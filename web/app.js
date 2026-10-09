@@ -4,7 +4,7 @@
   var $ = function (id) { return document.getElementById(id); };
   var dados = { indice: null, servicos: null, demo: false };
   var mapa = null, camadas = null, tiles = null;
-  var ultimo = null, objetivo = null;  /* so em memoria: nada vai para storage, cookie ou rede */
+  var ultimo = null, objetivo = null, necessidades = [];  /* so em memoria: nada vai para storage, cookie ou rede */
 
   function esc(s) {
     return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
@@ -109,25 +109,75 @@
     desenharObjetivos(); desenharSugestoes();
   });
 
+  function htmlGrupo(g, r) {
+    var itens = g.municipais.concat(g.proximos), html = "";
+    html += '<section class="grupo"><h2>' + esc(g.rotulo) + "</h2>";
+    if (!itens.length && !g.sem_localizacao.length) {
+      html += '<p class="vazio">Nenhum serviço deste tipo cadastrado ainda. Isso não significa que não exista: significa que ainda não temos o dado.</p>';
+    }
+    itens.forEach(function (s) { html += cartao(s, r.area); });
+    if (g.sem_localizacao.length) {
+      html += '<p class="meta">' + g.sem_localizacao.length + " serviço(s) deste tipo sem localização no mapa:</p>";
+      g.sem_localizacao.slice(0, 5).forEach(function (s) { html += cartao(s, r.area); });
+    }
+    if (g.total_local > g.proximos.length + g.sem_localizacao.length) {
+      html += '<p class="meta">Mostrando os ' + g.proximos.length + " mais próximos de " + g.total_local + " cadastrados.</p>";
+    }
+    return html + "</section>";
+  }
+
+  function desenharNecessidade(texto) {
+    var alvo = $("painel-necessidade");
+    if (!necessidades.length) {
+      alvo.innerHTML = texto && texto.trim() ? '<p class="meta">Não reconhecemos essa palavra. Tente: emprego, estudo, saúde, filhos, família, casamento, violência ou ônibus.</p>' : "";
+      return;
+    }
+    alvo.innerHTML = necessidades.map(function (n) {
+      var h = '<article class="cartao' + (n.urgente ? " urgente" : "") + '"><h2>' + esc(n.rotulo) + "</h2>";
+      if (n.aviso) h += "<p>" + esc(n.aviso) + "</p>";
+      (n.links || []).forEach(function (l) { h += '<p><a href="' + esc(l.url) + '" target="_blank" rel="noopener noreferrer">' + esc(l.texto) + "</a></p>"; });
+      if (n.tipos.length) h += '<p class="meta">Digite seu CEP abaixo para ver o que há perto de você.</p>';
+      return h + "</article>";
+    }).join("");
+  }
+
+  function escolherNecessidades(lista, texto) {
+    necessidades = lista;
+    desenharNecessidade(texto);
+    if (ultimo && lista.length) {  /* ja ha resultado na tela: reorganiza sem pedir o CEP de novo */
+      desenhar(ultimo);
+    }
+  }
+
+  function desenharChips() {
+    $("chips-necessidade").innerHTML = Necessidades.LISTA.map(function (n) {
+      return '<button type="button" data-nec="' + n.id + '">' + esc(n.rotulo.split(" / ")[0].split(",")[0]) + "</button>";
+    }).join("");
+  }
+
+  $("chips-necessidade").addEventListener("click", function (e) {
+    var id = e.target && e.target.getAttribute("data-nec");
+    if (!id) return;
+    $("necessidade").value = "";
+    escolherNecessidades([Necessidades.porId(id)], "");
+  });
+  $("necessidade").addEventListener("input", function (e) { escolherNecessidades(Necessidades.identificar(e.target.value), e.target.value); });
+  $("form-necessidade").addEventListener("submit", function (ev) { ev.preventDefault(); });
+  desenharChips();
+
   function desenhar(r) {
-    ultimo = r; desenharObjetivos(); desenharSugestoes();
+    ultimo = r;
+    var obj = necessidades.map(function (n) { return n.objetivo; }).filter(Boolean)[0];
+    if (obj) objetivo = obj;
+    desenharObjetivos(); desenharSugestoes();
     var html = "";
-    r.grupos.forEach(function (g) {
-      var itens = g.municipais.concat(g.proximos);
-      html += '<section class="grupo"><h2>' + esc(g.rotulo) + "</h2>";
-      if (!itens.length && !g.sem_localizacao.length) {
-        html += '<p class="vazio">Nenhum serviço deste tipo cadastrado ainda. Isso não significa que não exista: significa que ainda não temos o dado.</p>';
-      }
-      itens.forEach(function (s) { html += cartao(s, r.area); });
-      if (g.sem_localizacao.length) {
-        html += '<p class="meta">' + g.sem_localizacao.length + " serviço(s) deste tipo sem localização no mapa:</p>";
-        g.sem_localizacao.slice(0, 5).forEach(function (s) { html += cartao(s, r.area); });
-      }
-      if (g.total_local > g.proximos.length + g.sem_localizacao.length) {
-        html += '<p class="meta">Mostrando os ' + g.proximos.length + " mais próximos de " + g.total_local + " cadastrados.</p>";
-      }
-      html += "</section>";
-    });
+    var sep = Necessidades.separar(r.grupos, necessidades);
+    if (sep.destaque.length) {
+      sep.destaque.forEach(function (g) { html += htmlGrupo(g, r); });
+      html += '<details class="outros"><summary>Ver outros serviços perto de você</summary>' + sep.outros.map(function (g) { return htmlGrupo(g, r); }).join("") + "</details>";
+    } else {
+      r.grupos.forEach(function (g) { html += htmlGrupo(g, r); });
+    }
     $("grupos").innerHTML = html;
     $("resumo-area").textContent = "Resultados a partir do centro do CEP " + r.cep.slice(0, 5) + "-" + r.cep.slice(5) +
       " (área aproximada de " + r.area.raio_m + " m de raio, " + r.area.n + " endereços no IBGE).";
@@ -185,7 +235,8 @@
   });
 
   $("sair-rapido").addEventListener("click", function () {
-    $("cep").value = ""; $("grupos").innerHTML = ""; $("sugestoes").innerHTML = ""; ultimo = null; objetivo = null;
+    $("cep").value = ""; $("necessidade").value = ""; $("grupos").innerHTML = ""; $("sugestoes").innerHTML = "";
+    $("painel-necessidade").innerHTML = ""; ultimo = null; objetivo = null; necessidades = [];
     window.location.replace("https://www.google.com.br/");
   });
 

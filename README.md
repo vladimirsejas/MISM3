@@ -39,12 +39,16 @@ Se um download automático falhar (os sites mudam), o script diz onde baixar à 
     node web/tests/acesso.test.js
     node web/tests/recomendar.test.js
     node web/tests/vagas.test.js
+    node web/tests/necessidades.test.js
 
 ## Conferir o catálogo contra as páginas oficiais
 Com internet, rode `python pipeline/verificar_catalogo.py`. Ele abre a fonte de cada serviço e confere se os telefones cadastrados aparecem na página. "ATENCAO" não é erro certo: abra a fonte e confira.
 
 ## Acrescentar um serviço verificado
 Edite `catalogo/servicos_manuais.csv`. Obrigatórios: `tipo` (creche, saude, assistencia, mulher, emprego_curso), `nome`, `fonte_url`, `verificado_em`. Com `cep`, o serviço entra no mapa; `abrangencia=municipal` faz aparecer para todas. Depois rode `python pipeline/servicos.py`.
+
+## Busca por necessidade ("escreva e abrimos as portas")
+No topo do site a pessoa escreve uma palavra (emprego, estudo, saúde, filhos, família, casamento, violência, ônibus) ou toca num botão. O site mostra primeiro os serviços daquela necessidade e deixa o resto em "Ver outros serviços". A lista de palavras e a regra estão em `web/necessidades.js`, com testes. Regras de segurança: o texto digitado não sai do navegador nem é gravado; "violência" sempre vem em destaque com 190, 192 e Ligue 180; "ônibus" não mostra horário enquanto eles não forem conferidos, só o link da SOU Transportes; onde não há cadastro (ex.: Defensoria para guarda e pensão), o site diz isso.
 
 ## Trilha de autonomia (recomendação sem banco de dados)
 Depois de buscar o CEP, a usuária escolhe um objetivo (trabalhar, fazer curso, empreender) e vê os serviços de trabalho/renda em ordem, cada um com o **porquê** (objetivo confirmado no cadastro, gratuidade, distância). É uma regra aberta e explicável em `web/recomendar.js`, não um modelo treinado, e roda no navegador: nada é gravado. Só entra quem tem `objetivos` preenchido no catálogo (`trabalhar`, `curso`, `empreender`, separados por `;`) e `gratuito=sim` apenas quando a página oficial diz. Sem a informação confirmada, o serviço não é sugerido para o objetivo: não adivinhamos.

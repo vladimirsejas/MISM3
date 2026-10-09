@@ -22,6 +22,14 @@
 </header>
 
 <main>
+  <form id="form-necessidade" class="busca" autocomplete="off">
+    <label for="necessidade">O que você precisa?</label>
+    <input id="necessidade" placeholder="Escreva: emprego, estudo, saúde, filhos, família, casamento, violência…" autocomplete="off" autocapitalize="off" spellcheck="false">
+    <div id="chips-necessidade" class="objetivos" role="group" aria-label="Necessidades mais comuns"></div>
+    <p class="privacidade">O que você escreve aqui não sai deste aparelho: nada é enviado, gravado ou contado.</p>
+  </form>
+  <div id="painel-necessidade"></div>
+
   <form id="form-cep" class="busca" autocomplete="off">
     <label for="cep">Digite seu CEP</label>
     <div class="linha">
@@ -61,6 +69,7 @@
 <script src="vendor/leaflet.js"></script>
 <script src="acesso.js"></script>
 <script src="recomendar.js"></script>
+<script src="necessidades.js"></script>
 <script src="vagas.js"></script>
 <script src="app.js"></script>
 </body>

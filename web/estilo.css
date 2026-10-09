@@ -33,3 +33,9 @@ a{color:var(--pri)}
 .objetivos button { padding: .6rem 1rem; border: 2px solid #6b2d8a; background: #fff; color: #6b2d8a; border-radius: 999px; font: inherit; cursor: pointer; }
 .objetivos button[aria-pressed="true"] { background: #6b2d8a; color: #fff; }
 .porque { margin: .5rem 0 0; padding-left: 1.2rem; font-size: .95rem; }
+
+.objetivos button[data-nec] { border-color: #444; color: #222; }
+.cartao.urgente { border-left: 6px solid #a4161a; background: #fff5f5; }
+details.outros { margin-top: 1rem; }
+details.outros > summary { cursor: pointer; font-weight: 600; padding: .6rem 0; }
+#necessidade{display:block;width:100%;box-sizing:border-box;margin-top:.4rem;font-size:1.15rem;padding:.6rem;border:1px solid var(--bor);border-radius:.5rem;background:var(--bg);color:var(--fg)}

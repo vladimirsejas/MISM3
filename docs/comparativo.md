@@ -12,6 +12,7 @@ Marque cada célula: **Sim** / **Não** / **Parcial** / **N/C** (não conferido)
 
 | Funcionalidade | Secretaria da Mulher | Portal da Empregabilidade | Operadora de ônibus | Mapa do Cuidado (hoje) |
 |---|---|---|---|---|
+| Entrada por necessidade (escrever "emprego", "filhos", "violência"…) | | | | **Sim** (`web/necessidades.js`) |
 | Achar serviço por proximidade (CEP) | | | | **Sim** (`web/acesso.js`) |
 | Mostra fonte e data de verificação de cada informação | | | | **Sim** |
 | Telefones de emergência sempre visíveis (180/190) e "Sair rápido" | | | | **Sim** |
