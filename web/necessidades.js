@@ -10,6 +10,7 @@
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .toLowerCase()
+      .replace(/-/g, "")
       .replace(/[^a-z0-9\s]/g, " ")
       .replace(/\s+/g, " ")
       .trim();
@@ -40,14 +41,15 @@
       "vaga na creche", "matricula do filho"
     ]],
     ["emprego_curso", [
-      "emprego", "trabalho", "vaga", "vagas", "renda", "curriculo",
+      "emprego", "trabalho", "renda", "curriculo",
+      "vaga de emprego", "vagas de emprego", "vaga de trabalho", "vagas de trabalho", "trabalhar",
       "curso", "cursos", "qualificacao", "empreender", "desempregada",
       "desempregado", "procurando emprego", "voltar ao trabalho"
     ]],
     ["saude", [
       "saude", "medico", "medica", "consulta", "exame", "hospital",
       "posto de saude", "psicologa", "psicologo", "menopausa", "gestacao",
-      "gravidez", "ginecologista", "dor", "remedio"
+      "gravidez", "gravida", "ginecologista", "dor", "remedio"
     ]],
     ["estudo", [
       "estudo", "estudar", "faculdade", "universidade", "escola", "ensino",
