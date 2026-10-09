@@ -2,63 +2,13 @@
   "municipio": "Rio Claro",
   "uf": "SP",
   "fonte_primaria": {
-    "orgao": "Prefeitura Municipal de Rio Claro",
-    "operadora": "SOU Transportes",
-    "pagina_geral": "https://soutransportes.com.br/rio-claro/linhas-e-horarios/",
-    "observacao": "Os horários abaixo foram transcritos de publicações oficiais. A validade atual precisa ser confirmada para as linhas cuja publicação é de 2025."
+    "nome": "SOU Transportes — Rio Claro",
+    "url": "https://soutransportes.com.br/rio-claro/",
+    "pagina_linhas_horarios": "https://soutransportes.com.br/rio-claro/linhas-e-horarios/",
+    "tipo": "operadora oficial do transporte urbano municipal",
+    "observacao": "A página principal da SOU confirma que o aplicativo disponibiliza informações em tempo real e tabelas de horários. A página de linhas e horários não expôs tabelas legíveis nesta consulta automatizada."
   },
-  "linhas": [
-    {
-      "numero": "06",
-      "nome": "Cervezão / Regina Picelli",
-      "sentidos": {
-        "bairro_para_estacao": {
-          "dias_uteis": ["05:20", "05:50", "06:30", "07:00", "07:40", "08:10", "08:50", "09:20", "10:30", "11:40", "12:55", "14:05", "15:15", "16:25", "17:05", "17:35", "18:15", "18:45", "19:55", "21:00", "22:00", "23:00"],
-          "sabados": ["05:20", "06:30", "07:40", "08:50", "10:00", "11:10", "12:20", "13:30", "14:40", "15:50", "17:00", "18:10", "19:20", "20:30", "21:40", "22:50"],
-          "domingos_feriados": ["05:20", "07:30", "09:40", "11:50", "14:00", "16:10", "18:20", "20:30", "22:40"]
-        },
-        "estacao_para_bairro": {
-          "dias_uteis": ["05:50", "06:20", "07:00", "07:30", "08:10", "08:40", "09:50", "11:00", "12:10", "13:25", "14:35", "15:45", "16:25", "16:55", "17:35", "18:05", "18:45", "19:15", "20:25", "21:25", "22:25", "23:25"],
-          "sabados": ["05:50", "07:00", "08:10", "09:20", "10:30", "11:40", "12:50", "14:00", "15:10", "16:20", "17:30", "18:40", "19:50", "21:00", "22:10"],
-          "domingos_feriados": ["07:00", "09:10", "11:20", "13:30", "15:40", "17:50", "20:00", "22:10"]
-        }
-      },
-      "publicacao_data": "2026-08-05",
-      "vigencia_publicada": "2026-08-10",
-      "status_validacao": "publicado pela Prefeitura em agosto de 2026",
-      "fonte_url": "https://rioclaro.sp.gov.br/mobilidade-urbana-e-sistema-viario/linha-de-onibus-que-atende-cervezao-e-regina-picelli-muda-a-partir-de-2a-feira/"
-    },
-    {
-      "numero": "07",
-      "nome": "Circular 1 / Jardim Boa Vista",
-      "sentidos": {
-        "bairro_para_estacao": {
-          "horarios_publicados": ["05:00", "06:10", "07:25", "08:45", "10:05", "11:25", "12:45", "14:05", "15:25", "16:45", "18:05", "19:20", "20:30", "21:40", "22:50"]
-        },
-        "estacao_para_bairro": {
-          "horarios_publicados": ["05:40", "06:50", "08:10", "09:30", "10:50", "12:10", "13:30", "14:50", "16:10", "17:30", "18:50", "20:00", "21:10", "22:20", "23:20"]
-        }
-      },
-      "publicacao_data": "2025-07-22",
-      "vigencia_publicada": "2025-07-26",
-      "status_validacao": "horários publicados oficialmente em 2025; confirmar se continuam vigentes antes de exibir como atuais",
-      "fonte_url": "https://rioclaro.sp.gov.br/mobilidade-urbana-e-sistema-viario/linhas-de-onibus-do-jardim-boa-vista-mudam-de-horario-a-partir-de-sabado/"
-    },
-    {
-      "numero": "08",
-      "nome": "Circular 2 / Jardim Boa Vista",
-      "sentidos": {
-        "bairro_para_estacao": {
-          "horarios_publicados": ["04:55", "06:10", "07:25", "08:40", "09:55", "11:10", "12:25", "13:40", "15:10", "16:40", "18:10", "19:40", "21:00", "22:20"]
-        },
-        "estacao_para_bairro": {
-          "horarios_publicados": ["05:35", "06:50", "08:05", "09:20", "10:35", "11:50", "13:05", "14:20", "15:50", "17:20", "18:50", "20:20", "21:40", "23:05"]
-        }
-      },
-      "publicacao_data": "2025-07-22",
-      "vigencia_publicada": "2025-07-26",
-      "status_validacao": "horários publicados oficialmente em 2025; confirmar se continuam vigentes antes de exibir como atuais",
-      "fonte_url": "https://rioclaro.sp.gov.br/mobilidade-urbana-e-sistema-viario/linhas-de-onibus-do-jardim-boa-vista-mudam-de-horario-a-partir-de-sabado/"
-    }
-  ]
+  "linhas": [],
+  "status": "estrutura inicial; não contém horários transcritos",
+  "regra_de_qualidade": "Só incluir horários depois de extraí-los de uma tabela da SOU ou de documento oficial legível. Não reutilizar transcrições não verificadas."
 }
