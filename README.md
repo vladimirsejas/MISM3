@@ -1,6 +1,6 @@
 # Mapa do Cuidado Rio-Clarense (marco 1)
 
-Você digita o **CEP** e o site mostra os serviços públicos mais próximos em Rio Claro/SP: apoio à mulher, assistência social, creches, saúde e trabalho/cursos. Tudo com fonte e data de verificação. O CEP **nunca sai do navegador**.
+Comece pela sua necessidade: **Emprego, Saúde, Estudo, Filhos, Casamento e direitos, Violência ou Família**. O site abre caminhos, links oficiais e serviços cadastrados em Rio Claro/SP. Também é possível buscar serviços próximos pelo CEP; o CEP **nunca sai do navegador**. O catálogo está em expansão e informa quando faltam dados.
 
 ## Privacidade (por desenho)
 - Consulta 100% no navegador; sem servidor próprio, sem cookies, sem localStorage, sem estatísticas.
