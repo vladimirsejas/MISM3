@@ -3,7 +3,6 @@
 Uso (no seu computador, com internet):
     python pipeline/baixar.py            # tenta tudo
     python pipeline/baixar.py cnefe      # so o CNEFE (obrigatorio para o CEP)
-    python pipeline/baixar.py cnes
     python pipeline/baixar.py escolas
 
 Os caminhos exatos de arquivo nos servidores do IBGE/INEP podem mudar. Por isso este
@@ -25,7 +24,6 @@ from common import (BRUTO, MUNICIPIO_IBGE6, MUNICIPIO_IBGE7, abrir_url, baixar, 
 CNEFE_RAIZ = "https://ftp.ibge.gov.br/Cadastro_Nacional_de_Enderecos_Fins_Estatisticos/Censo_Demografico_2022/"
 CNEFE_PAGINA = "https://www.ibge.gov.br/estatisticas/sociais/populacao/38734-cadastro-nacional-de-enderecos-para-fins-estatisticos.html"
 INEP_PAGINA = "https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/microdados/censo-escolar"
-CNES_API = "https://apidadosabertos.saude.gov.br/cnes/estabelecimentos"
 
 
 # ------------------------------------------------------------- CNEFE
@@ -76,40 +74,6 @@ def baixar_cnefe(url_direta: str | None = None) -> Path:
     return baixar(pasta + zips[0], destino_dir / zips[0])
 
 
-# ------------------------------------------------------------- CNES
-def baixar_cnes() -> Path:
-    """Estabelecimentos de saude via API de Dados Abertos do Ministerio da Saude."""
-    destino = BRUTO / "cnes" / "estabelecimentos.json"
-    if destino.exists():
-        print("CNES ja esta em %s (apague para baixar de novo)." % destino)
-        return destino
-    registros: list[dict] = []
-    limite, offset = 20, 0
-    print("Baixando estabelecimentos do CNES (municipio %s)..." % MUNICIPIO_IBGE6)
-    while True:
-        url = "%s?codigo_municipio=%s&limit=%d&offset=%d" % (CNES_API, MUNICIPIO_IBGE6, limite, offset)
-        try:
-            dados = json.loads(abrir_url(url, timeout=60).decode("utf-8"))
-        except Exception as e:  # noqa: BLE001
-            if registros:
-                print("  interrompido em %d registros: %s" % (len(registros), e))
-                break
-            erro("Falha ao consultar a API do CNES (%s).\nAlternativa: exporte a lista de estabelecimentos de Rio Claro em "
-                 "https://cnes.datasus.gov.br (Consultas > Estabelecimentos) para CSV e coloque em %s" % (e, destino.parent))
-        lote = dados.get("estabelecimentos") if isinstance(dados, dict) else dados
-        if not lote:
-            break
-        registros.extend(lote)
-        print("\r  %d registros" % len(registros), end="", flush=True)
-        if len(lote) < limite:
-            break
-        offset += limite
-    print()
-    salvar_json(registros, destino)
-    return destino
-
-
-# ------------------------------------------------------------- escolas
 def baixar_escolas() -> Path:
     destino_dir = BRUTO / "escolas"
     existentes = list(destino_dir.glob("*.csv"))
@@ -156,8 +120,6 @@ def main(argv: list[str]) -> None:
     alvo = argv[0] if argv else "tudo"
     if alvo in ("tudo", "cnefe"):
         baixar_cnefe(url_direta)
-    if alvo in ("tudo", "cnes"):
-        baixar_cnes()
     if alvo in ("tudo", "escolas"):
         baixar_escolas()
     print("\nPronto. Proximo passo: python pipeline/inspecionar_arquivo.py dados/bruto")

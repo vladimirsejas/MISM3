@@ -74,19 +74,8 @@ def test_subtipo_saude():
     assert servicos.subtipo_saude("CENTRO DE SAUDE/UNIDADE BASICA") == "ubs"
     assert servicos.subtipo_saude("Pronto Atendimento") == "urgencia"
     assert servicos.subtipo_saude("CENTRO DE ATENCAO PSICOSSOCIAL") == "caps"
+    assert servicos.subtipo_saude("POLICLINICA") == "especialidades"
     assert servicos.subtipo_saude("Clinica") == "outros"
-
-
-def test_cnes_chaves_variaveis():
-    regs = [
-        {"codigo_cnes": 123, "nome_fantasia": "UBS CENTRO", "codigo_cep_estabelecimento": "13500001",
-         "descricao_tipo_unidade": "CENTRO DE SAUDE/UNIDADE BASICA", "codigo_municipio": "354390"},
-        {"codigo_cnes": 999, "nome_fantasia": "OUTRA CIDADE", "codigo_municipio": "330455"},
-        {"codigo_cnes": 5},  # sem nome
-    ]
-    s = servicos.servicos_cnes(regs, INDICE, "2026-10-08")
-    assert len(s) == 1 and s[0]["subtipo"] == "ubs" and s[0]["geo"] == "centroide_cep"
-    assert s[0]["nome"] == "Ubs Centro"
 
 
 def test_creches():
