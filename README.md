@@ -20,7 +20,9 @@ Requer Python 3.10+ e `pip install pandas numpy`.
 O CNES é a base completa baixada à mão do site do CNES e descompactada em `docs/cnes` (ou `dados/bruto/cnes`).
 
     python pipeline/baixar.py cnefe       # IBGE CNEFE de Rio Claro
-    python pipeline/baixar.py escolas     # Censo Escolar (arquivo grande)
+    python pipeline/baixar.py escolas     # Censo Escolar do INEP (grande; retoma se cair)
+    # se o INEP nao baixar: baixe o zip pelo navegador e rode
+    python pipeline/baixar.py escolas --zip "C:\\caminho\\microdados_censo_escolar_2025.zip"
     python pipeline/inspecionar_arquivo.py dados/bruto   # mostra só a ESTRUTURA dos arquivos
     python pipeline/indice_cep.py         # gera web/dados/cep_indice.json
     python pipeline/cnes.py docs/cnes     # diagnóstico: só contagens, confere as regras do CNES

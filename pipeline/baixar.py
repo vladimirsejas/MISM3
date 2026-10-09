@@ -3,11 +3,12 @@
 Uso (no seu computador, com internet):
     python pipeline/baixar.py            # tenta tudo
     python pipeline/baixar.py cnefe      # so o CNEFE (obrigatorio para o CEP)
-    python pipeline/baixar.py escolas
+    python pipeline/baixar.py escolas                 # baixa o Censo Escolar (retoma se cair)
+    python pipeline/baixar.py escolas --zip "C:\\...\\microdados_censo_escolar_2025.zip"   # zip baixado pelo navegador
 
-Os caminhos exatos de arquivo nos servidores do IBGE/INEP podem mudar. Por isso este
-script NAO tem nomes de arquivo fixos: ele navega pelos indices de diretorio e escolhe
-pelo codigo do municipio. Se algo nao for encontrado, ele diz o que fazer na mao
+Os caminhos nos servidores do IBGE/INEP podem mudar. O CNEFE e descoberto navegando pelos
+indices de diretorio (escolhe pelo codigo do municipio); o Censo Escolar usa uma lista de
+enderecos conhecidos do INEP. Downloads grandes RETOMAM de onde pararam se a conexao cair. Se algo nao for encontrado, ele diz o que fazer na mao
 (baixar pelo navegador e colocar o arquivo na pasta indicada).
 """
 from __future__ import annotations
@@ -74,41 +75,55 @@ def baixar_cnefe(url_direta: str | None = None) -> Path:
     return baixar(pasta + zips[0], destino_dir / zips[0])
 
 
-def baixar_escolas() -> Path:
-    destino_dir = BRUTO / "escolas"
-    existentes = list(destino_dir.glob("*.csv"))
-    if existentes:
-        print("Escolas ja esta em %s (apague para baixar de novo)." % destino_dir)
-        return existentes[0]
-    print("Procurando o Censo Escolar mais recente no portal do INEP...")
-    try:
-        pagina = abrir_url(INEP_PAGINA).decode("utf-8", errors="replace")
-    except Exception as e:  # noqa: BLE001
-        erro("Nao consegui abrir a pagina do INEP (%s). Baixe o zip do Censo Escolar em %s e coloque o arquivo "
-             "microdados_ed_basica_*.csv em %s" % (e, INEP_PAGINA, destino_dir))
-    links = re.findall(r'href="([^"]+\.zip)"', pagina, flags=re.I)
-    links = [l for l in links if "censo_escolar" in l.lower() or "microdados" in l.lower()]
-    anos = sorted({int(a) for l in links for a in re.findall(r"(20\d{2})", l)}, reverse=True)
-    if not anos:
-        erro("Nao achei links de .zip na pagina do INEP. Baixe manualmente em %s." % INEP_PAGINA)
-    ano = anos[0]
-    alvo = [l for l in links if str(ano) in l][0]
-    print("  ano mais recente encontrado: %d" % ano)
-    zip_path = baixar(alvo, destino_dir / ("censo_escolar_%d.zip" % ano))
+URLS_CENSO_ESCOLAR = [  # em ordem de preferencia; o INEP as troca de ano em ano
+    "https://download.inep.gov.br/dados_abertos/microdados_censo_escolar_2025_.zip",
+    "https://download.inep.gov.br/dados_abertos/microdados_censo_escolar_2025.zip",
+    "https://download.inep.gov.br/dados_abertos/microdados_censo_escolar_2024.zip",
+]
+
+
+def extrair_escolas(zip_path: Path, destino_dir: Path) -> Path:
+    """Tira do zip so o microdados_ed_basica_*.csv (o resto e enorme e nao usamos)."""
     with zipfile.ZipFile(zip_path) as z:
         nomes = [n for n in z.namelist() if re.search(r"microdados_ed_basica.*\.csv$", n, flags=re.I)]
         if not nomes:
             erro("O zip nao tem microdados_ed_basica_*.csv. Conteudo: %s" % z.namelist()[:20])
-        alvo_csv = destino_dir / Path(nomes[0]).name
+        alvo_csv = Path(destino_dir) / Path(nomes[0]).name
+        alvo_csv.parent.mkdir(parents=True, exist_ok=True)
         with z.open(nomes[0]) as src, open(alvo_csv, "wb") as dst:
             while True:
                 bloco = src.read(1024 * 1024)
                 if not bloco:
                     break
                 dst.write(bloco)
-    zip_path.unlink()  # economiza espaco: o csv ja foi extraido
     print("  extraido: %s" % alvo_csv)
     return alvo_csv
+
+
+def baixar_escolas(url_direta: str | None = None, zip_local: str | None = None) -> Path:
+    destino_dir = BRUTO / "escolas"
+    if zip_local:  # zip baixado pelo navegador
+        return extrair_escolas(Path(zip_local), destino_dir)
+    existentes = list(destino_dir.glob("microdados_ed_basica*.csv"))
+    if existentes:
+        print("Escolas ja esta em %s (apague para baixar de novo)." % destino_dir)
+        return existentes[0]
+    candidatos = [url_direta] if url_direta else URLS_CENSO_ESCOLAR
+    ultimo = None
+    for url in candidatos:
+        print("Baixando %s" % url)
+        try:
+            zip_path = baixar(url, destino_dir / "censo_escolar.zip")
+            break
+        except RuntimeError as e:
+            ultimo = e
+            print("  nao deu: %s" % e)
+    else:
+        erro("Nao consegui baixar o Censo Escolar (%s).\nBaixe o zip pelo navegador em %s e rode:\n"
+             "  python pipeline/baixar.py escolas --zip \"C:\\caminho\\arquivo.zip\"" % (ultimo, INEP_PAGINA))
+    caminho = extrair_escolas(zip_path, destino_dir)
+    zip_path.unlink()  # economiza espaco: o csv ja foi extraido
+    return caminho
 
 
 def main(argv: list[str]) -> None:
@@ -117,11 +132,16 @@ def main(argv: list[str]) -> None:
         i = argv.index("--url")
         url_direta = argv[i + 1]
         argv = argv[:i] + argv[i + 2:]
+    zip_local = None
+    if "--zip" in argv:
+        i = argv.index("--zip")
+        zip_local = argv[i + 1]
+        argv = argv[:i] + argv[i + 2:]
     alvo = argv[0] if argv else "tudo"
     if alvo in ("tudo", "cnefe"):
         baixar_cnefe(url_direta)
     if alvo in ("tudo", "escolas"):
-        baixar_escolas()
+        baixar_escolas(url_direta if alvo == "escolas" else None, zip_local)
     print("\nPronto. Proximo passo: python pipeline/inspecionar_arquivo.py dados/bruto")
 
 
