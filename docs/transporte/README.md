@@ -1,19 +1,16 @@
 # Horários de ônibus de Rio Claro
 
-## Fonte oficial de consulta
+## Fonte primária
 
-- [SOU Transportes — linhas e horários](https://soutransportes.com.br/rio-claro/linhas-e-horarios/)
-- [Prefeitura — Linha 06 Cervezão/Regina Picelli, publicação de 5 de agosto de 2026](https://rioclaro.sp.gov.br/mobilidade-urbana-e-sistema-viario/linha-de-onibus-que-atende-cervezao-e-regina-picelli-muda-a-partir-de-2a-feira/)
-- [Prefeitura — linhas 07 e 08 do Jardim Boa Vista, publicação de 22 de julho de 2025](https://rioclaro.sp.gov.br/mobilidade-urbana-e-sistema-viario/linhas-de-onibus-do-jardim-boa-vista-mudam-de-horario-a-partir-de-sabado/)
+- [SOU Transportes — Rio Claro](https://soutransportes.com.br/rio-claro/)
+- [SOU Transportes — Linhas e horários](https://soutransportes.com.br/rio-claro/linhas-e-horarios/)
 
-## Arquivo estruturado
+A página principal da SOU informa que o aplicativo oferece informações em tempo real e tabelas de horários. A página específica de linhas e horários não expôs tabelas legíveis na consulta automatizada feita para este projeto.
 
-Os horários transcritos das publicações municipais estão em `web/dados/horarios_onibus.json`.
+## Estado da base
 
-- Linha 06: publicação municipal de agosto de 2026, com vigência anunciada a partir de 10/08/2026.
-- Linhas 07 e 08: publicação municipal de julho de 2025. O arquivo preserva esses horários como referência publicada, mas marca que a vigência atual precisa ser confirmada.
-- Não usar o conteúdo dos PDFs em `docs/transporte` como tabela estruturada enquanto a extração só retornar cabeçalhos de impressão. Os PDFs locais examinados não continham texto de horários recuperável pelo `pypdf`.
+O arquivo `web/dados/horarios_onibus.json` registra a fonte primária, mas ainda não contém horários. Isso é intencional: a extração anterior dos 12 PDFs locais retornou apenas cabeçalhos de páginas de anotações, não os horários. Não devemos transformar esses arquivos em dados de transporte nem tratar horários não verificados como oficiais.
 
-## Próximo passo técnico
+## Próximo passo
 
-Antes de exibir os horários das linhas 07 e 08 como atuais, comparar com a tabela vigente no portal da SOU. Para novas linhas, registrar os horários e a URL de origem, data de publicação e vigência informada. Não inferir horários ausentes.
+Extrair as tabelas diretamente da página da SOU, do aplicativo oficial ou de arquivos de horários publicados pela operadora. Para cada linha, guardar número/nome, sentido, tipo de dia, horários, URL da fonte e data de consulta. Se não for possível ler a tabela automaticamente, registrar a limitação sem inventar valores.
