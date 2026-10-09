@@ -95,14 +95,9 @@
     }
   };
 
-  function abrirCategoria(chave) {
+  /* Conteudo de UMA categoria (links oficiais + servicos cadastrados + ajuda imediata). */
+  function blocoCategoria(chave) {
     var c = CATEGORIAS[chave];
-    if (!c) return;
-    aoAbrirCategoria(chave);
-    $("painel-categoria").hidden = false;
-    document.querySelector(".portas").hidden = true;
-    $("titulo-categoria").textContent = c.titulo;
-    $("descricao-categoria").textContent = c.descricao;
     var html = "";
     c.links.forEach(function (l) {
       html += '<article class="cartao"><h3><a href="' + esc(l[1]) + '" target="_blank" rel="noopener noreferrer">' + esc(l[0]) + '</a></h3><p>' + esc(l[2]) + '</p><p class="meta">Fonte externa oficial; confira os dados e a disponibilidade no site de origem.</p></article>';
@@ -123,9 +118,74 @@
     if (chave === "violencia") {
       html += '<article class="cartao urgente"><h3>Ajuda imediata</h3><p>Polícia: <a href="tel:190">190</a></p><p>Central de Atendimento à Mulher: <a href="tel:180">180</a></p><p>Atendimento médico de urgência: <a href="tel:192">192</a></p><p class="meta">Se o aparelho puder estar sendo monitorado, considere usar um dispositivo seguro. O botão “Sair rápido” não apaga o histórico do navegador.</p></article>';
     }
-    $("opcoes-categoria").innerHTML = html;
+    return html;
+  }
+
+  var CHAVE_PARA_ID = { emprego_curso: "emprego" }, ID_PARA_CHAVE = { emprego: "emprego_curso" };
+  var idNec = function (chave) { return CHAVE_PARA_ID[chave] || chave; };
+  var chaveDe = function (id) { return ID_PARA_CHAVE[id] || id; };
+  var veioDoTexto = false;  /* so mostramos "Entendemos que voce procura" quando a pessoa escreveu uma frase */
+
+  function desenharEntendimento() {
+    var alvo = $("entendimento");
+    if (!veioDoTexto || !necessidades.length) { alvo.innerHTML = ""; return; }
+    alvo.innerHTML = "<p>Entendemos que você procura:</p>" + '<div class="chips">' + necessidades.map(function (n) {
+      return '<button type="button" data-remover="' + esc(n.id) + '" title="Tirar da busca">' + esc(n.rotulo.split(" / ")[0].split(",")[0]) + " ✕</button>";
+    }).join("") + "</div>" + '<p class="meta">Se algo não é o que você procura, toque nele para tirar.</p>';
+  }
+
+  /* Abre uma ou VARIAS categorias juntas (a frase pode ter mais de uma necessidade). */
+  function abrirCaminho(chaves) {
+    var validas = chaves.filter(function (k) { return CATEGORIAS[k]; });
+    if (!validas.length) return;
+    necessidades = validas.map(function (k) { return Necessidades.porId(idNec(k)); }).filter(Boolean);
+    $("painel-categoria").hidden = false;
+    document.querySelector(".portas").hidden = true;
+    desenharEntendimento();
+    if (validas.length === 1) {
+      $("titulo-categoria").textContent = CATEGORIAS[validas[0]].titulo;
+      $("descricao-categoria").textContent = CATEGORIAS[validas[0]].descricao;
+      $("opcoes-categoria").innerHTML = blocoCategoria(validas[0]);
+    } else {
+      $("titulo-categoria").textContent = "Seu caminho";
+      $("descricao-categoria").textContent = "Reunimos o que se relaciona com o que você escreveu, uma parte de cada vez.";
+      $("opcoes-categoria").innerHTML = validas.map(function (k) {
+        return '<section class="subcaminho"><h3>' + esc(CATEGORIAS[k].titulo) + "</h3><p>" + esc(CATEGORIAS[k].descricao) + "</p>" + blocoCategoria(k) + "</section>";
+      }).join("");
+    }
+    if (ultimo) desenhar(ultimo);  /* ja ha busca por CEP na tela: reorganiza pelos servicos da necessidade */
     $("painel-categoria").scrollIntoView({behavior:"smooth", block:"start"});
   }
+
+  function abrirCategoria(chave) { veioDoTexto = false; abrirCaminho([chave]); }
+
+  $("entendimento").addEventListener("click", function (e) {
+    var id = e.target && e.target.getAttribute("data-remover");
+    if (!id) return;
+    var restantes = necessidades.filter(function (n) { return n.id !== id; }).map(function (n) { return chaveDe(n.id); });
+    if (!restantes.length) { $("voltar-portas").click(); return; }
+    abrirCaminho(restantes);
+  });
+
+  $("form-necessidade").addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var texto = $("necessidade").value;
+    var aviso = $("mensagem-necessidade");
+    if (!texto.trim()) {
+      aviso.textContent = "Escreva o que você precisa, com suas palavras. Ex.: “preciso de emprego, mas tenho um filho pequeno”.";
+      aviso.hidden = false;
+      return;
+    }
+    var achadas = Necessidades.identificar(texto);  /* violencia sempre primeiro; ate 3 necessidades */
+    if (!achadas.length) {
+      aviso.textContent = "Ainda não reconheci o que você escreveu. Tente com outras palavras, como emprego, saúde, estudo, filhos, família, casamento, violência ou ônibus.";
+      aviso.hidden = false;
+      return;
+    }
+    aviso.hidden = true;
+    veioDoTexto = true;
+    abrirCaminho(achadas.map(function (n) { return chaveDe(n.id); }));
+  });
 
   document.querySelectorAll("[data-categoria]").forEach(function (b) {
     b.addEventListener("click", function () { abrirCategoria(b.getAttribute("data-categoria")); });
@@ -247,29 +307,6 @@
     return html + "</section>";
   }
 
-  /* As "portas" e o campo de texto usam a mesma lista (necessidades.js). Chaves da tela -> ids da lista. */
-  var CHAVE_PARA_ID = { emprego_curso: "emprego" }, ID_PARA_CHAVE = { emprego: "emprego_curso" };
-  var idNec = function (chave) { return CHAVE_PARA_ID[chave] || chave; };
-
-  function aoAbrirCategoria(chave) {
-    var n = Necessidades.porId(idNec(chave));
-    necessidades = n ? [n] : [];
-    if (ultimo) desenhar(ultimo);  /* ja ha busca por CEP na tela: reorganiza pelos servicos da necessidade */
-  }
-
-  $("necessidade").addEventListener("input", function (e) {
-    var achadas = Necessidades.identificar(e.target.value);
-    $("dica-necessidade").textContent = achadas.length ? "Aperte Enter para abrir: " + achadas[0].rotulo
-      : (e.target.value.trim() ? "Não reconhecemos essa palavra. Tente: emprego, estudo, saúde, filhos, família, casamento, violência ou ônibus." : "");
-  });
-  $("form-necessidade").addEventListener("submit", function (ev) {
-    ev.preventDefault();
-    var achadas = Necessidades.identificar($("necessidade").value);  /* urgencia (violencia) sempre primeiro */
-    if (!achadas.length) return;
-    $("necessidade").value = ""; $("dica-necessidade").textContent = "";
-    abrirCategoria(ID_PARA_CHAVE[achadas[0].id] || achadas[0].id);
-  });
-
   function desenhar(r) {
     ultimo = r;
     var obj = necessidades.map(function (n) { return n.objetivo; }).filter(Boolean)[0];
@@ -341,7 +378,7 @@
 
   $("sair-rapido").addEventListener("click", function () {
     $("cep").value = ""; $("necessidade").value = ""; $("grupos").innerHTML = ""; $("sugestoes").innerHTML = "";
-    $("painel-categoria").hidden = true; $("opcoes-categoria").innerHTML = ""; ultimo = null; objetivo = null; necessidades = [];
+    $("painel-categoria").hidden = true; $("opcoes-categoria").innerHTML = ""; $("entendimento").innerHTML = ""; veioDoTexto = false; ultimo = null; objetivo = null; necessidades = [];
     window.location.replace("https://www.google.com.br/");
   });
 

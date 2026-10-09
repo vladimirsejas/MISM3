@@ -1,6 +1,6 @@
 # Mapa do Cuidado Rio-Clarense (marco 1)
 
-Comece pela sua necessidade: **Emprego, Saúde, Estudo, Filhos, Casamento e direitos, Violência ou Família**. O site abre caminhos, links oficiais e serviços cadastrados em Rio Claro/SP. Também é possível buscar serviços próximos pelo CEP; o CEP **nunca sai do navegador**. O catálogo está em expansão e informa quando faltam dados.
+Comece escrevendo uma necessidade ou escolhendo uma porta: **Emprego, Saúde, Estudo, Filhos, Casamento e direitos, Violência ou Família**. A busca por palavras é processada localmente no navegador e abre caminhos, links oficiais e serviços cadastrados em Rio Claro/SP. Também é possível buscar serviços próximos pelo CEP; o CEP **nunca sai do navegador**. O catálogo está em expansão e informa quando faltam dados.
 
 ## Privacidade (por desenho)
 - Consulta 100% no navegador; sem servidor próprio, sem cookies, sem localStorage, sem estatísticas.
@@ -48,7 +48,7 @@ Com internet, rode `python pipeline/verificar_catalogo.py`. Ele abre a fonte de 
 Edite `catalogo/servicos_manuais.csv`. Obrigatórios: `tipo` (creche, saude, assistencia, mulher, emprego_curso), `nome`, `fonte_url`, `verificado_em`. Com `cep`, o serviço entra no mapa; `abrangencia=municipal` faz aparecer para todas. Depois rode `python pipeline/servicos.py`.
 
 ## Busca por necessidade ("escreva e abrimos as portas")
-Na tela inicial a pessoa toca numa das "portas" (Emprego, Saúde, Estudo, Filhos, Casamento e direitos, Violência, Família) ou escreve uma palavra (inclui "ônibus") e aperta Enter. O site mostra primeiro os serviços daquela necessidade e deixa o resto em "Ver outros serviços". A lista de palavras e a regra estão em `web/necessidades.js`, com testes. Regras de segurança: o texto digitado não sai do navegador nem é gravado; "violência" sempre vem em destaque com 190, 192 e Ligue 180; "ônibus" não mostra horário enquanto eles não forem conferidos, só o link da SOU Transportes; onde não há cadastro (ex.: Defensoria para guarda e pensão), o site diz isso.
+Na tela inicial a pessoa toca numa "porta" (Emprego, Saúde, Estudo, Filhos, Casamento e direitos, Violência, Família) ou **escreve uma frase** ("preciso de emprego, mas tenho uma criança pequena"). A frase pode ter até 3 necessidades: o site mostra "Entendemos que você procura: [Emprego ✕] [Filhos ✕]" e a pessoa tira o que não serve. A regra está em `web/necessidades.js` e compara **palavras inteiras, radicais e expressões** (não pedaços de palavra, por isso "divagar" não vira "vaga"); palavras amplas como "dinheiro" e "bolsa" só valem dentro de expressões. "Violência" sempre vem primeiro e também é reconhecida de forma indireta ("ele me bate", "não deixa eu sair"). A lista de **47 frases de aceitação** em `web/tests/necessidades.test.js` é o roteiro da apresentação: para ensinar uma frase nova, acrescente-a lá primeiro. O texto digitado não sai do navegador.
 
 ## De mulher para mulher
 Área para mulheres que oferecem serviços a outras mulheres. **Quem verifica é a Secretaria da Mulher**: o site não tem como garantir que só mulheres participam, então só publica cadastros já conferidos por ela (o que foi conferido, por quem e quando). `catalogo/mulher_para_mulher.csv` está vazio e a porta só aparece quando há cadastro válido; no modo demonstração aparecem dois exemplos marcados [DEMO]. O validador exige consentimento, só bairro (nunca endereço) e validade de até 180 dias. Papéis, fluxo, limites e roteiro para a banca em `docs/de_mulher_para_mulher.md`. Não prometemos segurança, não há pagamento nem notas.
@@ -71,4 +71,4 @@ Coloque o CSV "Tabela da lista das escolas" do INEP em `docs/` e rode `python pi
 2. Setores censitários + Censo 2022 (crianças de 0 a 4 anos): "desertos de cuidado" e simulador de nova creche.
 3. Relatórios automáticos explicados; vagas e cursos; transporte.
 
-Veja `docs/inventario_de_fontes.md` e a [análise competitiva e roadmap funcional](docs/analise_competitiva_mism3.md), que compara as páginas públicas consultadas e define os diferenciais a implementar.
+Veja `docs/inventario_de_fontes.md`, a [análise competitiva e roadmap funcional](docs/analise_competitiva_mism3.md), o [plano de fontes externas e expansão](docs/plano_fontes_externas_e_expansao.md) e o [benchmark externo de ideias funcionais](docs/benchmark_externo_ideias_funcionais.md), que transforma referências de outros produtos em melhorias priorizadas para o MISM3.

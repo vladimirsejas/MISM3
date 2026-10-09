@@ -1,6 +1,10 @@
-/* "Escreva o que precisa e abrimos as portas": palavra -> necessidade -> grupos de servicos.
-   Roda no navegador. O texto digitado NAO e enviado nem gravado. So mostra o que o cadastro tem;
-   onde nao ha cadastro, diz isso (ausencia de dado nao e ausencia de servico). */
+/* "Escreva o que precisa e abrimos as portas": frase -> necessidades -> caminhos.
+   Roda no navegador; o texto digitado nao e enviado nem gravado.
+
+   Como casa: palavras INTEIRAS ("filho" nao casa dentro de "filhote"), radicais com * ("divorci*" casa divorcio,
+   divorciar, divorciada) e expressoes ("me bate", "nao deixa eu sair"). Isso evita falsos positivos por pedaco de
+   palavra (ex.: "divagar" contem "vaga"). Palavras amplas demais ("dinheiro", "vaga", "apoio", "bolsa") ficam de
+   fora de proposito: so entram dentro de expressoes que tem sentido. Ate 3 necessidades por frase. */
 (function (raiz, fabrica) {
   if (typeof module === "object" && module.exports) module.exports = fabrica();
   else raiz.Necessidades = fabrica();
@@ -8,50 +12,91 @@
   /* tipos = grupos de Acesso.ORDEM a destacar, na ordem. objetivo = filtro da trilha de autonomia (Recomendar). */
   var LISTA = [
     { id: "violencia", rotulo: "Violência / estou em perigo", urgente: true,
-      palavras: ["violencia", "agressao", "agredida", "apanho", "ameaca", "ameacada", "medo", "abuso", "estupro", "importunacao", "perseguicao", "maria da penha"],
+      palavras: ["violencia", "violent*", "agressao", "agredi*", "agressiv*", "apanh*", "ameac*", "abus*", "estupr*", "importunac*",
+        "assedi*", "perseguic*", "maria da penha", "medida protetiva", "me bate", "me bateu", "me batendo", "me agride", "me agrediu",
+        "me xinga", "me xingou", "me humilha", "me humilhou", "me persegue", "me perseguindo", "me forcou", "me obriga",
+        "nao deixa eu sair", "nao me deixa sair", "nao deixa eu trabalhar", "nao me deixa trabalhar", "me proibe", "me proibiu",
+        "controla meu dinheiro", "controla tudo", "tenho medo dele", "medo dele", "medo do marido", "medo do meu marido",
+        "medo do companheiro", "medo do meu companheiro", "medo do namorado", "medo do ex", "medo de apanhar"],
       tipos: ["mulher", "assistencia", "saude"],
       aviso: "Em perigo agora: ligue 190 (polícia) ou 192 (SAMU). Violência contra a mulher: Ligue 180, 24 horas, gratuito. Você não precisa se identificar para pedir orientação." },
     { id: "casamento", rotulo: "Casamento, separação, guarda, pensão",
-      palavras: ["casamento", "casada", "separacao", "separar", "divorcio", "guarda", "pensao", "marido", "companheiro", "uniao estavel", "namorado"],
+      palavras: ["casamento", "casad*", "separ*", "divorci*", "pensao", "marido", "companheiro", "uniao estavel", "namorado",
+        "advogad*", "defensoria", "direitos", "guarda dos filhos", "guarda do filho", "guarda da crianca", "guarda compartilhada",
+        "guarda unilateral", "pedir a guarda", "perder a guarda", "ex marido", "ex companheiro"],
       tipos: ["mulher", "assistencia"],
       aviso: "Para divórcio, guarda e pensão normalmente é preciso orientação jurídica gratuita (Defensoria Pública) ou advogado. Ainda não cadastramos esse serviço: pergunte à Secretaria da Mulher, abaixo. Se há violência no relacionamento, use também “Violência”." },
     { id: "familia", rotulo: "Família e assistência social",
-      palavras: ["familia", "cras", "creas", "cadunico", "cad unico", "bolsa familia", "cesta basica", "alimento", "fome", "beneficio", "aluguel", "assistencia"],
+      palavras: ["familia", "familias", "cras", "creas", "cadunico", "cad unico", "bolsa familia", "cesta basica", "beneficio*",
+        "aluguel", "moradia", "despejo", "sem casa", "comida", "fome", "comer", "o que comer", "passando necessidade",
+        "sem dinheiro", "nao tenho dinheiro", "falta de dinheiro", "pouco dinheiro", "sem renda", "assistencia", "assistente social",
+        "conta de luz", "luz cortada", "agua cortada"],
       tipos: ["assistencia", "mulher"] },
     { id: "filhos", rotulo: "Filhos e cuidado infantil",
-      palavras: ["filho", "filhos", "filha", "crianca", "criancas", "bebe", "creche", "berçario", "bercario", "deixar meu filho", "matricula", "gravida", "gestante"],
+      palavras: ["filho*", "filha*", "crianc*", "bebe*", "creche*", "maternidade", "escola infantil", "educacao infantil", "emei",
+        "baba", "com quem deixar", "deixar meu filho", "deixar meus filhos", "ninguem para cuidar", "gravida", "gestante", "gravidez",
+        "matricula", "escola"],
       tipos: ["creche", "educacao_infantil", "saude", "assistencia"],
       aviso: "O cadastro mostra onde há escolas e creches, não se há vaga. Confirme com a Secretaria de Educação." },
     { id: "saude", rotulo: "Saúde",
-      palavras: ["saude", "medico", "doente", "ubs", "posto de saude", "hospital", "upa", "pronto socorro", "remedio", "consulta", "psicologo", "ansiedade", "depressao", "caps", "vacina", "exame"],
+      palavras: ["saude", "medic*", "doente", "doenca*", "ubs", "upa", "posto de saude", "hospital", "pronto socorro", "remedio*",
+        "consulta*", "exame*", "psicolog*", "psiquiatr*", "ansiedade", "depress*", "terapia", "caps", "vacina*", "menopausa",
+        "gestacao", "gravida", "gravidez", "pre natal", "ginecolog*", "mamografia", "preventivo"],
       tipos: ["saude"] },
     { id: "emprego", rotulo: "Emprego e renda", objetivo: "trabalhar",
-      palavras: ["emprego", "trabalho", "trabalhar", "vaga", "vagas", "curriculo", "renda", "dinheiro", "desempregada", "concurso", "pat", "conecta", "empreender", "negocio", "credito", "microempreendedora"],
+      palavras: ["emprego*", "desemprega*", "trabalh*", "curriculo*", "renda", "ganhar dinheiro", "fonte de renda",
+        "vaga de emprego", "vagas de emprego", "vaga de trabalho", "vagas de trabalho", "procuro vaga", "procurando vaga",
+        "empreend*", "negocio", "credito", "microempreendedor*", "mei", "concurso*", "pat", "conecta", "banco do povo", "bico", "diarista"],
       tipos: ["emprego_curso"] },
     { id: "estudo", rotulo: "Estudo e cursos", objetivo: "curso",
-      palavras: ["estudo", "estudar", "curso", "cursos", "qualificacao", "capacitacao", "aprender", "faculdade", "eja", "supletivo", "escola", "formacao"],
+      palavras: ["estud*", "faculdade", "universidade", "ensino medio", "ensino superior", "eja", "supletivo", "curso*", "qualific*",
+        "capacit*", "etec", "fatec", "alfabetiza*", "enem", "escola", "formacao"],
       tipos: ["emprego_curso", "educacao_infantil"],
       aviso: "Hoje o cadastro tem os Centros de Qualificação do Fundo Social. Não temos ainda a lista de turmas abertas nem de EJA." },
     { id: "transporte", rotulo: "Ônibus e transporte",
-      palavras: ["transporte", "onibus", "horario", "linha", "terminal", "tarifa", "passagem", "como chegar"],
+      palavras: ["transporte", "onibus", "linha*", "horario*", "terminal", "tarifa", "passagem", "como chegar", "conducao", "vale transporte"],
       tipos: [],
       aviso: "Ainda não mostramos horários aqui: eles não foram conferidos. A fonte oficial do transporte coletivo é a SOU Transportes.",
       links: [{ texto: "Linhas e horários (SOU Transportes)", url: "https://soutransportes.com.br/rio-claro/" }] }
   ];
+  var MAXIMO = 3;
 
   function normalizar(t) {
     return String(t == null ? "" : t).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase()
-      .replace(/[^a-z0-9 ]+/g, " ").replace(/\s+/g, " ").trim();
+      .replace(/[^a-z0-9* ]+/g, " ").replace(/\s+/g, " ").trim();
   }
 
-  /* Texto livre -> necessidades que casam. Urgente (violencia) sempre primeiro. Casa palavra inteira ou frase. */
+  /* A expressao casa quando as palavras aparecem em sequencia; "x*" casa qualquer palavra que comece com "x". */
+  function posicao(entrada, tokens) {
+    var e = normalizar(entrada).split(" ");
+    for (var i = 0; i + e.length <= tokens.length; i++) {
+      var ok = e.every(function (p, j) {
+        return p.charAt(p.length - 1) === "*" ? tokens[i + j].indexOf(p.slice(0, -1)) === 0 : tokens[i + j] === p;
+      });
+      if (ok) return i;
+    }
+    return -1;
+  }
+
+  /* Texto livre -> necessidades que casam (ate 3). Urgente (violencia) sempre primeiro; o resto na ordem da frase. */
   function identificar(texto) {
-    var t = " " + normalizar(texto) + " ";
-    if (t.trim() === "") return [];
-    var achadas = LISTA.filter(function (n) {
-      return n.palavras.some(function (p) { return t.indexOf(" " + normalizar(p) + " ") >= 0; });
+    var t = normalizar(String(texto == null ? "" : texto).replace(/\*/g, " "));
+    if (t === "") return [];
+    var tokens = t.split(" ");
+    var achadas = [];
+    LISTA.forEach(function (n) {
+      var melhor = -1;
+      n.palavras.forEach(function (p) {
+        var pos = posicao(p, tokens);
+        if (pos >= 0 && (melhor < 0 || pos < melhor)) melhor = pos;
+      });
+      if (melhor >= 0) achadas.push({ n: n, pos: melhor });
     });
-    return achadas.sort(function (a, b) { return (b.urgente ? 1 : 0) - (a.urgente ? 1 : 0); });
+    achadas.sort(function (a, b) {
+      if (!!a.n.urgente !== !!b.n.urgente) return a.n.urgente ? -1 : 1;
+      return a.pos - b.pos;
+    });
+    return achadas.slice(0, MAXIMO).map(function (a) { return a.n; });
   }
 
   function porId(id) { return LISTA.filter(function (n) { return n.id === id; })[0] || null; }

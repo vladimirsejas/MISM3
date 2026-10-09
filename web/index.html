@@ -24,15 +24,15 @@
 <main>
   <section class="portas" aria-labelledby="titulo-portas">
     <h2 id="titulo-portas">O que você precisa hoje?</h2>
-    <p>Escolha uma opção para ver caminhos e serviços relacionados, ou escreva o que precisa.</p>
-    <form id="form-necessidade" class="escrever" autocomplete="off">
-      <label for="necessidade">Escreva o que você precisa</label>
+    <p>Escreva sua necessidade ou escolha uma das opções abaixo. A busca acontece neste aparelho.</p>
+    <form id="form-necessidade" class="busca-necessidade" autocomplete="off">
+      <label for="necessidade">O que você está procurando?</label>
       <div class="linha">
-        <input id="necessidade" placeholder="Ex.: emprego, filhos, violência, ônibus…" autocomplete="off" autocapitalize="off" spellcheck="false">
-        <button type="submit">Abrir</button>
+        <input id="necessidade" type="search" maxlength="100" placeholder="Ex.: emprego, creche, separação, violência" autocomplete="off" aria-describedby="ajuda-necessidade">
+        <button type="submit">Encontrar caminhos</button>
       </div>
-      <p id="dica-necessidade" class="meta" aria-live="polite"></p>
-      <p class="privacidade">O que você escreve aqui não sai deste aparelho: nada é enviado, gravado ou contado.</p>
+      <p id="ajuda-necessidade" class="privacidade">Não escreva nomes, documentos ou detalhes pessoais. O texto não é enviado a nenhum servidor.</p>
+      <p id="mensagem-necessidade" class="mensagem" role="status" hidden></p>
     </form>
     <div class="grade-portas">
       <button class="porta" type="button" data-categoria="emprego_curso"><span aria-hidden="true">💼</span><strong>Emprego</strong><small>Vagas, renda e cursos</small></button>
@@ -50,6 +50,7 @@
     <button id="voltar-portas" class="voltar" type="button">← Todas as opções</button>
     <h2 id="titulo-categoria"></h2>
     <p id="descricao-categoria"></p>
+    <div id="entendimento" class="entendimento" aria-live="polite"></div>
     <div id="opcoes-categoria"></div>
   </section>
 
