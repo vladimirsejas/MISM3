@@ -22,7 +22,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import (BRUTO, MUNICIPIO_IBGE6, MUNICIPIO_IBGE7, abrir_url, baixar, erro, listar_indice, salvar_json)  # noqa: E402
 
-CNEFE_RAIZ = "https://ftp.ibge.gov.br/Cadastro_Nacional_de_Enderecos_Fins_Estatisticos/Censo_Demografico_2022/"
+CNEFE_RAIZ = "https://ftp.ibge.gov.br/Cadastro_Nacional_de_Enderecos_para_Fins_Estatisticos/Censo_Demografico_2022/"
 CNEFE_PAGINA = "https://www.ibge.gov.br/estatisticas/sociais/populacao/38734-cadastro-nacional-de-enderecos-para-fins-estatisticos.html"
 INEP_PAGINA = "https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/microdados/censo-escolar"
 
@@ -62,7 +62,7 @@ def baixar_cnefe(url_direta: str | None = None) -> Path:
         return baixar(url_direta, destino_dir / Path(url_direta).name)
     print("Procurando o CNEFE 2022 de Rio Claro no FTP do IBGE...")
     try:
-        pasta, itens = _descer(CNEFE_RAIZ, [r"^Arquivos_CNEFE$", r"^CSV$", r"^Municipios$", r"^35", r"^SP$"])
+        pasta, itens = _descer(CNEFE_RAIZ, [r"^Arquivos_CNEFE$", r"^CSV$", r"^Municipio$", r"^35"])
     except Exception as e:  # noqa: BLE001
         erro("Nao consegui ler o FTP do IBGE (%s).\nBaixe manualmente em %s o arquivo do municipio %s (Rio Claro/SP) "
              "e coloque o .zip em %s" % (e, CNEFE_PAGINA, MUNICIPIO_IBGE7, destino_dir))
