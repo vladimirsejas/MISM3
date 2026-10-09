@@ -181,11 +181,12 @@ def main() -> None:
         print("AVISO: CNES ausente. Coloque a base completa em docs/cnes (ou passe a pasta: python pipeline/servicos.py caminho).")
 
     escolas = None
-    csvs = sorted((BRUTO / "escolas").glob("microdados_ed_basica_*.csv"))
+    csvs = sorted(set((BRUTO / "escolas").glob("microdados_ed_basica*.csv")) |
+                  set((RAIZ / "docs").rglob("microdados_ed_basica*.csv")))
     if csvs:
         escolas = ler_csv_flex(csvs[-1])
     else:
-        print("AVISO: Censo Escolar ausente (python pipeline/baixar.py escolas).")
+        print("AVISO: Censo Escolar ausente. Coloque microdados_ed_basica_AAAA.csv em docs/educacao (ou dados/bruto/escolas).")
 
     manuais = None
     m = CATALOGO / "servicos_manuais.csv"
