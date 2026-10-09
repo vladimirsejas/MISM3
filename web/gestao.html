@@ -17,16 +17,24 @@
   <h1>Painel de Gestão</h1>
   <p class="sub">O que as mulheres de Rio Claro procuram, onde a rede responde e onde ainda não chega. Só números agregados: nenhuma busca ou pessoa é identificada.</p>
 
-  <div class="visao" role="group" aria-label="Quem vê este painel">
-    <span class="visao-rotulo">Visão</span>
-    <button type="button" data-visao="publica" aria-pressed="true">Pública</button>
-    <button type="button" data-visao="gestao" aria-pressed="false">Gestão</button>
+  <div class="visao" role="group" aria-label="Visão demonstrativa do painel">
+    <span class="visao-rotulo">Demonstração</span>
+    <button type="button" data-visao="publica" aria-pressed="true">Visão pública</button>
+    <button type="button" data-visao="gestao" aria-pressed="false">Visão de gestão</button>
   </div>
   <p id="aviso-visao" class="meta"></p>
+  <p class="aviso-prototipo"><strong>Importante:</strong> as duas visões são demonstrativas e os números são fictícios. Este seletor não é autenticação nem controle de acesso. Não usar para dados reais ou pessoais.</p>
 </header>
 
 <main>
   <section id="kpis" aria-label="Resumo" class="painel-largo"></section>
+
+  <section id="sec-acoes" class="cartao-viz painel-largo" data-somente-gestao aria-labelledby="t-acoes">
+    <h2 id="t-acoes">Decisões possíveis e próximos passos</h2>
+    <p class="sub">O painel não deve parar no indicador. Cada cartão separa sinal, ação a validar, responsável sugerido e forma de acompanhar.</p>
+    <p class="aviso-prototipo">Cenários fictícios para demonstrar o método — não são diagnósticos nem recomendações reais para Rio Claro.</p>
+    <div id="acoes-gestao" class="lista-acoes" aria-live="polite"></div>
+  </section>
 
   <section class="cartao-viz" aria-labelledby="t-nec">
     <h2 id="t-nec">O que as pessoas procuram</h2>
@@ -79,7 +87,8 @@
 </main>
 
 <footer class="rodape">
-  <p><strong>Como ler este painel.</strong> Todos os números são fictícios e foram gerados por <code>pipeline/gerar_demo_gestao.py</code> com semente fixa. Contagens abaixo de 5 são ocultadas ("menos de 5"), para que um número pequeno nunca identifique alguém. A <em>visão pública</em> mostra totais; a <em>visão de gestão</em> acrescenta o detalhe por região e as buscas sem resultado.</p>
+  <p><strong>Como ler este painel.</strong> Todos os números são fictícios e foram gerados por <code>pipeline/gerar_demo_gestao.py</code> com semente fixa. A malha geográfica é usada apenas como geometria; os valores de crianças por setor são inventados. A regra de ocultar contagens pequenas é uma demonstração e não substitui uma avaliação de risco de reidentificação.</p>
+  <p><strong>Limite de acesso:</strong> este é um protótipo estático. Alternar a visão não protege conteúdo; qualquer dado real de gestão exigiria autenticação e autorização no servidor, além de controle de acesso aos arquivos e à API.</p>
   <p id="fonte-gestao"></p>
 </footer>
 
