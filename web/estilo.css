@@ -28,3 +28,24 @@ a{color:var(--pri)}
 .cartao .meta{color:var(--mut);font-size:.8rem}
 .vazio{color:var(--mut);font-style:italic}
 .rodape{font-size:.85rem;color:var(--mut);padding-bottom:3rem}
+
+
+/* Portas de entrada por necessidade */
+.portas{margin:1.5rem 0}
+.portas h2,.painel-categoria h2{margin-bottom:.25rem}
+.portas>p,.painel-categoria>p{color:var(--mut);margin-top:0}
+.grade-portas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.75rem;margin:1rem 0}
+.porta{display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:.25rem;min-height:118px;padding:1rem;border:1px solid var(--bor);border-radius:.8rem;background:var(--bg);color:var(--fg);cursor:pointer;box-shadow:0 2px 8px #00000008}
+.porta:hover,.porta:focus-visible{border-color:var(--pri);outline:2px solid var(--pri2);transform:translateY(-1px)}
+.porta span{font-size:1.35rem;color:var(--pri)}
+.porta strong{font-size:1.05rem}
+.porta small{font-size:.85rem;color:var(--mut)}
+.painel-categoria{margin:1.5rem 0}
+.voltar{border:0;background:transparent;color:var(--pri);font:inherit;font-weight:700;padding:.4rem 0;cursor:pointer}
+.subtitulo{margin:1.25rem 0 .5rem}
+.cartao.urgente{border-left:4px solid var(--alerta)}
+.busca-por-cep{margin:1.5rem 0;border-top:1px solid var(--bor);padding-top:1rem}
+.busca-por-cep summary{cursor:pointer;color:var(--pri);font-weight:700}
+.busca-por-cep .busca{margin-bottom:0}
+@media(max-width:620px){.grade-portas{grid-template-columns:repeat(2,minmax(0,1fr));gap:.55rem}.porta{min-height:105px;padding:.8rem}.topo h1{font-size:1.65rem}}
+@media(max-width:360px){.grade-portas{grid-template-columns:1fr}}
