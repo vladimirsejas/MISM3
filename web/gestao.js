@@ -194,7 +194,7 @@
     var h = '<div class="tile heroi"><div><p class="rot">Buscas por necessidade nos últimos 12 meses</p><p class="val">' + fmt(total) + '</p>' +
       '<p class="delta">' + (delta >= 0 ? "▲ +" : "▼ ") + delta + "% em " + esc(mesRot(D.meses[n - 1])) + " em relação ao mês anterior</p></div>" + sparkline(D.buscas_por_mes) + "</div>";
     function t(rot, val, nota) { return '<div class="tile"><p class="rot">' + rot + '</p><p class="val">' + val + '</p><p class="delta">' + nota + "</p></div>"; }
-    h += t("Buscas sem resultado", pctTxt(pct(sem, total)), "ampliar o catálogo reduz este número");
+    h += t("Buscas sem resultado", pctTxt(pct(sem, total)), "sinal para revisar a cobertura do catálogo");
     h += t("Concluem o que começam", pctTxt(pct(f[3].valor, f[2].valor)), "concluíram, entre as que participaram");
     h += t("Chegam a algo novo", pctTxt(pct(f[4].valor, f[3].valor)), "nova oportunidade, entre as que concluíram");
     h += t("Catálogo com horário", comHorario == null ? "—" : pctTxt(comHorario), "dos serviços cadastrados informam o horário");
