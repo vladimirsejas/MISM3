@@ -64,3 +64,4 @@ details.outros > summary { cursor: pointer; font-weight: 600; padding: .6rem 0; 
 .escrever label{font-weight:700}
 .escrever input{flex:1;font-size:1.15rem;padding:.6rem;border:1px solid var(--bor);border-radius:.5rem;background:var(--bg);color:var(--fg);min-width:0}
 .escrever button{font-size:1.1rem;padding:.6rem 1.2rem;border:0;border-radius:.5rem;background:var(--pri);color:var(--bg);font-weight:700;cursor:pointer}
+.porta[hidden]{display:none}

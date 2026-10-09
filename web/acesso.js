@@ -3,14 +3,15 @@
   if (typeof module === "object" && module.exports) module.exports = fabrica();
   else raiz.Acesso = fabrica();
 })(typeof self !== "undefined" ? self : this, function () {
-  var ORDEM = ["mulher", "assistencia", "creche", "educacao_infantil", "saude", "emprego_curso"];
+  var ORDEM = ["mulher", "assistencia", "creche", "educacao_infantil", "saude", "emprego_curso", "mulher_para_mulher"];
   var ROTULOS = {
     mulher: "Apoio e proteção à mulher",
     assistencia: "Assistência social (CRAS, CREAS e outros)",
     creche: "Creches (escolas que declaram oferecer creche)",
     educacao_infantil: "Escolas com Educação Infantil (não confirma creche)",
     saude: "Saúde",
-    emprego_curso: "Trabalho, renda e cursos"
+    emprego_curso: "Trabalho, renda e cursos",
+    mulher_para_mulher: "De mulher para mulher"
   };
 
   var ROTULOS_SUBTIPO = {

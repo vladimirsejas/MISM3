@@ -61,6 +61,12 @@
         ["Defensoria Pública do Estado de São Paulo", "https://www.defensoria.sp.def.br/", "Consulte os canais oficiais de orientação jurídica e os critérios de atendimento."]
       ]
     },
+    mulher_para_mulher: {
+      titulo: "De mulher para mulher",
+      descricao: "Mulheres que oferecem serviços a outras mulheres. O cadastro é voluntário e vence se não for renovado. O MISM3 não garante o serviço nem a segurança: combine em local público, avise alguém de confiança e desconfie de pedidos de dinheiro adiantado.",
+      tipos: ["mulher_para_mulher"],
+      links: []
+    },
     transporte: {
       titulo: "Ônibus e transporte",
       descricao: "Ainda não mostramos horários aqui: eles não foram conferidos. Consulte a fonte oficial do transporte coletivo.",
@@ -137,7 +143,10 @@
       return Promise.all([carregar("dados/demo/cep_indice.json"), carregar("dados/demo/servicos.json")])
         .then(function (r) { return [r[0], r[1], true]; });
     }).then(function (r) {
-      dados.indice = r[0].ceps; dados.servicos = r[1].servicos;
+      dados.indice = r[0].ceps;
+      /* cadastro "de mulher para mulher" vence: depois de renovar_ate nao aparece, mesmo que o arquivo seja antigo */
+      dados.servicos = r[1].servicos.filter(function (x) { return x.tipo !== "mulher_para_mulher" || (x.renovar_ate && x.renovar_ate >= hojeISO()); });
+      $("porta-m2m").hidden = !dados.servicos.some(function (x) { return x.tipo === "mulher_para_mulher"; });
       dados.demo = !!(r[0].meta && r[0].meta.demo) || !!(r[1].meta && r[1].meta.demo);
       $("faixa-demo").hidden = !dados.demo;
       $("fontes").textContent = "Índice de CEPs: " + (r[0].meta.fonte || "") + " · Serviços gerados em " + (r[1].meta.gerado_em || "?") + ".";

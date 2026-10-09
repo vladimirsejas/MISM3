@@ -25,7 +25,7 @@ from common import (BRUTO, CATALOGO, RAIZ, MUNICIPIO_IBGE6, MUNICIPIO_IBGE7, WEB
                     ler_csv_flex, normalizar_cep, salvar_json)
 
 OBJETIVOS = ("trabalhar", "curso", "empreender")
-TIPOS = ("creche", "educacao_infantil", "saude", "assistencia", "mulher", "emprego_curso")
+TIPOS = ("creche", "educacao_infantil", "saude", "assistencia", "mulher", "emprego_curso", "mulher_para_mulher")
 # Rio Claro/SP fica em aprox. lat -22.4, lon -47.56. Caixa folgada para rejeitar coordenada errada.
 CAIXA = (-22.65, -22.2, -47.8, -47.3)
 
@@ -151,7 +151,8 @@ def servicos_manuais(df, indice: dict) -> list[dict]:
 
 
 # ------------------------------------------------------------ principal
-def montar(indice: dict, cnes=None, escolas=None, manuais=None, hoje: str | None = None, catalogo_escolas=None) -> dict:
+def montar(indice: dict, cnes=None, escolas=None, manuais=None, hoje: str | None = None, catalogo_escolas=None,
+           mulheres=None) -> dict:
     hoje = hoje or agora_iso()
     itens: list[dict] = []
     contagem = {}
@@ -163,6 +164,9 @@ def montar(indice: dict, cnes=None, escolas=None, manuais=None, hoje: str | None
         import escolas_inep
         a = escolas_inep.servicos_escolas(catalogo_escolas, indice, hoje, localizar)
         itens += a; contagem["escolas_catalogo_inep"] = len(a)
+    if mulheres is not None:
+        import mulher_para_mulher
+        a = mulher_para_mulher.validar(mulheres, hoje); itens += a; contagem["mulher_para_mulher"] = len(a)
     if manuais is not None:
         a = servicos_manuais(manuais, indice); itens += a; contagem["manuais"] = len(a)
     vistos, unicos = set(), []
@@ -216,7 +220,12 @@ def main() -> None:
     if m.exists():
         manuais = ler_csv_flex(m)
 
-    saida = montar(indice, cnes, escolas, manuais, catalogo_escolas=catalogo_escolas)
+    mulheres = None
+    mm = CATALOGO / "mulher_para_mulher.csv"
+    if mm.exists():
+        mulheres = ler_csv_flex(mm)
+
+    saida = montar(indice, cnes, escolas, manuais, catalogo_escolas=catalogo_escolas, mulheres=mulheres)
     salvar_json(saida, WEB_DADOS / "servicos.json")
     por_tipo, por_geo = {}, {}
     for s in saida["servicos"]:
