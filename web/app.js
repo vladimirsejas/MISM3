@@ -80,40 +80,6 @@
     }
   };
 
-  function normalizar(texto) {
-    return String(texto || "")
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .toLowerCase()
-      .replace(/[^a-z0-9\s]/g, " ")
-      .replace(/\s+/g, " ")
-      .trim();
-  }
-
-  function contemExpressao(texto, expressao) {
-    var termo = normalizar(expressao);
-    return !!termo && (" " + texto + " ").indexOf(" " + termo + " ") !== -1;
-  }
-
-  function identificarCategorias(texto) {
-    var t = normalizar(texto);
-    if (!t) return [];
-    var regras = [
-      ["violencia", ["violencia", "agressao", "me bate", "me bateu", "bate em mim", "me ameaca", "ameacou", "abuso", "tenho medo dele", "tenho medo dela", "medo do meu marido", "nao deixa eu sair", "me controla", "medida protetiva", "protecao", "perigo", "me persegue"]],
-      ["casamento", ["casamento", "separacao", "separar", "quero me separar", "divorcio", "divorciar", "pensao", "guarda", "direitos", "advogada", "defensoria", "marido", "companheiro"]],
-      ["filhos", ["filho", "filhos", "crianca", "criancas", "bebe", "creche", "maternidade", "escola infantil", "baba", "educacao infantil"]],
-      ["emprego_curso", ["emprego", "trabalho", "vaga", "vagas", "renda", "curriculo", "curso", "cursos", "qualificacao", "empreender", "desempregada", "desempregado", "procurando emprego"]],
-      ["saude", ["saude", "medico", "medica", "consulta", "exame", "hospital", "posto de saude", "psicologa", "psicologo", "menopausa", "gestacao", "gravidez", "ginecologista"]],
-      ["estudo", ["estudo", "estudar", "faculdade", "universidade", "escola", "ensino", "alfabetizacao", "voltar a estudar"]],
-      ["familia", ["familia", "assistencia", "beneficio", "beneficios", "cras", "creas", "aluguel", "moradia", "comida", "cesta basica", "sem comida", "passar fome", "fome", "comer", "sem dinheiro para comer", "nao tenho o que comer", "apoio", "bolsa familia"]]
-    ];
-    var achadas = [];
-    regras.forEach(function (regra) {
-      if (regra[1].some(function (termo) { return contemExpressao(t, termo); })) achadas.push(regra[0]);
-    });
-    return achadas.slice(0, 3);
-  }
-
   function abrirCategoria(chave) {
     abrirCategorias([chave]);
   }
@@ -154,7 +120,7 @@
   $("form-necessidade").addEventListener("submit", function (ev) {
     ev.preventDefault();
     var texto = $("necessidade").value;
-    var chaves = identificarCategorias(texto);
+    var chaves = MISM3Necessidades.identificarCategorias(texto);
     var aviso = $("mensagem-necessidade");
     if (!texto.trim()) {
       aviso.textContent = "Digite uma necessidade, como emprego, saúde, creche ou violência.";
