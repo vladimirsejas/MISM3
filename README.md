@@ -38,6 +38,9 @@ Se um download automático falhar (os sites mudam), o script diz onde baixar à 
     python -m pytest pipeline/tests -q
     node web/tests/acesso.test.js
 
+## Conferir o catálogo contra as páginas oficiais
+Com internet, rode `python pipeline/verificar_catalogo.py`. Ele abre a fonte de cada serviço e confere se os telefones cadastrados aparecem na página. "ATENCAO" não é erro certo: abra a fonte e confira.
+
 ## Acrescentar um serviço verificado
 Edite `catalogo/servicos_manuais.csv`. Obrigatórios: `tipo` (creche, saude, assistencia, mulher, emprego_curso), `nome`, `fonte_url`, `verificado_em`. Com `cep`, o serviço entra no mapa; `abrangencia=municipal` faz aparecer para todas. Depois rode `python pipeline/servicos.py`.
 
