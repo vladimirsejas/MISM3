@@ -95,3 +95,14 @@ details.tabela td.n,details.tabela th.n{text-align:right;font-variant-numeric:ta
   .trilho>span{background:CanvasText}
 }
 @media (max-width:520px){.tile.heroi .val{font-size:2.6rem}.medidor{grid-template-columns:1fr 1fr}.medidor .cab{display:none}.medidor .tipo{grid-column:1/-1;margin-top:.7rem}}
+
+
+/* aviso de protótipo e cartões de decisão */
+.aviso-prototipo{margin:.6rem 0;padding:.7rem .85rem;border-left:4px solid var(--alerta-icone);background:var(--surface-1);color:var(--ink-2);font-size:.92rem}
+.lista-acoes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:.8rem}
+.acao-card{border:1px solid var(--bor);border-radius:.65rem;padding:1rem;background:var(--bg);min-width:0}
+.acao-card h3{font-size:1.05rem;line-height:1.35;margin:.2rem 0 .75rem;color:var(--ink)}
+.acao-card p{line-height:1.45;margin:.45rem 0;color:var(--ink-2)}
+.acao-card p strong{color:var(--ink)}
+.acao-card .acao-prioridade{display:inline-block;border-radius:999px;padding:.2rem .55rem;background:var(--surface-1);border:1px solid var(--bor);font-size:.78rem;font-weight:700}
+.acao-card .acao-confirmar{padding-top:.55rem;border-top:1px solid var(--bor);font-size:.88rem}
