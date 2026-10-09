@@ -1,6 +1,6 @@
 # Mapa do Cuidado Rio-Clarense (marco 1)
 
-Comece pela sua necessidade: **Emprego, Saúde, Estudo, Filhos, Casamento e direitos, Violência ou Família**. O site abre caminhos, links oficiais e serviços cadastrados em Rio Claro/SP. Também é possível buscar serviços próximos pelo CEP; o CEP **nunca sai do navegador**. O catálogo está em expansão e informa quando faltam dados.
+Comece escrevendo uma necessidade ou escolhendo uma porta: **Emprego, Saúde, Estudo, Filhos, Casamento e direitos, Violência ou Família**. A busca por palavras é processada localmente no navegador e abre caminhos, links oficiais e serviços cadastrados em Rio Claro/SP. Também é possível buscar serviços próximos pelo CEP; o CEP **nunca sai do navegador**. O catálogo está em expansão e informa quando faltam dados.
 
 ## Privacidade (por desenho)
 - Consulta 100% no navegador; sem servidor próprio, sem cookies, sem localStorage, sem estatísticas.
@@ -48,4 +48,4 @@ Edite `catalogo/servicos_manuais.csv`. Obrigatórios: `tipo` (creche, saude, ass
 2. Setores censitários + Censo 2022 (crianças de 0 a 4 anos): "desertos de cuidado" e simulador de nova creche.
 3. Relatórios automáticos explicados; vagas e cursos; transporte.
 
-Veja `docs/inventario_de_fontes.md` e a [análise competitiva e roadmap funcional](docs/analise_competitiva_mism3.md), que compara as páginas públicas consultadas e define os diferenciais a implementar.
+Veja `docs/inventario_de_fontes.md`, a [análise competitiva e roadmap funcional](docs/analise_competitiva_mism3.md) e o [plano de fontes externas e expansão](docs/plano_fontes_externas_e_expansao.md), que organiza fontes públicas, limitações e a ordem de expansão.
