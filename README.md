@@ -37,6 +37,7 @@ Se um download automático falhar (os sites mudam), o script diz onde baixar à 
     pip install pytest
     python -m pytest pipeline/tests -q
     node web/tests/acesso.test.js
+    node web/tests/necessidades.test.js
 
 ## Conferir o catálogo contra as páginas oficiais
 Com internet, rode `python pipeline/verificar_catalogo.py`. Ele abre a fonte de cada serviço e confere se os telefones cadastrados aparecem na página. "ATENCAO" não é erro certo: abra a fonte e confira.
