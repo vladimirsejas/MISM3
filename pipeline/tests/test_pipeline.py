@@ -205,7 +205,8 @@ def test_vagas_csv_real_valido():
 def _mm(**kw):
     base = {"categoria": "beleza", "nome_publico": "Studio X", "descricao": "Manicure e pedicure",
             "bairro_ou_regiao": "Centro", "contato_publico": "(19) 9 0000-0000 (WhatsApp)", "onde_atende": "estabelecimento",
-            "consentimento_em": "2026-10-01", "renovar_ate": "2026-12-30"}
+            "forma_de_verificacao": "documento de identidade conferido presencialmente", "verificada_por": "Secretaria da Mulher",
+            "verificada_em": "2026-10-02", "consentimento_em": "2026-10-01", "renovar_ate": "2026-12-30"}
     base.update(kw)
     return pd.DataFrame([base])
 
@@ -214,7 +215,7 @@ def test_mulher_para_mulher_ok_e_sem_promessa_de_seguranca():
     import mulher_para_mulher as m
     out = m.validar(_mm(), "2026-10-09")[0]
     assert out["tipo"] == "mulher_para_mulher" and out["abrangencia"] == "municipal" and out["lat"] is None
-    assert "autodeclarado" in out["observacao"] and "não garante" in out["observacao"]
+    assert "verificado por Secretaria da Mulher" in out["observacao"] and "não garante" in out["observacao"]
     assert out["endereco"] == "Bairro/região: Centro"
 
 
@@ -227,8 +228,9 @@ def test_mulher_para_mulher_recusa_o_que_expoe_ou_nao_tem_consentimento():
         _mm(consentimento_em=None),                           # sem consentimento
         _mm(consentimento_em="2026-12-01"),                   # consentimento no futuro
         _mm(renovar_ate="2027-12-01"),                        # validade longa demais
-        _mm(categoria="transporte"),                          # alto risco sem verificacao
-        _mm(categoria="servicos_na_casa", forma_de_verificacao="documento"),  # falta quem verificou
+        _mm(forma_de_verificacao=None),                       # ninguem conferiu
+        _mm(verificada_por=None),                             # sem dizer quem conferiu
+        _mm(verificada_em=None),                              # sem dizer quando
         _mm(categoria="inexistente"),
         _mm(onde_atende="em_qualquer_lugar"),
     ]
@@ -237,10 +239,10 @@ def test_mulher_para_mulher_recusa_o_que_expoe_ou_nao_tem_consentimento():
             m.validar(ruim, "2026-10-09")
 
 
-def test_mulher_para_mulher_alto_risco_com_verificacao_e_vencido_some():
+def test_mulher_para_mulher_verificacao_aparece_e_vencido_some():
     import mulher_para_mulher as m
-    ok = _mm(categoria="transporte", forma_de_verificacao="CNH e cadastro municipal conferidos pessoalmente", verificada_por="Secretaria da Mulher")
-    assert "Verificação: CNH" in m.validar(ok, "2026-10-09")[0]["observacao"]
+    ok = _mm(categoria="transporte", forma_de_verificacao="CNH e cadastro municipal conferidos pessoalmente")
+    assert "CNH e cadastro municipal" in m.validar(ok, "2026-10-09")[0]["observacao"]
     assert m.validar(_mm(renovar_ate="2026-10-05"), "2026-10-09") == []   # venceu: nao publica
 
 

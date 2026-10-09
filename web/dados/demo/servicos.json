@@ -227,6 +227,44 @@
    "objetivos": [
     "trabalhar"
    ]
+  },
+  {
+   "id": "demo-m2m-1",
+   "tipo": "mulher_para_mulher",
+   "subtipo": "beleza",
+   "nome": "[DEMO] Studio Exemplo (manicure e pedicure)",
+   "cep": null,
+   "endereco": "Bairro/região: Centro (ilustrativo)",
+   "telefone": "(19) 9 0000-0001 (WhatsApp ilustrativo)",
+   "horario": null,
+   "lat": null,
+   "lon": null,
+   "geo": "sem_local",
+   "abrangencia": "municipal",
+   "fonte": "Dado ilustrativo",
+   "fonte_url": "",
+   "verificado_em": "2026-10-09",
+   "renovar_ate": "2099-12-31",
+   "observacao": "Atende no estabelecimento. Exemplo para demonstrar a tela: nenhuma pessoa real está cadastrada. Em dados reais, aparece aqui quem a Secretaria verificou, o que conferiu e quando."
+  },
+  {
+   "id": "demo-m2m-2",
+   "tipo": "mulher_para_mulher",
+   "subtipo": "costura_artesanato",
+   "nome": "[DEMO] Ateliê Exemplo (ajustes e costura)",
+   "cep": null,
+   "endereco": "Bairro/região: Centro (ilustrativo)",
+   "telefone": "(19) 9 0000-0002 (WhatsApp ilustrativo)",
+   "horario": null,
+   "lat": null,
+   "lon": null,
+   "geo": "sem_local",
+   "abrangencia": "municipal",
+   "fonte": "Dado ilustrativo",
+   "fonte_url": "",
+   "verificado_em": "2026-10-09",
+   "renovar_ate": "2099-12-31",
+   "observacao": "Atende online e na casa da profissional. Exemplo para demonstrar a tela: nenhuma pessoa real está cadastrada. Em dados reais, aparece aqui quem a Secretaria verificou, o que conferiu e quando."
   }
  ]
 }

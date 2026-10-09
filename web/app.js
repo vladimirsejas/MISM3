@@ -63,7 +63,7 @@
     },
     mulher_para_mulher: {
       titulo: "De mulher para mulher",
-      descricao: "Mulheres que oferecem serviços a outras mulheres. O cadastro é voluntário e vence se não for renovado. O MISM3 não garante o serviço nem a segurança: combine em local público, avise alguém de confiança e desconfie de pedidos de dinheiro adiantado.",
+      descricao: "Mulheres que oferecem serviços a outras mulheres. Cada cadastro é verificado pela Secretaria da Mulher, é voluntário e vence se não for renovado. A verificação confere o que está escrito no cartão; não garante o serviço nem a segurança. Combine em local público, avise alguém de confiança e desconfie de pedidos de dinheiro adiantado.",
       tipos: ["mulher_para_mulher"],
       links: []
     },

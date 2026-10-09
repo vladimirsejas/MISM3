@@ -1,40 +1,67 @@
-# De mulher para mulher — regras antes de qualquer cadastro
+# De mulher para mulher — como funciona e por que é viável
 
-A ideia: mulheres que oferecem serviços a outras mulheres (beleza, costura, comida, aulas, saúde e bem-estar, serviços na casa, transporte), dando renda a quem oferece e confiança a quem procura. Liga com o pilar **Autonomia Feminina**: quem faz um curso do Fundo Social (costura, beleza…) pode divulgar o trabalho.
+**A ideia:** mulheres que oferecem serviços a outras mulheres (beleza, costura, comida, aulas, saúde e bem-estar, serviços na casa, transporte). Dá renda a quem oferece e confiança a quem procura. Liga com o pilar **Autonomia Feminina**: quem faz um curso do Fundo Social (costura, beleza…) pode divulgar o trabalho.
 
-## O que está pronto no código
-- `catalogo/mulher_para_mulher.csv` (vazio) + `pipeline/mulher_para_mulher.py` (validador) + porta no site que **só aparece quando há cadastro válido**.
-- O validador **recusa**: sem consentimento por escrito, endereço residencial ou CEP, e-mail pessoal, validade acima de 180 dias, e categorias de maior risco sem verificação descrita.
-- Cadastro vencido some do site (o navegador confere a data; o pipeline também não publica).
-- Nenhum cadastro foi criado: nada aqui é dado fingido.
+## Decisão central: quem verifica é a Secretaria da Mulher
+Um site feito por estudantes **não tem como garantir** que só mulheres participam, e não deve prometer isso. Quem pode exigir comprovação, conferir documentos e responder por isso é um **órgão público**. Por isso:
 
-## Regras (inegociáveis)
-1. **Consentimento por escrito** de cada mulher, com data. Ela pode pedir remoção a qualquer momento e a remoção é feita em até 2 dias úteis.
-2. **Só o necessário e só o profissional:** nome público (pode ser nome fantasia), descrição do serviço, bairro/região, WhatsApp ou telefone comercial. Nunca endereço de casa, CPF, foto de documento ou nome completo obrigatório. Quem divulga o telefone de uma mulher expõe essa mulher: por isso o consentimento e a validade.
-3. **Validade curta:** no máximo 180 dias; sem renovação, sai.
-4. **Sem prometer segurança.** O site diz que não garante o serviço, nem a segurança, e orienta: combinar em local público, avisar alguém de confiança, desconfiar de pedido de dinheiro adiantado.
-5. **Sem pagamento, sem intermediação:** o MISM3 não cobra, não recebe e não combina corrida nem serviço. Só mostra o contato.
-6. **Sem notas e avaliações públicas na primeira versão.** Avaliação mal desenhada vira difamação e vingança. Se vier depois, com regras e moderação definidas antes.
-7. **Canal de denúncia:** precisa existir e ter **uma pessoa responsável** antes de publicar o primeiro cadastro (sugestão: a Secretaria da Mulher ou a coordenação do projeto). Sem responsável, não publica.
+- **Todo cadastro é conferido pela Secretaria Municipal da Mulher** (ou órgão oficial que ela designar) antes de aparecer.
+- O **critério de quem pode participar é da Secretaria**, não do projeto.
+- O site só publica o que a Secretaria enviou **já verificado**: o código recusa qualquer linha sem "o que foi conferido, por quem e quando".
+- Aplicativos privados também fazem verificação própria, e ela falha às vezes. Por isso o selo do MISM3 diz **exatamente o que foi conferido**, nunca "seguro" ou "garantido".
 
-## Por que cada categoria tem um risco diferente
-| Categoria | Risco | Regra |
+## Quem faz o quê
+| Papel | Responsável | O que faz |
 |---|---|---|
-| Beleza, costura/artesanato, comida, aulas, design/contabilidade | Baixo (contato por WhatsApp, atendimento em estabelecimento ou online) | Cadastro autodeclarado é aceito, **marcado como não verificado** |
-| Saúde, corpo e bem-estar (academias, fisio, nutrição, psicologia) | Médio: exige registro profissional (CREFITO, CRN, CRP, CREF…) | Conferir o registro no conselho; só então marcar como verificado |
-| **Serviços na casa da cliente** (reparos, diarista, cuidadora) | Alto: entra na casa de alguém | **Obrigatório** descrever a verificação e quem verificou |
-| **Transporte e carona** | Alto: homem se passando por motorista é um risco real, e transporte remunerado de passageiros é atividade regulamentada | **Obrigatório** verificação presencial; **consultar a Prefeitura/jurídico** antes. **Não** afirmar parceria com Uber, 99 ou outro aplicativo sem confirmação por escrito |
+| Receber a adesão e o termo de consentimento | Secretaria da Mulher | Atende a mulher (presencial ou canal oficial) |
+| Conferir identidade, e registro profissional/CNH quando se aplica | Secretaria da Mulher | Preenche "o que foi conferido" e a data |
+| Canal de denúncia e remoção | Secretaria da Mulher | Responde e pede a retirada em até 2 dias úteis |
+| Receber a planilha verificada, validar o formato e publicar | **Projeto (Fatec)** | `pipeline/mulher_para_mulher.py` + site |
+| Renovação a cada 180 dias | Secretaria | Sem renovação, o cadastro some sozinho do site |
 
-## Como povoar (sem banco de dados e sem conta)
-1. Combinar com a **Secretaria da Mulher** quem recebe e confere os cadastros e o canal de denúncia.
-2. Parcerias naturais: **Fundo Social** (turmas de qualificação) e **Sala do Empreendedor / Desenvolvimento Econômico**. Começar pelas categorias de risco baixo, com 5 a 10 mulheres reais, e só depois avançar.
-3. Cada mulher assina o termo de consentimento (modelo abaixo) e uma pessoa do projeto preenche a linha do CSV.
+O projeto entrega a **ferramenta e as regras**. A Secretaria opera a verificação. Sem a parceria, a área fica pronta mas **vazia e invisível**: a porta só aparece quando há cadastro verificado.
+
+## Fluxo da participante
+1. Procura a Secretaria e assina o termo de consentimento.
+2. A Secretaria confere os dados e registra o que conferiu.
+3. A Secretaria envia a linha da planilha ao projeto.
+4. O projeto valida e publica: nome profissional, descrição, **bairro/região** e contato de trabalho.
+5. A cada 180 dias ela renova, ou o cadastro sai. Pode pedir remoção quando quiser.
+
+## O que o código garante hoje
+`catalogo/mulher_para_mulher.csv` está **vazio** (nada é dado fingido). O validador **recusa**:
+- cadastro sem consentimento com data, ou com data no futuro;
+- cadastro sem **forma de verificação, quem verificou e quando**;
+- endereço residencial ou CEP no campo de bairro; e-mail pessoal como contato;
+- validade acima de 180 dias; categoria ou local de atendimento desconhecidos.
+
+Cadastro vencido não é publicado e o navegador também o esconde. Não há notas nem avaliações, não há pagamento e o MISM3 não intermedia nada.
+
+## Categorias e cuidado extra
+| Categoria | Cuidado |
+|---|---|
+| Beleza, costura/artesanato, comida, aulas, design/contabilidade | Conferência de identidade pela Secretaria |
+| Saúde, corpo e bem-estar | Além da identidade, conferir o registro no conselho profissional (CREFITO, CRN, CRP, CREF…) |
+| **Serviços na casa da cliente** (reparos, diarista, cuidadora) | Conferência reforçada: a profissional entra na casa de alguém e a cliente também fica exposta |
+| **Transporte e carona** | Conferência reforçada e **consulta à Prefeitura/jurídico** sobre transporte remunerado de passageiros. **Não afirmar parceria com Uber, 99 ou outro aplicativo** sem confirmação por escrito |
+
+Sugestão para a primeira fase: começar só pelas categorias de menor risco.
+
+## O que não prometemos
+Segurança absoluta. A verificação confere o que está escrito no cartão do site e nada além. O site orienta a combinar em local público, avisar alguém de confiança e desconfiar de pedido de dinheiro adiantado.
+
+## Como apresentar à banca
+1. **Problema:** a mulher que quer renda ou serviço de outra mulher não tem onde encontrar com confiança.
+2. **Solução:** uma área em que **a Secretaria verifica** e o MISM3 publica, com regras de privacidade desde o desenho.
+3. **Honestidade sobre os limites:** o projeto não verifica ninguém, não garante segurança e só funciona com a parceria da Secretaria. Isso é uma força: mostra que o grupo entendeu o problema.
+4. **Mostrar:** a porta "De mulher para mulher" aparecendo com um cadastro de demonstração marcado como **DEMO**, e o validador recusando um cadastro sem verificação ou com endereço.
+5. **Próximo passo:** piloto com 5 a 10 mulheres, escolhidas pela Secretaria, nas categorias de menor risco.
 
 ## Modelo de termo de consentimento (rascunho, revisar com a Secretaria/jurídico da Fatec)
-> Autorizo a divulgação, no site Mapa do Cuidado Rio-Clarense (projeto acadêmico da Fatec Rio Claro), do nome profissional, da descrição do meu serviço, do meu bairro e do contato de trabalho que informei. Entendo que a divulgação é voluntária, vale por até 180 dias e pode ser retirada por mim quando eu quiser. Entendo que o site não garante o serviço nem a segurança e que não cobra nem recebe valores. Data: __ / __ / ____. Assinatura: ______
+> Autorizo a divulgação, no site Mapa do Cuidado Rio-Clarense (projeto acadêmico da Fatec Rio Claro, em parceria com a Secretaria Municipal da Mulher), do nome profissional, da descrição do meu serviço, do meu bairro e do contato de trabalho que informei. Entendo que a divulgação é voluntária, vale por até 180 dias e pode ser retirada por mim quando eu quiser. Entendo que a verificação feita pela Secretaria confere apenas o que está descrito no cadastro e que o site não garante o serviço nem a segurança, não cobra e não recebe valores. Data: __ / __ / ____. Assinatura: ______
 
-## Perguntas que ainda precisam de resposta (antes de publicar)
-- Quem é o responsável pelo canal de denúncia e pela remoção?
-- A Secretaria da Mulher quer participar? Sem parceria, vale publicar só a estrutura.
+## Perguntas em aberto (para a Secretaria e o jurídico da Fatec)
+- A Secretaria aceita ser a verificadora e quem responde ao canal de denúncia?
+- Qual critério de elegibilidade ela adota e como confere?
 - Transporte: o que a legislação municipal exige de quem transporta passageiras com remuneração?
-- LGPD: confirmar com o jurídico da Fatec quem é o controlador dos dados publicados.
+- LGPD: quem é o controlador dos dados publicados (Secretaria ou Fatec)?

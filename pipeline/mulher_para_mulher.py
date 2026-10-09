@@ -5,7 +5,9 @@ Principios (ver docs/de_mulher_para_mulher.md):
   * so contato PROFISSIONAL publico (WhatsApp/telefone comercial/link) e apenas BAIRRO ou regiao:
     nunca endereco residencial, nunca nome completo obrigatorio;
   * todo cadastro VENCE (renovar_ate, no maximo 180 dias depois do consentimento): sem renovacao some do site;
-  * categorias de maior risco (transporte, servicos na casa da cliente) exigem verificacao descrita e quem verificou;
+  * TODO cadastro e verificado pela Secretaria da Mulher (ou orgao oficial designado por ela): so um orgao publico pode
+    exigir comprovacao e responder por ela. Sem verificacao (o que foi conferido, por quem e quando), nao publica;
+  * categorias de maior risco (transporte, servicos na casa) exigem alem disso a conferencia especifica descrita;
   * nao ha nota/avaliacao nesta versao e o site nao promete seguranca.
 """
 from __future__ import annotations
@@ -57,21 +59,23 @@ def validar(df, hoje: str) -> list[dict]:
             raise ValueError("'%s': consentimento_em no futuro." % nome)
         if (renovar - consent).days > MAX_DIAS or renovar < consent:
             raise ValueError("'%s': renovar_ate deve ser de 0 a %d dias depois do consentimento." % (nome, MAX_DIAS))
-        if g("categoria") in ALTO_RISCO and not (g("forma_de_verificacao") and g("verificada_por")):
-            raise ValueError("'%s': categoria de maior risco exige forma_de_verificacao e verificada_por." % nome)
+        if not (g("forma_de_verificacao") and g("verificada_por")):
+            raise ValueError("'%s': todo cadastro exige forma_de_verificacao e verificada_por (Secretaria ou orgao oficial)." % nome)
+        verificada = _d(g("verificada_em"), "verificada_em", nome)
+        if verificada > date.fromisoformat(hoje):
+            raise ValueError("'%s': verificada_em no futuro." % nome)
         if renovar < date.fromisoformat(hoje):
             continue  # vencido: nao publica
-        verif = ("Verificação: %s (por %s)." % (g("forma_de_verificacao"), g("verificada_por"))
-                 if g("forma_de_verificacao") and g("verificada_por") else "Cadastro autodeclarado; não foi verificado.")
+        verif = "Cadastro verificado por %s em %s: %s." % (g("verificada_por"), g("verificada_em"), g("forma_de_verificacao"))
         saida.append({
             "id": g("id") or "m2m-" + re.sub(r"[^a-z0-9]+", "-", nome.lower()).strip("-"),
             "tipo": TIPO_SERVICO, "subtipo": g("categoria"), "nome": nome, "cep": None,
             "endereco": "Bairro/região: %s" % g("bairro_ou_regiao"), "telefone": g("contato_publico"), "horario": None,
             "lat": None, "lon": None, "geo": "sem_local", "abrangencia": "municipal",
-            "fonte": "Cadastro De mulher para mulher (consentimento em %s)" % g("consentimento_em"),
-            "fonte_url": "", "verificado_em": g("consentimento_em"), "renovar_ate": g("renovar_ate"),
+            "fonte": "Cadastro De mulher para mulher, verificado por %s" % g("verificada_por"),
+            "fonte_url": "", "verificado_em": g("verificada_em"), "renovar_ate": g("renovar_ate"),
             "observacao": " ".join(x for x in (g("descricao"), "Atende: %s." % g("onde_atende").replace("_", " "), verif,
-                                               "O MISM3 não garante o serviço nem a segurança. Combine em local público e avise alguém de confiança.",
+                                               "A verificação confere o que está escrito acima; não garante o serviço nem a segurança. Combine em local público e avise alguém de confiança.",
                                                g("observacao")) if x),
         })
     ids = [x["id"] for x in saida]
