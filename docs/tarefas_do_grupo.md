@@ -8,7 +8,7 @@ Regra de ouro: **nada entra sem fonte oficial e data de verificação.** Em dúv
 | Preencher concursos/processos seletivos abertos e previstos | `catalogo/vagas_publicas.csv` | Cada linha com **link do edital oficial** (Prefeitura ou banca). Site de notícia não vale. Rode `python pipeline/vagas.py` sem erro |
 | Cadastrar CRAS e CREAS (nome, endereço, telefone, bairros atendidos) | `catalogo/servicos_manuais.csv` (`tipo=assistencia`) | Página oficial em `fonte_url`; `verificar_catalogo.py` sem ATENCAO |
 | Descobrir endereço e horário do PAT e do CONECTA | mesmo CSV | Só se uma fonte oficial confirmar; senão, vai para o pedido de LAI nº 1 |
-| Protocolar os pedidos de LAI | `docs/lai_pedidos.md` | Número do protocolo anotado |
+| Protocolar os pedidos de LAI | `docs/pedidos_LAI.md` | Número do protocolo anotado |
 | Visitar (com autorização da Secretaria) um serviço e conferir endereço/horário | — | Foto da placa/horário, data e quem foi |
 
 ## Quem programa

@@ -1,0 +1,20 @@
+{
+  "municipio": "Rio Claro",
+  "uf": "SP",
+  "fonte_primaria": {
+    "nome": "SOU Transportes — Rio Claro",
+    "url": "https://soutransportes.com.br/rio-claro/",
+    "pagina_linhas_horarios": "https://soutransportes.com.br/rio-claro/linhas-e-horarios/",
+    "tipo": "fonte informada para os PDFs de horários reunidos no projeto",
+    "observacao": "Os 12 PDFs locais em docs/transporte foram obtidos/impressos a partir da fonte da SOU indicada acima, conforme informado durante o levantamento. O texto extraído desses PDFs continha apenas cabeçalhos de impressão/anotações, sem tabelas de horários legíveis."
+  },
+  "documentos_locais": {
+    "pasta": "docs/transporte/",
+    "quantidade_pdf": 12,
+    "extrator": "pipeline/extrair_texto_onibus.py",
+    "resultado_extracao": "processamento concluído, mas sem horários recuperáveis em texto"
+  },
+  "linhas": [],
+  "status": "fonte documentada; horários ainda precisam ser extraídos de tabelas legíveis",
+  "regra_de_qualidade": "Não inventar horários. Para cada linha estruturada, preservar URL de origem, data de consulta, sentido e tipo de dia."
+}
