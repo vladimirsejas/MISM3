@@ -27,7 +27,8 @@ from common import MUNICIPIO_IBGE6, normalizar_cep, para_numero  # noqa: E402
 
 COLUNAS = ["CO_UNIDADE", "CO_CNES", "NO_FANTASIA", "NO_LOGRADOURO", "NU_ENDERECO", "NO_BAIRRO", "CO_CEP",
            "NU_TELEFONE", "CO_NATUREZA_JUR", "CO_TIPO_UNIDADE", "CO_MUNICIPIO_GESTOR", "NU_LATITUDE",
-           "NU_LONGITUDE", "CO_MOTIVO_DESAB", "CO_TURNO_ATENDIMENTO"]
+           "NU_LONGITUDE", "CO_MOTIVO_DESAB", "CO_TURNO_ATENDIMENTO", "TP_UNIDADE", "CO_TIPO_ESTABELECIMENTO",
+           "CO_ATIVIDADE_PRINCIPAL"]
 PREFIXOS_NATUREZA = ("1", "3")  # 1 = administracao publica; 3 = entidades sem fins lucrativos
 BLOCO = 200_000
 
@@ -96,9 +97,33 @@ def filtrar(df, prefixos=PREFIXOS_NATUREZA):
     return df, cont
 
 
-def montar_servicos(df, indice: dict, tipos: dict, turnos: dict, hoje: str) -> list[dict]:
+def chave(v) -> str:
+    """Normaliza codigos: '02' e '2' viram a mesma chave; vazio/NaN vira ''."""
+    s = str(v if v is not None else "").strip()
+    if s.lower() == "nan":
+        return ""
+    return s.lstrip("0") or ("0" if s else "")
+
+
+def descricao_tipo(r: dict, tipos_unidade: dict, tipos_estab: dict) -> str:
+    """Nome do tipo de unidade. Tenta CO_TIPO_UNIDADE, depois TP_UNIDADE, depois CO_TIPO_ESTABELECIMENTO."""
+    for col, tabela in (("CO_TIPO_UNIDADE", tipos_unidade), ("TP_UNIDADE", tipos_unidade),
+                        ("CO_TIPO_ESTABELECIMENTO", tipos_estab)):
+        k = chave(r.get(col))
+        if k and k in tabela:
+            return tabela[k]
+    return ""
+
+
+def normaliza_tabela(d: dict) -> dict:
+    return {chave(k): v for k, v in d.items()}
+
+
+def montar_servicos(df, indice: dict, tipos: dict, turnos: dict, hoje: str, tipos_estab: dict | None = None) -> list[dict]:
     from servicos import localizar, subtipo_saude  # import tardio: servicos importa este modulo
 
+    tipos, turnos, tipos_estab = normaliza_tabela(tipos), normaliza_tabela(turnos), normaliza_tabela(tipos_estab or {})
+    df = df.fillna("")  # campos em branco viram texto vazio (evita NaN em .strip())
     saida = []
     for r in df.to_dict("records"):
         nome = (r.get("NO_FANTASIA") or "").strip()
@@ -107,8 +132,8 @@ def montar_servicos(df, indice: dict, tipos: dict, turnos: dict, hoje: str) -> l
         cep = r.get("CO_CEP")
         lat, lon, geo = localizar(cep, para_numero_escalar(r.get("NU_LATITUDE")),
                                   para_numero_escalar(r.get("NU_LONGITUDE")), indice)
-        tipo_desc = tipos.get(str(r.get("CO_TIPO_UNIDADE") or "").strip(), "")
-        turno = turnos.get(str(r.get("CO_TURNO_ATENDIMENTO") or "").strip())
+        tipo_desc = descricao_tipo(r, tipos, tipos_estab)
+        turno = turnos.get(chave(r.get("CO_TURNO_ATENDIMENTO")))
         end = " ".join(x.strip() for x in (r.get("NO_LOGRADOURO"), r.get("NU_ENDERECO"), r.get("NO_BAIRRO"))
                        if x and str(x).strip()) or None
         saida.append({
@@ -136,9 +161,10 @@ def carregar(pasta: Path, indice: dict, hoje: str) -> tuple[list[dict], dict]:
         raise FileNotFoundError("tbEstabelecimento*.csv nao encontrado em %s" % pasta)
     tipos = ler_tabela_pequena(achar_arquivo(pasta, "tbTipoUnidade"), "CO_TIPO_UNIDADE", "DS_TIPO_UNIDADE")
     turnos = ler_tabela_pequena(achar_arquivo(pasta, "tbTurnoAtendimento"), "CO_TURNO_ATENDIMENTO", "DS_TURNO_ATENDIMENTO")
+    tipos_estab = ler_tabela_pequena(achar_arquivo(pasta, "tbTipoEstabelecimento"), "CO_TIPO_ESTABELECIMENTO", "DS_TIPO_ESTABELECIMENTO")
     df = ler_estabelecimentos(arq, set(indice) if indice else None)
     df, cont = filtrar(df)
-    return montar_servicos(df, indice, tipos, turnos, hoje), cont
+    return montar_servicos(df, indice, tipos, turnos, hoje, tipos_estab), cont
 
 
 def diagnostico(pasta: Path, indice: dict) -> None:
@@ -163,10 +189,19 @@ def diagnostico(pasta: Path, indice: dict) -> None:
     print("Motivo de desabilitacao (valores):", df["CO_MOTIVO_DESAB"].fillna("(vazio)").str.strip().replace("", "(vazio)").value_counts().head(8).to_dict())
     filtrado, cont = filtrar(df)
     print("Apos regras:", cont)
-    c = collections.Counter(tipos.get(str(x).strip(), "cod " + str(x)) for x in filtrado["CO_TIPO_UNIDADE"])
-    print("Tipos de unidade incluidos:")
+    tipos, tipos_estab = normaliza_tabela(tipos), normaliza_tabela(
+        ler_tabela_pequena(achar_arquivo(pasta, "tbTipoEstabelecimento"), "CO_TIPO_ESTABELECIMENTO", "DS_TIPO_ESTABELECIMENTO"))
+    print("Preenchimento das colunas de tipo (nos incluidos):")
+    for col in ("CO_TIPO_UNIDADE", "TP_UNIDADE", "CO_TIPO_ESTABELECIMENTO", "CO_ATIVIDADE_PRINCIPAL"):
+        if col in filtrado:
+            print("   %-26s %d de %d preenchidos" % (col, int((filtrado[col].fillna("").str.strip() != "").sum()), len(filtrado)))
+    from servicos import subtipo_saude
+    registros = filtrado.fillna("").to_dict("records")
+    c = collections.Counter(descricao_tipo(r, tipos, tipos_estab) or "(sem descricao)" for r in registros)
+    print("Tipos incluidos (nome do tipo):")
     for nome, n in c.most_common(25):
         print("   %4d  %s" % (n, nome))
+    print("Classificacao do site:", dict(collections.Counter(subtipo_saude(descricao_tipo(r, tipos, tipos_estab)) for r in registros)))
     lat = para_numero(filtrado["NU_LATITUDE"].fillna(""))
     print("Com latitude valida: %d de %d" % (int(lat.notna().sum()), len(filtrado)))
     print("Com CEP valido: %d de %d" % (int(filtrado["CO_CEP"].map(normalizar_cep).notna().sum()), len(filtrado)))
