@@ -1,7 +1,7 @@
 """Passo 4 - monta o catalogo de servicos (web/dados/servicos.json).
 
 Junta tres origens, sempre marcando de onde veio cada registro:
-  * CNES (saude)               - dados/bruto/cnes/estabelecimentos.json
+  * CNES (saude)               - base completa do CNES (pasta com tbEstabelecimento*.csv), via cnes.py
   * Censo Escolar (creches)    - dados/bruto/escolas/microdados_ed_basica_*.csv
   * Catalogo manual verificado - catalogo/servicos_manuais.csv (CRAS, Secretaria da Mulher...)
 
@@ -20,7 +20,7 @@ import unicodedata
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import (BRUTO, CATALOGO, MUNICIPIO_IBGE6, MUNICIPIO_IBGE7, WEB_DADOS, achar_coluna, agora_iso,  # noqa: E402
+from common import (BRUTO, CATALOGO, RAIZ, MUNICIPIO_IBGE6, MUNICIPIO_IBGE7, WEB_DADOS, achar_coluna, agora_iso,  # noqa: E402
                     ler_csv_flex, normalizar_cep, salvar_json)
 
 TIPOS = ("creche", "saude", "assistencia", "mulher", "emprego_curso")
@@ -32,15 +32,6 @@ CAIXA = (-22.65, -22.2, -47.8, -47.3)
 def _norm(s: str) -> str:
     s = unicodedata.normalize("NFKD", str(s)).encode("ascii", "ignore").decode().lower()
     return re.sub(r"[^a-z0-9]+", "_", s).strip("_")
-
-
-def pegar(reg: dict, *tokens: str):
-    """Valor da primeira chave do registro cujo nome (normalizado) contem todos os tokens."""
-    for k, v in reg.items():
-        nk = _norm(k)
-        if all(t in nk for t in tokens) and v not in (None, ""):
-            return v
-    return None
 
 
 def coord_valida(lat, lon):
@@ -74,44 +65,9 @@ def subtipo_saude(descricao: str) -> str:
         return "hospital"
     if "centro_de_saude" in d or "unidade_basica" in d or "ubs" in d or "posto" in d:
         return "ubs"
+    if "policlinica" in d or "especialidade" in d:
+        return "especialidades"
     return "outros"
-
-
-# ------------------------------------------------------------ CNES
-def _lista_registros(obj):
-    if isinstance(obj, list):
-        return obj
-    if isinstance(obj, dict):
-        for v in obj.values():
-            if isinstance(v, list) and v and isinstance(v[0], dict):
-                return v
-    return []
-
-
-def servicos_cnes(registros: list[dict], indice: dict, hoje: str) -> list[dict]:
-    saida = []
-    for r in registros:
-        cod = pegar(r, "cnes") or pegar(r, "codigo", "unidade")
-        nome = pegar(r, "nome", "fantasia") or pegar(r, "razao")
-        if not nome:
-            continue
-        mun = str(pegar(r, "municipio") or "")
-        if mun and mun[:6].isdigit() and mun[:6] != MUNICIPIO_IBGE6:
-            continue  # cinto de seguranca: so Rio Claro/SP
-        desc = str(pegar(r, "tipo", "unidade") or pegar(r, "descricao") or "")
-        cep = pegar(r, "cep")
-        lat, lon, geo = localizar(cep, pegar(r, "latitude"), pegar(r, "longitude"), indice)
-        saida.append({
-            "id": "cnes-%s" % (cod or _norm(nome)),
-            "tipo": "saude", "subtipo": subtipo_saude(desc),
-            "nome": str(nome).title(), "cep": normalizar_cep(cep),
-            "endereco": " ".join(str(x) for x in (pegar(r, "endereco"), pegar(r, "numero")) if x) or None,
-            "telefone": pegar(r, "telefone"), "horario": None,
-            "lat": lat, "lon": lon, "geo": geo, "abrangencia": "local",
-            "fonte": "CNES/DATASUS", "fonte_url": "https://cnes.datasus.gov.br/", "verificado_em": hoje,
-            "observacao": "Cadastro nacional; confirme horario e atendimento direto com a unidade.",
-        })
-    return saida
 
 
 # ------------------------------------------------------------ Censo Escolar
@@ -180,8 +136,8 @@ def montar(indice: dict, cnes=None, escolas=None, manuais=None, hoje: str | None
     hoje = hoje or agora_iso()
     itens: list[dict] = []
     contagem = {}
-    if cnes is not None:
-        a = servicos_cnes(cnes, indice, hoje); itens += a; contagem["cnes"] = len(a)
+    if cnes is not None:  # lista de servicos ja montada por cnes.carregar()
+        itens += cnes; contagem["cnes"] = len(cnes)
     if escolas is not None:
         a = servicos_creches(escolas, indice, hoje); itens += a; contagem["creches_inep"] = len(a)
     if manuais is not None:
@@ -207,11 +163,14 @@ def main() -> None:
         print("AVISO: cep_indice.json ausente (rode indice_cep.py). Servicos sem coordenada ficarao 'sem_local'.")
 
     cnes = None
-    f = BRUTO / "cnes" / "estabelecimentos.json"
-    if f.exists():
-        cnes = _lista_registros(json.loads(f.read_text(encoding="utf-8")))
+    pasta_cnes = Path(sys.argv[1]) if len(sys.argv) > 1 else next(
+        (p for p in (BRUTO / "cnes", RAIZ / "docs" / "cnes") if list(p.glob("tbEstabelecimento*.csv"))), None)
+    if pasta_cnes:
+        import cnes as modulo_cnes
+        cnes, cont = modulo_cnes.carregar(pasta_cnes, indice, agora_iso())
+        print("CNES (%s): %s" % (pasta_cnes, cont))
     else:
-        print("AVISO: CNES ausente (python pipeline/baixar.py cnes).")
+        print("AVISO: CNES ausente. Coloque a base completa em docs/cnes (ou passe a pasta: python pipeline/servicos.py caminho).")
 
     escolas = None
     csvs = sorted((BRUTO / "escolas").glob("microdados_ed_basica_*.csv"))
