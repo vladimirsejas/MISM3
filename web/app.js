@@ -81,68 +81,93 @@
   };
 
   function normalizar(texto) {
-    return String(texto || "").normalize("NFD").replace(/[\\u0300-\\u036f]/g, "").toLowerCase().trim();
+    return String(texto || "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .replace(/[^a-z0-9\s]/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
   }
 
-  function identificarCategoria(texto) {
+  function contemExpressao(texto, expressao) {
+    var termo = normalizar(expressao);
+    return !!termo && (" " + texto + " ").indexOf(" " + termo + " ") !== -1;
+  }
+
+  function identificarCategorias(texto) {
     var t = normalizar(texto);
+    if (!t) return [];
     var regras = [
-      ["violencia", ["violencia", "agressao", "ameaca", "abuso", "medo", "protecao", "medida protetiva"]],
-      ["casamento", ["casamento", "separacao", "divorcio", "pensão", "pensao", "guarda", "direitos", "advogada", "defensoria"]],
-      ["filhos", ["filho", "filhos", "crianca", "criancas", "bebe", "creche", "maternidade", "escola infantil", "babá", "baba"]],
-      ["emprego_curso", ["emprego", "trabalho", "vaga", "vagas", "renda", "curriculo", "curso", "cursos", "qualificacao", "empreender", "dinheiro"]],
-      ["saude", ["saude", "medico", "medica", "consulta", "exame", "hospital", "posto", "psicologa", "psicologo", "menopausa", "gestacao"]],
-      ["estudo", ["estudo", "estudar", "faculdade", "universidade", "escola", "ensino", "bolsa", "alfabetizacao"]],
-      ["familia", ["familia", "assistencia", "beneficio", "beneficios", "cras", "creas", "aluguel", "moradia", "comida", "cesta basica", "apoio"]]
+      ["violencia", ["violencia", "agressao", "me bate", "me bateu", "bate em mim", "me ameaca", "ameacou", "abuso", "tenho medo dele", "tenho medo dela", "medo do meu marido", "nao deixa eu sair", "me controla", "medida protetiva", "protecao", "perigo", "me persegue"]],
+      ["casamento", ["casamento", "separacao", "separar", "quero me separar", "divorcio", "divorciar", "pensao", "guarda", "direitos", "advogada", "defensoria", "marido", "companheiro"]],
+      ["filhos", ["filho", "filhos", "crianca", "criancas", "bebe", "creche", "maternidade", "escola infantil", "baba", "educacao infantil"]],
+      ["emprego_curso", ["emprego", "trabalho", "vaga", "vagas", "renda", "curriculo", "curso", "cursos", "qualificacao", "empreender", "desempregada", "desempregado", "procurando emprego"]],
+      ["saude", ["saude", "medico", "medica", "consulta", "exame", "hospital", "posto de saude", "psicologa", "psicologo", "menopausa", "gestacao", "gravidez", "ginecologista"]],
+      ["estudo", ["estudo", "estudar", "faculdade", "universidade", "escola", "ensino", "alfabetizacao", "voltar a estudar"]],
+      ["familia", ["familia", "assistencia", "beneficio", "beneficios", "cras", "creas", "aluguel", "moradia", "comida", "cesta basica", "sem comida", "passar fome", "fome", "comer", "sem dinheiro para comer", "nao tenho o que comer", "apoio", "bolsa familia"]]
     ];
-    for (var i = 0; i < regras.length; i++) {
-      if (regras[i][1].some(function (termo) { return t.indexOf(normalizar(termo)) !== -1; })) return regras[i][0];
-    }
-    return null;
+    var achadas = [];
+    regras.forEach(function (regra) {
+      if (regra[1].some(function (termo) { return contemExpressao(t, termo); })) achadas.push(regra[0]);
+    });
+    return achadas.slice(0, 3);
   }
 
   function abrirCategoria(chave) {
-    var c = CATEGORIAS[chave];
-    if (!c) return;
+    abrirCategorias([chave]);
+  }
+
+  function abrirCategorias(chaves) {
+    var validas = chaves.filter(function (chave, i) {
+      return CATEGORIAS[chave] && chaves.indexOf(chave) === i;
+    }).slice(0, 3);
+    if (!validas.length) return;
     $("painel-categoria").hidden = false;
     document.querySelector(".portas").hidden = true;
-    $("titulo-categoria").textContent = c.titulo;
-    $("descricao-categoria").textContent = c.descricao;
+    $("titulo-categoria").textContent = validas.length === 1 ? CATEGORIAS[validas[0]].titulo : "Caminhos para suas necessidades";
+    $("descricao-categoria").textContent = validas.length === 1
+      ? CATEGORIAS[validas[0]].descricao
+      : "Identificamos mais de uma necessidade. Veja os caminhos abaixo.";
     var html = "";
-    c.links.forEach(function (l) {
-      html += '<article class="cartao"><h3><a href="' + esc(l[1]) + '" target="_blank" rel="noopener noreferrer">' + esc(l[0]) + '</a></h3><p>' + esc(l[2]) + '</p><p class="meta">Fonte externa oficial; confira os dados e a disponibilidade no site de origem.</p></article>';
+    validas.forEach(function (chave) {
+      var c = CATEGORIAS[chave];
+      html += '<section class="resultado-necessidade"><h3 class="subtitulo">' + esc(c.titulo) + '</h3><p>' + esc(c.descricao) + '</p>';
+      c.links.forEach(function (l) {
+        html += '<article class="cartao"><h3><a href="' + esc(l[1]) + '" target="_blank" rel="noopener noreferrer">' + esc(l[0]) + '</a></h3><p>' + esc(l[2]) + '</p><p class="meta">Fonte externa oficial; confira os dados e a disponibilidade no site de origem.</p></article>';
+      });
+      var encontrados = dados.servicos ? dados.servicos.filter(function (s) { return c.tipos.indexOf(s.tipo) !== -1; }) : [];
+      if (encontrados.length) {
+        html += '<h4>Serviços cadastrados em Rio Claro</h4>';
+        encontrados.forEach(function (s) { html += cartao(s, null); });
+      } else {
+        html += '<p class="vazio">Ainda não há serviços dessa categoria carregados no catálogo desta versão. Consulte também as fontes oficiais acima.</p>';
+      }
+      if (chave === "violencia") {
+        html += '<article class="cartao urgente"><h3>Ajuda imediata</h3><p>Polícia: <a href="tel:190">190</a></p><p>Central de Atendimento à Mulher: <a href="tel:180">180</a></p><p>Atendimento médico de urgência: <a href="tel:192">192</a></p><p class="meta">Protótipo: não escreva detalhes pessoais. O botão “Sair rápido” não apaga o histórico do navegador.</p></article>';
+      }
+      html += "</section>";
     });
-    var encontrados = dados.servicos ? dados.servicos.filter(function (s) { return c.tipos.indexOf(s.tipo) !== -1; }) : [];
-    if (encontrados.length) {
-      html += '<h3 class="subtitulo">Serviços cadastrados em Rio Claro</h3>';
-      encontrados.forEach(function (s) { html += cartao(s, null); });
-    } else {
-      html += '<p class="vazio">Ainda não há serviços dessa categoria carregados no catálogo desta versão. Estamos ampliando e validando os registros. Consulte também as fontes oficiais acima.</p>';
-    }
-    if (chave === "violencia") {
-      html += '<article class="cartao urgente"><h3>Ajuda imediata</h3><p>Polícia: <a href="tel:190">190</a></p><p>Central de Atendimento à Mulher: <a href="tel:180">180</a></p><p>Atendimento médico de urgência: <a href="tel:192">192</a></p><p class="meta">Se o aparelho puder estar sendo monitorado, considere usar um dispositivo seguro. O botão “Sair rápido” não apaga o histórico do navegador.</p></article>';
-    }
     $("opcoes-categoria").innerHTML = html;
     $("painel-categoria").scrollIntoView({behavior:"smooth", block:"start"});
   }
-
   $("form-necessidade").addEventListener("submit", function (ev) {
     ev.preventDefault();
     var texto = $("necessidade").value;
-    var chave = identificarCategoria(texto);
+    var chaves = identificarCategorias(texto);
     var aviso = $("mensagem-necessidade");
     if (!texto.trim()) {
       aviso.textContent = "Digite uma necessidade, como emprego, saúde, creche ou violência.";
       aviso.hidden = false;
       return;
     }
-    if (!chave) {
-      aviso.textContent = "Ainda não reconheci essa necessidade. Tente uma palavra como emprego, saúde, estudo, filhos, casamento, violência ou família.";
+    if (!chaves.length) {
+      aviso.textContent = "Ainda não reconheci essa necessidade. Tente emprego, saúde, estudo, filhos, separação, violência ou assistência.";
       aviso.hidden = false;
       return;
     }
     aviso.hidden = true;
-    abrirCategoria(chave);
+    abrirCategorias(chaves);
   });
 
   document.querySelectorAll("[data-categoria]").forEach(function (b) {
