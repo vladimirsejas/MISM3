@@ -14,6 +14,7 @@ Identificação: o pedido é do **projeto acadêmico da Fatec Rio Claro (Tecnolo
 
 ## 3. Transporte coletivo (órgão gestor do sistema)
 > Solicito: (a) lista oficial das linhas em operação, com itinerário e horários de cada uma; (b) a tarifa vigente e as gratuidades previstas; (c) se a Prefeitura ou a operadora disponibiliza os dados em formato aberto (por exemplo GTFS); (d) qual empresa opera o sistema atualmente e a vigência do contrato.
+> (e) autorização para reproduzir os horários e itinerários publicados no site da operadora em um mapa de uso gratuito e sem fins lucrativos, sempre com link e crédito à fonte.
 
 ## 4. Secretaria de Educação (educação infantil)
 > Solicito: (a) lista das unidades municipais com berçário/maternal (creche) e com pré-escola, com endereço e telefone; (b) horário de funcionamento de cada unidade e se há período integral; (c) número de vagas e de crianças na lista de espera, **por unidade e faixa etária**, sem nomes; (d) como a família solicita vaga e qual o prazo.
