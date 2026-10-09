@@ -53,6 +53,11 @@ Na tela inicial a pessoa toca numa "porta" (Emprego, Saúde, Estudo, Filhos, Cas
 ## De mulher para mulher
 Área para mulheres que oferecem serviços a outras mulheres. **Quem verifica é a Secretaria da Mulher**: o site não tem como garantir que só mulheres participam, então só publica cadastros já conferidos por ela (o que foi conferido, por quem e quando). `catalogo/mulher_para_mulher.csv` está vazio e a porta só aparece quando há cadastro válido; no modo demonstração aparecem dois exemplos marcados [DEMO]. O validador exige consentimento, só bairro (nunca endereço) e validade de até 180 dias. Papéis, fluxo, limites e roteiro para a banca em `docs/de_mulher_para_mulher.md`. Não prometemos segurança, não há pagamento nem notas.
 
+## Painel de Gestão (protótipo, dados fictícios)
+Abra `web/gestao.html` (ou `gestao.html?visao=gestao`). Mostra o que as mulheres procuram por necessidade, buscas por mês, o funil do interesse ao resultado (inscrição → participação → conclusão → nova oportunidade), demanda × oferta por região, crianças de 0 a 4 anos por setor sobre a malha real de 408 setores, qualidade do catálogo (calculada ao vivo) e as buscas sem resultado. **Todos os números são fictícios**, gerados por `python pipeline/gerar_demo_gestao.py` (semente fixa, com invariantes conferidos). Contagens abaixo de 5 são ocultadas.
+
+Há duas visões, para a decisão ainda em aberto sobre o que é público: a **Pública** mostra totais e tendências; a **Gestão** acrescenta o detalhe por região, o mapa em tabela e as buscas sem resultado. Gráficos em SVG puro (sem biblioteca nem rede), cores validadas com o validador da skill de visualização nos temas claro e escuro, cada gráfico com tabela equivalente.
+
 ## Trilha de autonomia (recomendação sem banco de dados)
 Depois de buscar o CEP, a usuária escolhe um objetivo (trabalhar, fazer curso, empreender) e vê os serviços de trabalho/renda em ordem, cada um com o **porquê** (objetivo confirmado no cadastro, gratuidade, distância). É uma regra aberta e explicável em `web/recomendar.js`, não um modelo treinado, e roda no navegador: nada é gravado. Só entra quem tem `objetivos` preenchido no catálogo (`trabalhar`, `curso`, `empreender`, separados por `;`) e `gratuito=sim` apenas quando a página oficial diz. Sem a informação confirmada, o serviço não é sugerido para o objetivo: não adivinhamos.
 

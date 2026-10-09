@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>Painel de Gestão – Mapa do Cuidado</title>
+<link rel="stylesheet" href="vendor/leaflet.css">
+<link rel="stylesheet" href="estilo.css">
+<link rel="stylesheet" href="gestao.css">
+</head>
+<body data-visao="publica">
+<div class="faixa-demo" role="note">DADOS FICTÍCIOS — protótipo. Nenhum número deste painel é medição real.</div>
+
+<header class="topo">
+  <p class="voltar-site"><a href="index.html">← Voltar ao Mapa do Cuidado</a></p>
+  <h1>Painel de Gestão</h1>
+  <p class="sub">O que as mulheres de Rio Claro procuram, onde a rede responde e onde ainda não chega. Só números agregados: nenhuma busca ou pessoa é identificada.</p>
+
+  <div class="visao" role="group" aria-label="Quem vê este painel">
+    <span class="visao-rotulo">Visão</span>
+    <button type="button" data-visao="publica" aria-pressed="true">Pública</button>
+    <button type="button" data-visao="gestao" aria-pressed="false">Gestão</button>
+  </div>
+  <p id="aviso-visao" class="meta"></p>
+</header>
+
+<main>
+  <section id="kpis" aria-label="Resumo" class="painel-largo"></section>
+
+  <section class="cartao-viz" aria-labelledby="t-nec">
+    <h2 id="t-nec">O que as pessoas procuram</h2>
+    <p class="sub">Buscas por necessidade nos últimos 12 meses. Uma frase pode ter mais de uma necessidade.</p>
+    <div id="g-necessidades"></div>
+    <div id="t-necessidades"></div>
+  </section>
+
+  <section class="cartao-viz" aria-labelledby="t-mes">
+    <h2 id="t-mes">Buscas por mês</h2>
+    <p class="sub">Picos em janeiro e agosto (volta às aulas e ao trabalho), no cenário fictício.</p>
+    <div id="g-meses"></div>
+    <div id="t-meses"></div>
+  </section>
+
+  <section id="sec-funil" class="cartao-viz" aria-labelledby="t-funil">
+    <h2 id="t-funil">Do interesse ao resultado</h2>
+    <p class="sub">Entre quem procurou trabalho ou curso: quantos se inscreveram, participaram, concluíram e chegaram a uma nova oportunidade. Mede o resultado da política, não só o volume.</p>
+    <div id="g-funil"></div>
+    <div id="t-funil-tab"></div>
+  </section>
+
+  <section class="cartao-viz" data-somente-gestao aria-labelledby="t-reg">
+    <h2 id="t-reg">Demanda e oferta por região</h2>
+    <p class="sub">Interessadas em oportunidades de trabalho e curso e vagas disponíveis. Demanda muito acima da oferta justifica abrir turmas; vagas ociosas sugerem problema de divulgação.</p>
+    <div id="g-regioes"></div>
+    <div id="t-regioes"></div>
+  </section>
+
+  <section class="cartao-viz painel-largo" aria-labelledby="t-mapa">
+    <h2 id="t-mapa">Crianças de 0 a 4 anos por setor censitário</h2>
+    <p class="sub">Valores fictícios sobre a malha real de 408 setores de Rio Claro. Os círculos são serviços de exemplo. <strong>Perto de um serviço não prova que há vaga</strong>: o mapa serve para escolher onde investigar, não para concluir.</p>
+    <div id="mapa-gestao" role="img" aria-label="Mapa de setores censitários coloridos pela quantidade fictícia de crianças de 0 a 4 anos"></div>
+    <div id="legenda-mapa" class="legenda-mapa"></div>
+    <div id="t-mapa-tab" data-somente-gestao></div>
+  </section>
+
+  <section class="cartao-viz painel-largo" aria-labelledby="t-cat">
+    <h2 id="t-cat">Qualidade do catálogo</h2>
+    <p class="sub">Calculada agora a partir dos serviços carregados no site: quanto de cada informação está preenchida. Falta de dado não é falta de serviço.</p>
+    <div id="g-catalogo"></div>
+  </section>
+
+  <section id="sec-sem" class="cartao-viz" data-somente-gestao aria-labelledby="t-sem">
+    <h2 id="t-sem">Buscas sem resultado: onde o catálogo ainda não responde</h2>
+    <p class="sub">Principais temas das buscas que não encontraram nada. É a lista de trabalho para ampliar o catálogo.</p>
+    <div id="g-sem"></div>
+    <div id="t-sem-tab"></div>
+  </section>
+</main>
+
+<footer class="rodape">
+  <p><strong>Como ler este painel.</strong> Todos os números são fictícios e foram gerados por <code>pipeline/gerar_demo_gestao.py</code> com semente fixa. Contagens abaixo de 5 são ocultadas ("menos de 5"), para que um número pequeno nunca identifique alguém. A <em>visão pública</em> mostra totais; a <em>visão de gestão</em> acrescenta o detalhe por região e as buscas sem resultado.</p>
+  <p id="fonte-gestao"></p>
+</footer>
+
+<div id="dica" class="dica" role="tooltip" hidden></div>
+<script src="vendor/leaflet.js"></script>
+<script src="acesso.js"></script>
+<script src="gestao.js"></script>
+</body>
+</html>

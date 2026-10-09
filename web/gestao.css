@@ -1,0 +1,97 @@
+/* Painel de Gestao. Cores dos graficos = tokens validados (skill dataviz): serie 1 azul, serie 2 laranja,
+   rampa ordinal do funil e rampa sequencial do mapa, nos dois temas. Texto nunca usa a cor da serie. */
+:root{
+  --surface-1:#fcfcfb; --grid:#e8e6e1; --ink:#2a2230; --ink-2:#52514e; --ink-3:#6b6275;
+  --s1:#2a78d6; --s2:#eb6834;
+  --seq-1:#cde2fb; --seq-2:#9ec5f4; --seq-3:#5598e7; --seq-4:#256abf; --seq-5:#104281;
+  --ord-1:#86b6ef; --ord-2:#5598e7; --ord-3:#2a78d6; --ord-4:#1c5cab; --ord-5:#104281;
+  --meter-trilho:#cde2fb; --meter-fill:#256abf; --neutro:#b9b6ae;
+  --alerta-icone:#ec835a;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --surface-1:#1a1a19; --grid:#2e2e2c; --ink:#f1ecf4; --ink-2:#c3c2b7; --ink-3:#b6abc0;
+    --s1:#3987e5; --s2:#d95926;
+    --seq-1:#0d366b; --seq-2:#184f95; --seq-3:#256abf; --seq-4:#5598e7; --seq-5:#9ec5f4;
+    --ord-1:#184f95; --ord-2:#256abf; --ord-3:#3987e5; --ord-4:#6da7ec; --ord-5:#9ec5f4;
+    --meter-trilho:#0d366b; --meter-fill:#5598e7; --neutro:#55534e;
+  }
+}
+main{max-width:1040px;margin:0 auto;padding:0 1rem 2rem;display:grid;grid-template-columns:1fr;gap:1rem}
+@media (min-width:860px){main{grid-template-columns:1fr 1fr}.painel-largo{grid-column:1/-1}}
+.topo{max-width:1040px}
+.rodape{max-width:1040px}
+.sub{margin:.1rem 0 .6rem;color:var(--ink-3);font-size:.95rem}
+.voltar-site{margin:.8rem 0 0}
+.meta{color:var(--ink-3);font-size:.9rem}
+
+/* seletor de visao */
+.visao{display:inline-flex;align-items:center;gap:.4rem;margin:.6rem 0 .2rem}
+.visao-rotulo{font-weight:700;margin-right:.2rem}
+.visao button{padding:.45rem 1rem;border:2px solid var(--pri);background:transparent;color:var(--pri);border-radius:999px;font:inherit;cursor:pointer}
+.visao button[aria-pressed="true"]{background:var(--pri);color:var(--bg)}
+body[data-visao="publica"] [data-somente-gestao]{display:none}
+@media (min-width:860px){
+  body[data-visao="publica"] #sec-funil,body[data-visao="gestao"] #sec-sem{grid-column:1/-1}  /* sem par ao lado: ocupa a linha */
+}
+
+/* cartao de grafico */
+.cartao-viz{background:var(--surface-1);border:1px solid var(--bor);border-radius:.8rem;padding:1rem;min-width:0}
+.cartao-viz h2{margin:.1rem 0 .1rem;font-size:1.15rem}
+.cartao-viz svg:not(.leaflet-zoom-animated){display:block;width:100%;height:auto;overflow:visible}
+.cartao-viz svg text{font:12px/1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;fill:var(--ink-2)}
+.cartao-viz svg .txt-valor{fill:var(--ink);font-weight:600}
+.cartao-viz svg .grade{stroke:var(--grid);stroke-width:1}
+.cartao-viz svg .eixo-txt{fill:var(--ink-3)}
+.marca{cursor:default;outline:none}
+.marca:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+/* tiles */
+#kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1rem}
+.tile{background:var(--surface-1);border:1px solid var(--bor);border-radius:.8rem;padding:.9rem 1rem}
+.tile .rot{color:var(--ink-3);font-size:.9rem;margin:0}
+.tile .val{font-size:1.9rem;font-weight:600;line-height:1.15;margin:.2rem 0;color:var(--ink)}
+.tile .delta{font-size:.9rem;color:var(--ink-2);margin:0}
+.tile.heroi{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-end;justify-content:space-between}
+.tile.heroi .val{font-size:3.4rem;line-height:1}
+.tile svg{display:block}
+
+/* legenda */
+.legenda{display:flex;flex-wrap:wrap;gap:1rem;margin:.2rem 0 .6rem;color:var(--ink-2);font-size:.9rem}
+.legenda i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:.35rem;vertical-align:-1px}
+
+/* sinalizacoes (icone + texto, nunca so cor) */
+.sinal{display:inline-block;font-size:.85rem;margin-left:.4rem;color:var(--ink-2)}
+.sinal b{color:var(--alerta-icone);margin-right:.15rem}
+
+/* medidor (qualidade do catalogo) */
+.medidor{display:grid;grid-template-columns:minmax(120px,1.4fr) repeat(4,minmax(64px,1fr));gap:.4rem .8rem;align-items:center}
+.medidor .cab{font-size:.8rem;color:var(--ink-3)}
+.medidor .tipo{font-weight:600;font-size:.95rem}
+.medidor .tipo small{display:block;font-weight:400;color:var(--ink-3)}
+.trilho{height:10px;border-radius:5px;background:var(--meter-trilho);overflow:hidden}
+.trilho>span{display:block;height:100%;background:var(--meter-fill);border-radius:5px}
+.medidor .pct{font-size:.8rem;color:var(--ink-2);margin-top:.15rem}
+
+/* mapa */
+#mapa-gestao{height:420px;border-radius:.6rem;border:1px solid var(--bor);background:var(--surface-1)}
+.legenda-mapa{display:flex;flex-wrap:wrap;align-items:center;gap:.3rem .6rem;margin:.5rem 0;color:var(--ink-2);font-size:.85rem}
+.legenda-mapa i{display:inline-block;width:22px;height:12px;border:1px solid var(--grid)}
+
+/* tabela equivalente */
+details.tabela{margin-top:.6rem}
+details.tabela summary{cursor:pointer;color:var(--pri);font-size:.9rem}
+details.tabela table{width:100%;border-collapse:collapse;margin-top:.4rem;font-size:.88rem}
+details.tabela th,details.tabela td{text-align:left;padding:.3rem .4rem;border-bottom:1px solid var(--grid)}
+details.tabela td.n,details.tabela th.n{text-align:right;font-variant-numeric:tabular-nums}
+
+/* dica (tooltip) */
+.dica{position:fixed;z-index:1000;pointer-events:none;background:var(--surface-1);color:var(--ink);border:1px solid var(--bor);
+  border-radius:.5rem;padding:.4rem .6rem;font-size:.85rem;box-shadow:0 2px 8px rgba(0,0,0,.18);max-width:240px}
+.dica b{display:block;margin-bottom:.1rem}
+
+@media (forced-colors:active){
+  .cartao-viz svg rect.barra,.cartao-viz svg path.barra{fill:CanvasText}
+  .trilho>span{background:CanvasText}
+}
+@media (max-width:520px){.tile.heroi .val{font-size:2.6rem}.medidor{grid-template-columns:1fr 1fr}.medidor .cab{display:none}.medidor .tipo{grid-column:1/-1;margin-top:.7rem}}
