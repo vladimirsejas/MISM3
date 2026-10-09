@@ -18,26 +18,51 @@
 
 <header class="topo">
   <h1>Mapa do Cuidado</h1>
-  <p>Descubra, a partir do seu CEP, os serviços públicos mais próximos: apoio à mulher, assistência social, creches, saúde e trabalho em Rio Claro/SP.</p>
+  <p>Escreva o que você precisa. O MISM3 abre caminhos, serviços e contatos úteis em Rio Claro.</p>
 </header>
 
 <main>
-  <form id="form-necessidade" class="busca" autocomplete="off">
-    <label for="necessidade">O que você precisa?</label>
-    <input id="necessidade" placeholder="Escreva: emprego, estudo, saúde, filhos, família, casamento, violência…" autocomplete="off" autocapitalize="off" spellcheck="false">
-    <div id="chips-necessidade" class="objetivos" role="group" aria-label="Necessidades mais comuns"></div>
-    <p class="privacidade">O que você escreve aqui não sai deste aparelho: nada é enviado, gravado ou contado.</p>
-  </form>
-  <div id="painel-necessidade"></div>
+  <section class="portas" aria-labelledby="titulo-portas">
+    <h2 id="titulo-portas">O que você precisa hoje?</h2>
+    <p>Escolha uma opção para ver caminhos e serviços relacionados, ou escreva o que precisa.</p>
+    <form id="form-necessidade" class="escrever" autocomplete="off">
+      <label for="necessidade">Escreva o que você precisa</label>
+      <div class="linha">
+        <input id="necessidade" placeholder="Ex.: emprego, filhos, violência, ônibus…" autocomplete="off" autocapitalize="off" spellcheck="false">
+        <button type="submit">Abrir</button>
+      </div>
+      <p id="dica-necessidade" class="meta" aria-live="polite"></p>
+      <p class="privacidade">O que você escreve aqui não sai deste aparelho: nada é enviado, gravado ou contado.</p>
+    </form>
+    <div class="grade-portas">
+      <button class="porta" type="button" data-categoria="emprego_curso"><span aria-hidden="true">💼</span><strong>Emprego</strong><small>Vagas, renda e cursos</small></button>
+      <button class="porta" type="button" data-categoria="saude"><span aria-hidden="true">＋</span><strong>Saúde</strong><small>Atendimento e cuidado</small></button>
+      <button class="porta" type="button" data-categoria="estudo"><span aria-hidden="true">📚</span><strong>Estudo</strong><small>Escolas e qualificação</small></button>
+      <button class="porta" type="button" data-categoria="filhos"><span aria-hidden="true">👨‍👩‍👧</span><strong>Filhos</strong><small>Creche, escola e apoio</small></button>
+      <button class="porta" type="button" data-categoria="casamento"><span aria-hidden="true">⚖</span><strong>Casamento e direitos</strong><small>Orientação e apoio</small></button>
+      <button class="porta" type="button" data-categoria="violencia"><span aria-hidden="true">🛡</span><strong>Violência</strong><small>Proteção e ajuda</small></button>
+      <button class="porta" type="button" data-categoria="familia"><span aria-hidden="true">🏠</span><strong>Família</strong><small>Assistência e serviços</small></button>
+    </div>
+  </section>
 
-  <form id="form-cep" class="busca" autocomplete="off">
+  <section id="painel-categoria" class="painel-categoria" hidden aria-live="polite">
+    <button id="voltar-portas" class="voltar" type="button">← Todas as opções</button>
+    <h2 id="titulo-categoria"></h2>
+    <p id="descricao-categoria"></p>
+    <div id="opcoes-categoria"></div>
+  </section>
+
+  <details class="busca-por-cep">
+    <summary>Quero encontrar serviços perto de mim pelo CEP</summary>
+    <form id="form-cep" class="busca" autocomplete="off">
     <label for="cep">Digite seu CEP</label>
     <div class="linha">
       <input id="cep" inputmode="numeric" maxlength="9" placeholder="00000-000" autocomplete="off" autocapitalize="off" spellcheck="false">
       <button type="submit">Buscar</button>
     </div>
     <p class="privacidade">Seu CEP fica só neste aparelho: a consulta é feita aqui no navegador, nada é enviado, gravado ou contado. Usamos o centro do CEP, nunca o seu endereço.</p>
-  </form>
+    </form>
+  </details>
 
   <p id="mensagem" role="status" class="mensagem" hidden></p>
 

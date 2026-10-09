@@ -1,6 +1,6 @@
 # Mapa do Cuidado Rio-Clarense (marco 1)
 
-Você digita o **CEP** e o site mostra os serviços públicos mais próximos em Rio Claro/SP: apoio à mulher, assistência social, creches, saúde e trabalho/cursos. Tudo com fonte e data de verificação. O CEP **nunca sai do navegador**.
+Comece pela sua necessidade: **Emprego, Saúde, Estudo, Filhos, Casamento e direitos, Violência ou Família**. O site abre caminhos, links oficiais e serviços cadastrados em Rio Claro/SP. Também é possível buscar serviços próximos pelo CEP; o CEP **nunca sai do navegador**. O catálogo está em expansão e informa quando faltam dados.
 
 ## Privacidade (por desenho)
 - Consulta 100% no navegador; sem servidor próprio, sem cookies, sem localStorage, sem estatísticas.
@@ -48,7 +48,7 @@ Com internet, rode `python pipeline/verificar_catalogo.py`. Ele abre a fonte de 
 Edite `catalogo/servicos_manuais.csv`. Obrigatórios: `tipo` (creche, saude, assistencia, mulher, emprego_curso), `nome`, `fonte_url`, `verificado_em`. Com `cep`, o serviço entra no mapa; `abrangencia=municipal` faz aparecer para todas. Depois rode `python pipeline/servicos.py`.
 
 ## Busca por necessidade ("escreva e abrimos as portas")
-No topo do site a pessoa escreve uma palavra (emprego, estudo, saúde, filhos, família, casamento, violência, ônibus) ou toca num botão. O site mostra primeiro os serviços daquela necessidade e deixa o resto em "Ver outros serviços". A lista de palavras e a regra estão em `web/necessidades.js`, com testes. Regras de segurança: o texto digitado não sai do navegador nem é gravado; "violência" sempre vem em destaque com 190, 192 e Ligue 180; "ônibus" não mostra horário enquanto eles não forem conferidos, só o link da SOU Transportes; onde não há cadastro (ex.: Defensoria para guarda e pensão), o site diz isso.
+Na tela inicial a pessoa toca numa das "portas" (Emprego, Saúde, Estudo, Filhos, Casamento e direitos, Violência, Família) ou escreve uma palavra (inclui "ônibus") e aperta Enter. O site mostra primeiro os serviços daquela necessidade e deixa o resto em "Ver outros serviços". A lista de palavras e a regra estão em `web/necessidades.js`, com testes. Regras de segurança: o texto digitado não sai do navegador nem é gravado; "violência" sempre vem em destaque com 190, 192 e Ligue 180; "ônibus" não mostra horário enquanto eles não forem conferidos, só o link da SOU Transportes; onde não há cadastro (ex.: Defensoria para guarda e pensão), o site diz isso.
 
 ## Trilha de autonomia (recomendação sem banco de dados)
 Depois de buscar o CEP, a usuária escolhe um objetivo (trabalhar, fazer curso, empreender) e vê os serviços de trabalho/renda em ordem, cada um com o **porquê** (objetivo confirmado no cadastro, gratuidade, distância). É uma regra aberta e explicável em `web/recomendar.js`, não um modelo treinado, e roda no navegador: nada é gravado. Só entra quem tem `objetivos` preenchido no catálogo (`trabalhar`, `curso`, `empreender`, separados por `;`) e `gratuito=sim` apenas quando a página oficial diz. Sem a informação confirmada, o serviço não é sugerido para o objetivo: não adivinhamos.
