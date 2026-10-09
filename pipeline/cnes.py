@@ -164,7 +164,13 @@ def carregar(pasta: Path, indice: dict, hoje: str) -> tuple[list[dict], dict]:
     tipos_estab = ler_tabela_pequena(achar_arquivo(pasta, "tbTipoEstabelecimento"), "CO_TIPO_ESTABELECIMENTO", "DS_TIPO_ESTABELECIMENTO")
     df = ler_estabelecimentos(arq, set(indice) if indice else None)
     df, cont = filtrar(df)
-    return montar_servicos(df, indice, tipos, turnos, hoje, tipos_estab), cont
+    todos = montar_servicos(df, indice, tipos, turnos, hoje, tipos_estab)
+    from servicos import SUBTIPOS_PUBLICO
+
+    publicos = [x for x in todos if x["subtipo"] in SUBTIPOS_PUBLICO]
+    cont["fora_do_site_apoio_ou_outros"] = len(todos) - len(publicos)
+    cont["no_site"] = len(publicos)
+    return publicos, cont
 
 
 def diagnostico(pasta: Path, indice: dict) -> None:
@@ -195,13 +201,17 @@ def diagnostico(pasta: Path, indice: dict) -> None:
     for col in ("CO_TIPO_UNIDADE", "TP_UNIDADE", "CO_TIPO_ESTABELECIMENTO", "CO_ATIVIDADE_PRINCIPAL"):
         if col in filtrado:
             print("   %-26s %d de %d preenchidos" % (col, int((filtrado[col].fillna("").str.strip() != "").sum()), len(filtrado)))
-    from servicos import subtipo_saude
+    from servicos import SUBTIPOS_PUBLICO, subtipo_saude
     registros = filtrado.fillna("").to_dict("records")
     c = collections.Counter(descricao_tipo(r, tipos, tipos_estab) or "(sem descricao)" for r in registros)
     print("Tipos incluidos (nome do tipo):")
     for nome, n in c.most_common(25):
         print("   %4d  %s" % (n, nome))
-    print("Classificacao do site:", dict(collections.Counter(subtipo_saude(descricao_tipo(r, tipos, tipos_estab)) for r in registros)))
+    cls = collections.Counter(subtipo_saude(descricao_tipo(r, tipos, tipos_estab)) for r in registros)
+    print("Classificacao:", dict(cls))
+    print("Vao para o site (%s): %d | ficam de fora (apoio/outros): %d" % (
+        ", ".join(SUBTIPOS_PUBLICO), sum(v for k, v in cls.items() if k in SUBTIPOS_PUBLICO),
+        sum(v for k, v in cls.items() if k not in SUBTIPOS_PUBLICO)))
     lat = para_numero(filtrado["NU_LATITUDE"].fillna(""))
     print("Com latitude valida: %d de %d" % (int(lat.notna().sum()), len(filtrado)))
     print("Com CEP valido: %d de %d" % (int(filtrado["CO_CEP"].map(normalizar_cep).notna().sum()), len(filtrado)))

@@ -38,6 +38,8 @@
 
   function cartao(s, area) {
     var partes = [];
+    var tipoTxt = Acesso.rotuloSubtipo(s.subtipo);
+    if (tipoTxt) partes.push('<p class="meta">' + esc(tipoTxt) + "</p>");
     if (s.distancia_m != null) {
       var aprox = s.geo === "centroide_cep" ? " (localização aproximada pelo CEP do serviço)" : "";
       partes.push('<p class="dist">' + esc(Acesso.formatarDistancia(s.distancia_m)) + aprox + "</p>");

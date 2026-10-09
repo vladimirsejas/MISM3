@@ -55,8 +55,16 @@ def localizar(cep, lat, lon, indice: dict):
     return None, None, "sem_local"
 
 
+# Subtipos que sao LUGARES onde a usuaria pode ir. O resto (centrais, ambulancias, vigilancia,
+# laboratorio, farmacia...) e estrutura de apoio e nao aparece no site.
+SUBTIPOS_PUBLICO = ("ubs", "urgencia", "hospital", "caps", "especialidades")
+
+
 def subtipo_saude(descricao: str) -> str:
     d = _norm(descricao)
+    if any(x in d for x in ("central", "movel", "vigilancia", "laboratorio", "apoio_diagnose", "sadt",
+                            "abastecimento", "regulacao", "telessaude", "farmacia", "consultorio_isolado")):
+        return "apoio"
     if "caps" in d or "psicossocial" in d:
         return "caps"
     if "pronto" in d or "urgencia" in d or "upa" in d:
