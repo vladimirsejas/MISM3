@@ -17,6 +17,103 @@
     });
   }
 
+
+  var CATEGORIAS = {
+    emprego_curso: {
+      titulo: "Emprego, renda e cursos",
+      descricao: "Comece pelas oportunidades e confirme prazos, requisitos e inscrições diretamente na fonte.",
+      tipos: ["emprego_curso"],
+      links: [
+        ["Portal da Empregabilidade de Rio Claro", "https://vagas.rioclaro.sp.gov.br/", "Consultar oportunidades e informações para trabalhadores."],
+        ["Trampolim — Governo de São Paulo", "https://www.trampolim.sp.gov.br/", "Consultar oportunidades e cursos disponíveis na plataforma."]
+      ]
+    },
+    saude: {
+      titulo: "Saúde",
+      descricao: "Encontre serviços de saúde cadastrados. Em urgência médica, ligue 192.",
+      tipos: ["saude"],
+      links: []
+    },
+    estudo: {
+      titulo: "Estudo e qualificação",
+      descricao: "Veja informações sobre educação infantil, escolas e cursos. A abertura de turma ou vaga precisa ser confirmada.",
+      tipos: ["creche", "emprego_curso"],
+      links: [
+        ["Secretaria Municipal da Educação", "https://rioclaro.sp.gov.br/secretaria/secretaria-da-educacao/", "Informações oficiais sobre a rede municipal."],
+        ["Fundo Social de Solidariedade", "https://rioclaro.sp.gov.br/secretaria/fundo-social-de-solidariedade/", "Informações sobre cursos e programas."]
+      ]
+    },
+    filhos: {
+      titulo: "Filhos: creche, escola e apoio",
+      descricao: "Reúna os caminhos para educação infantil e apoio à família. A existência de uma unidade não confirma vaga disponível.",
+      tipos: ["creche", "assistencia", "saude"],
+      links: [
+        ["Secretaria Municipal da Educação", "https://rioclaro.sp.gov.br/secretaria/secretaria-da-educacao/", "Orientações sobre a rede e matrícula."],
+        ["Consulta pública da demanda escolar", "https://www.educacaorc.com.br/?r=demandaescolar", "Consulte as informações disponibilizadas no portal da Educação."]
+      ]
+    },
+    casamento: {
+      titulo: "Casamento, separação e direitos",
+      descricao: "Veja caminhos para buscar orientação sobre direitos e questões familiares. O catálogo específico dessa área ainda está sendo ampliado.",
+      tipos: ["mulher", "assistencia"],
+      links: [
+        ["Defensoria Pública do Estado de São Paulo", "https://www.defensoria.sp.def.br/", "Consulte os canais oficiais de orientação jurídica e os critérios de atendimento."]
+      ]
+    },
+    violencia: {
+      titulo: "Violência: proteção e ajuda",
+      descricao: "Se houver perigo imediato, ligue 190. Para orientação e denúncia de violência contra a mulher, Ligue 180. Não é necessário contar sua história ao MISM3.",
+      tipos: ["mulher", "assistencia"],
+      links: [
+        ["Ligue 180 — Central de Atendimento à Mulher", "https://www.gov.br/mulheres/pt-br/ligue180", "Canal nacional de atendimento, orientação e encaminhamento."],
+        ["Secretaria Municipal da Mulher", "https://rioclaro.sp.gov.br/secretaria/secretaria-da-mulher/", "Consulte os contatos institucionais publicados pela Prefeitura."]
+      ]
+    },
+    familia: {
+      titulo: "Família e assistência",
+      descricao: "Encontre serviços cadastrados de assistência, saúde, apoio à mulher e educação. Se uma informação estiver ausente, isso não significa que o serviço não exista.",
+      tipos: ["assistencia", "mulher", "saude", "creche"],
+      links: [
+        ["Secretaria de Desenvolvimento Social", "https://rioclaro.sp.gov.br/secretaria/secretaria-de-desenvolvimento-social/", "Informações institucionais sobre assistência social."],
+        ["Secretaria Municipal da Mulher", "https://rioclaro.sp.gov.br/secretaria/secretaria-da-mulher/", "Informações e contatos da Secretaria."]
+      ]
+    }
+  };
+
+  function abrirCategoria(chave) {
+    var c = CATEGORIAS[chave];
+    if (!c) return;
+    $("painel-categoria").hidden = false;
+    document.querySelector(".portas").hidden = true;
+    $("titulo-categoria").textContent = c.titulo;
+    $("descricao-categoria").textContent = c.descricao;
+    var html = "";
+    c.links.forEach(function (l) {
+      html += '<article class="cartao"><h3><a href="' + esc(l[1]) + '" target="_blank" rel="noopener noreferrer">' + esc(l[0]) + '</a></h3><p>' + esc(l[2]) + '</p><p class="meta">Fonte externa oficial; confira os dados e a disponibilidade no site de origem.</p></article>';
+    });
+    var encontrados = dados.servicos ? dados.servicos.filter(function (s) { return c.tipos.indexOf(s.tipo) !== -1; }) : [];
+    if (encontrados.length) {
+      html += '<h3 class="subtitulo">Serviços cadastrados em Rio Claro</h3>';
+      encontrados.forEach(function (s) { html += cartao(s, null); });
+    } else {
+      html += '<p class="vazio">Ainda não há serviços dessa categoria carregados no catálogo desta versão. Estamos ampliando e validando os registros. Consulte também as fontes oficiais acima.</p>';
+    }
+    if (chave === "violencia") {
+      html += '<article class="cartao urgente"><h3>Ajuda imediata</h3><p>Polícia: <a href="tel:190">190</a></p><p>Central de Atendimento à Mulher: <a href="tel:180">180</a></p><p>Atendimento médico de urgência: <a href="tel:192">192</a></p><p class="meta">Se o aparelho puder estar sendo monitorado, considere usar um dispositivo seguro. O botão “Sair rápido” não apaga o histórico do navegador.</p></article>';
+    }
+    $("opcoes-categoria").innerHTML = html;
+    $("painel-categoria").scrollIntoView({behavior:"smooth", block:"start"});
+  }
+
+  document.querySelectorAll("[data-categoria]").forEach(function (b) {
+    b.addEventListener("click", function () { abrirCategoria(b.getAttribute("data-categoria")); });
+  });
+  $("voltar-portas").addEventListener("click", function () {
+    $("painel-categoria").hidden = true;
+    document.querySelector(".portas").hidden = false;
+    document.querySelector(".portas").scrollIntoView({behavior:"smooth", block:"start"});
+  });
+
   function iniciar() {
     carregar("dados/cep_indice.json").then(function (idx) {
       return carregar("dados/servicos.json").then(function (sv) { return [idx, sv, false]; });
