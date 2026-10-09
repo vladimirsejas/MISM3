@@ -10,6 +10,7 @@ Regras do projeto, valem para todos os scripts:
 from __future__ import annotations
 
 import html
+import http.client
 import io
 import json
 import re
@@ -41,34 +42,56 @@ def abrir_url(url: str, timeout: int = 60) -> bytes:
         return resp.read()
 
 
-def baixar(url: str, destino: Path, tentativas: int = 3, mostrar: bool = True) -> Path:
-    """Baixa um arquivo grande em blocos, com nova tentativa e escrita atomica."""
+def baixar(url: str, destino: Path, tentativas: int = 15, mostrar: bool = True) -> Path:
+    """Baixa um arquivo grande em blocos. RETOMA de onde parou se a conexao cair.
+
+    Guarda o que ja veio em "<arquivo>.parte" e, na nova tentativa, pede so o resto (cabecalho
+    Range). Se o servidor ignorar o pedido de retomada, recomeca do zero. Servidores lentos como
+    o do INEP costumam cair no meio de arquivos de centenas de MB: por isso 15 tentativas.
+    """
     destino = Path(destino)
     destino.parent.mkdir(parents=True, exist_ok=True)
     parcial = destino.with_suffix(destino.suffix + ".parte")
     ultimo_erro: Exception | None = None
     for n in range(1, tentativas + 1):
         try:
-            req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-            with urllib.request.urlopen(req, timeout=120) as resp, open(parcial, "wb") as f:
-                total = int(resp.headers.get("Content-Length") or 0)
-                lido = 0
-                while True:
-                    bloco = resp.read(1024 * 256)
-                    if not bloco:
-                        break
-                    f.write(bloco)
-                    lido += len(bloco)
-                    if mostrar and total:
-                        print("\r  %s: %5.1f%% (%d MB)" % (destino.name, 100 * lido / total, lido // 1_048_576), end="", flush=True)
+            ja = parcial.stat().st_size if parcial.exists() else 0
+            cab = {"User-Agent": USER_AGENT}
+            if ja:
+                cab["Range"] = "bytes=%d-" % ja
+            with urllib.request.urlopen(urllib.request.Request(url, headers=cab), timeout=60) as resp:
+                if ja and getattr(resp, "status", 200) != 206:
+                    ja = 0  # servidor ignorou a retomada: recomeca
+                tam = int(resp.headers.get("Content-Length") or 0)
+                esperado = (ja + tam) if tam else 0
+                if mostrar and ja:
+                    print("  retomando de %d MB" % (ja // 1_048_576))
+                lido = ja
+                with open(parcial, "ab" if ja else "wb") as f:
+                    while True:
+                        bloco = resp.read(1024 * 256)
+                        if not bloco:
+                            break
+                        f.write(bloco)
+                        lido += len(bloco)
+                        if mostrar and esperado:
+                            print("\r  %s: %5.1f%% (%d MB)" % (destino.name, 100 * lido / esperado, lido // 1_048_576), end="", flush=True)
+            if esperado and parcial.stat().st_size < esperado:
+                raise OSError("download incompleto (%d de %d bytes)" % (parcial.stat().st_size, esperado))
             if mostrar:
                 print()
             parcial.replace(destino)
             return destino
-        except (urllib.error.URLError, TimeoutError, ConnectionError) as e:  # noqa: PERF203
+        except urllib.error.HTTPError as e:
             ultimo_erro = e
-            print("  tentativa %d/%d falhou: %s" % (n, tentativas, e))
-            time.sleep(2 * n)
+            if e.code == 416 and parcial.exists():  # parcial inconsistente: recomeca
+                parcial.unlink()
+            print("\n  tentativa %d/%d falhou: HTTP %s" % (n, tentativas, e.code))
+            time.sleep(min(30, 2 * n))
+        except (OSError, http.client.HTTPException) as e:  # URLError, timeout, conexao cortada
+            ultimo_erro = e
+            print("\n  tentativa %d/%d falhou: %s" % (n, tentativas, e))
+            time.sleep(min(30, 2 * n))
     raise RuntimeError("Nao consegui baixar %s: %s" % (url, ultimo_erro))
 
 
