@@ -1,0 +1,17 @@
+# Downloads grandes e dados brutos: ficam so no computador de quem roda o pipeline
+dados/bruto/*
+!dados/bruto/.gitkeep
+docs/cnes/
+docs/ibge/
+*.zip
+*.parte
+*.shp
+*.dbf
+*.shx
+*.parquet
+
+# Python / testes
+__pycache__/
+.pytest_cache/
+*.pyc
+.venv/

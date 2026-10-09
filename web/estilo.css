@@ -1,0 +1,30 @@
+:root{--bg:#fbf8f6;--fg:#2a2230;--mut:#6b6275;--pri:#6b2d8a;--pri2:#f1e6f6;--bor:#e4dbe9;--alerta:#a4161a}
+@media (prefers-color-scheme:dark){:root{--bg:#1b1620;--fg:#f1ecf4;--mut:#b6abc0;--pri:#c99be3;--pri2:#2b2234;--bor:#3b3045;--alerta:#ff8c8f}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:var(--pri)}
+.faixa-demo{background:#ffd54a;color:#3b2f00;text-align:center;padding:.5rem 1rem;font-weight:700}
+.barra-emergencia{display:flex;gap:.75rem;align-items:center;justify-content:space-between;flex-wrap:wrap;background:var(--pri2);border-bottom:2px solid var(--alerta);padding:.6rem 1rem}
+.barra-emergencia a{font-weight:700;color:var(--alerta)}
+#sair-rapido{background:var(--alerta);color:#fff;border:0;border-radius:.4rem;padding:.45rem .8rem;font-weight:700;cursor:pointer}
+.topo,main,.rodape{max-width:880px;margin:0 auto;padding:0 1rem}
+.topo h1{margin:1.2rem 0 .2rem}
+.busca{background:var(--pri2);border:1px solid var(--bor);border-radius:.8rem;padding:1rem;margin:1rem 0}
+.busca label{font-weight:700}
+.linha{display:flex;gap:.5rem;margin-top:.4rem}
+.linha input{flex:1;font-size:1.3rem;padding:.6rem;border:1px solid var(--bor);border-radius:.5rem;background:var(--bg);color:var(--fg);min-width:0}
+.linha button{font-size:1.1rem;padding:.6rem 1.2rem;border:0;border-radius:.5rem;background:var(--pri);color:var(--bg);font-weight:700;cursor:pointer}
+.privacidade{font-size:.85rem;color:var(--mut);margin:.6rem 0 0}
+.mensagem{padding:.7rem 1rem;border-left:4px solid var(--alerta);background:var(--pri2);border-radius:.3rem}
+.resumo{color:var(--mut)}
+#mapa{height:340px;border-radius:.8rem;border:1px solid var(--bor);background:var(--pri2)}
+.tiles{display:block;font-size:.85rem;color:var(--mut);margin:.4rem 0 1rem}
+.grupo{margin:1.2rem 0}
+.grupo h2{font-size:1.15rem;margin:0 0 .4rem;border-bottom:2px solid var(--bor);padding-bottom:.2rem}
+.cartao{border:1px solid var(--bor);border-radius:.6rem;padding:.7rem .9rem;margin:.5rem 0;background:var(--bg)}
+.cartao h3{margin:0;font-size:1rem}
+.cartao .dist{color:var(--pri);font-weight:700}
+.cartao p{margin:.2rem 0;font-size:.92rem}
+.cartao .meta{color:var(--mut);font-size:.8rem}
+.vazio{color:var(--mut);font-style:italic}
+.rodape{font-size:.85rem;color:var(--mut);padding-bottom:3rem}

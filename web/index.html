@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>Mapa do Cuidado – Rio Claro</title>
+<link rel="stylesheet" href="vendor/leaflet.css">
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<div id="faixa-demo" class="faixa-demo" hidden>DADOS ILUSTRATIVOS — nenhum serviço abaixo é real. Rode o pipeline para usar dados reais.</div>
+
+<div class="barra-emergencia" role="region" aria-label="Emergência">
+  <span><strong>Em perigo agora?</strong> Ligue <a href="tel:190">190</a> · Violência contra a mulher: <a href="tel:180">Ligue 180</a> (24h, gratuito)</span>
+  <button id="sair-rapido" type="button" title="Fecha esta página e abre outro site">Sair rápido</button>
+</div>
+
+<header class="topo">
+  <h1>Mapa do Cuidado</h1>
+  <p>Descubra, a partir do seu CEP, os serviços públicos mais próximos: apoio à mulher, assistência social, creches, saúde e trabalho em Rio Claro/SP.</p>
+</header>
+
+<main>
+  <form id="form-cep" class="busca" autocomplete="off">
+    <label for="cep">Digite seu CEP</label>
+    <div class="linha">
+      <input id="cep" inputmode="numeric" maxlength="9" placeholder="00000-000" autocomplete="off" autocapitalize="off" spellcheck="false">
+      <button type="submit">Buscar</button>
+    </div>
+    <p class="privacidade">Seu CEP fica só neste aparelho: a consulta é feita aqui no navegador, nada é enviado, gravado ou contado. Usamos o centro do CEP, nunca o seu endereço.</p>
+  </form>
+
+  <p id="mensagem" role="status" class="mensagem" hidden></p>
+
+  <section id="resultado" hidden>
+    <p id="resumo-area" class="resumo"></p>
+    <div id="mapa" aria-label="Mapa dos serviços próximos"></div>
+    <label class="tiles"><input type="checkbox" id="usar-tiles"> Mostrar ruas (carrega imagens do OpenStreetMap; o servidor do mapa saberá a região aproximada)</label>
+    <div id="grupos"></div>
+  </section>
+</main>
+
+<footer class="rodape">
+  <p><strong>Como ler este mapa.</strong> A lista mostra serviços cadastrados em fontes públicas (CNES, Censo Escolar/INEP, páginas da Prefeitura). Isso <em>não</em> informa se há vaga, fila ou horário atual: confirme sempre com o serviço. Distâncias são em linha reta a partir do centro do CEP.</p>
+  <p id="fontes"></p>
+</footer>
+
+<script src="vendor/leaflet.js"></script>
+<script src="acesso.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
