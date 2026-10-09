@@ -11,7 +11,7 @@ O painel deve ajudar a gestão a decidir o que investigar e qual ação testar, 
 - Os nomes de regiões e as ocorrências de buscas sem resultado são exemplos de demonstração, não um retrato de Rio Claro.
 - As recomendações são regras transparentes e ilustrativas, não previsões nem decisões automáticas.
 - A alternância entre “Visão pública” e “Visão de gestão” apenas esconde partes da interface no navegador. **Não é autenticação nem autorização.** Dados reais exclusivos da gestão não podem ser colocados em arquivos estáticos acessíveis publicamente. Uma implantação real exigiria autenticação, autorização no servidor, proteção das APIs e dos arquivos e revisão de segurança.
-- A supressão de valores pequenos é apenas uma demonstração. Antes de publicar estatísticas reais, é necessário avaliar risco de reidentificação por cruzamento, geografia, período e totais complementares; um limite fixo de cinco não garante anonimato.
+- O gerador e o JSON demonstrativo suprimem valores fictícios inferiores a cinco (52 dos 408 setores nesta versão). Antes de publicar estatísticas reais, é necessário avaliar risco de reidentificação por cruzamento, geografia, período e totais complementares; um limite fixo de cinco não garante anonimato.
 - Não registrar nem encaminhar relatos individuais de saúde, violência ou questões jurídicas para o painel de gestão. A análise deve usar apenas dados cuja finalidade, base legal, acesso, retenção e agregação tenham sido definidos.
 
 ## Recomendações demonstrativas
@@ -46,3 +46,12 @@ O painel não deve converter automaticamente um sinal em decisão de orçamento 
 - Government Analysis Function — [Statistical disclosure control for tables](https://analysisfunction.civilservice.gov.uk/policy-store/statistical-disclosure-control-for-tables-produced-from-surveys/): pequenas contagens podem exigir supressão complementar para evitar inferência por subtração.
 
 Essas referências fundamentam princípios gerais de trabalho com dados; não certificam este protótipo nem substituem a análise jurídica e de segurança necessária para uma implantação real.
+
+
+## Verificações realizadas nesta versão
+
+- Sintaxe de `web/gestao.js`: verificada com compilação JavaScript (`new Function`), sem erro de sintaxe.
+- Busca: os testes automatizados de `web/tests/necessidades.test.js` passaram, incluindo 47 frases de aceitação. Os arquivos de busca não foram alterados nesta branch.
+- Estrutura: conferido que a página contém o painel de ações e que o script chama sua renderização.
+- Dados de demonstração: 408 chaves de setor; os valores menores que cinco estão como `null` no JSON desta versão.
+- **Não realizado:** teste visual completo em navegador, teste de leitor de tela, execução local do gerador Python e teste de autenticação real. O protótipo continua sem autenticação e não deve receber dados reais.
