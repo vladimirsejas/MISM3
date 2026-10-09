@@ -65,7 +65,7 @@ Preencha `catalogo/vagas_publicas.csv` com o **link do edital oficial** (Prefeit
 Coloque o CSV "Tabela da lista das escolas" do INEP em `docs/` e rode `python pipeline/servicos.py`. Aparecem como **Escolas com Educação Infantil (não confirma creche)**: o arquivo não diz se há berçário nem vagas.
 
 ## Tarefas e pedidos formais
-`docs/tarefas_do_grupo.md` (o que cada pessoa pode fazer agora) e `docs/pedidos_LAI.md` (rascunhos dos pedidos de acesso à informação).
+`docs/inspiracoes_internacionais.md` (o que França, Reino Unido, Alemanha, EUA e São Paulo fazem e o que adaptar), `docs/tarefas_do_grupo.md` (o que cada pessoa pode fazer agora) e `docs/pedidos_LAI.md` (rascunhos dos pedidos de acesso à informação).
 
 ## Próximos marcos
 2. Setores censitários + Censo 2022 (crianças de 0 a 4 anos): "desertos de cuidado" e simulador de nova creche.

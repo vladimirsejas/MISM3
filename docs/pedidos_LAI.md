@@ -28,6 +28,8 @@ Solicito a relação atualizada das linhas de transporte coletivo municipal, pre
 
 Solicito informar se a Prefeitura ou a operadora mantém arquivo GTFS ou outro conjunto de dados digitais dos itinerários e horários e, em caso positivo, fornecer o link público ou indicar o procedimento de acesso. Caso os dados estejam sob guarda da empresa operadora, solicito o encaminhamento ao órgão responsável ou a identificação da unidade competente. Não é necessário produzir estudo novo: peço acesso aos registros e arquivos existentes.
 
+Solicito também informar se existe norma ou prática de **desembarque noturno fora do ponto** a pedido de passageiras (como a adotada em outras cidades) e, se existir, em quais linhas e horários, e como a passageira é informada desse direito.
+
 Solicito ainda informar se é permitido reproduzir os horários e itinerários publicados no site da operadora em um mapa gratuito e sem fins lucrativos, sempre com crédito e link para a fonte original.
 
 ## 4. Educação — vagas e lista de espera para creche
@@ -47,6 +49,12 @@ Solicito os dados sem nomes, CPF, endereço residencial, data de nascimento comp
 Solicito a relação atualizada das unidades municipais que oferecem Educação Infantil, distinguindo claramente creche (0 a 3 anos) e pré-escola (4 e 5 anos). Para cada unidade, solicito, se disponíveis: nome; endereço; telefone institucional; etapas e faixas etárias atendidas; dias e horários de funcionamento; turnos ofertados (integral ou parcial); calendário de funcionamento; existência de atendimento em período integral; critérios de matrícula; e link ou procedimento oficial para solicitar vaga.
 
 Solicito também informar se há unidades com horários ampliados ou atendimento compatível com jornadas de trabalho fora do horário comercial, sem necessidade de identificar crianças ou famílias. Se a relação já existir em planilha ou sistema, peço cópia em formato aberto e a data da última atualização.
+
+## 7. Saúde — horários e serviços para a mulher
+
+**Assunto:** Unidades de saúde: horários e serviços de saúde da mulher
+
+Solicito a relação atualizada das unidades básicas de saúde e demais unidades municipais, em formato aberto, com: nome; endereço; telefone institucional; **dias e horários de funcionamento**; serviços de saúde da mulher oferecidos (pré-natal, planejamento familiar, exames preventivos); necessidade de agendamento; e acessibilidade (inclusive intérprete de Libras). Solicito informar também onde a população consulta plantões e a data da última atualização. Não solicito dados de pacientes.
 
 ## 6. Administração / Recursos Humanos — a Prefeitura como empregadora
 
