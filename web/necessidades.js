@@ -7,7 +7,7 @@
    fora de proposito: so entram dentro de expressoes que tem sentido. Ate 3 necessidades por frase. */
 (function (raiz, fabrica) {
   if (typeof module === "object" && module.exports) module.exports = fabrica();
-  else raiz.Necessidades = fabrica();
+  else { raiz.Necessidades = fabrica(); raiz.MISM3Necessidades = raiz.Necessidades; }
 })(typeof self !== "undefined" ? self : this, function () {
   /* tipos = grupos de Acesso.ORDEM a destacar, na ordem. objetivo = filtro da trilha de autonomia (Recomendar). */
   var LISTA = [
@@ -17,7 +17,8 @@
         "me xinga", "me xingou", "me humilha", "me humilhou", "me persegue", "me perseguindo", "me forcou", "me obriga",
         "nao deixa eu sair", "nao me deixa sair", "nao deixa eu trabalhar", "nao me deixa trabalhar", "me proibe", "me proibiu",
         "controla meu dinheiro", "controla tudo", "tenho medo dele", "medo dele", "medo do marido", "medo do meu marido",
-        "medo do companheiro", "medo do meu companheiro", "medo do namorado", "medo do ex", "medo de apanhar"],
+        "medo do companheiro", "medo do meu companheiro", "medo do namorado", "medo do ex", "medo de apanhar",
+        "bate em mim", "me empurrou", "me machucou", "me controla", "estou em perigo", "em perigo"],
       tipos: ["mulher", "assistencia", "saude"],
       aviso: "Em perigo agora: ligue 190 (polícia) ou 192 (SAMU). Violência contra a mulher: Ligue 180, 24 horas, gratuito. Você não precisa se identificar para pedir orientação." },
     { id: "casamento", rotulo: "Casamento, separação, guarda, pensão",
@@ -34,19 +35,20 @@
       tipos: ["assistencia", "mulher"] },
     { id: "filhos", rotulo: "Filhos e cuidado infantil",
       palavras: ["filho*", "filha*", "crianc*", "bebe*", "creche*", "maternidade", "escola infantil", "educacao infantil", "emei",
-        "baba", "com quem deixar", "deixar meu filho", "deixar meus filhos", "ninguem para cuidar", "gravida", "gestante", "gravidez",
-        "matricula", "escola"],
+        "baba", "com quem deixar", "deixar meu filho", "deixar meus filhos", "ninguem para cuidar",
+        "matricula", "escola do meu filho", "escola dos meus filhos", "escola da minha filha", "levar na escola"],
+      exclusivas: ["escola do meu filho", "escola dos meus filhos", "escola da minha filha", "levar na escola"],  // so de "filhos": as outras nao as enxergam
       tipos: ["creche", "educacao_infantil", "saude", "assistencia"],
       aviso: "O cadastro mostra onde há escolas e creches, não se há vaga. Confirme com a Secretaria de Educação." },
     { id: "saude", rotulo: "Saúde",
       palavras: ["saude", "medic*", "doente", "doenca*", "ubs", "upa", "posto de saude", "hospital", "pronto socorro", "remedio*",
         "consulta*", "exame*", "psicolog*", "psiquiatr*", "ansiedade", "depress*", "terapia", "caps", "vacina*", "menopausa",
-        "gestacao", "gravida", "gravidez", "pre natal", "ginecolog*", "mamografia", "preventivo"],
+        "gestacao", "gestante", "gravida", "gravidez", "pre natal", "ginecolog*", "mamografia", "preventivo", "dor"],
       tipos: ["saude"] },
     { id: "emprego", rotulo: "Emprego e renda", objetivo: "trabalhar",
       palavras: ["emprego*", "desemprega*", "trabalh*", "curriculo*", "renda", "ganhar dinheiro", "fonte de renda",
         "vaga de emprego", "vagas de emprego", "vaga de trabalho", "vagas de trabalho", "procuro vaga", "procurando vaga",
-        "empreend*", "negocio", "credito", "microempreendedor*", "mei", "concurso*", "pat", "conecta", "banco do povo", "bico", "diarista"],
+        "qualific*", "capacit*", "empreend*", "negocio", "credito", "microempreendedor*", "mei", "concurso*", "pat", "conecta", "banco do povo", "bico", "diarista"],
       tipos: ["emprego_curso"] },
     { id: "estudo", rotulo: "Estudo e cursos", objetivo: "curso",
       palavras: ["estud*", "faculdade", "universidade", "ensino medio", "ensino superior", "eja", "supletivo", "curso*", "qualific*",
@@ -60,6 +62,7 @@
       links: [{ texto: "Linhas e horários (SOU Transportes)", url: "https://soutransportes.com.br/rio-claro/" }] }
   ];
   var MAXIMO = 3;
+  var IGNORAR = ["escola de samba", "guarda municipal", "bolsa de couro", "vaga lume"];
 
   function normalizar(t) {
     return String(t == null ? "" : t).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase()
@@ -81,13 +84,23 @@
   /* Texto livre -> necessidades que casam (ate 3). Urgente (violencia) sempre primeiro; o resto na ordem da frase. */
   function identificar(texto) {
     var t = normalizar(String(texto == null ? "" : texto).replace(/\*/g, " "));
+    IGNORAR.forEach(function (x) { t = (" " + t + " ").replace(" " + normalizar(x) + " ", " ").trim(); });
     if (t === "") return [];
     var tokens = t.split(" ");
     var achadas = [];
     LISTA.forEach(function (n) {
+      // expressoes "exclusivas" de OUTRA necessidade somem do texto que esta enxerga (ex.: "levar na escola" nao e estudo)
+      var meus = tokens;
+      LISTA.forEach(function (o) {
+        if (o !== n && o.exclusivas) {
+          var u = " " + meus.join(" ") + " ";
+          o.exclusivas.forEach(function (x) { u = u.split(" " + normalizar(x) + " ").join(" "); });
+          meus = u.trim() === "" ? [] : u.trim().split(" ");
+        }
+      });
       var melhor = -1;
       n.palavras.forEach(function (p) {
-        var pos = posicao(p, tokens);
+        var pos = posicao(p, meus);
         if (pos >= 0 && (melhor < 0 || pos < melhor)) melhor = pos;
       });
       if (melhor >= 0) achadas.push({ n: n, pos: melhor });
@@ -110,5 +123,10 @@
     return { destaque: destaque, outros: outros };
   }
 
-  return { LISTA: LISTA, normalizar: normalizar, identificar: identificar, porId: porId, separar: separar };
+  /* Mesmo resultado, com o nome das "portas" da tela (emprego -> emprego_curso). Mantido por compatibilidade. */
+  function identificarCategorias(texto) {
+    return identificar(texto).map(function (n) { return n.id === "emprego" ? "emprego_curso" : n.id; });
+  }
+
+  return { LISTA: LISTA, normalizar: normalizar, identificar: identificar, identificarCategorias: identificarCategorias, porId: porId, separar: separar };
 });

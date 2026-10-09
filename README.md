@@ -1,5 +1,7 @@
 # Mapa do Cuidado Rio-Clarense (marco 1)
 
+> **Orientação:** este README é somente um mapa resumido do trabalho, não uma fonte de verdade nem uma base para decisões. Antes de decidir ou afirmar que algo existe, confira o código, os testes executados, os dados/fontes originais e o [registro de decisões de desenvolvimento](docs/registro_decisoes_desenvolvimento.md).
+
 Comece escrevendo uma necessidade ou escolhendo uma porta: **Emprego, Saúde, Estudo, Filhos, Casamento e direitos, Violência ou Família**. A busca por palavras é processada localmente no navegador e abre caminhos, links oficiais e serviços cadastrados em Rio Claro/SP. Também é possível buscar serviços próximos pelo CEP; o CEP **nunca sai do navegador**. O catálogo está em expansão e informa quando faltam dados.
 
 ## Privacidade (por desenho)
@@ -53,6 +55,9 @@ Na tela inicial a pessoa toca numa "porta" (Emprego, Saúde, Estudo, Filhos, Cas
 ## De mulher para mulher
 Área para mulheres que oferecem serviços a outras mulheres. **Quem verifica é a Secretaria da Mulher**: o site não tem como garantir que só mulheres participam, então só publica cadastros já conferidos por ela (o que foi conferido, por quem e quando). `catalogo/mulher_para_mulher.csv` está vazio e a porta só aparece quando há cadastro válido; no modo demonstração aparecem dois exemplos marcados [DEMO]. O validador exige consentimento, só bairro (nunca endereço) e validade de até 180 dias. Papéis, fluxo, limites e roteiro para a banca em `docs/de_mulher_para_mulher.md`. Não prometemos segurança, não há pagamento nem notas.
 
+## Abrir o protótipo com um clique (sem servidor, sem internet)
+Dê dois cliques em **`abrir_demo.bat`** (Windows) ou abra `demo_unico/index.html` no navegador. Cada página é um arquivo único, com estilos, scripts e dados embutidos; os links entre telas funcionam (Mapa do Cuidado, Painel de Gestão, Inteligência Pública, De Mulher para Mulher). Depois de qualquer mudança em `web/`, rode `python pipeline/gerar_demo_unico.py` para atualizar. O `abrir_site.bat` (servidor local com Python) continua valendo para quem está desenvolvendo.
+
 ## Painel de Gestão (protótipo, dados fictícios)
 Abra `web/gestao.html` (ou `gestao.html?visao=gestao`). Mostra o que as mulheres procuram por necessidade, buscas por mês, o funil do interesse ao resultado (inscrição → participação → conclusão → nova oportunidade), demanda × oferta por região, crianças de 0 a 4 anos por setor sobre a malha real de 408 setores, qualidade do catálogo (calculada ao vivo) e as buscas sem resultado. **Todos os números são fictícios**, gerados por `python pipeline/gerar_demo_gestao.py` (semente fixa, com invariantes conferidos). Contagens abaixo de 5 são ocultadas.
 
@@ -76,4 +81,4 @@ Coloque o CSV "Tabela da lista das escolas" do INEP em `docs/` e rode `python pi
 2. Setores censitários + Censo 2022 (crianças de 0 a 4 anos): "desertos de cuidado" e simulador de nova creche.
 3. Relatórios automáticos explicados; vagas e cursos; transporte.
 
-Veja `docs/inventario_de_fontes.md`, a [análise competitiva e roadmap funcional](docs/analise_competitiva_mism3.md), o [plano de fontes externas e expansão](docs/plano_fontes_externas_e_expansao.md) e o [benchmark externo de ideias funcionais](docs/benchmark_externo_ideias_funcionais.md), que transforma referências de outros produtos em melhorias priorizadas para o MISM3.
+Veja o [registro de decisões de desenvolvimento](docs/registro_decisoes_desenvolvimento.md), o [protótipo De Mulher para Mulher](web/rede-mulheres.html), o [painel conceitual Inteligência Pública](web/inteligencia-publica.html) e o [roteiro de demonstração com três histórias fictícias](docs/roteiro_demo_mism3.md), `docs/inventario_de_fontes.md`, a [análise competitiva e roadmap funcional](docs/analise_competitiva_mism3.md), o [plano de fontes externas e expansão](docs/plano_fontes_externas_e_expansao.md) e o [benchmark externo de ideias funcionais](docs/benchmark_externo_ideias_funcionais.md), que transforma referências de outros produtos em melhorias priorizadas para o MISM3.
