@@ -201,7 +201,11 @@
    "fonte": "Dado ilustrativo",
    "fonte_url": "",
    "verificado_em": "2026-10-08",
-   "observacao": "Exemplo para demonstrar a tela."
+   "observacao": "Exemplo para demonstrar a tela.",
+   "objetivos": [
+    "curso"
+   ],
+   "gratuito": true
   },
   {
    "id": "demo-12",
@@ -219,7 +223,10 @@
    "fonte": "Dado ilustrativo",
    "fonte_url": "",
    "verificado_em": "2026-10-08",
-   "observacao": "Exemplo para demonstrar a tela."
+   "observacao": "Exemplo para demonstrar a tela.",
+   "objetivos": [
+    "trabalhar"
+   ]
   }
  ]
 }

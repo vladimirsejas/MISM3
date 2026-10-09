@@ -4,6 +4,7 @@
   var $ = function (id) { return document.getElementById(id); };
   var dados = { indice: null, servicos: null, demo: false };
   var mapa = null, camadas = null, tiles = null;
+  var ultimo = null, objetivo = null;  /* so em memoria: nada vai para storage, cookie ou rede */
 
   function esc(s) {
     return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
@@ -57,7 +58,36 @@
     return '<article class="cartao"><h3>' + esc(s.nome) + "</h3>" + partes.join("") + "</article>";
   }
 
+  function desenharObjetivos() {
+    $("objetivos").innerHTML = Object.keys(Recomendar.OBJETIVOS).map(function (k) {
+      return '<button type="button" data-obj="' + k + '" aria-pressed="' + (objetivo === k) + '">' + esc(Recomendar.OBJETIVOS[k]) + "</button>";
+    }).join("");
+  }
+
+  function desenharSugestoes() {
+    var alvo = $("sugestoes");
+    if (!objetivo || !ultimo) { alvo.innerHTML = ""; return; }
+    var todos = ultimo.grupos.reduce(function (a, g) { return a.concat(g.municipais, g.proximos, g.sem_localizacao); }, []);
+    var lista = Recomendar.recomendar(todos, objetivo);
+    if (!lista.length) {
+      alvo.innerHTML = '<p class="vazio">Ainda não temos serviço cadastrado para este objetivo com essa informação confirmada. Isso não significa que não exista.</p>';
+      return;
+    }
+    alvo.innerHTML = lista.map(function (s, i) {
+      return '<article class="cartao"><p class="meta">Sugestão ' + (i + 1) + "</p>" + cartao(s, ultimo.area).replace(/^<article class="cartao">|<\/article>$/g, "") +
+        '<ul class="porque">' + s.porque.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("") + "</ul></article>";
+    }).join("") + '<p class="meta">A ordem usa só o que o cadastro oficial confirma (objetivo, gratuidade, distância em linha reta). Não avalia você e não garante vaga.</p>';
+  }
+
+  $("objetivos").addEventListener("click", function (e) {
+    var k = e.target && e.target.getAttribute("data-obj");
+    if (!k) return;
+    objetivo = objetivo === k ? null : k;
+    desenharObjetivos(); desenharSugestoes();
+  });
+
   function desenhar(r) {
+    ultimo = r; desenharObjetivos(); desenharSugestoes();
     var html = "";
     r.grupos.forEach(function (g) {
       var itens = g.municipais.concat(g.proximos);
@@ -132,7 +162,7 @@
   });
 
   $("sair-rapido").addEventListener("click", function () {
-    $("cep").value = ""; $("grupos").innerHTML = "";
+    $("cep").value = ""; $("grupos").innerHTML = ""; $("sugestoes").innerHTML = ""; ultimo = null; objetivo = null;
     window.location.replace("https://www.google.com.br/");
   });
 

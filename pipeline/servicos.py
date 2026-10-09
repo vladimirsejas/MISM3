@@ -23,6 +23,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import (BRUTO, CATALOGO, RAIZ, MUNICIPIO_IBGE6, MUNICIPIO_IBGE7, WEB_DADOS, achar_coluna, agora_iso,  # noqa: E402
                     ler_csv_flex, normalizar_cep, salvar_json)
 
+OBJETIVOS = ("trabalhar", "curso", "empreender")
 TIPOS = ("creche", "saude", "assistencia", "mulher", "emprego_curso")
 # Rio Claro/SP fica em aprox. lat -22.4, lon -47.56. Caixa folgada para rejeitar coordenada errada.
 CAIXA = (-22.65, -22.2, -47.8, -47.3)
@@ -128,6 +129,9 @@ def servicos_manuais(df, indice: dict) -> list[dict]:
             raise ValueError("Tipo invalido '%s' no catalogo manual (use: %s)" % (tipo, ", ".join(TIPOS)))
         if not g("fonte_url") or not g("verificado_em"):
             raise ValueError("Registro '%s' sem fonte_url/verificado_em: todo item manual precisa de fonte e data." % g("nome"))
+        for o in (g("objetivos") or "").split(";"):
+            if o and o not in OBJETIVOS:
+                raise ValueError("Objetivo invalido '%s' em '%s' (use: %s)" % (o, g("nome"), ", ".join(OBJETIVOS)))
         lat, lon, geo = localizar(g("cep"), g("lat"), g("lon"), indice)
         saida.append({
             "id": g("id") or "man-%s" % _norm(g("nome") or ""), "tipo": tipo, "subtipo": g("subtipo"),
@@ -135,7 +139,13 @@ def servicos_manuais(df, indice: dict) -> list[dict]:
             "telefone": g("telefone"), "horario": g("horario"), "lat": lat, "lon": lon, "geo": geo,
             "abrangencia": g("abrangencia") or "local", "fonte": "Pagina oficial (cadastro manual)",
             "fonte_url": g("fonte_url"), "verificado_em": g("verificado_em"), "observacao": g("observacao"),
+            "objetivos": [o for o in (g("objetivos") or "").split(";") if o],
+            "gratuito": True if g("gratuito") == "sim" else None,
         })
+        if not saida[-1]["objetivos"]:
+            del saida[-1]["objetivos"]
+        if saida[-1]["gratuito"] is None:
+            del saida[-1]["gratuito"]
     return saida
 
 

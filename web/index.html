@@ -37,6 +37,12 @@
     <p id="resumo-area" class="resumo"></p>
     <div id="mapa" aria-label="Mapa dos serviços próximos"></div>
     <label class="tiles"><input type="checkbox" id="usar-tiles"> Mostrar ruas (carrega imagens do OpenStreetMap; o servidor do mapa saberá a região aproximada)</label>
+    <section id="trilha" class="grupo">
+      <h2>O que você quer para a sua autonomia?</h2>
+      <p class="meta">Escolha um objetivo e veja onde começar, na ordem em que sugerimos e por quê. Sua escolha não é enviada nem gravada.</p>
+      <div id="objetivos" class="objetivos" role="group" aria-label="Objetivo"></div>
+      <div id="sugestoes"></div>
+    </section>
     <div id="grupos"></div>
   </section>
 </main>
@@ -48,6 +54,7 @@
 
 <script src="vendor/leaflet.js"></script>
 <script src="acesso.js"></script>
+<script src="recomendar.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

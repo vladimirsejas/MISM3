@@ -121,6 +121,22 @@ def test_catalogo_manual_real_valido():
     assert len(s) >= 2 and all(x["fonte_url"] and x["verificado_em"] for x in s)
 
 
+def test_objetivos_e_gratuito_do_catalogo():
+    base = {"tipo": "emprego_curso", "nome": "X", "fonte_url": "u", "verificado_em": "d"}
+    out = servicos.servicos_manuais(pd.DataFrame([dict(base, objetivos="trabalhar;curso", gratuito="sim")]), INDICE)[0]
+    assert out["objetivos"] == ["trabalhar", "curso"] and out["gratuito"] is True
+    vazio = servicos.servicos_manuais(pd.DataFrame([base]), INDICE)[0]
+    assert "objetivos" not in vazio and "gratuito" not in vazio  # nao inventa o que a fonte nao diz
+    with pytest.raises(ValueError):
+        servicos.servicos_manuais(pd.DataFrame([dict(base, objetivos="voar")]), INDICE)
+
+
+def test_catalogo_real_so_usa_objetivos_validos():
+    df = common.ler_csv_flex(common.CATALOGO / "servicos_manuais.csv")
+    for x in servicos.servicos_manuais(df, INDICE):
+        assert set(x.get("objetivos", [])) <= set(servicos.OBJETIVOS)
+
+
 def test_montar_deduplica():
     m = pd.DataFrame([{"id": "a", "tipo": "mulher", "nome": "X", "fonte_url": "u", "verificado_em": "d"}] * 2)
     out = servicos.montar(INDICE, manuais=m, hoje="2026-10-08")

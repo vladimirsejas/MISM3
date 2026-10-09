@@ -37,12 +37,18 @@ Se um download automático falhar (os sites mudam), o script diz onde baixar à 
     pip install pytest
     python -m pytest pipeline/tests -q
     node web/tests/acesso.test.js
+    node web/tests/recomendar.test.js
 
 ## Conferir o catálogo contra as páginas oficiais
 Com internet, rode `python pipeline/verificar_catalogo.py`. Ele abre a fonte de cada serviço e confere se os telefones cadastrados aparecem na página. "ATENCAO" não é erro certo: abra a fonte e confira.
 
 ## Acrescentar um serviço verificado
 Edite `catalogo/servicos_manuais.csv`. Obrigatórios: `tipo` (creche, saude, assistencia, mulher, emprego_curso), `nome`, `fonte_url`, `verificado_em`. Com `cep`, o serviço entra no mapa; `abrangencia=municipal` faz aparecer para todas. Depois rode `python pipeline/servicos.py`.
+
+## Trilha de autonomia (recomendação sem banco de dados)
+Depois de buscar o CEP, a usuária escolhe um objetivo (trabalhar, fazer curso, empreender) e vê os serviços de trabalho/renda em ordem, cada um com o **porquê** (objetivo confirmado no cadastro, gratuidade, distância). É uma regra aberta e explicável em `web/recomendar.js`, não um modelo treinado, e roda no navegador: nada é gravado. Só entra quem tem `objetivos` preenchido no catálogo (`trabalhar`, `curso`, `empreender`, separados por `;`) e `gratuito=sim` apenas quando a página oficial diz. Sem a informação confirmada, o serviço não é sugerido para o objetivo: não adivinhamos.
+
+Decisão de projeto: **não usamos conta, e-mail, perfil salvo nem PostgreSQL por enquanto**, para manter a promessa de privacidade do marco 1. Banco só se justifica quando houver um parceiro que cadastre turmas/vagas (veja `docs/decisoes.md`).
 
 ## Próximos marcos
 2. Setores censitários + Censo 2022 (crianças de 0 a 4 anos): "desertos de cuidado" e simulador de nova creche.

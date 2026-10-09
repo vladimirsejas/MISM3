@@ -28,3 +28,8 @@ a{color:var(--pri)}
 .cartao .meta{color:var(--mut);font-size:.8rem}
 .vazio{color:var(--mut);font-style:italic}
 .rodape{font-size:.85rem;color:var(--mut);padding-bottom:3rem}
+
+.objetivos { display: flex; flex-wrap: wrap; gap: .5rem; margin: .5rem 0 1rem; }
+.objetivos button { padding: .6rem 1rem; border: 2px solid #6b2d8a; background: #fff; color: #6b2d8a; border-radius: 999px; font: inherit; cursor: pointer; }
+.objetivos button[aria-pressed="true"] { background: #6b2d8a; color: #fff; }
+.porque { margin: .5rem 0 0; padding-left: 1.2rem; font-size: .95rem; }
