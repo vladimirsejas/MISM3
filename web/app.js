@@ -80,6 +80,27 @@
     }
   };
 
+  function normalizar(texto) {
+    return String(texto || "").normalize("NFD").replace(/[\\u0300-\\u036f]/g, "").toLowerCase().trim();
+  }
+
+  function identificarCategoria(texto) {
+    var t = normalizar(texto);
+    var regras = [
+      ["violencia", ["violencia", "agressao", "ameaca", "abuso", "medo", "protecao", "medida protetiva"]],
+      ["casamento", ["casamento", "separacao", "divorcio", "pensão", "pensao", "guarda", "direitos", "advogada", "defensoria"]],
+      ["filhos", ["filho", "filhos", "crianca", "criancas", "bebe", "creche", "maternidade", "escola infantil", "babá", "baba"]],
+      ["emprego_curso", ["emprego", "trabalho", "vaga", "vagas", "renda", "curriculo", "curso", "cursos", "qualificacao", "empreender", "dinheiro"]],
+      ["saude", ["saude", "medico", "medica", "consulta", "exame", "hospital", "posto", "psicologa", "psicologo", "menopausa", "gestacao"]],
+      ["estudo", ["estudo", "estudar", "faculdade", "universidade", "escola", "ensino", "bolsa", "alfabetizacao"]],
+      ["familia", ["familia", "assistencia", "beneficio", "beneficios", "cras", "creas", "aluguel", "moradia", "comida", "cesta basica", "apoio"]]
+    ];
+    for (var i = 0; i < regras.length; i++) {
+      if (regras[i][1].some(function (termo) { return t.indexOf(normalizar(termo)) !== -1; })) return regras[i][0];
+    }
+    return null;
+  }
+
   function abrirCategoria(chave) {
     var c = CATEGORIAS[chave];
     if (!c) return;
@@ -104,6 +125,25 @@
     $("opcoes-categoria").innerHTML = html;
     $("painel-categoria").scrollIntoView({behavior:"smooth", block:"start"});
   }
+
+  $("form-necessidade").addEventListener("submit", function (ev) {
+    ev.preventDefault();
+    var texto = $("necessidade").value;
+    var chave = identificarCategoria(texto);
+    var aviso = $("mensagem-necessidade");
+    if (!texto.trim()) {
+      aviso.textContent = "Digite uma necessidade, como emprego, saúde, creche ou violência.";
+      aviso.hidden = false;
+      return;
+    }
+    if (!chave) {
+      aviso.textContent = "Ainda não reconheci essa necessidade. Tente uma palavra como emprego, saúde, estudo, filhos, casamento, violência ou família.";
+      aviso.hidden = false;
+      return;
+    }
+    aviso.hidden = true;
+    abrirCategoria(chave);
+  });
 
   document.querySelectorAll("[data-categoria]").forEach(function (b) {
     b.addEventListener("click", function () { abrirCategoria(b.getAttribute("data-categoria")); });
