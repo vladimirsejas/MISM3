@@ -85,7 +85,7 @@ def gerar() -> dict:
     for f in geo["features"]:
         pessoas = int(f["properties"].get("pessoas") or 0)
         r = random.Random(f"{SEMENTE}-{f['properties']['setor']}")
-        setores[f["properties"]["setor"]] = int(pessoas * r.uniform(0.03, 0.095))
+        setores[f["properties"]["setor"]] = suprimir(int(pessoas * r.uniform(0.03, 0.095)))
 
     sem_resultado = [{"tema": t, "ocorrencias": n} for t, n in SEM_RESULTADO]
     # cada necessidade fica identificavel na lista de "sem resultado" so se passar do limite de privacidade
