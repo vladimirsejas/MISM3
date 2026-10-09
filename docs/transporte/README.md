@@ -1,16 +1,21 @@
 # Horários de ônibus de Rio Claro
 
-## Fonte primária
+## Fonte utilizada no levantamento
 
-- [SOU Transportes — Rio Claro](https://soutransportes.com.br/rio-claro/)
-- [SOU Transportes — Linhas e horários](https://soutransportes.com.br/rio-claro/linhas-e-horarios/)
+**Fonte informada para os documentos reunidos no projeto:** [SOU Transportes — Rio Claro](https://soutransportes.com.br/rio-claro/).
 
-A página principal da SOU informa que o aplicativo oferece informações em tempo real e tabelas de horários. A página específica de linhas e horários não expôs tabelas legíveis na consulta automatizada feita para este projeto.
+Página específica de linhas e horários: [SOU Transportes — Linhas e horários](https://soutransportes.com.br/rio-claro/linhas-e-horarios/).
+
+Os 12 PDFs guardados localmente em `docs/transporte/` foram obtidos/impressos a partir da fonte da SOU indicada acima, conforme informado durante o levantamento. Portanto, essa URL deve ser citada como origem dos documentos na documentação do MISM3.
+
+## Resultado da extração
+
+O script `pipeline/extrair_texto_onibus.py` conseguiu abrir os 12 PDFs e processar 29 páginas, mas o texto extraído contém somente cabeçalhos de impressão/anotações. Os horários não ficaram disponíveis como texto legível nesses arquivos. Isso não invalida a fonte: significa apenas que os PDFs locais não permitiram extrair automaticamente as tabelas.
 
 ## Estado da base
 
-O arquivo `web/dados/horarios_onibus.json` registra a fonte primária, mas ainda não contém horários. Isso é intencional: a extração anterior dos 12 PDFs locais retornou apenas cabeçalhos de páginas de anotações, não os horários. Não devemos transformar esses arquivos em dados de transporte nem tratar horários não verificados como oficiais.
+O arquivo `web/dados/horarios_onibus.json` registra a fonte da SOU, mas ainda não contém horários estruturados. Não preencher horários por suposição.
 
 ## Próximo passo
 
-Extrair as tabelas diretamente da página da SOU, do aplicativo oficial ou de arquivos de horários publicados pela operadora. Para cada linha, guardar número/nome, sentido, tipo de dia, horários, URL da fonte e data de consulta. Se não for possível ler a tabela automaticamente, registrar a limitação sem inventar valores.
+Obter as tabelas legíveis a partir da própria página da SOU ou de seus arquivos/documentos publicados e estruturar cada linha com número/nome, sentido, tipo de dia, horários, URL da fonte e data de consulta. Preservar a URL da SOU como referência de origem e indicar separadamente qualquer dificuldade técnica de extração.
