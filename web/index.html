@@ -24,7 +24,16 @@
 <main>
   <section class="portas" aria-labelledby="titulo-portas">
     <h2 id="titulo-portas">O que você precisa hoje?</h2>
-    <p>Escolha uma opção para ver caminhos e serviços relacionados.</p>
+    <p>Escreva sua necessidade ou escolha uma das opções abaixo. A busca acontece neste aparelho.</p>
+    <form id="form-necessidade" class="busca-necessidade" autocomplete="off">
+      <label for="necessidade">O que você está procurando?</label>
+      <div class="linha">
+        <input id="necessidade" type="search" maxlength="100" placeholder="Ex.: emprego, creche, separação, violência" autocomplete="off" aria-describedby="ajuda-necessidade">
+        <button type="submit">Encontrar caminhos</button>
+      </div>
+      <p id="ajuda-necessidade" class="privacidade">Não escreva nomes, documentos ou detalhes pessoais. O texto não é enviado a nenhum servidor.</p>
+      <p id="mensagem-necessidade" class="mensagem" role="status" hidden></p>
+    </form>
     <div class="grade-portas">
       <button class="porta" type="button" data-categoria="emprego_curso"><span aria-hidden="true">💼</span><strong>Emprego</strong><small>Vagas, renda e cursos</small></button>
       <button class="porta" type="button" data-categoria="saude"><span aria-hidden="true">＋</span><strong>Saúde</strong><small>Atendimento e cuidado</small></button>
