@@ -49,3 +49,14 @@ Não inferir que uma funcionalidade existe só porque aparece no README ou em um
 
 ## Atualização deste registro
 Ao concluir mudanças relevantes, registrar o que foi alterado, o teste executado, o resultado observado e o que ainda não foi verificado.
+
+### Inteligência Pública
+- Criada a página `web/inteligencia-publica.html`.
+- A página tenta carregar `web/dados/setores_resumo.json` e mostra contagens de setores, pessoas e domicílios apenas se o arquivo estiver disponível.
+- O gráfico de comparação territorial usa valores fictícios explicitamente marcados `[DEMO]`; não representa estatísticas de Rio Claro.
+- O painel explica que a malha geral não comprova demanda por creche e que são necessários dados apropriados de faixa etária e oferta.
+- Sintaxe JavaScript embutida verificada; ainda falta inspeção visual e teste com um arquivo real confirmado.
+
+### Navegação
+- A tela inicial agora liga para os protótipos De Mulher para Mulher e Inteligência Pública.
+- O teste de busca foi repetido depois das alterações: 39 cenários passaram. Sintaxe de `web/app.js` e dos scripts embutidos nas duas páginas foi verificada.
