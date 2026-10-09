@@ -36,6 +36,9 @@ const casos = [
   ["a vaga-lume apareceu no quintal", []],
   ["bolsa de couro", []],
   ["quero conversar sobre escola de samba", ["estudo"]],
+  ["Preciso de emprego e de uma vaga na creche para meu filho", ["filhos", "emprego_curso"]],
+  ["Quero me separar, mas não tenho dinheiro para pagar uma advogada", ["casamento", "familia"]],
+  ["Meu marido me ameaça e não deixa eu sair", ["violencia", "casamento"]],
   ["", []],
   ["   ", []]
 ];
