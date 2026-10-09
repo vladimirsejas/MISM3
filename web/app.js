@@ -35,6 +35,29 @@
     });
   }
 
+  function hojeISO() {  /* data local do aparelho; so serve para decidir aberto/encerrado e nunca e enviada */
+    var d = new Date(), z = function (n) { return (n < 10 ? "0" : "") + n; };
+    return d.getFullYear() + "-" + z(d.getMonth() + 1) + "-" + z(d.getDate());
+  }
+
+  function carregarVagas() {
+    carregar("dados/vagas.json").then(function (j) {
+      var lista = Vagas.organizar(j.vagas || [], hojeISO());
+      if (!lista.length) return;
+      $("lista-vagas").innerHTML = lista.map(function (v) {
+        var p = ['<p class="meta">' + esc(Vagas.ROTULO[v.situacao]) + " · prazo final " + esc(Vagas.dataBR(v.inscricoes_ate)) + "</p>"];
+        if (v.inscricoes_de) p.push("<p>Inscrições a partir de " + esc(Vagas.dataBR(v.inscricoes_de)) + "</p>");
+        if (v.banca) p.push("<p>Banca organizadora: " + esc(v.banca) + "</p>");
+        if (v.cargos_resumo) p.push("<p>Cargos: " + esc(v.cargos_resumo) + "</p>");
+        if (v.escolaridade) p.push("<p>Escolaridade: " + esc(v.escolaridade) + "</p>");
+        if (v.observacao) p.push("<p>" + esc(v.observacao) + "</p>");
+        p.push('<p class="meta"><a href="' + esc(v.edital_url) + '" target="_blank" rel="noopener noreferrer">Edital oficial</a> · verificado em ' + esc(Vagas.dataBR(v.verificado_em)) + "</p>");
+        return '<article class="cartao"><h3>' + esc(v.titulo) + '</h3><p class="meta">' + esc(v.orgao) + "</p>" + p.join("") + "</article>";
+      }).join("");
+      $("vagas").hidden = false;
+    }).catch(function () { /* sem vagas cadastradas: a secao continua escondida */ });
+  }
+
   function mostrarMensagem(t) { var m = $("mensagem"); m.textContent = t; m.hidden = !t; }
 
   function cartao(s, area) {
@@ -167,4 +190,5 @@
   });
 
   iniciar();
+  carregarVagas();
 })();

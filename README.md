@@ -38,6 +38,7 @@ Se um download automático falhar (os sites mudam), o script diz onde baixar à 
     python -m pytest pipeline/tests -q
     node web/tests/acesso.test.js
     node web/tests/recomendar.test.js
+    node web/tests/vagas.test.js
 
 ## Conferir o catálogo contra as páginas oficiais
 Com internet, rode `python pipeline/verificar_catalogo.py`. Ele abre a fonte de cada serviço e confere se os telefones cadastrados aparecem na página. "ATENCAO" não é erro certo: abra a fonte e confira.
@@ -49,6 +50,15 @@ Edite `catalogo/servicos_manuais.csv`. Obrigatórios: `tipo` (creche, saude, ass
 Depois de buscar o CEP, a usuária escolhe um objetivo (trabalhar, fazer curso, empreender) e vê os serviços de trabalho/renda em ordem, cada um com o **porquê** (objetivo confirmado no cadastro, gratuidade, distância). É uma regra aberta e explicável em `web/recomendar.js`, não um modelo treinado, e roda no navegador: nada é gravado. Só entra quem tem `objetivos` preenchido no catálogo (`trabalhar`, `curso`, `empreender`, separados por `;`) e `gratuito=sim` apenas quando a página oficial diz. Sem a informação confirmada, o serviço não é sugerido para o objetivo: não adivinhamos.
 
 Decisão de projeto: **não usamos conta, e-mail, perfil salvo nem PostgreSQL por enquanto**, para manter a promessa de privacidade do marco 1. Banco só se justifica quando houver um parceiro que cadastre turmas/vagas (veja `docs/decisoes.md`).
+
+## Concursos e processos seletivos da Prefeitura
+Preencha `catalogo/vagas_publicas.csv` com o **link do edital oficial** (Prefeitura ou banca) e rode `python pipeline/vagas.py`. O validador recusa sites de notícia e agregadores, datas inválidas e `http` sem `s`. A seção só aparece no site se houver registros, e "aberto/encerrado" é calculado no navegador pela data de hoje.
+
+## Escolas com Educação Infantil
+Coloque o CSV "Tabela da lista das escolas" do INEP em `docs/` e rode `python pipeline/servicos.py`. Aparecem como **Escolas com Educação Infantil (não confirma creche)**: o arquivo não diz se há berçário nem vagas.
+
+## Tarefas e pedidos formais
+`docs/tarefas_do_grupo.md` (o que cada pessoa pode fazer agora) e `docs/lai_pedidos.md` (rascunhos dos pedidos de acesso à informação).
 
 ## Próximos marcos
 2. Setores censitários + Censo 2022 (crianças de 0 a 4 anos): "desertos de cuidado" e simulador de nova creche.

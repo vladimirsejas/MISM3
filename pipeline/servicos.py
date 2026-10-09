@@ -3,6 +3,7 @@
 Junta tres origens, sempre marcando de onde veio cada registro:
   * CNES (saude)               - base completa do CNES (pasta com tbEstabelecimento*.csv), via cnes.py
   * Censo Escolar (creches)    - dados/bruto/escolas/microdados_ed_basica_*.csv
+  * Catalogo de Escolas do INEP (educacao infantil, SEM afirmar creche) - escolas_inep.py
   * Catalogo manual verificado - catalogo/servicos_manuais.csv (CRAS, Secretaria da Mulher...)
 
 Localizacao: se a fonte traz coordenada valida, usa; senao usa o centro do CEP
@@ -24,7 +25,7 @@ from common import (BRUTO, CATALOGO, RAIZ, MUNICIPIO_IBGE6, MUNICIPIO_IBGE7, WEB
                     ler_csv_flex, normalizar_cep, salvar_json)
 
 OBJETIVOS = ("trabalhar", "curso", "empreender")
-TIPOS = ("creche", "saude", "assistencia", "mulher", "emprego_curso")
+TIPOS = ("creche", "educacao_infantil", "saude", "assistencia", "mulher", "emprego_curso")
 # Rio Claro/SP fica em aprox. lat -22.4, lon -47.56. Caixa folgada para rejeitar coordenada errada.
 CAIXA = (-22.65, -22.2, -47.8, -47.3)
 
@@ -150,7 +151,7 @@ def servicos_manuais(df, indice: dict) -> list[dict]:
 
 
 # ------------------------------------------------------------ principal
-def montar(indice: dict, cnes=None, escolas=None, manuais=None, hoje: str | None = None) -> dict:
+def montar(indice: dict, cnes=None, escolas=None, manuais=None, hoje: str | None = None, catalogo_escolas=None) -> dict:
     hoje = hoje or agora_iso()
     itens: list[dict] = []
     contagem = {}
@@ -158,6 +159,10 @@ def montar(indice: dict, cnes=None, escolas=None, manuais=None, hoje: str | None
         itens += cnes; contagem["cnes"] = len(cnes)
     if escolas is not None:
         a = servicos_creches(escolas, indice, hoje); itens += a; contagem["creches_inep"] = len(a)
+    if catalogo_escolas is not None:
+        import escolas_inep
+        a = escolas_inep.servicos_escolas(catalogo_escolas, indice, hoje, localizar)
+        itens += a; contagem["escolas_catalogo_inep"] = len(a)
     if manuais is not None:
         a = servicos_manuais(manuais, indice); itens += a; contagem["manuais"] = len(a)
     vistos, unicos = set(), []
@@ -198,12 +203,20 @@ def main() -> None:
     else:
         print("AVISO: Censo Escolar ausente. Coloque microdados_ed_basica_AAAA.csv em docs/educacao (ou dados/bruto/escolas).")
 
+    catalogo_escolas = None
+    ce = sorted(set((BRUTO / "escolas").glob("*lista das escolas*.csv")) | set((RAIZ / "docs").rglob("*lista das escolas*.csv")))
+    if ce:
+        catalogo_escolas = ler_csv_flex(ce[-1])
+        print("Catalogo de Escolas do INEP: %s" % ce[-1].name)
+    else:
+        print("AVISO: Catalogo de Escolas ausente. Coloque o CSV 'Tabela da lista das escolas' em docs/ (ou dados/bruto/escolas).")
+
     manuais = None
     m = CATALOGO / "servicos_manuais.csv"
     if m.exists():
         manuais = ler_csv_flex(m)
 
-    saida = montar(indice, cnes, escolas, manuais)
+    saida = montar(indice, cnes, escolas, manuais, catalogo_escolas=catalogo_escolas)
     salvar_json(saida, WEB_DADOS / "servicos.json")
     por_tipo, por_geo = {}, {}
     for s in saida["servicos"]:

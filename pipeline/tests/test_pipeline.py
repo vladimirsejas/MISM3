@@ -141,3 +141,62 @@ def test_montar_deduplica():
     m = pd.DataFrame([{"id": "a", "tipo": "mulher", "nome": "X", "fonte_url": "u", "verificado_em": "d"}] * 2)
     out = servicos.montar(INDICE, manuais=m, hoje="2026-10-08")
     assert len(out["servicos"]) == 1
+
+
+def _catalogo_escolas_falso():
+    return pd.DataFrame([
+        {"Código INEP": "35000001", "Escola": "EMEI JARDIM A", "Restrição de Atendimento": "Escola em funcionamento",
+         "Dependência Administrativa": "Municipal", "Endereço": "Rua A, 1", "Telefone": "(19) 3000-0001",
+         "Latitude": "-22,4010", "Longitude": "-47,5610", "Etapas e Modalidade de Ensino Oferecidas": "Educação Infantil - Pré-escola"},
+        {"Código INEP": "35000002", "Escola": "ESCOLA PARALISADA", "Restrição de Atendimento": "Escola paralisada",
+         "Dependência Administrativa": "Municipal", "Endereço": "Rua B, 2", "Telefone": "", "Latitude": "", "Longitude": "",
+         "Etapas e Modalidade de Ensino Oferecidas": "Educação Infantil"},
+        {"Código INEP": "35000003", "Escola": "COLEGIO SO FUNDAMENTAL", "Restrição de Atendimento": "Escola em funcionamento",
+         "Dependência Administrativa": "Estadual", "Endereço": "Rua C, 3", "Telefone": "", "Latitude": "", "Longitude": "",
+         "Etapas e Modalidade de Ensino Oferecidas": "Ensino Fundamental"},
+        {"Código INEP": "35000004", "Escola": "ESCOLA ESPECIAL", "Restrição de Atendimento": "Atende exclusivamente alunos com deficiência",
+         "Dependência Administrativa": "Privada", "Endereço": "Rua D, 4", "Telefone": "", "Latitude": "", "Longitude": "",
+         "Etapas e Modalidade de Ensino Oferecidas": "Educação Infantil"},
+        {"Código INEP": "35000005", "Escola": "BERCARIO PRIVADO", "Restrição de Atendimento": "Escola em funcionamento",
+         "Dependência Administrativa": "Privada", "Endereço": "Rua E, 5", "Telefone": "(19) 3000-0005", "Latitude": "", "Longitude": "",
+         "Etapas e Modalidade de Ensino Oferecidas": "Educação Infantil - Creche; Pré-escola"},
+    ])
+
+
+def test_catalogo_escolas_filtra_e_nao_afirma_creche():
+    out = servicos.montar(INDICE, catalogo_escolas=_catalogo_escolas_falso(), hoje="2026-10-09")["servicos"]
+    assert [s["id"] for s in out] == ["esc-35000001", "esc-35000005"]  # paralisada, so fundamental e especial ficam fora
+    assert all(s["tipo"] == "educacao_infantil" for s in out)           # nunca "creche"
+    a, b = out
+    assert (a["subtipo"], a["geo"], a["lat"]) == ("municipal", "coordenada_fonte", -22.401)
+    assert b["subtipo"] == "privada" and b["geo"] == "sem_local"
+    assert "NAO informa se atende creche" in a["observacao"]
+
+
+def test_catalogo_escolas_sem_colunas_essenciais_lista_o_que_achou():
+    with pytest.raises(ValueError, match="Colunas encontradas"):
+        servicos.montar(INDICE, catalogo_escolas=pd.DataFrame([{"x": "1"}]))
+
+
+def test_vagas_publicas():
+    import vagas
+    base = {"orgao": "Prefeitura", "titulo": "Concurso X", "tipo": "concurso", "inscricoes_ate": "2026-09-01",
+            "edital_url": "https://www.rioclaro.sp.gov.br/edital.pdf", "verificado_em": "2026-10-09"}
+    ok = vagas.validar(pd.DataFrame([dict(base, inscricoes_de="2026-08-01")]))
+    assert ok[0]["id"] == "concurso-x" and "situacao" not in ok[0]  # situacao e calculada no site
+    for ruim in (dict(base, edital_url="https://www.qconcursos.com/noticia"),   # agregador
+                 dict(base, edital_url="http://edital"),                         # sem https
+                 dict(base, inscricoes_ate="31/08/2026"),                        # data fora do padrao
+                 dict(base, inscricoes_ate="2026-02-31"),                        # data inexistente
+                 dict(base, inscricoes_de="2026-10-01"),                         # de depois de ate
+                 dict(base, tipo="vaga"),
+                 dict(base, orgao="")):
+        with pytest.raises(ValueError):
+            vagas.validar(pd.DataFrame([ruim]))
+    with pytest.raises(ValueError, match="repetidos"):
+        vagas.validar(pd.DataFrame([base, base]))
+
+
+def test_vagas_csv_real_valido():
+    import vagas
+    assert vagas.validar(common.ler_csv_flex(common.CATALOGO / "vagas_publicas.csv")) is not None
