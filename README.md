@@ -48,4 +48,4 @@ Edite `catalogo/servicos_manuais.csv`. Obrigatórios: `tipo` (creche, saude, ass
 2. Setores censitários + Censo 2022 (crianças de 0 a 4 anos): "desertos de cuidado" e simulador de nova creche.
 3. Relatórios automáticos explicados; vagas e cursos; transporte.
 
-Veja `docs/inventario_de_fontes.md`.
+Veja `docs/inventario_de_fontes.md` e a [análise competitiva e roadmap funcional](docs/analise_competitiva_mism3.md), que compara as páginas públicas consultadas e define os diferenciais a implementar.
