@@ -25,7 +25,7 @@ def grava(pasta, linhas):
         f.write(";".join(CAB_ESTAB) + "\n")
         for l in linhas:
             f.write(";".join(l) + "\n")
-    (pasta / "tbTipoUnidade202608.csv").write_text("CO_TIPO_UNIDADE;DS_TIPO_UNIDADE\n2;CENTRO DE SAUDE/UNIDADE BASICA\n73;PRONTO ATENDIMENTO\n36;CLINICA/CENTRO DE ESPECIALIDADE\n", encoding="latin-1")
+    (pasta / "tbTipoUnidade202608.csv").write_text("CO_TIPO_UNIDADE;DS_TIPO_UNIDADE\n2;CENTRO DE SAUDE/UNIDADE BASICA\n73;PRONTO ATENDIMENTO\n36;CLINICA/CENTRO DE ESPECIALIDADE\n42;UNIDADE MOVEL DE NIVEL PRE-HOSPITALAR NA AREA DE URGENCIA\n", encoding="latin-1")
     (pasta / "tbTurnoAtendimento202608.csv").write_text("CO_TURNO_ATENDIMENTO;DS_TURNO_ATENDIMENTO\n3;TURNOS DA MANHA E TARDE\n", encoding="latin-1")
 
 
@@ -101,3 +101,13 @@ def test_fallback_tipo_estabelecimento(tmp_path):
         "CO_TIPO_ESTABELECIMENTO;DS_TIPO_ESTABELECIMENTO;DS_CONCEITO_TIPO\n36;POLICLINICA;x\n", encoding="latin-1")
     servs, _ = cnes.carregar(tmp_path, INDICE, "2026-10-08")
     assert servs[0]["subtipo"] == "especialidades"
+
+
+def test_estrutura_de_apoio_fica_fora_do_site(tmp_path):
+    grava(tmp_path, [
+        linha("1", "1001", "UBS A", "13500001", "1244", "02", "354390"),
+        linha("2", "1002", "SAMU AMBULANCIA 1", "13500001", "1244", "42", "354390"),
+    ])
+    servs, cont = cnes.carregar(tmp_path, INDICE, "2026-10-08")
+    assert [s["nome"] for s in servs] == ["Ubs A"]
+    assert cont["fora_do_site_apoio_ou_outros"] == 1 and cont["no_site"] == 1

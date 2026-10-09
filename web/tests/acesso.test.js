@@ -34,4 +34,7 @@ assert.strictEqual(r.grupos.length, A.ORDEM.length);
 assert.strictEqual(A.buscar("abc", indice, serv).status, "cep_invalido");
 assert.strictEqual(A.buscar("13500002", indice, serv).status, "cep_desconhecido");
 assert(!("endereco" in r.area) && r.area.raio_m === 200);
+assert.strictEqual(A.rotuloSubtipo("ubs"), "Unidade básica de saúde");
+assert.strictEqual(A.rotuloSubtipo("desconhecido"), null);
+assert.strictEqual(A.rotuloSubtipo(null), null);
 console.log("acesso.js: todos os testes passaram");

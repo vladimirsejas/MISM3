@@ -12,6 +12,22 @@
     emprego_curso: "Trabalho, renda e cursos"
   };
 
+  var ROTULOS_SUBTIPO = {
+    ubs: "Unidade básica de saúde",
+    urgencia: "Pronto atendimento / urgência",
+    hospital: "Hospital",
+    caps: "CAPS (saúde mental)",
+    especialidades: "Atendimento especializado",
+    secretaria: "Secretaria municipal",
+    sede: "Sede administrativa",
+    municipal: "Rede municipal",
+    estadual: "Rede estadual",
+    federal: "Rede federal",
+    privada: "Rede privada"
+  };
+
+  function rotuloSubtipo(s) { return (s && ROTULOS_SUBTIPO[s]) || null; }
+
   function normalizarCep(v) {
     var s = String(v == null ? "" : v).replace(/\D/g, "");
     if (s.length !== 8 || s === "00000000") return null;
@@ -63,6 +79,6 @@
     return { status: "ok", cep: cep, area: { lat: area[0], lon: area[1], raio_m: area[2], setor: area[3], n: area[4] }, grupos: grupos };
   }
 
-  return { ORDEM: ORDEM, ROTULOS: ROTULOS, normalizarCep: normalizarCep, haversine: haversine,
+  return { ORDEM: ORDEM, ROTULOS: ROTULOS, rotuloSubtipo: rotuloSubtipo, normalizarCep: normalizarCep, haversine: haversine,
     formatarDistancia: formatarDistancia, comDistancia: comDistancia, buscar: buscar };
 });

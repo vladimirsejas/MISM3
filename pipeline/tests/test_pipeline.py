@@ -76,6 +76,14 @@ def test_subtipo_saude():
     assert servicos.subtipo_saude("CENTRO DE ATENCAO PSICOSSOCIAL") == "caps"
     assert servicos.subtipo_saude("POLICLINICA") == "especialidades"
     assert servicos.subtipo_saude("Clinica") == "outros"
+    # nomes reais do CNES de Rio Claro que NAO sao lugares de atendimento
+    for nome in ("UNIDADE MOVEL DE NIVEL PRE-HOSPITALAR NA AREA DE URGENCIA", "CENTRAL DE REGULACAO MEDICA DAS URGENCIAS",
+                 "FARMACIA", "CENTRAL DE ABASTECIMENTO", "UNIDADE DE VIGILANCIA EM SAUDE", "LABORATORIO DE SAUDE PUBLICA",
+                 "UNIDADE DE APOIO DIAGNOSE E TERAPIA (SADT ISOLADO)", "CONSULTORIO ISOLADO", "UNIDADE MOVEL TERRESTRE"):
+        assert servicos.subtipo_saude(nome) == "apoio", nome
+    assert servicos.subtipo_saude("HOSPITAL ESPECIALIZADO") == "hospital"
+    assert servicos.subtipo_saude("CENTRO DE ATENCAO PSICOSSOCIAL") == "caps"
+    assert servicos.subtipo_saude("CLINICA/CENTRO DE ESPECIALIDADE") == "especialidades"
 
 
 def test_creches():
