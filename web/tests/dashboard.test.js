@@ -61,6 +61,23 @@ assert.strictEqual(tel["Conselho Tutelar – Região Sul"], "(19) 3533-5411 / (1
 assert.strictEqual(tel["Conselho Tutelar – Região Norte"], "(19) 3523-6439", "telefone do Norte conforme a página do CMDCA");
 assert(!JSON.stringify(conselhos).includes("99336"), "telefone sem fonte não pode voltar");
 conselhos.forEach((s) => assert(s.conferido !== false && /CMDCA/.test(s.fonte) && s.fonte_url === "https://cmdcarioclaro.com.br/contato/", "fonte do Conselho: " + s.nome));
+/* ---- 5b. CRAS, CREAS e unidades de convivência (Secretaria de Desenvolvimento Social, 10/10/2026) ---- */
+const cras = catalogo.servicos.filter((s) => s.subtipo === "cras");
+assert.strictEqual(cras.length, 6, "a página oficial lista seis CRAS");
+cras.forEach((s) => assert(s.bairros && s.bairros.split(",").length >= 10, "CRAS sem lista de bairros: " + s.nome));
+const porNome = Object.fromEntries(catalogo.servicos.map((s) => [s.nome, s]));
+assert.strictEqual(porNome["CRAS Região Mãe Preta"].telefone, "(19) 3524-9954");
+assert.strictEqual(porNome["CRAS Região Panorama"].endereco, "Rua 14, 2763, Jd. Wenzel");
+assert(/endereço provisório/.test(porNome["CRAS Região Jardim Brasília"].observacao) && !porNome["CRAS Região Jardim Brasília"].telefone,
+  "o CRAS Jardim Brasília está em endereço provisório e sem telefone na fonte: nada pode ser inventado");
+const creas = catalogo.servicos.filter((s) => s.subtipo === "creas");
+assert.strictEqual(creas.length, 1);
+assert.strictEqual(creas[0].telefone, "(19) 3523-6420 / (19) 3523-6439");
+assert(creas[0].endereco.includes("Rua 6, 640") && creas[0].observacao.includes("creas@rioclaro.sp.gov.br"));
+assert(porNome["Conselho Tutelar – Região Norte"].observacao.includes("também aparece como telefone do CREAS"), "o número repetido entre Conselho Norte e CREAS deve ser sinalizado");
+assert.strictEqual(catalogo.servicos.filter((s) => s.subtipo === "scfv").length, 13, "a página oficial lista 13 unidades de convivência");
+catalogo.servicos.filter((s) => ["cras", "creas", "scfv"].includes(s.subtipo)).forEach((s) =>
+  assert(s.conferido !== false && s.fonte_url.startsWith("https://desenvolvimentosocial.rc.sp.gov.br/"), "fonte da Secretaria: " + s.nome));
 catalogo.servicos.filter((s) => s.conferido === false).forEach((s) => assert(/não conferida/.test(s.fonte), "item não conferido com fonte enganosa: " + s.nome));
 assert(app.includes("Ainda não conferido na página oficial") && app.includes("s.conferido === false"), "a interface deve avisar quando o item não foi conferido");
 
@@ -77,8 +94,9 @@ Areas.AREAS.forEach((a) => {
   assert.strictEqual(new Set(urls).size, urls.length, a.id + ": link repetido dentro da mesma área");
 });
 const assistencia = Areas.porId("assistencia");
-assert(assistencia.pendencias.some((p) => /CREAS/.test(p)) && assistencia.pendencias.some((p) => /Conselho Tutelar/.test(p)),
-  "CREAS e Conselho Tutelar sem dados verificados devem aparecer como pendentes, não como serviços");
+assert(!assistencia.pendencias.some((p) => /CREAS: endereço/.test(p)), "o CREAS já tem cadastro: não pode constar como pendente");
+assert(assistencia.pendencias.some((p) => /Horário de funcionamento dos CRAS/.test(p)), "a falta de horário dos CRAS/CREAS deve estar declarada");
+assert(assistencia.pendencias.some((p) => /Conselho Tutelar/.test(p)), "a falta de horário/plantão do Conselho Tutelar deve estar declarada");
 assert(Areas.porId("saude").pendencias.length, "Saúde deve declarar a lacuna quando o CNES não está carregado");
 assert.strictEqual(Areas.porId("inexistente"), null);
 
