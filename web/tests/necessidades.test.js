@@ -39,6 +39,13 @@ const casos = [
   ["Preciso de emprego e de uma vaga na creche para meu filho", ["filhos", "emprego_curso"]],
   ["Quero me separar, mas não tenho dinheiro para pagar uma advogada", ["casamento", "familia"]],
   ["Meu marido me ameaça e não deixa eu sair", ["violencia", "casamento"]],
+  ["preciso de aluguel social", ["moradia"]],
+  ["estou com medo de despejo e preciso de moradia", ["moradia"]],
+  ["quero fazer cadastro habitacional", ["moradia"]],
+  ["quero renegociar minhas dívidas", ["dividas"]],
+  ["não consigo pagar as contas do cartão", ["dividas"]],
+  ["quero simular minha aposentadoria no INSS", ["dividas"]],
+  ["estou sem dinheiro para comer e com contas atrasadas", ["dividas", "familia"]],
   ["", []],
   ["   ", []]
 ];
