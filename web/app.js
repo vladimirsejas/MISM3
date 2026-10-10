@@ -64,7 +64,7 @@
     },
     lazer: {
       titulo: "Lazer, cultura e esporte",
-      descricao: "Consulte a agenda de atividades e os filtros por dia, categoria e público. Enquanto não houver cadastros reais verificados, exemplos e horários fictícios ficam identificados como [DEMO].",
+      descricao: "A programação real ainda não foi cadastrada. Consulte diretamente os canais oficiais de Cultura, Esportes e Turismo; não exibimos atividades nem horários sem confirmação.",
       tipos: [],
       links: []
     },
@@ -137,7 +137,7 @@
       html = '<article class="cartao cartao-destaque"><h3><a href="saude.html">Qual é a minha unidade de saúde?</a></h3><p>Digite o seu bairro e veja a UBS de referência, telefones, horários, unidades 24 horas e saúde da mulher.</p><p class="meta">Dados de páginas oficiais, com a data da conferência.</p></article>' + html;
     }
     if (chave === "lazer") {
-      html += '<article class="cartao cartao-destaque"><h3><a href="lazer.html">Agenda de lazer, cultura e esporte</a></h3><p>Abra a agenda para filtrar atividades por dia, tipo, gratuidade e público.</p><p class="meta">Horários reais só entram com fonte oficial https e data de conferência; exemplos aparecem com faixa [DEMO].</p></article>';
+      html += '<article class="cartao cartao-destaque"><h3><a href="lazer.html">Agenda de lazer, cultura e esporte</a></h3><p>Abra a agenda para filtrar atividades por dia, tipo, gratuidade e público.</p><p class="meta">A agenda só exibirá atividades com fonte oficial e data de conferência. No momento, não há atividades cadastradas.</p></article>';
     }
     var candidatos = dados.servicos ? dados.servicos.filter(function (s) { return c.tipos.indexOf(s.tipo) !== -1; }) : [];
     var encontrados = candidatos.filter(function (s) {
@@ -279,22 +279,28 @@
   });
 
   function iniciar() {
-    carregar("dados/cep_indice.json").then(function (idx) {
-      return carregar("dados/servicos.json").then(function (sv) { return [idx, sv, false]; });
-    }).catch(function () {
-      return Promise.all([carregar("dados/demo/cep_indice.json"), carregar("dados/demo/servicos.json")])
-        .then(function (r) { return [r[0], r[1], true]; });
-    }).then(function (r) {
-      dados.indice = r[0].ceps;
-      /* cadastro "de mulher para mulher" vence: depois de renovar_ate nao aparece, mesmo que o arquivo seja antigo */
-      dados.servicos = r[1].servicos.filter(function (x) { return x.tipo !== "mulher_para_mulher" || (x.renovar_ate && x.renovar_ate >= hojeISO()); });
+    Promise.all([carregar("dados/cep_indice.json"), carregar("dados/servicos.json")]).then(function (r) {
+      dados.indice = r[0].ceps || {};
+      /* Só registros do catálogo real. Nunca substitui arquivo ausente por dados fictícios. */
+      dados.servicos = (r[1].servicos || []).filter(function (x) {
+        return x.tipo !== "mulher_para_mulher" || (x.renovar_ate && x.renovar_ate >= hojeISO());
+      });
       $("porta-m2m").hidden = !dados.servicos.some(function (x) { return x.tipo === "mulher_para_mulher"; });
-      dados.demo = !!(r[0].meta && r[0].meta.demo) || !!(r[1].meta && r[1].meta.demo);
-      $("faixa-demo").hidden = !dados.demo;
-      $("fontes").textContent = "Índice de CEPs: " + (r[0].meta.fonte || "") + " · Serviços gerados em " + (r[1].meta.gerado_em || "?") + ".";
-      $("aviso-cep-demo").hidden = !dados.demo;
+      dados.demo = false;
+      var fontes = [];
+      if (r[0].meta && r[0].meta.fonte) fontes.push("Índice de CEPs: " + r[0].meta.fonte);
+      if (r[1].meta && r[1].meta.gerado_em) fontes.push("Serviços atualizados em " + r[1].meta.gerado_em);
+      $("fontes").textContent = fontes.join(" · ");
+      $("faixa-demo").hidden = true;
+      $("aviso-cep-demo").hidden = true;
     }).catch(function () {
-      mostrarMensagem("Não foi possível carregar os dados. Abra o site por um servidor local (veja o README).");
+      dados.indice = {};
+      dados.servicos = [];
+      dados.demo = false;
+      $("faixa-demo").hidden = true;
+      $("aviso-cep-demo").hidden = true;
+      mostrarMensagem("O catálogo de serviços ou o índice de CEPs reais não está disponível nesta execução. A busca por categorias e os links oficiais continuam disponíveis; a busca por proximidade fica indisponível até carregar os dados reais.");
+      $("contagem") && ($("contagem").textContent = "Busca por CEP indisponível: índice real não carregado.");
     });
   }
 
