@@ -52,7 +52,7 @@ const dadosVisiveis = ler("dados/catalogo_manual.json");
 });
 assert(fs.existsSync(path.join(web, "dados/catalogo_manual.json")), "o catálogo verificado deve acompanhar o site");
 const catalogo = JSON.parse(dadosVisiveis);
-assert.strictEqual(catalogo.meta.demo, false, "o catálogo do site não pode ser de demonstração");
+assert(!("demo" in catalogo.meta), "não deve existir marcador de demonstração no catálogo");
 catalogo.servicos.forEach((s) => assert(s.fonte_url && s.verificado_em && !/\[DEMO\]/.test(s.nome), "serviço sem fonte/data ou de demonstração: " + s.nome));
 const conselhos = catalogo.servicos.filter((s) => /Conselho Tutelar/.test(s.nome));
 assert.strictEqual(conselhos.length, 2, "devem constar o Conselho Tutelar Sul e o Norte");
@@ -94,11 +94,11 @@ assert.deepStrictEqual(Areas.areasDaNecessidade(Busca.identificarCategorias("nã
 assert(index.includes('class="pular"'), "falta o link para pular ao conteúdo");
 
 /* ---- 7. Comportamento esperado no código ---- */
-assert(app.includes("sv.meta && sv.meta.demo"), "dados de demonstração nunca devem ser exibidos");
+["web/dados/demo", "web/prototipos", "docs/roteiro_demo_mism3.md"].forEach((c) => assert(!fs.existsSync(path.join(web, "..", c)), "conteúdo de demonstração removido não pode voltar: " + c));
 assert(app.includes("history.state && history.state.app"), "Voltar deve usar o histórico apenas quando a navegação começou no sistema");
 assert(app.includes("linksTelefone") && !/replace\(\/\[\^\\d\+\]\/g, ""\)\) \+ '">' \+ esc\(s\.telefone/.test(app), "telefones múltiplos devem ter um link cada");
 assert(app.includes("busca-por-cep"), "a busca por CEP deve continuar existindo");
 assert(css.includes(".emergencia>summary") && css.includes("min-height:44px"), "alvos de toque devem ter pelo menos 44px");
 assert(!/prefers-color-scheme:\s*dark/.test(css), "a interface deve manter o fundo claro");
 
-console.log("dashboard.test.js: sete portas, emergência, navegação, ausência de demonstração, links locais e conteúdo das áreas passaram");
+console.log("dashboard.test.js: sete portas, emergência, navegação, nenhum conteúdo de demonstração, links locais e conteúdo das áreas passaram");
