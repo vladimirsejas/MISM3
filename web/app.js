@@ -137,7 +137,7 @@
       html = '<article class="cartao cartao-destaque"><h3><a href="saude.html">Qual é a minha unidade de saúde?</a></h3><p>Digite o seu bairro e veja a UBS de referência, telefones, horários, unidades 24 horas e saúde da mulher.</p><p class="meta">Dados de páginas oficiais, com a data da conferência.</p></article>' + html;
     }
     if (chave === "lazer") {
-      html += '<article class="cartao cartao-destaque"><h3><a href="lazer.html">Agenda de lazer, cultura e esporte</a></h3><p>Abra a agenda para filtrar atividades por dia, tipo, gratuidade e público.</p><p class="meta">A agenda só exibirá atividades com fonte oficial e data de conferência. No momento, não há atividades cadastradas.</p></article>';
+      html += '<article class="cartao cartao-destaque"><h3><a href="lazer.html">Lazer, cultura e esporte</a></h3><p>A agenda ainda não tem atividades confirmadas. Consulte as páginas oficiais de Cultura, Esportes e Turismo.</p></article>';
     }
     var candidatos = dados.servicos ? dados.servicos.filter(function (s) { return c.tipos.indexOf(s.tipo) !== -1; }) : [];
     var encontrados = candidatos.filter(function (s) {
@@ -291,8 +291,6 @@
       if (r[0].meta && r[0].meta.fonte) fontes.push("Índice de CEPs: " + r[0].meta.fonte);
       if (r[1].meta && r[1].meta.gerado_em) fontes.push("Serviços atualizados em " + r[1].meta.gerado_em);
       $("fontes").textContent = fontes.join(" · ");
-      $("faixa-demo").hidden = true;
-      $("aviso-cep-demo").hidden = true;
     }).catch(function () {
       dados.indice = {};
       dados.servicos = [];
