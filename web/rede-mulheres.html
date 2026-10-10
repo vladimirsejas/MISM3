@@ -10,7 +10,6 @@
 </head>
 <body class="pagina">
 <div class="faixa-institucional"><strong>Protótipo acadêmico</strong> · Fatec Rio Claro · Curso de Inteligência Artificial · não é um serviço oficial da Prefeitura</div>
-<div id="faixa-demo" class="faixa-demo" role="note" hidden><strong>[DEMO]</strong> Os cartões e contatos abaixo são fictícios. Não ligue para números de demonstração. Cadastros reais só aparecem depois da verificação prevista no projeto.</div>
 
 <nav class="navegacao-principal" aria-label="Navegação principal">
   <a class="marca-site" href="index.html"><span class="marca-selo" aria-hidden="true">M3</span><span class="marca-texto"><strong>MISM3</strong><span>Mapa do Cuidado · Rio Claro/SP</span></span></a>
@@ -51,7 +50,7 @@
       <li>Depois da verificação, o projeto publica apenas o nome profissional, a descrição do serviço, o bairro/região e o contato de trabalho autorizado.</li>
       <li>O cadastro precisa ser renovado no prazo previsto e pode ser retirado a pedido da profissional.</li>
     </ol>
-    <p>Esta página não recebe inscrições, não envia formulários e não guarda dados pessoais. A presença de exemplos [DEMO] não significa que exista cadastro real ativo.</p>
+    <p>Esta página não recebe inscrições nem encaminha denúncias. Não há cadastros de profissionais publicados até que sejam conferidos e autorizados pela Secretaria responsável.</p>
   </section>
 
   <section class="orientacao-rede" aria-labelledby="como-denunciar">
@@ -71,7 +70,7 @@
 (function () {
   "use strict";
   var $ = function (id) { return document.getElementById(id); };
-  var areas = [], cadastros = [], areaAtual = "", modoDemo = false;
+  var areas = [], cadastros = [], areaAtual = "";
   var icones = {
     costura_artesanato: "✂", beleza: "✦", alimentacao: "♨", cuidadoras: "♡",
     limpeza: "⌂", reparos: "⚒", aulas: "▤", saude_bem_estar: "+",
@@ -105,15 +104,13 @@
   function carregarServicos() {
     return json("dados/servicos.json").then(function (d) {
       var lista = Array.isArray(d) ? d : (d.servicos || []);
-      var reais = lista.filter(function (c) { return c.tipo === "mulher_para_mulher"; });
-      if (reais.length) return { lista: reais, demo: !!(d.meta && d.meta.demo) };
-      return json("dados/demo/servicos.json").then(function (demo) {
-        return { lista: demo.servicos || [], demo: true };
+      return lista.filter(function (c) {
+        return c.tipo === "mulher_para_mulher" && c.verificado === true &&
+          c.fonte_url && /^https:\/\//.test(c.fonte_url) && c.verificado_em;
       });
     }).catch(function () {
-      return json("dados/demo/servicos.json").then(function (demo) {
-        return { lista: demo.servicos || [], demo: true };
-      });
+      /* Catálogo ausente significa lista vazia, nunca substituída por perfis inventados. */
+      return [];
     });
   }
   function servicosDaArea(chave) {
@@ -137,7 +134,7 @@
   function cartao(c) {
     var nome = c.nome || "Nome profissional não informado";
     var servico = c.descricao || nome;
-    var tel = modoDemo || /^\[DEMO\]/i.test(nome) ? "" : telefones(c);
+    var tel = telefones(c);
     var selo = c.verificacao || ("Verificação não informada no cadastro");
     return '<article class="cartao-rede-servico">' +
       '<h3>' + esc(servico) + '</h3>' +
@@ -146,7 +143,7 @@
       '<p><strong>Onde atende:</strong> ' + esc(onde(c)) + '</p>' +
       '<p class="selo-verificacao">' + esc(selo) + '</p>' +
       (tel ? '<a class="botao-ligar" href="' + esc(tel) + '">Ligar</a>' :
-        '<button class="botao-ligar" type="button" disabled>' + (modoDemo ? "Ligar [DEMO — indisponível]" : "Contato não disponível") + '</button>') +
+        '<button class="botao-ligar" type="button" disabled>' + "Contato não disponível" + '</button>') +
       '</article>';
   }
   function abrirArea(chave) {
@@ -179,14 +176,11 @@
   });
   Promise.all([json("dados/areas_mulheres.json"), carregarServicos()]).then(function (resultados) {
     areas = resultados[0].areas || [];
-    cadastros = resultados[1].lista.filter(function (c) { return c.tipo === "mulher_para_mulher"; });
-    modoDemo = resultados[1].demo || cadastros.some(function (c) { return /^\[DEMO\]/i.test(c.nome || "") || /^demo-/i.test(c.id || ""); });
-    $("faixa-demo").hidden = !modoDemo;
+    cadastros = resultados[1];
     desenharAreas();
-    $("status-rede").textContent = modoDemo ?
-      "Modo demonstração: " + cadastros.length + " exemplos fictícios distribuídos nas áreas." :
-      cadastros.length + " cadastro(s) vigente(s) carregado(s). A verificação é responsabilidade da Secretaria da Mulher.";
-    if (!cadastros.length) $("status-rede").textContent = "Ainda não há cadastro real publicado. As áreas permanecem disponíveis para consulta.";
+    $("status-rede").textContent = cadastros.length
+      ? cadastros.length + " cadastro(s) verificado(s) carregado(s)."
+      : "Nenhum cadastro real verificado está publicado. As áreas são categorias de organização, não uma lista de profissionais disponíveis.";
   }).catch(function () {
     $("status-rede").textContent = "Não foi possível carregar os dados. Tente abrir o site por abrir_site.bat.";
     $("grade-areas").innerHTML = '<p role="alert">Dados indisponíveis. Nenhum cadastro foi inventado.</p>';
