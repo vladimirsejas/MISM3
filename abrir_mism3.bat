@@ -28,8 +28,8 @@ if errorlevel 1 (
     exit /b 1
 )
 
-if not exist "%~dp0demo_unico\index.html" (
-    echo ERRO: nao encontrei demo_unico\index.html.
+if not exist "%~dp0web\index.html" (
+    echo ERRO: nao encontrei web\index.html.
     echo Este BAT precisa ficar na pasta raiz C:\MISM3.
     echo.
     pause
@@ -43,7 +43,7 @@ echo O servidor vai iniciar agora.
 echo Deixe esta janela aberta enquanto usar o MISM3.
 echo Para encerrar, pressione Ctrl+C.
 echo.
-python -m http.server 8000 --bind 127.0.0.1 --directory "%~dp0demo_unico"
+python -m http.server 8000 --bind 127.0.0.1 --directory "%~dp0web"
 echo.
 echo O servidor foi encerrado.
 pause
