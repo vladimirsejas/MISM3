@@ -100,20 +100,22 @@
 
   /* Blocos "agrupar": os serviços ficam em grupos recolhidos (por público), para a página não ficar carregada. */
   function htmlGrupos(servicos) {
+    var abrir = servicos.length <= 6; /* poucos serviços: já abertos; muitos: recolhidos com contagem */
     var ordem = [], porGrupo = Object.create(null);
     servicos.forEach(function (s) {
-      var g = s.grupo || "Outros serviços";
+      var g = s.grupo || Acesso.rotuloSubtipo(s.subtipo) || "Outros serviços";
       if (!porGrupo[g]) { porGrupo[g] = []; ordem.push(g); }
       porGrupo[g].push(s);
     });
     /* Ordem lógica por público; grupos novos (não listados) vão para o fim. */
-    var PREFERIDA = ["Crianças e adolescentes", "Adultos (30 a 59 anos)", "Pessoas idosas (65 anos ou mais)", "APAE — pessoas com deficiência"];
+    var PREFERIDA = ["Crianças e adolescentes", "Adultos (30 a 59 anos)", "Pessoas idosas (65 anos ou mais)", "APAE — pessoas com deficiência",
+      "Unidade básica de saúde", "Pronto atendimento / urgência", "Hospital", "CAPS (saúde mental)", "Atendimento especializado", "Saúde da criança e do adolescente"];
     ordem.sort(function (x, y) {
       var a = PREFERIDA.indexOf(x), b = PREFERIDA.indexOf(y);
       return (a === -1 ? 99 : a) - (b === -1 ? 99 : b);
     });
     return ordem.map(function (g) {
-      return '<details class="grupo-recolhido"><summary>' + esc(g) + " <span class=\"contagem\">(" + porGrupo[g].length + ')</span></summary><div class="lista-cartoes">' +
+      return '<details class="grupo-recolhido"' + (abrir ? " open" : "") + '><summary>' + esc(g) + " <span class=\"contagem\">(" + porGrupo[g].length + ')</span></summary><div class="lista-cartoes">' +
         porGrupo[g].map(function (s) { return cartaoServico(s, false); }).join("") + "</div></details>";
     }).join("");
   }
@@ -169,9 +171,11 @@
     if (area.avisos && area.avisos.length) {
       html += '<div class="status" role="note"><strong>Importante.</strong> ' + area.avisos.map(esc).join(" ") + "</div>";
     }
-    if (area.pendencias && area.pendencias.length) {
+    var pend = (area.pendencias || []).slice();
+    if (area.pendenciasSemBase && !dados.servicos.some(function (s) { return /CNES/.test(s.fonte || ""); })) pend = area.pendenciasSemBase.concat(pend.filter(function (p) { return !/CNES/.test(p); }));
+    if (pend.length) {
       html += '<aside class="pendente" aria-label="Ainda não disponível ou não confirmado"><h2>Ainda não disponível ou não confirmado</h2><ul>' +
-        area.pendencias.map(function (p) { return "<li>" + esc(p) + "</li>"; }).join("") + "</ul></aside>";
+        pend.map(function (p) { return "<li>" + esc(p) + "</li>"; }).join("") + "</ul></aside>";
     }
     return html;
   }
