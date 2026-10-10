@@ -93,6 +93,17 @@ a.tel-grande{display:inline-block;font-weight:800;font-size:1.2rem;color:var(--a
 .bairros{margin-top:.4rem}
 .bairros summary{cursor:pointer;color:var(--pri-esc);font-weight:700;min-height:44px;display:flex;align-items:center}
 .bairros p{font-size:.88rem;color:var(--mut)}
+.secao-recolhida>summary{cursor:pointer;list-style:none;min-height:44px;display:flex;align-items:center;border-bottom:2px solid var(--lav);margin-bottom:.7rem}
+.secao-recolhida>summary::-webkit-details-marker{display:none}
+.secao-recolhida>summary h2{margin:0;border:0;padding:0;font-size:1.15rem}
+.secao-recolhida>summary::after,.grupo-recolhido>summary::after{content:"＋";margin-left:auto;color:var(--pri-esc);font-weight:800}
+.secao-recolhida[open]>summary::after,.grupo-recolhido[open]>summary::after{content:"－"}
+.grupo-recolhido{background:var(--card);border:1px solid var(--bor);border-radius:var(--raio);margin:.6rem 0;padding:0 1rem}
+.grupo-recolhido>summary{cursor:pointer;list-style:none;min-height:48px;display:flex;align-items:center;font-weight:700;color:var(--pri-esc)}
+.grupo-recolhido>summary::-webkit-details-marker{display:none}
+.grupo-recolhido[open]{padding-bottom:1rem}
+.contagem{font-weight:600;color:var(--mut);margin-left:.35rem;font-size:.92em}
+.fonte-comum{margin-top:.6rem}
 .pendente{background:var(--aviso);border:1px solid var(--aviso-bor);border-radius:var(--raio);padding:.8rem 1rem;margin:1.4rem 0}
 .pendente h2{font-size:.98rem;margin-bottom:.3rem}
 .pendente ul{margin:.2rem 0 0;padding-left:1.2rem}

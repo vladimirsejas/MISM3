@@ -143,6 +143,7 @@ def servicos_manuais(df, indice: dict) -> list[dict]:
             "conferido": not nao_conferido,
             "bairros": g("bairros"),
             "aviso": g("aviso"),
+            "grupo": g("grupo"),
         })
     return saida
 
