@@ -31,3 +31,14 @@ def test_construir_indice_filtra_coordenada_fora_da_caixa_e_nao_exporta_endereco
     assert diagnostico["coordenadas_fora_da_caixa_de_triagem"] == 1
     assert all(len(registro) == 5 for registro in indice.values())
     assert all("Rua" not in str(registro) and "Centro" not in str(registro) for registro in indice.values())
+
+
+def test_achar_csv_procura_nas_duas_pastas_e_ignora_o_nome(tmp_path):
+    from pipeline.indice_cep_csv import achar_csv
+    assert achar_csv(tmp_path) is None
+    (tmp_path / "docs" / "cep_Rio_Claro").mkdir(parents=True)
+    (tmp_path / "docs" / "cep_Rio_Claro" / "qualquer nome.csv").write_text("x", encoding="utf-8")
+    assert achar_csv(tmp_path).name == "qualquer nome.csv"
+    (tmp_path / "dados" / "bruto" / "ceps_google").mkdir(parents=True)
+    (tmp_path / "dados" / "bruto" / "ceps_google" / "a.csv").write_text("x", encoding="utf-8")
+    assert achar_csv(tmp_path).name == "a.csv"          # dados/bruto tem prioridade
