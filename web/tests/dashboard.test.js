@@ -22,6 +22,8 @@ assert(html.includes('class="acesso-digital rodape-acesso"'), "o aviso de acesso
 assert(app.includes('titulo: "Benefícios e assistência social"'), "o painel da categoria também deve usar o novo rótulo");
 assert(app.includes('titulo: "Lazer, cultura e esporte"') && app.includes('href="lazer.html"'), "a categoria lazer deve abrir a agenda própria");
 assert(app.includes("function novosVistos()") && app.includes("vistos.links[chaveLink]"), "busca combinada deve deduplicar links");
+assert(!app.includes('dados/demo/'), "a interface principal não pode recorrer a catálogos fictícios");
+assert(!html.includes("faixa-demo") && !html.includes("aviso-cep-demo"), "a home não deve exibir avisos de dados de demonstração");
 assert(app.includes("vistos.servicos[chaveServico]") && app.includes("blocoCategoria(k, vistos)"), "busca combinada deve deduplicar serviços e compartilhar o estado entre categorias");
 assert(app.includes("Checklist para avaliar uma oportunidade"), "emprego deve exibir o checklist de viabilidade");
 assert(css.includes(".grade-portas-principal") && css.includes(".rodape-acesso"), "a home e o aviso do rodapé devem ter estilo responsivo");
