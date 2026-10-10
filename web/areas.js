@@ -106,6 +106,12 @@
       secoes: [{
         titulo: "Canais oficiais",
         tipos: [],
+        canais: [
+          { nome: "Elektro — atendimento ao cliente em Rio Claro (energia elétrica)", sem_tel: true,
+            texto: "Distribuidora de energia elétrica da cidade. Segundo a notícia, o Espaço de Atendimento ao Cliente fica na Avenida 7, nº 190, bairro Cidade Nova, e atende das 8h às 17h, com serviços como ligação nova, alteração da data de vencimento da conta, troca de nome do titular e pedido de desligamento. Canal de WhatsApp informado: (19) 2122-1696.",
+            aviso: "Informação de uma notícia de 17/12/2020: endereço, horário e canais podem ter mudado. Confirme com a Elektro antes de ir.",
+            fonte: ["Notícia da Elektro (Neoenergia): “Espaço de atendimento da Elektro em Rio Claro em novo endereço”", null, "publicada em 17/12/2020, consultada em 10/10/2026"] }
+        ],
         links: [
           ["Secretaria de Habitação de Rio Claro", "https://rioclaro.sp.gov.br/secretaria/secretaria-de-planejamento-e-habitacao/", "A Prefeitura publica os contatos da secretaria e links para cadastro habitacional e critérios."],
           ["Tarifa social de água e esgoto de Rio Claro", "https://rioclaro.sp.gov.br/daae/familias-em-vulnerabilidade-social-podem-solicitar-tarifa-social-na-conta-de-agua-e-esgoto/", "Desconto para famílias que atendam aos critérios publicados; confirme requisitos e vigência com o DAAE."],
@@ -114,7 +120,7 @@
       }],
       pendencias: [
         "Este sistema não faz inscrição em programas nem confirma vaga, aluguel social ou prioridade habitacional.",
-        "Tarifa social de energia elétrica: o desconto é aplicado pela Elektro, distribuidora da cidade (informação do mantenedor); o link oficial da Elektro ainda não foi verificado nesta versão. Para se inscrever, procure o CRAS e a Elektro."
+        "Tarifa social de energia elétrica: a distribuidora de Rio Claro é a Elektro (confirmado em notícia da própria empresa, de 2020), mas nenhuma página lida trata da tarifa social; o link oficial ainda não foi verificado nesta versão. Para saber como pedir o desconto, procure o CRAS e a Elektro."
       ]
     },
     {

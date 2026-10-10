@@ -94,8 +94,13 @@
   var BUSCA_BAIRRO = '<div class="busca-area" id="busca-bairro"><label for="bairro">Qual CRAS atende o meu bairro?</label><input id="bairro" type="search" maxlength="60" placeholder="Digite o nome do bairro" autocomplete="off" aria-describedby="ajuda-bairro"><p id="ajuda-bairro" class="privacidade">A busca usa a lista de bairros publicada pela Prefeitura e acontece neste aparelho. Ruas não constam na lista: confirme por telefone.</p><p id="resposta-bairro" class="status" role="status" hidden></p></div>';
 
   function cartaoCanal(c) {
-    return '<article class="cartao"><h3>' + esc(c.nome) + '</h3><p><a class="tel-grande" href="tel:' + esc(c.tel) + '">' + esc(c.tel) + "</a></p><p>" + esc(c.texto) + '</p><p class="meta">' +
-      (c.fonte ? 'Fonte: <a href="' + esc(c.fonte[1]) + '" target="_blank" rel="noopener noreferrer">' + esc(c.fonte[0]) + "</a> · " + esc(c.fonte[2]) + "." : "Canal nacional oficial.") + "</p></article>";
+    var fonteTxt = c.fonte
+      ? "Fonte: " + (c.fonte[1] ? '<a href="' + esc(c.fonte[1]) + '" target="_blank" rel="noopener noreferrer">' + esc(c.fonte[0]) + "</a>" : esc(c.fonte[0])) + " · " + esc(c.fonte[2]) + "."
+      : "Canal nacional oficial.";
+    return '<article class="cartao"><h3>' + esc(c.nome) + "</h3>" +
+      (c.sem_tel ? "" : '<p><a class="tel-grande" href="tel:' + esc(c.tel) + '">' + esc(c.tel) + "</a></p>") +
+      "<p>" + esc(c.texto) + "</p>" + (c.aviso ? '<p class="aviso-nao-conferido">' + esc(c.aviso) + "</p>" : "") +
+      '<p class="meta">' + fonteTxt + "</p></article>";
   }
 
   /* Blocos "agrupar": os serviços ficam em grupos recolhidos (por público), para a página não ficar carregada. */

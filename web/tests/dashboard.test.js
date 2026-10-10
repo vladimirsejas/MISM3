@@ -118,6 +118,11 @@ assert(!assistencia.pendencias.some((p) => /CREAS: endereço/.test(p)), "o CREAS
 assert(assistencia.pendencias.some((p) => /Horário de funcionamento dos CRAS/.test(p)), "a falta de horário dos CRAS/CREAS deve estar declarada");
 assert(assistencia.pendencias.some((p) => /Conselho Tutelar/.test(p)), "a falta de horário/plantão do Conselho Tutelar deve estar declarada");
 assert(Areas.porId("saude").pendencias.length, "Saúde deve declarar a lacuna quando o CNES não está carregado");
+const elektro = Areas.porId("moradia").secoes[0].canais.find((c) => /Elektro/.test(c.nome));
+assert(elektro && elektro.sem_tel === true && /Avenida 7, nº 190/.test(elektro.texto) && /8h às 17h/.test(elektro.texto) && /2122-1696/.test(elektro.texto), "canal da Elektro conforme a notícia");
+assert(/17\/12\/2020/.test(elektro.aviso) && /17\/12\/2020/.test(elektro.fonte[2]), "notícia de 2020 deve ser sinalizada como possivelmente desatualizada");
+assert(!/tel:.*2122/.test(JSON.stringify(elektro)), "o número do WhatsApp não pode virar link de ligação");
+assert(Areas.porId("moradia").pendencias.some((p) => /Elektro/.test(p) && /link oficial ainda não foi verificado/.test(p)), "a tarifa social de energia segue sem link verificado");
 const redeSaude = Areas.porId("saude").listaRede;
 const nGrupo = Object.fromEntries(redeSaude.grupos.map((g) => [g.titulo, g.itens.length]));
 assert.strictEqual(nGrupo["Pronto atendimento 24 horas (UPA)"], 2, "Rio Claro tem 2 UPAs 24 horas");

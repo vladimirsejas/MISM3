@@ -163,3 +163,9 @@ Ao concluir mudanças relevantes, registrar o que foi alterado, o teste executad
 - Foram incluídos na página Saúde 32 estabelecimentos **onde a pessoa vai** (2 UPAs, 1 hospital, 3 CAPS, 21 UBS/USF e 5 de especialidades, reabilitação e saúde do trabalhador), com nome e código CNES, como lista recolhida. Ficaram de fora, como no pipeline, farmácias, dispensário, laboratório, regulação, bases do SAMU, vigilância, zoonoses, sede da Fundação (cadastrada à parte), unidade odontológica móvel e a "UNAMOS UNESP" (natureza não identificada). Nomes padronizados e acentuados a partir de um cadastro em letras maiúsculas.
 - A lista **some sozinha** quando a base do CNES com endereços é carregada (detecção pelo prefixo `cnes-` do id), para não duplicar as unidades.
 - Distribuidora de energia de Rio Claro: **Elektro** (informação do mantenedor, não verificada em página oficial). O aviso de Moradia diz que o desconto da tarifa social de energia é aplicado pela Elektro e que o link oficial ainda não foi verificado.
+
+### Elektro (distribuidora de energia) — 10/10/2026
+- Fonte: PDF de uma notícia da própria Elektro (Neoenergia), "Espaço de atendimento da Elektro em Rio Claro em novo endereço", **publicada em 17/12/2020**, impressa pelo mantenedor em 10/10/2026, 04:14. A impressão não traz o endereço (URL) da página, por isso a fonte é citada sem link.
+- Confirma que a distribuidora de Rio Claro é a Elektro. Cadastrado em Moradia o atendimento ao cliente: Avenida 7, nº 190, bairro Cidade Nova; das 8h às 17h; serviços (ligação nova, alteração da data de vencimento, troca de titularidade, pedido de desligamento); canal de WhatsApp (19) 2122-1696, exibido só como texto, sem link de ligação.
+- Aviso na interface: a notícia tem seis anos e endereço, horário e canais podem ter mudado.
+- A notícia **não trata de tarifa social de energia**. O aviso de Moradia segue dizendo que o link oficial dessa tarifa não foi verificado; falta a página da Elektro sobre o tema.
