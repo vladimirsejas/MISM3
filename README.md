@@ -33,7 +33,7 @@ O CNES é a base completa baixada à mão do site do CNES e descompactada em `do
     pip install pyshp
     python pipeline/setores.py caminho/SP_setores_CD2022.zip   # malha de setores de Rio Claro
 
-Se um download automático falhar (os sites mudam), o script diz onde baixar à mão e em qual pasta colocar. Com `servicos.json` e `cep_indice.json` gerados, o site passa a usá-los (e oferece a busca por CEP).
+Se um download automático falhar (os sites mudam), o script diz onde baixar à mão e em qual pasta colocar. O catálogo verificado (`catalogo_manual.json`) vale sempre. Com `servicos.json` gerado, o site **acrescenta** as unidades do CNES e do Censo Escolar que não estão no catálogo (sem duplicar as já cadastradas à mão com o código CNES). Com `cep_indice.json`, o site oferece a busca por CEP. Depois de editar `catalogo/servicos_manuais.csv`, rode `python pipeline/servicos.py --somente-manual` para atualizar o catálogo.
 
 ## Testes
 

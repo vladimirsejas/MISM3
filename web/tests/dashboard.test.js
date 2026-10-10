@@ -191,6 +191,10 @@ assert(!existentes.some((f) => /matrix|regrasaneel/i.test(f)), "o blog comercial
 const ignorados = fs.readFileSync(path.join(web, "..", ".gitignore"), "utf8").split(/\r?\n/).map((l) => l.trim());
 [".env", "*.db", "*.sqlite", "*.backup"].forEach((p) => assert(ignorados.includes(p), ".gitignore deve bloquear " + p));
 
+/* ---- 6e. O catálogo verificado vale sempre; o servicos.json do pipeline só acrescenta ---- */
+assert(app.includes("dados/catalogo_manual.json") && app.includes("idsManuais") && app.includes("codigosManuais"), "o catálogo verificado deve ser carregado sempre e prevalecer sobre o servicos.json");
+assert(!/tentativas\s*=/.test(app), "um servicos.json antigo não pode substituir o catálogo verificado (voltaria a esconder CRAS e CREAS)");
+
 /* ---- 7. Comportamento esperado no código ---- */
 ["web/dados/demo", "web/prototipos", "docs/roteiro_demo_mism3.md"].forEach((c) => assert(!fs.existsSync(path.join(web, "..", c)), "conteúdo de demonstração removido não pode voltar: " + c));
 assert(app.includes("history.state && history.state.app"), "Voltar deve usar o histórico apenas quando a navegação começou no sistema");
