@@ -2,7 +2,7 @@
 (function () {
   "use strict";
   var $ = function (id) { return document.getElementById(id); };
-  var dados = { indice: null, servicos: null, demo: false };
+  var dados = { indice: null, servicos: null };
   var mapa = null, camadas = null, tiles = null;
   var ultimo = null, objetivo = null, necessidades = [];  /* so em memoria: nada vai para storage, cookie ou rede */
 
@@ -286,7 +286,6 @@
         return x.tipo !== "mulher_para_mulher" || (x.renovar_ate && x.renovar_ate >= hojeISO());
       });
       $("porta-m2m").hidden = !dados.servicos.some(function (x) { return x.tipo === "mulher_para_mulher"; });
-      dados.demo = false;
       var fontes = [];
       if (r[0].meta && r[0].meta.fonte) fontes.push("Índice de CEPs: " + r[0].meta.fonte);
       if (r[1].meta && r[1].meta.gerado_em) fontes.push("Serviços atualizados em " + r[1].meta.gerado_em);
@@ -295,8 +294,6 @@
       dados.indice = {};
       dados.servicos = [];
       dados.demo = false;
-      $("faixa-demo").hidden = true;
-      $("aviso-cep-demo").hidden = true;
       mostrarMensagem("O catálogo de serviços ou o índice de CEPs reais não está disponível nesta execução. A busca por categorias e os links oficiais continuam disponíveis; a busca por proximidade fica indisponível até carregar os dados reais.");
       $("contagem") && ($("contagem").textContent = "Busca por CEP indisponível: índice real não carregado.");
     });
