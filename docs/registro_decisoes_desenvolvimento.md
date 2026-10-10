@@ -60,3 +60,11 @@ Ao concluir mudanças relevantes, registrar o que foi alterado, o teste executad
 ### Navegação
 - A tela inicial agora liga para os protótipos De Mulher para Mulher e Inteligência Pública.
 - O teste de busca foi repetido depois das alterações: 39 cenários passaram. Sintaxe de `web/app.js` e dos scripts embutidos nas duas páginas foi verificada.
+
+### Organização do dashboard e triagem das sugestões de empregabilidade — 10/10/2026
+- A tela inicial foi reorganizada em três jornadas: **Trabalho e desenvolvimento**, **Saúde e rede de cuidado** e **Direitos e proteção**. As sete portas de entrada e seus identificadores foram preservados para não quebrar a busca existente.
+- Os protótipos **De Mulher para Mulher** e **Inteligência Pública** foram separados em “Outras áreas da plataforma”, distinguindo o atendimento à população da ferramenta conceitual de gestão.
+- Em buscas que identificam mais de uma necessidade, links oficiais repetidos e serviços compartilhados agora aparecem uma única vez, com aviso explicativo.
+- A jornada de emprego ganhou um checklist de viabilidade que considera horário/escala, deslocamento, responsabilidades de cuidado, clareza do contrato e sinais de fraude. Isso é orientação de avaliação, não uma promessa de vaga ou de validação da empresa.
+- As ideias do Gemini foram tratadas como arquitetura futura, não como funcionalidades já disponíveis. Ainda não existem integração real com Gov.br, verificação de identidade ou de CNPJ, cadastro público de profissionais, vagas integradas, fila municipal de creche, microcrédito, botão de pânico conectado à emergência nem armazenamento seguro em nuvem. Cada uma exige fontes oficiais, integração autorizada, análise jurídica e desenho de segurança antes de ser anunciada como funcional.
+- Verificação executada após as mudanças: sintaxe de `web/app.js`, `web/necessidades.js` e `web/tests/necessidades.test.js` validada; os **39 cenários** do classificador de necessidades passaram. A estrutura estática da tela confirma as sete portas e três grupos. Ainda falta abrir a interface no navegador e testar visualmente os fluxos combinados e o mapa por CEP.
