@@ -46,24 +46,30 @@
 <main class="conteudo">
   <section class="area" aria-labelledby="titulo-area">
     <h1 id="titulo-area"><span class="icone-titulo"><svg aria-hidden="true" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-mulheres"/></svg></span>De Mulher para Mulher</h1>
-    <p class="intro">Caminhos de acolhimento e apoio, de mulher para mulher. Escolha a situação mais parecida com a sua.</p>
+    <p class="intro">Serviços que mulheres oferecem a outras mulheres: motorista, psicóloga, academia só para mulheres, beleza, aulas e mais. Escolha o que você procura.</p>
 
     <div class="status" role="note">
-      <strong>A troca entre mulheres dentro deste site ainda não está disponível.</strong> Não existem cadastro, perfis nem mensagens, e nada do que você digitar neste sistema é enviado a outras pessoas. O que há aqui são caminhos para serviços reais de Rio Claro.
+      <strong>Ainda não há mulheres cadastradas.</strong> Este espaço está pronto para receber ofertas, mas só publica quem pedir e autorizar. Nenhum nome, perfil ou serviço é inventado para preencher a página.
     </div>
 
-    <section class="secao" aria-labelledby="titulo-ponto">
-      <h2 id="titulo-ponto">Em que ponto você está?</h2>
-      <p class="meta">Cada caminho aponta para serviços já cadastrados neste site. Os que vêm de outro projeto ainda não foram conferidos e trazem um aviso.</p>
-      <div id="caminhos"></div>
+    <section class="secao" aria-labelledby="titulo-procura">
+      <h2 id="titulo-procura">O que você procura?</h2>
+      <p class="meta">Cada oferta mostra o contato que a própria mulher autorizou e a data do consentimento. Este sistema não intermedeia pagamento nem conversa: o contato é direto com ela.</p>
+      <div id="categorias"></div>
       <p id="aviso-catalogo" class="meta"></p>
+    </section>
+
+    <section class="secao" aria-labelledby="titulo-oferecer">
+      <h2 id="titulo-oferecer">Sou mulher e quero oferecer meu serviço</h2>
+      <p>Para aparecer aqui, a oferta precisa de: nome (ou nome do negócio), categoria, descrição curta, bairro ou região atendida, um contato que você escolhe divulgar e o seu consentimento por escrito. Você pode pedir a retirada a qualquer momento.</p>
+      <p class="meta">O canal para enviar o cadastro ainda não foi definido. Até lá, nada é recebido por este site.</p>
     </section>
 
     <aside class="pendente" aria-labelledby="titulo-planejado">
       <h2 id="titulo-planejado">Planejado, ainda não disponível</h2>
       <ul>
-        <li>Um espaço de apoio e troca de experiências entre mulheres.</li>
-        <li>Antes de qualquer lançamento: regras claras de segurança, verificação real de identidade, revisão humana de denúncias e proteção contra denúncias abusivas.</li>
+        <li>Cadastro feito pela própria mulher, direto neste site.</li>
+        <li>Antes de qualquer lançamento: regras de segurança, verificação real de identidade, revisão humana de denúncias e proteção contra denúncias abusivas.</li>
         <li>Enquanto isso não existir, nenhum selo de confiança ou “identidade verificada” será apresentado.</li>
       </ul>
     </aside>
@@ -93,46 +99,25 @@
     if (mesmaOrigem && history.length > 1) { e.preventDefault(); history.back(); }
   });
 
-  /* Os caminhos vêm de areas.js e os serviços do catálogo; cada informação tem uma casa só. */
+  /* As categorias vêm de areas.js e as ofertas de dados/ofertas_mulheres.json; cada informação tem uma casa só. */
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
-  function linksTelefone(txt) {
-    return String(txt).split(/\s+\/\s+/).map(function (t) {
-      var num = t.replace(/[^\d+]/g, "");
-      return num ? '<a href="tel:' + esc(num) + '">' + esc(t) + "</a>" : esc(t);
-    }).join(" · ");
-  }
-  function cartao(s) {
-    var p = ["<h3>" + esc(s.nome) + "</h3>"];
-    if (s.abrangencia === "municipal") p.push('<p class="dist">Atende todo o município</p>');
-    if (s.endereco) p.push("<p>" + esc(s.endereco) + "</p>");
-    if (s.telefone) p.push("<p>Telefone: " + linksTelefone(s.telefone) + "</p>");
-    if (s.horario) p.push("<p>Horário: " + esc(s.horario) + "</p>");
-    if (s.observacao) p.push('<p class="meta">' + esc(s.observacao) + "</p>");
-    var fonte = s.fonte_url ? '<a href="' + esc(s.fonte_url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.fonte) + "</a>" : esc(s.fonte);
-    if (s.conferido === false) {
-      p.push('<p class="aviso-nao-conferido">' + esc(s.aviso || "Ainda não conferido na página oficial. Ligue antes de ir.") + "</p>");
-      p.push('<p class="meta">Para conferir: ' + fonte + " · informado em " + esc(s.verificado_em) + "</p>");
-    } else {
-      p.push('<p class="meta">Fonte: ' + fonte + " · verificado em " + esc(s.verificado_em) + "</p>");
-    }
+  function data(d) { var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(d || ""); return m ? m[3] + "/" + m[2] + "/" + m[1] : esc(d); }
+  function cartao(o) {
+    var p = ["<h3>" + esc(o.nome) + "</h3>", "<p>" + esc(o.descricao) + "</p>"];
+    if (o.atende) p.push('<p class="dist">Atende: ' + esc(o.atende) + "</p>");
+    if (o.contato) p.push("<p>Contato: " + esc(o.contato) + "</p>");
+    p.push('<p class="meta">Publicado com o consentimento dela em ' + data(o.consentimento_em) + ". Confirme preço e disponibilidade direto com ela.</p>");
     return '<article class="cartao">' + p.join("") + "</article>";
   }
-  function canal(tel) {
-    var c = MISM3Areas.EMERGENCIA.filter(function (x) { return x.tel === tel; })[0];
-    if (!c) return "";
-    var urgente = tel === "180" ? " urgente" : "";
-    return '<article class="cartao' + urgente + '"><h3>' + esc(c.nome) + " — " + esc(c.tel) + '</h3><p><a class="tel-grande" href="tel:' + esc(c.tel) + '">Ligar para ' + esc(c.tel) + "</a></p><p>" + esc(c.quando) + '</p><p class="meta">Canal nacional oficial.</p></article>';
-  }
-  fetch("dados/catalogo_manual.json", { cache: "no-store" }).then(function (r) { if (!r.ok) throw new Error("catalogo"); return r.json(); }).then(function (sv) {
-    var porId = {}; sv.servicos.forEach(function (s) { porId[s.id] = s; });
-    document.getElementById("caminhos").innerHTML = MISM3Areas.REDE_MULHERES.situacoes.map(function (sit) {
-      var cartoes = sit.canais.map(canal).join("") + sit.itens.map(function (id) { return porId[id] ? cartao(porId[id]) : ""; }).join("");
-      var atalhos = sit.atalhos.length ? '<nav class="navegacao" aria-label="Ver também">' + sit.atalhos.map(function (a) { return '<a class="btn-nav" href="' + esc(a[1]) + '">' + esc(a[0]) + " →</a>"; }).join("") + "</nav>" : "";
-      return '<details class="grupo-recolhido" id="' + esc(sit.id) + '"><summary>' + esc(sit.titulo) + "</summary><p>" + esc(sit.texto) + "</p>" +
-        (cartoes ? '<div class="lista-cartoes">' + cartoes + "</div>" : "") + atalhos + "</details>";
+  fetch("dados/ofertas_mulheres.json", { cache: "no-store" }).then(function (r) { if (!r.ok) throw new Error("ofertas"); return r.json(); }).then(function (d) {
+    document.getElementById("categorias").innerHTML = MISM3Areas.REDE_OFERTAS.categorias.map(function (c) {
+      var of = d.ofertas.filter(function (o) { return o.categoria === c.id; });
+      var corpo = of.length ? '<div class="lista-cartoes">' + of.map(cartao).join("") + "</div>"
+        : '<p class="meta">Ainda não há mulheres cadastradas nesta categoria.</p>';
+      return '<details class="grupo-recolhido" id="' + esc(c.id) + '"><summary>' + esc(c.titulo) + (of.length ? " (" + of.length + ")" : "") + "</summary><p>" + esc(c.exemplo) + "</p>" + corpo + "</details>";
     }).join("");
   }).catch(function () {
-    document.getElementById("aviso-catalogo").textContent = "O cadastro de serviços não foi carregado. Abra o sistema pelo procedimento do README.";
+    document.getElementById("aviso-catalogo").textContent = "As ofertas não foram carregadas. Abra o sistema pelo procedimento do README.";
   });
 })();
 </script>
