@@ -4,91 +4,65 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="referrer" content="no-referrer">
-<title>Inteligência Pública — MISM3</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%2314375e%27/%3E%3Ctext x=%2716%27 y=%2722%27 font-family=%27Arial,sans-serif%27 font-size=%2714%27 font-weight=%27bold%27 text-anchor=%27middle%27 fill=%27white%27%3EM3%3C/text%3E%3C/svg%3E">
+<title>Painel de dados confirmados — MISM3</title>
 <link rel="stylesheet" href="estilo.css">
 <link rel="stylesheet" href="paginas.css">
 </head>
 <body class="pagina">
-<div class="faixa-institucional"><strong>Protótipo acadêmico</strong> · Fatec Rio Claro · Curso de Inteligência Artificial · não é um serviço oficial da Prefeitura</div>
-<div class="faixa-demo" role="note">Painel conceitual: indicadores de exemplo, não são estatísticas oficiais.</div>
-
+<div class="faixa-institucional"><strong>Projeto acadêmico</strong> · FATEC Rio Claro · Inteligência Artificial · não é serviço oficial da Prefeitura</div>
 <nav class="navegacao-principal" aria-label="Navegação principal">
   <a class="marca-site" href="index.html"><span class="marca-selo" aria-hidden="true">M3</span><span class="marca-texto"><strong>MISM3</strong><span>Mapa do Cuidado · Rio Claro/SP</span></span></a>
   <div class="links-navegacao" data-menu><a href="index.html">Início</a></div>
 </nav>
 <header class="topo">
-<p class="breadcrumb"><a href="index.html">Início</a> › Inteligência pública</p>
-<h1>Inteligência Pública</h1>
-<p class="muted">Uma visão para ajudar gestores a formular perguntas sobre demanda de cuidado, oferta de serviços e possíveis lacunas territoriais. O painel separa o que foi carregado de fonte original do que é apenas uma simulação.</p>
-<div class="warn"><strong>Estado dos dados:</strong> este protótipo não presume que os dados reais estejam presentes. A malha do IBGE, quando carregada, pode mostrar setores, pessoas e domicílios. Isso, sozinho, não permite estimar quantas crianças precisam de creche. Para essa análise, precisamos de uma fonte adequada para a faixa etária e de dados comparáveis de oferta.</div>
+  <p class="breadcrumb"><a href="index.html">Início</a> › Painel de dados</p>
+  <h1>Painel de dados confirmados</h1>
+  <p class="muted">Este painel apresenta apenas registros do catálogo institucional versionado, com fonte e situação de conferência. Não estima demanda, filas, vagas nem resultados de políticas públicas.</p>
 </header>
 <main>
-<section class="panel">
-<h2>Dados encontrados nesta execução</h2>
-<div id="estado-dados" class="callout" role="status">Verificando se existe um resumo de setores censitários carregado...</div>
-<div class="grid" style="margin-top:1rem">
-<article class="card"><h2>Setores censitários</h2><div class="metric" id="setores">—</div><p class="small" id="setores-nota">Aguardando arquivo do IBGE.</p></article>
-<article class="card"><h2>Pessoas somadas nos setores</h2><div class="metric" id="pessoas">—</div><p class="small">Contagem agregada; conferir o dicionário e a cobertura da fonte.</p></article>
-<article class="card"><h2>Domicílios somados</h2><div class="metric" id="domicilios">—</div><p class="small">Não representa demanda por creche nem número de famílias elegíveis.</p></article>
-</div>
-<p class="small" id="fonte-real"></p>
-</section>
-<section class="panel">
-<h2>Exemplo de análise territorial</h2>
-<p class="muted">A visualização abaixo usa valores inventados para demonstrar como comparar indicadores. Não representa bairros, setores ou demanda real de Rio Claro.</p>
-<div class="tag">DADOS FICTÍCIOS [DEMO]</div>
-<div id="grafico"></div>
-<p class="small">Os índices não têm unidade oficial e não devem ser citados como resultado de pesquisa. São apenas um rascunho de interação visual.</p>
-</section>
-<section class="panel">
-<h2>O que falta para uma análise real de demanda por creche?</h2>
-<table>
-<thead><tr><th>Componente</th><th>Estado nesta versão</th><th>Uso pretendido</th></tr></thead>
-<tbody>
-<tr><td>Malha e identificadores dos setores</td><td id="status-malha">Verificando</td><td>Organizar indicadores por território.</td></tr>
-<tr><td>População de crianças na faixa etária relevante</td><td><span class="tag">Não confirmado</span></td><td>Estimar a população potencialmente demandante, com ano e definição claros.</td></tr>
-<tr><td>Oferta de creches e capacidade de atendimento</td><td><span class="tag">Não confirmado</span></td><td>Comparar demanda potencial com oferta; existência de escola não prova vaga disponível.</td></tr>
-<tr><td>Regra de comparação territorial</td><td><span class="tag">A definir</span></td><td>Documentar fórmula, limitações, cobertura e incerteza.</td></tr>
-</tbody>
-</table>
-</section>
-<section class="callout">
-<strong>Princípio de leitura:</strong> ausência de registro não prova ausência de serviço; número de crianças não é igual a número de crianças que precisam de vaga; e uma diferença entre oferta e população não deve ser chamada de fila ou déficit real sem dados adequados.
-</section>
+  <section class="panel">
+    <h2>O que o catálogo contém</h2>
+    <div id="estado-dados" class="callout" role="status">Carregando catálogo institucional…</div>
+    <div class="grid" style="margin-top:1rem">
+      <article class="card"><h2>Unidades de saúde</h2><div class="metric" id="unidades">—</div><p class="small">Registros publicados com fonte e data de conferência.</p></article>
+      <article class="card"><h2>Canais oficiais</h2><div class="metric" id="canais">—</div><p class="small">Secretarias, canais e documentos do catálogo.</p></article>
+      <article class="card"><h2>Links conferidos</h2><div class="metric" id="conferidos">—</div><p class="small">Página aberta na data indicada no registro.</p></article>
+      <article class="card"><h2>Atividades de lazer confirmadas</h2><div class="metric" id="lazer">—</div><p class="small">Somente atividades com fonte oficial e data. Zero significa que nenhuma foi cadastrada, não que a cidade não tenha atividades.</p></article>
+    </div>
+    <p id="data-catalogo" class="small"></p>
+  </section>
+  <section class="panel">
+    <h2>Consultar os registros reais</h2>
+    <div class="grid">
+      <article class="card"><h2>Saúde por bairro</h2><p>Unidades, áreas de abrangência, telefones e observações sobre divergências entre fontes.</p><p><a href="saude.html">Abrir consulta de saúde</a></p></article>
+      <article class="card"><h2>Secretarias e canais</h2><p>Links oficiais separados entre páginas conferidas e links apenas listados, ainda sem conferência recente.</p><p><a href="secretarias.html">Abrir catálogo institucional</a></p></article>
+      <article class="card"><h2>Lazer, cultura e esporte</h2><p>A agenda não inventa atividades nem horários. Quando não há registro confirmado, consulte diretamente as fontes oficiais.</p><p><a href="lazer.html">Consultar agenda e fontes</a></p></article>
+    </div>
+  </section>
+  <section class="callout">
+    <strong>Limite importante:</strong> este projeto não registra nem armazena buscas das pessoas. Portanto, não existem dados observados para mostrar “o que as pessoas procuram”, comparar bairros por demanda ou medir resultados. Para criar indicadores de gestão reais, seria necessário definir uma coleta autorizada, transparente, minimizada e compatível com a privacidade — isso ainda não está implementado.
+  </section>
 </main>
-<footer class="rodape"><p class="small">Fonte esperada para os agregados carregados: arquivo local gerado pelo pipeline de setores censitários do IBGE. Este painel não envia dados, não coleta informações pessoais e não altera os arquivos de origem.</p></footer>
+<footer class="rodape"><p id="fontes-painel" class="small">Fonte: web/dados/institucional.json, gerado a partir de CSVs versionados com links HTTPS e datas de conferência.</p></footer>
+<script src="api.js"></script>
+<script src="nav.js"></script>
 <script>
 (function(){
 "use strict";
-function num(v){return Number(v||0).toLocaleString("pt-BR");}
-function safe(s){return String(s||"").replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
-var exemplo=[
-{rotulo:"Território A",demanda:72,oferta:38},
-{rotulo:"Território B",demanda:54,oferta:49},
-{rotulo:"Território C",demanda:31,oferta:45}
-];
-var max=100;
-document.getElementById("grafico").innerHTML=exemplo.map(function(x){return '<div class="barrow"><strong>'+safe(x.rotulo)+'</strong><div><div class="small">Demanda ilustrativa: '+x.demanda+'</div><div class="track"><div class="bar demo" style="width:'+(x.demanda/max*100)+'%"></div></div><div class="small">Oferta ilustrativa: '+x.oferta+'</div><div class="track"><div class="bar" style="width:'+(x.oferta/max*100)+'%"></div></div></div><span class="small">[DEMO]</span></div>';}).join("");
-fetch("dados/setores_resumo.json",{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error("arquivo ausente");return r.json();}).then(function(data){
-var setores=data.setores||{},lista=Object.keys(setores),pessoas=0,dom=0,temP=false,temD=false;
-lista.forEach(function(k){var x=setores[k];if(x.pessoas!=null){pessoas+=Number(x.pessoas);temP=true;}if(x.domicilios!=null){dom+=Number(x.domicilios);temD=true;}});
-document.getElementById("setores").textContent=num(lista.length);
-document.getElementById("pessoas").textContent=temP?num(pessoas):"Não disponível";
-document.getElementById("domicilios").textContent=temD?num(dom):"Não disponível";
-document.getElementById("setores-nota").textContent="Contagem de registros do arquivo local.";
-document.getElementById("estado-dados").textContent="Arquivo local de setores encontrado. Os totais abaixo vêm do arquivo, mas exigem conferência de metadados e dicionário.";
-document.getElementById("status-malha").textContent="Resumo local encontrado";
-document.getElementById("fonte-real").textContent="Metadados declarados pela fonte: "+((data.meta&&data.meta.fonte)||"não informados")+" · Gerado em: "+((data.meta&&data.meta.gerado_em)||"não informado")+".";
+function n(v){return Number(v||0).toLocaleString("pt-BR");}
+Api.json("dados/institucional.json").then(function(d){
+  var m=d.meta||{}, saude=d.saude||[], canais=d.canais||[], lazer=d.lazer||[];
+  document.getElementById("unidades").textContent=n(saude.length);
+  document.getElementById("canais").textContent=n(canais.length);
+  document.getElementById("conferidos").textContent=n(canais.filter(function(c){return c.situacao==="conferido" && c.verificado_em && /^https:\/\//.test(c.url);}).length);
+  document.getElementById("lazer").textContent=n(lazer.filter(function(i){return i.fonte_url && /^https:\/\//.test(i.fonte_url) && i.verificado_em;}).length);
+  document.getElementById("estado-dados").textContent="Catálogo carregado. Os números representam registros publicados, não a cobertura total dos serviços existentes em Rio Claro.";
+  document.getElementById("data-catalogo").textContent="Catálogo gerado em "+(m.gerado_em||"data não informada")+". Confirme informações sensíveis ao tempo diretamente na fonte.";
 }).catch(function(){
-document.getElementById("estado-dados").textContent="Nenhum arquivo dados/setores_resumo.json foi encontrado nesta versão publicada. Os indicadores reais não foram carregados; os gráficos abaixo são somente demonstração.";
-document.getElementById("setores").textContent="—";document.getElementById("pessoas").textContent="—";document.getElementById("domicilios").textContent="—";
-document.getElementById("setores-nota").textContent="Arquivo real ainda não carregado.";
-document.getElementById("status-malha").textContent="Arquivo não encontrado";
-document.getElementById("fonte-real").textContent="Não há números oficiais exibidos neste painel.";
+  document.getElementById("estado-dados").textContent="O catálogo institucional não foi carregado. Nenhum indicador fictício será mostrado.";
+  ["unidades","canais","conferidos","lazer"].forEach(function(id){document.getElementById(id).textContent="Indisponível";});
 });
 })();
 </script>
-<script src="nav.js"></script>
 </body>
 </html>
