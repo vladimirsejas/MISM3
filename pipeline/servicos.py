@@ -130,12 +130,17 @@ def servicos_manuais(df, indice: dict) -> list[dict]:
         if not g("fonte_url") or not g("verificado_em"):
             raise ValueError("Registro '%s' sem fonte_url/verificado_em: todo item manual precisa de fonte e data." % g("nome"))
         lat, lon, geo = localizar(g("cep"), g("lat"), g("lon"), indice)
+        # "conferido=nao": a informacao veio de pesquisa na internet e ainda nao foi lida na pagina oficial.
+        # O site mostra isso a usuaria e nunca escreve "verificado" nesses itens.
+        nao_conferido = (g("conferido") or "").lower() in ("nao", "não", "n")
         saida.append({
             "id": g("id") or "man-%s" % _norm(g("nome") or ""), "tipo": tipo, "subtipo": g("subtipo"),
             "nome": g("nome"), "cep": normalizar_cep(g("cep")), "endereco": g("endereco"),
             "telefone": g("telefone"), "horario": g("horario"), "lat": lat, "lon": lon, "geo": geo,
-            "abrangencia": g("abrangencia") or "local", "fonte": "Página oficial do órgão",
+            "abrangencia": g("abrangencia") or "local",
+            "fonte": "Pesquisa na internet; não conferida na página oficial" if nao_conferido else "Página oficial do órgão",
             "fonte_url": g("fonte_url"), "verificado_em": g("verificado_em"), "observacao": g("observacao"),
+            "conferido": not nao_conferido,
         })
     return saida
 

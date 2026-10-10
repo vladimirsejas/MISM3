@@ -88,3 +88,9 @@ Ao concluir mudanças relevantes, registrar o que foi alterado, o teste executad
 - **Busca por texto:** saiu da home (especificação), mas voltou dentro de cada área como "indicar área": usa `necessidades.js` (47 testes) e só aponta para uma das seis áreas (`AREA_DA_NECESSIDADE` em `web/areas.js`), sem conteúdo novo. Também foi adicionado o link "Pular para o conteúdo".
 - **Verificado:** testes JS (acesso, necessidades, dashboard) e 34 de pipeline passaram; teste no Chromium (30 verificações: portas, Voltar/Início/histórico, emergência, celular 375px, ausência de erros de console).
 - **Não verificado:** links externos (rede sem acesso aos sites oficiais nesta sessão), os números de emergência contra fonte oficial atual, a busca por CEP e o mapa com dados reais, leitores de tela, aparelhos físicos.
+
+### Conselhos Tutelares (não conferidos) — 10/10/2026
+- Cadastrados no catálogo os Conselhos Tutelares Região Sul (Avenida 5, 760) e Região Norte (Rua 1, 1809; plantão por telefone/WhatsApp), com a coluna nova `conferido=nao`. A origem é pesquisa na internet informada pelo mantenedor; **nenhuma página oficial foi lida** (a rede da sessão não alcança os sites). O link de conferência é https://cmdcarioclaro.com.br/contato/.
+- A interface mostra "Ainda não conferido na página oficial. Ligue antes de ir." e "informado em", nunca "verificado em", para esses itens. Horários, bairros atendidos e CEP do Conselho Norte não foram informados e não foram inventados.
+- Correção: telefones múltiplos num mesmo campo (separados por " / ") agora têm um link `tel:` cada; antes seriam emendados num único número inexistente.
+- Pendente: conferir os dois Conselhos na página oficial e então trocar `conferido` para vazio; cadastrar CRAS e CREAS; o texto colado cita um "Segundo Conselho Tutelar" na Rua 1 com Avenida 14, e não está confirmado que seja o mesmo que o da Região Norte.
