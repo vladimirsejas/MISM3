@@ -67,3 +67,23 @@ Podem contextualizar políticas, orçamento, editais, convênios, planos e manif
 - Não combinar localização individual de paciente com o índice de CEP.
 - Não tratar notícia, protocolo ou contagem isolada como base epidemiológica completa.
 - Distinguir dados oficiais, informações de contato e aproximações territoriais.
+
+
+## Fontes complementares para indicadores de saúde da mulher
+
+Estas fontes podem apoiar o painel de gestão, desde que os indicadores sejam calculados a partir de dados documentados e agregados:
+
+- DATASUS/SISCAN: https://datasus.saude.gov.br/acesso-a-informacao/sistema-de-informacao-do-cancer-siscan-colo-do-utero-e-mama/ — consultas de citopatologia/histopatologia do colo do útero, mamografias e exames de mama; há opções por residência e local de atendimento.
+- DATASUS — Epidemiologia e morbidade: https://datasus.saude.gov.br/epidemiologicas-e-morbidade/ — caminhos para SIH/SUS, SIM, SINAN e SISCAN.
+- INCA — Dados e Números de câncer de mama: https://www.gov.br/inca/pt-br/assuntos/gestor-e-profissional-de-saude/controle-do-cancer-de-mama/dados-e-numeros
+- INCA — Dados e Números de câncer do colo do útero: https://www.gov.br/inca/pt-br/assuntos/gestor-e-profissional-de-saude/controle-do-cancer-do-colo-do-utero/dados-e-numeros
+- Portal de Dados Abertos do SUS — Prevenção de câncer de colo e mama: https://dadosabertos.saude.gov.br/dataset/mgdi-prevencao-do-cancer-de-colo-e-mama
+- Painel-Oncologia: https://www.gov.br/saude/pt-br/composicao/saes/cgcan/cgcan
+
+O protocolo municipal de câncer do colo do útero localizado no portal menciona 35 encaminhamentos em 2023 e 55 em 2024 para tratamento de lesões precursoras, câncer in situ e/ou invasor. O protocolo municipal de câncer de mama menciona 127 diagnósticos registrados entre 2020 e 2024. Sempre apresentar esses números com sua definição e período de origem; não tratá-los como equivalentes a internações, incidência ou número de pessoas únicas sem metodologia adicional.
+
+### Separação entre MISM3 e MISM2
+
+- **MISM3:** prioridade de produto. Usar os protocolos para orientar o catálogo municipal, os encaminhamentos e a estrutura dos indicadores do painel; não exibir valores calculados sem dados de origem validados.
+- **MISM2:** preservar fontes e métodos para análise de saúde da mulher baseada em SIH/SUS. SISCAN, SIM, SIA, INCA e os protocolos locais podem complementar a interpretação, mas seus eventos e unidades de contagem são distintos.
+- Nunca transferir registros individuais ou localização de pacientes para o MISM3. Reutilizar somente referências, definições e estatísticas agregadas com proveniência documentada.
