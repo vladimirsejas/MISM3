@@ -4,14 +4,14 @@
 <script>
 /* Dados embutidos: responde ao fetch sem servidor. O que nao esta aqui responde 404, como no servidor local. */
 (function () {
-  var EMBUTIDOS = {"dados/demo/cep_indice.json": "{\n \"meta\": {\n  \"fonte\": \"DADOS ILUSTRATIVOS - nao reais\",\n  \"demo\": true,\n  \"gerado_em\": \"2026-10-08\"\n },\n \"ceps\": {\n  \"00000001\": [\n   -22.406,\n   -47.56,\n   250,\n   \"demo\",\n   20\n  ],\n  \"00000002\": [\n   -22.42,\n   -47.545,\n   300,\n   \"demo\",\n   15\n  ],\n  \"00000003\": [\n   -22.39,\n   -47.58,\n   400,\n   \"demo\",\n   8\n  ]\n }\n}", "dados/demo/servicos.json": "{\n  \"meta\": {\n    \"demo\": true,\n    \"gerado_em\": \"2026-10-08\",\n    \"aviso\": \"DADOS ILUSTRATIVOS. Nenhum servico abaixo e real.\"\n  },\n  \"servicos\": [\n    {\n      \"id\": \"demo-1\",\n      \"tipo\": \"creche\",\n      \"subtipo\": null,\n      \"nome\": \"[DEMO] Creche Exemplo Centro\",\n      \"cep\": null,\n      \"endereco\": \"endereço ilustrativo\",\n      \"telefone\": null,\n      \"horario\": \"horário ilustrativo\",\n      \"lat\": -22.4075,\n      \"lon\": -47.561,\n      \"geo\": \"centroide_cep\",\n      \"abrangencia\": \"local\",\n      \"fonte\": \"Dado ilustrativo\",\n      \"fonte_url\": \"\",\n      \"verificado_em\": \"2026-10-08\",\n      \"observacao\": \"Exemplo para demonstrar a tela.\"\n    },\n    {\n      \"id\": \"demo-2\",\n      \"tipo\": \"creche\",\n      \"subtipo\": null,\n      \"nome\": \"[DEMO] Creche Exemplo Norte\",\n      \"cep\": null,\n      \"endereco\": \"endereço ilustrativo\",\n      \"telefone\": null,\n      \"horario\": \"horário ilustrativo\",\n      \"lat\": -22.395,\n      \"lon\": -47.57,\n      \"geo\": \"centroide_cep\",\n      \"abrangencia\": \"local\",\n      \"fonte\": \"Dado ilustrativo\",\n      \"fonte_url\": \"\",\n      \"verificado_em\": \"2026-10-08\",\n      \"observacao\": \"Exemplo para demonstrar a tela.\"\n    },\n    {\n      \"id\": \"demo-3\",\n      \"tipo\": \"creche\",\n      \"subtipo\": null,\n      \"nome\": \"[DEMO] EMEI Exemplo Sul\",\n      \"cep\": null,\n      \"endereco\": \"endereço ilustrativo\",\n      \"telefone\": null,\n      \"horario\": \"horário ilustrativo\",\n      \"lat\": -22.43,\n      \"lon\": -47.55,\n      \"geo\": \"centroide_cep\",\n      \"abrangencia\": \"local\",\n      \"fonte\": \"Dado ilustrativo\",\n      \"fonte_url\": \"\",\n      \"verificado_em\": \"2026-10-08\",\n      \"observacao\": \"Exemplo para demonstrar a tela.\"\n    },\n    {\n      \"id\": \"demo-4\",\n      \"tipo\": \"creche\",\n      \"subtipo\": null,\n      \"nome\": \"[DEMO] Creche Exemplo sem localização\",\n      \"cep\": null,\n      \"endereco\": \"endereço ilustrativo\",\n      \"telefone\": null,\n      \"horario\": \"horário ilustrativo\",\n      \"lat\": null,\n      \"lon\": null,\n      \"geo\": \"sem_local\",\n      \"abrangencia\": \"local\",\n      \"fonte\": \"Dado ilustrativo\",\n      \"fonte_url\": \"\",\n      \"verificado_em\": \"2026-10-08\",\n      \"observacao\": \"Exemplo para demonstrar a tela.\"\n    },\n    {\n      \"id\": \"demo-5\",\n      \"tipo\": \"saude\",\n      \"subtipo\": \"ubs\",\n      \"nome\": \"[DEMO] UBS Exemplo A\",\n      \"cep\": null,\n      \"endereco\": \"endereço ilustrativo\",\n      \"telefone\": null,\n      \"horario\": \"horário ilustrativo\",\n      \"lat\": -22.41,\n      \"lon\": -47.558,\n      \"geo\": \"centroide_cep\",\n      \"abrangencia\": \"local\",\n      \"fonte\": \"Dado ilustrativo\",\n      \"fonte_url\": \"\",\n      \"verificado_em\": \"2026-10-08\",\n      \"observacao\": \"Exemplo para demonstrar a tela.\"\n    },\n    {\n      \"id\": \"demo-6\",\n      \"tipo\": \"saude\",\n      \"subtipo\": \"ubs\",\n      \"nome\": \"[DEMO] UBS Exemplo B\",\n      \"cep\": null,\n      \"endereco\": \"endereço ilustrativo\",\n      \"telefone\": null,\n      \"horario\": \"horário ilustrativo\",\n      \"lat\": -22.425,\n      \"lon\": -47.54,\n      \"geo\": \"centroide_cep\",\n      \"abrangencia\": \"local\",\n      \"fonte\": \"Dado ilustrativo\",\n      \"fonte_url\": \"\",\n      \"verificado_em\": \"2026-10-08\",\n      \"observacao\": \"Exemplo para demonstrar a tela.\"\n    },\n    {\n      \"id\": \"demo-7\",\n      \"tipo\": \"saude\",\n      \"subtipo\": \"urgencia\",\n      \"nome\": \"[DEMO] Pronto Atendimento Exemplo\",\n      \"cep\": null,\n      \"endereco\": \"endereço ilustrativo\",\n      \"telefone\": null,\n      \"horario\": \"horário ilustrativo\",\n      \"lat\": -22.4,\n      \"lon\": -47.565,\n      \"geo\": \"centroide_cep\",\n      \"abrangencia\": \"local\",\n      \"fonte\": \"Dado ilustrativo\",\n      \"fonte_url\": \"\",\n      \"verificado_em\": \"2026-10-08\",\n      \"observacao\": \"Exemplo para demonstrar a tela.\"\n    },\n    {\n      \"id\": \"demo-8\",\n      \"tipo\": \"assistencia\",\n      \"subtipo\": null,\n      \"nome\": \"[DEMO] CRAS Exemplo 1\",\n      \"cep\": null,\n      \"endereco\": \"endereço ilustrativo\",\n      \"telefone\": null,\n      \"horario\": \"horário ilustrativo\",\n      \"lat\": -22.412,\n      \"lon\": -47.552,\n      \"geo\": \"centroide_cep\",\n      \"abrangencia\": \"local\",\n      \"fonte\": \"Dado ilustrativo\",\n      \"fonte_url\": \"\",\n      \"verificado_em\": \"2026-10-08\",\n      \"observacao\": \"Exemplo para demonstrar a tela.\"\n    },\n    {\n      \"id\": \"demo-9\",\n      \"tipo\": \"assistencia\",\n      \"subtipo\": null,\n      \"nome\": \"[DEMO] CRAS Exemplo 2\",\n      \"cep\": null,\n      \"endereco\": \"endereço ilustrativo\",\n      \"telefone\": null,\n      \"horario\": \"horário ilustrativo\",\n      \"lat\": -22.388,\n      \"lon\": -47.579,\n      \"geo\": \"centroide_cep\",\n      \"abrangencia\": \"local\",\n      \"fonte\": \"Dado ilustrativo\",\n      \"fonte_url\": \"\",\n      \"verificado_em\": \"2026-10-08\",\n      \"observacao\": \"Exemplo para demonstrar a tela.\"\n    },\n    {\n      \"id\": \"demo-10\",\n      \"tipo\": \"mulher\",\n      \"subtipo\": null,\n      \"nome\": \"[DEMO] Atendimento à Mulher Exemplo\",\n      \"cep\": null,\n      \"endereco\": \"endereço ilustrativo\",\n      \"telefone\": null,\n      \"horario\": \"horário ilustrativo\",\n      \"lat\": null,\n      \"lon\": null,\n      \"geo\": \"sem_local\",\n      \"abrangencia\": \"municipal\",\n      \"fonte\": \"Dado ilustrativo\",\n      \"fonte_url\": \"\",\n      \"verificado_em\": \"2026-10-08\",\n      \"observacao\": \"Exemplo para demonstrar a tela.\"\n    },\n    {\n      \"id\": \"demo-11\",\n      \"tipo\": \"emprego_curso\",\n      \"subtipo\": null,\n      \"nome\": \"[DEMO] Posto de Trabalho Exemplo\",\n      \"cep\": null,\n      \"endereco\": \"endereço ilustrativo\",\n      \"telefone\": null,\n      \"horario\": \"horário ilustrativo\",\n      \"lat\": -22.404,\n      \"lon\": -47.559,\n      \"geo\": \"centroide_cep\",\n      \"abrangencia\": \"local\",\n      \"fonte\": \"Dado ilustrativo\",\n      \"fonte_url\": \"\",\n      \"verificado_em\": \"2026-10-08\",\n      \"observacao\": \"Exemplo para demonstrar a tela.\",\n      \"objetivos\": [\n        \"curso\"\n      ],\n      \"gratuito\": true\n    },\n    {\n      \"id\": \"demo-12\",\n      \"tipo\": \"emprego_curso\",\n      \"subtipo\": null,\n      \"nome\": \"[DEMO] Curso gratuito Exemplo\",\n      \"cep\": null,\n      \"endereco\": \"endereço ilustrativo\",\n      \"telefone\": null,\n      \"horario\": \"horário ilustrativo\",\n      \"lat\": -22.42,\n      \"lon\": -47.546,\n      \"geo\": \"centroide_cep\",\n      \"abrangencia\": \"local\",\n      \"fonte\": \"Dado ilustrativo\",\n      \"fonte_url\": \"\",\n      \"verificado_em\": \"2026-10-08\",\n      \"observacao\": \"Exemplo para demonstrar a tela.\",\n      \"objetivos\": [\n        \"trabalhar\"\n      ]\n    },\n    {\n      \"id\": \"demo-m2m-1\",\n      \"tipo\": \"mulher_para_mulher\",\n      \"subtipo\": \"costura_artesanato\",\n      \"nome\": \"[DEMO] Ajustes e costura de roupas (exemplo)\",\n      \"cep\": null,\n      \"endereco\": \"Bairro/região: Centro\",\n      \"telefone\": \"(19) 9 0000-0001 (WhatsApp ilustrativo)\",\n      \"horario\": null,\n      \"lat\": null,\n      \"lon\": null,\n      \"geo\": \"sem_local\",\n      \"abrangencia\": \"municipal\",\n      \"fonte\": \"Dado ilustrativo\",\n      \"fonte_url\": \"\",\n      \"verificado_em\": \"2026-10-09\",\n      \"renovar_ate\": \"2099-12-31\",\n      \"descricao\": \"Barras, ajustes e consertos de roupas.\",\n      \"bairro\": \"Centro\",\n      \"onde_atende\": \"estabelecimento\",\n      \"verificacao\": \"[DEMO] Exemplo de selo: em dados reais aparece quem a Secretaria da Mulher verificou, o que conferiu e quando.\",\n      \"observacao\": \"Exemplo para demonstrar a tela: nenhuma pessoa real está cadastrada.\"\n    },\n    {\n      \"id\": \"demo-m2m-2\",\n      \"tipo\": \"mulher_para_mulher\",\n      \"subtipo\": \"costura_artesanato\",\n      \"nome\": \"[DEMO] Crochê e bordado por encomenda (exemplo)\",\n      \"cep\": null,\n      \"endereco\": \"Bairro/região: Vila Cristina\",\n      \"telefone\": \"(19) 9 0000-0002 (WhatsApp ilustrativo)\",\n      \"horario\": null,\n      \"lat\": null,\n      \"lon\": null,\n      \"geo\": \"sem_local\",\n      \"abrangencia\": \"municipal\",\n      \"fonte\": \"Dado ilustrativo\",\n      \"fonte_url\": \"\",\n      \"verificado_em\": \"2026-10-09\",\n      \"renovar_ate\": \"2099-12-31\",\n      \"descricao\": \"Peças artesanais sob encomenda.\",\n      \"bairro\": \"Vila Cristina\",\n      \"onde_atende\": \"casa_da_profissional\",\n      \"verificacao\": \"[DEMO] Exemplo de selo: em dados reais aparece quem a Secretaria da Mulher verificou, o que conferiu e quando.\",\n      \"observacao\": \"Exemplo para demonstrar a tela: nenhuma pessoa real está cadastrada.\"\n    },\n    {\n      \"id\": \"demo-m2m-3\",\n      \"tipo\": \"mulher_para_mulher\",\n      \"subtipo\": \"beleza\",\n      \"nome\": \"[DEMO] Manicure e pedicure (exemplo)\",\n      \"cep\": null,\n      \"endereco\": \"Bairro/região: Centro\",\n      \"telefone\": \"(19) 9 0000-0003 (WhatsApp ilustrativo)\",\n      \"horario\": null,\n      \"lat\": null,\n      \"lon\": null,\n      \"geo\": \"sem_local\",\n      \"abrangencia\": \"municipal\",\n      \"fonte\": \"Dado ilustrativo\",\n      \"fonte_url\": \"\",\n      \"verificado_em\": \"2026-10-09\",\n      \"renovar_ate\": \"2099-12-31\",\n      \"descricao\": \"Atendimento com horário marcado.\",\n      \"bairro\": \"Centro\",\n      \"onde_atende\": \"estabelecimento\",\n      \"verificacao\": \"[DEMO] Exemplo de selo: em dados reais aparece quem a Secretaria da Mulher verificou, o que conferiu e quando.\",\n      \"observacao\": \"Exemplo para demonstrar a tela: nenhuma pessoa real está cadastrada.\"\n    },\n    {\n      \"id\": \"demo-m2m-4\",\n      \"tipo\": \"mulher_para_mulher\",\n      \"subtipo\": \"alimentacao\",\n      \"nome\": \"[DEMO] Marmitas caseiras (exemplo)\",\n      \"cep\": null,\n      \"endereco\": \"Bairro/região: Wenzel\",\n      \"telefone\": \"(19) 9 0000-0004 (WhatsApp ilustrativo)\",\n      \"horario\": null,\n      \"lat\": null,\n      \"lon\": null,\n      \"geo\": \"sem_local\",\n      \"abrangencia\": \"municipal\",\n      \"fonte\": \"Dado ilustrativo\",\n      \"fonte_url\": \"\",\n      \"verificado_em\": \"2026-10-09\",\n      \"renovar_ate\": \"2099-12-31\",\n      \"descricao\": \"Marmitas para a semana, com entrega no bairro.\",\n      \"bairro\": \"Wenzel\",\n      \"onde_atende\": \"a_combinar\",\n      \"verificacao\": \"[DEMO] Exemplo de selo: em dados reais aparece quem a Secretaria da Mulher verificou, o que conferiu e quando.\",\n      \"observacao\": \"Exemplo para demonstrar a tela: nenhuma pessoa real está cadastrada.\"\n    },\n    {\n      \"id\": \"demo-m2m-5\",\n      \"tipo\": \"mulher_para_mulher\",\n      \"subtipo\": \"alimentacao\",\n      \"nome\": \"[DEMO] Bolos e doces para festas (exemplo)\",\n      \"cep\": null,\n      \"endereco\": \"Bairro/região: Jardim Boa Vista\",\n      \"telefone\": \"(19) 9 0000-0005 (WhatsApp ilustrativo)\",\n      \"horario\": null,\n      \"lat\": null,\n      \"lon\": null,\n      \"geo\": \"sem_local\",\n      \"abrangencia\": \"municipal\",\n      \"fonte\": \"Dado ilustrativo\",\n      \"fonte_url\": \"\",\n      \"verificado_em\": \"2026-10-09\",\n      \"renovar_ate\": \"2099-12-31\",\n      \"descricao\": \"Encomendas com antecedência.\",\n      \"bairro\": \"Jardim Boa Vista\",\n      \"onde_atende\": \"casa_da_profissional\",\n      \"verificacao\": \"[DEMO] Exemplo de selo: em dados reais aparece quem a Secretaria da Mulher verificou, o que conferiu e quando.\",\n      \"observacao\": \"Exemplo para demonstrar a tela: nenhuma pessoa real está cadastrada.\"\n    },\n    {\n      \"id\": \"demo-m2m-6\",\n      \"tipo\": \"mulher_para_mulher\",\n      \"subtipo\": \"cuidadoras\",\n      \"nome\": \"[DEMO] Acompanhante de idosos (exemplo)\",\n      \"cep\": null,\n      \"endereco\": \"Bairro/região: Centro\",\n      \"telefone\": \"(19) 9 0000-0006 (WhatsApp ilustrativo)\",\n      \"horario\": null,\n      \"lat\": null,\n      \"lon\": null,\n      \"geo\": \"sem_local\",\n      \"abrangencia\": \"municipal\",\n      \"fonte\": \"Dado ilustrativo\",\n      \"fonte_url\": \"\",\n      \"verificado_em\": \"2026-10-09\",\n      \"renovar_ate\": \"2099-12-31\",\n      \"descricao\": \"Companhia e apoio no dia a dia de pessoas idosas.\",\n      \"bairro\": \"Centro\",\n      \"onde_atende\": \"casa_da_cliente\",\n      \"verificacao\": \"[DEMO] Exemplo de selo: em dados reais aparece quem a Secretaria da Mulher verificou, o que conferiu e quando.\",\n      \"observacao\": \"Exemplo para demonstrar a tela: nenhuma pessoa real está cadastrada.\"\n    },\n    {\n      \"id\": \"demo-m2m-7\",\n      \"tipo\": \"mulher_para_mulher\",\n      \"subtipo\": \"cuidadoras\",\n      \"nome\": \"[DEMO] Acompanhante em consultas e hospital (exemplo)\",\n      \"cep\": null,\n      \"endereco\": \"Bairro/região: Estádio\",\n      \"telefone\": \"(19) 9 0000-0007 (WhatsApp ilustrativo)\",\n      \"horario\": null,\n      \"lat\": null,\n      \"lon\": null,\n      \"geo\": \"sem_local\",\n      \"abrangencia\": \"municipal\",\n      \"fonte\": \"Dado ilustrativo\",\n      \"fonte_url\": \"\",\n      \"verificado_em\": \"2026-10-09\",\n      \"renovar_ate\": \"2099-12-31\",\n      \"descricao\": \"Acompanha a pessoa em consultas, exames e internações.\",\n      \"bairro\": \"Estádio\",\n      \"onde_atende\": \"a_combinar\",\n      \"verificacao\": \"[DEMO] Exemplo de selo: em dados reais aparece quem a Secretaria da Mulher verificou, o que conferiu e quando.\",\n      \"observacao\": \"Exemplo para demonstrar a tela: nenhuma pessoa real está cadastrada.\"\n    },\n    {\n      \"id\": \"demo-m2m-8\",\n      \"tipo\": \"mulher_para_mulher\",\n      \"subtipo\": \"limpeza\",\n      \"nome\": \"[DEMO] Diarista (exemplo)\",\n      \"cep\": null,\n      \"endereco\": \"Bairro/região: Jardim Chervezon\",\n      \"telefone\": \"(19) 9 0000-0008 (WhatsApp ilustrativo)\",\n      \"horario\": null,\n      \"lat\": null,\n      \"lon\": null,\n      \"geo\": \"sem_local\",\n      \"abrangencia\": \"municipal\",\n      \"fonte\": \"Dado ilustrativo\",\n      \"fonte_url\": \"\",\n      \"verificado_em\": \"2026-10-09\",\n      \"renovar_ate\": \"2099-12-31\",\n      \"descricao\": \"Limpeza de casa, por dia combinado.\",\n      \"bairro\": \"Jardim Chervezon\",\n      \"onde_atende\": \"casa_da_cliente\",\n      \"verificacao\": \"[DEMO] Exemplo de selo: em dados reais aparece quem a Secretaria da Mulher verificou, o que conferiu e quando.\",\n      \"observacao\": \"Exemplo para demonstrar a tela: nenhuma pessoa real está cadastrada.\"\n    },\n    {\n      \"id\": \"demo-m2m-9\",\n      \"tipo\": \"mulher_para_mulher\",\n      \"subtipo\": \"reparos\",\n      \"nome\": \"[DEMO] Pintura e pequenos reparos (exemplo)\",\n      \"cep\": null,\n      \"endereco\": \"Bairro/região: Jardim Panorama\",\n      \"telefone\": \"(19) 9 0000-0009 (WhatsApp ilustrativo)\",\n      \"horario\": null,\n      \"lat\": null,\n      \"lon\": null,\n      \"geo\": \"sem_local\",\n      \"abrangencia\": \"municipal\",\n      \"fonte\": \"Dado ilustrativo\",\n      \"fonte_url\": \"\",\n      \"verificado_em\": \"2026-10-09\",\n      \"renovar_ate\": \"2099-12-31\",\n      \"descricao\": \"Pintura de paredes e reparos domésticos.\",\n      \"bairro\": \"Jardim Panorama\",\n      \"onde_atende\": \"casa_da_cliente\",\n      \"verificacao\": \"[DEMO] Exemplo de selo: em dados reais aparece quem a Secretaria da Mulher verificou, o que conferiu e quando.\",\n      \"observacao\": \"Exemplo para demonstrar a tela: nenhuma pessoa real está cadastrada.\"\n    },\n    {\n      \"id\": \"demo-m2m-10\",\n      \"tipo\": \"mulher_para_mulher\",\n      \"subtipo\": \"aulas\",\n      \"nome\": \"[DEMO] Reforço escolar (exemplo)\",\n      \"cep\": null,\n      \"endereco\": \"Bairro/região: Centro\",\n      \"telefone\": \"(19) 9 0000-0010 (WhatsApp ilustrativo)\",\n      \"horario\": null,\n      \"lat\": null,\n      \"lon\": null,\n      \"geo\": \"sem_local\",\n      \"abrangencia\": \"municipal\",\n      \"fonte\": \"Dado ilustrativo\",\n      \"fonte_url\": \"\",\n      \"verificado_em\": \"2026-10-09\",\n      \"renovar_ate\": \"2099-12-31\",\n      \"descricao\": \"Apoio em português e matemática para o ensino fundamental.\",\n      \"bairro\": \"Centro\",\n      \"onde_atende\": \"online\",\n      \"verificacao\": \"[DEMO] Exemplo de selo: em dados reais aparece quem a Secretaria da Mulher verificou, o que conferiu e quando.\",\n      \"observacao\": \"Exemplo para demonstrar a tela: nenhuma pessoa real está cadastrada.\"\n    },\n    {\n      \"id\": \"demo-m2m-11\",\n      \"tipo\": \"mulher_para_mulher\",\n      \"subtipo\": \"saude_bem_estar\",\n      \"nome\": \"[DEMO] Atendimento psicológico (exemplo)\",\n      \"cep\": null,\n      \"endereco\": \"Bairro/região: Centro\",\n      \"telefone\": \"(19) 9 0000-0011 (WhatsApp ilustrativo)\",\n      \"horario\": null,\n      \"lat\": null,\n      \"lon\": null,\n      \"geo\": \"sem_local\",\n      \"abrangencia\": \"municipal\",\n      \"fonte\": \"Dado ilustrativo\",\n      \"fonte_url\": \"\",\n      \"verificado_em\": \"2026-10-09\",\n      \"renovar_ate\": \"2099-12-31\",\n      \"descricao\": \"Atendimento individual, com registro profissional conferido.\",\n      \"bairro\": \"Centro\",\n      \"onde_atende\": \"online\",\n      \"verificacao\": \"[DEMO] Exemplo de selo: em dados reais aparece quem a Secretaria da Mulher verificou, o que conferiu e quando.\",\n      \"observacao\": \"Exemplo para demonstrar a tela: nenhuma pessoa real está cadastrada.\"\n    },\n    {\n      \"id\": \"demo-m2m-12\",\n      \"tipo\": \"mulher_para_mulher\",\n      \"subtipo\": \"negocios\",\n      \"nome\": \"[DEMO] Contabilidade para MEI (exemplo)\",\n      \"cep\": null,\n      \"endereco\": \"Bairro/região: Centro\",\n      \"telefone\": \"(19) 9 0000-0012 (WhatsApp ilustrativo)\",\n      \"horario\": null,\n      \"lat\": null,\n      \"lon\": null,\n      \"geo\": \"sem_local\",\n      \"abrangencia\": \"municipal\",\n      \"fonte\": \"Dado ilustrativo\",\n      \"fonte_url\": \"\",\n      \"verificado_em\": \"2026-10-09\",\n      \"renovar_ate\": \"2099-12-31\",\n      \"descricao\": \"Abertura e declaração anual de MEI.\",\n      \"bairro\": \"Centro\",\n      \"onde_atende\": \"online\",\n      \"verificacao\": \"[DEMO] Exemplo de selo: em dados reais aparece quem a Secretaria da Mulher verificou, o que conferiu e quando.\",\n      \"observacao\": \"Exemplo para demonstrar a tela: nenhuma pessoa real está cadastrada.\"\n    },\n    {\n      \"id\": \"demo-m2m-13\",\n      \"tipo\": \"mulher_para_mulher\",\n      \"subtipo\": \"transporte\",\n      \"nome\": \"[DEMO] Transporte para consultas (exemplo)\",\n      \"cep\": null,\n      \"endereco\": \"Bairro/região: Wenzel\",\n      \"telefone\": \"(19) 9 0000-0013 (WhatsApp ilustrativo)\",\n      \"horario\": null,\n      \"lat\": null,\n      \"lon\": null,\n      \"geo\": \"sem_local\",\n      \"abrangencia\": \"municipal\",\n      \"fonte\": \"Dado ilustrativo\",\n      \"fonte_url\": \"\",\n      \"verificado_em\": \"2026-10-09\",\n      \"renovar_ate\": \"2099-12-31\",\n      \"descricao\": \"Leva e traz a cliente a consultas e exames.\",\n      \"bairro\": \"Wenzel\",\n      \"onde_atende\": \"a_combinar\",\n      \"verificacao\": \"[DEMO] Exemplo de selo: em dados reais aparece quem a Secretaria da Mulher verificou, o que conferiu e quando.\",\n      \"observacao\": \"Exemplo para demonstrar a tela: nenhuma pessoa real está cadastrada.\"\n    }\n  ]\n}"};
+  var EMBUTIDOS = {};
   var original = window.fetch ? window.fetch.bind(window) : null;
   window.fetch = function (url) {
     var chave = String(url).split("?")[0].replace(/^\.\//, "");
     if (Object.prototype.hasOwnProperty.call(EMBUTIDOS, chave)) {
       return Promise.resolve(new Response(EMBUTIDOS[chave], { status: 200, headers: { "Content-Type": "application/json" } }));
     }
-    return Promise.resolve(new Response("", { status: 404 }));
+    return original ? original(url) : Promise.resolve(new Response("", { status: 404 }));
   };
 })();
 </script>
@@ -690,23 +690,23 @@ svg.leaflet-image-layer.leaflet-interactive path {
    vermelho so para alerta/emergencia. Contraste conferido (texto >= 4.5:1). Nao usa brasao nem marca oficial. */
 :root {
   color-scheme: light;
-  --bg: #f2f4f7;
+  --bg: #fbf8f8;
   --surface: #ffffff;
-  --fg: #1b2633;
-  --mut: #4f5b6a;
-  --pri: #14375e;
-  --pri-hover: #0c2543;
-  --pri-2: #1f5a96;
-  --soft: #e6edf5;
-  --bor: #d3dae3;
-  --bor-forte: #aab5c3;
-  --alerta: #a1262b;
-  --alerta-fundo: #fbefef;
-  --alerta-borda: #e3bcbc;
-  --aviso-fundo: #eef1f5;
-  --foco: #0b6bcb;
-  --radius: 6px;
-  --shadow: 0 1px 2px rgba(20, 40, 70, .06), 0 1px 3px rgba(20, 40, 70, .05);
+  --fg: #352b32;
+  --mut: #766a73;
+  --pri: #87556f;
+  --pri-hover: #6d4058;
+  --pri-2: #8d5a75;
+  --soft: #f5eaf0;
+  --bor: #e7dce2;
+  --bor-forte: #c9b5c0;
+  --alerta: #b43b4b;
+  --alerta-fundo: #fff5f6;
+  --alerta-borda: #e8c6cc;
+  --aviso-fundo: #f7eff3;
+  --foco: #b17a98;
+  --radius: 10px;
+  --shadow: 0 3px 12px rgba(89, 53, 72, .06);
   --largura: 1120px;
   --lateral: max(1rem, calc((100% - var(--largura)) / 2));
 }
@@ -724,14 +724,10 @@ h1, h2, h3 { color: var(--fg); line-height: 1.25; letter-spacing: -.01em; }
 .icone { width: 1.5rem; height: 1.5rem; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 
 /* ---------- casca: faixa institucional, emergencia, navegacao ---------- */
-.faixa-institucional { padding: .35rem var(--lateral); background: var(--pri); color: #e8eef6; font-size: .8rem; letter-spacing: .02em; }
-.faixa-institucional strong { color: #fff; font-weight: 650; }
-.faixa-demo { padding: .5rem var(--lateral); background: var(--aviso-fundo); border-bottom: 1px solid var(--bor); color: #2f3b4a; font-size: .85rem; }
-.faixa-demo::before { content: "PROTÓTIPO"; margin-right: .6rem; padding: .1rem .4rem; border: 1px solid #6b7889; border-radius: 3px; font-size: .7rem; font-weight: 700; letter-spacing: .08em; }
-.barra-emergencia { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .5rem 1rem; padding: .5rem var(--lateral); background: var(--alerta-fundo); border-bottom: 1px solid var(--alerta-borda); color: #3b2a2c; font-size: .9rem; }
-.barra-emergencia a { color: var(--alerta); font-weight: 700; white-space: nowrap; }
-#sair-rapido { flex: 0 0 auto; min-height: 36px; padding: .25rem .8rem; border: 1px solid var(--alerta); border-radius: var(--radius); background: #fff; color: var(--alerta); font-weight: 650; font-size: .88rem; }
-#sair-rapido:hover { background: var(--alerta); color: #fff; }
+.barra-emergencia { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .5rem 1rem; padding: .45rem var(--lateral); background: #fffdfc; border-bottom: 1px solid var(--bor); color: var(--fg); font-size: .88rem; }
+.barra-emergencia a { display:inline-flex; align-items:center; min-height:32px; padding:.2rem .65rem; margin:.1rem; border:1px solid #e6b9bf; border-radius:999px; background:#fff1f2; color:#a52f43; font-weight:750; text-decoration:none; white-space:nowrap; }
+#sair-rapido { flex: 0 0 auto; min-height: 32px; padding: .2rem .7rem; border: 1px solid var(--bor); border-radius: 999px; background: #fff; color: var(--mut); font-weight: 650; font-size: .84rem; }
+#sair-rapido:hover { background: var(--soft); color:var(--fg); }
 .navegacao-principal { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .55rem var(--lateral); background: var(--surface); border-bottom: 1px solid var(--bor); box-shadow: var(--shadow); }
 .marca-site { display: flex; align-items: center; gap: .7rem; color: var(--fg); text-decoration: none; white-space: nowrap; }
 .marca-site:hover { color: var(--fg); }
@@ -898,9 +894,6 @@ details.outros > summary { display: flex; align-items: center; min-height: 44px;
 </style>
 </head>
 <body>
-<div class="faixa-institucional"><strong>Protótipo acadêmico</strong> · Fatec Rio Claro · Curso de Inteligência Artificial · não é um serviço oficial da Prefeitura</div>
-<div id="faixa-demo" class="faixa-demo" role="note" hidden>Os serviços, endereços e telefones exibidos são exemplos de demonstração, não cadastros reais.</div>
-
 <div class="barra-emergencia" role="region" aria-label="Emergência">
   <span><strong>Em perigo agora?</strong> Polícia <a href="tel:190">190</a> · SAMU <a href="tel:192">192</a> · Violência contra a mulher: <a href="tel:180">Ligue 180</a> (24h, gratuito)</span>
   <button id="sair-rapido" type="button" title="Fecha esta página e abre outro site">Sair rápido</button>
@@ -914,7 +907,7 @@ details.outros > summary { display: flex; align-items: center; min-height: 44px;
 <header class="hero">
   <div class="hero-miolo">
     <h1>Mapa do Cuidado Rio-Clarense</h1>
-    <p>Trabalho, cursos, saúde, filhos, direitos e proteção: escreva o que você precisa e veja os caminhos e serviços de Rio Claro.</p>
+    <p>Saúde, educação, família, trabalho, moradia e direitos em um só lugar. Escolha um assunto ou escreva o que precisa para encontrar os canais oficiais de Rio Claro.</p>
     <form id="form-necessidade" class="busca-necessidade" autocomplete="off">
       <label for="necessidade">O que você está procurando?</label>
       <div class="linha">
@@ -928,93 +921,36 @@ details.outros > summary { display: flex; align-items: center; min-height: 44px;
 </header>
 
 <main>
-  <section class="ferramentas-secao oficial" aria-labelledby="titulo-oficial">
-    <h2 id="titulo-oficial" class="secao-titulo">Informações oficiais de Rio Claro</h2>
-    <p class="secao-sub">Endereços, telefones e links copiados de páginas da Prefeitura e da Fundação de Saúde, cada um com a data da conferência. Confirme sempre por telefone antes de ir.</p>
-    <div class="ferramentas">
-      <article class="ferramenta">
-        <h3>Qual é a minha unidade de saúde?</h3>
-        <p>Digite o bairro e veja a UBS de referência, telefones, horários e as unidades 24 horas.</p>
-        <p class="acoes"><a href="saude.html">Encontrar minha unidade →</a></p>
-      </article>
-      <article class="ferramenta">
-        <h3>Saúde da mulher</h3>
-        <p>Onde fazer o Papanicolau, o pronto atendimento ginecológico 24 horas e os protocolos do município.</p>
-        <p class="acoes"><a href="saude.html#saude-mulher">Ver saúde da mulher →</a></p>
-      </article>
-      <article class="ferramenta">
-        <h3>Secretarias e canais oficiais</h3>
-        <p>Links das secretarias, Ouvidoria, Portal de Serviços e Transparência, com a situação de cada link.</p>
-        <p class="acoes"><a href="secretarias.html">Ver secretarias →</a></p>
-      </article>
-    </div>
-  </section>
-
   <section class="portas" aria-labelledby="titulo-portas">
-    <h2 id="titulo-portas" class="secao-titulo">Ou escolha um assunto</h2>
-    <p class="secao-sub">Os assuntos estão agrupados por jornada. Cada um abre os serviços e contatos de Rio Claro. A busca acontece neste aparelho.</p>
+    <h2 id="titulo-portas" class="secao-titulo">Por onde você quer começar?</h2>
+    <p class="secao-sub">Informações e canais oficiais ficam reunidos em cada assunto, sem repetir os mesmos serviços em várias áreas.</p>
     <div class="blocos-portas">
-      <section class="bloco-portas" aria-labelledby="titulo-renda">
-        <h3 id="titulo-renda">Trabalho e desenvolvimento</h3>
+      <section class="bloco-portas" aria-labelledby="titulo-vida">
+        <h3 id="titulo-vida">Vida e autonomia</h3>
         <div class="grade-portas">
-          <button class="porta" type="button" data-categoria="emprego_curso"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg><strong>Emprego e renda</strong><small>Vagas, cursos e qualificação</small></button>
-          <button class="porta" type="button" data-categoria="estudo"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9l9-5 9 5-9 5-9-5z"/><path d="M7 11.500V16c0 1 2.200 2.500 5 2.500s5-1.500 5-2.500v-4.500"/></svg><strong>Educação</strong><small>Escolas e formação</small></button>
+          <button class="porta" type="button" data-categoria="emprego_curso"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg><strong>Trabalho, cursos e renda</strong><small>Emprego, qualificação e oportunidades</small></button>
+          <button class="porta" type="button" data-categoria="estudo"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9l9-5 9 5-9 5-9-5z"/><path d="M7 11.5V16c0 1 2.2 2.5 5 2.5s5-1.5 5-2.5v-4.5"/></svg><strong>Educação, filhos e família</strong><small>Escola, creche, cursos e assistência</small></button>
         </div>
       </section>
       <section class="bloco-portas" aria-labelledby="titulo-cuidado">
-        <h3 id="titulo-cuidado">Saúde e rede de cuidado</h3>
+        <h3 id="titulo-cuidado">Saúde e proteção</h3>
         <div class="grade-portas">
-          <button class="porta" type="button" data-categoria="saude"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.600-7 10-7 10z"/></svg><strong>Saúde</strong><small>Atendimento e orientação</small></button>
-          <button class="porta" type="button" data-categoria="filhos"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="7" r="3"/><circle cx="17" cy="10" r="2"/><path d="M2.500 20v-1.500A4.500 4.500 0 0 1 7 14h2a4.500 4.500 0 0 1 4.500 4.500V20M15 20v-1a3 3 0 0 1 3-3h.5a2.500 2.500 0 0 1 2.500 2.500V20"/></svg><strong>Filhos e cuidado</strong><small>Creche, escola e apoio</small></button>
-          <button class="porta" type="button" data-categoria="familia"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.2"/><path d="M3 20a6 6 0 0 1 12 0M15 20a4.5 4.5 0 0 1 6 0"/></svg><strong>Família e assistência</strong><small>Benefícios e serviços de apoio</small></button>
+          <button class="porta" type="button" data-categoria="saude"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><strong>Saúde</strong><small>Unidades, horários e saúde da mulher</small></button>
+          <button class="porta" type="button" data-categoria="violencia"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.3 7.8-8 9-4.7-1.2-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg><strong>Proteção e violência</strong><small>Ajuda imediata e rede de atendimento</small></button>
         </div>
       </section>
-      <section class="bloco-portas" aria-labelledby="titulo-direitos">
-        <h3 id="titulo-direitos">Direitos e proteção</h3>
+      <section class="bloco-portas" aria-labelledby="titulo-casa-direitos">
+        <h3 id="titulo-casa-direitos">Casa, contas e direitos</h3>
         <div class="grade-portas">
-          <button class="porta" type="button" data-categoria="casamento"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v17M7 20h10M4 7h16"/><path d="M4 7l-2.500 6a3.500 3.500 0 0 0 5 0L4 7zM20 7l-2.500 6a3.500 3.500 0 0 0 5 0L20 7z"/></svg><strong>Direitos e separação</strong><small>Orientação jurídica e apoio</small></button>
-          <button class="porta" type="button" data-categoria="violencia"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 4.500-3.300 7.800-8 9-4.700-1.200-8-4.500-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg><strong>Proteção e violência</strong><small>Orientação e rede de apoio</small></button>
-          <button class="porta" type="button" id="porta-m2m" data-categoria="mulher_para_mulher" hidden><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M2.500 20a5.500 5.500 0 0 1 11 0M10.500 20a5.500 5.500 0 0 1 11 0"/></svg><strong>De mulher para mulher</strong><small>Serviços feitos por mulheres</small></button>
+          <button class="porta" type="button" data-categoria="moradia"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></svg><strong>Moradia, água e luz</strong><small>Habitação, DAAE e tarifa social</small></button>
+          <button class="porta" type="button" data-categoria="casamento"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v17M7 20h10M4 7h16"/><path d="M4 7l-2.5 6a3.5 3.5 0 0 0 5 0L4 7zM20 7l-2.5 6a3.5 3.5 0 0 0 5 0L20 7z"/></svg><strong>Direitos, separação e aposentadoria</strong><small>Orientação jurídica, INSS e consumidor</small></button>
         </div>
       </section>
-      <section class="bloco-portas" aria-labelledby="titulo-moradia-financas">
-        <h3 id="titulo-moradia-financas">Moradia e vida financeira</h3>
-        <div class="grade-portas">
-          <button class="porta" type="button" data-categoria="moradia"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></svg><strong>Moradia e aluguel</strong><small>Habitação, assistência e benefícios a confirmar</small></button>
-          <button class="porta" type="button" data-categoria="dividas"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M16 14.5h2"/></svg><strong>Dívidas e aposentadoria</strong><small>Orientação financeira e previdenciária</small></button>
-        </div>
-      </section>
-    </div>
-    <section class="acesso-digital" aria-labelledby="titulo-acesso-digital">
-      <h3 id="titulo-acesso-digital">Acesso digital e privacidade</h3>
-      <p>O texto da busca por necessidade é processado neste aparelho. Ainda não há navegação sem franquia de dados, login Gov.br integrado, atendimento por áudio nem garantia de apagar o histórico do navegador.</p>
-      <p>Se estiver usando um aparelho compartilhado, evite informar dados pessoais. O botão “Sair rápido” abre outro site, mas não apaga o histórico.</p>
-    </section>
-  </section>
-
-  <section class="outras-areas" aria-labelledby="titulo-outras-areas">
-    <h3 id="titulo-outras-areas">Outras áreas da plataforma</h3>
-    <div class="grade-outras-areas">
-      <article class="cartao">
-        <h4>De Mulher para Mulher <span class="meta">[DEMO]</span></h4>
-        <p>Protótipo de diretório e rede de apoio entre mulheres. Os perfis e selos são fictícios; não há cadastro nem verificação real.</p>
-        <p><a href="rede-mulheres.html">Explorar o protótipo</a></p>
-      </article>
-      <article class="cartao">
-        <h4>Painel de gestão <span class="meta">[DEMO]</span></h4>
-        <p>O que as mulheres procuram, demanda e oferta por região e o mapa de setores. Todos os números são fictícios.</p>
-        <p><a href="gestao.html">Visão pública</a> · <a href="gestao.html?visao=gestao">Visão de gestão</a></p>
-      </article>
-      <article class="cartao">
-        <h4>Inteligência Pública <span class="meta">[DEMO]</span></h4>
-        <p>Painel conceitual para gestores: dados territoriais, qualidade das fontes e exemplos de análise. Gráficos ilustrativos não são estatísticas oficiais.</p>
-        <p><a href="inteligencia-publica.html">Abrir painel conceitual</a></p>
-      </article>
     </div>
   </section>
 
   <section id="painel-categoria" class="painel-categoria" hidden aria-live="polite">
-    <button id="voltar-portas" class="voltar" type="button">← Todas as opções</button>
+    <button id="voltar-portas" class="voltar" type="button">← Todos os assuntos</button>
     <h2 id="titulo-categoria"></h2>
     <p id="descricao-categoria"></p>
     <div id="entendimento" class="entendimento" aria-live="polite"></div>
@@ -1025,7 +961,6 @@ details.outros > summary { display: flex; align-items: center; min-height: 44px;
   <details class="busca-por-cep">
     <summary>Quero encontrar serviços perto de mim pelo CEP</summary>
     <form id="form-cep" class="busca" autocomplete="off">
-    <p id="aviso-cep-demo" class="aviso-dados" hidden><strong>Dados de demonstração.</strong> Para testar, use os CEPs fictícios 00000-001, 00000-002 ou 00000-003.</p>
     <label for="cep">Digite seu CEP</label>
     <div class="linha">
       <input id="cep" inputmode="numeric" maxlength="9" placeholder="00000-000" autocomplete="off" autocapitalize="off" spellcheck="false">
@@ -1058,7 +993,7 @@ details.outros > summary { display: flex; align-items: center; min-height: 44px;
 </main>
 
 <footer class="rodape">
-  <p><strong>Como ler este mapa.</strong> A lista mostra serviços cadastrados em fontes públicas (CNES, Censo Escolar/INEP, páginas da Prefeitura). Isso <em>não</em> informa se há vaga, fila ou horário atual: confirme sempre com o serviço. Distâncias são em linha reta a partir do centro do CEP.</p>
+  <p><strong>Importante.</strong> Este mapa reúne links e informações de fontes públicas. A presença de um serviço não confirma vaga, fila, horário atual ou aprovação de benefício; confirme os requisitos diretamente no canal oficial.</p>
   <p id="fontes"></p>
 </footer>
 
@@ -1320,7 +1255,7 @@ window.MISM3_CONFIG = {
         "preciso sair de casa", "quero sair de casa com seguranca", "sair de casa com seguranca"],
       tipos: ["mulher", "assistencia", "saude"],
       aviso: "Em perigo agora: ligue 190 (polícia) ou 192 (SAMU). Violência contra a mulher: Ligue 180, 24 horas, gratuito. Você não precisa se identificar para pedir orientação." },
-    { id: "casamento", rotulo: "Casamento, separação, guarda, pensão",
+    { id: "casamento", rotulo: "Direitos, separação e aposentadoria",
       palavras: ["casamento", "casad*", "separ*", "divorci*", "pensao", "marido", "companheiro", "uniao estavel", "namorado",
         "advogad*", "defensoria", "direitos", "guarda dos filhos", "guarda do filho", "guarda da crianca", "guarda compartilhada",
         "guarda unilateral", "pedir a guarda", "perder a guarda", "ex marido", "ex companheiro"],
@@ -1360,11 +1295,11 @@ window.MISM3_CONFIG = {
         "vaga de emprego", "vagas de emprego", "vaga de trabalho", "vagas de trabalho", "procuro vaga", "procurando vaga",
         "qualific*", "capacit*", "empreend*", "negocio", "credito", "microempreendedor*", "mei", "concurso*", "pat", "conecta", "banco do povo", "bico", "diarista"],
       tipos: ["emprego_curso"] },
-    { id: "estudo", rotulo: "Estudo e cursos", objetivo: "curso",
+    { id: "estudo", rotulo: "Educação, filhos e família", objetivo: "curso",
       palavras: ["estud*", "faculdade", "universidade", "ensino medio", "ensino superior", "eja", "supletivo", "curso*", "qualific*",
         "capacit*", "etec", "fatec", "alfabetiza*", "enem", "escola", "formacao"],
       tipos: ["emprego_curso", "educacao_infantil"],
-      aviso: "Hoje o cadastro tem os Centros de Qualificação do Fundo Social. Não temos ainda a lista de turmas abertas nem de EJA." },
+      aviso: "Reunimos caminhos de educação, cuidado e assistência familiar. Confirme vagas, turmas, critérios e documentos diretamente nos canais oficiais." },
     { id: "transporte", rotulo: "Ônibus e transporte",
       palavras: ["transporte", "onibus", "linha*", "horario*", "terminal", "tarifa", "passagem", "como chegar", "conducao", "vale transporte"],
       tipos: [],
@@ -1478,7 +1413,7 @@ window.MISM3_CONFIG = {
 (function () {
   "use strict";
   var $ = function (id) { return document.getElementById(id); };
-  var dados = { indice: null, servicos: null, demo: false };
+  var dados = { indice: null, servicos: null };
   var mapa = null, camadas = null, tiles = null;
   var ultimo = null, objetivo = null, necessidades = [];  /* so em memoria: nada vai para storage, cookie ou rede */
 
@@ -1507,36 +1442,28 @@ window.MISM3_CONFIG = {
       links: []
     },
     estudo: {
-      titulo: "Estudo e qualificação",
-      descricao: "Veja informações sobre educação infantil, escolas e cursos. A abertura de turma ou vaga precisa ser confirmada.",
-      tipos: ["creche", "educacao_infantil", "emprego_curso"],
+      titulo: "Educação, filhos e família",
+      descricao: "Reunimos educação infantil, escolas, matrícula, formação de jovens e adultos e orientação de assistência social. A existência de uma escola ou programa não confirma vaga, turma aberta ou benefício aprovado.",
+      tipos: ["creche", "educacao_infantil", "assistencia"],
       links: [
-        ["Secretaria Municipal da Educação", "https://rioclaro.sp.gov.br/secretaria/secretaria-da-educacao/", "Informações oficiais sobre a rede municipal."],
-        ["Fundo Social de Solidariedade", "https://rioclaro.sp.gov.br/secretaria/fundo-social-de-solidariedade/", "Informações sobre cursos e programas."]
-      ]
-    },
-    filhos: {
-      titulo: "Filhos: creche, escola e apoio",
-      descricao: "Reúna os caminhos para educação infantil e apoio à família. A existência de uma unidade não confirma vaga disponível.",
-      tipos: ["creche", "educacao_infantil", "assistencia", "saude"],
-      links: [
-        ["Secretaria Municipal da Educação", "https://rioclaro.sp.gov.br/secretaria/secretaria-da-educacao/", "Orientações sobre a rede e matrícula."],
-        ["Consulta pública da demanda escolar", "https://www.educacaorc.com.br/?r=demandaescolar", "Consulte as informações disponibilizadas no portal da Educação."]
+        ["Secretaria Municipal da Educação", "https://rioclaro.sp.gov.br/secretaria/secretaria-da-educacao/", "Informações oficiais sobre a rede municipal, matrícula e orientações escolares."],
+        ["Consulta pública da demanda escolar", "https://www.educacaorc.com.br/?r=demandaescolar", "Consulte as informações publicadas no portal municipal da Educação."],
+        ["Secretaria de Desenvolvimento Social", "https://rioclaro.sp.gov.br/secretaria/secretaria-de-desenvolvimento-social/", "Orientação sobre assistência social e serviços para famílias."],
+        ["CRAS — Centros de Referência de Assistência Social", "https://rioclaro.sp.gov.br/centro-ref-assistencia-social/", "Consulte a unidade de referência para Cadastro Único e benefícios; confirme critérios e documentos."],
+        ["Fundo Social de Solidariedade", "https://rioclaro.sp.gov.br/secretaria/fundo-social-de-solidariedade/", "Informações sobre cursos e programas municipais."]
       ]
     },
     casamento: {
-      titulo: "Casamento, separação e direitos",
-      descricao: "Veja caminhos para buscar orientação sobre direitos e questões familiares. O catálogo específico dessa área ainda está sendo ampliado.",
-      tipos: ["mulher", "assistencia"],
+      titulo: "Direitos, separação e aposentadoria",
+      descricao: "Canais oficiais para orientação jurídica sobre separação, divórcio, guarda e pensão, além de previdência, aposentadoria e defesa do consumidor. Esta página não substitui atendimento jurídico e não confirma concessão de benefício.",
+      tipos: ["assistencia", "mulher"],
       links: [
-        ["Defensoria Pública do Estado de São Paulo", "https://www.defensoria.sp.def.br/", "Consulte os canais oficiais de orientação jurídica e os critérios de atendimento."]
+        ["Defensoria Pública do Estado de São Paulo", "https://www.defensoria.sp.def.br/", "Orientação jurídica gratuita, critérios de atendimento e encaminhamentos."],
+        ["Meu INSS — Simular aposentadoria", "https://www.gov.br/pt-br/servicos/simular-aposentadoria", "Consulte o tempo estimado para aposentadoria. A simulação é uma projeção, não garante benefício."],
+        ["Meu INSS — serviços e benefícios", "https://meu.inss.gov.br/", "Acesse os serviços oficiais da Previdência Social."],
+        ["Procon de Rio Claro", "https://rioclaro.sp.gov.br/secretaria/secretaria-de-justica/", "Canais municipais para orientação ao consumidor."],
+        ["Procon-SP — Apoio ao Superendividado", "https://www.procon.sp.gov.br/espaco-consumidor/#ApoioSuperendividado", "Consulte orientação para pessoas que não conseguem pagar dívidas sem comprometer a subsistência."]
       ]
-    },
-    mulher_para_mulher: {
-      titulo: "De mulher para mulher",
-      descricao: "Mulheres que oferecem serviços a outras mulheres. Cada cadastro é verificado pela Secretaria da Mulher, é voluntário e vence se não for renovado. A verificação confere o que está escrito no cartão; não garante o serviço nem a segurança. Combine em local público, avise alguém de confiança e desconfie de pedidos de dinheiro adiantado.",
-      tipos: ["mulher_para_mulher"],
-      links: []
     },
     transporte: {
       titulo: "Ônibus e transporte",
@@ -1555,35 +1482,19 @@ window.MISM3_CONFIG = {
         ["Secretaria Municipal da Mulher", "https://rioclaro.sp.gov.br/secretaria/secretaria-da-mulher/", "Consulte os contatos institucionais publicados pela Prefeitura."]
       ]
     },
-    familia: {
-      titulo: "Família e assistência",
-      descricao: "Encontre serviços cadastrados de assistência, saúde, apoio à mulher e educação. Se uma informação estiver ausente, isso não significa que o serviço não exista.",
-      tipos: ["assistencia", "mulher", "saude", "creche"],
-      links: [
-        ["Secretaria de Desenvolvimento Social", "https://rioclaro.sp.gov.br/secretaria/secretaria-de-desenvolvimento-social/", "Informações institucionais sobre assistência social."],
-        ["Secretaria Municipal da Mulher", "https://rioclaro.sp.gov.br/secretaria/secretaria-da-mulher/", "Informações e contatos da Secretaria."]
-      ]
-    },
     moradia: {
-      titulo: "Moradia, habitação e apoio para permanecer em segurança",
-      descricao: "Comece pelos canais oficiais de habitação e assistência social. Esta página não faz inscrição em programas nem confirma vaga, aluguel social ou prioridade habitacional; pergunte quais critérios e programas estão vigentes.",
-      tipos: ["assistencia", "mulher"],
+      titulo: "Moradia, água, luz e benefícios",
+      descricao: "Reunimos os canais para habitação, água, energia e tarifas sociais. Os links orientam; não fazem inscrição, não garantem elegibilidade nem confirmam concessão de benefício.",
+      tipos: ["assistencia"],
       links: [
-        ["Secretaria de Habitação de Rio Claro", "https://rioclaro.sp.gov.br/secretaria/secretaria-de-planejamento-e-habitacao/", "A Prefeitura publica os contatos da secretaria e links para cadastro habitacional e critérios de elegibilidade."],
-        ["CRAS — Centros de Referência de Assistência Social", "https://rioclaro.sp.gov.br/centro-ref-assistencia-social/", "Consulte a unidade de referência e peça orientação sobre benefícios e proteção social."],
-        ["Tarifa social de água e esgoto de Rio Claro", "https://rioclaro.sp.gov.br/daae/familias-em-vulnerabilidade-social-podem-solicitar-tarifa-social-na-conta-de-agua-e-esgoto/", "Informação municipal sobre desconto para famílias que atendam aos critérios publicados; confirme requisitos e vigência com o DAAE."]
+        ["Secretaria de Habitação de Rio Claro", "https://rioclaro.sp.gov.br/secretaria/secretaria-de-planejamento-e-habitacao/", "Consulte cadastro habitacional, critérios e programas municipais vigentes."],
+        ["Minha Casa, Minha Vida — Ministério das Cidades", "https://www.gov.br/cidades/pt-br/assuntos/minha-casa-minha-vida", "Consulte as modalidades e regras oficiais do programa federal."],
+        ["CRAS — Centros de Referência de Assistência Social", "https://rioclaro.sp.gov.br/centro-ref-assistencia-social/", "Peça orientação sobre Cadastro Único e benefícios sociais relacionados à moradia e renda."],
+        ["DAAE — tarifa social de água e esgoto", "https://rioclaro.sp.gov.br/daae/familias-em-vulnerabilidade-social-podem-solicitar-tarifa-social-na-conta-de-agua-e-esgoto/", "Informações municipais sobre desconto na conta de água; confirme requisitos e vigência com o DAAE."],
+        ["Neoenergia Elektro — atendimento", "https://www.neoenergia.com/web/sp", "Consulte canais oficiais para conta de energia, ligação, parcelamento e atendimento."],
+        ["Tarifa Social de Energia Elétrica — ANEEL", "https://www.gov.br/aneel/pt-br/assuntos/tarifas/tarifa-social", "Consulte as regras federais e confirme se sua família atende aos critérios."]
       ]
     },
-    dividas: {
-      titulo: "Dívidas, orçamento e aposentadoria",
-      descricao: "Use canais oficiais para buscar orientação. Não compartilhe senhas, códigos de acesso ou documentos com intermediários; simulações previdenciárias não garantem concessão de benefício.",
-      tipos: [],
-      links: [
-        ["Procon de Rio Claro", "https://rioclaro.sp.gov.br/secretaria/secretaria-de-justica/", "A página municipal informa os contatos das unidades do Procon. Procure orientação sobre dívidas de consumo e seus direitos."],
-        ["Procon-SP — Apoio ao Superendividado", "https://www.procon.sp.gov.br/espaco-consumidor/#ApoioSuperendividado", "Programa estadual com inscrição online e triagem para pessoas que não conseguem pagar dívidas sem comprometer a subsistência."],
-        ["Meu INSS — Simular aposentadoria", "https://www.gov.br/pt-br/servicos/simular-aposentadoria", "Simule o tempo que falta com base nos vínculos previdenciários registrados. Confira dados ausentes; o resultado é apenas uma projeção."]
-      ]
-    }
   };
 
   /* Conteudo de UMA categoria (links oficiais + servicos cadastrados + ajuda imediata). */
@@ -1637,7 +1548,13 @@ window.MISM3_CONFIG = {
     return html;
   }
 
-  var CHAVE_PARA_ID = { emprego_curso: "emprego" }, ID_PARA_CHAVE = { emprego: "emprego_curso" };
+  var CHAVE_PARA_ID = { emprego_curso: "emprego" }, ID_PARA_CHAVE = { emprego: "emprego_curso", filhos: "estudo", familia: "estudo", dividas: "casamento" };
+  function categoriaPrincipal(chave) {
+    if (chave === "filhos" || chave === "familia") return "estudo";
+    if (chave === "dividas") return "casamento";
+    if (chave === "mulher_para_mulher") return null;
+    return chave;
+  }
   var idNec = function (chave) { return CHAVE_PARA_ID[chave] || chave; };
   var chaveDe = function (id) { return ID_PARA_CHAVE[id] || id; };
   var veioDoTexto = false;  /* so mostramos "Entendemos que voce procura" quando a pessoa escreveu uma frase */
@@ -1652,7 +1569,7 @@ window.MISM3_CONFIG = {
 
   /* Abre uma ou VARIAS categorias juntas (a frase pode ter mais de uma necessidade). */
   function abrirCaminho(chaves) {
-    var validas = chaves.filter(function (k) { return CATEGORIAS[k]; });
+    var validas = chaves.map(categoriaPrincipal).filter(function (k, i, arr) { return k && CATEGORIAS[k] && arr.indexOf(k) === i; });
     if (!validas.length) return;
     necessidades = validas.map(function (k) { return Necessidades.porId(idNec(k)); }).filter(Boolean);
     $("painel-categoria").hidden = false;
@@ -1747,21 +1664,17 @@ window.MISM3_CONFIG = {
 
   function iniciar() {
     carregar("dados/cep_indice.json").then(function (idx) {
-      return carregar("dados/servicos.json").then(function (sv) { return [idx, sv, false]; });
-    }).catch(function () {
-      return Promise.all([carregar("dados/demo/cep_indice.json"), carregar("dados/demo/servicos.json")])
-        .then(function (r) { return [r[0], r[1], true]; });
+      return carregar("dados/servicos.json").then(function (sv) { return [idx, sv]; });
     }).then(function (r) {
-      dados.indice = r[0].ceps;
-      /* cadastro "de mulher para mulher" vence: depois de renovar_ate nao aparece, mesmo que o arquivo seja antigo */
-      dados.servicos = r[1].servicos.filter(function (x) { return x.tipo !== "mulher_para_mulher" || (x.renovar_ate && x.renovar_ate >= hojeISO()); });
-      $("porta-m2m").hidden = !dados.servicos.some(function (x) { return x.tipo === "mulher_para_mulher"; });
-      dados.demo = !!(r[0].meta && r[0].meta.demo) || !!(r[1].meta && r[1].meta.demo);
-      $("faixa-demo").hidden = !dados.demo;
-      $("fontes").textContent = "Índice de CEPs: " + (r[0].meta.fonte || "") + " · Serviços gerados em " + (r[1].meta.gerado_em || "?") + ".";
-      $("aviso-cep-demo").hidden = !dados.demo;
+      dados.indice = r[0].ceps || {};
+      dados.servicos = r[1].servicos || [];
+      $("fontes").textContent = "Fontes: " + (r[0].meta && r[0].meta.fonte || "índice de CEPs") + " · Catálogo atualizado em " + (r[1].meta && r[1].meta.gerado_em || "data não informada") + ".";
     }).catch(function () {
-      mostrarMensagem("Não foi possível carregar os dados. Abra o site por um servidor local (veja o README).");
+      dados.indice = null;
+      dados.servicos = [];
+      document.querySelector(".busca-por-cep").hidden = true;
+      $("form-cep").querySelectorAll("input, button").forEach(function (el) { el.disabled = true; });
+      $("fontes").textContent = "A busca por proximidade ficará disponível quando o catálogo real for publicado. Os canais oficiais continuam acessíveis nas áreas acima.";
     });
   }
 
@@ -1946,15 +1859,10 @@ window.MISM3_CONFIG = {
   "use strict";
   var MENU = [
     { href: "index.html", rotulo: "Início" },
-    { href: "saude.html", rotulo: "Saúde" },
-    { href: "lazer.html", rotulo: "Lazer" },
-    { href: "rede-mulheres.html", rotulo: "De mulher para mulher" },
-    { href: "gestao.html", rotulo: "Gestão", tambem: ["inteligencia-publica.html"] }
+    { href: "saude.html", rotulo: "Saúde" }
   ];
   var MAIS = [
-    { href: "secretarias.html", rotulo: "Secretarias e telefones úteis" },
-    { href: "gestao.html", rotulo: "Painel de gestão (protótipo)" },
-    { href: "inteligencia-publica.html", rotulo: "Inteligência pública (protótipo)" }
+    { href: "secretarias.html", rotulo: "Secretarias e telefones úteis" }
   ];
   var atual = (window.location.pathname.split("/").pop() || "index.html").toLowerCase();
 
