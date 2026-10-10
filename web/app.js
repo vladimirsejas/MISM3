@@ -335,12 +335,12 @@
     }
     camadas.clearLayers();
     var pts = [[r.area.lat, r.area.lon]];
-    L.circle([r.area.lat, r.area.lon], { radius: Math.max(r.area.raio_m, 150), color: "#6b2d8a", fillOpacity: 0.12 })
+    L.circle([r.area.lat, r.area.lon], { radius: Math.max(r.area.raio_m, 150), color: "#ad7892", fillOpacity: 0.12 })
       .bindTooltip("Sua região aproximada").addTo(camadas);
     r.grupos.forEach(function (g) {
       g.proximos.forEach(function (s) {
         pts.push([s.lat, s.lon]);
-        L.circleMarker([s.lat, s.lon], { radius: 7, color: "#fff", weight: 2, fillColor: "#a4161a", fillOpacity: 1 })
+        L.circleMarker([s.lat, s.lon], { radius: 7, color: "#fff", weight: 2, fillColor: "#87556f", fillOpacity: 1 })
           .bindPopup("<strong>" + esc(s.nome) + "</strong><br>" + esc(g.rotulo)).addTo(camadas);
       });
     });
