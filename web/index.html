@@ -13,9 +13,18 @@
 <div class="faixa-institucional"><strong>Protótipo acadêmico</strong> · Fatec Rio Claro · Curso de Inteligência Artificial · não é um serviço oficial da Prefeitura</div>
 <div id="faixa-demo" class="faixa-demo" role="note" hidden>Os serviços, endereços e telefones exibidos são exemplos de demonstração, não cadastros reais.</div>
 
-<div class="barra-emergencia" role="region" aria-label="Emergência">
-  <span><strong>Em perigo agora?</strong> Polícia <a href="tel:190">190</a> · SAMU <a href="tel:192">192</a> · Violência contra a mulher: <a href="tel:180">Ligue 180</a> (24h, gratuito)</span>
-  <button id="sair-rapido" type="button" title="Fecha esta página e abre outro site">Sair rápido</button>
+<div class="linha-seguranca">
+  <details class="emergencia-compacta">
+    <summary><span class="ponto-emergencia" aria-hidden="true"></span> Em perigo agora?</summary>
+    <div class="emergencia-conteudo">
+      <p>Se houver risco imediato, procure um local seguro e ligue:</p>
+      <a href="tel:190"><strong>190</strong><span>Polícia · emergência</span></a>
+      <a href="tel:192"><strong>192</strong><span>SAMU · urgência médica</span></a>
+      <a href="tel:180"><strong>180</strong><span>Central da Mulher · 24h, gratuito</span></a>
+      <button id="sair-rapido" type="button" title="Abre outro site; não apaga o histórico">Sair rápido</button>
+    </div>
+  </details>
+  <p class="mensagem-seguranca">Você merece acolhimento, informação e caminhos seguros.</p>
 </div>
 
 <nav class="navegacao-principal" aria-label="Navegação principal">
@@ -23,10 +32,10 @@
   <div class="links-navegacao" data-menu><a href="index.html">Início</a></div>
 </nav>
 
-<header class="hero">
+<header class="hero">\n  <div class="hero-selo">MAPA DO CUIDADO <span>· RIO CLARO</span></div>
   <div class="hero-miolo">
-    <h1>Mapa do Cuidado Rio-Clarense</h1>
-    <p>Trabalho, saúde, educação, lazer, direitos e proteção: escreva o que você precisa e veja caminhos de Rio Claro.</p>
+    <h1>Um lugar para encontrar <em>cuidado e caminhos</em></h1>
+    <p class="hero-intro">Informação que acolhe. Orientação para seus próximos passos em Rio Claro.</p>
     <form id="form-necessidade" class="busca-necessidade" autocomplete="off">
       <label for="necessidade">O que você está procurando?</label>
       <div class="linha">
