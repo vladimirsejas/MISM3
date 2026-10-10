@@ -54,9 +54,14 @@ assert(fs.existsSync(path.join(web, "dados/catalogo_manual.json")), "o catálogo
 const catalogo = JSON.parse(dadosVisiveis);
 assert.strictEqual(catalogo.meta.demo, false, "o catálogo do site não pode ser de demonstração");
 catalogo.servicos.forEach((s) => assert(s.fonte_url && s.verificado_em && !/\[DEMO\]/.test(s.nome), "serviço sem fonte/data ou de demonstração: " + s.nome));
-const naoConferidos = catalogo.servicos.filter((s) => s.conferido === false);
-assert(naoConferidos.length >= 2, "os Conselhos Tutelares devem constar como não conferidos");
-naoConferidos.forEach((s) => assert(/não conferida/.test(s.fonte), "item não conferido com fonte enganosa: " + s.nome));
+const conselhos = catalogo.servicos.filter((s) => /Conselho Tutelar/.test(s.nome));
+assert.strictEqual(conselhos.length, 2, "devem constar o Conselho Tutelar Sul e o Norte");
+const tel = Object.fromEntries(conselhos.map((s) => [s.nome, s.telefone]));
+assert.strictEqual(tel["Conselho Tutelar – Região Sul"], "(19) 3533-5411 / (19) 3532-5221");
+assert.strictEqual(tel["Conselho Tutelar – Região Norte"], "(19) 3523-6439", "telefone do Norte conforme a página do CMDCA");
+assert(!JSON.stringify(conselhos).includes("99336"), "telefone sem fonte não pode voltar");
+conselhos.forEach((s) => assert(s.conferido !== false && /CMDCA/.test(s.fonte) && s.fonte_url === "https://cmdcarioclaro.com.br/contato/", "fonte do Conselho: " + s.nome));
+catalogo.servicos.filter((s) => s.conferido === false).forEach((s) => assert(/não conferida/.test(s.fonte), "item não conferido com fonte enganosa: " + s.nome));
 assert(app.includes("Ainda não conferido na página oficial") && app.includes("s.conferido === false"), "a interface deve avisar quando o item não foi conferido");
 
 /* ---- 6. Conteúdo das áreas ---- */

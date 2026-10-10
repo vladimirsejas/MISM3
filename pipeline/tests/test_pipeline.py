@@ -149,3 +149,10 @@ def test_manual_nao_conferido_nao_aparece_como_verificado():
     a, b = servicos_manuais(df, {})
     assert a["conferido"] is False and "não conferida" in a["fonte"]
     assert b["conferido"] is True and a["fonte"] != b["fonte"]
+
+
+def test_manual_usa_fonte_informada_quando_conferido():
+    import pandas as pd
+    from servicos import servicos_manuais
+    df = pd.DataFrame([{"tipo": "assistencia", "nome": "A", "fonte_url": "https://x.org.br", "verificado_em": "2026-10-10", "fonte": "Site do órgão X"}])
+    assert servicos_manuais(df, {})[0]["fonte"] == "Site do órgão X"

@@ -109,7 +109,7 @@
       ],
       pendencias: [
         "CREAS: endereço e telefone ainda não verificados nesta versão.",
-        "Conselho Tutelar: os endereços e telefones acima foram obtidos por pesquisa na internet e ainda não foram conferidos na página oficial. Confirme por telefone; para saber qual Conselho atende o seu bairro, consulte a Secretaria de Desenvolvimento Social (link acima)."
+        "Conselho Tutelar: horário de funcionamento e plantão não constam na fonte consultada (CMDCA Rio Claro); ligue antes de ir. Para saber qual Conselho atende o seu bairro, consulte a Secretaria de Desenvolvimento Social (link acima)."
       ]
     }
   ];
