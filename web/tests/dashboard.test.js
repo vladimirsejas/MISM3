@@ -13,9 +13,10 @@ const esperadas = ["emprego_curso", "saude", "estudo", "filhos", "casamento", "v
 assert.strictEqual(categorias.length, 9, "a tela inicial deve manter as sete portas originais e acrescentar moradia e dívidas");
 assert.deepStrictEqual([...new Set(categorias)].sort(), esperadas.slice().sort(),
   "as sete portas devem manter as categorias reconhecidas pelo classificador");
-assert.strictEqual((html.match(/class="bloco-portas"/g) || []).length, 3,
-  "as portas devem continuar organizadas em três jornadas");
+assert.strictEqual((html.match(/class="bloco-portas"/g) || []).length, 4,
+  "as portas devem continuar organizadas em quatro jornadas");
 assert(html.includes('class="outras-areas"'), "ferramentas de gestão e rede devem ficar separadas das portas de atendimento");
+assert(html.includes('class="acesso-digital"'), "a tela deve explicar os limites atuais de privacidade e acessibilidade");
 assert(app.includes("var linksExibidos = Object.create(null)"), "busca combinada deve deduplicar links");
 assert(app.includes("var servicosExibidos = Object.create(null)"), "busca combinada deve deduplicar serviços");
 assert(app.includes("Checklist para avaliar uma oportunidade"), "emprego deve exibir o checklist de viabilidade");
