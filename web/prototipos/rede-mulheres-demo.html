@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>De Mulher para Mulher — MISM3</title>
+<style>
+:root{--bg:#fbf8f6;--fg:#382b35;--mut:#786b75;--pri:#80536d;--pale:#f7edf1;--bor:#e9dce3;--warn:#f3d9a6}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+.demo{background:var(--warn);color:#3b2f00;padding:.65rem 1rem;text-align:center;font-weight:800}
+header,main,footer{max-width:1000px;margin:auto;padding:1rem}header h1{margin:.6rem 0 .2rem}a{color:var(--pri)}.back{display:inline-flex;align-items:center;gap:.35rem;margin:.2rem 0 1rem;padding:.55rem .85rem;border:1px solid var(--bor);border-radius:999px;background:var(--pale);color:var(--pri);font-weight:700;text-decoration:none;transition:background .18s ease,border-color .18s ease}.back:hover,.back:focus-visible{background:#efdee6;border-color:#d9bdca;outline:2px solid #ead7e0;outline-offset:2px}
+.note{color:var(--mut);max-width:75ch}.tools{display:flex;gap:.7rem;flex-wrap:wrap;margin:1rem 0}.tools input,.tools select,input,textarea,select{font:inherit;padding:.65rem;border:1px solid var(--bor);border-radius:.5rem;background:white;color:#2a2230}.tools input{flex:1;min-width:200px}
+button{font:inherit;border:0;border-radius:.5rem;background:var(--pri);color:white;font-weight:700;padding:.7rem 1rem;cursor:pointer}button.secondary{background:var(--pale);color:var(--pri);border:1px solid var(--bor)}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}.card{border:1px solid var(--bor);border-radius:.8rem;padding:1rem;background:white;display:flex;flex-direction:column;gap:.45rem}.avatar{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:var(--pale);color:var(--pri);font-size:1.4rem;font-weight:800}.card h2{font-size:1.1rem;margin:.2rem 0}.tags{display:flex;flex-wrap:wrap;gap:.35rem}.tag,.seal{font-size:.78rem;border-radius:99px;padding:.25rem .55rem;background:var(--pale);color:var(--pri);font-weight:700}.seal{background:#e8f4e8;color:#245c2a}.seal.demo{background:#fff0cc;color:#755000}.meta{font-size:.85rem;color:var(--mut)}.card button{margin-top:auto}.panel{margin:1.5rem 0;padding:1rem;border:1px solid var(--bor);border-radius:.8rem;background:var(--pale)}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}.field{display:flex;flex-direction:column;gap:.3rem}.field.full{grid-column:1/-1}textarea{min-height:85px;resize:vertical}.hidden{display:none}.preview{padding:.8rem;background:white;border-radius:.5rem;margin-top:.8rem}.status{padding:.8rem;background:white;border-left:4px solid var(--pri);margin:.8rem 0}.empty{padding:1rem;border:1px dashed var(--bor);border-radius:.5rem}.foot{color:var(--mut);font-size:.85rem}
+@media(max-width:760px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){.grid,.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.tools{flex-direction:column}.tools input,.tools select{width:100%}}
+</style>
+</head>
+<body>
+<div class="demo">MISM3 · PROTÓTIPO FECHADO · PERFIS, SELOS E DENÚNCIAS SÃO FICTÍCIOS [DEMO]</div>
+<header>
+<a class="back" href="../index.html">← Voltar ao sistema</a>
+<h1>De Mulher para Mulher</h1>
+<p>Uma ideia de rede para compartilhar experiências, indicar oportunidades e encontrar apoio entre mulheres.</p>
+<p class="note">Esta tela demonstra uma possível experiência de navegação. Não existe cadastro real, verificação de identidade, publicação ou envio de denúncias. Os selos são exemplos visuais, não atestados de confiança.</p>
+<div class="tools">
+<input id="filtro" type="search" maxlength="60" placeholder="Buscar por habilidade, serviço ou tema" aria-label="Buscar perfis">
+<select id="nivel" aria-label="Filtrar por selo">
+<option value="todos">Todos os níveis demonstrativos</option>
+<option value="1">Nível 1 — perfil preenchido</option>
+<option value="2">Nível 2 — experiência demonstrada</option>
+<option value="3">Nível 3 — referência comunitária</option>
+</select>
+</div>
+</header>
+<main>
+<section aria-labelledby="perfis-titulo">
+<h2 id="perfis-titulo">Perfis de exemplo</h2>
+<div id="perfis" class="grid" aria-live="polite"></div>
+<p id="vazio" class="empty hidden">Nenhum perfil de demonstração corresponde a essa busca.</p>
+</section>
+<section class="panel" aria-labelledby="cadastro-titulo">
+<h2 id="cadastro-titulo">Experimentar um cadastro</h2>
+<p>Preencha dados fictícios para ver como um perfil poderia aparecer. Nada será enviado ou guardado.</p>
+<form id="cadastro">
+<div class="formgrid">
+<label class="field">Nome fictício<input id="nome" maxlength="40" required placeholder="Ex.: Joana Exemplo"></label>
+<label class="field">O que oferece?<select id="oferta"><option>Mentoria profissional</option><option>Costura e reparos</option><option>Apoio para currículo</option><option>Cuidados e rede de apoio</option><option>Artesanato</option></select></label>
+<label class="field">Experiência resumida<input id="experiencia" maxlength="100" placeholder="Ex.: experiência em atendimento"></label>
+<label class="field">Nível de demonstração<select id="nivel-cadastro"><option value="1">Nível 1 — perfil preenchido</option><option value="2">Nível 2 — experiência demonstrada</option><option value="3">Nível 3 — referência comunitária</option></select></label>
+<label class="field full">Descrição fictícia<textarea id="descricao" maxlength="220" placeholder="Descreva o serviço de exemplo, sem dados pessoais reais."></textarea></label>
+</div>
+<p><button type="submit">Gerar prévia fictícia</button></p>
+<div id="previa" class="preview hidden" aria-live="polite"></div>
+</form>
+</section>
+<section class="panel" aria-labelledby="denuncia-titulo">
+<h2 id="denuncia-titulo">Simular denúncia de perfil</h2>
+<p>Esta interação mostra como o protótipo poderia confirmar uma denúncia. Ela não é enviada a ninguém e não fica registrada.</p>
+<label class="field">Perfil de exemplo<select id="perfil-denuncia"></select></label>
+<label class="field" style="margin-top:.7rem">Motivo demonstrativo<select id="motivo"><option>Informação possivelmente falsa</option><option>Comportamento inadequado</option><option>Oferta suspeita</option><option>Outro motivo</option></select></label>
+<p><button id="denunciar" type="button" class="secondary">Simular denúncia</button></p>
+<div id="retorno-denuncia" class="status hidden" role="status"></div>
+</section>
+</main>
+<footer><p class="foot">Decisão para uma versão futura: definir critérios claros, evidências necessárias, revisão humana, recurso contra decisões e proteção contra denúncias abusivas. Nenhum nível deve ser apresentado como “identidade verificada” enquanto não houver um processo real de verificação.</p></footer>
+<script>
+(function(){
+"use strict";
+var exemplos=[
+{id:"p1",nome:"Ana Exemplo",oferta:"Mentoria profissional",experiencia:"10 anos em atendimento e organização",nivel:2,descricao:"Ajuda fictícia para revisar currículo e preparar entrevistas.",temas:["trabalho","currículo","mentoria"]},
+{id:"p2",nome:"Bia Demonstração",oferta:"Costura e reparos",experiencia:"Costura criativa e pequenos consertos",nivel:1,descricao:"Exemplo de serviço local oferecido por uma empreendedora.",temas:["costura","empreendedorismo"]},
+{id:"p3",nome:"Cris Modelo",oferta:"Apoio para currículo",experiencia:"Voluntariado fictício em orientação profissional",nivel:3,descricao:"Perfil de exemplo para demonstrar uma referência comunitária.",temas:["trabalho","currículo","apoio"]},
+{id:"p4",nome:"Dani Exemplo",oferta:"Artesanato",experiencia:"Peças artesanais e encomendas fictícias",nivel:1,descricao:"Exemplo de troca de experiências entre mulheres.",temas:["artesanato","renda"]},
+{id:"p5",nome:"Eva Demonstração",oferta:"Cuidados e rede de apoio",experiencia:"Organização comunitária fictícia",nivel:2,descricao:"Exemplo de apoio mútuo e compartilhamento de informações.",temas:["apoio","rede","família"]}
+];
+var perfis=document.getElementById("perfis"),vazio=document.getElementById("vazio");
+function escapeHTML(s){return String(s||"").replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function rotuloNivel(n){return {"1":"Nível 1 — perfil preenchido","2":"Nível 2 — experiência demonstrada","3":"Nível 3 — referência comunitária"}[n]||"Nível demonstrativo";}
+function desenhar(){
+var q=document.getElementById("filtro").value.trim().toLocaleLowerCase("pt-BR"),n=document.getElementById("nivel").value;
+var filtrados=exemplos.filter(function(p){var texto=[p.nome,p.oferta,p.experiencia,p.descricao].concat(p.temas).join(" ").toLocaleLowerCase("pt-BR");return (!q||texto.indexOf(q)!==-1)&&(n==="todos"||String(p.nivel)===n);});
+perfis.innerHTML=filtrados.map(function(p){return '<article class="card"><div class="avatar" aria-hidden="true">'+escapeHTML(p.nome.charAt(0))+'</div><h2>'+escapeHTML(p.nome)+' <span class="tag">[DEMO]</span></h2><span class="seal demo">'+escapeHTML(rotuloNivel(p.nivel))+'</span><strong>'+escapeHTML(p.oferta)+'</strong><p>'+escapeHTML(p.experiencia)+'</p><p>'+escapeHTML(p.descricao)+'</p><div class="tags">'+p.temas.map(function(t){return '<span class="tag">'+escapeHTML(t)+'</span>';}).join("")+'</div><button type="button" class="secondary denunciar-perfil" data-id="'+escapeHTML(p.id)+'">Simular denúncia</button></article>';}).join("");
+vazio.classList.toggle("hidden",filtrados.length!==0);
+document.querySelectorAll(".denunciar-perfil").forEach(function(b){b.addEventListener("click",function(){document.getElementById("perfil-denuncia").value=b.dataset.id;document.getElementById("denuncia-titulo").scrollIntoView({behavior:"smooth"});});});
+}
+document.getElementById("filtro").addEventListener("input",desenhar);
+document.getElementById("nivel").addEventListener("change",desenhar);
+document.getElementById("cadastro").addEventListener("submit",function(e){
+e.preventDefault();
+var nome=document.getElementById("nome").value.trim(),oferta=document.getElementById("oferta").value,exp=document.getElementById("experiencia").value.trim(),nivel=document.getElementById("nivel-cadastro").value,desc=document.getElementById("descricao").value.trim();
+document.getElementById("previa").innerHTML='<strong>'+escapeHTML(nome)+'</strong> <span class="tag">[PRÉVIA DEMO]</span><p>'+escapeHTML(oferta)+'</p><span class="seal demo">'+escapeHTML(rotuloNivel(nivel))+' — não verificado</span><p>'+escapeHTML(exp||"Experiência não informada")+'</p><p>'+escapeHTML(desc||"Descrição não informada")+'</p><p class="meta">Prévia temporária: não foi publicada nem armazenada.</p>';
+document.getElementById("previa").classList.remove("hidden");
+});
+var sel=document.getElementById("perfil-denuncia");
+sel.innerHTML=exemplos.map(function(p){return '<option value="'+escapeHTML(p.id)+'">'+escapeHTML(p.nome)+' [DEMO]</option>';}).join("");
+document.getElementById("denunciar").addEventListener("click",function(){
+var p=exemplos.find(function(x){return x.id===sel.value;}),motivo=document.getElementById("motivo").value,ret=document.getElementById("retorno-denuncia");
+ret.textContent="SIMULAÇÃO [DEMO]: denúncia sobre "+p.nome+" — motivo: "+motivo+". Nada foi enviado, salvo ou encaminhado.";
+ret.classList.remove("hidden");
+});
+desenhar();
+})();
+</script>
+</body>
+</html>
