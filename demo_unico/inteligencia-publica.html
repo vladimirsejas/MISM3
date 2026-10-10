@@ -367,15 +367,12 @@ document.getElementById("fonte-real").textContent="Não há números oficiais ex
   var MENU = [
     { href: "index.html", rotulo: "Início" },
     { href: "saude.html", rotulo: "Saúde" },
-    { href: "lazer.html", rotulo: "Lazer" },
-    { href: "rede-mulheres.html", rotulo: "De mulher para mulher" },
-    { href: "gestao.html", rotulo: "Gestão", tambem: ["inteligencia-publica.html"] }
-  ];
-  var MAIS = [
+    { href: "rede-mulheres.html", rotulo: "De Mulher para Mulher" },
+    { href: "index.html#assistencia-social", rotulo: "Assistência social" },
     { href: "secretarias.html", rotulo: "Secretarias e telefones úteis" },
-    { href: "gestao.html", rotulo: "Painel de gestão (protótipo)" },
-    { href: "inteligencia-publica.html", rotulo: "Inteligência pública (protótipo)" }
+    { href: "lazer.html", rotulo: "Lazer, cultura e esporte" }
   ];
+  var MAIS = [];
   var atual = (window.location.pathname.split("/").pop() || "index.html").toLowerCase();
 
   function ehAtual(item) { return item.href === atual || (item.tambem || []).indexOf(atual) !== -1; }
