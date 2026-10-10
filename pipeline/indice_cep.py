@@ -105,7 +105,6 @@ def main() -> None:
             "municipio": "%s/%s (IBGE %s)" % (MUNICIPIO_NOME, UF, MUNICIPIO_IBGE7),
             "gerado_em": agora_iso(),
             "formato": "cep -> [latitude, longitude, raio_m, setor_censitario, n_enderecos]",
-            "demo": False,
         },
         "ceps": indice,
     }

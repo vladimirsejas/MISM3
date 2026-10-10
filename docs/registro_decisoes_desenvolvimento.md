@@ -20,8 +20,7 @@ Não inferir que uma funcionalidade existe só porque aparece no README ou em um
 
 - O MISM3 é um protótipo fechado em desenvolvimento; não pressupor uso pelo público.
 - Usar cenários sintéticos para testes internos. Não exigir testes com mulheres reais para avançar no protótipo.
-- Marcar explicitamente dados, perfis, serviços e histórias fictícias com `[DEMO]` ou aviso equivalente.
-- Não misturar dados reais e ilustrativos sem identificação visível e inequívoca.
+- (Regra substituída em 10/10/2026) Antes, dados fictícios eram marcados com `[DEMO]`. Agora **não há conteúdo fictício no projeto**: todo dado exibido tem fonte e data, e o que falta aparece como "não confirmado".
 - A busca deve reconhecer acentos, sinônimos e necessidades combinadas, sem enviar o texto digitado a um servidor.
 - Priorizar caminhos funcionais e jornadas integradas, não apenas uma coleção de links.
 - Construir progressivamente: validar a base antes de ampliar funcionalidades.
@@ -103,3 +102,9 @@ Ao concluir mudanças relevantes, registrar o que foi alterado, o teste executad
 - A página também lista o administrativo do CMDCA (Casa dos Conselhos, Rua 8, nº 3.131, Alto do Santana, CEP 13504-096, (19) 3533-2507; atendimento de segunda a sexta, 8h às 17h). Não foi cadastrado: é o conselho de direitos, não o Conselho Tutelar, e o horário da página não está claramente atribuído aos Conselhos Tutelares.
 - Horário e plantão dos Conselhos Tutelares **não constam** na fonte; a interface manda ligar antes. O campo `conferido=nao` e o aviso na interface continuam disponíveis para futuros itens não conferidos.
 - Nova coluna opcional `fonte` no catálogo manual, para nomear a fonte quando não for a Prefeitura.
+
+### Remoção de todo conteúdo de demonstração — 10/10/2026
+- Removidos: `web/dados/demo/` (serviços e CEPs inventados), `web/prototipos/` (protótipos De Mulher para Mulher e Inteligência Pública com perfis e gráficos fictícios) e `docs/roteiro_demo_mism3.md` (histórias de personagens fictícias). Continuam no histórico do git até o commit `355b010`.
+- Removidos também as verificações de `meta.demo` no código e o campo `"demo": false` dos arquivos gerados pelo pipeline. Um teste agora impede que esses caminhos voltem.
+- Mantidos `web/dados/setores.geojson` e `setores_resumo.json` (dados reais do IBGE, para o marco de setores censitários); a página que os exibia era o painel conceitual removido, então hoje nada na interface os usa.
+- Ainda não confirmado e sem dado para cadastrar: CRAS e CREAS (página oficial não pôde ser lida), unidades de saúde (CNES), fonte oficial do Disque 100, tarifa social de energia.

@@ -161,7 +161,7 @@ def montar(indice: dict, cnes=None, escolas=None, manuais=None, hoje: str | None
         if s["id"] in vistos:
             continue
         vistos.add(s["id"]); unicos.append(s)
-    return {"meta": {"gerado_em": hoje, "demo": False, "contagem_por_origem": contagem,
+    return {"meta": {"gerado_em": hoje, "contagem_por_origem": contagem,
                      "aviso": "Cadastros oficiais podem estar desatualizados. Confirme antes de ir."},
             "servicos": unicos}
 

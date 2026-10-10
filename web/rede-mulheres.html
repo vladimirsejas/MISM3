@@ -102,7 +102,6 @@
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
   function carregar(url) { return fetch(url, { cache: "no-store" }).then(function (r) { if (!r.ok) throw new Error(url); return r.json(); }); }
   carregar("dados/servicos.json").catch(function () { return carregar("dados/catalogo_manual.json"); }).then(function (sv) {
-    if (sv.meta && sv.meta.demo) throw new Error("demo");
     var lista = sv.servicos.filter(function (s) { return s.tipo === "mulher"; });
     var html = lista.map(function (s) {
       var p = ["<h3>" + esc(s.nome) + "</h3>"];

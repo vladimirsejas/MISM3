@@ -223,13 +223,11 @@
     function tentar(i) {
       if (i >= tentativas.length) return Promise.reject(new Error("sem catálogo"));
       return carregar(tentativas[i][0]).then(function (sv) {
-        if (sv.meta && sv.meta.demo) throw new Error("dados de demonstração ignorados");
         dados.servicos = sv.servicos; dados.origem = tentativas[i][1]; dados.geradoEm = (sv.meta && sv.meta.gerado_em) || "";
       }).catch(function () { return tentar(i + 1); });
     }
     return tentar(0).catch(function () { dados.falhou = true; }).then(function () {
       return carregar("dados/cep_indice.json").then(function (idx) {
-        if (idx.meta && idx.meta.demo) return;
         dados.indice = idx.ceps;
       }).catch(function () { /* sem índice real a busca por CEP simplesmente não é oferecida */ });
     }).then(function () {
