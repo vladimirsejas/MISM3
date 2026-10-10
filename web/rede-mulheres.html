@@ -46,22 +46,16 @@
 <main class="conteudo">
   <section class="area" aria-labelledby="titulo-area">
     <h1 id="titulo-area"><span class="icone-titulo"><svg aria-hidden="true" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-mulheres"/></svg></span>De Mulher para Mulher</h1>
-    <p class="intro">Uma área de acolhimento, apoio e conexão entre mulheres, separada dos serviços públicos e da gestão.</p>
+    <p class="intro">Caminhos de acolhimento e apoio, de mulher para mulher. Escolha a situação mais parecida com a sua.</p>
 
     <div class="status" role="note">
-      <strong>Esta área ainda não está disponível.</strong> Não existem cadastro, perfis, mensagens nem denúncias. Nenhuma mulher é listada aqui, e nada do que você digitar em qualquer parte deste sistema é enviado a outras pessoas.
+      <strong>A troca entre mulheres dentro deste site ainda não está disponível.</strong> Não existem cadastro, perfis nem mensagens, e nada do que você digitar neste sistema é enviado a outras pessoas. O que há aqui são caminhos para serviços reais de Rio Claro.
     </div>
 
-    <section class="secao" aria-labelledby="titulo-hoje">
-      <h2 id="titulo-hoje">Onde buscar acolhimento hoje</h2>
-      <div class="lista-cartoes" id="canais-mulher">
-        <article class="cartao urgente">
-          <h3>Central de Atendimento à Mulher — 180</h3>
-          <p><a class="tel-grande" href="tel:180">Ligar para 180</a> (24 horas, gratuito)</p>
-          <p>Orientação, denúncia e encaminhamento em casos de violência contra a mulher.</p>
-          <p class="meta">Canal nacional oficial.</p>
-        </article>
-      </div>
+    <section class="secao" aria-labelledby="titulo-ponto">
+      <h2 id="titulo-ponto">Em que ponto você está?</h2>
+      <p class="meta">Cada caminho aponta para serviços já cadastrados neste site. Os que vêm de outro projeto ainda não foram conferidos e trazem um aviso.</p>
+      <div id="caminhos"></div>
       <p id="aviso-catalogo" class="meta"></p>
     </section>
 
@@ -80,6 +74,7 @@
   <p>Os dados vêm de páginas oficiais e podem estar desatualizados. Confirme sempre com o órgão.</p>
 </footer>
 
+<script src="areas.js"></script>
 <script>
 (function () {
   "use strict";
@@ -98,23 +93,46 @@
     if (mesmaOrigem && history.length > 1) { e.preventDefault(); history.back(); }
   });
 
-  /* Mostra o cadastro verificado da Secretaria Municipal da Mulher, se o catálogo estiver disponível. */
+  /* Os caminhos vêm de areas.js e os serviços do catálogo; cada informação tem uma casa só. */
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
-  function carregar(url) { return fetch(url, { cache: "no-store" }).then(function (r) { if (!r.ok) throw new Error(url); return r.json(); }); }
-  carregar("dados/servicos.json").catch(function () { return carregar("dados/catalogo_manual.json"); }).then(function (sv) {
-    var lista = sv.servicos.filter(function (s) { return s.tipo === "mulher"; });
-    var html = lista.map(function (s) {
-      var p = ["<h3>" + esc(s.nome) + "</h3>"];
-      if (s.endereco) p.push("<p>" + esc(s.endereco) + "</p>");
-      if (s.telefone) p.push('<p>Telefone: <a href="tel:' + esc(String(s.telefone).replace(/[^\d+]/g, "")) + '">' + esc(s.telefone) + "</a></p>");
-      if (s.horario) p.push("<p>Horário: " + esc(s.horario) + "</p>");
-      if (s.observacao) p.push('<p class="meta">' + esc(s.observacao) + "</p>");
-      p.push('<p class="meta">Fonte: <a href="' + esc(s.fonte_url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.fonte) + "</a> · verificado em " + esc(s.verificado_em) + "</p>");
-      return '<article class="cartao">' + p.join("") + "</article>";
+  function linksTelefone(txt) {
+    return String(txt).split(/\s+\/\s+/).map(function (t) {
+      var num = t.replace(/[^\d+]/g, "");
+      return num ? '<a href="tel:' + esc(num) + '">' + esc(t) + "</a>" : esc(t);
+    }).join(" · ");
+  }
+  function cartao(s) {
+    var p = ["<h3>" + esc(s.nome) + "</h3>"];
+    if (s.abrangencia === "municipal") p.push('<p class="dist">Atende todo o município</p>');
+    if (s.endereco) p.push("<p>" + esc(s.endereco) + "</p>");
+    if (s.telefone) p.push("<p>Telefone: " + linksTelefone(s.telefone) + "</p>");
+    if (s.horario) p.push("<p>Horário: " + esc(s.horario) + "</p>");
+    if (s.observacao) p.push('<p class="meta">' + esc(s.observacao) + "</p>");
+    var fonte = s.fonte_url ? '<a href="' + esc(s.fonte_url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.fonte) + "</a>" : esc(s.fonte);
+    if (s.conferido === false) {
+      p.push('<p class="aviso-nao-conferido">' + esc(s.aviso || "Ainda não conferido na página oficial. Ligue antes de ir.") + "</p>");
+      p.push('<p class="meta">Para conferir: ' + fonte + " · informado em " + esc(s.verificado_em) + "</p>");
+    } else {
+      p.push('<p class="meta">Fonte: ' + fonte + " · verificado em " + esc(s.verificado_em) + "</p>");
+    }
+    return '<article class="cartao">' + p.join("") + "</article>";
+  }
+  function canal(tel) {
+    var c = MISM3Areas.EMERGENCIA.filter(function (x) { return x.tel === tel; })[0];
+    if (!c) return "";
+    var urgente = tel === "180" ? " urgente" : "";
+    return '<article class="cartao' + urgente + '"><h3>' + esc(c.nome) + " — " + esc(c.tel) + '</h3><p><a class="tel-grande" href="tel:' + esc(c.tel) + '">Ligar para ' + esc(c.tel) + "</a></p><p>" + esc(c.quando) + '</p><p class="meta">Canal nacional oficial.</p></article>';
+  }
+  fetch("dados/catalogo_manual.json", { cache: "no-store" }).then(function (r) { if (!r.ok) throw new Error("catalogo"); return r.json(); }).then(function (sv) {
+    var porId = {}; sv.servicos.forEach(function (s) { porId[s.id] = s; });
+    document.getElementById("caminhos").innerHTML = MISM3Areas.REDE_MULHERES.situacoes.map(function (sit) {
+      var cartoes = sit.canais.map(canal).join("") + sit.itens.map(function (id) { return porId[id] ? cartao(porId[id]) : ""; }).join("");
+      var atalhos = sit.atalhos.length ? '<nav class="navegacao" aria-label="Ver também">' + sit.atalhos.map(function (a) { return '<a class="btn-nav" href="' + esc(a[1]) + '">' + esc(a[0]) + " →</a>"; }).join("") + "</nav>" : "";
+      return '<details class="grupo-recolhido" id="' + esc(sit.id) + '"><summary>' + esc(sit.titulo) + "</summary><p>" + esc(sit.texto) + "</p>" +
+        (cartoes ? '<div class="lista-cartoes">' + cartoes + "</div>" : "") + atalhos + "</details>";
     }).join("");
-    document.getElementById("canais-mulher").insertAdjacentHTML("beforeend", html);
   }).catch(function () {
-    document.getElementById("aviso-catalogo").textContent = "O cadastro de serviços locais não foi carregado. Abra o sistema pelo procedimento do README.";
+    document.getElementById("aviso-catalogo").textContent = "O cadastro de serviços não foi carregado. Abra o sistema pelo procedimento do README.";
   });
 })();
 </script>

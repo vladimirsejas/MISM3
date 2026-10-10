@@ -185,10 +185,44 @@
     { tel: "188", nome: "CVV — apoio emocional", quando: "Conversa de apoio em momentos de sofrimento. 24 horas, gratuito." }
   ];
 
+  /* Página "De Mulher para Mulher": caminhos por situação, sem prender a mulher a um assunto ou a uma doença.
+     Cada caminho: um texto curto (acalma, informa, aponta o passo), os serviços do catálogo (por id) e atalhos para as áreas. */
+  var REDE_MULHERES = {
+    situacoes: [
+      { id: "perigo", titulo: "Estou em perigo ou sofrendo violência",
+        texto: "Você não precisa passar por isso sozinha. Em perigo agora, ligue 190; para orientação, denúncia e encaminhamento, o 180 atende 24 horas, de graça. Em Rio Claro, estes serviços acolhem, orientam e protegem:",
+        canais: ["180"], itens: ["man-secretaria-mulher", "man-cram", "man-ddm-rio-claro", "man-patrulha-maria-da-penha", "man-defensoria-nudem", "man-creas"],
+        atalhos: [["Ver a área Direitos", "index.html#direitos"], ["Ver a Assistência Social", "index.html#assistencia"]] },
+      { id: "juridico", titulo: "Preciso de orientação jurídica",
+        texto: "Separação, pensão, guarda e medida protetiva são situações em que uma orientação jurídica ajuda. Quem não pode pagar advogado pode procurar a Defensoria Pública. No CREAS também se oferece orientação jurídica.",
+        canais: [], itens: ["man-defensoria-nudem", "man-creas", "man-secretaria-mulher"],
+        atalhos: [["Ver a área Direitos", "index.html#direitos"]] },
+      { id: "conversar", titulo: "Preciso conversar com alguém",
+        texto: "Você pode falar com alguém agora: o 188 (CVV) atende 24 horas, de graça. Em Rio Claro, o CRAS é a porta de entrada da assistência social e o CAPS atende quem precisa de cuidado em saúde mental. O CRAM acolhe e orienta mulheres.",
+        canais: ["188"], itens: ["man-cram"],
+        atalhos: [["Ver o seu CRAS", "index.html#assistencia"], ["Ver os CAPS, na Saúde", "index.html#saude"]] },
+      { id: "renda", titulo: "Estou sem renda ou preciso de apoio para a família",
+        texto: "O CRAS, perto de onde você mora, é a porta de entrada da assistência social e orienta sobre benefícios. O Fundo Social oferece cursos gratuitos de qualificação. Famílias que se enquadram podem ter desconto nas contas de água e de luz.",
+        canais: [], itens: ["man-fundo-social"],
+        atalhos: [["Ver a Assistência Social", "index.html#assistencia"], ["Ver o Trabalho", "index.html#trabalho"], ["Ver a Moradia", "index.html#moradia"]] },
+      { id: "saude", titulo: "Quero cuidar da minha saúde",
+        texto: "A unidade de saúde do seu bairro é a porta de entrada. Para agendar consulta pela rede municipal, o Cadu atende por telefone e WhatsApp. A área Saúde reúne as unidades, com endereço, telefone e horário.",
+        canais: [], itens: ["man-cadu"],
+        atalhos: [["Ver a área Saúde", "index.html#saude"]] },
+      { id: "trabalho", titulo: "Quero trabalhar ou estudar",
+        texto: "O Portal da Empregabilidade e o Trampolim reúnem oportunidades de trabalho. O Centro de Qualificação Profissional oferece cursos gratuitos. A Secretaria da Educação orienta sobre creche e matrícula.",
+        canais: [], itens: ["man-cqp-rio-claro"],
+        atalhos: [["Ver o Trabalho", "index.html#trabalho"], ["Ver a Educação", "index.html#educacao"]] },
+      { id: "apoiar", titulo: "Quero apoiar outras mulheres",
+        texto: "Ainda não há aqui um cadastro de voluntárias nem um espaço para trocar mensagens. Uma forma de começar é perguntar, na Secretaria Municipal da Mulher, como colaborar.",
+        canais: [], itens: ["man-secretaria-mulher"], atalhos: [] }
+    ]
+  };
+
   function porId(id) {
     for (var i = 0; i < AREAS.length; i++) if (AREAS[i].id === id) return AREAS[i];
     return null;
   }
 
-  return { AREAS: AREAS, EMERGENCIA: EMERGENCIA, NOTA_FONTE: NOTA_FONTE, porId: porId };
+  return { AREAS: AREAS, EMERGENCIA: EMERGENCIA, REDE_MULHERES: REDE_MULHERES, NOTA_FONTE: NOTA_FONTE, porId: porId };
 });

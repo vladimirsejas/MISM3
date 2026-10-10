@@ -190,6 +190,28 @@ const ignorados = fs.readFileSync(path.join(web, "..", ".gitignore"), "utf8").sp
 assert(app.includes("dados/catalogo_manual.json") && app.includes("idsManuais") && app.includes("codigosManuais"), "o catálogo verificado deve ser carregado sempre e prevalecer sobre o servicos.json");
 assert(!/tentativas\s*=/.test(app), "um servicos.json antigo não pode substituir o catálogo verificado (voltaria a esconder CRAS e CREAS)");
 
+/* ---- 6f. De Mulher para Mulher: caminhos por situação, só com itens do catálogo e sem prender a uma doença ---- */
+const sits = Areas.REDE_MULHERES.situacoes;
+assert.strictEqual(sits.length, 7, "sete caminhos");
+assert.strictEqual(new Set(sits.map((s) => s.id)).size, sits.length);
+sits.forEach((s) => {
+  assert(s.titulo && s.texto.length > 60, "caminho sem texto: " + s.id);
+  s.itens.forEach((id) => assert(catalogo.servicos.some((x) => x.id === id), "o caminho " + s.id + " cita um item que não existe no catálogo: " + id));
+  s.canais.forEach((tel) => assert(Areas.EMERGENCIA.some((c) => c.tel === tel), "canal sem contato oficial: " + tel));
+  s.atalhos.forEach((a) => assert(/^index\.html#(trabalho|educacao|saude|direitos|moradia|assistencia)$/.test(a[1]), "atalho inválido: " + a[1]));
+  assert(!/câncer|cancer|mamografia|oncolog|quimio/i.test(s.titulo + " " + s.texto), "os caminhos não devem ficar presos a uma doença: " + s.id);
+});
+assert(/190/.test(sits[0].texto) && /180/.test(sits[0].texto) && /24 horas/.test(sits[0].texto));
+["man-cram", "man-ddm-rio-claro", "man-patrulha-maria-da-penha", "man-defensoria-nudem", "man-cadu"].forEach((id) => {
+  const s = catalogo.servicos.find((x) => x.id === id);
+  assert(s && s.conferido === false && s.aviso && /MISM2/.test(s.aviso + s.fonte), "item trazido do MISM2 deve constar como não conferido, citando a origem: " + id);
+  assert(s.fonte_url.startsWith("https://"), "item sem fonte: " + id);
+});
+assert(!catalogo.servicos.find((x) => x.id === "man-ddm-rio-claro").telefone, "a DDM não tem telefone confiável: nada pode ser inventado");
+assert.strictEqual(catalogo.servicos.find((x) => x.id === "man-cram").telefone, "(19) 3532-4014 / (19) 3525-1366");
+assert(!/fictíci|protótipo|\[DEMO\]|Ana Exemplo/i.test(rede), "a página não pode ter conteúdo fictício");
+assert(rede.includes('src="areas.js"') && rede.includes('id="caminhos"') && !/<style/.test(rede), "a página usa só os componentes já existentes: nenhum estilo novo");
+
 /* ---- 7. Comportamento esperado no código ---- */
 ["web/dados/demo", "web/prototipos", "docs/roteiro_demo_mism3.md"].forEach((c) => assert(!fs.existsSync(path.join(web, "..", c)), "conteúdo de demonstração removido não pode voltar: " + c));
 assert(app.includes("history.state && history.state.app"), "Voltar deve usar o histórico apenas quando a navegação começou no sistema");
