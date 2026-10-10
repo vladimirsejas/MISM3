@@ -686,8 +686,8 @@ svg.leaflet-image-layer.leaflet-interactive path {
 </style>
 <style>
 /* MISM3 – sistema visual institucional.
-   Principios: sobrio, legivel, sem decoracao gratuita. Azul-marinho como unica cor de marca, cinzas neutros,
-   vermelho so para alerta/emergencia. Contraste conferido (texto >= 4.5:1). Nao usa brasao nem marca oficial. */
+   Principios: sobrio, legivel, com tons suaves de malva e neutros; vermelho reservado para alertas.
+   Nao usa brasao nem marca oficial. */
 :root {
   color-scheme: light;
   --bg: #fbf8f8;
@@ -1264,12 +1264,11 @@ window.MISM3_CONFIG = {
     { id: "familia", rotulo: "Família e assistência social",
       palavras: ["familia", "familias", "cras", "creas", "cadunico", "cad unico", "bolsa familia", "cesta basica", "beneficio*",
         "comida", "fome", "comer", "o que comer", "passando necessidade",
-        "sem dinheiro", "nao tenho dinheiro", "falta de dinheiro", "pouco dinheiro", "sem renda", "assistencia", "assistente social",
-        "conta de luz", "luz cortada", "agua cortada"],
+        "sem dinheiro", "nao tenho dinheiro", "falta de dinheiro", "pouco dinheiro", "sem renda", "assistencia", "assistente social"],
       tipos: ["assistencia", "mulher"] },
     { id: "moradia", rotulo: "Moradia e aluguel",
       palavras: ["moradia", "habitacao", "aluguel", "aluguel social", "casa para morar", "sem casa", "despejo", "despejada",
-        "regularizacao fundiaria", "cadastro habitacional", "casa popular", "moradia popular", "preciso sair de casa"],
+        "regularizacao fundiaria", "cadastro habitacional", "casa popular", "moradia popular", "preciso sair de casa", "minha casa minha vida", "minha casa minha vida", "daae", "conta de agua", "conta de luz", "luz cortada", "agua cortada", "energia", "eletricidade", "tarifa social"],
       tipos: ["assistencia", "mulher"],
       aviso: "Esta página não faz inscrição em programas nem confirma vaga, aluguel social ou prioridade habitacional: pergunte à Prefeitura quais critérios e programas estão vigentes. Se a saída de casa é por medo de alguém, use também “Violência”." },
     { id: "dividas", rotulo: "Dívidas, orçamento e aposentadoria",
@@ -1437,9 +1436,11 @@ window.MISM3_CONFIG = {
     },
     saude: {
       titulo: "Saúde",
-      descricao: "Encontre serviços de saúde cadastrados. Em urgência médica, ligue 192.",
+      descricao: "Consulte a página de saúde para encontrar unidades, horários, atendimento 24 horas e orientações de saúde da mulher. Em urgência médica, ligue 192.",
       tipos: ["saude"],
-      links: []
+      links: [
+        ["Saúde em Rio Claro", "saude.html", "Unidades de saúde, contatos, atendimento 24 horas e informações de saúde da mulher."]
+      ]
     },
     estudo: {
       titulo: "Educação, filhos e família",
