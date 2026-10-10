@@ -966,7 +966,7 @@ details.outros > summary { display: flex; align-items: center; min-height: 44px;
     </div>
   </section>
 
-  <section id="assistencia-social" class="grupo contatos-essenciais" aria-labelledby="titulo-contatos-essenciais">
+  <section id="assistencia-social" class="grupo contatos-essenciais" aria-labelledby="titulo-contatos-essenciais" hidden>
     <h2 id="titulo-contatos-essenciais">Assistência social: onde encontrar ajuda</h2>
     <p class="meta">Não sabe qual serviço procurar? Escolha a situação que mais se parece com a sua. Explicamos para que cada serviço serve e mostramos os contatos disponíveis. Confirme o atendimento antes de ir.</p>
     <div class="grade-contatos">
@@ -1981,5 +1981,25 @@ window.MISM3_CONFIG = {
   }
 })();
 </script>
+
+<script>
+/* A área de Assistência Social só aparece quando a pessoa escolhe essa opção. */
+(function () {
+  var secao = document.getElementById("assistencia-social");
+  if (!secao) return;
+  function atualizarAssistencia() {
+    var mostrar = window.location.hash === "#assistencia-social";
+    secao.hidden = !mostrar;
+    if (mostrar) {
+      window.requestAnimationFrame(function () {
+        secao.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
+  }
+  window.addEventListener("hashchange", atualizarAssistencia);
+  atualizarAssistencia();
+})();
+</script>
+
 </body>
 </html>
