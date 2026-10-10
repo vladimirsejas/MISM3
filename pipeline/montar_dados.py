@@ -7,7 +7,7 @@ falta (com o comando para obter). Nada e inventado: sem o arquivo da fonte, a et
   python pipeline/montar_dados.py --so-diagnostico so mostra o que existe e o que falta
 
 Gera (e o git ignora, porque se refaz a partir das fontes):  web/dados/cep_indice.json, servicos.json, vagas.json
-Depois: abrir_servidor.bat. A faixa "DADOS ILUSTRATIVOS" some sozinha quando cep_indice.json e servicos.json existem.
+Depois: abrir_site.bat. A faixa "DADOS ILUSTRATIVOS" some sozinha quando cep_indice.json e servicos.json existem.
 """
 from __future__ import annotations
 
@@ -142,7 +142,7 @@ def main() -> None:
     print("\n== Resultado ==")
     for linha in resumo():
         print(" ", linha)
-    print("\nProximo passo: abrir_servidor.bat (ou python pipeline\\servidor.py)")
+    print("\nProximo passo: abrir_site.bat (ou python pipeline\\servidor.py)")
 
 
 if __name__ == "__main__":

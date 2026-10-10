@@ -19,12 +19,16 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-CATEGORIAS = {
-    "beleza": "Beleza e estética", "costura_artesanato": "Costura e artesanato", "alimentacao": "Comidas e doces",
-    "aulas": "Aulas e reforço escolar", "saude_bem_estar": "Saúde, corpo e bem-estar", "negocios": "Design, foto, contabilidade e outros serviços",
-    "servicos_na_casa": "Serviços na casa da cliente (reparos, diarista, cuidadora)", "transporte": "Transporte e carona",
-}
-ALTO_RISCO = ("servicos_na_casa", "transporte")
+def _carregar_areas() -> dict:
+    """Areas de servico: UMA fonte (web/dados/areas_mulheres.json), usada tambem pela pagina rede-mulheres.html."""
+    import json
+    caminho = Path(__file__).resolve().parent.parent / "web" / "dados" / "areas_mulheres.json"
+    return json.loads(caminho.read_text(encoding="utf-8"))["areas"]
+
+
+_AREAS = _carregar_areas()
+CATEGORIAS = {a["chave"]: a["rotulo"] for a in _AREAS}
+ALTO_RISCO = tuple(a["chave"] for a in _AREAS if a["alto_risco"])
 ONDE = ("estabelecimento", "casa_da_cliente", "casa_da_profissional", "online", "a_combinar")
 MAX_DIAS = 180
 SEM_ENDERECO = re.compile(r"\b(rua|avenida|av\.|travessa|alameda|estrada|n[ºo°]\s*\d+|\d{5}-?\d{3})\b", re.I)

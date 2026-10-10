@@ -1,0 +1,75 @@
+{
+  "aviso": "Áreas de serviço da rede De mulher para mulher. Fonte ÚNICA: lida pelo validador (pipeline/mulher_para_mulher.py) e pela página rede-mulheres.html.",
+  "areas": [
+    {
+      "chave": "costura_artesanato",
+      "rotulo": "Artesanato e costura",
+      "exemplos": "Crochê, bordado, ajustes de roupa, bijuterias, lembrancinhas e encomendas.",
+      "alto_risco": false,
+      "cuidado": ""
+    },
+    {
+      "chave": "beleza",
+      "rotulo": "Beleza e estética",
+      "exemplos": "Manicure, cabelo, maquiagem, sobrancelha e depilação.",
+      "alto_risco": false,
+      "cuidado": ""
+    },
+    {
+      "chave": "alimentacao",
+      "rotulo": "Comidas e doces",
+      "exemplos": "Marmitas, bolos, salgados, doces e comida para festas.",
+      "alto_risco": false,
+      "cuidado": "Quem vende alimentos precisa seguir as regras da vigilância sanitária; pergunte."
+    },
+    {
+      "chave": "cuidadoras",
+      "rotulo": "Cuidadoras e acompanhantes",
+      "exemplos": "Acompanhante de idosos, de pessoas internadas, de consultas e cuidado de crianças.",
+      "alto_risco": true,
+      "cuidado": "Peça referências e confirme formação ou curso. A cuidadora convive com pessoas que dependem de cuidado: o cadastro exige conferência reforçada."
+    },
+    {
+      "chave": "limpeza",
+      "rotulo": "Diarista e limpeza",
+      "exemplos": "Limpeza de casas e escritórios, passadoria e organização.",
+      "alto_risco": true,
+      "cuidado": "A profissional entra na casa da cliente e a cliente também fica exposta: conferência reforçada."
+    },
+    {
+      "chave": "reparos",
+      "rotulo": "Reformas e reparos",
+      "exemplos": "Elétrica, hidráulica, pintura, pequenos reparos e reformas.",
+      "alto_risco": true,
+      "cuidado": "A profissional entra na casa da cliente: conferência reforçada."
+    },
+    {
+      "chave": "aulas",
+      "rotulo": "Aulas e reforço escolar",
+      "exemplos": "Reforço escolar, idiomas, música, informática e aulas particulares.",
+      "alto_risco": false,
+      "cuidado": ""
+    },
+    {
+      "chave": "saude_bem_estar",
+      "rotulo": "Saúde, corpo e bem-estar",
+      "exemplos": "Psicologia, fisioterapia, nutrição, massagem, atividade física e terapias.",
+      "alto_risco": false,
+      "cuidado": "Além da identidade, confirme o registro no conselho profissional (CRP, CREFITO, CRN, CREF…)."
+    },
+    {
+      "chave": "negocios",
+      "rotulo": "Serviços profissionais",
+      "exemplos": "Contabilidade, design, fotografia, marketing e outros serviços de escritório.",
+      "alto_risco": false,
+      "cuidado": ""
+    },
+    {
+      "chave": "transporte",
+      "rotulo": "Transporte e carona",
+      "exemplos": "Transporte de passageiras e entregas feitas por mulheres.",
+      "alto_risco": true,
+      "cuidado": "Transporte remunerado de passageiros tem regras municipais: consulte a Prefeitura antes de divulgar. Não afirmamos parceria com aplicativos."
+    }
+  ]
+}

@@ -9,7 +9,7 @@ navegador (web/)  ──>  Api.json / Api.pesquisar  (web/api.js)  ──>  serv
 ```
 - **Modo local** (padrão, `web/config.js`): lê arquivos de `web/dados/`. Funciona com duplo clique, sem internet. É o que o `demo_unico/` usa.
 - **Modo api**: o site pergunta ao servidor. **Se a API falhar** (offline, 404, 500), cai para os arquivos locais, então ela nunca derruba o site.
-- O servidor liga o modo api sozinho: rode `abrir_servidor.bat` (ou `python pipeline/servidor.py`) e ele entrega um `/config.js` com `modo: "api"`.
+- O servidor liga o modo api sozinho: rode `abrir_site.bat` (ou `python pipeline/servidor.py`) e ele entrega um `/config.js` com `modo: "api"`.
 
 ## Rotas
 | Rota | Devolve | Observação |
@@ -49,7 +49,7 @@ O `pipeline/provedor_gemini.py` usa o Gemini com busca na web e **só aproveita 
    MISM3_PROVEDOR=gemini
    ```
 3. Teste sem o site: `python pipeline/provedor_gemini.py "preciso de emprego e tenho filho pequeno"`. Se o formato vier estranho, `--bruto` mostra só a estrutura da resposta (nunca a chave).
-4. Rode `abrir_servidor.bat`: a linha de início diz `pesquisa real: LIGADA (Google (Gemini))` e a tela passa a avisar que a frase vai ao servidor **e ao serviço Google (Gemini)**.
+4. Rode `abrir_site.bat`: a linha de início diz `pesquisa real: LIGADA (Google (Gemini))` e a tela passa a avisar que a frase vai ao servidor **e ao serviço Google (Gemini)**.
 
 Modelo: o padrão é o mesmo valor que o MISM2 usa; para trocar, `MISM3_GEMINI_MODELO` no `.env`.
 O que o Gemini devolve na prática: o link vem como redirecionador do Google (`vertexaisearch.cloud.google.com/…`, que leva à página real) e o "título" é o domínio do site (ex.: `rioclaro.sp.gov.br`). Por isso a tela mostra o **site** como fonte.

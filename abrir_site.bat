@@ -54,7 +54,7 @@ exit /b 0
 echo.
 echo  ERRO: o Python nao foi encontrado neste computador.
 echo  Instale o Python 3 (python.org) e marque a opcao "Add Python to PATH".
-echo  Sem Python, ainda da para ver o prototipo: abra abrir_demo.bat.
+echo  Depois de instalar, de dois cliques neste arquivo de novo.
 echo.
 pause
 endlocal

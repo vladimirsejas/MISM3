@@ -11,14 +11,12 @@ Comece escrevendo uma necessidade ou escolhendo uma porta: **Emprego, Saúde, Es
 - Barra fixa com 190 e Ligue 180, e botão "Sair rápido". Não prometemos que o uso é invisível: o histórico do navegador pode guardar a visita.
 
 ## Ver agora (um clique)
-Dê dois cliques em **`abrir_site.bat`** (Windows). Ele acha o Python, atualiza os dados oficiais de saúde e secretarias, escolhe uma porta livre (8000 a 8010), liga o servidor e abre o navegador. Para parar, feche a janela preta. Sem servidor: `abrir_demo.bat`.
+Dê dois cliques em **`abrir_site.bat`** (Windows). Ele acha o Python, atualiza os dados oficiais de saúde e secretarias, escolhe uma porta livre (8000 a 8010), liga o servidor e abre o navegador. Para parar, feche a janela preta.
 
-| Arquivo | Para quê |
-|---|---|
-| `abrir_site.bat` | **O normal.** Site completo no navegador. |
-| `abrir_demo.bat` | Sem Python e sem servidor (arquivos em `demo_unico/`). Depois de mudar `web/`, rode `python pipeline/gerar_demo_unico.py`. |
-| `mism3.bat`, `abrir_servidor.bat`, `abrir_mism3.bat` | Variações antigas (site + API de pesquisa real, com `.env`). |
-| `montar_dados.bat` | Monta os dados reais de CEP/serviços quando você tiver as fontes. |
+**Existe um único `.bat`: `abrir_site.bat`.** Ele serve o site e a API juntos e lê o `.env` sozinho (pesquisa real só se você configurar a chave). Outras tarefas são comandos, não arquivos soltos:
+
+- Montar os dados reais de CEP e serviços (quando você tiver as fontes): `python pipeline/montar_dados.py`
+- Ver o protótipo **sem Python e sem servidor**: abra `demo_unico/index.html` no navegador (depois de mudar `web/`, rode `python pipeline/gerar_demo_unico.py`).
 
 Manualmente: `python pipeline/institucional.py` e `python pipeline/servidor.py`, ou `python -m http.server 8000 --directory web`, e abra http://localhost:8000. A faixa **DADOS ILUSTRATIVOS** da tela inicial (busca por CEP e mapa) só some quando existirem `cep_indice.json` e `servicos.json` reais; as páginas **Saúde** e **Secretarias** já usam dados reais e dizem isso na tela. CEPs de teste do modo demonstração: 00000-001, 00000-002 ou 00000-003.
 
@@ -69,10 +67,10 @@ Na tela inicial a pessoa toca numa "porta" (Emprego, Saúde, Estudo, Filhos, Cas
 Área para mulheres que oferecem serviços a outras mulheres. **Quem verifica é a Secretaria da Mulher**: o site não tem como garantir que só mulheres participam, então só publica cadastros já conferidos por ela (o que foi conferido, por quem e quando). `catalogo/mulher_para_mulher.csv` está vazio e a porta só aparece quando há cadastro válido; no modo demonstração aparecem dois exemplos marcados [DEMO]. O validador exige consentimento, só bairro (nunca endereço) e validade de até 180 dias. Papéis, fluxo, limites e roteiro para a banca em `docs/de_mulher_para_mulher.md`. Não prometemos segurança, não há pagamento nem notas.
 
 ## Dados e pesquisas reais (API)
-O MISM3 é funcional com ou sem usuárias: o site tem uma **camada de dados plugável** (`web/api.js`). Sem servidor, lê os arquivos de `web/dados/`; com o servidor (`abrir_servidor.bat` ou `python pipeline/servidor.py`) fala com a API e, se ela falhar, volta para os arquivos. Para **pesquisas reais**: o `provedor_gemini.py` usa o **Google Gemini com Pesquisa Google, a mesma API do MISM2** (coloque `GEMINI_API_KEY` e `MISM3_PROVEDOR=gemini` num `.env`, que o git ignora), e só aproveita o que tem fonte. Ou escreva o seu em `provedor_pesquisa.py` (modelo: `provedor_pesquisa.exemplo.py`). A chave nunca vai ao navegador. Frases sobre violência nunca vão à API. Contrato, regras e limites em `docs/api_contrato.md`.
+O MISM3 é funcional com ou sem usuárias: o site tem uma **camada de dados plugável** (`web/api.js`). Sem servidor, lê os arquivos de `web/dados/`; com o servidor (`abrir_site.bat` ou `python pipeline/servidor.py`) fala com a API e, se ela falhar, volta para os arquivos. Para **pesquisas reais**: o `provedor_gemini.py` usa o **Google Gemini com Pesquisa Google, a mesma API do MISM2** (coloque `GEMINI_API_KEY` e `MISM3_PROVEDOR=gemini` num `.env`, que o git ignora), e só aproveita o que tem fonte. Ou escreva o seu em `provedor_pesquisa.py` (modelo: `provedor_pesquisa.exemplo.py`). A chave nunca vai ao navegador. Frases sobre violência nunca vão à API. Contrato, regras e limites em `docs/api_contrato.md`.
 
 ## Abrir o protótipo com um clique (sem servidor, sem internet)
-Dê dois cliques em **`abrir_demo.bat`** (Windows) ou abra `demo_unico/index.html` no navegador. Cada página é um arquivo único, com estilos, scripts e dados embutidos; os links entre telas funcionam (Mapa do Cuidado, Painel de Gestão, Inteligência Pública, De Mulher para Mulher). Depois de qualquer mudança em `web/`, rode `python pipeline/gerar_demo_unico.py` para atualizar. O `abrir_site.bat` (servidor local com Python) continua valendo para quem está desenvolvendo.
+Abra `demo_unico/index.html` no navegador (duplo clique). Cada página é um arquivo único, com estilos, scripts e dados embutidos; os links entre telas funcionam (Mapa do Cuidado, Painel de Gestão, Inteligência Pública, De Mulher para Mulher). Depois de qualquer mudança em `web/`, rode `python pipeline/gerar_demo_unico.py` para atualizar. O `abrir_site.bat` (servidor local com Python) é o caminho normal.
 
 ## Painel de Gestão (protótipo, dados fictícios)
 Abra `web/gestao.html` (ou `gestao.html?visao=gestao`). Mostra necessidades, evolução mensal, funil, demanda × oferta, malha de setores, qualidade do catálogo, buscas sem resultado e **cartões de próximos passos para a gestão** (sinal, ação a validar, responsável sugerido, indicador e o que confirmar antes de decidir). **Todos os números de demonstração são fictícios**; a malha real de 408 setores é usada só como geometria e os valores de crianças por setor são inventados.
