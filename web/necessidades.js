@@ -55,9 +55,20 @@
       "estudo", "estudar", "faculdade", "universidade", "escola", "ensino",
       "alfabetizacao", "voltar a estudar", "bolsa de estudos"
     ]],
+    ["moradia", [
+      "moradia", "habitacao", "aluguel", "aluguel social", "casa para morar",
+      "sem casa", "despejo", "regularizacao fundiaria", "cadastro habitacional",
+      "casa popular", "moradia popular", "preciso sair de casa"
+    ]],
+    ["dividas", [
+      "divida", "dividas", "superendividamento", "nome sujo", "renegociar divida",
+      "renegociacao de dividas", "cartao atrasado", "emprestimo consignado",
+      "nao consigo pagar as contas", "contas atrasadas", "orcamento domestico",
+      "aposentadoria", "inss", "tempo de contribuicao", "simular aposentadoria"
+    ]],
     ["familia", [
       "familia", "assistencia", "beneficio", "beneficios", "cras", "creas",
-      "aluguel", "moradia", "comida", "cesta basica", "sem comida",
+      "comida", "cesta basica", "sem comida",
       "passar fome", "fome", "comer", "sem dinheiro para comer",
       "nao tenho o que comer", "apoio", "bolsa familia", "sem dinheiro",
       "nao tenho dinheiro", "preciso de ajuda financeira"
