@@ -33,3 +33,7 @@ web/dados/gestao.json
 # Documentos que ficam so no computador (PDFs de horarios da SOU; CEPs com coordenadas fornecidos ao projeto)
 docs/transporte/*.pdf
 docs/cep_Rio_Claro/
+
+# Gerados por pipeline/gerar_bairros_geojson.py (refazem-se a partir do CSV local + IBGE/OSM)
+web/dados/bairros_rio_claro.geojson
+web/dados/municipio_rio_claro.geojson
