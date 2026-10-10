@@ -59,7 +59,7 @@ main{width:min(calc(100% - 2rem),var(--width));margin:auto;padding-bottom:3rem}.
 <script>
 (function(){
 "use strict";
-var MENU=[{href:"index.html",rotulo:"Início"},{href:"saude.html",rotulo:"Saúde"},{href:"rede-mulheres.html",rotulo:"Mulher em Rede"},{href:"secretarias.html",rotulo:"Secretarias e serviços"}];
+var MENU=[{href:"index.html",rotulo:"Início"},{href:"saude.html",rotulo:"Saúde"},{href:"rede-mulheres.html",rotulo:"De Mulher para Mulher"},{href:"secretarias.html",rotulo:"Secretarias e serviços"}];
 var atual=(location.pathname.split("/").pop()||"index.html").toLowerCase();
 var alvo=document.querySelector("[data-menu]");
 if(alvo)alvo.innerHTML=MENU.map(function(x){return '<a href="'+x.href+'"'+(x.href===atual?' aria-current="page"':"")+'>'+x.rotulo+'</a>';}).join("");
