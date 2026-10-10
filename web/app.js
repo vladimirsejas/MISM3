@@ -314,6 +314,11 @@
     return tentar(0).catch(function () { dados.falhou = true; }).then(function () {
       return carregar("dados/cep_indice.json").then(function (idx) {
         dados.indice = idx.ceps;
+        /* Serviço com CEP e sem coordenada é localizado pelo centro do CEP (aproximado), como o pipeline faria. */
+        dados.servicos.forEach(function (s) {
+          var c = s.cep && dados.indice[String(s.cep).replace(/\D/g, "")];
+          if (s.lat == null && c) { s.lat = c[0]; s.lon = c[1]; s.geo = "centroide_cep"; }
+        });
       }).catch(function () { /* sem índice real a busca por CEP simplesmente não é oferecida */ });
     }).then(function () {
       var d = /^(\d{4})-(\d{2})-(\d{2})/.exec(dados.geradoEm);
