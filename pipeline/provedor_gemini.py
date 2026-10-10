@@ -42,6 +42,11 @@ PEDIDO: {texto}
 """
 
 
+def pronto() -> bool:
+    """O servidor so liga a pesquisa se isto for verdadeiro (senao a tela diria que a frase vai ao Google sem ir)."""
+    return bool(os.environ.get("GEMINI_API_KEY"))
+
+
 def dominio(url: str) -> str:
     host = urlparse(url or "").netloc.lower()
     return host[4:] if host.startswith("www.") else host

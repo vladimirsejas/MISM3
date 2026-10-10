@@ -96,3 +96,18 @@ def test_provedor_gemini_e_escolhido_pela_variavel(monkeypatch):
     monkeypatch.setenv("MISM3_PROVEDOR", "gemini")
     mod = servidor.carregar_provedor()
     assert mod is not None and mod.NOME == "Google (Gemini)" and callable(mod.pesquisar)
+
+
+def test_provedor_sem_chave_fica_desligado_com_aviso(monkeypatch, capsys):
+    """Cenario real: .env ja tem MISM3_PROVEDOR=gemini, mas a chave ainda nao foi colocada."""
+    if (Path(servidor.__file__).parent / "provedor_pesquisa.py").exists():
+        pytest.skip("existe um provedor_pesquisa.py local")
+    monkeypatch.setenv("MISM3_PROVEDOR", "gemini")
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    assert servidor.provedor_se_pronto(servidor.carregar_provedor()) is None
+    assert "Pesquisa real DESLIGADA" in capsys.readouterr().out
+    monkeypatch.setenv("GEMINI_API_KEY", "qualquer")
+    assert servidor.provedor_se_pronto(servidor.carregar_provedor()).NOME == "Google (Gemini)"
+    assert servidor.provedor_se_pronto(None) is None
+    um_sem_pronto = NS(NOME="x")   # provedor sem a funcao pronto(): continua ligado (compatibilidade)
+    assert servidor.provedor_se_pronto(um_sem_pronto) is um_sem_pronto

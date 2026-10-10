@@ -84,6 +84,16 @@ def carregar_provedor(caminho: Path | None = None):
     return modulo
 
 
+def provedor_se_pronto(provedor):
+    """Provedor escolhido mas sem o que precisa (ex.: sem chave) = pesquisa DESLIGADA, com aviso claro.
+    Evita a tela afirmar que a frase vai a um servico externo quando nada seria enviado."""
+    if provedor is not None and callable(getattr(provedor, "pronto", None)) and not provedor.pronto():
+        print("AVISO: provedor '%s' escolhido, mas falta a chave/configuracao. Pesquisa real DESLIGADA; o site usa so a busca local." %
+              getattr(provedor, "NOME", "pesquisa"))
+        return None
+    return provedor
+
+
 def criar_servidor(web: Path = WEB_PADRAO, provedor=None, porta: int = 8000, host: str = "127.0.0.1") -> ThreadingHTTPServer:
     web = Path(web).resolve()
 
@@ -172,7 +182,7 @@ def main() -> None:
     carregadas = carregar_env()
     if carregadas:
         print("Lido do .env (so os nomes): %s" % ", ".join(carregadas))
-    provedor = carregar_provedor()
+    provedor = provedor_se_pronto(carregar_provedor())
     srv = criar_servidor(Path(args.web), provedor, args.porta)
     print("MISM3 em http://localhost:%d  |  pesquisa real: %s" % (
         args.porta, ("LIGADA (%s)" % getattr(provedor, "NOME", "provedor_pesquisa.py")) if provedor else "desligada (veja docs/api_contrato.md)"))
