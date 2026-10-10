@@ -740,6 +740,14 @@ h1, h2, h3 { color: var(--fg); line-height: 1.25; letter-spacing: -.01em; }
 .links-navegacao a:hover { background: var(--soft); color: var(--pri); }
 .links-navegacao a[aria-current="page"] { border-bottom-color: var(--pri); color: var(--pri); }
 
+.contatos-essenciais{margin:1.5rem auto;padding:1.25rem;background:var(--surface);border:1px solid var(--bor);border-radius:1rem}
+.contatos-essenciais h2{margin-top:0}
+.grade-contatos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.cartao-contato{min-width:0;padding:1rem;border:1px solid var(--bor);border-radius:.8rem;background:#fff}
+.cartao-contato h3{margin:.1rem 0 .5rem;font-size:1.05rem}
+.cartao-contato p{margin:.45rem 0}
+.cartao-contato a{overflow-wrap:anywhere}
+@media(max-width:640px){.grade-contatos{grid-template-columns:1fr}}
 /* ---------- estrutura ---------- */
 .conteudo, main, .rodape { width: min(100% - 2rem, var(--largura)); margin-inline: auto; }
 main { padding-bottom: 2.5rem; }
@@ -933,19 +941,54 @@ details.outros > summary { display: flex; align-items: center; min-height: 44px;
         </div>
       </section>
       <section class="bloco-portas" aria-labelledby="titulo-cuidado">
-        <h3 id="titulo-cuidado">Saúde e proteção</h3>
+        <h3 id="titulo-cuidado">Saúde</h3>
         <div class="grade-portas">
           <button class="porta" type="button" data-categoria="saude"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><strong>Saúde</strong><small>Unidades, horários e saúde da mulher</small></button>
-          <button class="porta" type="button" data-categoria="violencia"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.3 7.8-8 9-4.7-1.2-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg><strong>Proteção e violência</strong><small>Ajuda imediata e rede de atendimento</small></button>
         </div>
       </section>
       <section class="bloco-portas" aria-labelledby="titulo-casa-direitos">
-        <h3 id="titulo-casa-direitos">Casa, contas e direitos</h3>
+        <h3 id="titulo-casa-direitos">Casa, contas e cidadania</h3>
         <div class="grade-portas">
-          <button class="porta" type="button" data-categoria="moradia"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></svg><strong>Moradia, água e luz</strong><small>Habitação, DAAE e tarifa social</small></button>
-          <button class="porta" type="button" data-categoria="casamento"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v17M7 20h10M4 7h16"/><path d="M4 7l-2.5 6a3.5 3.5 0 0 0 5 0L4 7zM20 7l-2.5 6a3.5 3.5 0 0 0 5 0L20 7z"/></svg><strong>Direitos, separação e aposentadoria</strong><small>Orientação jurídica, INSS e consumidor</small></button>
+          <button class="porta" type="button" data-categoria="moradia"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></svg><strong>Moradia, água e luz</strong><small>Habitação, DAAE, energia e tarifa social</small></button>
+          <button class="porta" type="button" data-categoria="casamento"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v17M7 20h10M4 7h16"/><path d="M4 7l-2.5 6a3.5 3.5 0 0 0 5 0L4 7zM20 7l-2.5 6a3.5 3.5 0 0 0 5 0L20 7z"/></svg><strong>Direitos, proteção e cidadania</strong><small>Violência, medidas protetivas, separação, pensão e aposentadoria</small></button>
         </div>
       </section>
+    </div>
+  </section>
+
+  <section class="grupo contatos-essenciais" aria-labelledby="titulo-contatos-essenciais">
+    <h2 id="titulo-contatos-essenciais">Contatos essenciais em Rio Claro</h2>
+    <p class="meta">Telefones e endereços de fontes oficiais. Confirme o atendimento antes de se deslocar; o CRAS responsável pode variar conforme o bairro.</p>
+    <div class="grade-contatos">
+      <article class="cartao-contato">
+        <h3>Assistência social — CRAS</h3>
+        <p>O CRAS orienta famílias sobre Cadastro Único, benefícios e acompanhamento social.</p>
+        <p><strong>Mãe Preta / Jardim Bandeirantes</strong><br>Av. 1-MP, 159 — Jardim Mãe Preta<br><a href="tel:+551935249954">(19) 3524-9954</a></p>
+        <p><strong>Jardim Brasília</strong><br>Av. 30, 290 — Jardim Brasília<br><a href="tel:+551935333752">(19) 3533-3752</a></p>
+        <p><a href="https://rioclaro.sp.gov.br/centro-ref-assistencia-social/" target="_blank" rel="noopener noreferrer">Ver lista oficial dos CRAS e bairros atendidos</a></p>
+      </article>
+      <article class="cartao-contato">
+        <h3>CREAS — proteção social especializada</h3>
+        <p>Para situações de violência, abandono, negligência e outras violações de direitos.</p>
+        <p><strong>Endereço:</strong> Rua 6, 640, entre as avenidas 9 e 11 — Centro.</p>
+        <p><strong>Telefone:</strong> <a href="tel:+551935236513">(19) 3523-6513</a></p>
+        <p><strong>Atendimento publicado:</strong> segunda a sexta, das 8h às 17h.</p>
+        <p><a href="https://rioclaro.sp.gov.br/desenvolvimento-social/creas-tem-novo-local-de-funcionamento/" target="_blank" rel="noopener noreferrer">Fonte oficial do CREAS</a></p>
+      </article>
+      <article class="cartao-contato">
+        <h3>Secretaria de Desenvolvimento Social</h3>
+        <p><strong>Telefone:</strong> <a href="tel:+551935221930">(19) 3522-1930</a></p>
+        <p><strong>E-mail:</strong> <a href="mailto:gabinetesmas@assistenciasocial.rc.sp.gov.br">gabinetesmas@assistenciasocial.rc.sp.gov.br</a></p>
+        <p><strong>Endereço:</strong> Rua Doutor Elói Chaves, 3265 — Alto do Santana.</p>
+        <p><a href="https://rioclaro.sp.gov.br/secretaria/secretaria-de-desenvolvimento-social/" target="_blank" rel="noopener noreferrer">Página oficial da Secretaria</a></p>
+      </article>
+      <article class="cartao-contato">
+        <h3>Emergência e proteção</h3>
+        <p>Polícia Militar: <a href="tel:190">190</a></p>
+        <p>SAMU: <a href="tel:192">192</a></p>
+        <p>Central de Atendimento à Mulher: <a href="tel:180">180</a> — gratuito, 24 horas.</p>
+        <p>Secretaria da Mulher: WhatsApp <a href="https://wa.me/5519999563042" target="_blank" rel="noopener noreferrer">(19) 99956-3042</a>.</p>
+      </article>
     </div>
   </section>
 
