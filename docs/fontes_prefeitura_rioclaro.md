@@ -2,6 +2,8 @@
 
 **Estado: NÃO VERIFICADO.** Em 2026-10-10 o ambiente de desenvolvimento não conseguiu abrir `rioclaro.sp.gov.br` nem `saude-rioclaro.org.br` (rede bloqueada). Tudo abaixo vem de **resultados de busca**: trechos antigos, muitos sem data. Regra do projeto: **nada entra no catálogo (`catalogo/servicos_manuais.csv`) sem conferir na página oficial e registrar a data**.
 
+**Leia junto:** `docs/fontes_oficiais_rioclaro_mism3.md` (levantamento de 09/10/2026 feito com acesso às páginas; é a referência mais confiável). Este arquivo só acrescenta pistas de contato vindas de busca. Onde os dois divergirem (por exemplo o nome do PDF do protocolo de mama), vale o que for aberto no navegador.
+
 ## Páginas que valem abrir e conferir à mão
 
 | O que | Endereço | Para quê no MISM3 |
