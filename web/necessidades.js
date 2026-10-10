@@ -28,7 +28,7 @@
       "abuso", "tenho medo dele", "tenho medo dela", "medo do meu marido",
       "nao deixa eu sair", "me controla", "medida protetiva", "protecao",
       "perigo", "me persegue", "me empurrou", "me machucou", "me humilha",
-      "violencia sexual", "violencia psicologica"
+      "violencia sexual", "violencia psicologica", "preciso sair de casa", "quero sair de casa com seguranca"
     ]],
     ["casamento", [
       "casamento", "separacao", "separar", "quero me separar", "divorcio",
