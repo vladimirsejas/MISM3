@@ -1,415 +1,69 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-<script>
-/* Dados embutidos: responde ao fetch sem servidor. O que nao esta aqui responde 404, como no servidor local. */
-(function () {
-  var EMBUTIDOS = {};
-  var original = window.fetch ? window.fetch.bind(window) : null;
-  window.fetch = function (url) {
-    var chave = String(url).split("?")[0].replace(/^\.\//, "");
-    if (Object.prototype.hasOwnProperty.call(EMBUTIDOS, chave)) {
-      return Promise.resolve(new Response(EMBUTIDOS[chave], { status: 200, headers: { "Content-Type": "application/json" } }));
-    }
-    return Promise.resolve(new Response("", { status: 404 }));
-  };
-})();
-</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="referrer" content="no-referrer">
 <title>De Mulher para Mulher — MISM3</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%2314375e%27/%3E%3Ctext x=%2716%27 y=%2722%27 font-family=%27Arial,sans-serif%27 font-size=%2714%27 font-weight=%27bold%27 text-anchor=%27middle%27 fill=%27white%27%3EM3%3C/text%3E%3C/svg%3E">
 <style>
-/* MISM3 – sistema visual institucional.
-   Principios: sobrio, legivel, sem decoracao gratuita. Azul-marinho como unica cor de marca, cinzas neutros,
-   vermelho so para alerta/emergencia. Contraste conferido (texto >= 4.5:1). Nao usa brasao nem marca oficial. */
-:root {
-  color-scheme: light;
-  --bg: #f2f4f7;
-  --surface: #ffffff;
-  --fg: #1b2633;
-  --mut: #4f5b6a;
-  --pri: #14375e;
-  --pri-hover: #0c2543;
-  --pri-2: #1f5a96;
-  --soft: #e6edf5;
-  --bor: #d3dae3;
-  --bor-forte: #aab5c3;
-  --alerta: #a1262b;
-  --alerta-fundo: #fbefef;
-  --alerta-borda: #e3bcbc;
-  --aviso-fundo: #eef1f5;
-  --foco: #0b6bcb;
-  --radius: 6px;
-  --shadow: 0 1px 2px rgba(20, 40, 70, .06), 0 1px 3px rgba(20, 40, 70, .05);
-  --largura: 1120px;
-  --lateral: max(1rem, calc((100% - var(--largura)) / 2));
-}
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", sans-serif; -webkit-font-smoothing: antialiased; }
-a { color: var(--pri-2); text-underline-offset: .18em; }
-a:hover { color: var(--pri); }
-button, input, select, textarea { font: inherit; }
-button, summary { touch-action: manipulation; }
-:where(button,input,summary,select,textarea,a):focus-visible { outline: 3px solid var(--foco); outline-offset: 2px; }
-button { min-height: 44px; cursor: pointer; }
-[hidden] { display: none !important; }
-h1, h2, h3 { color: var(--fg); line-height: 1.25; letter-spacing: -.01em; }
-.icone { width: 1.5rem; height: 1.5rem; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
-
-/* ---------- casca: faixa institucional, emergencia, navegacao ---------- */
-.faixa-institucional { padding: .35rem var(--lateral); background: var(--pri); color: #e8eef6; font-size: .8rem; letter-spacing: .02em; }
-.faixa-institucional strong { color: #fff; font-weight: 650; }
-.faixa-demo { padding: .5rem var(--lateral); background: var(--aviso-fundo); border-bottom: 1px solid var(--bor); color: #2f3b4a; font-size: .85rem; }
-.faixa-demo::before { content: "PROTÓTIPO"; margin-right: .6rem; padding: .1rem .4rem; border: 1px solid #6b7889; border-radius: 3px; font-size: .7rem; font-weight: 700; letter-spacing: .08em; }
-.barra-emergencia { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .5rem 1rem; padding: .5rem var(--lateral); background: var(--alerta-fundo); border-bottom: 1px solid var(--alerta-borda); color: #3b2a2c; font-size: .9rem; }
-.barra-emergencia a { color: var(--alerta); font-weight: 700; white-space: nowrap; }
-#sair-rapido { flex: 0 0 auto; min-height: 36px; padding: .25rem .8rem; border: 1px solid var(--alerta); border-radius: var(--radius); background: #fff; color: var(--alerta); font-weight: 650; font-size: .88rem; }
-#sair-rapido:hover { background: var(--alerta); color: #fff; }
-.navegacao-principal { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .55rem var(--lateral); background: var(--surface); border-bottom: 1px solid var(--bor); box-shadow: var(--shadow); }
-.marca-site { display: flex; align-items: center; gap: .7rem; color: var(--fg); text-decoration: none; white-space: nowrap; }
-.marca-site:hover { color: var(--fg); }
-.marca-selo { display: grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: 6px; background: var(--pri); color: #fff; font-weight: 800; font-size: .95rem; letter-spacing: -.03em; }
-.marca-texto { display: flex; flex-direction: column; line-height: 1.2; }
-.marca-texto strong { font-size: 1.05rem; letter-spacing: -.01em; }
-.marca-texto span { color: var(--mut); font-size: .78rem; }
-.links-navegacao { display: flex; flex-wrap: wrap; align-items: center; gap: .15rem; }
-.links-navegacao a { display: inline-flex; align-items: center; min-height: 44px; padding: .4rem .85rem; border-bottom: 3px solid transparent; color: var(--fg); text-decoration: none; font-weight: 600; font-size: .95rem; }
-.links-navegacao a:hover { background: var(--soft); color: var(--pri); }
-.links-navegacao a[aria-current="page"] { border-bottom-color: var(--pri); color: var(--pri); }
-
-/* ---------- estrutura ---------- */
-.conteudo, main, .rodape { width: min(100% - 2rem, var(--largura)); margin-inline: auto; }
-main { padding-bottom: 2.5rem; }
-.topo { padding: 1.6rem var(--lateral) .6rem; }
-.topo h1 { margin: 0 0 .4rem; font-size: clamp(1.7rem, 3vw, 2.2rem); }
-.topo > p { max-width: 72ch; margin: .3rem 0; color: var(--mut); }
-.breadcrumb { margin: 0 0 .6rem; color: var(--mut); font-size: .85rem; }
-.breadcrumb a { color: var(--mut); }
-
-/* ---------- abertura (hero) com a busca ---------- */
-.hero { padding: 2rem var(--lateral) 2.4rem; background: var(--pri); color: #fff; border-bottom: 4px solid #0c2543; }
-.hero-miolo { max-width: 780px; }
-.hero h1 { margin: 0 0 .5rem; color: #fff; font-size: clamp(1.9rem, 4vw, 2.7rem); letter-spacing: -.02em; }
-.hero p { margin: .3rem 0 1.1rem; max-width: 62ch; color: #dbe5f1; font-size: 1.05rem; }
-.hero .busca-necessidade { margin: 0; padding: 1rem 1.1rem 1.1rem; border: 0; border-radius: var(--radius); background: var(--surface); color: var(--fg); box-shadow: 0 6px 20px rgba(0, 0, 0, .22); }
-.hero .busca-necessidade .privacidade { color: var(--mut); }
-
-/* ---------- formularios ---------- */
-.busca-necessidade label, .busca label, .escrever label { display: block; font-weight: 650; }
-.linha { display: flex; gap: .6rem; margin-top: .45rem; }
-.linha input, #necessidade, #cep, .escrever input { width: 100%; min-width: 0; min-height: 48px; padding: .6rem .8rem; border: 1px solid var(--bor-forte); border-radius: var(--radius); background: var(--surface); color: var(--fg); }
-.linha input:focus, #necessidade:focus, #cep:focus, .escrever input:focus { border-color: var(--pri-2); }
-.linha button, .escrever button { flex: 0 0 auto; min-height: 48px; padding: .6rem 1.2rem; border: 1px solid var(--pri); border-radius: var(--radius); background: var(--pri); color: #fff; font-weight: 650; }
-.linha button:hover, .escrever button:hover { background: var(--pri-hover); }
-.privacidade, .meta { color: var(--mut); font-size: .86rem; }
-.privacidade { margin: .55rem 0 0; }
-.mensagem { padding: .7rem 1rem; border-left: 4px solid var(--alerta); border-radius: 3px; background: var(--alerta-fundo); color: #3b2a2c; }
-
-/* ---------- portas (categorias) ---------- */
-.secao-titulo { margin: 2rem 0 .3rem; font-size: 1.35rem; }
-.secao-sub { max-width: 70ch; margin: 0 0 1rem; color: var(--mut); }
-.portas { margin: 0 0 1.5rem; }
-.grade-portas { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .8rem; margin: 1rem 0; }
-.porta { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: .35rem; min-width: 0; min-height: 138px; padding: 1rem; border: 1px solid var(--bor); border-top: 3px solid var(--pri); border-radius: var(--radius); background: var(--surface); color: var(--fg); text-align: left; box-shadow: var(--shadow); transition: border-color .15s, box-shadow .15s, transform .15s; }
-.porta:hover, .porta:focus-visible { border-color: var(--pri-2); border-top-color: var(--pri-2); box-shadow: 0 4px 14px rgba(20, 40, 70, .12); transform: translateY(-1px); }
-.porta .icone { width: 1.7rem; height: 1.7rem; margin-bottom: .2rem; color: var(--pri-2); }
-.porta strong { font-size: 1rem; line-height: 1.3; font-weight: 650; }
-.porta small { color: var(--mut); font-size: .86rem; line-height: 1.4; }
-.porta::after { content: "→"; position: absolute; right: .9rem; bottom: .7rem; color: var(--pri-2); font-weight: 700; }
-.porta[hidden] { display: none; }
-
-/* ---------- ferramentas (cartoes de link) ---------- */
-.ferramentas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8rem; margin: 1rem 0 0; }
-.ferramenta { display: flex; flex-direction: column; gap: .35rem; padding: 1rem; border: 1px solid var(--bor); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
-.ferramenta h3 { margin: 0; font-size: 1.02rem; }
-.ferramenta p { margin: 0; color: var(--mut); font-size: .92rem; }
-.ferramenta .acoes { margin-top: auto; padding-top: .5rem; font-weight: 650; font-size: .92rem; }
-.etiqueta { display: inline-block; margin-left: .4rem; padding: .05rem .4rem; border: 1px solid var(--bor-forte); border-radius: 3px; background: var(--aviso-fundo); color: var(--mut); font-size: .68rem; font-weight: 700; letter-spacing: .06em; vertical-align: .12em; }
-
-/* ---------- painel de uma categoria ---------- */
-.painel-categoria { margin: 1.5rem 0 2rem; padding: 1.2rem 1.3rem; border: 1px solid var(--bor); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
-.painel-categoria h2 { margin: .1rem 0 .35rem; font-size: 1.45rem; }
-.painel-categoria > p { max-width: 70ch; color: var(--mut); margin: .25rem 0 .8rem; }
-.voltar { display: inline-flex; align-items: center; min-height: 40px; margin: 0 0 .8rem; padding: .35rem .7rem; border: 1px solid var(--bor-forte); border-radius: var(--radius); background: var(--surface); color: var(--pri); font-weight: 650; }
-.voltar:hover { background: var(--soft); }
-.entendimento { margin: .8rem 0 1rem; }
-.entendimento p { margin: .2rem 0; font-weight: 600; }
-.entendimento .chips, .objetivos { display: flex; flex-wrap: wrap; gap: .5rem; margin: .6rem 0 1rem; }
-.entendimento button, .objetivos button { min-height: 40px; padding: .4rem .85rem; border: 1px solid var(--pri); border-radius: 999px; background: var(--surface); color: var(--pri); font-weight: 600; }
-.entendimento button:hover, .objetivos button:hover { background: var(--soft); }
-.objetivos button[aria-pressed="true"] { background: var(--pri); color: #fff; }
-.subcaminho { margin: 1.2rem 0; padding-top: .9rem; border-top: 1px solid var(--bor); }
-.subcaminho > h3 { margin: .2rem 0 .5rem; font-size: 1.1rem; }
-.porque { margin: .5rem 0 0; padding-left: 1.2rem; font-size: .95rem; }
-
-/* ---------- busca por CEP ---------- */
-.busca-por-cep { margin: 1.4rem 0; border: 1px solid var(--bor); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
-.busca-por-cep summary { display: flex; align-items: center; min-height: 52px; padding: 0 1.1rem; color: var(--pri); font-weight: 650; cursor: pointer; }
-.busca-por-cep[open] summary { border-bottom: 1px solid var(--bor); }
-.busca { margin: 0; padding: 1rem 1.1rem; }
-.aviso-dados { margin: 0 0 .8rem; padding: .6rem .8rem; border: 1px solid var(--bor); border-left: 4px solid var(--bor-forte); border-radius: 3px; background: var(--aviso-fundo); color: #2f3b4a; font-size: .88rem; }
-
-/* ---------- resultados e cartoes de servico ---------- */
-.resumo { color: var(--mut); }
-#mapa, #mapa-gestao { width: 100%; min-height: 300px; border: 1px solid var(--bor); border-radius: var(--radius); background: var(--soft); }
-#mapa { height: 340px; }
-.tiles { display: block; margin: .7rem 0 1rem; color: var(--mut); font-size: .88rem; }
-.tiles input { width: 1.1rem; height: 1.1rem; vertical-align: middle; }
-.grupo { margin: 1.6rem 0; }
-.grupo h2 { margin: 0 0 .7rem; padding-bottom: .5rem; border-bottom: 2px solid var(--pri); font-size: 1.2rem; }
-.subtitulo { font-size: 1.05rem; margin: 1.2rem 0 .4rem; }
-.cartao { margin: .6rem 0; padding: .95rem 1.1rem; border: 1px solid var(--bor); border-left: 4px solid var(--pri-2); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
-.cartao h3 { margin: 0; font-size: 1.02rem; }
-.cartao p { margin: .3rem 0; font-size: .93rem; }
-.cartao .cab-cartao { display: flex; align-items: flex-start; justify-content: space-between; gap: .8rem; }
-.cartao .selo-tipo { flex: 0 0 auto; padding: .1rem .5rem; border: 1px solid var(--bor-forte); border-radius: 3px; background: var(--soft); color: var(--pri); font-size: .74rem; font-weight: 650; }
-.cartao .dist { display: inline-block; padding: .05rem .5rem; border-radius: 999px; background: var(--soft); color: var(--pri); font-weight: 650; font-size: .86rem; }
-.cartao .meta { color: var(--mut); font-size: .83rem; }
-.cartao .fonte { margin-top: .5rem; padding-top: .45rem; border-top: 1px dashed var(--bor); }
-.cartao.urgente { border-left-color: var(--alerta); background: var(--alerta-fundo); }
-.cartao-destaque { border-left-color: var(--pri); background: var(--soft); }
-.vazio { color: var(--mut); }
-details.outros { margin-top: 1rem; }
-details.outros > summary { display: flex; align-items: center; min-height: 44px; color: var(--pri); cursor: pointer; font-weight: 650; }
-#resultado { margin-top: 1.4rem; }
-
-/* ---------- rodape ---------- */
-.rodape { padding-top: 1.2rem; padding-bottom: 2.5rem; border-top: 1px solid var(--bor); color: var(--mut); font-size: .88rem; }
-.rodape p { max-width: 90ch; }
-.rodape-faixa { margin-top: 2rem; padding: 1.2rem var(--lateral); background: var(--pri); color: #cfdbea; font-size: .86rem; }
-.rodape-faixa strong { color: #fff; }
-.rodape-faixa a { color: #fff; }
-
-/* ---------- responsivo ---------- */
-@media (max-width: 900px) {
-  .grade-portas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .ferramentas { grid-template-columns: minmax(0, 1fr); }
-}
-@media (max-width: 620px) {
-  .faixa-institucional { font-size: .74rem; }
-  .navegacao-principal { align-items: flex-start; flex-direction: column; gap: .2rem; padding-block: .6rem; }
-  .links-navegacao { width: 100%; margin-left: -.4rem; }
-  .barra-emergencia { align-items: flex-start; }
-  .hero { padding-block: 1.4rem 1.6rem; }
-  .linha { flex-direction: column; }
-  .linha button { width: 100%; }
-  .grade-portas { gap: .6rem; }
-  .porta { min-height: 128px; padding: .85rem; }
-  #mapa { height: 290px; }
-  .painel-categoria { padding: 1rem; }
-}
-@media (max-width: 360px) { .grade-portas { grid-template-columns: 1fr; } }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; } }
-@media (forced-colors: active) { .porta, .cartao, .ferramenta { border: 1px solid CanvasText; } }
-@media print { .barra-emergencia, .navegacao-principal, .faixa-institucional, #sair-rapido { display: none; } }
-
-/* ---------- organizacao por jornadas (vinda da main, traduzida para o sistema visual institucional) ---------- */
-.blocos-portas { display: grid; gap: 1rem; margin: 1rem 0; }
-.bloco-portas { padding: .9rem 1rem 1rem; border: 1px solid var(--bor); border-radius: var(--radius); background: var(--soft); }
-.bloco-portas h3, .outras-areas h3 { margin: .1rem 0 .3rem; font-size: 1.05rem; }
-.bloco-portas .grade-portas { margin: .5rem 0 0; grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.bloco-portas .secao-sub, .bloco-portas > p { margin: 0 0 .4rem; color: var(--mut); font-size: .92rem; }
-.acesso-digital { margin: 1rem 0; padding: 1rem; border: 1px solid var(--bor); border-left: 4px solid var(--pri); border-radius: var(--radius); background: var(--soft); }
-.acesso-digital h3 { margin: .1rem 0 .5rem; font-size: 1rem; }
-.acesso-digital p { margin: .35rem 0; }
-.outras-areas { margin: 1.5rem 0; padding-top: 1rem; border-top: 2px solid var(--bor); }
-.grade-outras-areas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
-.grade-outras-areas .cartao { margin: 0; }
-.grade-outras-areas h4 { margin: 0; font-size: 1rem; }
-.resultado-necessidade { margin: 1rem 0; padding: 1rem; border: 1px solid var(--bor); border-radius: var(--radius); background: var(--surface); }
-.nota-redundancia { padding: .75rem 1rem; border-left: 4px solid var(--pri); border-radius: 3px; background: var(--soft); color: var(--fg); }
-.resultado-necessidade ul { padding-left: 1.25rem; margin: .5rem 0; }
-.resultado-necessidade li { margin: .35rem 0; }
-.resultado-necessidade .cartao h4 { margin: .1rem 0 .5rem; font-size: 1rem; }
-.resultado-necessidade > p { color: var(--mut); }
-@media (max-width: 620px) {
-  .bloco-portas .grade-portas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .grade-outras-areas { grid-template-columns: 1fr; }
-}
-@media (max-width: 360px) { .bloco-portas .grade-portas { grid-template-columns: 1fr; } }
-
-</style>
-<style>
-/* Estilos das paginas internas (rede-mulheres, inteligencia-publica) sobre o sistema visual de estilo.css. */
-.pagina button:not(.voltar):not([id="sair-rapido"]) { border: 1px solid var(--pri); border-radius: var(--radius); background: var(--pri); color: #fff; font-weight: 650; padding: .6rem 1rem; }
-.pagina button:not(.voltar):not([id="sair-rapido"]):hover { background: var(--pri-hover); }
-.pagina button.secondary { background: var(--surface); color: var(--pri); border-color: var(--bor-forte); }
-.pagina button.secondary:hover { background: var(--soft); }
-.button { display: inline-block; padding: .6rem 1rem; border: 1px solid var(--pri); border-radius: var(--radius); background: var(--pri); color: #fff; font-weight: 650; }
-.pagina input, .pagina textarea, .pagina select { padding: .6rem .75rem; border: 1px solid var(--bor-forte); border-radius: var(--radius); background: var(--surface); color: var(--fg); }
-.pagina textarea { min-height: 90px; resize: vertical; }
-.note, .muted { max-width: 75ch; color: var(--mut); }
-.small, .foot { color: var(--mut); font-size: .85rem; }
-.hidden { display: none; }
-.tools { display: flex; gap: .7rem; flex-wrap: wrap; margin: 1rem 0; }
-.tools input { flex: 1; min-width: 200px; }
-.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
-.card { display: flex; flex-direction: column; gap: .45rem; padding: 1.05rem; border: 1px solid var(--bor); border-top: 3px solid var(--pri); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
-.card h2 { margin: .2rem 0; font-size: 1.05rem; }
-.card button { margin-top: auto; }
-.avatar { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--soft); color: var(--pri); font-size: 1.2rem; font-weight: 700; }
-.tags { display: flex; flex-wrap: wrap; gap: .35rem; }
-.tag, .seal { display: inline-block; padding: .1rem .5rem; border: 1px solid var(--bor-forte); border-radius: 3px; background: var(--soft); color: var(--pri); font-size: .76rem; font-weight: 650; }
-.seal { background: #fff; }
-.seal.demo { border-style: dashed; color: var(--mut); background: var(--aviso-fundo); }
-.panel { margin: 1.5rem 0; padding: 1.1rem 1.2rem; border: 1px solid var(--bor); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
-.panel > h2 { margin-top: 0; padding-bottom: .5rem; border-bottom: 2px solid var(--pri); font-size: 1.2rem; }
-.formgrid { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
-.field { display: flex; flex-direction: column; gap: .3rem; }
-.field.full { grid-column: 1 / -1; }
-.preview { margin-top: .8rem; padding: .8rem; border: 1px solid var(--bor); border-radius: var(--radius); background: var(--bg); }
-.status { margin: .8rem 0; padding: .8rem 1rem; border: 1px solid var(--bor); border-left: 4px solid var(--pri); border-radius: 3px; background: var(--surface); }
-.empty { padding: 1rem; border: 1px dashed var(--bor-forte); border-radius: var(--radius); color: var(--mut); }
-.callout { padding: .8rem 1rem; border: 1px solid var(--bor); border-left: 4px solid var(--pri); border-radius: 3px; background: var(--soft); }
-.warn { padding: .8rem 1rem; border: 1px solid var(--bor); border-left: 4px solid var(--bor-forte); border-radius: 3px; background: var(--aviso-fundo); color: #2f3b4a; }
-.metric { color: var(--pri); font-size: 1.9rem; font-weight: 700; font-variant-numeric: tabular-nums; }
-.barrow { display: grid; grid-template-columns: 9rem 1fr 3rem; align-items: center; gap: .6rem; margin: .7rem 0; }
-.track { height: .85rem; overflow: hidden; border-radius: 3px; background: var(--soft); }
-.bar { height: 100%; width: 0; background: var(--pri); }
-.bar.demo { background: #86a8cf; }
-table { width: 100%; border-collapse: collapse; background: var(--surface); }
-th, td { padding: .65rem; border-bottom: 1px solid var(--bor); text-align: left; }
-th { background: var(--soft); color: var(--pri); font-size: .88rem; }
-@media (max-width: 760px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 720px) { .barrow { grid-template-columns: 7rem 1fr 2rem; } table { font-size: .9rem; } }
-@media (max-width: 520px) { .grid, .formgrid { grid-template-columns: 1fr; } .field.full { grid-column: auto; } .tools { flex-direction: column; } .tools input, .tools select { width: 100%; } }
-
+:root{color-scheme:light;--bg:#fbf7f8;--paper:#fff;--ink:#332b3a;--muted:#665d6b;--plum:#775b83;--plum-dark:#5b4268;--lilac:#f0e8f3;--rose:#f9e9ed;--line:#e7dce9;--red:#b4233c;--shadow:0 8px 28px rgba(73,47,81,.08);--width:1120px;--gutter:max(1rem,calc((100% - var(--width))/2))}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 "Segoe UI",system-ui,sans-serif}a{color:var(--plum-dark);text-underline-offset:.18em}a:hover{color:var(--red)}button,a{touch-action:manipulation} :focus-visible{outline:3px solid #246ac0;outline-offset:3px}
+.topline{padding:.45rem var(--gutter);background:#f0e7f2;color:#51435b;font-size:.84rem}.nav{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;padding:.8rem var(--gutter);background:#fff;border-bottom:1px solid var(--line)}.brand{display:flex;gap:.7rem;align-items:center;text-decoration:none;color:var(--ink)}.brand-mark{display:grid;place-items:center;width:42px;height:42px;border-radius:14px;background:var(--plum);color:#fff;font-weight:800}.brand small{display:block;color:var(--muted)}.navlinks{display:flex;gap:.35rem;flex-wrap:wrap}.navlinks a{padding:.5rem .75rem;border-radius:999px;text-decoration:none;font-weight:650}.navlinks a[aria-current=page],.navlinks a:hover{background:var(--lilac)}
+main{width:min(calc(100% - 2rem),var(--width));margin:auto;padding-bottom:3rem}.hero{margin:1.5rem 0 1.25rem;padding:clamp(1.4rem,4vw,3.2rem);border-radius:28px;background:linear-gradient(125deg,#f0e6f3 0%,#fff6f5 68%,#f8e7ec 100%);border:1px solid var(--line);position:relative;overflow:hidden}.eyebrow{margin:0 0 .5rem;text-transform:uppercase;letter-spacing:.12em;font-size:.78rem;font-weight:800;color:var(--plum)}h1{max-width:780px;margin:.1rem 0 .8rem;font-size:clamp(2rem,5vw,3.5rem);line-height:1.08;letter-spacing:-.04em;color:#382c40}.hero p{max-width:720px;color:#574b5d;font-size:1.08rem}.hero-actions{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:1.2rem}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:.65rem 1rem;border-radius:13px;font-weight:750;text-decoration:none;border:1px solid var(--plum)}.btn.primary{background:var(--plum);color:#fff}.btn.secondary{background:#fff;color:var(--plum-dark)}.btn:hover{transform:translateY(-1px)}.section-head{margin:2rem 0 1rem}.section-head h2{margin:0;font-size:clamp(1.35rem,3vw,1.8rem);letter-spacing:-.02em}.section-head p{margin:.35rem 0;color:var(--muted);max-width:75ch}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}.tile{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:1.2rem;box-shadow:var(--shadow);min-height:190px}.tile-icon{display:grid;place-items:center;width:44px;height:44px;margin-bottom:.65rem;border-radius:14px;background:var(--lilac);font-size:1.25rem}.tile h3{margin:.2rem 0 .35rem;font-size:1.08rem}.tile p{margin:0;color:var(--muted);font-size:.95rem}
+.status{margin:1.25rem 0;padding:clamp(1.2rem,3vw,2rem);border:1px solid #dfcce5;border-radius:22px;background:#fff;display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:center}.status h2{margin:0 0 .4rem;font-size:1.4rem}.status p{margin:.25rem 0;color:var(--muted)}.status-label{display:inline-block;margin-bottom:.5rem;padding:.25rem .65rem;border-radius:999px;background:var(--lilac);color:var(--plum-dark);font-size:.78rem;font-weight:800}
+.contact{display:grid;grid-template-columns:1.2fr .8fr;gap:1rem;margin-top:1.3rem}.contact-main,.contact-details{border-radius:22px;padding:1.4rem;background:#fff;border:1px solid var(--line)}.contact-main{background:var(--plum);color:#fff}.contact-main h2{margin:.1rem 0 .5rem;color:#fff}.contact-main p{color:#f0e8f3}.contact-main a{color:#fff}.contact-details h3{margin:.1rem 0 .5rem}.contact-details p{margin:.35rem 0;color:var(--muted)}.small{font-size:.88rem;color:var(--muted)}.footer{margin-top:2rem;padding:1.2rem 0;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
+@media(max-width:760px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.status,.contact{grid-template-columns:1fr}.status .btn{justify-self:start}}@media(max-width:480px){.grid{grid-template-columns:1fr}.nav{align-items:flex-start}.hero{border-radius:20px}.tile{min-height:0}}
 </style>
 </head>
-<body class="pagina">
-<div class="faixa-institucional"><strong>Protótipo acadêmico</strong> · Fatec Rio Claro · Curso de Inteligência Artificial · não é um serviço oficial da Prefeitura</div>
-<div class="faixa-demo" role="note">Perfis, selos e denúncias desta página são fictícios e servem apenas para demonstração.</div>
-
-<nav class="navegacao-principal" aria-label="Navegação principal">
-  <a class="marca-site" href="index.html"><span class="marca-selo" aria-hidden="true">M3</span><span class="marca-texto"><strong>MISM3</strong><span>Mapa do Cuidado · Rio Claro/SP</span></span></a>
-  <div class="links-navegacao" data-menu><a href="index.html">Início</a></div>
+<body>
+<div class="topline">MISM3 · Mapa do Cuidado · Rio Claro/SP</div>
+<nav class="nav" aria-label="Navegação principal">
+<a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">M3</span><span><strong>MISM3</strong><small>Mapa do Cuidado</small></span></a>
+<div class="navlinks" data-menu><a href="index.html">Início</a><a href="saude.html">Saúde</a></div>
 </nav>
-<header class="topo">
-<p class="breadcrumb"><a href="index.html">Início</a> › De mulher para mulher</p>
-<h1>De Mulher para Mulher</h1>
-<p>Uma ideia de rede para compartilhar experiências, indicar oportunidades e encontrar apoio entre mulheres.</p>
-<p class="note">Esta tela demonstra uma possível experiência de navegação. Não existe cadastro real, verificação de identidade, publicação ou envio de denúncias. Os selos são exemplos visuais, não atestados de confiança.</p>
-<div class="tools">
-<input id="filtro" type="search" maxlength="60" placeholder="Buscar por habilidade, serviço ou tema" aria-label="Buscar perfis">
-<select id="nivel" aria-label="Filtrar por selo">
-<option value="todos">Todos os níveis demonstrativos</option>
-<option value="1">Nível 1 — perfil preenchido</option>
-<option value="2">Nível 2 — experiência demonstrada</option>
-<option value="3">Nível 3 — referência comunitária</option>
-</select>
+<main>
+<header class="hero">
+<p class="eyebrow">Conexão, autonomia e oportunidades</p>
+<h1>De mulher para mulher</h1>
+<p>Um espaço para aproximar mulheres, fortalecer a autonomia financeira e facilitar a busca por serviços, habilidades e apoio no dia a dia.</p>
+<div class="hero-actions">
+<a class="btn primary" href="#areas">Explorar áreas de serviço</a>
+<a class="btn secondary" href="#contato">Falar com a Secretaria da Mulher</a>
 </div>
 </header>
-<main>
-<section aria-labelledby="perfis-titulo">
-<h2 id="perfis-titulo">Perfis de exemplo</h2>
-<div id="perfis" class="grid" aria-live="polite"></div>
-<p id="vazio" class="empty hidden">Nenhum perfil de demonstração corresponde a essa busca.</p>
-</section>
-<section class="panel" aria-labelledby="cadastro-titulo">
-<h2 id="cadastro-titulo">Experimentar um cadastro</h2>
-<p>Preencha dados fictícios para ver como um perfil poderia aparecer. Nada será enviado ou guardado.</p>
-<form id="cadastro">
-<div class="formgrid">
-<label class="field">Nome fictício<input id="nome" maxlength="40" required placeholder="Ex.: Joana Exemplo"></label>
-<label class="field">O que oferece?<select id="oferta"><option>Mentoria profissional</option><option>Costura e reparos</option><option>Apoio para currículo</option><option>Cuidados e rede de apoio</option><option>Artesanato</option></select></label>
-<label class="field">Experiência resumida<input id="experiencia" maxlength="100" placeholder="Ex.: experiência em atendimento"></label>
-<label class="field">Nível de demonstração<select id="nivel-cadastro"><option value="1">Nível 1 — perfil preenchido</option><option value="2">Nível 2 — experiência demonstrada</option><option value="3">Nível 3 — referência comunitária</option></select></label>
-<label class="field full">Descrição fictícia<textarea id="descricao" maxlength="220" placeholder="Descreva o serviço de exemplo, sem dados pessoais reais."></textarea></label>
+<section aria-labelledby="areas-titulo">
+<div class="section-head"><h2 id="areas-titulo">O que você procura?</h2><p>Estas são as áreas previstas para conectar quem oferece um serviço a quem precisa dele. Não exibimos nomes nem avaliações sem cadastro real e consentimento das profissionais.</p></div>
+<div class="grid" id="areas">
+<article class="tile"><span class="tile-icon" aria-hidden="true">✦</span><h3>Beleza e bem-estar</h3><p>Cabeleireiras, manicures, maquiagem, massagem e cuidados pessoais.</p></article>
+<article class="tile"><span class="tile-icon" aria-hidden="true">⌂</span><h3>Casa e manutenção</h3><p>Limpeza, organização, pequenos reparos, pintura e serviços domésticos.</p></article>
+<article class="tile"><span class="tile-icon" aria-hidden="true">↗</span><h3>Trabalho e negócios</h3><p>Empreendedorismo, serviços profissionais, apoio com currículo e orientação de carreira.</p></article>
+<article class="tile"><span class="tile-icon" aria-hidden="true">♡</span><h3>Saúde e cuidado</h3><p>Profissionais habilitadas e serviços de cuidado, respeitando as regras de cada profissão.</p></article>
+<article class="tile"><span class="tile-icon" aria-hidden="true">✂</span><h3>Costura e produção</h3><p>Consertos de roupas, artesanato, produção por encomenda e trabalhos manuais.</p></article>
+<article class="tile"><span class="tile-icon" aria-hidden="true">☼</span><h3>Apoio às mães</h3><p>Troca de informações e busca por serviços relacionados à rotina familiar e aos cuidados.</p></article>
+<article class="tile"><span class="tile-icon" aria-hidden="true">↗</span><h3>Transporte e mobilidade</h3><p>Motoristas e serviços de deslocamento oferecidos por profissionais devidamente habilitadas.</p></article>
+<article class="tile"><span class="tile-icon" aria-hidden="true">◎</span><h3>Atividade física</h3><p>Academias, aulas, personal trainers e atividades conduzidas por profissionais qualificados.</p></article>
+<article class="tile"><span class="tile-icon" aria-hidden="true">＋</span><h3>Outros serviços</h3><p>Uma área aberta para outras habilidades e serviços oferecidos por mulheres.</p></article>
 </div>
-<p><button type="submit">Gerar prévia fictícia</button></p>
-<div id="previa" class="preview hidden" aria-live="polite"></div>
-</form>
 </section>
-<section class="panel" aria-labelledby="denuncia-titulo">
-<h2 id="denuncia-titulo">Simular denúncia de perfil</h2>
-<p>Esta interação mostra como o protótipo poderia confirmar uma denúncia. Ela não é enviada a ninguém e não fica registrada.</p>
-<label class="field">Perfil de exemplo<select id="perfil-denuncia"></select></label>
-<label class="field" style="margin-top:.7rem">Motivo demonstrativo<select id="motivo"><option>Informação possivelmente falsa</option><option>Comportamento inadequado</option><option>Oferta suspeita</option><option>Outro motivo</option></select></label>
-<p><button id="denunciar" type="button" class="secondary">Simular denúncia</button></p>
-<div id="retorno-denuncia" class="status hidden" role="status"></div>
+<section class="status" aria-labelledby="rede-titulo">
+<div><span class="status-label">Situação atual</span><h2 id="rede-titulo">Cadastro de profissionais</h2><p>A lista pública de prestadoras ainda não está disponível. Por isso, esta página não mostra perfis fictícios, avaliações inventadas nem botões de cadastro que não enviam informações.</p><p>O próximo passo é estruturar um cadastro real, com autorização de publicação, regras de privacidade e um canal para corrigir ou retirar informações.</p></div>
+<a class="btn primary" href="https://rioclaro.sp.gov.br/secretaria/secretaria-da-mulher/" target="_blank" rel="noopener noreferrer">Consultar canal oficial</a>
 </section>
+<section id="contato" class="contact" aria-labelledby="contato-titulo">
+<div class="contact-main"><p class="eyebrow" style="color:#f0e8f3">Rio Claro</p><h2 id="contato-titulo">Secretaria Municipal da Mulher</h2><p>Para informações sobre políticas públicas, autonomia econômica, qualificação e iniciativas voltadas às mulheres, fale diretamente com a Secretaria.</p><p><strong>WhatsApp:</strong> <a href="https://wa.me/5519999563042">(19) 99956-3042</a></p><a class="btn secondary" href="https://rioclaro.sp.gov.br/secretaria/secretaria-da-mulher/" target="_blank" rel="noopener noreferrer">Abrir página oficial</a></div>
+<div class="contact-details"><h3>Atendimento municipal</h3><p><strong>E-mail</strong><br><a href="mailto:secretariadamulherrc@rioclaro.sp.gov.br">secretariadamulherrc@rioclaro.sp.gov.br</a></p><p><strong>Endereço</strong><br>Rua 7, 830 — Condomínio Maria Manieiro, 2º andar, sala 205, Centro.</p><p><strong>Horário informado</strong><br>Segunda a sexta, das 8h às 17h.</p><p class="small">Confirme o horário e o canal de atendimento antes de se deslocar.</p></div>
+</section>
+<footer class="footer"><p>O MISM3 organiza caminhos de acesso e não substitui os serviços públicos ou profissionais. Os contatos da Secretaria foram consultados na página oficial da Prefeitura.</p><p><a href="index.html">Voltar ao início</a> · <a href="saude.html">Saúde em Rio Claro</a></p></footer>
 </main>
-<footer class="rodape"><p class="foot">Decisão para uma versão futura: definir critérios claros, evidências necessárias, revisão humana, recurso contra decisões e proteção contra denúncias abusivas. Nenhum nível deve ser apresentado como “identidade verificada” enquanto não houver um processo real de verificação.</p></footer>
 <script>
 (function(){
 "use strict";
-var exemplos=[
-{id:"p1",nome:"Ana Exemplo",oferta:"Mentoria profissional",experiencia:"10 anos em atendimento e organização",nivel:2,descricao:"Ajuda fictícia para revisar currículo e preparar entrevistas.",temas:["trabalho","currículo","mentoria"]},
-{id:"p2",nome:"Bia Demonstração",oferta:"Costura e reparos",experiencia:"Costura criativa e pequenos consertos",nivel:1,descricao:"Exemplo de serviço local oferecido por uma empreendedora.",temas:["costura","empreendedorismo"]},
-{id:"p3",nome:"Cris Modelo",oferta:"Apoio para currículo",experiencia:"Voluntariado fictício em orientação profissional",nivel:3,descricao:"Perfil de exemplo para demonstrar uma referência comunitária.",temas:["trabalho","currículo","apoio"]},
-{id:"p4",nome:"Dani Exemplo",oferta:"Artesanato",experiencia:"Peças artesanais e encomendas fictícias",nivel:1,descricao:"Exemplo de troca de experiências entre mulheres.",temas:["artesanato","renda"]},
-{id:"p5",nome:"Eva Demonstração",oferta:"Cuidados e rede de apoio",experiencia:"Organização comunitária fictícia",nivel:2,descricao:"Exemplo de apoio mútuo e compartilhamento de informações.",temas:["apoio","rede","família"]}
-];
-var perfis=document.getElementById("perfis"),vazio=document.getElementById("vazio");
-function escapeHTML(s){return String(s||"").replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
-function rotuloNivel(n){return {"1":"Nível 1 — perfil preenchido","2":"Nível 2 — experiência demonstrada","3":"Nível 3 — referência comunitária"}[n]||"Nível demonstrativo";}
-function desenhar(){
-var q=document.getElementById("filtro").value.trim().toLocaleLowerCase("pt-BR"),n=document.getElementById("nivel").value;
-var filtrados=exemplos.filter(function(p){var texto=[p.nome,p.oferta,p.experiencia,p.descricao].concat(p.temas).join(" ").toLocaleLowerCase("pt-BR");return (!q||texto.indexOf(q)!==-1)&&(n==="todos"||String(p.nivel)===n);});
-perfis.innerHTML=filtrados.map(function(p){return '<article class="card"><div class="avatar" aria-hidden="true">'+escapeHTML(p.nome.charAt(0))+'</div><h2>'+escapeHTML(p.nome)+' <span class="tag">[DEMO]</span></h2><span class="seal demo">'+escapeHTML(rotuloNivel(p.nivel))+'</span><strong>'+escapeHTML(p.oferta)+'</strong><p>'+escapeHTML(p.experiencia)+'</p><p>'+escapeHTML(p.descricao)+'</p><div class="tags">'+p.temas.map(function(t){return '<span class="tag">'+escapeHTML(t)+'</span>';}).join("")+'</div><button type="button" class="secondary denunciar-perfil" data-id="'+escapeHTML(p.id)+'">Simular denúncia</button></article>';}).join("");
-vazio.classList.toggle("hidden",filtrados.length!==0);
-document.querySelectorAll(".denunciar-perfil").forEach(function(b){b.addEventListener("click",function(){document.getElementById("perfil-denuncia").value=b.dataset.id;document.getElementById("denuncia-titulo").scrollIntoView({behavior:"smooth"});});});
-}
-document.getElementById("filtro").addEventListener("input",desenhar);
-document.getElementById("nivel").addEventListener("change",desenhar);
-document.getElementById("cadastro").addEventListener("submit",function(e){
-e.preventDefault();
-var nome=document.getElementById("nome").value.trim(),oferta=document.getElementById("oferta").value,exp=document.getElementById("experiencia").value.trim(),nivel=document.getElementById("nivel-cadastro").value,desc=document.getElementById("descricao").value.trim();
-document.getElementById("previa").innerHTML='<strong>'+escapeHTML(nome)+'</strong> <span class="tag">[PRÉVIA DEMO]</span><p>'+escapeHTML(oferta)+'</p><span class="seal demo">'+escapeHTML(rotuloNivel(nivel))+' — não verificado</span><p>'+escapeHTML(exp||"Experiência não informada")+'</p><p>'+escapeHTML(desc||"Descrição não informada")+'</p><p class="meta">Prévia temporária: não foi publicada nem armazenada.</p>';
-document.getElementById("previa").classList.remove("hidden");
-});
-var sel=document.getElementById("perfil-denuncia");
-sel.innerHTML=exemplos.map(function(p){return '<option value="'+escapeHTML(p.id)+'">'+escapeHTML(p.nome)+' [DEMO]</option>';}).join("");
-document.getElementById("denunciar").addEventListener("click",function(){
-var p=exemplos.find(function(x){return x.id===sel.value;}),motivo=document.getElementById("motivo").value,ret=document.getElementById("retorno-denuncia");
-ret.textContent="SIMULAÇÃO [DEMO]: denúncia sobre "+p.nome+" — motivo: "+motivo+". Nada foi enviado, salvo ou encaminhado.";
-ret.classList.remove("hidden");
-});
-desenhar();
+var MENU=[{href:"index.html",rotulo:"Início"},{href:"saude.html",rotulo:"Saúde"},{href:"rede-mulheres.html",rotulo:"De mulher para mulher"}];
+var atual=(location.pathname.split("/").pop()||"index.html").toLowerCase();
+var alvo=document.querySelector("[data-menu]");
+if(alvo)alvo.innerHTML=MENU.map(function(x){return '<a href="'+x.href+'"'+(x.href===atual?' aria-current="page"':"")+'>'+x.rotulo+'</a>';}).join("");
 })();
-</script>
-<script>
-/* Menu e rodape COMPARTILHADOS: uma unica lista para todas as paginas (antes era copiada a mao em cada HTML).
-   Saude e lazer ficam em primeiro plano; secretarias e paineis de gestao ficam no rodape ("Mais"). */
-(function () {
-  "use strict";
-  var MENU = [
-    { href: "index.html", rotulo: "Início" },
-    { href: "saude.html", rotulo: "Saúde" },
-    { href: "lazer.html", rotulo: "Lazer" },
-    { href: "rede-mulheres.html", rotulo: "De mulher para mulher" },
-    { href: "gestao.html", rotulo: "Gestão", tambem: ["inteligencia-publica.html"] }
-  ];
-  var MAIS = [
-    { href: "secretarias.html", rotulo: "Secretarias e telefones úteis" },
-    { href: "gestao.html", rotulo: "Painel de gestão (protótipo)" },
-    { href: "inteligencia-publica.html", rotulo: "Inteligência pública (protótipo)" }
-  ];
-  var atual = (window.location.pathname.split("/").pop() || "index.html").toLowerCase();
-
-  function ehAtual(item) { return item.href === atual || (item.tambem || []).indexOf(atual) !== -1; }
-
-  var menu = document.querySelector("[data-menu]");
-  if (menu) {
-    menu.innerHTML = MENU.map(function (m) {
-      return '<a href="' + m.href + '"' + (ehAtual(m) ? ' aria-current="page"' : "") + ">" + m.rotulo + "</a>";
-    }).join("");
-  }
-
-  var rodape = document.querySelector("footer.rodape");
-  if (!rodape) { rodape = document.createElement("footer"); rodape.className = "rodape"; document.body.appendChild(rodape); }
-  var mais = document.createElement("nav");
-  mais.className = "rodape-links";
-  mais.setAttribute("aria-label", "Mais páginas");
-  mais.innerHTML = "<strong>Mais:</strong> " + MAIS.map(function (m) {
-    return '<a href="' + m.href + '"' + (m.href === atual ? ' aria-current="page"' : "") + ">" + m.rotulo + "</a>";
-  }).join(" · ");
-  rodape.insertBefore(mais, rodape.firstChild);
-})();
-
 </script>
 </body>
 </html>
