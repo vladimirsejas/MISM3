@@ -62,6 +62,12 @@
       tipos: ["mulher_para_mulher"],
       links: []
     },
+    lazer: {
+      titulo: "Lazer, cultura e esporte",
+      descricao: "Consulte a agenda de atividades e os filtros por dia, categoria e público. Enquanto não houver cadastros reais verificados, exemplos e horários fictícios ficam identificados como [DEMO].",
+      tipos: [],
+      links: []
+    },
     transporte: {
       titulo: "Ônibus e transporte",
       descricao: "Ainda não mostramos horários aqui: eles não foram conferidos. Consulte a fonte oficial do transporte coletivo.",
@@ -129,6 +135,9 @@
     });
     if (chave === "saude") {  /* pagina propria, com dados reais e busca por bairro (nao depende do CEP) */
       html = '<article class="cartao cartao-destaque"><h3><a href="saude.html">Qual é a minha unidade de saúde?</a></h3><p>Digite o seu bairro e veja a UBS de referência, telefones, horários, unidades 24 horas e saúde da mulher.</p><p class="meta">Dados de páginas oficiais, com a data da conferência.</p></article>' + html;
+    }
+    if (chave === "lazer") {
+      html += '<article class="cartao cartao-destaque"><h3><a href="lazer.html">Agenda de lazer, cultura e esporte</a></h3><p>Abra a agenda para filtrar atividades por dia, tipo, gratuidade e público.</p><p class="meta">Horários reais só entram com fonte oficial https e data de conferência; exemplos aparecem com faixa [DEMO].</p></article>';
     }
     var candidatos = dados.servicos ? dados.servicos.filter(function (s) { return c.tipos.indexOf(s.tipo) !== -1; }) : [];
     var encontrados = candidatos.filter(function (s) {

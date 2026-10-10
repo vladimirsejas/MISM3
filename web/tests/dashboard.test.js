@@ -20,6 +20,7 @@ assert(!html.includes('class="outras-areas"'), "outras áreas da plataforma não
 assert(!html.includes('class="acesso-digital" aria-labelledby="titulo-acesso-digital"'), "o aviso de acesso digital não deve ficar no corpo da home");
 assert(html.includes('class="acesso-digital rodape-acesso"'), "o aviso de acesso digital deve ficar no rodapé");
 assert(app.includes('titulo: "Benefícios e assistência social"'), "o painel da categoria também deve usar o novo rótulo");
+assert(app.includes('titulo: "Lazer, cultura e esporte"') && app.includes('href="lazer.html"'), "a categoria lazer deve abrir a agenda própria");
 assert(app.includes("function novosVistos()") && app.includes("vistos.links[chaveLink]"), "busca combinada deve deduplicar links");
 assert(app.includes("vistos.servicos[chaveServico]") && app.includes("blocoCategoria(k, vistos)"), "busca combinada deve deduplicar serviços e compartilhar o estado entre categorias");
 assert(app.includes("Checklist para avaliar uma oportunidade"), "emprego deve exibir o checklist de viabilidade");
