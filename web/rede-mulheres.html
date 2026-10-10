@@ -32,7 +32,7 @@
           <li><a class="tel" href="tel:192" aria-label="Ligar para 192, SAMU">192</a><div><strong>SAMU</strong><span>Urgência médica ou pessoa ferida.</span></div></li>
           <li><a class="tel" href="tel:193" aria-label="Ligar para 193, Bombeiros">193</a><div><strong>Bombeiros</strong><span>Incêndio, resgate ou acidente.</span></div></li>
           <li><a class="tel" href="tel:180" aria-label="Ligar para 180, Central de Atendimento à Mulher">180</a><div><strong>Central de Atendimento à Mulher</strong><span>Violência contra a mulher: orientação, denúncia e encaminhamento. 24 horas, gratuito.</span></div></li>
-          <li><a class="tel" href="tel:100" aria-label="Ligar para 100, Disque Direitos Humanos">100</a><div><strong>Disque Direitos Humanos</strong><span>Violações de direitos de crianças, adolescentes, idosos e outros grupos.</span></div></li>
+          <li><a class="tel" href="tel:100" aria-label="Ligar para 100, Disque Direitos Humanos">100</a><div><strong>Disque Direitos Humanos</strong><span>Violações de direitos humanos, como contra crianças, idosos e pessoas com deficiência. 24 horas, gratuito.</span></div></li>
           <li><a class="tel" href="tel:188" aria-label="Ligar para 188, CVV">188</a><div><strong>CVV — apoio emocional</strong><span>Conversa de apoio em momentos de sofrimento. 24 horas, gratuito.</span></div></li>
         </ul>
         <button id="sair-rapido" class="sair" type="button">Sair desta página agora</button>
@@ -102,7 +102,6 @@
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
   function carregar(url) { return fetch(url, { cache: "no-store" }).then(function (r) { if (!r.ok) throw new Error(url); return r.json(); }); }
   carregar("dados/servicos.json").catch(function () { return carregar("dados/catalogo_manual.json"); }).then(function (sv) {
-    if (sv.meta && sv.meta.demo) throw new Error("demo");
     var lista = sv.servicos.filter(function (s) { return s.tipo === "mulher"; });
     var html = lista.map(function (s) {
       var p = ["<h3>" + esc(s.nome) + "</h3>"];

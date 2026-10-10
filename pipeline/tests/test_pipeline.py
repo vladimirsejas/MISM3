@@ -125,3 +125,65 @@ def test_montar_deduplica():
     m = pd.DataFrame([{"id": "a", "tipo": "mulher", "nome": "X", "fonte_url": "u", "verificado_em": "d"}] * 2)
     out = servicos.montar(INDICE, manuais=m, hoje="2026-10-08")
     assert len(out["servicos"]) == 1
+
+
+def test_catalogo_manual_do_site_tem_fonte_e_nenhum_item_de_exemplo():
+    """web/dados/catalogo_manual.json e o que o site mostra sem o pipeline completo."""
+    import json
+    from pathlib import Path
+    d = json.loads((Path(__file__).resolve().parents[2] / "web" / "dados" / "catalogo_manual.json").read_text(encoding="utf-8"))
+    assert "demo" not in d["meta"]
+    assert d["servicos"], "catalogo vazio"
+    for s in d["servicos"]:
+        assert s["fonte_url"].startswith("http") and s["verificado_em"], s["nome"]
+        assert "[DEMO]" not in s["nome"]
+
+
+def test_manual_nao_conferido_nao_aparece_como_verificado():
+    import pandas as pd
+    from servicos import servicos_manuais
+    df = pd.DataFrame([
+        {"tipo": "assistencia", "nome": "A", "fonte_url": "https://x.gov.br", "verificado_em": "2026-10-10", "conferido": "nao"},
+        {"tipo": "assistencia", "nome": "B", "fonte_url": "https://x.gov.br", "verificado_em": "2026-10-10", "conferido": ""},
+    ])
+    a, b = servicos_manuais(df, {})
+    assert a["conferido"] is False and "não conferida" in a["fonte"]
+    assert b["conferido"] is True and a["fonte"] != b["fonte"]
+
+
+def test_manual_usa_fonte_informada_quando_conferido():
+    import pandas as pd
+    from servicos import servicos_manuais
+    df = pd.DataFrame([{"tipo": "assistencia", "nome": "A", "fonte_url": "https://x.org.br", "verificado_em": "2026-10-10", "fonte": "Site do órgão X"}])
+    assert servicos_manuais(df, {})[0]["fonte"] == "Site do órgão X"
+
+
+def test_manual_repassa_lista_de_bairros():
+    import pandas as pd
+    from servicos import servicos_manuais
+    df = pd.DataFrame([{"tipo": "assistencia", "nome": "CRAS X", "fonte_url": "https://x.gov.br", "verificado_em": "2026-10-10",
+                        "bairros": "Jd. A, Jd. B"}])
+    assert servicos_manuais(df, {})[0]["bairros"] == "Jd. A, Jd. B"
+
+
+def test_manual_repassa_aviso_proprio():
+    import pandas as pd
+    from servicos import servicos_manuais
+    df = pd.DataFrame([{"tipo": "saude", "nome": "X", "fonte_url": "https://x.gov.br", "verificado_em": "2026-10-10", "conferido": "nao", "aviso": "Notícia antiga."}])
+    r = servicos_manuais(df, {})[0]
+    assert r["aviso"] == "Notícia antiga." and r["conferido"] is False
+
+
+def test_unidade_manual_com_codigo_cnes_vence_o_registro_do_cnes():
+    """Sem isso, cada unidade cadastrada à mão apareceria duas vezes ao gerar a base completa."""
+    import pandas as pd
+    from servicos import servicos_manuais, montar
+    manuais = pd.DataFrame([{"tipo": "saude", "nome": "USF X", "fonte_url": "https://x.gov.br", "verificado_em": "2026-10-10", "cnes": "1234567", "telefone": "(19) 3000-0000"}])
+    cnes = [
+        {"id": "cnes-1234567", "tipo": "saude", "subtipo": "ubs", "nome": "UBS X (CNES)"},
+        {"id": "cnes-7654321", "tipo": "saude", "subtipo": "ubs", "nome": "UBS Y (CNES)"},
+    ]
+    saida = montar({}, cnes=cnes, manuais=manuais)
+    nomes = sorted(s["nome"] for s in saida["servicos"])
+    assert nomes == ["UBS Y (CNES)", "USF X"], nomes
+    assert [s for s in saida["servicos"] if s["nome"] == "USF X"][0]["cnes"] == "1234567"

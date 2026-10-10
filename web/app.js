@@ -23,7 +23,21 @@
   function mostrarMensagem(t) { var m = $("mensagem"); m.textContent = t; m.hidden = !t; }
 
   /* ------------------------------------------------------------ cartões */
-  function cartaoServico(s) {
+  /* Normaliza nomes de bairro para comparar: sem acento, minúsculas e abreviações da fonte por extenso. */
+  var ABREV = { jd: "jardim", pq: "parque", res: "residencial", cond: "condominio", conj: "conjunto", hab: "habitacional" };
+  function normBairro(t) {
+    return MISM3Necessidades.normalizar(t).split(" ").map(function (p) { return ABREV[p] || p; }).join(" ");
+  }
+
+  /* Um campo pode ter mais de um número separado por " / ": cada um recebe o seu link (nunca um número emendado). */
+  function linksTelefone(txt) {
+    return String(txt).split(/\s+\/\s+/).map(function (t) {
+      var num = t.replace(/[^\d+]/g, "");
+      return num ? '<a href="tel:' + esc(num) + '">' + esc(t) + "</a>" : esc(t);
+    }).join(" · ");
+  }
+
+  function cartaoServico(s, semFonte) {
     var partes = [];
     var tipoTxt = Acesso.rotuloSubtipo(s.subtipo);
     if (tipoTxt) partes.push('<p class="meta">' + esc(tipoTxt) + "</p>");
@@ -35,12 +49,21 @@
     }
     if (s.endereco) partes.push("<p>" + esc(s.endereco) + "</p>");
     else partes.push('<p class="meta">Endereço não informado na fonte: ligue para confirmar.</p>');
-    if (s.telefone) partes.push('<p>Telefone: <a href="tel:' + esc(String(s.telefone).replace(/[^\d+]/g, "")) + '">' + esc(s.telefone) + "</a></p>");
+    if (s.telefone) partes.push("<p>Telefone: " + linksTelefone(s.telefone) + "</p>");
     if (s.horario) partes.push("<p>Horário: " + esc(s.horario) + "</p>");
     if (s.observacao) partes.push('<p class="meta">' + esc(s.observacao) + "</p>");
+    if (s.bairros) partes.push('<details class="bairros"><summary>Bairros atendidos</summary><p>' + esc(s.bairros) + ".</p></details>");
     var fonte = s.fonte_url ? '<a href="' + esc(s.fonte_url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.fonte) + "</a>" : esc(s.fonte);
-    partes.push('<p class="meta">Fonte: ' + fonte + " · verificado em " + esc(s.verificado_em) + "</p>");
-    return '<article class="cartao"><h3>' + esc(s.nome) + "</h3>" + partes.join("") + "</article>";
+    if (semFonte) {
+      /* a fonte comum aparece uma vez no fim do bloco */
+    } else if (s.conferido === false) {
+      partes.push('<p class="aviso-nao-conferido">' + (s.aviso ? esc(s.aviso) : "<strong>Ainda não conferido na página oficial.</strong> Ligue antes de ir.") + "</p>");
+      partes.push('<p class="meta">Para conferir: ' + fonte + " · informado em " + esc(s.verificado_em) + "</p>");
+    } else {
+      partes.push('<p class="meta">Fonte: ' + fonte + " · verificado em " + esc(s.verificado_em) + "</p>");
+    }
+    var dados_bairros = s.bairros ? ' data-bairros="' + esc(normBairro(s.bairros)) + '"' : "";
+    return '<article class="cartao"' + dados_bairros + '><h3>' + esc(s.nome) + "</h3>" + partes.join("") + "</article>";
   }
 
   function cartaoLink(l) {
@@ -51,52 +74,120 @@
   var CHECKLIST = '<article class="cartao"><h3>Antes de aceitar uma oportunidade</h3><ul><li>O horário e a escala combinam com sua rotina?</li><li>Quanto tempo e dinheiro o deslocamento vai exigir?</li><li>Como ficam os cuidados com crianças ou outros dependentes?</li><li>Salário, contrato, local de trabalho e custos estão claros?</li><li>Desconfie de anúncios que exigem pagamento para participar do processo seletivo.</li></ul><p class="meta">Este roteiro ajuda a avaliar a viabilidade; não substitui a conferência da empresa e da vaga.</p></article>';
 
   /* ------------------------------------------------------------ áreas */
-  function servicosDosTipos(tipos, vistos) {
+  /* Em Assistência Social, CRAS e CREAS vêm antes dos demais serviços. */
+  var ORDEM_SUBTIPO = { cras: 0, creas: 1, conselho_tutelar: 2, sede: 3, scfv: 5 };
+
+  /* Serviços de um bloco: do tipo certo, do subtipo pedido (se houver) e ainda não mostrados em outro bloco. */
+  function servicosDaSecao(sec, vistos) {
     var lista = dados.servicos.filter(function (s) {
-      if (tipos.indexOf(s.tipo) === -1 || vistos[s.id]) return false;
+      if (sec.tipos.indexOf(s.tipo) === -1 || vistos[s.id]) return false;
+      if (sec.subtipos && sec.subtipos.indexOf(s.subtipo) === -1) return false;
       vistos[s.id] = true;
       return true;
     });
-    return lista.sort(function (a, b) { return String(a.nome).localeCompare(String(b.nome), "pt-BR"); });
+    return lista.sort(function (a, b) {
+      var d = (ORDEM_SUBTIPO[a.subtipo] != null ? ORDEM_SUBTIPO[a.subtipo] : 4) - (ORDEM_SUBTIPO[b.subtipo] != null ? ORDEM_SUBTIPO[b.subtipo] : 4);
+      return d || String(a.nome).localeCompare(String(b.nome), "pt-BR");
+    });
+  }
+
+  var BUSCA_BAIRRO = '<div class="busca-area" id="busca-bairro"><label for="bairro">Qual CRAS atende o meu bairro?</label><input id="bairro" type="search" maxlength="60" placeholder="Digite o nome do bairro" autocomplete="off" aria-describedby="ajuda-bairro"><p id="ajuda-bairro" class="privacidade">A busca usa a lista de bairros publicada pela Prefeitura e acontece neste aparelho. Ruas não constam na lista: confirme por telefone.</p><p id="resposta-bairro" class="status" role="status" hidden></p></div>';
+
+  function cartaoCanal(c) {
+    var fonteTxt = c.fonte
+      ? "Fonte: " + (c.fonte[1] ? '<a href="' + esc(c.fonte[1]) + '" target="_blank" rel="noopener noreferrer">' + esc(c.fonte[0]) + "</a>" : esc(c.fonte[0])) + " · " + esc(c.fonte[2]) + "."
+      : "Canal nacional oficial.";
+    return '<article class="cartao"><h3>' + esc(c.nome) + "</h3>" +
+      (c.sem_tel ? "" : '<p><a class="tel-grande" href="tel:' + esc(c.tel) + '">' + esc(c.tel) + "</a></p>") +
+      "<p>" + esc(c.texto) + "</p>" +
+      (c.topicos ? '<details class="detalhes-canal"><summary>Ver quem tem direito, documentos e prazos</summary><dl>' +
+        c.topicos.map(function (t) { return "<dt>" + esc(t[0]) + "</dt><dd>" + esc(t[1]) + "</dd>"; }).join("") + "</dl></details>" : "") +
+      (c.aviso ? '<p class="aviso-nao-conferido">' + esc(c.aviso) + "</p>" : "") +
+      '<p class="meta">' + fonteTxt + "</p></article>";
+  }
+
+  /* Unidades vindas do CNES (sem grupo escrito) caem nos mesmos grupos das cadastradas à mão. */
+  var GRUPO_POR_SUBTIPO = { ubs: "Unidades básicas de saúde (UBS e USF)", urgencia: "Pronto atendimento 24 horas", caps: "Saúde mental (CAPS)",
+    especialidades: "Especialidades, reabilitação e saúde do trabalhador", hospital: "Hospitais e ambulatórios" };
+
+  /* Blocos "agrupar": os serviços ficam em grupos recolhidos (por público), para a página não ficar carregada. */
+  function htmlGrupos(servicos) {
+    var abrir = servicos.length <= 6; /* poucos serviços: já abertos; muitos: recolhidos com contagem */
+    var ordem = [], porGrupo = Object.create(null);
+    servicos.forEach(function (s) {
+      var g = s.grupo || GRUPO_POR_SUBTIPO[s.subtipo] || Acesso.rotuloSubtipo(s.subtipo) || "Outros serviços";
+      if (!porGrupo[g]) { porGrupo[g] = []; ordem.push(g); }
+      porGrupo[g].push(s);
+    });
+    /* Ordem lógica por público; grupos novos (não listados) vão para o fim. */
+    var PREFERIDA = ["Secretaria de Saúde", "Pronto atendimento 24 horas", "Unidades básicas de saúde (UBS e USF)", "Saúde mental (CAPS)", "Especialidades, reabilitação e saúde do trabalhador",
+      "Hospitais e ambulatórios", "Farmácia, exames e transporte",
+      "Crianças e adolescentes", "Adultos (30 a 59 anos)", "Pessoas idosas (65 anos ou mais)", "APAE — pessoas com deficiência"];
+    ordem.sort(function (x, y) {
+      var a = PREFERIDA.indexOf(x), b = PREFERIDA.indexOf(y);
+      return (a === -1 ? 99 : a) - (b === -1 ? 99 : b);
+    });
+    return ordem.map(function (g) {
+      return '<details class="grupo-recolhido"' + (abrir ? " open" : "") + '><summary>' + esc(g) + " <span class=\"contagem\">(" + porGrupo[g].length + ')</span></summary><div class="lista-cartoes">' +
+        porGrupo[g].map(function (s) { return cartaoServico(s, false); }).join("") + "</div></details>";
+    }).join("");
   }
 
   function htmlArea(area) {
     var html = "";
     var vistos = Object.create(null);
     area.secoes.forEach(function (sec, i) {
-      var cartoes = "";
+      var cartoes = "", notaFonte = "";
       if (sec.urgente) {
         cartoes += '<article class="cartao urgente"><h3>Ajuda imediata</h3><p>Perigo imediato: <a class="tel-grande" href="tel:190">190</a> (Polícia)</p><p>Violência contra a mulher: <a class="tel-grande" href="tel:180">180</a> (24 horas, gratuito)</p><p class="meta">Mais contatos no botão “Em perigo agora?”. Não é necessário contar sua história a este sistema.</p></article>';
       }
-      if (i === 0 && area.canais) {
-        area.canais.forEach(function (c) {
-          cartoes += '<article class="cartao"><h3>' + esc(c.nome) + '</h3><p><a class="tel-grande" href="tel:' + esc(c.tel) + '">' + esc(c.tel) + "</a></p><p>" + esc(c.texto) + '</p><p class="meta">Canal nacional oficial.</p></article>';
-        });
-      }
+      (sec.canais || []).forEach(function (c) { cartoes += cartaoCanal(c); });
       if (i === 0 && area.checklist) cartoes += CHECKLIST;
-      var servicos = servicosDosTipos(sec.tipos, vistos);
+      var servicos = servicosDaSecao(sec, vistos);
       var nomes = servicos.map(function (s) { return String(s.nome).toLowerCase(); });
       sec.links.forEach(function (l) { if (nomes.indexOf(l[0].toLowerCase()) === -1) cartoes += cartaoLink(l); });
-      var visiveis = servicos.slice(0, LIMITE_CARTOES);
-      visiveis.forEach(function (s) { cartoes += cartaoServico(s); });
-      html += '<section class="secao"><h2>' + esc(sec.titulo) + '</h2>';
-      if (cartoes) html += '<div class="lista-cartoes">' + cartoes + "</div>";
-      if (servicos.length > visiveis.length) {
-        html += '<p class="mais"><button type="button" class="btn secundario" data-mais="' + i + '">Mostrar todos (' + servicos.length + ")</button></p>";
+      var limitar = !sec.recolhida && !sec.agrupar;
+      var visiveis = limitar ? servicos.slice(0, LIMITE_CARTOES) : servicos;
+      var corpo = "";
+      if (sec.busca === "bairro") corpo += BUSCA_BAIRRO;
+      if (sec.agrupar) {
+        corpo += htmlGrupos(visiveis);
+      } else {
+        /* Se todos os cartões do bloco têm a mesma fonte e data (e estão conferidos), a fonte aparece uma vez no fim. */
+      var comum = !sec.agrupar && visiveis.length >= 3 && visiveis.every(function (s) {
+        return s.conferido !== false && s.fonte === visiveis[0].fonte && s.fonte_url === visiveis[0].fonte_url && s.verificado_em === visiveis[0].verificado_em;
+      });
+      visiveis.forEach(function (s) { cartoes += cartaoServico(s, comum); });
+      if (comum) {
+        notaFonte = '<p class="meta fonte-comum">Fonte de todos os cartões acima: <a href="' + esc(visiveis[0].fonte_url) + '" target="_blank" rel="noopener noreferrer">' + esc(visiveis[0].fonte) + "</a> · verificado em " + esc(visiveis[0].verificado_em) + ".</p>";
       }
-      if (sec.tipos.length && !servicos.length) {
-        html += '<p class="vazio">' + (dados.falhou
+      }
+      if (cartoes) corpo += '<div class="lista-cartoes">' + cartoes + "</div>" + notaFonte;
+      if (servicos.length > visiveis.length) {
+        corpo += '<p class="mais"><button type="button" class="btn secundario" data-mais="' + i + '">Mostrar todos (' + servicos.length + ")</button></p>";
+      }
+      if (sec.tipos.length && !servicos.length && !sec.links.length && !(sec.canais || []).length) {
+        corpo += '<p class="vazio">' + (dados.falhou
           ? "Não foi possível carregar o catálogo de serviços. Abra o sistema pelo procedimento do README."
           : "Nenhum serviço desta categoria está carregado nesta versão. Isso não significa que não exista: significa que ainda não temos o dado.") + "</p>";
+      } else if (sec.tipos.length && !servicos.length && !cartoes && !corpo) {
+        corpo += '<p class="vazio">Nenhum serviço cadastrado neste bloco ainda.</p>';
       }
-      html += "</section>";
+      var total = servicos.length + sec.links.length + (sec.canais || []).length;
+      if (sec.recolhida) {
+        html += '<section class="secao"><details class="secao-recolhida"><summary><h2>' + esc(sec.titulo) + ' <span class="contagem">(' + total + ")</span></h2></summary>" +
+          (sec.descricao ? "<p class=\"meta\">" + esc(sec.descricao) + "</p>" : "") + corpo + "</details></section>";
+      } else {
+        html += '<section class="secao"><h2>' + esc(sec.titulo) + "</h2>" + (sec.descricao ? '<p class="meta">' + esc(sec.descricao) + "</p>" : "") + corpo + "</section>";
+      }
     });
     if (area.avisos && area.avisos.length) {
       html += '<div class="status" role="note"><strong>Importante.</strong> ' + area.avisos.map(esc).join(" ") + "</div>";
     }
-    if (area.pendencias && area.pendencias.length) {
+    var pend = (area.pendencias || []).slice();
+    if (pend.length) {
       html += '<aside class="pendente" aria-label="Ainda não disponível ou não confirmado"><h2>Ainda não disponível ou não confirmado</h2><ul>' +
-        area.pendencias.map(function (p) { return "<li>" + esc(p) + "</li>"; }).join("") + "</ul></aside>";
+        pend.map(function (p) { return "<li>" + esc(p) + "</li>"; }).join("") + "</ul></aside>";
     }
     return html;
   }
@@ -104,8 +195,8 @@
   function mostrarTodos(area, indiceSecao, botao) {
     var vistos = Object.create(null);
     var alvo = [];
-    area.secoes.forEach(function (s, i) {
-      var lista = servicosDosTipos(s.tipos, vistos);
+    area.secoes.forEach(function (sec, i) {
+      var lista = servicosDaSecao(sec, vistos);
       if (i === indiceSecao) alvo = lista;
     });
     var cont = botao.parentNode.previousElementSibling;
@@ -141,6 +232,7 @@
     var temServicos = area.secoes.some(function (s) { return s.tipos.length; });
     $("busca-por-cep").hidden = !(dados.indice && temServicos);
     limparResultadoCep();
+    $("necessidade").value = ""; $("resposta-necessidade").hidden = true;
     document.title = area.nome + " – Mulher em Rede";
   }
 
@@ -175,6 +267,42 @@
   $("inicio").addEventListener("click", function (e) { e.preventDefault(); irPara(""); });
   $("marca").addEventListener("click", function (e) { e.preventDefault(); if (areaAtual) irPara(""); });
 
+  /* ------------------------------------------------------------ "qual CRAS atende o meu bairro?" */
+  document.addEventListener("input", function (e) {
+    if (e.target.id !== "bairro") return;
+    var q = normBairro(e.target.value), r = $("resposta-bairro");
+    var cards = document.querySelectorAll("article[data-bairros]");
+    cards.forEach(function (c) { c.classList.remove("destaque"); });
+    if (q.length < 3) { r.hidden = true; return; }
+    var achados = [];
+    cards.forEach(function (c) {
+      if ((" " + c.getAttribute("data-bairros") + " ").indexOf(" " + q + " ") !== -1 || c.getAttribute("data-bairros").indexOf(q) !== -1) {
+        c.classList.add("destaque"); achados.push(c.querySelector("h3").textContent);
+      }
+    });
+    r.textContent = achados.length
+      ? "Na lista da Prefeitura, este bairro aparece em: " + achados.join("; ") + "." + (achados.length > 1 ? " Aparece em mais de um: ligue para confirmar qual atende a sua rua." : " Os cartões destacados abaixo têm endereço e telefone.")
+      : "Não encontrei esse bairro na lista dos CRAS. Confira a grafia ou ligue para a Secretaria de Desenvolvimento Social, (19) 3522-1930.";
+    r.hidden = false;
+  });
+
+  /* ------------------------------------------------------------ "indicar área" (classificador local) */
+  $("form-necessidade").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var r = $("resposta-necessidade");
+    var texto = $("necessidade").value;
+    if (!texto.trim()) { r.textContent = "Digite o que você precisa, como emprego, creche, aluguel ou separação."; r.hidden = false; return; }
+    var achadas = AREAS.areasDaNecessidade(MISM3Necessidades.identificarCategorias(texto));
+    if (!achadas.length) {
+      r.textContent = "Não reconheci essa necessidade. Volte ao início e escolha uma das áreas.";
+    } else {
+      r.innerHTML = "Veja: " + achadas.map(function (a) {
+        return a === areaAtual ? esc(a.nome) + " (você já está aqui)" : '<a href="#' + esc(a.id) + '">' + esc(a.nome) + "</a>";
+      }).join(" · ");
+    }
+    r.hidden = false;
+  });
+
   /* ------------------------------------------------------------ emergência */
   var emerg = $("emergencia");
   document.addEventListener("keydown", function (e) {
@@ -192,14 +320,17 @@
     function tentar(i) {
       if (i >= tentativas.length) return Promise.reject(new Error("sem catálogo"));
       return carregar(tentativas[i][0]).then(function (sv) {
-        if (sv.meta && sv.meta.demo) throw new Error("dados de demonstração ignorados");
         dados.servicos = sv.servicos; dados.origem = tentativas[i][1]; dados.geradoEm = (sv.meta && sv.meta.gerado_em) || "";
       }).catch(function () { return tentar(i + 1); });
     }
     return tentar(0).catch(function () { dados.falhou = true; }).then(function () {
       return carregar("dados/cep_indice.json").then(function (idx) {
-        if (idx.meta && idx.meta.demo) return;
         dados.indice = idx.ceps;
+        /* Serviço com CEP e sem coordenada é localizado pelo centro do CEP (aproximado), como o pipeline faria. */
+        dados.servicos.forEach(function (s) {
+          var c = s.cep && dados.indice[String(s.cep).replace(/\D/g, "")];
+          if (s.lat == null && c) { s.lat = c[0]; s.lon = c[1]; s.geo = "centroide_cep"; }
+        });
       }).catch(function () { /* sem índice real a busca por CEP simplesmente não é oferecida */ });
     }).then(function () {
       var d = /^(\d{4})-(\d{2})-(\d{2})/.exec(dados.geradoEm);
