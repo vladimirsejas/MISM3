@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="gestao.css">
 </head>
 <body data-visao="publica">
-<div class="faixa-demo" role="note">DADOS FICTÍCIOS — protótipo. Nenhum número deste painel é medição real.</div>
+<div class="faixa-demo" role="note">PAINEL CONCEITUAL · DADOS SIMULADOS</div>
 
 <nav class="navegacao-principal" aria-label="Navegação principal">
   <a class="marca-site" href="index.html"><strong>MISM3</strong><span>Mapa do Cuidado</span></a>
@@ -23,15 +23,15 @@
 <header class="topo">
   
   <h1>Painel de Gestão</h1>
-  <p class="sub">O que as mulheres de Rio Claro procuram, onde a rede responde e onde ainda não chega. Só números agregados: nenhuma busca ou pessoa é identificada.</p>
+  <p class="sub">Visão de planejamento da rede de cuidado. Os indicadores exibidos nesta tela são simulados.</p>
 
   <div class="visao" role="group" aria-label="Visão demonstrativa do painel">
-    <span class="visao-rotulo">Demonstração</span>
+    <span class="visao-rotulo">Visualização</span>
     <button type="button" data-visao="publica" aria-pressed="true">Visão pública</button>
     <button type="button" data-visao="gestao" aria-pressed="false">Visão de gestão</button>
   </div>
   <p id="aviso-visao" class="meta"></p>
-  <p class="aviso-prototipo"><strong>Importante:</strong> as duas visões são demonstrativas e os números são fictícios. Este seletor não é autenticação nem controle de acesso. Não usar para dados reais ou pessoais.</p>
+  <p class="aviso-prototipo"><strong>Dados simulados.</strong> Este painel é conceitual e não deve orientar decisões reais. O seletor de visão não controla acesso.</p>
 </header>
 
 <main>
@@ -39,21 +39,21 @@
 
   <section id="sec-acoes" class="cartao-viz painel-largo" data-somente-gestao aria-labelledby="t-acoes">
     <h2 id="t-acoes">Decisões possíveis e próximos passos</h2>
-    <p class="sub">O painel não deve parar no indicador. Cada cartão separa sinal, ação a validar, responsável sugerido e forma de acompanhar.</p>
-    <p class="aviso-prototipo">Cenários fictícios para demonstrar o método — não são diagnósticos nem recomendações reais para Rio Claro.</p>
+    <p class="sub">Cada cartão organiza um possível sinal, uma ação a validar e uma forma de acompanhamento.</p>
+    
     <div id="acoes-gestao" class="lista-acoes" aria-live="polite"></div>
   </section>
 
   <section class="cartao-viz" aria-labelledby="t-nec">
     <h2 id="t-nec">O que as pessoas procuram</h2>
-    <p class="sub">Distribuição fictícia por categoria principal. Na utilização real, uma busca pode envolver mais de uma necessidade.</p>
+    <p class="sub">Distribuição simulada por categoria. Uma busca pode envolver mais de uma necessidade.</p>
     <div id="g-necessidades"></div>
     <div id="t-necessidades"></div>
   </section>
 
   <section class="cartao-viz" aria-labelledby="t-mes">
     <h2 id="t-mes">Buscas por mês</h2>
-    <p class="sub">Picos em janeiro e agosto (volta às aulas e ao trabalho), no cenário fictício.</p>
+    <p class="sub">Série mensal simulada para ilustrar a leitura de variações ao longo do ano.</p>
     <div id="g-meses"></div>
     <div id="t-meses"></div>
   </section>
@@ -74,7 +74,7 @@
 
   <section class="cartao-viz painel-largo" aria-labelledby="t-mapa">
     <h2 id="t-mapa">Crianças de 0 a 4 anos por setor censitário</h2>
-    <p class="sub">Valores fictícios sobre a malha real de 408 setores de Rio Claro. Os círculos são serviços de exemplo. <strong>Perto de um serviço não prova que há vaga</strong>: o mapa serve para escolher onde investigar, não para concluir.</p>
+    <p class="sub">Valores simulados sobre a malha geográfica de Rio Claro. Os marcadores são ilustrativos; proximidade não confirma vaga ou atendimento disponível.</p>
     <div id="mapa-gestao" role="img" aria-label="Mapa de setores censitários coloridos pela quantidade fictícia de crianças de 0 a 4 anos"></div>
     <div id="legenda-mapa" class="legenda-mapa"></div>
     <div id="t-mapa-tab" data-somente-gestao></div>
@@ -95,7 +95,7 @@
 </main>
 
 <footer class="rodape">
-  <p><strong>Como ler este painel.</strong> Todos os números são fictícios e foram gerados por <code>pipeline/gerar_demo_gestao.py</code> com semente fixa. A malha geográfica é usada apenas como geometria; os valores de crianças por setor são inventados. A regra de ocultar contagens pequenas é uma demonstração e não substitui uma avaliação de risco de reidentificação.</p>
+  <p><strong>Nota metodológica.</strong> Os indicadores são simulados e gerados por <code>pipeline/gerar_demo_gestao.py</code>. A malha geográfica é real, mas os valores associados aos setores não são dados observados.</p>
   <p><strong>Limite de acesso:</strong> este é um protótipo estático. Alternar a visão não protege conteúdo; qualquer dado real de gestão exigiria autenticação e autorização no servidor, além de controle de acesso aos arquivos e à API.</p>
   <p id="fonte-gestao"></p>
 </footer>
