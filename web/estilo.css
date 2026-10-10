@@ -207,3 +207,39 @@ details.outros > summary { display: flex; align-items: center; min-height: 44px;
   .grade-outras-areas { grid-template-columns: 1fr; }
 }
 @media (max-width: 360px) { .bloco-portas .grade-portas { grid-template-columns: 1fr; } }
+
+
+/* ---------- De mulher para mulher: diretório por área de serviço ---------- */
+.rede-mulheres { display: grid; gap: 1.4rem; }
+.nota-rede { max-width: 75ch; padding: .75rem 1rem; border-left: 4px solid var(--pri); background: var(--soft); }
+.campo-rede { display: block; margin: 1rem 0 .3rem; font-weight: 650; }
+#busca-rede { width: 100%; min-height: 46px; padding: .65rem .8rem; border: 1px solid var(--bor); border-radius: var(--radius); background: var(--surface); }
+.grade-areas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .75rem; }
+.area-rede { display: flex; flex-direction: column; align-items: flex-start; gap: .45rem; min-width: 0; min-height: 150px; padding: 1rem; border: 1px solid var(--bor); border-radius: var(--radius); background: var(--surface); color: inherit; text-align: left; }
+.area-rede:hover, .area-rede:focus-visible, .area-rede.selecionada { border-color: var(--pri); background: var(--soft); }
+.icone-area { display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 50%; background: var(--soft); color: var(--pri); font-size: 1.25rem; font-weight: 700; }
+.area-rede strong { color: var(--pri); line-height: 1.3; }
+.exemplos-area { color: var(--mut); font-size: .9rem; line-height: 1.4; }
+.contagem-area { margin-top: auto; color: var(--mut); font-size: .82rem; font-weight: 650; }
+.resultado-rede { padding-top: .5rem; scroll-margin-top: 1rem; }
+.cuidado-area { margin: .7rem 0; padding: .8rem 1rem; border-left: 4px solid var(--pri); background: var(--soft); }
+.cartoes-rede { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem; }
+.cartao-rede-servico { min-width: 0; padding: 1rem; border: 1px solid var(--bor); border-radius: var(--radius); background: var(--surface); }
+.cartao-rede-servico h3 { margin: 0 0 .25rem; font-size: 1.08rem; }
+.cartao-rede-servico p { margin: .35rem 0; overflow-wrap: anywhere; }
+.nome-profissional { color: var(--mut); font-size: .9rem; }
+.selo-verificacao { padding-top: .55rem; border-top: 1px dashed var(--bor); color: var(--mut); font-size: .82rem; }
+.botao-ligar { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; margin-top: .4rem; padding: .45rem .9rem; border: 1px solid var(--pri); border-radius: var(--radius); background: var(--pri); color: #fff; font-weight: 650; text-decoration: none; }
+.botao-ligar:hover { background: var(--surface); color: var(--pri); }
+.botao-ligar:disabled { background: var(--soft); color: var(--mut); border-color: var(--bor); cursor: not-allowed; }
+.orientacao-rede { padding: 1rem 0; border-top: 1px solid var(--bor); }
+.orientacao-rede h2 { margin-top: 0; }
+.orientacao-rede li { margin: .45rem 0; }
+@media (max-width: 760px) {
+  .grade-areas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cartoes-rede { grid-template-columns: 1fr; }
+}
+@media (max-width: 390px) {
+  .grade-areas { grid-template-columns: 1fr; }
+  .area-rede { min-height: 0; }
+}

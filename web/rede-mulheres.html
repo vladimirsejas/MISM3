@@ -4,101 +4,193 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="referrer" content="no-referrer">
-<title>De Mulher para Mulher — MISM3</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%2314375e%27/%3E%3Ctext x=%2716%27 y=%2722%27 font-family=%27Arial,sans-serif%27 font-size=%2714%27 font-weight=%27bold%27 text-anchor=%27middle%27 fill=%27white%27%3EM3%3C/text%3E%3C/svg%3E">
+<title>De mulher para mulher — MISM3</title>
 <link rel="stylesheet" href="estilo.css">
 <link rel="stylesheet" href="paginas.css">
 </head>
 <body class="pagina">
 <div class="faixa-institucional"><strong>Protótipo acadêmico</strong> · Fatec Rio Claro · Curso de Inteligência Artificial · não é um serviço oficial da Prefeitura</div>
-<div class="faixa-demo" role="note">Perfis, selos e denúncias desta página são fictícios e servem apenas para demonstração.</div>
+<div id="faixa-demo" class="faixa-demo" role="note" hidden><strong>[DEMO]</strong> Os cartões e contatos abaixo são fictícios. Não ligue para números de demonstração. Cadastros reais só aparecem depois da verificação prevista no projeto.</div>
 
 <nav class="navegacao-principal" aria-label="Navegação principal">
   <a class="marca-site" href="index.html"><span class="marca-selo" aria-hidden="true">M3</span><span class="marca-texto"><strong>MISM3</strong><span>Mapa do Cuidado · Rio Claro/SP</span></span></a>
   <div class="links-navegacao" data-menu><a href="index.html">Início</a></div>
 </nav>
+
 <header class="topo">
-<p class="breadcrumb"><a href="index.html">Início</a> › De mulher para mulher</p>
-<h1>De Mulher para Mulher</h1>
-<p>Uma ideia de rede para compartilhar experiências, indicar oportunidades e encontrar apoio entre mulheres.</p>
-<p class="note">Esta tela demonstra uma possível experiência de navegação. Não existe cadastro real, verificação de identidade, publicação ou envio de denúncias. Os selos são exemplos visuais, não atestados de confiança.</p>
-<div class="tools">
-<input id="filtro" type="search" maxlength="60" placeholder="Buscar por habilidade, serviço ou tema" aria-label="Buscar perfis">
-<select id="nivel" aria-label="Filtrar por selo">
-<option value="todos">Todos os níveis demonstrativos</option>
-<option value="1">Nível 1 — perfil preenchido</option>
-<option value="2">Nível 2 — experiência demonstrada</option>
-<option value="3">Nível 3 — referência comunitária</option>
-</select>
-</div>
+  <p class="breadcrumb"><a href="index.html">Início</a> › De mulher para mulher</p>
+  <h1>De mulher para mulher</h1>
+  <p>Encontre serviços oferecidos por mulheres, organizados pela área de serviço — não por ranking ou popularidade de profissionais.</p>
+  <p class="nota-rede">A verificação é responsabilidade da Secretaria Municipal da Mulher ou do órgão oficial que ela designar. O MISM3 não garante a qualidade do serviço nem a segurança de um encontro.</p>
+  <label class="campo-rede" for="busca-rede">Buscar serviço, descrição ou bairro</label>
+  <input id="busca-rede" type="search" maxlength="80" placeholder="Ex.: costura, reforço escolar, Centro">
+  <p id="status-rede" class="meta" role="status" aria-live="polite">Carregando áreas e cadastros…</p>
 </header>
-<main>
-<section aria-labelledby="perfis-titulo">
-<h2 id="perfis-titulo">Perfis de exemplo</h2>
-<div id="perfis" class="grid" aria-live="polite"></div>
-<p id="vazio" class="empty hidden">Nenhum perfil de demonstração corresponde a essa busca.</p>
-</section>
-<section class="panel" aria-labelledby="cadastro-titulo">
-<h2 id="cadastro-titulo">Experimentar um cadastro</h2>
-<p>Preencha dados fictícios para ver como um perfil poderia aparecer. Nada será enviado ou guardado.</p>
-<form id="cadastro">
-<div class="formgrid">
-<label class="field">Nome fictício<input id="nome" maxlength="40" required placeholder="Ex.: Joana Exemplo"></label>
-<label class="field">O que oferece?<select id="oferta"><option>Mentoria profissional</option><option>Costura e reparos</option><option>Apoio para currículo</option><option>Cuidados e rede de apoio</option><option>Artesanato</option></select></label>
-<label class="field">Experiência resumida<input id="experiencia" maxlength="100" placeholder="Ex.: experiência em atendimento"></label>
-<label class="field">Nível de demonstração<select id="nivel-cadastro"><option value="1">Nível 1 — perfil preenchido</option><option value="2">Nível 2 — experiência demonstrada</option><option value="3">Nível 3 — referência comunitária</option></select></label>
-<label class="field full">Descrição fictícia<textarea id="descricao" maxlength="220" placeholder="Descreva o serviço de exemplo, sem dados pessoais reais."></textarea></label>
-</div>
-<p><button type="submit">Gerar prévia fictícia</button></p>
-<div id="previa" class="preview hidden" aria-live="polite"></div>
-</form>
-</section>
-<section class="panel" aria-labelledby="denuncia-titulo">
-<h2 id="denuncia-titulo">Simular denúncia de perfil</h2>
-<p>Esta interação mostra como o protótipo poderia confirmar uma denúncia. Ela não é enviada a ninguém e não fica registrada.</p>
-<label class="field">Perfil de exemplo<select id="perfil-denuncia"></select></label>
-<label class="field" style="margin-top:.7rem">Motivo demonstrativo<select id="motivo"><option>Informação possivelmente falsa</option><option>Comportamento inadequado</option><option>Oferta suspeita</option><option>Outro motivo</option></select></label>
-<p><button id="denunciar" type="button" class="secondary">Simular denúncia</button></p>
-<div id="retorno-denuncia" class="status hidden" role="status"></div>
-</section>
+
+<main class="rede-mulheres">
+  <section aria-labelledby="titulo-areas">
+    <h2 id="titulo-areas">Escolha uma área de serviço</h2>
+    <p class="sub">A quantidade mostra os cadastros vigentes carregados nesta tela. Se uma área estiver vazia, isso não significa que não existam profissionais na cidade.</p>
+    <div id="grade-areas" class="grade-areas" aria-live="polite"></div>
+  </section>
+
+  <section id="resultado-area" class="resultado-rede" aria-labelledby="titulo-resultado-area" hidden>
+    <button id="limpar-area" class="voltar" type="button">← Todas as áreas</button>
+    <h2 id="titulo-resultado-area"></h2>
+    <p id="exemplos-area" class="meta"></p>
+    <div id="cuidado-area" class="cuidado-area" hidden></div>
+    <div id="cartoes-servicos" class="cartoes-rede" aria-live="polite"></div>
+    <p id="vazio-area" class="empty" hidden>Nenhum cadastro vigente corresponde a esta área e busca. Consulte novamente mais tarde ou procure os canais oficiais da Secretaria da Mulher.</p>
+  </section>
+
+  <section class="orientacao-rede" aria-labelledby="como-entrar">
+    <h2 id="como-entrar">Como entrar na rede</h2>
+    <ol>
+      <li>Procure a Secretaria Municipal da Mulher pelos canais oficiais publicados pela Prefeitura e manifeste interesse em participar.</li>
+      <li>O fluxo previsto exige consentimento e conferência pela Secretaria: o que foi conferido, por quem e em qual data.</li>
+      <li>Depois da verificação, o projeto publica apenas o nome profissional, a descrição do serviço, o bairro/região e o contato de trabalho autorizado.</li>
+      <li>O cadastro precisa ser renovado no prazo previsto e pode ser retirado a pedido da profissional.</li>
+    </ol>
+    <p>Esta página não recebe inscrições, não envia formulários e não guarda dados pessoais. A presença de exemplos [DEMO] não significa que exista cadastro real ativo.</p>
+  </section>
+
+  <section class="orientacao-rede" aria-labelledby="como-denunciar">
+    <h2 id="como-denunciar">Como denunciar</h2>
+    <p>Se encontrar informação suspeita ou quiser pedir a retirada de um cadastro, encaminhe a solicitação à Secretaria Municipal da Mulher pelos canais oficiais publicados pela Prefeitura. O fluxo descrito no projeto prevê análise humana e solicitação de remoção em até <strong>2 dias úteis</strong>.</p>
+    <p>Esta página não recebe nem encaminha denúncias. Não inventamos um telefone, endereço ou formulário de denúncia. Em caso de risco imediato, ligue 190; para orientação sobre violência contra a mulher, Ligue 180.</p>
+    <p class="meta">Regras, responsabilidades e limites: <a href="../docs/de_mulher_para_mulher.md">documento do projeto</a>.</p>
+  </section>
 </main>
-<footer class="rodape"><p class="foot">Decisão para uma versão futura: definir critérios claros, evidências necessárias, revisão humana, recurso contra decisões e proteção contra denúncias abusivas. Nenhum nível deve ser apresentado como “identidade verificada” enquanto não houver um processo real de verificação.</p></footer>
+
+<footer class="rodape">
+  <p class="foot">A verificação confirma somente os itens informados no selo. Não é garantia de qualidade, identidade além do que foi conferido ou segurança absoluta. Combine os detalhes do serviço com cuidado e desconfie de pedidos de pagamento antecipado suspeitos.</p>
+</footer>
+
+<script src="institucional.js"></script>
 <script>
-(function(){
-"use strict";
-var exemplos=[
-{id:"p1",nome:"Ana Exemplo",oferta:"Mentoria profissional",experiencia:"10 anos em atendimento e organização",nivel:2,descricao:"Ajuda fictícia para revisar currículo e preparar entrevistas.",temas:["trabalho","currículo","mentoria"]},
-{id:"p2",nome:"Bia Demonstração",oferta:"Costura e reparos",experiencia:"Costura criativa e pequenos consertos",nivel:1,descricao:"Exemplo de serviço local oferecido por uma empreendedora.",temas:["costura","empreendedorismo"]},
-{id:"p3",nome:"Cris Modelo",oferta:"Apoio para currículo",experiencia:"Voluntariado fictício em orientação profissional",nivel:3,descricao:"Perfil de exemplo para demonstrar uma referência comunitária.",temas:["trabalho","currículo","apoio"]},
-{id:"p4",nome:"Dani Exemplo",oferta:"Artesanato",experiencia:"Peças artesanais e encomendas fictícias",nivel:1,descricao:"Exemplo de troca de experiências entre mulheres.",temas:["artesanato","renda"]},
-{id:"p5",nome:"Eva Demonstração",oferta:"Cuidados e rede de apoio",experiencia:"Organização comunitária fictícia",nivel:2,descricao:"Exemplo de apoio mútuo e compartilhamento de informações.",temas:["apoio","rede","família"]}
-];
-var perfis=document.getElementById("perfis"),vazio=document.getElementById("vazio");
-function escapeHTML(s){return String(s||"").replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
-function rotuloNivel(n){return {"1":"Nível 1 — perfil preenchido","2":"Nível 2 — experiência demonstrada","3":"Nível 3 — referência comunitária"}[n]||"Nível demonstrativo";}
-function desenhar(){
-var q=document.getElementById("filtro").value.trim().toLocaleLowerCase("pt-BR"),n=document.getElementById("nivel").value;
-var filtrados=exemplos.filter(function(p){var texto=[p.nome,p.oferta,p.experiencia,p.descricao].concat(p.temas).join(" ").toLocaleLowerCase("pt-BR");return (!q||texto.indexOf(q)!==-1)&&(n==="todos"||String(p.nivel)===n);});
-perfis.innerHTML=filtrados.map(function(p){return '<article class="card"><div class="avatar" aria-hidden="true">'+escapeHTML(p.nome.charAt(0))+'</div><h2>'+escapeHTML(p.nome)+' <span class="tag">[DEMO]</span></h2><span class="seal demo">'+escapeHTML(rotuloNivel(p.nivel))+'</span><strong>'+escapeHTML(p.oferta)+'</strong><p>'+escapeHTML(p.experiencia)+'</p><p>'+escapeHTML(p.descricao)+'</p><div class="tags">'+p.temas.map(function(t){return '<span class="tag">'+escapeHTML(t)+'</span>';}).join("")+'</div><button type="button" class="secondary denunciar-perfil" data-id="'+escapeHTML(p.id)+'">Simular denúncia</button></article>';}).join("");
-vazio.classList.toggle("hidden",filtrados.length!==0);
-document.querySelectorAll(".denunciar-perfil").forEach(function(b){b.addEventListener("click",function(){document.getElementById("perfil-denuncia").value=b.dataset.id;document.getElementById("denuncia-titulo").scrollIntoView({behavior:"smooth"});});});
-}
-document.getElementById("filtro").addEventListener("input",desenhar);
-document.getElementById("nivel").addEventListener("change",desenhar);
-document.getElementById("cadastro").addEventListener("submit",function(e){
-e.preventDefault();
-var nome=document.getElementById("nome").value.trim(),oferta=document.getElementById("oferta").value,exp=document.getElementById("experiencia").value.trim(),nivel=document.getElementById("nivel-cadastro").value,desc=document.getElementById("descricao").value.trim();
-document.getElementById("previa").innerHTML='<strong>'+escapeHTML(nome)+'</strong> <span class="tag">[PRÉVIA DEMO]</span><p>'+escapeHTML(oferta)+'</p><span class="seal demo">'+escapeHTML(rotuloNivel(nivel))+' — não verificado</span><p>'+escapeHTML(exp||"Experiência não informada")+'</p><p>'+escapeHTML(desc||"Descrição não informada")+'</p><p class="meta">Prévia temporária: não foi publicada nem armazenada.</p>';
-document.getElementById("previa").classList.remove("hidden");
-});
-var sel=document.getElementById("perfil-denuncia");
-sel.innerHTML=exemplos.map(function(p){return '<option value="'+escapeHTML(p.id)+'">'+escapeHTML(p.nome)+' [DEMO]</option>';}).join("");
-document.getElementById("denunciar").addEventListener("click",function(){
-var p=exemplos.find(function(x){return x.id===sel.value;}),motivo=document.getElementById("motivo").value,ret=document.getElementById("retorno-denuncia");
-ret.textContent="SIMULAÇÃO [DEMO]: denúncia sobre "+p.nome+" — motivo: "+motivo+". Nada foi enviado, salvo ou encaminhado.";
-ret.classList.remove("hidden");
-});
-desenhar();
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var areas = [], cadastros = [], areaAtual = "", modoDemo = false;
+  var icones = {
+    costura_artesanato: "✂", beleza: "✦", alimentacao: "♨", cuidadoras: "♡",
+    limpeza: "⌂", reparos: "⚒", aulas: "▤", saude_bem_estar: "+",
+    negocios: "▧", transporte: "↗"
+  };
+  function esc(valor) {
+    return String(valor == null ? "" : valor).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function hojeISO() {
+    var d = new Date();
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  }
+  function json(url) {
+    return fetch(url).then(function (r) {
+      if (!r.ok) throw new Error("Não foi possível carregar " + url);
+      return r.json();
+    });
+  }
+  function onde(c) {
+    return Institucional.ONDE_ATENDE[c.onde_atende] || "Local de atendimento a combinar";
+  }
+  function telefones(c) {
+    var bruto = String(c.telefone || "");
+    var numeros = Institucional.telefones(bruto);
+    if (numeros.length) return numeros[0].href;
+    var limpo = bruto.replace(/[^+\d]/g, "");
+    return /^\+?\d{10,13}$/.test(limpo) ? "tel:" + limpo : "";
+  }
+  function carregarServicos() {
+    return json("dados/servicos.json").then(function (d) {
+      var lista = Array.isArray(d) ? d : (d.servicos || []);
+      var reais = lista.filter(function (c) { return c.tipo === "mulher_para_mulher"; });
+      if (reais.length) return { lista: reais, demo: !!(d.meta && d.meta.demo) };
+      return json("dados/demo/servicos.json").then(function (demo) {
+        return { lista: demo.servicos || [], demo: true };
+      });
+    }).catch(function () {
+      return json("dados/demo/servicos.json").then(function (demo) {
+        return { lista: demo.servicos || [], demo: true };
+      });
+    });
+  }
+  function servicosDaArea(chave) {
+    var vigentes = Institucional.cadastrosVigentes(cadastros, hojeISO());
+    return Institucional.filtrarCadastros(vigentes, { area: chave, texto: $("busca-rede").value });
+  }
+  function desenharAreas() {
+    var contagens = Institucional.contarPorArea(Institucional.cadastrosVigentes(cadastros, hojeISO()));
+    $("grade-areas").innerHTML = areas.map(function (a) {
+      var quantidade = contagens[a.chave] || 0;
+      return '<button type="button" class="area-rede' + (a.chave === areaAtual ? ' selecionada' : '') +
+        '" data-area="' + esc(a.chave) + '" aria-pressed="' + (a.chave === areaAtual ? "true" : "false") + '">' +
+        '<span class="icone-area" aria-hidden="true">' + esc(icones[a.chave] || "•") + '</span>' +
+        '<strong>' + esc(a.rotulo) + '</strong><span class="exemplos-area">' + esc(a.exemplos) + '</span>' +
+        '<span class="contagem-area">' + quantidade + (quantidade === 1 ? " cadastro vigente" : " cadastros vigentes") + '</span></button>';
+    }).join("");
+    $("grade-areas").querySelectorAll("[data-area]").forEach(function (botao) {
+      botao.addEventListener("click", function () { abrirArea(botao.getAttribute("data-area")); });
+    });
+  }
+  function cartao(c) {
+    var nome = c.nome || "Nome profissional não informado";
+    var servico = c.descricao || nome;
+    var tel = modoDemo || /^\[DEMO\]/i.test(nome) ? "" : telefones(c);
+    var selo = c.verificacao || ("Verificação não informada no cadastro");
+    return '<article class="cartao-rede-servico">' +
+      '<h3>' + esc(servico) + '</h3>' +
+      '<p class="nome-profissional">' + esc(nome) + '</p>' +
+      (c.bairro ? '<p><strong>Bairro/região:</strong> ' + esc(c.bairro) + '</p>' : '') +
+      '<p><strong>Onde atende:</strong> ' + esc(onde(c)) + '</p>' +
+      '<p class="selo-verificacao">' + esc(selo) + '</p>' +
+      (tel ? '<a class="botao-ligar" href="' + esc(tel) + '">Ligar</a>' :
+        '<button class="botao-ligar" type="button" disabled>' + (modoDemo ? "Ligar [DEMO — indisponível]" : "Contato não disponível") + '</button>') +
+      '</article>';
+  }
+  function abrirArea(chave) {
+    areaAtual = chave;
+    var area = areas.filter(function (a) { return a.chave === chave; })[0];
+    if (!area) return;
+    $("resultado-area").hidden = false;
+    $("titulo-resultado-area").textContent = area.rotulo;
+    $("exemplos-area").textContent = area.exemplos;
+    $("cuidado-area").hidden = !area.alto_risco || !area.cuidado;
+    $("cuidado-area").textContent = area.alto_risco ? area.cuidado : "";
+    desenharAreas();
+    desenharCartoes();
+    $("resultado-area").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  function desenharCartoes() {
+    if (!areaAtual) return;
+    var lista = servicosDaArea(areaAtual);
+    $("cartoes-servicos").innerHTML = lista.map(cartao).join("");
+    $("vazio-area").hidden = lista.length > 0;
+  }
+  $("limpar-area").addEventListener("click", function () {
+    areaAtual = "";
+    $("resultado-area").hidden = true;
+    desenharAreas();
+    $("titulo-areas").scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+  $("busca-rede").addEventListener("input", function () {
+    if (areaAtual) desenharCartoes();
+  });
+  Promise.all([json("dados/areas_mulheres.json"), carregarServicos()]).then(function (resultados) {
+    areas = resultados[0].areas || [];
+    cadastros = resultados[1].lista.filter(function (c) { return c.tipo === "mulher_para_mulher"; });
+    modoDemo = resultados[1].demo || cadastros.some(function (c) { return /^\[DEMO\]/i.test(c.nome || "") || /^demo-/i.test(c.id || ""); });
+    $("faixa-demo").hidden = !modoDemo;
+    desenharAreas();
+    $("status-rede").textContent = modoDemo ?
+      "Modo demonstração: " + cadastros.length + " exemplos fictícios distribuídos nas áreas." :
+      cadastros.length + " cadastro(s) vigente(s) carregado(s). A verificação é responsabilidade da Secretaria da Mulher.";
+    if (!cadastros.length) $("status-rede").textContent = "Ainda não há cadastro real publicado. As áreas permanecem disponíveis para consulta.";
+  }).catch(function () {
+    $("status-rede").textContent = "Não foi possível carregar os dados. Tente abrir o site por abrir_site.bat.";
+    $("grade-areas").innerHTML = '<p role="alert">Dados indisponíveis. Nenhum cadastro foi inventado.</p>';
+  });
 })();
 </script>
 <script src="nav.js"></script>
