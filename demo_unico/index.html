@@ -784,6 +784,10 @@ main { padding-bottom: 2.5rem; }
 .secao-sub { max-width: 70ch; margin: 0 0 1rem; color: var(--mut); }
 .portas { margin: 0 0 1.5rem; }
 .grade-portas { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .8rem; margin: 1rem 0; }
+.porta-social { background:#f8eff5; border:2px solid #b99aaa; border-top:4px solid #94798a; }
+.porta-social strong { color:#352b32; }
+.porta-social small { color:#51434b; }
+.porta-social .icone { color:#765d70; }
 .porta { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: .35rem; min-width: 0; min-height: 138px; padding: 1rem; border: 1px solid var(--bor); border-top: 3px solid var(--pri); border-radius: var(--radius); background: var(--surface); color: var(--fg); text-align: left; box-shadow: var(--shadow); transition: border-color .15s, box-shadow .15s, transform .15s; }
 .porta:hover, .porta:focus-visible { border-color: var(--pri-2); border-top-color: var(--pri-2); box-shadow: 0 4px 14px rgba(20, 40, 70, .12); transform: translateY(-1px); }
 .porta .icone { width: 1.7rem; height: 1.7rem; margin-bottom: .2rem; color: var(--pri-2); }
@@ -942,7 +946,7 @@ details.outros > summary { display: flex; align-items: center; min-height: 44px;
         <div class="grade-portas">
           <button class="porta" type="button" data-categoria="emprego_curso"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg><strong>Trabalho, cursos e renda</strong><small>Emprego, qualificação e oportunidades</small></button>
           <button class="porta" type="button" data-categoria="estudo"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9l9-5 9 5-9 5-9-5z"/><path d="M7 11.5V16c0 1 2.2 2.5 5 2.5s5-1.5 5-2.5v-4.5"/></svg><strong>Educação, filhos e família</strong><small>Escola, creche e apoio familiar</small></button>
-          <a class="porta" href="#assistencia-social"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-8-4.4-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6.6-8 11-8 11z"/><path d="M8 12h8M12 8v8"/></svg><strong>Assistência social</strong><small>CRAS, CREAS, Fundo Social e apoio nas unidades de saúde</small></a>
+          <a class="porta porta-social" href="#assistencia-social" aria-label="Assistência social: CRAS, CREAS, Conselho Tutelar, Disque 100 e Fundo Social"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-8-4.4-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6.6-8 11-8 11z"/><path d="M8 12h8M12 8v8"/></svg><strong>Assistência social</strong><small>CRAS, CREAS, Fundo Social e apoio nas unidades de saúde</small></a>
         </div>
       </section>
       <section class="bloco-portas" aria-labelledby="titulo-cuidado">
