@@ -316,14 +316,24 @@
 
   /* ------------------------------------------------------------ dados */
   function iniciar() {
-    var tentativas = [["dados/servicos.json", "Base completa (pipeline)"], ["dados/catalogo_manual.json", "Catálogo verificado manualmente"]];
-    function tentar(i) {
-      if (i >= tentativas.length) return Promise.reject(new Error("sem catálogo"));
-      return carregar(tentativas[i][0]).then(function (sv) {
-        dados.servicos = sv.servicos; dados.origem = tentativas[i][1]; dados.geradoEm = (sv.meta && sv.meta.gerado_em) || "";
-      }).catch(function () { return tentar(i + 1); });
-    }
-    return tentar(0).catch(function () { dados.falhou = true; }).then(function () {
+    /* O catálogo verificado (catalogo_manual.json, versionado) vale SEMPRE. O servicos.json gerado pelo pipeline é opcional
+       e só acrescenta o que não está no catálogo (CNES, Censo Escolar). Assim um servicos.json antigo nunca esconde
+       cadastros novos, e uma unidade cadastrada à mão com o código CNES não aparece duas vezes. */
+    function opcional(url) { return carregar(url).catch(function () { return null; }); }
+    return Promise.all([opcional("dados/catalogo_manual.json"), opcional("dados/servicos.json")]).then(function (r) {
+      var manual = (r[0] && r[0].servicos) || [], pipeline = (r[1] && r[1].servicos) || [];
+      var idsManuais = Object.create(null), codigosManuais = Object.create(null);
+      manual.forEach(function (s) { idsManuais[s.id] = true; if (s.cnes) codigosManuais[String(s.cnes)] = true; });
+      var acrescimos = pipeline.filter(function (s) {
+        var id = String(s.id || "");
+        return !idsManuais[id] && !(/^cnes-/.test(id) && codigosManuais[id.slice(5)]);
+      });
+      dados.servicos = manual.concat(acrescimos);
+      dados.falhou = !r[0] && !r[1];
+      dados.origem = r[1] ? "Catálogo verificado e base do pipeline" : "Catálogo verificado manualmente";
+      var datas = [r[0], r[1]].map(function (x) { return (x && x.meta && x.meta.gerado_em) || ""; }).sort();
+      dados.geradoEm = datas[datas.length - 1];
+    }).catch(function () { dados.falhou = true; }).then(function () {
       return carregar("dados/cep_indice.json").then(function (idx) {
         dados.indice = idx.ceps;
         /* Serviço com CEP e sem coordenada é localizado pelo centro do CEP (aproximado), como o pipeline faria. */

@@ -202,3 +202,8 @@ Ao concluir mudanças relevantes, registrar o que foi alterado, o teste executad
 
 ### Proteção contra envio acidental de bancos de dados — 10/10/2026
 - O mantenedor mantém, fora deste repositório, bancos de dados de um projeto anterior (`escudo_feminino*.db`) e cópias de segurança. **Nenhum deles foi aberto ou lido pela sessão.** Como esse tipo de arquivo pode conter dados pessoais, o `.gitignore` passou a bloquear `.env`, `*.db`, `*.sqlite`, `*.sqlite3`, `*.backup` e `*.bak`, com teste automático.
+
+### Correção: servicos.json antigo escondia CRAS e CREAS — 10/10/2026
+- **Defeito:** o site usava o `servicos.json` (gerado pelo pipeline) **no lugar** do `catalogo_manual.json`. Um `servicos.json` gerado antes da atualização do catálogo fazia o site mostrar 0 CRAS e 0 CREAS. Reproduzido em navegador antes da correção.
+- **Correção:** o catálogo verificado agora é carregado sempre; o `servicos.json` só **acrescenta** o que não está nele (CNES e Censo Escolar), descartando registros `cnes-<código>` de unidades já cadastradas à mão. Teste novo com um `servicos.json` antigo simulado; a bateria passou a recriar as pastas de teste a partir do código atual a cada execução.
+- Consequência para quem edita o CSV: rodar `python pipeline/servicos.py --somente-manual` para atualizar o catálogo versionado.
