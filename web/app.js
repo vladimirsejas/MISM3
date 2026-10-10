@@ -293,7 +293,6 @@
     }).catch(function () {
       dados.indice = {};
       dados.servicos = [];
-      dados.demo = false;
       mostrarMensagem("O catálogo de serviços ou o índice de CEPs reais não está disponível nesta execução. A busca por categorias e os links oficiais continuam disponíveis; a busca por proximidade fica indisponível até carregar os dados reais.");
       $("contagem") && ($("contagem").textContent = "Busca por CEP indisponível: índice real não carregado.");
     });
