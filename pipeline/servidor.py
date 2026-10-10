@@ -51,7 +51,10 @@ def carregar_env(arquivo: Path | None = None) -> list[str]:
     carregadas: list[str] = []
     if not arquivo.is_file():
         return carregadas
-    for linha in arquivo.read_text(encoding="utf-8").splitlines():
+    bruto = arquivo.read_bytes()
+    # Windows/PowerShell costuma gravar com BOM ou em UTF-16; sem isto o nome da primeira chave sairia errado
+    texto = bruto.decode("utf-16") if bruto[:2] in (b"\xff\xfe", b"\xfe\xff") else bruto.decode("utf-8-sig", errors="replace")
+    for linha in texto.splitlines():
         linha = linha.strip()
         if not linha or linha.startswith("#") or "=" not in linha:
             continue

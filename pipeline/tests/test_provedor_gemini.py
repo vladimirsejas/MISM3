@@ -111,3 +111,16 @@ def test_provedor_sem_chave_fica_desligado_com_aviso(monkeypatch, capsys):
     assert servidor.provedor_se_pronto(None) is None
     um_sem_pronto = NS(NOME="x")   # provedor sem a funcao pronto(): continua ligado (compatibilidade)
     assert servidor.provedor_se_pronto(um_sem_pronto) is um_sem_pronto
+
+
+@pytest.mark.parametrize("codificacao", ["utf-8", "utf-8-sig", "utf-16"])
+def test_env_gravado_no_windows_tambem_e_lido(tmp_path, monkeypatch, codificacao):
+    """PowerShell/Bloco de Notas gravam com BOM ou UTF-16: o nome da primeira chave nao pode sair corrompido."""
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    monkeypatch.delenv("MISM3_PROVEDOR", raising=False)
+    env = tmp_path / ".env"
+    env.write_bytes("GEMINI_API_KEY=abc123\r\nMISM3_PROVEDOR=gemini\r\n".encode(codificacao))
+    assert sorted(servidor.carregar_env(env)) == ["GEMINI_API_KEY", "MISM3_PROVEDOR"]
+    assert os.environ["GEMINI_API_KEY"] == "abc123"          # sem \r nem BOM grudados
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    monkeypatch.delenv("MISM3_PROVEDOR", raising=False)
