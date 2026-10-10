@@ -34,25 +34,45 @@
       <p id="ajuda-necessidade" class="privacidade">Não escreva nomes, documentos ou detalhes pessoais. O texto não é enviado a nenhum servidor.</p>
       <p id="mensagem-necessidade" class="mensagem" role="status" hidden></p>
     </form>
-    <div class="grade-portas">
-      <button class="porta" type="button" data-categoria="emprego_curso"><span aria-hidden="true">💼</span><strong>Emprego</strong><small>Vagas, renda e cursos</small></button>
-      <button class="porta" type="button" data-categoria="saude"><span aria-hidden="true">＋</span><strong>Saúde</strong><small>Atendimento e cuidado</small></button>
-      <button class="porta" type="button" data-categoria="estudo"><span aria-hidden="true">📚</span><strong>Estudo</strong><small>Escolas e qualificação</small></button>
-      <button class="porta" type="button" data-categoria="filhos"><span aria-hidden="true">👨‍👩‍👧</span><strong>Filhos</strong><small>Creche, escola e apoio</small></button>
-      <button class="porta" type="button" data-categoria="casamento"><span aria-hidden="true">⚖</span><strong>Casamento e direitos</strong><small>Orientação e apoio</small></button>
-      <button class="porta" type="button" data-categoria="violencia"><span aria-hidden="true">🛡</span><strong>Violência</strong><small>Proteção e ajuda</small></button>
-      <button class="porta" type="button" data-categoria="familia"><span aria-hidden="true">🏠</span><strong>Família</strong><small>Assistência e serviços</small></button>
+    <div class="blocos-portas">
+      <section class="bloco-portas" aria-labelledby="titulo-renda">
+        <h3 id="titulo-renda">Trabalho e desenvolvimento</h3>
+        <div class="grade-portas">
+          <button class="porta" type="button" data-categoria="emprego_curso"><span aria-hidden="true">💼</span><strong>Emprego e renda</strong><small>Vagas, cursos e caminhos para trabalhar</small></button>
+          <button class="porta" type="button" data-categoria="estudo"><span aria-hidden="true">📚</span><strong>Estudo e qualificação</strong><small>Escolas, formação e cursos</small></button>
+        </div>
+      </section>
+      <section class="bloco-portas" aria-labelledby="titulo-cuidado">
+        <h3 id="titulo-cuidado">Saúde e rede de cuidado</h3>
+        <div class="grade-portas">
+          <button class="porta" type="button" data-categoria="saude"><span aria-hidden="true">＋</span><strong>Saúde</strong><small>Atendimento e cuidado</small></button>
+          <button class="porta" type="button" data-categoria="filhos"><span aria-hidden="true">👨‍👩‍👧</span><strong>Filhos</strong><small>Creche, escola e apoio</small></button>
+          <button class="porta" type="button" data-categoria="familia"><span aria-hidden="true">🏠</span><strong>Família e assistência</strong><small>Benefícios e serviços de apoio</small></button>
+        </div>
+      </section>
+      <section class="bloco-portas" aria-labelledby="titulo-direitos">
+        <h3 id="titulo-direitos">Direitos e proteção</h3>
+        <div class="grade-portas">
+          <button class="porta" type="button" data-categoria="casamento"><span aria-hidden="true">⚖</span><strong>Separação e direitos</strong><small>Orientação jurídica e familiar</small></button>
+          <button class="porta" type="button" data-categoria="violencia"><span aria-hidden="true">🛡</span><strong>Violência e proteção</strong><small>Ajuda segura e canais oficiais</small></button>
+        </div>
+      </section>
     </div>
-    <article class="cartao" style="margin-top:1rem">
-      <h3>De Mulher para Mulher <span class="meta">[DEMO]</span></h3>
-      <p>Explore perfis fictícios, níveis demonstrativos e simulações de cadastro e denúncia.</p>
-      <p><a href="rede-mulheres.html">Abrir protótipo da rede entre mulheres</a></p>
-    </article>
-    <article class="cartao" style="margin-top:1rem">
-      <h3>Inteligência Pública <span class="meta">[DEMO]</span></h3>
-      <p>Painel conceitual para comparar territórios e acompanhar a proveniência dos dados.</p>
-      <p><a href="inteligencia-publica.html">Abrir painel conceitual</a></p>
-    </article>
+    <section class="outras-areas" aria-labelledby="titulo-outras-areas">
+      <h3 id="titulo-outras-areas">Outras áreas da plataforma</h3>
+      <div class="grade-outras-areas">
+        <article class="cartao">
+          <h4>De Mulher para Mulher <span class="meta">[DEMO]</span></h4>
+          <p>Protótipo de diretório e rede de apoio entre mulheres. Os perfis e selos são fictícios; não há cadastro nem verificação real.</p>
+          <p><a href="rede-mulheres.html">Explorar o protótipo</a></p>
+        </article>
+        <article class="cartao">
+          <h4>Inteligência Pública <span class="meta">[DEMO]</span></h4>
+          <p>Painel separado para gestores: dados territoriais, qualidade das fontes e exemplos de análise. Gráficos ilustrativos não são estatísticas oficiais.</p>
+          <p><a href="inteligencia-publica.html">Abrir painel de gestão</a></p>
+        </article>
+      </div>
+    </section>
   </section>
 
   <section id="painel-categoria" class="painel-categoria" hidden aria-live="polite">
