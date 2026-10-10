@@ -4,107 +4,46 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="referrer" content="no-referrer">
-<title>Painel de Gestão – Mapa do Cuidado</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%2314375e%27/%3E%3Ctext x=%2716%27 y=%2722%27 font-family=%27Arial,sans-serif%27 font-size=%2714%27 font-weight=%27bold%27 text-anchor=%27middle%27 fill=%27white%27%3EM3%3C/text%3E%3C/svg%3E">
-<link rel="stylesheet" href="vendor/leaflet.css">
+<title>Dados de gestão — MISM3</title>
 <link rel="stylesheet" href="estilo.css">
-<link rel="stylesheet" href="gestao.css">
+<link rel="stylesheet" href="paginas.css">
 </head>
-<body data-visao="publica">
-<div class="faixa-institucional"><strong>Protótipo acadêmico</strong> · Fatec Rio Claro · Curso de Inteligência Artificial · não é um serviço oficial da Prefeitura</div>
-<div id="faixa-demo" class="faixa-demo" role="note" hidden>Painel conceitual: os indicadores exibidos são simulados e não devem orientar decisões reais.</div>
-
+<body class="pagina">
+<div class="faixa-institucional"><strong>Projeto acadêmico</strong> · FATEC Rio Claro · Inteligência Artificial · não é serviço oficial da Prefeitura</div>
 <nav class="navegacao-principal" aria-label="Navegação principal">
   <a class="marca-site" href="index.html"><span class="marca-selo" aria-hidden="true">M3</span><span class="marca-texto"><strong>MISM3</strong><span>Mapa do Cuidado · Rio Claro/SP</span></span></a>
   <div class="links-navegacao" data-menu><a href="index.html">Início</a></div>
 </nav>
-
 <header class="topo">
-  
-  <h1>Painel de Gestão</h1>
-  <p class="sub">Visão de planejamento da rede de cuidado. Os indicadores exibidos nesta tela são simulados.</p>
-
-  <div class="visao" role="group" aria-label="Visão demonstrativa do painel">
-    <span class="visao-rotulo">Visualização</span>
-    <button type="button" data-visao="publica" aria-pressed="true">Visão pública</button>
-    <button type="button" data-visao="gestao" aria-pressed="false">Visão de gestão</button>
-  </div>
-  <p id="aviso-visao" class="meta"></p>
-  <p class="aviso-prototipo"><strong>Dados simulados.</strong> Este painel é conceitual e não deve orientar decisões reais. O seletor de visão não controla acesso.</p>
+  <p class="breadcrumb"><a href="index.html">Início</a> › Gestão</p>
+  <h1>Dados para gestão</h1>
+  <p class="muted">Este painel só deve exibir indicadores medidos. Os gráficos de buscas, funil de atendimento e demanda por região não estão disponíveis porque o MISM3 não coleta nem armazena esses eventos.</p>
 </header>
-
 <main>
-  <section id="kpis" aria-label="Resumo" class="painel-largo"></section>
-
-  <section id="sec-acoes" class="cartao-viz painel-largo" data-somente-gestao aria-labelledby="t-acoes">
-    <h2 id="t-acoes">Decisões possíveis e próximos passos</h2>
-    <p class="sub">Cada cartão organiza um possível sinal, uma ação a validar e uma forma de acompanhamento.</p>
-    
-    <div id="acoes-gestao" class="lista-acoes" aria-live="polite"></div>
+  <section class="panel">
+    <h2>Estado atual</h2>
+    <div class="callout">
+      <strong>Não há série real de demanda para apresentar.</strong>
+      <p>O MISM3 processa a busca por necessidade no navegador e não grava o que cada pessoa procura. Por isso, não existem contagens reais de buscas, conversões, inscrições, encaminhamentos ou resultados de atendimento.</p>
+      <p>Não serão mostrados gráficos simulados como se fossem dados de Rio Claro.</p>
+    </div>
   </section>
-
-  <section class="cartao-viz" aria-labelledby="t-nec">
-    <h2 id="t-nec">O que as pessoas procuram</h2>
-    <p class="sub">Distribuição simulada por categoria. Uma busca pode envolver mais de uma necessidade.</p>
-    <div id="g-necessidades"></div>
-    <div id="t-necessidades"></div>
+  <section class="panel">
+    <h2>Dados reais disponíveis neste projeto</h2>
+    <p>O catálogo institucional contém registros de unidades de saúde e links oficiais, com fontes e datas. Ele descreve o catálogo publicado, não a demanda nem a capacidade de atendimento.</p>
+    <p><a href="inteligencia-publica.html">Abrir painel de dados confirmados</a> · <a href="saude.html">Consultar unidades de saúde</a> · <a href="secretarias.html">Consultar secretarias e canais oficiais</a></p>
   </section>
-
-  <section class="cartao-viz" aria-labelledby="t-mes">
-    <h2 id="t-mes">Buscas por mês</h2>
-    <p class="sub"><span data-demo>Série mensal simulada para ilustrar a leitura de variações ao longo do ano.</span><span data-real>Série mensal das buscas por necessidade.</span></p>
-    <div id="g-meses"></div>
-    <div id="t-meses"></div>
-  </section>
-
-  <section id="sec-funil" class="cartao-viz" aria-labelledby="t-funil">
-    <h2 id="t-funil">Do interesse ao resultado</h2>
-    <p class="sub">Entre quem procurou trabalho ou curso: quantos se inscreveram, participaram, concluíram e chegaram a uma nova oportunidade. Mede o resultado da política, não só o volume.</p>
-    <div id="g-funil"></div>
-    <div id="t-funil-tab"></div>
-  </section>
-
-  <section class="cartao-viz" data-somente-gestao aria-labelledby="t-reg">
-    <h2 id="t-reg">Demanda e oferta por região</h2>
-    <p class="sub">Interessadas em oportunidades de trabalho e curso e vagas disponíveis. Demanda muito acima da oferta justifica abrir turmas; vagas ociosas sugerem problema de divulgação.</p>
-    <div id="g-regioes"></div>
-    <div id="t-regioes"></div>
-  </section>
-
-  <section class="cartao-viz painel-largo" aria-labelledby="t-mapa">
-    <h2 id="t-mapa">Crianças de 0 a 4 anos por setor censitário</h2>
-    <p class="sub">Crianças de 0 a 4 anos por setor censitário de Rio Claro. <span data-demo>Os valores são simulados e os marcadores são ilustrativos.</span> <strong>Proximidade não confirma vaga ou atendimento disponível</strong>: o mapa serve para escolher onde investigar, não para concluir.</p>
-    <div id="mapa-gestao" role="img" aria-label="Mapa de setores censitários coloridos pela quantidade de crianças de 0 a 4 anos"></div>
-    <div id="legenda-mapa" class="legenda-mapa"></div>
-    <div id="t-mapa-tab" data-somente-gestao></div>
-  </section>
-
-  <section class="cartao-viz painel-largo" aria-labelledby="t-cat">
-    <h2 id="t-cat">Qualidade do catálogo</h2>
-    <p class="sub">Calculada agora a partir dos serviços carregados no site: quanto de cada informação está preenchida. Falta de dado não é falta de serviço.</p>
-    <div id="g-catalogo"></div>
-  </section>
-
-  <section id="sec-sem" class="cartao-viz" data-somente-gestao aria-labelledby="t-sem">
-    <h2 id="t-sem">Buscas sem resultado: onde o catálogo ainda não responde</h2>
-    <p class="sub">Principais temas das buscas que não encontraram nada. É a lista de trabalho para ampliar o catálogo.</p>
-    <div id="g-sem"></div>
-    <div id="t-sem-tab"></div>
+  <section class="panel">
+    <h2>O que precisa existir antes de criar indicadores de gestão</h2>
+    <ul>
+      <li>Definição explícita do indicador, da fonte, do período e da população coberta.</li>
+      <li>Coleta autorizada e transparente, com minimização de dados e proteção de privacidade.</li>
+      <li>Dados de oferta e capacidade de atendimento, não apenas listas de endereços.</li>
+      <li>Validação dos cálculos e das limitações antes de usar o painel para tomar decisões.</li>
+    </ul>
   </section>
 </main>
-
-<footer class="rodape">
-  <p><strong>Nota metodológica.</strong> <span data-demo>Os indicadores são simulados e gerados por <code>pipeline/gerar_demo_gestao.py</code> (semente fixa). A malha geográfica é real, mas os valores associados aos setores não são dados observados.</span><span data-real>Os números vêm da fonte indicada abaixo.</span> Contagens abaixo de 5 são ocultadas ("menos de 5"), para que um número pequeno nunca identifique alguém. A <em>visão pública</em> mostra totais; a <em>visão de gestão</em> acrescenta o detalhe por região e as buscas sem resultado.</p>
-  <p><strong>Limite de acesso:</strong> este é um protótipo estático. Alternar a visão não protege conteúdo; qualquer dado real de gestão exigiria autenticação e autorização no servidor, além de controle de acesso aos arquivos e à API.</p>
-  <p id="fonte-gestao"></p>
-</footer>
-
-<div id="dica" class="dica" role="tooltip" hidden></div>
-<script src="config.js"></script>
-<script src="api.js"></script>
-<script src="vendor/leaflet.js"></script>
-<script src="acesso.js"></script>
-<script src="gestao.js"></script>
+<footer class="rodape"><p>Não há autenticação de gestão implementada nesta versão. Nenhum dado pessoal ou indicador restrito é exibido nesta página.</p></footer>
 <script src="nav.js"></script>
 </body>
 </html>

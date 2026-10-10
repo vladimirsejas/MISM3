@@ -18,6 +18,8 @@ const FRASES = [
   ["violência", ["violencia"]], ["violencia", ["violencia"]], ["VIOLÊNCIA", ["violencia"]],
   ["Saúde", ["saude"]], ["família", ["familia"]], ["emprego", ["emprego"]], ["estudo", ["estudo"]],
   ["filhos", ["filhos"]], ["casamento", ["casamento"]], ["ônibus", ["transporte"]],
+  ["quero opções de lazer", ["lazer"]], ["atividades culturais", ["lazer"]], ["quero praticar esporte", ["lazer"]],
+  ["o que fazer no fim de semana", ["lazer"]], ["qual horário do ônibus", ["transporte"]],
   // violencia dita de forma indireta
   ["ele me bate", ["violencia"]], ["fui agredida", ["violencia"]], ["ele me ameaça", ["violencia"]],
   ["tenho medo dele", ["violencia"]], ["sofro violência em casa", ["violencia"]], ["meu ex me persegue", ["violencia"]],
@@ -96,6 +98,9 @@ assert.deepStrictEqual(ids("estou grávida"), ["saude"]);   // gestante e saude,
 /* ---- Contrato de cada necessidade ---- */
 assert(N.porId("violencia").urgente && /180/.test(N.porId("violencia").aviso) && /190/.test(N.porId("violencia").aviso));
 assert.deepStrictEqual(N.porId("transporte").tipos, []);              // transporte nao inventa horario
+assert(N.porId("lazer") && N.porId("lazer").tipos.length === 0, "lazer deve abrir a agenda própria, sem inventar serviços no mapa");
+assert(N.porId("lazer").palavras.every(p => !p.includes("horario")), "horário continua sendo palavra da necessidade transporte");
+assert(N.porId("transporte").palavras.includes("horario*"), "horário permanece na necessidade transporte");
 assert(N.porId("transporte").links[0].url.startsWith("https://"));
 assert.strictEqual(N.porId("inexistente"), null);
 

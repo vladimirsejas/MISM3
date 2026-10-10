@@ -3,7 +3,7 @@
   "use strict";
   var I = Institucional;
   var $ = function (id) { return document.getElementById(id); };
-  var itens = [], canais = [], demo = false;
+  var itens = [], canais = [];
   var hoje = I.chaveDoDia(new Date());
   var filtro = { dia: "", gratuito: false, publico: "", categoria: "", fimDeSemana: false };
 
@@ -26,12 +26,12 @@
     if (i.publico && i.publico !== "todas") selos.push('<span class="selo-tipo">' + esc(I.PUBLICOS[i.publico]) + "</span>");
     var fonte = i.fonte_url
       ? '<p class="meta fonte">Fonte: <a href="' + esc(i.fonte_url) + '" target="_blank" rel="noopener noreferrer">página oficial</a> · conferido em ' + esc(I.dataBR(i.verificado_em)) + "</p>"
-      : '<p class="meta fonte">Exemplo fictício, sem fonte.</p>';
+      : '<p class="meta fonte">Fonte oficial ainda não cadastrada.</p>';
     return '<article class="cartao atividade"><p class="hora">' + esc(i.horario) + "</p><h3>" + esc(i.nome) + "</h3>" +
       (i.local ? '<p class="meta">' + esc(i.local) + "</p>" : "") +
       (compacto ? "" : '<p class="meta">' + esc(I.rotuloDias(i.dias)) + " · " + esc(I.LAZER_CATEGORIAS[i.categoria] || "") + "</p>") +
       (selos.length ? '<div class="selos">' + selos.join("") + "</div>" : "") +
-      (i.observacao && !demo ? "<p>" + esc(i.observacao) + "</p>" : "") + fonte + "</article>";
+      (i.observacao ? "<p>" + esc(i.observacao) + "</p>" : "") + fonte + "</article>";
   }
 
   function desenhar() {
@@ -46,7 +46,7 @@
     }).join("");
 
     var lista = aplicar();
-    $("contagem").textContent = lista.length + (lista.length === 1 ? " atividade" : " atividades") + (demo ? " (exemplos fictícios)" : "");
+    $("contagem").textContent = lista.length + (lista.length === 1 ? " atividade" : " atividades");
 
     var semana = I.agendaSemanal(lista);
     $("agenda").innerHTML = semana.map(function (d) {
@@ -84,16 +84,14 @@
   $("sair-rapido").addEventListener("click", function () { window.location.replace("https://www.google.com.br/"); });
 
   Api.json("dados/institucional.json").then(function (d) {
-    canais = d.canais || []; itens = d.lazer || [];
-    if (itens.length) return d;
-    /* agenda real vazia: mostra o exemplo fictício, sempre sinalizado */
-    return Api.json("dados/demo/lazer.json").then(function (x) { itens = x.lazer || []; demo = true; return d; });
-  }).then(function (d) {
-    $("faixa-demo").hidden = !demo;
+    canais = d.canais || [];
+    itens = (d.lazer || []).filter(function (i) { return i.fonte_url && /^https:\/\//.test(i.fonte_url) && i.verificado_em; });
     $("categoria").innerHTML = '<option value="">Todas</option>' + Object.keys(I.LAZER_CATEGORIAS).map(function (k) { return '<option value="' + esc(k) + '">' + esc(I.LAZER_CATEGORIAS[k]) + "</option>"; }).join("");
     desenhar(); desenharFontes();
-    $("fontes").textContent = "Cadastro gerado em " + I.dataBR(d.meta && d.meta.gerado_em) + ".";
+    $("fontes").textContent = "Catálogo atualizado em " + I.dataBR(d.meta && d.meta.gerado_em) + ".";
+    if (!itens.length) $("contagem").textContent = "Nenhuma atividade com fonte oficial e data de conferência está cadastrada. Consulte os canais oficiais abaixo.";
   }).catch(function () {
-    $("contagem").textContent = "Não foi possível carregar a agenda. Abra o site pelo arquivo abrir_site.bat (veja o README).";
+    $("contagem").textContent = "Não foi possível carregar o catálogo oficial de lazer. Nenhuma atividade fictícia foi exibida.";
+    $("agenda").innerHTML = '<p class="mensagem">Agenda indisponível nesta execução. Consulte os canais oficiais abaixo.</p>';
   });
 })();

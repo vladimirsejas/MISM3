@@ -2,7 +2,7 @@
 
 > **Orientação:** este README é somente um mapa resumido do trabalho, não uma fonte de verdade nem uma base para decisões. Antes de decidir ou afirmar que algo existe, confira o código, os testes executados, os dados/fontes originais e o [registro de decisões de desenvolvimento](docs/registro_decisoes_desenvolvimento.md).
 
-Comece escrevendo uma necessidade ou escolhendo uma porta: **Emprego, Saúde, Estudo, Filhos, Casamento e direitos, Violência ou Família**. A busca por palavras é processada localmente no navegador e abre caminhos, links oficiais e serviços cadastrados em Rio Claro/SP. Também é possível buscar serviços próximos pelo CEP; o CEP **nunca sai do navegador**. O catálogo está em expansão e informa quando faltam dados.
+Comece escrevendo uma necessidade ou escolhendo uma porta: **Emprego, Saúde, Educação, Filhos e cuidado, Benefícios e assistência social, Lazer, cultura e esporte, Direitos e separação, Proteção e violência, Moradia ou Dívidas e aposentadoria**. A busca por palavras é processada localmente no navegador e abre caminhos, links oficiais e serviços cadastrados em Rio Claro/SP. Também é possível buscar serviços próximos pelo CEP; o CEP **nunca sai do navegador**. O catálogo está em expansão e informa quando faltam dados.
 
 ## Privacidade (por desenho)
 - Consulta 100% no navegador; sem servidor próprio, sem cookies, sem localStorage, sem estatísticas.
@@ -16,9 +16,15 @@ Dê dois cliques em **`abrir_site.bat`** (Windows). Ele acha o Python, atualiza 
 **Existe um único `.bat`: `abrir_site.bat`.** Ele serve o site e a API juntos e lê o `.env` sozinho (pesquisa real só se você configurar a chave). Outras tarefas são comandos, não arquivos soltos:
 
 - Montar os dados reais de CEP e serviços (quando você tiver as fontes): `python pipeline/montar_dados.py`
-- Ver o protótipo **sem Python e sem servidor**: abra `demo_unico/index.html` no navegador (depois de mudar `web/`, rode `python pipeline/gerar_demo_unico.py`).
+- Para consultar a versão funcional com os dados locais, use `abrir_site.bat`.
 
-Manualmente: `python pipeline/institucional.py` e `python pipeline/servidor.py`, ou `python -m http.server 8000 --directory web`, e abra http://localhost:8000. A faixa **DADOS ILUSTRATIVOS** da tela inicial (busca por CEP e mapa) só some quando existirem `cep_indice.json` e `servicos.json` reais; as páginas **Saúde** e **Secretarias** já usam dados reais e dizem isso na tela. CEPs de teste do modo demonstração: 00000-001, 00000-002 ou 00000-003.
+Manualmente: `python pipeline/institucional.py` e `python pipeline/servidor.py`, ou `python -m http.server 8000 --directory web`, e abra http://localhost:8000. A busca por CEP só funciona quando `cep_indice.json` e `servicos.json` reais estiverem disponíveis. Se esses arquivos não existirem, a interface informa a indisponibilidade; não há substituição por registros fictícios.
+
+## Navegação única e Lazer, cultura e esporte
+- `web/nav.js` é a fonte única do menu e do rodapé compartilhados. As páginas carregam esse script em vez de copiar links de navegação em cada HTML. **Saúde e Lazer** ficam no menu principal; Secretarias e os painéis conceituais ficam no rodapé, em **Mais**.
+- `web/lazer.html` oferece uma agenda semanal com filtros por dia, categoria, gratuidade e público. A página usa `web/dados/institucional.json`, gerado por `python pipeline/institucional.py` a partir de `catalogo/lazer.csv`.
+- `catalogo/lazer.csv` está vazio enquanto não houver programação confirmada. A agenda fica vazia e aponta para os canais oficiais; não exibe exemplos nem horários fictícios. Cada atividade precisa de fonte oficial `https` e data de conferência.
+- Na home, o atalho **“Qual é a minha unidade de saúde?”** leva diretamente a `web/saude.html`. A busca reconhece lazer sem reutilizar a palavra “horário”, que continua associada à necessidade de transporte.
 
 ## Saúde por bairro e secretarias (dados reais, sem CEP)
 - `web/saude.html` — "Qual é a minha unidade de saúde?": o bairro digitado é comparado **no navegador** com a área de abrangência de cada UBS (guia da Fundação de Saúde). Mostra a UBS de referência, as unidades que ficam no bairro, urgências 24 horas, saúde da mulher e todas as unidades, com botão de ligar, horário, fonte e data. Quando as duas fontes oficiais **divergem** (ex.: telefone da UBS Vila Cristina), mostra as duas versões e pede confirmação, em vez de escolher uma.
@@ -40,7 +46,7 @@ O CNES é a base completa baixada à mão do site do CNES e descompactada em `do
     pip install pyshp
     python pipeline/setores.py caminho/SP_setores_CD2022.zip   # malha de setores de Rio Claro
 
-Se um download automático falhar (os sites mudam), o script diz onde baixar à mão e em qual pasta colocar. Quando os dois JSON existirem, a faixa de demonstração some sozinha.
+Se um download automático falhar (os sites mudam), o script diz onde baixar à mão e em qual pasta colocar. Sem os arquivos reais, a busca por proximidade informa que está indisponível e não mostra dados fictícios.
 
 ## Testes
 
@@ -64,18 +70,17 @@ Edite `catalogo/servicos_manuais.csv`. Obrigatórios: `tipo` (creche, saude, ass
 Na tela inicial a pessoa toca numa "porta" (Emprego, Saúde, Estudo, Filhos, Casamento e direitos, Violência, Família) ou **escreve uma frase** ("preciso de emprego, mas tenho uma criança pequena"). A frase pode ter até 3 necessidades: o site mostra "Entendemos que você procura: [Emprego ✕] [Filhos ✕]" e a pessoa tira o que não serve. A regra está em `web/necessidades.js` e compara **palavras inteiras, radicais e expressões** (não pedaços de palavra, por isso "divagar" não vira "vaga"); palavras amplas como "dinheiro" e "bolsa" só valem dentro de expressões. "Violência" sempre vem primeiro e também é reconhecida de forma indireta ("ele me bate", "não deixa eu sair"). A lista de **47 frases de aceitação** em `web/tests/necessidades.test.js` é o roteiro da apresentação: para ensinar uma frase nova, acrescente-a lá primeiro. O texto digitado não sai do navegador.
 
 ## De mulher para mulher
-Área para mulheres que oferecem serviços a outras mulheres. **Quem verifica é a Secretaria da Mulher**: o site não tem como garantir que só mulheres participam, então só publica cadastros já conferidos por ela (o que foi conferido, por quem e quando). `catalogo/mulher_para_mulher.csv` está vazio e a porta só aparece quando há cadastro válido; no modo demonstração aparecem dois exemplos marcados [DEMO]. O validador exige consentimento, só bairro (nunca endereço) e validade de até 180 dias. Papéis, fluxo, limites e roteiro para a banca em `docs/de_mulher_para_mulher.md`. Não prometemos segurança, não há pagamento nem notas.
+Área para mulheres que oferecem serviços a outras mulheres. **Quem verifica é a Secretaria da Mulher**: o site não tem como garantir que só mulheres participam, então só publica cadastros já conferidos por ela (o que foi conferido, por quem e quando). `catalogo/mulher_para_mulher.csv` está vazio e a porta só aparece quando há cadastro válido; não são exibidos perfis fictícios. O validador exige consentimento, só bairro (nunca endereço) e validade de até 180 dias. Papéis, fluxo, limites e roteiro para a banca em `docs/de_mulher_para_mulher.md`. Não prometemos segurança, não há pagamento nem notas.
 
 ## Dados e pesquisas reais (API)
 O MISM3 é funcional com ou sem usuárias: o site tem uma **camada de dados plugável** (`web/api.js`). Sem servidor, lê os arquivos de `web/dados/`; com o servidor (`abrir_site.bat` ou `python pipeline/servidor.py`) fala com a API e, se ela falhar, volta para os arquivos. Para **pesquisas reais**: o `provedor_gemini.py` usa o **Google Gemini com Pesquisa Google, a mesma API do MISM2** (coloque `GEMINI_API_KEY` e `MISM3_PROVEDOR=gemini` num `.env`, que o git ignora), e só aproveita o que tem fonte. Ou escreva o seu em `provedor_pesquisa.py` (modelo: `provedor_pesquisa.exemplo.py`). A chave nunca vai ao navegador. Frases sobre violência nunca vão à API. Contrato, regras e limites em `docs/api_contrato.md`.
 
-## Abrir o protótipo com um clique (sem servidor, sem internet)
-Abra `demo_unico/index.html` no navegador (duplo clique). Cada página é um arquivo único, com estilos, scripts e dados embutidos; os links entre telas funcionam (Mapa do Cuidado, Painel de Gestão, Inteligência Pública, De Mulher para Mulher). Depois de qualquer mudança em `web/`, rode `python pipeline/gerar_demo_unico.py` para atualizar. O `abrir_site.bat` (servidor local com Python) é o caminho normal.
+## Abrir a versão com dados locais
+Use `abrir_site.bat`. A versão funcional depende dos arquivos reais gerados pelos pipelines. Não use `demo_unico/` como fonte de dados ou apresentação de informações reais.
 
-## Painel de Gestão (protótipo, dados fictícios)
-Abra `web/gestao.html` (ou `gestao.html?visao=gestao`). Mostra necessidades, evolução mensal, funil, demanda × oferta, malha de setores, qualidade do catálogo, buscas sem resultado e **cartões de próximos passos para a gestão** (sinal, ação a validar, responsável sugerido, indicador e o que confirmar antes de decidir). **Todos os números de demonstração são fictícios**; a malha real de 408 setores é usada só como geometria e os valores de crianças por setor são inventados.
+## Painel de Gestão
 
-As visões Pública e Gestão são apenas modos de apresentação no navegador. **Não há autenticação:** o seletor não protege conteúdo e o protótipo não pode receber dados reais. O gerador aplica supressão de valores fictícios menores que cinco no próprio JSON, mas essa regra isolada não garante anonimato para dados reais. Leia `docs/painel_gestao_criterios.md` antes de alterar ou reutilizar o painel.
+O painel não apresenta gráficos de demanda ou resultados porque o MISM3 não registra buscas, inscrições ou encaminhamentos. A página informa essa limitação e não exibe séries simuladas. O painel de dados confirmados mostra apenas contagens do catálogo institucional versionado.
 
 ## Trilha de autonomia (recomendação sem banco de dados)
 Depois de buscar o CEP, a usuária escolhe um objetivo (trabalhar, fazer curso, empreender) e vê os serviços de trabalho/renda em ordem, cada um com o **porquê** (objetivo confirmado no cadastro, gratuidade, distância). É uma regra aberta e explicável em `web/recomendar.js`, não um modelo treinado, e roda no navegador: nada é gravado. Só entra quem tem `objetivos` preenchido no catálogo (`trabalhar`, `curso`, `empreender`, separados por `;`) e `gratuito=sim` apenas quando a página oficial diz. Sem a informação confirmada, o serviço não é sugerido para o objetivo: não adivinhamos.
@@ -95,4 +100,4 @@ Coloque o CSV "Tabela da lista das escolas" do INEP em `docs/` e rode `python pi
 2. Setores censitários + Censo 2022 (crianças de 0 a 4 anos): "desertos de cuidado" e simulador de nova creche.
 3. Relatórios automáticos explicados; vagas e cursos; transporte.
 
-Veja o [registro de decisões de desenvolvimento](docs/registro_decisoes_desenvolvimento.md), o [protótipo De Mulher para Mulher](web/rede-mulheres.html), o [painel conceitual Inteligência Pública](web/inteligencia-publica.html) e o [roteiro de demonstração com três histórias fictícias](docs/roteiro_demo_mism3.md), `docs/inventario_de_fontes.md`, a [análise competitiva e roadmap funcional](docs/analise_competitiva_mism3.md), o [plano de fontes externas e expansão](docs/plano_fontes_externas_e_expansao.md) e o [benchmark externo de ideias funcionais](docs/benchmark_externo_ideias_funcionais.md), que transforma referências de outros produtos em melhorias priorizadas para o MISM3.
+Veja o [registro de decisões de desenvolvimento](docs/registro_decisoes_desenvolvimento.md), o [protótipo De Mulher para Mulher](web/rede-mulheres.html), o [painel de dados confirmados](web/inteligencia-publica.html) e o [roteiro de demonstração com três histórias fictícias](docs/roteiro_demo_mism3.md), `docs/inventario_de_fontes.md`, a [análise competitiva e roadmap funcional](docs/analise_competitiva_mism3.md), o [plano de fontes externas e expansão](docs/plano_fontes_externas_e_expansao.md) e o [benchmark externo de ideias funcionais](docs/benchmark_externo_ideias_funcionais.md), que transforma referências de outros produtos em melhorias priorizadas para o MISM3.

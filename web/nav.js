@@ -1,5 +1,4 @@
-/* Menu e rodape COMPARTILHADOS: uma unica lista para todas as paginas (antes era copiada a mao em cada HTML).
-   Saude e lazer ficam em primeiro plano; secretarias e paineis de gestao ficam no rodape ("Mais"). */
+/* Menu e rodapé compartilhados. Só são destacados os caminhos que existem e usam conteúdo institucional versionado. */
 (function () {
   "use strict";
   var MENU = [
@@ -7,12 +6,10 @@
     { href: "saude.html", rotulo: "Saúde" },
     { href: "lazer.html", rotulo: "Lazer" },
     { href: "rede-mulheres.html", rotulo: "De mulher para mulher" },
-    { href: "gestao.html", rotulo: "Gestão", tambem: ["inteligencia-publica.html"] }
+    { href: "inteligencia-publica.html", rotulo: "Dados confirmados" }
   ];
   var MAIS = [
-    { href: "secretarias.html", rotulo: "Secretarias e telefones úteis" },
-    { href: "gestao.html", rotulo: "Painel de gestão (protótipo)" },
-    { href: "inteligencia-publica.html", rotulo: "Inteligência pública (protótipo)" }
+    { href: "secretarias.html", rotulo: "Secretarias e telefones úteis" }
   ];
   var atual = (window.location.pathname.split("/").pop() || "index.html").toLowerCase();
 

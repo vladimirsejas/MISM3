@@ -156,3 +156,11 @@ Retorno do usuário após ver o site integrado: "bagunça", poucos serviços, "D
 3. **Busca:** acrescentar a necessidade "lazer" ao classificador (cuidado: "horário" já pertence a transporte) e a categoria Lazer em `web/app.js`.
 4. README ainda não descreve Lazer nem o menu compartilhado.
 5. Conteúdo real de lazer: depende de alguém conferir as páginas oficiais e preencher `catalogo/lazer.csv` (rede bloqueada neste ambiente).
+
+
+### 2026-10-10 — Remoção de dados fictícios da interface
+- Removidos os fallbacks de dados de demonstração da busca principal, da busca por CEP, da agenda de lazer e da página De mulher para mulher. Arquivo real ausente ou lista vazia agora resulta em indisponibilidade/estado vazio; não se preenche com perfis, endereços, telefones ou horários fictícios.
+- O painel Inteligência Pública foi substituído por métricas do catálogo institucional versionado: contagem de unidades de saúde, canais, links conferidos e atividades de lazer com fonte/data. Não calcula demanda, fila, vagas ou resultados que não foram medidos.
+- O Painel de Gestão deixou de mostrar gráficos simulados. A página explica que o projeto não armazena buscas nem resultados de atendimento, então não há série real de demanda.
+- Navegação atualizada para priorizar Início, Saúde, Lazer, De mulher para mulher e Dados confirmados; gestão simulada foi retirada do menu.
+- Testes automatizados atualizados para impedir o fallback da home para `dados/demo/`. Ainda é necessário executar os testes no checkout local e conferir o navegador em desktop e 390 px.
