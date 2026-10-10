@@ -195,3 +195,10 @@ Ao concluir mudanças relevantes, registrar o que foi alterado, o teste executad
 - Novo campo opcional `cnes` no catálogo: quando o pipeline completo é rodado, a unidade cadastrada à mão **vence** o registro `cnes-<código>` correspondente (que não traz telefone nem horário), evitando duplicidade. Registros do CNES sem correspondente manual caem nos mesmos grupos pelo subtipo.
 - Retirada a lista "só com nomes e códigos" da rede municipal criada antes, que deixou de ser necessária. O Hospital Municipal permanece, com aviso de que nenhuma fonte traz endereço e telefone.
 - O CHI passou a constar também com o horário da página (dias úteis, das 7h às 16h); o CEI recebeu a observação de que a página lista hoje o CAPS I e o CEO Infantil na Rua 15, nº 51, Consolação, com os mesmos telefones da notícia de 2019.
+
+### Fontes arquivadas em docs/documetacao — 10/10/2026
+- O mantenedor enviou à branch a pasta `docs/documetacao` com 7 PDFs. Conferidos por SHA-256: são **idênticos** aos PDFs recebidos na conversa e lidos para os cadastros. Foram acrescentados mais 3 (endereços das unidades de saúde, Elektro e informativo do DAAE) e um `LEIA-ME.md` que diz, para cada arquivo, o que é, a página de origem, o horário da impressão e onde foi usado. Um teste exige que todo PDF da pasta esteja explicado no `LEIA-ME`.
+- O artigo da Matrix Energia não foi arquivado: não é fonte oficial e não foi usado.
+
+### Proteção contra envio acidental de bancos de dados — 10/10/2026
+- O mantenedor mantém, fora deste repositório, bancos de dados de um projeto anterior (`escudo_feminino*.db`) e cópias de segurança. **Nenhum deles foi aberto ou lido pela sessão.** Como esse tipo de arquivo pode conter dados pessoais, o `.gitignore` passou a bloquear `.env`, `*.db`, `*.sqlite`, `*.sqlite3`, `*.backup` e `*.bak`, com teste automático.
