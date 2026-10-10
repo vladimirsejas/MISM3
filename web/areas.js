@@ -41,32 +41,10 @@
       id: "saude", nome: "Saúde", icone: "saude",
       intro: "Unidades de saúde e serviços de atendimento. Em urgência médica, ligue 192.",
       secoes: [{ titulo: "Unidades de saúde", tipos: ["saude"], agrupar: true, links: [] }],
-      listaRede: {
-        titulo: "Rede municipal de saúde — lista oficial (CNES)",
-        nota: "Nomes e códigos do cadastro nacional (CNES, Ministério da Saúde) das unidades mantidas pela Fundação Municipal de Saúde, consultado em 10/10/2026. Endereço e telefone de cada unidade ainda não foram cadastrados aqui: ligue para a Fundação Municipal de Saúde, (19) 3522-3600. Os nomes foram acentuados e padronizados a partir do cadastro, que é em letras maiúsculas.",
-        fonte: ["CNESNet — Fundação Municipal de Saúde de Rio Claro", "https://cnes2.datasus.gov.br/Listar_Mantidas.asp?VCnpj=00955107000193&VEstado=35"],
-        grupos: [
-          { titulo: "Pronto atendimento 24 horas (UPA)", itens: [["2033135", "UPA 24 horas Bairro Chervezon"], ["7038895", "UPA 24 horas Dr. Olavo Narkevitz"]] },
-          { titulo: "Hospital", itens: [["5550874", "Hospital Público Municipal Maria Thereza Ramos Vitti"]] },
-          { titulo: "Saúde mental (CAPS)", itens: [["2031884", "CAPS III 18 de Maio"], ["7312857", "CAPSi Rio Claro"], ["2055910", "CAPS AD Luzan Yara Pereira"]] },
-          { titulo: "Unidades básicas de saúde (UBS e USF)", itens: [
-            ["9428992", "USF Jardim São Miguel Jorcelino Quintino de Faria"], ["2033186", "UBS PSF Dr. Gilson Giovanni"], ["9429115", "USF Bela Vista Dr. Arindal Carneiro Cesar Pires"],
-            ["9523200", "USF Jardim Brasília Neusa Maria Mortari"], ["3347087", "UBS PSF Dr. Dirceu Ferreira Penteado"], ["2030462", "UBS Dr. Mario Fittipaldi"],
-            ["2049163", "UBS PSF de Ajapi Farmacêutico Antonio Gilberto Fonseca"], ["5870755", "UBS PSF Dr. Moacir de Oliveira Camargo"], ["7045395", "UBS PSF Dr. Emilio Beltrati Junior"],
-            ["7427077", "USF Jd. Progresso José Carlos da Silva"], ["9422005", "UBS PSF Jardim Santa Eliza"], ["5981921", "UBS PSF Dr. Oswaldo Akamine"],
-            ["3355519", "UBS PSF Dr. Norberto Antonio Simão Carneiro"], ["2085097", "UBS PSF Parque Mãe Preta de Eduardo Reis"], ["2055902", "UBS PSF Célia Ap. Ceccato da Silva"],
-            ["2074494", "UBS Dr. Antonio Raphael Minervino Santomauro"], ["2055821", "UBS PSF da Assistência"], ["2060825", "UBS Dr. Silvio Arnaldo Piva"],
-            ["5733022", "UBS PSF Dr. Celestino Donato"], ["2071940", "UBS Dr. Nicolino Mazziotti Jardim Cervezon"], ["2031922", "UBS Orestes Armando Giovanni"]
-          ] },
-          { titulo: "Especialidades, reabilitação e saúde do trabalhador", itens: [
-            ["2033194", "CEO — Centro de Especialidades Odontológicas Rio Claro"], ["2044838", "Centro Especializado em Reabilitação Princesa Vitória"],
-            ["2060027", "CEAD — Centro de Especialidades e Apoio Diagnóstico"], ["2038366", "Centro de Referência em Saúde do Trabalhador Regional"],
-            ["2049023", "Graziela Osele Ferro Ramos — SEPA (Serviço Especializado em Prevenção e Assistência)"]
-          ] }
-        ]
-      },
-      pendenciasSemBase: ["Endereço, telefone e horário de cada unidade da rede municipal ainda não foram cadastrados aqui (eles vêm da base completa do CNES, carregada pelo pipeline). Ligue para a Fundação Municipal de Saúde, (19) 3522-3600, ou para a própria unidade."],
-      pendencias: ["Os dados do CNES (cadastro nacional) podem estar desatualizados e não informam vaga nem horário de atendimento: confirme com a unidade ou com a Secretaria Municipal de Saúde."]
+      pendencias: [
+        "A lista segue a página “Endereços das unidades de saúde” da Fundação Municipal de Saúde (10/10/2026), conferida com o cadastro do CNES. Telefones e horários podem mudar: confirme com a unidade.",
+        "Hospital Público Municipal Maria Thereza Ramos Vitti: o nome consta no CNES, mas nenhuma fonte consultada traz o endereço e o telefone. Ligue para a Fundação Municipal de Saúde."
+      ]
     },
     {
       id: "direitos", nome: "Direitos", icone: "direitos",

@@ -87,8 +87,34 @@ assert.strictEqual(cei.telefone, "(19) 3523-3754 / (19) 3533-4055 / (19) 3524-57
 assert(/Rua 15, entre as avenidas 23 e 25/.test(cei.endereco) && /Criari/.test(cei.observacao) && /Caps IJ/.test(cei.observacao) && /CEO/.test(cei.observacao));
 assert(/odontologia do CHI/.test(porNome["Centro de Habilitação Infantil “Princesa Victória” (CHI)"].observacao), "a mudança da odontologia do CHI deve constar no cartão do CHI");
 const fund = porNome["Fundação Municipal de Saúde de Rio Claro"];
-assert(fund && fund.tipo === "saude" && fund.telefone === "(19) 3522-3600" && fund.cep === "13500190" && /Rua 6, 2572/.test(fund.endereco), "contato da Fundação de Saúde conforme o CNES");
-assert(/cnes2\.datasus\.gov\.br/.test(fund.fonte_url) && /desatualizados/.test(fund.observacao), "dado do CNES deve citar a fonte e avisar que pode estar desatualizado");
+assert(fund && fund.tipo === "saude" && fund.telefone === "(19) 3525-4717 / (19) 3522-3600" && /Rua 6, 2580, Santa Cruz/.test(fund.endereco), "sede da Fundação conforme a página da própria Fundação");
+assert(/Rua 6, 2572, Centro/.test(fund.observacao) && /3522-3600/.test(fund.observacao) && /confirme por telefone/.test(fund.observacao), "a divergência entre a página e o CNES deve ficar à vista");
+assert(fund.cnes === "6361528" && /saude-rioclaro\.org\.br\/enderecos\.htm/.test(fund.fonte_url));
+
+/* ---- 5c. Unidades de saúde: página "Endereços das unidades de saúde" da Fundação (10/10/2026) ---- */
+const saude = catalogo.servicos.filter((s) => s.tipo === "saude");
+const por = (g) => saude.filter((s) => s.grupo === g);
+assert.strictEqual(por("Unidades básicas de saúde (UBS e USF)").length, 22, "a página lista 4 UBS e 18 USF");
+assert.strictEqual(por("Pronto atendimento 24 horas").length, 3);
+assert.strictEqual(por("Saúde mental (CAPS)").length, 3);
+const upas = saude.filter((s) => /^UPA/.test(s.nome));
+assert.strictEqual(upas.length, 2, "Rio Claro tem 2 UPAs");
+upas.forEach((u) => assert(u.horario === "24 horas" && u.subtipo === "urgencia", "UPA 24 horas: " + u.nome));
+assert.strictEqual(porNome["UPA do Cervezão"].telefone, "(19) 3533-7272");
+assert.strictEqual(porNome["UPA — Unidade de Pronto Atendimento (Av. 29)"].telefone, "(19) 3522-1818");
+assert.strictEqual(porNome["CAPS III “18 de Maio”"].horario, "24 horas");
+assert.strictEqual(porNome["USF Mãe Preta I/II"].horario, "Dias úteis, das 7h às 19h", "três USFs funcionam até as 19h");
+assert.strictEqual(saude.filter((s) => /às 19h/.test(s.horario || "")).length, 3);
+assert.strictEqual(porNome["USF Terra Nova"].cnes || "", "", "sem correspondência segura no CNES: o código não pode ser chutado");
+assert.strictEqual(porNome["USF Ferraz"].cnes || "", "");
+const cn = saude.map((s) => s.cnes).filter(Boolean);
+assert.strictEqual(new Set(cn).size, cn.length, "código CNES repetido no catálogo");
+cn.forEach((c) => assert(/^\d{7}$/.test(c), "código CNES inválido: " + c));
+assert(/Rua M9, 66/.test(porNome["UPA do Cervezão"].endereco) && /Rua M-9, 66/.test(porNome["CAPS III “18 de Maio”"].endereco), "o mesmo endereço aparece em duas unidades na fonte e deve vir com aviso");
+assert(/confirme o local por telefone/.test(porNome["UPA do Cervezão"].observacao) && /confirme o local por telefone/.test(porNome["CAPS III “18 de Maio”"].observacao));
+const hosp = porNome["Hospital Público Municipal Maria Thereza Ramos Vitti"];
+assert(hosp && !hosp.endereco && !hosp.telefone && hosp.cnes === "5550874", "o hospital municipal só consta por nome: nada pode ser inventado");
+saude.forEach((s) => assert(s.fonte_url && s.verificado_em && s.fonte, "unidade sem fonte: " + s.nome));
 const apae = catalogo.servicos.filter((s) => s.subtipo === "apae");
 assert.strictEqual(apae.length, 2, "o site da APAE lista duas unidades de atendimento");
 assert.strictEqual(porNome["APAE Rio Claro – Unidade Central"].telefone, "(19) 2112-2700 / (19) 99694-2420 (WhatsApp)");
@@ -138,18 +164,6 @@ assert(/Resolução ARES-PCJ nº 592\/2024/.test(agua.fonte[0]) && /reajustado/.
 assert(agua.sem_tel === true, "o informativo não traz telefone: nenhum número pode ser inventado");
 const neo = moradiaLinks.find((l) => l[1] === "https://www.neoenergia.com/tarifa-social");
 assert(neo && /confirme se as regras e os canais valem para a Elektro/.test(neo[2]), "a página da Neoenergia pode cobrir outros estados: o cartão deve pedir para confirmar que vale para a Elektro");
-const redeSaude = Areas.porId("saude").listaRede;
-const nGrupo = Object.fromEntries(redeSaude.grupos.map((g) => [g.titulo, g.itens.length]));
-assert.strictEqual(nGrupo["Pronto atendimento 24 horas (UPA)"], 2, "Rio Claro tem 2 UPAs 24 horas");
-assert.strictEqual(nGrupo["Hospital"], 1);
-assert.strictEqual(nGrupo["Saúde mental (CAPS)"], 3);
-assert.strictEqual(nGrupo["Unidades básicas de saúde (UBS e USF)"], 21);
-const codigos = redeSaude.grupos.flatMap((g) => g.itens.map((i) => i[0]));
-assert.strictEqual(codigos.length, 32);
-assert.strictEqual(new Set(codigos).size, codigos.length, "código CNES repetido");
-codigos.forEach((c) => assert(/^\d{7}$/.test(c), "código CNES inválido: " + c));
-assert(redeSaude.grupos.every((g) => g.itens.every((i) => i[1].length > 8)), "nome de unidade vazio ou curto");
-assert(/cnes2\.datasus\.gov\.br/.test(redeSaude.fonte[1]) && /3522-3600/.test(redeSaude.nota));
 assert.strictEqual(Areas.porId("inexistente"), null);
 
 /* ---- 6b. Busca dentro das áreas: cobre todas as chaves do classificador ---- */
@@ -168,7 +182,6 @@ assert(index.includes('class="pular"'), "falta o link para pular ao conteúdo");
 assert(app.includes("history.state && history.state.app"), "Voltar deve usar o histórico apenas quando a navegação começou no sistema");
 assert(app.includes("linksTelefone") && !/replace\(\/\[\^\\d\+\]\/g, ""\)\) \+ '">' \+ esc\(s\.telefone/.test(app), "telefones múltiplos devem ter um link cada");
 assert(app.includes("PREFERIDA") && app.includes("grupo-recolhido"), "unidades de convivência devem ficar em grupos recolhidos, em ordem por público");
-assert(app.includes('/^cnes-/.test(String(s.id'), "a base do CNES deve ser detectada pelo id cnes-, não por menção ao CNES na fonte (a Fundação de Saúde cita o CNES e é cadastro manual)");
 assert(app.includes("busca-por-cep"), "a busca por CEP deve continuar existindo");
 assert(css.includes(".emergencia>summary") && css.includes("min-height:44px"), "alvos de toque devem ter pelo menos 44px");
 assert(!/prefers-color-scheme:\s*dark/.test(css), "a interface deve manter o fundo claro");
