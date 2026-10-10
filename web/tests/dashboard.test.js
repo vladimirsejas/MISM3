@@ -166,15 +166,10 @@ const neo = moradiaLinks.find((l) => l[1] === "https://www.neoenergia.com/tarifa
 assert(neo && /confirme se as regras e os canais valem para a Elektro/.test(neo[2]), "a página da Neoenergia pode cobrir outros estados: o cartão deve pedir para confirmar que vale para a Elektro");
 assert.strictEqual(Areas.porId("inexistente"), null);
 
-/* ---- 6b. Busca dentro das áreas: cobre todas as chaves do classificador ---- */
-const Busca = require("../necessidades.js");
-assert(!inicio.includes('id="form-necessidade"') && index.includes('id="form-necessidade"'), "a busca fica dentro das áreas, nunca na tela inicial");
-const chavesClassificador = Array.from(fs.readFileSync(path.join(web, "necessidades.js"), "utf8").matchAll(/^\s+\["(\w+)", \[$/gm), (m) => m[1]);
-assert(chavesClassificador.length >= 9, "não achei as chaves do classificador");
-chavesClassificador.forEach((c) => assert(Areas.AREA_DA_NECESSIDADE[c], "necessidade sem área: " + c));
-assert.deepStrictEqual(Areas.areasDaNecessidade(Busca.identificarCategorias("preciso de creche e aluguel")).map((a) => a.id), ["educacao", "moradia"]);
-assert.deepStrictEqual(Areas.areasDaNecessidade(Busca.identificarCategorias("quero me separar")).map((a) => a.id), ["direitos"]);
-assert.deepStrictEqual(Areas.areasDaNecessidade(Busca.identificarCategorias("não tenho o que comer")).map((a) => a.id), ["assistencia"]);
+/* ---- 6b. Sem caixa de busca por necessidade: nem na tela inicial nem dentro das áreas ---- */
+assert(!/id="form-necessidade"|id="necessidade"|Não encontrou\?/.test(index), "a caixa de busca por necessidade foi retirada");
+assert(!/form-necessidade|resposta-necessidade|areasDaNecessidade|AREA_DA_NECESSIDADE/.test(app + ler("areas.js")), "não pode sobrar código da caixa retirada");
+assert(app.includes("MISM3Necessidades.normalizar") && index.includes('src="necessidades.js"'), "a busca de bairro usa a normalização de texto do módulo, que deve continuar carregado");
 assert(index.includes('class="pular"'), "falta o link para pular ao conteúdo");
 
 /* ---- 6c. Fontes arquivadas: todo PDF citado no LEIA-ME existe, e todo PDF da pasta está explicado ---- */

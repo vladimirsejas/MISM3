@@ -207,3 +207,6 @@ Ao concluir mudanças relevantes, registrar o que foi alterado, o teste executad
 - **Defeito:** o site usava o `servicos.json` (gerado pelo pipeline) **no lugar** do `catalogo_manual.json`. Um `servicos.json` gerado antes da atualização do catálogo fazia o site mostrar 0 CRAS e 0 CREAS. Reproduzido em navegador antes da correção.
 - **Correção:** o catálogo verificado agora é carregado sempre; o `servicos.json` só **acrescenta** o que não está nele (CNES e Censo Escolar), descartando registros `cnes-<código>` de unidades já cadastradas à mão. Teste novo com um `servicos.json` antigo simulado; a bateria passou a recriar as pastas de teste a partir do código atual a cada execução.
 - Consequência para quem edita o CSV: rodar `python pipeline/servicos.py --somente-manual` para atualizar o catálogo versionado.
+
+### Retirada da caixa "Não encontrou?" — 10/10/2026
+- A caixa que indicava a área a partir de um texto digitado (criada por iniciativa da sessão) foi **retirada**: o mantenedor não a achou útil. Saíram o formulário, o código que o ligava e o mapeamento de necessidades para áreas. O módulo `necessidades.js` e seus 47 testes permanecem, porque a busca de bairro dos CRAS usa a normalização de texto dele. Não há mais nenhuma caixa de busca por texto livre no site; só o campo de bairro, em Assistência Social, e o de CEP, quando existe o índice.
