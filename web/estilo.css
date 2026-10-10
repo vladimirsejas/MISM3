@@ -50,6 +50,26 @@ a{color:var(--pri)}
 @media(max-width:620px){.grade-portas{grid-template-columns:repeat(2,minmax(0,1fr));gap:.55rem}.porta{min-height:105px;padding:.8rem}.topo h1{font-size:1.65rem}}
 @media(max-width:360px){.grade-portas{grid-template-columns:1fr}}
 
+/* Organização do painel: jornadas principais separadas de ferramentas da plataforma */
+.blocos-portas{display:grid;gap:1rem;margin:1rem 0}
+.bloco-portas{border:1px solid var(--bor);border-radius:.85rem;padding:.9rem;background:color-mix(in srgb,var(--pri2) 28%,var(--bg))}
+.bloco-portas h3,.outras-areas h3{margin:.1rem 0 .6rem;font-size:1rem}
+.bloco-portas .grade-portas{margin:.5rem 0 0;grid-template-columns:repeat(3,minmax(0,1fr))}
+.bloco-portas:first-child .grade-portas,.bloco-portas:last-child .grade-portas{grid-template-columns:repeat(2,minmax(0,1fr))}
+.outras-areas{margin:1.5rem 0;padding-top:1rem;border-top:2px solid var(--bor)}
+.grade-outras-areas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem}
+.grade-outras-areas .cartao{margin:0}
+.grade-outras-areas h4{margin:0;font-size:1rem}
+.resultado-necessidade{margin:1rem 0;padding:1rem;border:1px solid var(--bor);border-radius:.8rem}
+.resultado-necessidade>p{color:var(--mut)}
+@media(max-width:620px){
+  .bloco-portas .grade-portas,.bloco-portas:first-child .grade-portas,.bloco-portas:last-child .grade-portas{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grade-outras-areas{grid-template-columns:1fr}
+}
+@media(max-width:360px){
+  .bloco-portas .grade-portas,.bloco-portas:first-child .grade-portas,.bloco-portas:last-child .grade-portas{grid-template-columns:1fr}
+}
+
 /* Busca por necessidade: o texto é processado localmente e não é enviado */
 .busca-necessidade{background:var(--pri2);border:1px solid var(--bor);border-radius:.8rem;padding:1rem;margin:1rem 0}
 .busca-necessidade label{font-weight:700}
