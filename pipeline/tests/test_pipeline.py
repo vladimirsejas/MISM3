@@ -125,3 +125,15 @@ def test_montar_deduplica():
     m = pd.DataFrame([{"id": "a", "tipo": "mulher", "nome": "X", "fonte_url": "u", "verificado_em": "d"}] * 2)
     out = servicos.montar(INDICE, manuais=m, hoje="2026-10-08")
     assert len(out["servicos"]) == 1
+
+
+def test_catalogo_manual_do_site_nao_tem_demonstracao_e_tem_fonte():
+    """web/dados/catalogo_manual.json e o que o site mostra sem o pipeline completo."""
+    import json
+    from pathlib import Path
+    d = json.loads((Path(__file__).resolve().parents[2] / "web" / "dados" / "catalogo_manual.json").read_text(encoding="utf-8"))
+    assert d["meta"]["demo"] is False
+    assert d["servicos"], "catalogo vazio"
+    for s in d["servicos"]:
+        assert s["fonte_url"].startswith("http") and s["verificado_em"], s["nome"]
+        assert "[DEMO]" not in s["nome"]
