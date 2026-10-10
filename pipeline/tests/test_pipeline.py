@@ -249,3 +249,14 @@ def test_mulher_para_mulher_verificacao_aparece_e_vencido_some():
 def test_mulher_para_mulher_csv_real_valido():
     import mulher_para_mulher as m
     assert m.validar(common.ler_csv_flex(common.CATALOGO / "mulher_para_mulher.csv"), "2026-10-09") == []
+
+
+def test_catalogo_manual_todas_as_linhas_tem_o_mesmo_numero_de_colunas():
+    """Virgula sem aspas no texto cria coluna a mais e o pandas desloca todos os campos (ja aconteceu)."""
+    import csv
+    from pathlib import Path
+    caminho = Path(__file__).resolve().parents[2] / "catalogo" / "servicos_manuais.csv"
+    linhas = list(csv.reader(caminho.open(encoding="utf-8-sig", newline="")))
+    n = len(linhas[0])
+    ruins = [(l[0], len(l)) for l in linhas[1:] if len(l) != n]
+    assert not ruins, "linhas com colunas a mais/menos (coloque o texto entre aspas): %s" % ruins

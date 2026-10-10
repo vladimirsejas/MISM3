@@ -80,3 +80,21 @@ def test_resumo_diz_se_o_site_esta_real_ou_em_demonstracao(tmp_path):
     r = md.resumo(tmp_path)
     assert any("CEPs indexados: 1" in x for x in r) and any("Servicos: 2" in x and "'saude': 2" in x for x in r)
     assert "DADOS REAIS" in r[-1]
+
+
+def test_so_com_csv_de_ceps_usa_o_indice_por_csv(tmp_path):
+    arvore(tmp_path, cnes=True)
+    (tmp_path / "docs" / "cep_Rio_Claro").mkdir(parents=True)
+    (tmp_path / "docs" / "cep_Rio_Claro" / "ceps.csv").write_text("CEP;Latitude;Longitude\n", encoding="utf-8")
+    fontes = md.diagnosticar(tmp_path)
+    assert por_chave(fontes)["ceps_csv"].ok and not por_chave(fontes)["ceps_csv"].obrigatoria
+    plano = md.planejar(fontes, tmp_path)
+    assert plano[0][0] == "indice_cep_csv.py" and plano[0][2] == ""        # roda, nao e pulado
+    assert dict((s, m) for s, _, m in plano)["servicos.py"] == ""           # e os servicos reais sao montados
+
+
+def test_cnefe_tem_prioridade_sobre_o_csv(tmp_path):
+    arvore(tmp_path, cnefe=True, cnes=True)
+    (tmp_path / "docs" / "cep_Rio_Claro").mkdir(parents=True)
+    (tmp_path / "docs" / "cep_Rio_Claro" / "ceps.csv").write_text("CEP;Latitude;Longitude\n", encoding="utf-8")
+    assert md.planejar(md.diagnosticar(tmp_path), tmp_path)[0][0] == "indice_cep.py"

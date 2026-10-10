@@ -20,6 +20,18 @@ from common import WEB_DADOS, erro, normalizar_cep, salvar_json  # noqa: E402
 RAIZ = Path(__file__).resolve().parent.parent
 ENTRADA = RAIZ / "dados" / "bruto" / "ceps_google" / "resumido3_com_coordenadas_google.csv"
 
+PASTAS_CSV = (RAIZ / "dados" / "bruto" / "ceps_google", RAIZ / "docs" / "cep_Rio_Claro")
+
+
+def achar_csv(raiz: Path = RAIZ) -> Path | None:
+    """Primeiro CSV de CEPs encontrado: dados/bruto/ceps_google/ ou docs/cep_Rio_Claro/ (o nome do arquivo nao importa)."""
+    for pasta in (raiz / "dados" / "bruto" / "ceps_google", raiz / "docs" / "cep_Rio_Claro"):
+        achados = sorted(pasta.glob("*.csv")) if pasta.is_dir() else []
+        if achados:
+            return achados[0]
+    return None
+
+
 # Caixa de triagem ampla para Rio Claro/SP, não substitui o limite municipal oficial.
 LAT_MIN, LAT_MAX = -22.65, -22.15
 LON_MIN, LON_MAX = -47.80, -47.30
@@ -75,7 +87,7 @@ def construir_indice(caminho: Path = ENTRADA) -> tuple[dict, dict]:
 
 def main() -> None:
     try:
-        indice, d = construir_indice()
+        indice, d = construir_indice(achar_csv() or ENTRADA)
     except (FileNotFoundError, ValueError) as exc:
         erro(str(exc))
     saida = {

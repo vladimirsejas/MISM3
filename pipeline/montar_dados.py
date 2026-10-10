@@ -48,9 +48,12 @@ def diagnosticar(raiz: Path = RAIZ) -> list[Fonte]:
     cnes = [p for p in (bruto / "cnes", docs / "cnes") if list(p.glob("tbEstabelecimento*.csv"))]
     censo = sorted(set((bruto / "escolas").glob("microdados_ed_basica*.csv")) | set(docs.rglob("microdados_ed_basica*.csv")))
     inep = sorted(set((bruto / "escolas").glob("*lista das escolas*.csv")) | set(docs.rglob("*lista das escolas*.csv")))
+    ceps_csv = sorted((bruto / "ceps_google").glob("*.csv")) + sorted((docs / "cep_Rio_Claro").glob("*.csv"))
     manual, vagas, m2m = cat / "servicos_manuais.csv", cat / "vagas_publicas.csv", cat / "mulher_para_mulher.csv"
     return [
         Fonte("cnefe", "IBGE CNEFE (CEP e coordenadas)", True, cnefe, r"python pipeline\baixar.py cnefe"),
+        Fonte("ceps_csv", "CSV de CEPs com coordenadas (plano B ao CNEFE)", False, ceps_csv,
+              r"coloque o CSV em docs\cep_Rio_Claro (colunas CEP;Latitude;Longitude)"),
         Fonte("cnes", "CNES (estabelecimentos de saude)", False, cnes,
               r"baixe a base completa no site do CNES e descompacte em docs\cnes"),
         Fonte("inep", "INEP Catalogo de Escolas (CSV exportado)", False, inep,
@@ -69,11 +72,17 @@ def planejar(fontes: list[Fonte], raiz: Path = RAIZ) -> list[tuple[str, str, str
     """Etapas (script, o que faz, motivo se for pulada ou ''). Respeita a ordem e as dependencias."""
     f = {x.chave: x for x in fontes}
     web = raiz / "web" / "dados"
-    tem_indice = f["cnefe"].ok or (web / "cep_indice.json").is_file()
+    tem_indice = f["cnefe"].ok or f["ceps_csv"].ok or (web / "cep_indice.json").is_file()
     tem_servicos = any(f[k].ok for k in ("cnes", "inep", "censo", "manual"))
+    if f["cnefe"].ok:
+        indice = ("indice_cep.py", "indice de CEP (cada CEP -> centro aproximado, via CNEFE)", "")
+    elif f["ceps_csv"].ok:   # plano B: o CSV de CEPs com coordenadas (nao exporta rua nem bairro)
+        indice = ("indice_cep_csv.py", "indice de CEP (via CSV de CEPs, no lugar do CNEFE)", "")
+    else:
+        indice = ("indice_cep.py", "indice de CEP (cada CEP -> centro aproximado)",
+                  "ja existe web/dados/cep_indice.json: mantido" if tem_indice else "falta o CNEFE (%s)" % f["cnefe"].como_obter)
     return [
-        ("indice_cep.py", "indice de CEP (cada CEP -> centro aproximado)", "" if f["cnefe"].ok else
-         ("ja existe web/dados/cep_indice.json: mantido" if tem_indice else "falta o CNEFE (%s)" % f["cnefe"].como_obter)),
+        indice,
         ("servicos.py", "catalogo de servicos", "" if (tem_indice and tem_servicos) else
          "sem o indice de CEP o site nao usa os servicos reais" if not tem_indice else "nenhuma fonte de servicos encontrada"),
         ("vagas.py", "concursos e processos seletivos", ""),
@@ -121,8 +130,9 @@ def executar(passos, raiz: Path = RAIZ, rodar=None) -> list[tuple[str, str]]:
 def main() -> None:
     fontes = diagnosticar()
     print("== O que voce ja tem ==")
+    csv_ok = any(x.chave == "ceps_csv" and x.ok for x in fontes)
     for x in fontes:
-        marca = "[OK]" if x.ok else ("[FALTA]" if x.obrigatoria else "[opcional]")
+        marca = "[OK]" if x.ok else ("[plano B]" if x.chave == "cnefe" and csv_ok else "[FALTA]" if x.obrigatoria else "[opcional]")
         print("%-10s %-52s %s" % (marca, x.nome, ("%d arquivo(s)" % len(x.achados)) if x.ok else "-> " + x.como_obter))
     if "--so-diagnostico" in sys.argv:
         return
