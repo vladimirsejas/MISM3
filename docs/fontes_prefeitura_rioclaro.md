@@ -1,5 +1,7 @@
 # Pistas nos sites da Prefeitura e da Saúde de Rio Claro
 
+> **Atualização de 10/10/2026:** as páginas de UBS e USF foram capturadas em PDF (`docs/unidades saude rio claro/`), lidas e incorporadas ao catálogo; a lista de secretarias e canais está em `catalogo/secretarias.csv`. O restante deste arquivo (CRAM, PAT, protocolos) continua **não verificado**. Veja o registro de decisões.
+
 **Estado: NÃO VERIFICADO.** Em 2026-10-10 o ambiente de desenvolvimento não conseguiu abrir `rioclaro.sp.gov.br` nem `saude-rioclaro.org.br` (rede bloqueada). Tudo abaixo vem de **resultados de busca**: trechos antigos, muitos sem data. Regra do projeto: **nada entra no catálogo (`catalogo/servicos_manuais.csv`) sem conferir na página oficial e registrar a data**.
 
 **Leia junto:** `docs/fontes_oficiais_rioclaro_mism3.md` (levantamento de 09/10/2026 feito com acesso às páginas; é a referência mais confiável). Este arquivo só acrescenta pistas de contato vindas de busca. Onde os dois divergirem (por exemplo o nome do PDF do protocolo de mama), vale o que for aberto no navegador.

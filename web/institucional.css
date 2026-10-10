@@ -1,0 +1,70 @@
+/* Paginas "Saude" e "Secretarias" (dados reais de paginas oficiais), sobre o sistema visual de estilo.css.
+   Mesma regra de cor do resto: azul-marinho de marca, cinzas neutros, vermelho SO para urgencia. */
+.faixa-dados { padding: .5rem var(--lateral); background: var(--soft); border-bottom: 1px solid var(--bor); color: #2f3b4a; font-size: .85rem; }
+.faixa-dados::before { content: "DADOS REAIS"; margin-right: .6rem; padding: .1rem .4rem; border: 1px solid var(--pri); border-radius: 3px; color: var(--pri); font-size: .7rem; font-weight: 700; letter-spacing: .08em; }
+
+.hero-compacto { padding-bottom: 1.8rem; }
+.hero .busca-necessidade datalist { display: none; }
+
+/* resultado da busca por bairro */
+.resultado-bairro { margin: 1.4rem 0; padding: 1.1rem 1.3rem; border: 1px solid var(--bor); border-left: 4px solid var(--pri); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
+.resultado-bairro:focus { outline: none; }  /* recebe foco so para leitor de tela anunciar o resultado */
+.resultado-bairro h2 { margin: 0 0 .3rem; font-size: 1.3rem; }
+.resultado-bairro h3 { margin: 1.1rem 0 .2rem; font-size: 1.02rem; }
+.resultado-bairro .explica { max-width: 70ch; margin: .2rem 0 .6rem; color: var(--mut); }
+
+/* blocos */
+.bloco { margin: 1.8rem 0; }
+.bloco > h2 { margin: 0 0 .5rem; padding-bottom: .5rem; border-bottom: 2px solid var(--pri); font-size: 1.25rem; }
+.bloco > .sub { max-width: 72ch; margin: 0 0 .9rem; color: var(--mut); }
+.bloco.urgencia > h2 { border-bottom-color: var(--alerta); }
+.grade-cartoes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem; }
+.grade-cartoes .cartao { margin: 0; display: flex; flex-direction: column; }
+.grade-cartoes .cartao .fonte { margin-top: auto; }
+
+/* chips de filtro */
+.chips-filtro { display: flex; flex-wrap: wrap; gap: .5rem; margin: .5rem 0 1rem; }
+.chips-filtro button { min-height: 40px; padding: .4rem .85rem; border: 1px solid var(--pri); border-radius: 999px; background: var(--surface); color: var(--pri); font-weight: 600; }
+.chips-filtro button:hover { background: var(--soft); }
+.chips-filtro button[aria-pressed="true"] { background: var(--pri); color: #fff; }
+
+/* cartao de unidade / de canal */
+.selos { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .3rem; }
+.cartao .selo-24h { border-color: var(--alerta-borda); background: var(--alerta-fundo); color: var(--alerta); }
+.cartao .quem { margin: .4rem 0 0; padding: .35rem .6rem; border-radius: 3px; background: var(--soft); color: var(--pri); font-size: .88rem; font-weight: 600; }
+.cartao .endereco { margin-top: .5rem; }
+.acoes-contato { display: flex; flex-wrap: wrap; gap: .35rem .5rem; margin: .5rem 0 .2rem; }
+.botao-acao { display: inline-flex; align-items: center; min-height: 44px; padding: .3rem .95rem; border: 1px solid var(--pri); border-radius: var(--radius); background: var(--pri); color: #fff; font-weight: 650; text-decoration: none; }
+.botao-acao:hover { background: var(--pri-hover); color: #fff; }
+.botao-acao.claro { background: var(--surface); color: var(--pri); }
+.botao-acao.claro:hover { background: var(--soft); color: var(--pri); }
+.botao-acao.urgente { border-color: var(--alerta); background: var(--alerta); }
+.botao-acao.urgente:hover { background: #7f1d21; }
+.cartao details { margin: .4rem 0; }
+.cartao summary { display: flex; align-items: center; gap: .4rem; min-height: 40px; color: var(--pri); font-weight: 650; cursor: pointer; list-style: none; }
+.cartao summary::-webkit-details-marker { display: none; }
+.cartao summary::before { content: "▸"; font-size: .9em; }
+.cartao details[open] > summary::before { content: "▾"; }
+.alerta-fontes { margin: .6rem 0; padding: .6rem .8rem; border: 1px solid var(--bor); border-left: 4px solid var(--bor-forte); border-radius: 3px; background: var(--aviso-fundo); color: #2f3b4a; font-size: .9rem; }
+.alerta-fontes strong { display: block; margin-bottom: .1rem; }
+
+/* status de link (secretarias) */
+.status-link { display: inline-block; padding: .1rem .55rem; border-radius: 999px; font-size: .76rem; font-weight: 650; white-space: nowrap; }
+.status-link.conferido { border: 1px solid var(--pri); background: var(--pri); color: #fff; }
+.status-link.listado { border: 1px dashed var(--bor-forte); background: var(--aviso-fundo); color: var(--mut); }
+.url-curta { margin: .3rem 0 0; color: var(--mut); font-size: .8rem; overflow-wrap: anywhere; }
+.legenda { display: flex; flex-wrap: wrap; gap: .5rem 1.2rem; margin: .6rem 0 0; font-size: .88rem; color: var(--mut); }
+.legenda span { display: inline-flex; align-items: center; gap: .4rem; }
+.contagem { margin: .2rem 0 .8rem; color: var(--mut); font-size: .9rem; }
+
+.entrada-rapida { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem; margin: 1rem 0 0; }
+
+@media (max-width: 760px) {
+  .grade-cartoes, .entrada-rapida { grid-template-columns: minmax(0, 1fr); }
+  .cartao .cab-cartao { flex-direction: column; gap: .3rem; }
+  .selos { justify-content: flex-start; }
+}
+@media (forced-colors: active) { .status-link, .botao-acao, .chips-filtro button { border: 1px solid CanvasText; } }
+
+/* texto so para leitor de tela (da contexto ao link "Abrir pagina oficial") */
+.sr-so { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }

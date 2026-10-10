@@ -143,6 +143,13 @@ def servicos_manuais(df, indice: dict) -> list[dict]:
             "objetivos": [o for o in (g("objetivos") or "").split(";") if o],
             "gratuito": True if g("gratuito") == "sim" else None,
         })
+        # campos opcionais da saude (catalogo manual): onde a unidade fica, que bairros atende e se as fontes divergem
+        if g("bairro"):
+            saida[-1]["bairro"] = g("bairro")
+        if g("bairros"):
+            saida[-1]["bairros"] = [b.strip() for b in g("bairros").split(";") if b.strip()]
+        if g("divergencia"):
+            saida[-1]["divergencia"] = g("divergencia")
         if not saida[-1]["objetivos"]:
             del saida[-1]["objetivos"]
         if saida[-1]["gratuito"] is None:

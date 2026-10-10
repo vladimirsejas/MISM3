@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>Saúde em Rio Claro — MISM3</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%2314375e%27/%3E%3Ctext x=%2716%27 y=%2722%27 font-family=%27Arial,sans-serif%27 font-size=%2714%27 font-weight=%27bold%27 text-anchor=%27middle%27 fill=%27white%27%3EM3%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="estilo.css">
+<link rel="stylesheet" href="institucional.css">
+</head>
+<body>
+<div class="faixa-institucional"><strong>Protótipo acadêmico</strong> · Fatec Rio Claro · Curso de Inteligência Artificial · não é um serviço oficial da Prefeitura</div>
+<div class="faixa-dados" role="note">Endereços e telefones copiados de páginas oficiais da Prefeitura e da Fundação de Saúde em 09/10/2026. Podem estar desatualizados: <strong>ligue e confirme antes de ir</strong>.</div>
+
+<div class="barra-emergencia" role="region" aria-label="Emergência">
+  <span><strong>Em perigo agora?</strong> Polícia <a href="tel:190">190</a> · SAMU <a href="tel:192">192</a> · Violência contra a mulher: <a href="tel:180">Ligue 180</a> (24h, gratuito)</span>
+  <button id="sair-rapido" type="button" title="Fecha esta página e abre outro site">Sair rápido</button>
+</div>
+
+<nav class="navegacao-principal" aria-label="Navegação principal">
+  <a class="marca-site" href="index.html"><span class="marca-selo" aria-hidden="true">M3</span><span class="marca-texto"><strong>MISM3</strong><span>Mapa do Cuidado · Rio Claro/SP</span></span></a>
+  <div class="links-navegacao">
+    <a href="index.html">Início</a>
+    <a href="saude.html" aria-current="page">Saúde</a>
+    <a href="secretarias.html">Secretarias</a>
+    <a href="rede-mulheres.html">De mulher para mulher</a>
+    <a href="gestao.html">Painel de gestão</a>
+    <a href="inteligencia-publica.html">Inteligência pública</a>
+  </div>
+</nav>
+
+<header class="hero hero-compacto">
+  <div class="hero-miolo">
+    <h1>Saúde em Rio Claro</h1>
+    <p>Descubra qual é a unidade de saúde do seu bairro, veja telefones e horários e saiba onde há atendimento 24 horas.</p>
+    <form id="form-bairro" class="busca-necessidade" autocomplete="off">
+      <label for="bairro">Em que bairro você mora?</label>
+      <div class="linha">
+        <input id="bairro" type="search" list="lista-bairros" maxlength="60" placeholder="Ex.: Wenzel, Jardim Chervezon, Vila Cristina" autocomplete="off" aria-describedby="ajuda-bairro">
+        <datalist id="lista-bairros"></datalist>
+        <button type="submit">Ver minha unidade</button>
+      </div>
+      <p id="ajuda-bairro" class="privacidade">Não escreva seu endereço, só o bairro. O que você digita é comparado neste aparelho e não é enviado a nenhum servidor.</p>
+    </form>
+  </div>
+</header>
+
+<main>
+  <p id="mensagem" role="status" class="mensagem" hidden></p>
+
+  <section id="resultado-bairro" class="resultado-bairro" aria-live="polite" tabindex="-1" hidden></section>
+
+  <section class="bloco urgencia" aria-labelledby="t-urgencia">
+    <h2 id="t-urgencia">Precisa de atendimento agora?</h2>
+    <p class="sub">Em risco de vida, ligue para o <a href="tel:192">SAMU 192</a>. Estas unidades funcionam 24 horas:</p>
+    <div id="lista-urgencia" class="grade-cartoes"></div>
+  </section>
+
+  <section class="bloco" id="saude-mulher" aria-labelledby="t-mulher">
+    <h2 id="t-mulher">Saúde da mulher</h2>
+    <p class="sub">As UBS informam que fazem <strong>coleta de exames, inclusive o Papanicolau</strong>. Ginecologia e obstetrícia existem <strong>só em algumas unidades</strong>: ligue para a sua UBS e pergunte antes de ir. Para mamografia e outros exames, o caminho começa na UBS do seu bairro. O <a href="#t-urgencia">Pronto Atendimento Ginecológico e Obstétrico</a> funciona 24 horas.</p>
+    <div id="docs-mulher" class="grade-cartoes"></div>
+  </section>
+
+  <section class="bloco" id="todas" aria-labelledby="t-todas">
+    <h2 id="t-todas">Todas as unidades</h2>
+    <p class="sub">Clínica geral há em todas as UBS. Pediatria, ginecologia/obstetrícia e odontologia estão só em algumas, segundo o guia da Saúde.</p>
+    <div id="filtros" class="chips-filtro" role="group" aria-label="Tipo de unidade"></div>
+    <p id="contagem" class="contagem" aria-live="polite"></p>
+    <div id="lista-unidades"></div>
+  </section>
+</main>
+
+<footer class="rodape">
+  <p><strong>De onde vêm estes dados.</strong> Guia das Unidades Básicas de Saúde, da Fundação Municipal de Saúde (página sem data de atualização), e página “Unidades Básicas de Saúde” da Prefeitura. Os telefones das unidades de urgência e das Unidades de Saúde da Família foram lidos de uma captura de tela da página da Prefeitura de 09/10/2026 e ainda precisam ser conferidos na página ao vivo.</p>
+  <p>Quando as duas fontes oficiais discordam, mostramos as duas versões em vez de escolher uma. A lista de Unidades de Saúde da Família está incompleta: a captura cortou parte dela.</p>
+  <p id="fontes"></p>
+</footer>
+
+<script src="config.js"></script>
+<script src="api.js"></script>
+<script src="institucional.js"></script>
+<script src="saude.js"></script>
+</body>
+</html>

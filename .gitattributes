@@ -1,0 +1,2 @@
+# .bat: o Git NAO converte quebras de linha (preserva os bytes). abrir_site.bat precisa ficar em CRLF para o Windows.
+*.bat -text

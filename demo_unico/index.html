@@ -19,6 +19,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="referrer" content="no-referrer">
 <title>Mapa do Cuidado – Rio Claro</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%2314375e%27/%3E%3Ctext x=%2716%27 y=%2722%27 font-family=%27Arial,sans-serif%27 font-size=%2714%27 font-weight=%27bold%27 text-anchor=%27middle%27 fill=%27white%27%3EM3%3C/text%3E%3C/svg%3E">
 <style>
 /* required styles */
 
@@ -833,6 +834,7 @@ main { padding-bottom: 2.5rem; }
 .cartao .meta { color: var(--mut); font-size: .83rem; }
 .cartao .fonte { margin-top: .5rem; padding-top: .45rem; border-top: 1px dashed var(--bor); }
 .cartao.urgente { border-left-color: var(--alerta); background: var(--alerta-fundo); }
+.cartao-destaque { border-left-color: var(--pri); background: var(--soft); }
 .vazio { color: var(--mut); }
 details.outros { margin-top: 1rem; }
 details.outros > summary { display: flex; align-items: center; min-height: 44px; color: var(--pri); cursor: pointer; font-weight: 650; }
@@ -883,6 +885,8 @@ details.outros > summary { display: flex; align-items: center; min-height: 44px;
   <a class="marca-site" href="index.html"><span class="marca-selo" aria-hidden="true">M3</span><span class="marca-texto"><strong>MISM3</strong><span>Mapa do Cuidado · Rio Claro/SP</span></span></a>
   <div class="links-navegacao">
     <a href="index.html" aria-current="page">Início</a>
+    <a href="saude.html">Saúde</a>
+    <a href="secretarias.html">Secretarias</a>
     <a href="rede-mulheres.html">De mulher para mulher</a>
     <a href="gestao.html">Painel de gestão</a>
     <a href="inteligencia-publica.html">Inteligência pública</a>
@@ -906,6 +910,28 @@ details.outros > summary { display: flex; align-items: center; min-height: 44px;
 </header>
 
 <main>
+  <section class="ferramentas-secao oficial" aria-labelledby="titulo-oficial">
+    <h2 id="titulo-oficial" class="secao-titulo">Informações oficiais de Rio Claro</h2>
+    <p class="secao-sub">Endereços, telefones e links copiados de páginas da Prefeitura e da Fundação de Saúde, cada um com a data da conferência. Confirme sempre por telefone antes de ir.</p>
+    <div class="ferramentas">
+      <article class="ferramenta">
+        <h3>Qual é a minha unidade de saúde?</h3>
+        <p>Digite o bairro e veja a UBS de referência, telefones, horários e as unidades 24 horas.</p>
+        <p class="acoes"><a href="saude.html">Encontrar minha unidade →</a></p>
+      </article>
+      <article class="ferramenta">
+        <h3>Saúde da mulher</h3>
+        <p>Onde fazer o Papanicolau, o pronto atendimento ginecológico 24 horas e os protocolos do município.</p>
+        <p class="acoes"><a href="saude.html#saude-mulher">Ver saúde da mulher →</a></p>
+      </article>
+      <article class="ferramenta">
+        <h3>Secretarias e canais oficiais</h3>
+        <p>Links das secretarias, Ouvidoria, Portal de Serviços e Transparência, com a situação de cada link.</p>
+        <p class="acoes"><a href="secretarias.html">Ver secretarias →</a></p>
+      </article>
+    </div>
+  </section>
+
   <section class="portas" aria-labelledby="titulo-portas">
     <h2 id="titulo-portas" class="secao-titulo">Ou escolha um assunto</h2>
     <p class="secao-sub">Cada assunto abre os serviços e contatos de Rio Claro. A busca acontece neste aparelho.</p>
@@ -1490,6 +1516,9 @@ window.MISM3_CONFIG = {
     c.links.forEach(function (l) {
       html += '<article class="cartao"><h3><a href="' + esc(l[1]) + '" target="_blank" rel="noopener noreferrer">' + esc(l[0]) + '</a></h3><p>' + esc(l[2]) + '</p><p class="meta">Fonte externa oficial; confira os dados e a disponibilidade no site de origem.</p></article>';
     });
+    if (chave === "saude") {  /* pagina propria, com dados reais e busca por bairro (nao depende do CEP) */
+      html = '<article class="cartao cartao-destaque"><h3><a href="saude.html">Qual é a minha unidade de saúde?</a></h3><p>Digite o seu bairro e veja a UBS de referência, telefones, horários, unidades 24 horas e saúde da mulher.</p><p class="meta">Dados de páginas oficiais, com a data da conferência.</p></article>' + html;
+    }
     var encontrados = dados.servicos ? dados.servicos.filter(function (s) { return c.tipos.indexOf(s.tipo) !== -1; }) : [];
     if (encontrados.length) {
       html += '<h3 class="subtitulo">Serviços cadastrados em Rio Claro</h3>';
@@ -1503,6 +1532,7 @@ window.MISM3_CONFIG = {
     } else {
       html += '<p class="vazio">Ainda não há serviços dessa categoria carregados no catálogo desta versão. Estamos ampliando e validando os registros. Consulte também as fontes oficiais acima.</p>';
     }
+    html += '<p class="meta">Veja também <a href="secretarias.html">todas as secretarias e canais oficiais</a>.</p>';
     if (chave === "violencia") {
       html += '<article class="cartao urgente"><h3>Ajuda imediata</h3><p>Polícia: <a href="tel:190">190</a></p><p>Central de Atendimento à Mulher: <a href="tel:180">180</a></p><p>Atendimento médico de urgência: <a href="tel:192">192</a></p><p class="meta">Se o aparelho puder estar sendo monitorado, considere usar um dispositivo seguro. O botão “Sair rápido” não apaga o histórico do navegador.</p></article>';
     }

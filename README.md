@@ -10,12 +10,22 @@ Comece escrevendo uma necessidade ou escolhendo uma porta: **Emprego, Saúde, Es
 - O mapa começa **sem** imagens externas. As ruas (OpenStreetMap) só carregam se a usuária marcar a caixa.
 - Barra fixa com 190 e Ligue 180, e botão "Sair rápido". Não prometemos que o uso é invisível: o histórico do navegador pode guardar a visita.
 
-## Ver agora (modo demonstração)
-Dê dois cliques em `abrir_site.bat` (Windows) ou rode:
+## Ver agora (um clique)
+Dê dois cliques em **`abrir_site.bat`** (Windows). Ele acha o Python, atualiza os dados oficiais de saúde e secretarias, escolhe uma porta livre (8000 a 8010), liga o servidor e abre o navegador. Para parar, feche a janela preta. Sem servidor: `abrir_demo.bat`.
 
-    python -m http.server 8000 --directory web
+| Arquivo | Para quê |
+|---|---|
+| `abrir_site.bat` | **O normal.** Site completo no navegador. |
+| `abrir_demo.bat` | Sem Python e sem servidor (arquivos em `demo_unico/`). Depois de mudar `web/`, rode `python pipeline/gerar_demo_unico.py`. |
+| `mism3.bat`, `abrir_servidor.bat`, `abrir_mism3.bat` | Variações antigas (site + API de pesquisa real, com `.env`). |
+| `montar_dados.bat` | Monta os dados reais de CEP/serviços quando você tiver as fontes. |
 
-e abra http://localhost:8000. Sem dados reais aparece a faixa amarela **DADOS ILUSTRATIVOS**; use os CEPs 00000-001, 00000-002 ou 00000-003.
+Manualmente: `python pipeline/institucional.py` e `python pipeline/servidor.py`, ou `python -m http.server 8000 --directory web`, e abra http://localhost:8000. A faixa **DADOS ILUSTRATIVOS** da tela inicial (busca por CEP e mapa) só some quando existirem `cep_indice.json` e `servicos.json` reais; as páginas **Saúde** e **Secretarias** já usam dados reais e dizem isso na tela. CEPs de teste do modo demonstração: 00000-001, 00000-002 ou 00000-003.
+
+## Saúde por bairro e secretarias (dados reais, sem CEP)
+- `web/saude.html` — "Qual é a minha unidade de saúde?": o bairro digitado é comparado **no navegador** com a área de abrangência de cada UBS (guia da Fundação de Saúde). Mostra a UBS de referência, as unidades que ficam no bairro, urgências 24 horas, saúde da mulher e todas as unidades, com botão de ligar, horário, fonte e data. Quando as duas fontes oficiais **divergem** (ex.: telefone da UBS Vila Cristina), mostra as duas versões e pede confirmação, em vez de escolher uma.
+- `web/secretarias.html` — 44 links oficiais (secretarias, canais de atendimento, páginas e documentos da Saúde) com filtro por assunto e busca. Cada link é **"conferido"** (página aberta numa data) ou **"só listado"** (consta no índice oficial, mas não foi reaberto).
+- Dados: `catalogo/servicos_manuais.csv` (linhas `tipo=saude`, com as colunas `bairro`, `bairros` e `divergencia`) e `catalogo/secretarias.csv`. O gerador `pipeline/institucional.py` valida (fonte https, data real, "listado" nunca com data) e grava `web/dados/institucional.json`, que **vai para o GitHub** porque vem de CSV versionado. Para atualizar: edite o CSV e dê dois cliques em `abrir_site.bat`.
 
 ## Usar dados reais (na sua máquina, com internet)
 Requer Python 3.10+ e `pip install pandas numpy`.
@@ -43,12 +53,13 @@ Se um download automático falhar (os sites mudam), o script diz onde baixar à 
     node web/tests/vagas.test.js
     node web/tests/necessidades.test.js
     node web/tests/api.test.js
+    node web/tests/institucional.test.js
 
 ## Conferir o catálogo contra as páginas oficiais
 Com internet, rode `python pipeline/verificar_catalogo.py`. Ele abre a fonte de cada serviço e confere se os telefones cadastrados aparecem na página. "ATENCAO" não é erro certo: abra a fonte e confira.
 
 ## Acrescentar um serviço verificado
-Edite `catalogo/servicos_manuais.csv`. Obrigatórios: `tipo` (creche, saude, assistencia, mulher, emprego_curso), `nome`, `fonte_url`, `verificado_em`. Com `cep`, o serviço entra no mapa; `abrangencia=municipal` faz aparecer para todas. Depois rode `python pipeline/servicos.py`.
+Edite `catalogo/servicos_manuais.csv`. Obrigatórios: `tipo` (creche, saude, assistencia, mulher, emprego_curso), `nome`, `fonte_url`, `verificado_em`. Para `saude`: `subtipo` (urgencia, ubs, usf, caps, vigilancia), `bairro` (onde fica), `bairros` (bairros atendidos, separados por `;`) e, se as fontes discordarem, `divergencia`. Com `cep`, o serviço entra no mapa; `abrangencia=municipal` faz aparecer para todas. Depois rode `python pipeline/servicos.py`.
 
 ## Busca por necessidade ("escreva e abrimos as portas")
 Na tela inicial a pessoa toca numa "porta" (Emprego, Saúde, Estudo, Filhos, Casamento e direitos, Violência, Família) ou **escreve uma frase** ("preciso de emprego, mas tenho uma criança pequena"). A frase pode ter até 3 necessidades: o site mostra "Entendemos que você procura: [Emprego ✕] [Filhos ✕]" e a pessoa tira o que não serve. A regra está em `web/necessidades.js` e compara **palavras inteiras, radicais e expressões** (não pedaços de palavra, por isso "divagar" não vira "vaga"); palavras amplas como "dinheiro" e "bolsa" só valem dentro de expressões. "Violência" sempre vem primeiro e também é reconhecida de forma indireta ("ele me bate", "não deixa eu sair"). A lista de **47 frases de aceitação** em `web/tests/necessidades.test.js` é o roteiro da apresentação: para ensinar uma frase nova, acrescente-a lá primeiro. O texto digitado não sai do navegador.
