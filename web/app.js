@@ -212,7 +212,7 @@
       dados.servicos = [];
       $("porta-m2m").hidden = true;
       $("form-cep").querySelectorAll("input, button").forEach(function (el) { el.disabled = true; });
-      mostrarMensagem("A busca por CEP está temporariamente indisponível porque o catálogo real ainda não foi gerado nesta instalação. Nenhum dado fictício será exibido. Os caminhos e contatos oficiais continuam disponíveis acima.");
+      mostrarMensagem("A busca por CEP está temporariamente indisponível porque o catálogo real ainda não foi gerado nesta instalação. Para evitar informações incorretas, deixamos essa busca desativada. Os caminhos e contatos oficiais continuam disponíveis acima.");
       $("fontes").textContent = "Catálogo real não carregado. A busca por CEP só será habilitada quando os arquivos oficiais estiverem disponíveis.";
     });
   }
