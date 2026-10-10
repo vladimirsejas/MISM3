@@ -108,7 +108,7 @@
       porGrupo[g].push(s);
     });
     /* Ordem lógica por público; grupos novos (não listados) vão para o fim. */
-    var PREFERIDA = ["Crianças e adolescentes", "Adultos (30 a 59 anos)", "Pessoas idosas (65 anos ou mais)", "APAE — pessoas com deficiência",
+    var PREFERIDA = ["Secretaria de Saúde", "Crianças e adolescentes", "Adultos (30 a 59 anos)", "Pessoas idosas (65 anos ou mais)", "APAE — pessoas com deficiência",
       "Unidade básica de saúde", "Pronto atendimento / urgência", "Hospital", "CAPS (saúde mental)", "Atendimento especializado", "Saúde da criança e do adolescente"];
     ordem.sort(function (x, y) {
       var a = PREFERIDA.indexOf(x), b = PREFERIDA.indexOf(y);
@@ -172,7 +172,7 @@
       html += '<div class="status" role="note"><strong>Importante.</strong> ' + area.avisos.map(esc).join(" ") + "</div>";
     }
     var pend = (area.pendencias || []).slice();
-    if (area.pendenciasSemBase && !dados.servicos.some(function (s) { return /CNES/.test(s.fonte || ""); })) pend = area.pendenciasSemBase.concat(pend.filter(function (p) { return !/CNES/.test(p); }));
+    if (area.pendenciasSemBase && !dados.servicos.some(function (s) { return /^cnes-/.test(String(s.id || "")); })) pend = area.pendenciasSemBase.concat(pend.filter(function (p) { return !/CNES/.test(p); }));
     if (pend.length) {
       html += '<aside class="pendente" aria-label="Ainda não disponível ou não confirmado"><h2>Ainda não disponível ou não confirmado</h2><ul>' +
         pend.map(function (p) { return "<li>" + esc(p) + "</li>"; }).join("") + "</ul></aside>";

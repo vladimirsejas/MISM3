@@ -86,6 +86,9 @@ assert(cei && cei.tipo === "saude" && cei.conferido === false && /11\/10\/2019/.
 assert.strictEqual(cei.telefone, "(19) 3523-3754 / (19) 3533-4055 / (19) 3524-5770");
 assert(/Rua 15, entre as avenidas 23 e 25/.test(cei.endereco) && /Criari/.test(cei.observacao) && /Caps IJ/.test(cei.observacao) && /CEO/.test(cei.observacao));
 assert(/odontologia do CHI/.test(porNome["Centro de Habilitação Infantil “Princesa Victória” (CHI)"].observacao), "a mudança da odontologia do CHI deve constar no cartão do CHI");
+const fund = porNome["Fundação Municipal de Saúde de Rio Claro"];
+assert(fund && fund.tipo === "saude" && fund.telefone === "(19) 3522-3600" && fund.cep === "13500190" && /Rua 6, 2572/.test(fund.endereco), "contato da Fundação de Saúde conforme o CNES");
+assert(/cnes2\.datasus\.gov\.br/.test(fund.fonte_url) && /desatualizados/.test(fund.observacao), "dado do CNES deve citar a fonte e avisar que pode estar desatualizado");
 const apae = catalogo.servicos.filter((s) => s.subtipo === "apae");
 assert.strictEqual(apae.length, 2, "o site da APAE lista duas unidades de atendimento");
 assert.strictEqual(porNome["APAE Rio Claro – Unidade Central"].telefone, "(19) 2112-2700 / (19) 99694-2420 (WhatsApp)");
@@ -133,6 +136,7 @@ assert(index.includes('class="pular"'), "falta o link para pular ao conteúdo");
 assert(app.includes("history.state && history.state.app"), "Voltar deve usar o histórico apenas quando a navegação começou no sistema");
 assert(app.includes("linksTelefone") && !/replace\(\/\[\^\\d\+\]\/g, ""\)\) \+ '">' \+ esc\(s\.telefone/.test(app), "telefones múltiplos devem ter um link cada");
 assert(app.includes("PREFERIDA") && app.includes("grupo-recolhido"), "unidades de convivência devem ficar em grupos recolhidos, em ordem por público");
+assert(app.includes('/^cnes-/.test(String(s.id'), "a base do CNES deve ser detectada pelo id cnes-, não por menção ao CNES na fonte (a Fundação de Saúde cita o CNES e é cadastro manual)");
 assert(app.includes("busca-por-cep"), "a busca por CEP deve continuar existindo");
 assert(css.includes(".emergencia>summary") && css.includes("min-height:44px"), "alvos de toque devem ter pelo menos 44px");
 assert(!/prefers-color-scheme:\s*dark/.test(css), "a interface deve manter o fundo claro");
