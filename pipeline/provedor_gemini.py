@@ -14,6 +14,7 @@ Ligar:  coloque no .env da raiz do projeto
 
 Testar sozinho, sem o site:   python pipeline/provedor_gemini.py "preciso de emprego e tenho filho pequeno"
 Ver a estrutura bruta da resposta:   python pipeline/provedor_gemini.py --bruto "preciso de emprego"
+Diagnostico de cota (testa a chave SEM a busca): python pipeline/provedor_gemini.py --sem-busca x
 """
 from __future__ import annotations
 
@@ -83,10 +84,15 @@ def converter(resp, hoje: str | None = None) -> dict:
     return {"necessidades": [], "resultados": resultados[:10]}
 
 
-def _configuracao():
-    """Ferramenta de busca do Gemini. Separado para os testes nao precisarem do pacote."""
+def _configuracao(sem_busca: bool = False):
+    """Ferramenta de busca do Gemini. Separado para os testes nao precisarem do pacote.
+    sem_busca=True e so para diagnostico: separa "a cota geral acabou" de "a cota da busca acabou"."""
     from google.genai import types
-    return types.GenerateContentConfig(tools=[types.Tool(google_search=types.GoogleSearch())], temperature=0.2)
+    ferramentas = None if sem_busca else [types.Tool(google_search=types.GoogleSearch())]
+    return types.GenerateContentConfig(
+        tools=ferramentas, temperature=0.2,
+        automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),  # tira um aviso inutil do SDK
+    )
 
 
 def _cliente():
@@ -95,6 +101,27 @@ def _cliente():
         raise RuntimeError("GEMINI_API_KEY nao encontrada (coloque no .env da raiz do projeto)")
     from google import genai
     return genai.Client(api_key=chave)
+
+
+DICAS_ERRO = {
+    400: "pedido invalido ou chave invalida. Confira o GEMINI_API_KEY no .env (sem aspas, sem espacos).",
+    401: "chave nao aceita. Gere outra no Google AI Studio e troque no .env.",
+    403: "a chave nao tem permissao (projeto sem a API ativada, ou regiao nao permitida).",
+    404: "modelo nao encontrado. Troque o nome com MISM3_GEMINI_MODELO no .env.",
+    429: "COTA ESGOTADA (a chave FUNCIONA). Veja o uso em https://ai.dev/rate-limit . Causas comuns: o limite gratis do dia/minuto "
+         "acabou (inclusive se o MISM2 usa a mesma chave), ou a busca na web nao esta liberada no plano gratis. "
+         "Teste com --sem-busca para separar as duas.",
+    500: "erro no servico do Google. Tente de novo em instantes.",
+    503: "servico do Google sobrecarregado. Tente de novo em instantes.",
+}
+
+
+def explicar_erro(e: Exception) -> str:
+    """Traduz o erro da API para uma frase util. Nunca inclui a chave."""
+    codigo = getattr(e, "code", None)
+    status = getattr(e, "status", None) or type(e).__name__
+    dica = DICAS_ERRO.get(codigo, "erro inesperado; rode de novo com --bruto ou me mostre as 3 ultimas linhas.")
+    return "ERRO da API do Gemini: %s %s. %s" % (codigo if codigo is not None else "", status, dica)
 
 
 def pesquisar(texto: str, contexto: dict | None = None, cliente=None) -> dict:
@@ -122,15 +149,22 @@ if __name__ == "__main__":
         carregar_env()
     except Exception:  # noqa: BLE001
         pass
-    args = [a for a in sys.argv[1:] if a != "--bruto"]
+    args = [a for a in sys.argv[1:] if a not in ("--bruto", "--sem-busca")]
     if not args:
         sys.exit('uso: python pipeline/provedor_gemini.py [--bruto] "frase da usuaria"')
     try:
         cli = _cliente()
     except RuntimeError as e:
         sys.exit("ERRO: %s" % e)
-    if "--bruto" in sys.argv:
-        r = cli.models.generate_content(model=MODELO, contents=PROMPT.format(texto=args[0][:300]), config=_configuracao())
-        print(json.dumps(_bruto(r), ensure_ascii=False, indent=2))
-    else:
-        print(json.dumps(pesquisar(args[0], cliente=cli), ensure_ascii=False, indent=2))
+    sem_busca = "--sem-busca" in sys.argv
+    try:
+        if sem_busca:   # diagnostico: so gera texto, sem buscar na web. NAO e o resultado que o site usa.
+            r = cli.models.generate_content(model=MODELO, contents="Responda apenas: ok", config=_configuracao(sem_busca=True))
+            print("Sem a ferramenta de busca, a chave e o modelo funcionam. Resposta: %s" % (r.text or "").strip()[:60])
+        elif "--bruto" in sys.argv:
+            r = cli.models.generate_content(model=MODELO, contents=PROMPT.format(texto=args[0][:300]), config=_configuracao())
+            print(json.dumps(_bruto(r), ensure_ascii=False, indent=2))
+        else:
+            print(json.dumps(pesquisar(args[0], cliente=cli), ensure_ascii=False, indent=2))
+    except Exception as e:  # noqa: BLE001 - qualquer falha da API vira uma frase util, sem traceback
+        sys.exit(explicar_erro(e))

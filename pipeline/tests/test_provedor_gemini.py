@@ -124,3 +124,13 @@ def test_env_gravado_no_windows_tambem_e_lido(tmp_path, monkeypatch, codificacao
     assert os.environ["GEMINI_API_KEY"] == "abc123"          # sem \r nem BOM grudados
     monkeypatch.delenv("GEMINI_API_KEY", raising=False)
     monkeypatch.delenv("MISM3_PROVEDOR", raising=False)
+
+
+def test_erros_da_api_viram_frase_util_sem_vazar_nada():
+    e429 = NS(code=429, status="RESOURCE_EXHAUSTED")
+    msg = pg.explicar_erro(e429)
+    assert "COTA ESGOTADA" in msg and "a chave FUNCIONA" in msg and "--sem-busca" in msg
+    assert "MISM3_GEMINI_MODELO" in pg.explicar_erro(NS(code=404, status="NOT_FOUND"))
+    assert "chave" in pg.explicar_erro(NS(code=400, status="INVALID_ARGUMENT")).lower()
+    desconhecido = pg.explicar_erro(ValueError("boom"))
+    assert "erro inesperado" in desconhecido and "ValueError" in desconhecido
