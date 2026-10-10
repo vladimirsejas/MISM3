@@ -138,7 +138,7 @@ def servicos_manuais(df, indice: dict) -> list[dict]:
             "nome": g("nome"), "cep": normalizar_cep(g("cep")), "endereco": g("endereco"),
             "telefone": g("telefone"), "horario": g("horario"), "lat": lat, "lon": lon, "geo": geo,
             "abrangencia": g("abrangencia") or "local",
-            "fonte": "Pesquisa na internet; não conferida na página oficial" if nao_conferido else (g("fonte") or "Página oficial do órgão"),
+            "fonte": (g("fonte") or "Pesquisa na internet; não conferida na página oficial") if nao_conferido else (g("fonte") or "Página oficial do órgão"),
             "fonte_url": g("fonte_url"), "verificado_em": g("verificado_em"), "observacao": g("observacao"),
             "conferido": not nao_conferido,
             "bairros": g("bairros"),
