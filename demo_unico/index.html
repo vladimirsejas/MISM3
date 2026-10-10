@@ -1929,11 +1929,8 @@ window.MISM3_CONFIG = {
     $("resultado").scrollIntoView({ behavior: "smooth" });
   });
 
-  $("sair-rapido").addEventListener("click", function () {
-    $("cep").value = ""; $("necessidade").value = ""; $("grupos").innerHTML = ""; $("sugestoes").innerHTML = "";
-    $("painel-categoria").hidden = true; $("opcoes-categoria").innerHTML = ""; $("entendimento").innerHTML = ""; $("resultados-reais").innerHTML = ""; veioDoTexto = false; ultimo = null; objetivo = null; necessidades = [];
-    window.location.replace("https://www.google.com.br/");
-  });
+  /* O botão de emergência não apaga dados nem redireciona para um site aleatório.
+     A navegação para os contatos de emergência é controlada pelo menu global. */
 
   if (Api.cfg().modo === "api" && Api.cfg().pesquisaRemota) {
     $("ajuda-necessidade").textContent = "Não escreva nomes, documentos ou detalhes pessoais. Para pesquisar, sua frase é enviada ao servidor do projeto" + (Api.cfg().pesquisaDestino ? " e ao serviço " + Api.cfg().pesquisaDestino : "") + " (frases sobre violência nunca são enviadas).";
@@ -1960,7 +1957,7 @@ window.MISM3_CONFIG = {
     nav.innerHTML = links.map(function (item) {
       var page = item[0].split("?")[0].split("#")[0];
       var current = (location.pathname.split("/").pop() || "index.html") === page && !item[0].includes("?");
-      return '<a href="' + item[0] + '"' + (current ? ' aria-current="page"' : "") + '>' + item[1] + '</a>';
+      return '<a href="' + item[0] + '" class="' + (item[1] === 'Home' ? 'botao-home' : 'link-menu') + '"' + (current ? ' aria-current="page"' : "") + '>' + item[1] + '</a>';
     }).join("");
   });
   var emergency = document.getElementById("sair-rapido");
