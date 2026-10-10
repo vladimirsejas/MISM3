@@ -5,20 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="referrer" content="no-referrer">
 <title>De Mulher para Mulher — MISM3</title>
-<style>
-:root{--bg:#fbf8f6;--fg:#2a2230;--mut:#6b6275;--pri:#6b2d8a;--pale:#f1e6f6;--bor:#e4dbe9;--warn:#ffd54a}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
-.demo{background:var(--warn);color:#3b2f00;padding:.65rem 1rem;text-align:center;font-weight:800}
-header,main,footer{max-width:1000px;margin:auto;padding:1rem}header h1{margin:.6rem 0 .2rem}a{color:var(--pri)}.back{display:inline-block;margin:.2rem 0 1rem;font-weight:700}
-.note{color:var(--mut);max-width:75ch}.tools{display:flex;gap:.7rem;flex-wrap:wrap;margin:1rem 0}.tools input,.tools select,input,textarea,select{font:inherit;padding:.65rem;border:1px solid var(--bor);border-radius:.5rem;background:white;color:#2a2230}.tools input{flex:1;min-width:200px}
-button{font:inherit;border:0;border-radius:.5rem;background:var(--pri);color:white;font-weight:700;padding:.7rem 1rem;cursor:pointer}button.secondary{background:var(--pale);color:var(--pri);border:1px solid var(--bor)}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}.card{border:1px solid var(--bor);border-radius:.8rem;padding:1rem;background:white;display:flex;flex-direction:column;gap:.45rem}.avatar{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:var(--pale);color:var(--pri);font-size:1.4rem;font-weight:800}.card h2{font-size:1.1rem;margin:.2rem 0}.tags{display:flex;flex-wrap:wrap;gap:.35rem}.tag,.seal{font-size:.78rem;border-radius:99px;padding:.25rem .55rem;background:var(--pale);color:var(--pri);font-weight:700}.seal{background:#e8f4e8;color:#245c2a}.seal.demo{background:#fff0cc;color:#755000}.meta{font-size:.85rem;color:var(--mut)}.card button{margin-top:auto}.panel{margin:1.5rem 0;padding:1rem;border:1px solid var(--bor);border-radius:.8rem;background:var(--pale)}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}.field{display:flex;flex-direction:column;gap:.3rem}.field.full{grid-column:1/-1}textarea{min-height:85px;resize:vertical}.hidden{display:none}.preview{padding:.8rem;background:white;border-radius:.5rem;margin-top:.8rem}.status{padding:.8rem;background:white;border-left:4px solid var(--pri);margin:.8rem 0}.empty{padding:1rem;border:1px dashed var(--bor);border-radius:.5rem}.foot{color:var(--mut);font-size:.85rem}
-@media(max-width:760px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){.grid,.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.tools{flex-direction:column}.tools input,.tools select{width:100%}}
-</style>
+<link rel="stylesheet" href="estilo.css">
+<link rel="stylesheet" href="paginas.css">
 </head>
-<body>
-<div class="demo">MISM3 · PROTÓTIPO FECHADO · PERFIS, SELOS E DENÚNCIAS SÃO FICTÍCIOS [DEMO]</div>
-<header>
-<a class="back" href="index.html">← Voltar ao Mapa do Cuidado</a>
+<body class="pagina">
+<div class="faixa-institucional"><strong>Protótipo acadêmico</strong> · Fatec Rio Claro · Curso de Inteligência Artificial · não é um serviço oficial da Prefeitura</div>
+<div class="faixa-demo" role="note">Perfis, selos e denúncias desta página são fictícios e servem apenas para demonstração.</div>
+
+<nav class="navegacao-principal" aria-label="Navegação principal">
+  <a class="marca-site" href="index.html"><span class="marca-selo" aria-hidden="true">M3</span><span class="marca-texto"><strong>MISM3</strong><span>Mapa do Cuidado · Rio Claro/SP</span></span></a>
+  <div class="links-navegacao">
+    <a href="index.html">Início</a>
+    <a href="rede-mulheres.html" aria-current="page">De mulher para mulher</a>
+    <a href="gestao.html">Painel de gestão</a>
+    <a href="inteligencia-publica.html">Inteligência pública</a>
+  </div>
+</nav>
+<header class="topo">
+<p class="breadcrumb"><a href="index.html">Início</a> › De mulher para mulher</p>
 <h1>De Mulher para Mulher</h1>
 <p>Uma ideia de rede para compartilhar experiências, indicar oportunidades e encontrar apoio entre mulheres.</p>
 <p class="note">Esta tela demonstra uma possível experiência de navegação. Não existe cadastro real, verificação de identidade, publicação ou envio de denúncias. Os selos são exemplos visuais, não atestados de confiança.</p>
@@ -62,7 +66,7 @@ button{font:inherit;border:0;border-radius:.5rem;background:var(--pri);color:whi
 <div id="retorno-denuncia" class="status hidden" role="status"></div>
 </section>
 </main>
-<footer><p class="foot">Decisão para uma versão futura: definir critérios claros, evidências necessárias, revisão humana, recurso contra decisões e proteção contra denúncias abusivas. Nenhum nível deve ser apresentado como “identidade verificada” enquanto não houver um processo real de verificação.</p></footer>
+<footer class="rodape"><p class="foot">Decisão para uma versão futura: definir critérios claros, evidências necessárias, revisão humana, recurso contra decisões e proteção contra denúncias abusivas. Nenhum nível deve ser apresentado como “identidade verificada” enquanto não houver um processo real de verificação.</p></footer>
 <script>
 (function(){
 "use strict";

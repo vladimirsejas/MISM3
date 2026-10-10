@@ -2,27 +2,26 @@
   --surface-1: var(--surface);
   --grid: var(--bor);
   --ink: var(--fg);
-  --ink-2: #455752;
+  --ink-2: #3b4757;
   --ink-3: var(--mut);
-  --s1: #245b57;
-  --s2: #8b9e98;
-  --seq-1: #e0ebe7; --seq-2: #b8d1c8; --seq-3: #8db8aa; --seq-4: #568e80; --seq-5: #245b57;
-  --ord-1: #e0ebe7; --ord-2: #b8d1c8; --ord-3: #8db8aa; --ord-4: #568e80; --ord-5: #245b57;
-  --meter-trilho: #e0ebe7; --meter-fill: #397d72; --neutro: #c7ceca;
-  --alerta-icone: #a83232;
+  --s1: #14375e;
+  --s2: #8796aa;
+    --seq-1: #e3ebf5; --seq-2: #b9cce3; --seq-3: #86a8cf; --seq-4: #4c7fb5; --seq-5: #14375e;
+    --ord-1: #e3ebf5; --ord-2: #b9cce3; --ord-3: #86a8cf; --ord-4: #4c7fb5; --ord-5: #14375e;
+  --meter-trilho: #e3ebf5; --meter-fill: #1f5a96; --neutro: #c3ccd8;
+  --alerta-icone: #a1262b;
 }
 main { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; align-items:start; }
 main>.painel-largo { grid-column:1/-1; }
-.topo { padding-bottom:1.2rem; }
 .sub { margin:.25rem 0 .75rem; color:var(--mut); font-size:.93rem; }
 .meta { color:var(--mut); font-size:.88rem; }
 .visao { display:flex; align-items:center; flex-wrap:wrap; gap:.45rem; margin:.8rem 0 .4rem; }
 .visao-rotulo { margin-right:.3rem; font-weight:650; }
-.visao button { min-height:42px; padding:.5rem .8rem; border:1px solid var(--bor); border-radius:6px; background:var(--surface); color:var(--pri); font-weight:600; }
+.visao button { min-height:42px; padding:.5rem .9rem; border:1px solid var(--bor-forte); border-radius:var(--radius); background:var(--surface); color:var(--pri); font-weight:600; }
 .visao button[aria-pressed="true"] { border-color:var(--pri); background:var(--pri); color:#fff; }
 body[data-visao="publica"] [data-somente-gestao] { display:none; }
-.aviso-prototipo { max-width:80ch; margin:.8rem 0 0; padding:.75rem .9rem; border-left:3px solid #b59b61; background:#fbf8f0; color:#504832; font-size:.9rem; }
-.cartao-viz { min-width:0; padding:1.1rem; border:1px solid var(--bor); border-radius:var(--radius); background:var(--surface); }
+.aviso-prototipo { max-width:80ch; margin:.8rem 0 0; padding:.7rem .9rem; border:1px solid var(--bor); border-left:4px solid var(--bor-forte); border-radius:3px; background:var(--aviso-fundo); color:#2f3b4a; font-size:.9rem; }
+.cartao-viz { min-width:0; padding:1.1rem 1.2rem; border:1px solid var(--bor); border-top:3px solid var(--pri); border-radius:var(--radius); background:var(--surface); box-shadow:var(--shadow); }
 .cartao-viz h2 { margin:.05rem 0 .3rem; font-size:1.12rem; }
 .cartao-viz svg:not(.leaflet-zoom-animated) { display:block; width:100%; height:auto; overflow:visible; }
 .cartao-viz svg text { font:12px/1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; fill:var(--ink-2); }
@@ -32,7 +31,7 @@ body[data-visao="publica"] [data-somente-gestao] { display:none; }
 .marca { cursor:default; outline:none; }
 .marca:focus-visible { outline:2px solid var(--pri); outline-offset:2px; }
 #kpis { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:.75rem; }
-.tile { min-width:0; padding:.9rem; border:1px solid var(--bor); border-radius:var(--radius); background:var(--surface); }
+.tile { min-width:0; padding:.9rem; border:1px solid var(--bor); border-radius:var(--radius); background:var(--surface); box-shadow:var(--shadow); }
 .tile .rot { margin:0; color:var(--mut); font-size:.86rem; line-height:1.4; }
 .tile .val { margin:.35rem 0; color:var(--fg); font-size:clamp(1.6rem,2.5vw,2.1rem); line-height:1.1; font-weight:700; font-variant-numeric:tabular-nums; }
 .tile .delta { margin:0; color:var(--mut); font-size:.85rem; line-height:1.45; }
@@ -59,7 +58,7 @@ details.tabela td.n, details.tabela th.n { text-align:right; font-variant-numeri
 .dica { position:fixed; z-index:1000; max-width:260px; padding:.5rem .65rem; border:1px solid var(--bor); border-radius:6px; background:var(--surface); color:var(--fg); font-size:.85rem; box-shadow:0 4px 16px #0002; pointer-events:none; }
 .dica b { display:block; margin-bottom:.15rem; }
 .lista-acoes { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr)); gap:.75rem; }
-.acao-card { min-width:0; padding:1rem; border:1px solid var(--bor); border-radius:8px; background:var(--bg); }
+.acao-card { min-width:0; padding:1rem; border:1px solid var(--bor); border-radius:var(--radius); background:var(--bg); }
 .acao-card h3 { margin:.3rem 0 .65rem; font-size:1.02rem; line-height:1.35; }
 .acao-card p { margin:.45rem 0; color:var(--mut); font-size:.9rem; line-height:1.5; }
 .acao-card p strong { color:var(--fg); }

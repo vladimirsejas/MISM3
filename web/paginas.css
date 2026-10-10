@@ -1,0 +1,43 @@
+/* Estilos das paginas internas (rede-mulheres, inteligencia-publica) sobre o sistema visual de estilo.css. */
+.pagina button:not(.voltar):not([id="sair-rapido"]) { border: 1px solid var(--pri); border-radius: var(--radius); background: var(--pri); color: #fff; font-weight: 650; padding: .6rem 1rem; }
+.pagina button:not(.voltar):not([id="sair-rapido"]):hover { background: var(--pri-hover); }
+.pagina button.secondary { background: var(--surface); color: var(--pri); border-color: var(--bor-forte); }
+.pagina button.secondary:hover { background: var(--soft); }
+.button { display: inline-block; padding: .6rem 1rem; border: 1px solid var(--pri); border-radius: var(--radius); background: var(--pri); color: #fff; font-weight: 650; }
+.pagina input, .pagina textarea, .pagina select { padding: .6rem .75rem; border: 1px solid var(--bor-forte); border-radius: var(--radius); background: var(--surface); color: var(--fg); }
+.pagina textarea { min-height: 90px; resize: vertical; }
+.note, .muted { max-width: 75ch; color: var(--mut); }
+.small, .foot { color: var(--mut); font-size: .85rem; }
+.hidden { display: none; }
+.tools { display: flex; gap: .7rem; flex-wrap: wrap; margin: 1rem 0; }
+.tools input { flex: 1; min-width: 200px; }
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.card { display: flex; flex-direction: column; gap: .45rem; padding: 1.05rem; border: 1px solid var(--bor); border-top: 3px solid var(--pri); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
+.card h2 { margin: .2rem 0; font-size: 1.05rem; }
+.card button { margin-top: auto; }
+.avatar { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--soft); color: var(--pri); font-size: 1.2rem; font-weight: 700; }
+.tags { display: flex; flex-wrap: wrap; gap: .35rem; }
+.tag, .seal { display: inline-block; padding: .1rem .5rem; border: 1px solid var(--bor-forte); border-radius: 3px; background: var(--soft); color: var(--pri); font-size: .76rem; font-weight: 650; }
+.seal { background: #fff; }
+.seal.demo { border-style: dashed; color: var(--mut); background: var(--aviso-fundo); }
+.panel { margin: 1.5rem 0; padding: 1.1rem 1.2rem; border: 1px solid var(--bor); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
+.panel > h2 { margin-top: 0; padding-bottom: .5rem; border-bottom: 2px solid var(--pri); font-size: 1.2rem; }
+.formgrid { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
+.field { display: flex; flex-direction: column; gap: .3rem; }
+.field.full { grid-column: 1 / -1; }
+.preview { margin-top: .8rem; padding: .8rem; border: 1px solid var(--bor); border-radius: var(--radius); background: var(--bg); }
+.status { margin: .8rem 0; padding: .8rem 1rem; border: 1px solid var(--bor); border-left: 4px solid var(--pri); border-radius: 3px; background: var(--surface); }
+.empty { padding: 1rem; border: 1px dashed var(--bor-forte); border-radius: var(--radius); color: var(--mut); }
+.callout { padding: .8rem 1rem; border: 1px solid var(--bor); border-left: 4px solid var(--pri); border-radius: 3px; background: var(--soft); }
+.warn { padding: .8rem 1rem; border: 1px solid var(--bor); border-left: 4px solid var(--bor-forte); border-radius: 3px; background: var(--aviso-fundo); color: #2f3b4a; }
+.metric { color: var(--pri); font-size: 1.9rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.barrow { display: grid; grid-template-columns: 9rem 1fr 3rem; align-items: center; gap: .6rem; margin: .7rem 0; }
+.track { height: .85rem; overflow: hidden; border-radius: 3px; background: var(--soft); }
+.bar { height: 100%; width: 0; background: var(--pri); }
+.bar.demo { background: #86a8cf; }
+table { width: 100%; border-collapse: collapse; background: var(--surface); }
+th, td { padding: .65rem; border-bottom: 1px solid var(--bor); text-align: left; }
+th { background: var(--soft); color: var(--pri); font-size: .88rem; }
+@media (max-width: 760px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 720px) { .barrow { grid-template-columns: 7rem 1fr 2rem; } table { font-size: .9rem; } }
+@media (max-width: 520px) { .grid, .formgrid { grid-template-columns: 1fr; } .field.full { grid-column: auto; } .tools { flex-direction: column; } .tools input, .tools select { width: 100%; } }

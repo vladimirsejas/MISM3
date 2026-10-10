@@ -5,15 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="referrer" content="no-referrer">
 <title>Inteligência Pública — MISM3</title>
-<style>
-:root{--bg:#fbf8f6;--fg:#2a2230;--mut:#6b6275;--pri:#6b2d8a;--pale:#f1e6f6;--bor:#e4dbe9;--warn:#ffd54a}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}header,main,footer{max-width:1050px;margin:auto;padding:1rem}.demo{background:var(--warn);color:#3b2f00;padding:.65rem 1rem;text-align:center;font-weight:800}.back{font-weight:700;color:var(--pri)}h1{margin:.6rem 0 .2rem}.muted{color:var(--mut);max-width:80ch}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}.card{background:white;border:1px solid var(--bor);border-radius:.8rem;padding:1rem}.card h2{font-size:1rem;margin:0 0 .5rem}.metric{font-size:1.8rem;font-weight:800;color:var(--pri)}.tag{display:inline-block;font-size:.75rem;font-weight:800;border-radius:99px;background:#fff0cc;color:#755000;padding:.2rem .55rem}.panel{margin:1rem 0;padding:1rem;border:1px solid var(--bor);border-radius:.8rem}.barrow{display:grid;grid-template-columns:9rem 1fr 3rem;align-items:center;gap:.6rem;margin:.7rem 0}.track{height:1rem;background:var(--pale);border-radius:99px;overflow:hidden}.bar{height:100%;background:var(--pri);width:0}.bar.demo{background:#ad83c4}.callout{border-left:4px solid var(--pri);background:var(--pale);padding:.8rem 1rem}.warn{border-left:4px solid #a16b00;background:#fff5d8;padding:.8rem 1rem}.button{font:inherit;font-weight:700;padding:.65rem 1rem;border:0;border-radius:.5rem;background:var(--pri);color:white;cursor:pointer}.hidden{display:none}.small{font-size:.85rem;color:var(--mut)}table{border-collapse:collapse;width:100%;background:white}th,td{text-align:left;padding:.65rem;border-bottom:1px solid var(--bor)}@media(max-width:720px){.grid{grid-template-columns:1fr}.barrow{grid-template-columns:7rem 1fr 2rem}table{font-size:.9rem}}
-</style>
+<link rel="stylesheet" href="estilo.css">
+<link rel="stylesheet" href="paginas.css">
 </head>
-<body>
-<div class="demo">MISM3 · PAINEL CONCEITUAL · INDICADORES DE EXEMPLO [DEMO] NÃO SÃO ESTATÍSTICAS OFICIAIS</div>
-<header>
-<a class="back" href="index.html">← Voltar ao Mapa do Cuidado</a>
+<body class="pagina">
+<div class="faixa-institucional"><strong>Protótipo acadêmico</strong> · Fatec Rio Claro · Curso de Inteligência Artificial · não é um serviço oficial da Prefeitura</div>
+<div class="faixa-demo" role="note">Painel conceitual: indicadores de exemplo, não são estatísticas oficiais.</div>
+
+<nav class="navegacao-principal" aria-label="Navegação principal">
+  <a class="marca-site" href="index.html"><span class="marca-selo" aria-hidden="true">M3</span><span class="marca-texto"><strong>MISM3</strong><span>Mapa do Cuidado · Rio Claro/SP</span></span></a>
+  <div class="links-navegacao">
+    <a href="index.html">Início</a>
+    <a href="rede-mulheres.html">De mulher para mulher</a>
+    <a href="gestao.html">Painel de gestão</a>
+    <a href="inteligencia-publica.html" aria-current="page">Inteligência pública</a>
+  </div>
+</nav>
+<header class="topo">
+<p class="breadcrumb"><a href="index.html">Início</a> › Inteligência pública</p>
 <h1>Inteligência Pública</h1>
 <p class="muted">Uma visão para ajudar gestores a formular perguntas sobre demanda de cuidado, oferta de serviços e possíveis lacunas territoriais. O painel separa o que foi carregado de fonte original do que é apenas uma simulação.</p>
 <div class="warn"><strong>Estado dos dados:</strong> este protótipo não presume que os dados reais estejam presentes. A malha do IBGE, quando carregada, pode mostrar setores, pessoas e domicílios. Isso, sozinho, não permite estimar quantas crianças precisam de creche. Para essa análise, precisamos de uma fonte adequada para a faixa etária e de dados comparáveis de oferta.</div>
@@ -52,7 +61,7 @@
 <strong>Princípio de leitura:</strong> ausência de registro não prova ausência de serviço; número de crianças não é igual a número de crianças que precisam de vaga; e uma diferença entre oferta e população não deve ser chamada de fila ou déficit real sem dados adequados.
 </section>
 </main>
-<footer><p class="small">Fonte esperada para os agregados carregados: arquivo local gerado pelo pipeline de setores censitários do IBGE. Este painel não envia dados, não coleta informações pessoais e não altera os arquivos de origem.</p></footer>
+<footer class="rodape"><p class="small">Fonte esperada para os agregados carregados: arquivo local gerado pelo pipeline de setores censitários do IBGE. Este painel não envia dados, não coleta informações pessoais e não altera os arquivos de origem.</p></footer>
 <script>
 (function(){
 "use strict";

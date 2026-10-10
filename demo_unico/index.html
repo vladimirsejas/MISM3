@@ -684,180 +684,262 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
 </style>
 <style>
+/* MISM3 – sistema visual institucional.
+   Principios: sobrio, legivel, sem decoracao gratuita. Azul-marinho como unica cor de marca, cinzas neutros,
+   vermelho so para alerta/emergencia. Contraste conferido (texto >= 4.5:1). Nao usa brasao nem marca oficial. */
 :root {
   color-scheme: light;
-  --bg: #f4f6f5;
+  --bg: #f2f4f7;
   --surface: #ffffff;
-  --fg: #20312f;
-  --mut: #5d6d69;
-  --pri: #245b57;
-  --pri-hover: #194743;
-  --soft: #e8f0ed;
-  --bor: #d7e0dc;
-  --alerta: #a83232;
-  --radius: 10px;
-  --shadow: 0 2px 8px rgba(24, 49, 44, .045);
+  --fg: #1b2633;
+  --mut: #4f5b6a;
+  --pri: #14375e;
+  --pri-hover: #0c2543;
+  --pri-2: #1f5a96;
+  --soft: #e6edf5;
+  --bor: #d3dae3;
+  --bor-forte: #aab5c3;
+  --alerta: #a1262b;
+  --alerta-fundo: #fbefef;
+  --alerta-borda: #e3bcbc;
+  --aviso-fundo: #eef1f5;
+  --foco: #0b6bcb;
+  --radius: 6px;
+  --shadow: 0 1px 2px rgba(20, 40, 70, .06), 0 1px 3px rgba(20, 40, 70, .05);
+  --largura: 1120px;
+  --lateral: max(1rem, calc((100% - var(--largura)) / 2));
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-a { color: var(--pri); text-underline-offset: .18em; }
-a:hover { color: var(--pri-hover); }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", sans-serif; -webkit-font-smoothing: antialiased; }
+a { color: var(--pri-2); text-underline-offset: .18em; }
+a:hover { color: var(--pri); }
 button, input, select, textarea { font: inherit; }
 button, summary { touch-action: manipulation; }
-:where(button,input,summary,select,textarea,a):focus-visible { outline: 3px solid #438b7f; outline-offset: 3px; }
+:where(button,input,summary,select,textarea,a):focus-visible { outline: 3px solid var(--foco); outline-offset: 2px; }
 button { min-height: 44px; cursor: pointer; }
 [hidden] { display: none !important; }
-.navegacao-principal { display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:.7rem max(1rem,calc((100% - 1080px)/2)); background:var(--surface); border-bottom:1px solid var(--bor); }
-.marca-site { display:flex; align-items:baseline; gap:.65rem; color:var(--fg); text-decoration:none; white-space:nowrap; }
-.marca-site strong { font-size:1.1rem; letter-spacing:-.025em; }
-.marca-site span { color:var(--mut); font-size:.9rem; }
-.links-navegacao { display:flex; flex-wrap:wrap; align-items:center; gap:.25rem; }
-.links-navegacao a { display:inline-flex; align-items:center; min-height:42px; padding:.5rem .8rem; border-radius:6px; color:var(--fg); text-decoration:none; font-weight:600; }
-.links-navegacao a:hover, .links-navegacao a[aria-current="page"] { background:var(--soft); color:var(--pri); }
-.barra-emergencia { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:.7rem 1rem; padding:.65rem max(1rem,calc((100% - 1080px)/2)); background:#fffafa; border-bottom:1px solid #e6c9c9; color:#3e3333; font-size:.92rem; }
-.barra-emergencia a { color:#922d2d; font-weight:700; white-space:nowrap; }
-#sair-rapido { flex:0 0 auto; min-height:40px; padding:.4rem .8rem; border:1px solid #922d2d; border-radius:6px; background:#fff; color:#922d2d; font-weight:650; }
-#sair-rapido:hover { background:#fff0f0; }
-.faixa-demo { padding:.55rem max(1rem,calc((100% - 1080px)/2)); background:#f4ead0; color:#514322; font-size:.82rem; font-weight:700; letter-spacing:.035em; }
-.topo, main, .rodape { width:min(100% - 2rem,1080px); margin-inline:auto; }
-.topo { padding-top:1.8rem; padding-bottom:.8rem; }
-.topo h1 { margin:0 0 .45rem; font-size:clamp(1.9rem,3.5vw,2.55rem); line-height:1.15; letter-spacing:-.04em; font-weight:700; }
-.topo>p { max-width:70ch; margin:.4rem 0; color:var(--mut); }
-main { padding-bottom:2.5rem; }
-h2 { color:var(--fg); line-height:1.3; letter-spacing:-.015em; }
-.portas { margin:1.2rem 0 2rem; }
-.portas h2, .painel-categoria h2 { margin:.1rem 0 .35rem; font-size:1.4rem; }
-.portas>p, .painel-categoria>p { max-width:70ch; color:var(--mut); margin:.25rem 0 .8rem; }
-.busca-necessidade { margin:1.25rem 0; padding:1.1rem; background:var(--surface); border:1px solid var(--bor); border-radius:var(--radius); }
-.busca-necessidade label, .busca label, .escrever label { display:block; font-weight:650; }
-.linha { display:flex; gap:.65rem; margin-top:.45rem; }
-.linha input, #necessidade, #cep, .escrever input { width:100%; min-width:0; min-height:48px; padding:.65rem .8rem; border:1px solid #bdcbc5; border-radius:6px; background:var(--surface); color:var(--fg); }
-.linha input:focus, #necessidade:focus, #cep:focus, .escrever input:focus { border-color:var(--pri); }
-.linha button, .busca-necessidade .linha button, .escrever button { flex:0 0 auto; min-height:48px; padding:.65rem 1rem; border:1px solid var(--pri); border-radius:6px; background:var(--pri); color:white; font-weight:650; }
-.linha button:hover, .busca-necessidade .linha button:hover, .escrever button:hover { background:var(--pri-hover); }
-.privacidade, .meta { color:var(--mut); font-size:.88rem; }
-.privacidade { margin:.6rem 0 0; }
-.grade-portas { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:.75rem; margin:1.2rem 0; }
-.porta { display:flex; flex-direction:column; align-items:flex-start; justify-content:flex-start; gap:.4rem; min-width:0; min-height:116px; padding:1rem; border:1px solid var(--bor); border-radius:var(--radius); background:var(--surface); color:var(--fg); text-align:left; box-shadow:var(--shadow); transition:border-color .15s,background .15s; }
-.porta:hover, .porta:focus-visible { border-color:#8db3a9; background:#f8fbf9; }
-.porta span { display:none; }
-.porta strong { font-size:1rem; line-height:1.35; font-weight:650; }
-.porta small { color:var(--mut); font-size:.87rem; line-height:1.4; }
-.painel-categoria { margin:1.5rem 0 2rem; padding-top:1rem; border-top:1px solid var(--bor); }
-.voltar { display:inline-flex; align-items:center; min-height:42px; margin:.1rem 0 .8rem; padding:.45rem .7rem; border:1px solid var(--bor); border-radius:6px; background:var(--surface); color:var(--pri); font-weight:650; }
-.voltar:hover { background:var(--soft); }
-.entendimento { margin:.8rem 0 1rem; }
-.entendimento p { margin:.2rem 0; font-weight:600; }
-.entendimento .chips, .objetivos { display:flex; flex-wrap:wrap; gap:.5rem; margin:.6rem 0 1rem; }
-.entendimento button, .objetivos button { min-height:42px; padding:.5rem .8rem; border:1px solid var(--pri); border-radius:6px; background:var(--surface); color:var(--pri); }
-.objetivos button[aria-pressed="true"] { background:var(--pri); color:#fff; }
-.subcaminho { margin:1.2rem 0; padding-top:.8rem; border-top:1px solid var(--bor); }
-.subcaminho>h3 { margin:.2rem 0 .5rem; }
-.porque { margin:.5rem 0 0; padding-left:1.2rem; font-size:.95rem; }
-.busca-por-cep { margin:1.6rem 0; padding-top:1rem; border-top:1px solid var(--bor); }
-.busca-por-cep summary { display:flex; align-items:center; min-height:44px; color:var(--pri); font-weight:650; cursor:pointer; }
-.busca { margin:1rem 0; padding:1rem; border:1px solid var(--bor); border-radius:var(--radius); background:var(--surface); }
-.busca-por-cep .busca { margin-bottom:0; }
-.mensagem { padding:.75rem 1rem; border-left:4px solid var(--alerta); border-radius:4px; background:#fff5f5; color:#4c2828; }
-.resumo { color:var(--mut); }
-#mapa, #mapa-gestao { width:100%; min-height:300px; border:1px solid var(--bor); border-radius:var(--radius); background:var(--soft); }
-#mapa { height:340px; }
-.tiles { display:block; margin:.7rem 0 1rem; color:var(--mut); font-size:.88rem; }
-.tiles input { width:1.1rem; height:1.1rem; vertical-align:middle; }
-.grupo { margin:1.6rem 0; }
-.grupo h2 { margin:0 0 .6rem; padding-bottom:.5rem; border-bottom:1px solid var(--bor); font-size:1.2rem; }
-.cartao { margin:.6rem 0; padding:.9rem 1rem; border:1px solid var(--bor); border-radius:8px; background:var(--surface); }
-.cartao h3 { margin:0; font-size:1rem; }
-.cartao p { margin:.35rem 0; font-size:.93rem; }
-.cartao .dist { color:var(--pri); font-weight:700; }
-.cartao .meta { color:var(--mut); font-size:.83rem; }
-.cartao.urgente { border-left:4px solid var(--alerta); }
-.vazio { color:var(--mut); }
-details.outros { margin-top:1rem; }
-details.outros>summary { display:flex; align-items:center; min-height:44px; cursor:pointer; font-weight:650; }
-#resultado { margin-top:1.4rem; }
-.rodape { padding-top:1.2rem; padding-bottom:2.5rem; border-top:1px solid var(--bor); color:var(--mut); font-size:.88rem; }
-.rodape p { max-width:90ch; }
-@media(max-width:800px) { .grade-portas { grid-template-columns:repeat(2,minmax(0,1fr)); } }
-@media(max-width:620px) {
-  .navegacao-principal { align-items:flex-start; flex-direction:column; gap:.35rem; padding:.75rem 1rem; }
-  .links-navegacao { width:100%; }
-  .links-navegacao a { padding:.45rem .65rem; }
-  .barra-emergencia { align-items:flex-start; padding:.7rem 1rem; }
-  .topo, main, .rodape { width:calc(100% - 2rem); }
-  .topo { padding-top:1.25rem; }
-  .linha { flex-direction:column; }
-  .linha button { width:100%; }
-  .busca-necessidade { padding:.9rem; }
-  .grade-portas { gap:.6rem; }
-  .porta { min-height:105px; padding:.85rem; }
-  #mapa { height:290px; }
+h1, h2, h3 { color: var(--fg); line-height: 1.25; letter-spacing: -.01em; }
+.icone { width: 1.5rem; height: 1.5rem; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ---------- casca: faixa institucional, emergencia, navegacao ---------- */
+.faixa-institucional { padding: .35rem var(--lateral); background: var(--pri); color: #e8eef6; font-size: .8rem; letter-spacing: .02em; }
+.faixa-institucional strong { color: #fff; font-weight: 650; }
+.faixa-demo { padding: .5rem var(--lateral); background: var(--aviso-fundo); border-bottom: 1px solid var(--bor); color: #2f3b4a; font-size: .85rem; }
+.faixa-demo::before { content: "PROTÓTIPO"; margin-right: .6rem; padding: .1rem .4rem; border: 1px solid #6b7889; border-radius: 3px; font-size: .7rem; font-weight: 700; letter-spacing: .08em; }
+.barra-emergencia { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .5rem 1rem; padding: .5rem var(--lateral); background: var(--alerta-fundo); border-bottom: 1px solid var(--alerta-borda); color: #3b2a2c; font-size: .9rem; }
+.barra-emergencia a { color: var(--alerta); font-weight: 700; white-space: nowrap; }
+#sair-rapido { flex: 0 0 auto; min-height: 36px; padding: .25rem .8rem; border: 1px solid var(--alerta); border-radius: var(--radius); background: #fff; color: var(--alerta); font-weight: 650; font-size: .88rem; }
+#sair-rapido:hover { background: var(--alerta); color: #fff; }
+.navegacao-principal { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .55rem var(--lateral); background: var(--surface); border-bottom: 1px solid var(--bor); box-shadow: var(--shadow); }
+.marca-site { display: flex; align-items: center; gap: .7rem; color: var(--fg); text-decoration: none; white-space: nowrap; }
+.marca-site:hover { color: var(--fg); }
+.marca-selo { display: grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: 6px; background: var(--pri); color: #fff; font-weight: 800; font-size: .95rem; letter-spacing: -.03em; }
+.marca-texto { display: flex; flex-direction: column; line-height: 1.2; }
+.marca-texto strong { font-size: 1.05rem; letter-spacing: -.01em; }
+.marca-texto span { color: var(--mut); font-size: .78rem; }
+.links-navegacao { display: flex; flex-wrap: wrap; align-items: center; gap: .15rem; }
+.links-navegacao a { display: inline-flex; align-items: center; min-height: 44px; padding: .4rem .85rem; border-bottom: 3px solid transparent; color: var(--fg); text-decoration: none; font-weight: 600; font-size: .95rem; }
+.links-navegacao a:hover { background: var(--soft); color: var(--pri); }
+.links-navegacao a[aria-current="page"] { border-bottom-color: var(--pri); color: var(--pri); }
+
+/* ---------- estrutura ---------- */
+.conteudo, main, .rodape { width: min(100% - 2rem, var(--largura)); margin-inline: auto; }
+main { padding-bottom: 2.5rem; }
+.topo { padding: 1.6rem var(--lateral) .6rem; }
+.topo h1 { margin: 0 0 .4rem; font-size: clamp(1.7rem, 3vw, 2.2rem); }
+.topo > p { max-width: 72ch; margin: .3rem 0; color: var(--mut); }
+.breadcrumb { margin: 0 0 .6rem; color: var(--mut); font-size: .85rem; }
+.breadcrumb a { color: var(--mut); }
+
+/* ---------- abertura (hero) com a busca ---------- */
+.hero { padding: 2rem var(--lateral) 2.4rem; background: var(--pri); color: #fff; border-bottom: 4px solid #0c2543; }
+.hero-miolo { max-width: 780px; }
+.hero h1 { margin: 0 0 .5rem; color: #fff; font-size: clamp(1.9rem, 4vw, 2.7rem); letter-spacing: -.02em; }
+.hero p { margin: .3rem 0 1.1rem; max-width: 62ch; color: #dbe5f1; font-size: 1.05rem; }
+.hero .busca-necessidade { margin: 0; padding: 1rem 1.1rem 1.1rem; border: 0; border-radius: var(--radius); background: var(--surface); color: var(--fg); box-shadow: 0 6px 20px rgba(0, 0, 0, .22); }
+.hero .busca-necessidade .privacidade { color: var(--mut); }
+
+/* ---------- formularios ---------- */
+.busca-necessidade label, .busca label, .escrever label { display: block; font-weight: 650; }
+.linha { display: flex; gap: .6rem; margin-top: .45rem; }
+.linha input, #necessidade, #cep, .escrever input { width: 100%; min-width: 0; min-height: 48px; padding: .6rem .8rem; border: 1px solid var(--bor-forte); border-radius: var(--radius); background: var(--surface); color: var(--fg); }
+.linha input:focus, #necessidade:focus, #cep:focus, .escrever input:focus { border-color: var(--pri-2); }
+.linha button, .escrever button { flex: 0 0 auto; min-height: 48px; padding: .6rem 1.2rem; border: 1px solid var(--pri); border-radius: var(--radius); background: var(--pri); color: #fff; font-weight: 650; }
+.linha button:hover, .escrever button:hover { background: var(--pri-hover); }
+.privacidade, .meta { color: var(--mut); font-size: .86rem; }
+.privacidade { margin: .55rem 0 0; }
+.mensagem { padding: .7rem 1rem; border-left: 4px solid var(--alerta); border-radius: 3px; background: var(--alerta-fundo); color: #3b2a2c; }
+
+/* ---------- portas (categorias) ---------- */
+.secao-titulo { margin: 2rem 0 .3rem; font-size: 1.35rem; }
+.secao-sub { max-width: 70ch; margin: 0 0 1rem; color: var(--mut); }
+.portas { margin: 0 0 1.5rem; }
+.grade-portas { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .8rem; margin: 1rem 0; }
+.porta { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: .35rem; min-width: 0; min-height: 138px; padding: 1rem; border: 1px solid var(--bor); border-top: 3px solid var(--pri); border-radius: var(--radius); background: var(--surface); color: var(--fg); text-align: left; box-shadow: var(--shadow); transition: border-color .15s, box-shadow .15s, transform .15s; }
+.porta:hover, .porta:focus-visible { border-color: var(--pri-2); border-top-color: var(--pri-2); box-shadow: 0 4px 14px rgba(20, 40, 70, .12); transform: translateY(-1px); }
+.porta .icone { width: 1.7rem; height: 1.7rem; margin-bottom: .2rem; color: var(--pri-2); }
+.porta strong { font-size: 1rem; line-height: 1.3; font-weight: 650; }
+.porta small { color: var(--mut); font-size: .86rem; line-height: 1.4; }
+.porta::after { content: "→"; position: absolute; right: .9rem; bottom: .7rem; color: var(--pri-2); font-weight: 700; }
+.porta[hidden] { display: none; }
+
+/* ---------- ferramentas (cartoes de link) ---------- */
+.ferramentas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8rem; margin: 1rem 0 0; }
+.ferramenta { display: flex; flex-direction: column; gap: .35rem; padding: 1rem; border: 1px solid var(--bor); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
+.ferramenta h3 { margin: 0; font-size: 1.02rem; }
+.ferramenta p { margin: 0; color: var(--mut); font-size: .92rem; }
+.ferramenta .acoes { margin-top: auto; padding-top: .5rem; font-weight: 650; font-size: .92rem; }
+.etiqueta { display: inline-block; margin-left: .4rem; padding: .05rem .4rem; border: 1px solid var(--bor-forte); border-radius: 3px; background: var(--aviso-fundo); color: var(--mut); font-size: .68rem; font-weight: 700; letter-spacing: .06em; vertical-align: .12em; }
+
+/* ---------- painel de uma categoria ---------- */
+.painel-categoria { margin: 1.5rem 0 2rem; padding: 1.2rem 1.3rem; border: 1px solid var(--bor); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
+.painel-categoria h2 { margin: .1rem 0 .35rem; font-size: 1.45rem; }
+.painel-categoria > p { max-width: 70ch; color: var(--mut); margin: .25rem 0 .8rem; }
+.voltar { display: inline-flex; align-items: center; min-height: 40px; margin: 0 0 .8rem; padding: .35rem .7rem; border: 1px solid var(--bor-forte); border-radius: var(--radius); background: var(--surface); color: var(--pri); font-weight: 650; }
+.voltar:hover { background: var(--soft); }
+.entendimento { margin: .8rem 0 1rem; }
+.entendimento p { margin: .2rem 0; font-weight: 600; }
+.entendimento .chips, .objetivos { display: flex; flex-wrap: wrap; gap: .5rem; margin: .6rem 0 1rem; }
+.entendimento button, .objetivos button { min-height: 40px; padding: .4rem .85rem; border: 1px solid var(--pri); border-radius: 999px; background: var(--surface); color: var(--pri); font-weight: 600; }
+.entendimento button:hover, .objetivos button:hover { background: var(--soft); }
+.objetivos button[aria-pressed="true"] { background: var(--pri); color: #fff; }
+.subcaminho { margin: 1.2rem 0; padding-top: .9rem; border-top: 1px solid var(--bor); }
+.subcaminho > h3 { margin: .2rem 0 .5rem; font-size: 1.1rem; }
+.porque { margin: .5rem 0 0; padding-left: 1.2rem; font-size: .95rem; }
+
+/* ---------- busca por CEP ---------- */
+.busca-por-cep { margin: 1.4rem 0; border: 1px solid var(--bor); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
+.busca-por-cep summary { display: flex; align-items: center; min-height: 52px; padding: 0 1.1rem; color: var(--pri); font-weight: 650; cursor: pointer; }
+.busca-por-cep[open] summary { border-bottom: 1px solid var(--bor); }
+.busca { margin: 0; padding: 1rem 1.1rem; }
+.aviso-dados { margin: 0 0 .8rem; padding: .6rem .8rem; border: 1px solid var(--bor); border-left: 4px solid var(--bor-forte); border-radius: 3px; background: var(--aviso-fundo); color: #2f3b4a; font-size: .88rem; }
+
+/* ---------- resultados e cartoes de servico ---------- */
+.resumo { color: var(--mut); }
+#mapa, #mapa-gestao { width: 100%; min-height: 300px; border: 1px solid var(--bor); border-radius: var(--radius); background: var(--soft); }
+#mapa { height: 340px; }
+.tiles { display: block; margin: .7rem 0 1rem; color: var(--mut); font-size: .88rem; }
+.tiles input { width: 1.1rem; height: 1.1rem; vertical-align: middle; }
+.grupo { margin: 1.6rem 0; }
+.grupo h2 { margin: 0 0 .7rem; padding-bottom: .5rem; border-bottom: 2px solid var(--pri); font-size: 1.2rem; }
+.subtitulo { font-size: 1.05rem; margin: 1.2rem 0 .4rem; }
+.cartao { margin: .6rem 0; padding: .95rem 1.1rem; border: 1px solid var(--bor); border-left: 4px solid var(--pri-2); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
+.cartao h3 { margin: 0; font-size: 1.02rem; }
+.cartao p { margin: .3rem 0; font-size: .93rem; }
+.cartao .cab-cartao { display: flex; align-items: flex-start; justify-content: space-between; gap: .8rem; }
+.cartao .selo-tipo { flex: 0 0 auto; padding: .1rem .5rem; border: 1px solid var(--bor-forte); border-radius: 3px; background: var(--soft); color: var(--pri); font-size: .74rem; font-weight: 650; }
+.cartao .dist { display: inline-block; padding: .05rem .5rem; border-radius: 999px; background: var(--soft); color: var(--pri); font-weight: 650; font-size: .86rem; }
+.cartao .meta { color: var(--mut); font-size: .83rem; }
+.cartao .fonte { margin-top: .5rem; padding-top: .45rem; border-top: 1px dashed var(--bor); }
+.cartao.urgente { border-left-color: var(--alerta); background: var(--alerta-fundo); }
+.vazio { color: var(--mut); }
+details.outros { margin-top: 1rem; }
+details.outros > summary { display: flex; align-items: center; min-height: 44px; color: var(--pri); cursor: pointer; font-weight: 650; }
+#resultado { margin-top: 1.4rem; }
+
+/* ---------- rodape ---------- */
+.rodape { padding-top: 1.2rem; padding-bottom: 2.5rem; border-top: 1px solid var(--bor); color: var(--mut); font-size: .88rem; }
+.rodape p { max-width: 90ch; }
+.rodape-faixa { margin-top: 2rem; padding: 1.2rem var(--lateral); background: var(--pri); color: #cfdbea; font-size: .86rem; }
+.rodape-faixa strong { color: #fff; }
+.rodape-faixa a { color: #fff; }
+
+/* ---------- responsivo ---------- */
+@media (max-width: 900px) {
+  .grade-portas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ferramentas { grid-template-columns: minmax(0, 1fr); }
 }
-@media(max-width:360px) { .grade-portas { grid-template-columns:1fr; } }
-@media(prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; transition-duration:.01ms!important; animation-duration:.01ms!important; animation-iteration-count:1!important; } }
+@media (max-width: 620px) {
+  .faixa-institucional { font-size: .74rem; }
+  .navegacao-principal { align-items: flex-start; flex-direction: column; gap: .2rem; padding-block: .6rem; }
+  .links-navegacao { width: 100%; margin-left: -.4rem; }
+  .barra-emergencia { align-items: flex-start; }
+  .hero { padding-block: 1.4rem 1.6rem; }
+  .linha { flex-direction: column; }
+  .linha button { width: 100%; }
+  .grade-portas { gap: .6rem; }
+  .porta { min-height: 128px; padding: .85rem; }
+  #mapa { height: 290px; }
+  .painel-categoria { padding: 1rem; }
+}
+@media (max-width: 360px) { .grade-portas { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; } }
+@media (forced-colors: active) { .porta, .cartao, .ferramenta { border: 1px solid CanvasText; } }
+@media print { .barra-emergencia, .navegacao-principal, .faixa-institucional, #sair-rapido { display: none; } }
 
 </style>
 </head>
 <body>
-<div id="faixa-demo" class="faixa-demo" hidden>DADOS ILUSTRATIVOS — nenhum serviço abaixo é real. Rode o pipeline para usar dados reais.</div>
+<div class="faixa-institucional"><strong>Protótipo acadêmico</strong> · Fatec Rio Claro · Curso de Inteligência Artificial · não é um serviço oficial da Prefeitura</div>
+<div id="faixa-demo" class="faixa-demo" role="note" hidden>Os serviços, endereços e telefones exibidos são exemplos de demonstração, não cadastros reais.</div>
 
 <div class="barra-emergencia" role="region" aria-label="Emergência">
-  <span><strong>Em perigo agora?</strong> Polícia <a href="tel:190">190</a> · Saúde (SAMU) <a href="tel:192">192</a> · Violência contra a mulher: <a href="tel:180">Ligue 180</a> (24h, gratuito)</span>
+  <span><strong>Em perigo agora?</strong> Polícia <a href="tel:190">190</a> · SAMU <a href="tel:192">192</a> · Violência contra a mulher: <a href="tel:180">Ligue 180</a> (24h, gratuito)</span>
   <button id="sair-rapido" type="button" title="Fecha esta página e abre outro site">Sair rápido</button>
 </div>
 
 <nav class="navegacao-principal" aria-label="Navegação principal">
-  <a class="marca-site" href="index.html"><strong>MISM3</strong><span>Mapa do Cuidado</span></a>
+  <a class="marca-site" href="index.html"><span class="marca-selo" aria-hidden="true">M3</span><span class="marca-texto"><strong>MISM3</strong><span>Mapa do Cuidado · Rio Claro/SP</span></span></a>
   <div class="links-navegacao">
     <a href="index.html" aria-current="page">Início</a>
+    <a href="rede-mulheres.html">De mulher para mulher</a>
     <a href="gestao.html">Painel de gestão</a>
+    <a href="inteligencia-publica.html">Inteligência pública</a>
   </div>
 </nav>
 
-<header class="topo">
-  <h1>Mapa do Cuidado</h1>
-  <p>Escreva o que você precisa. O MISM3 abre caminhos, serviços e contatos úteis em Rio Claro.</p>
-</header>
-
-<main>
-  <section class="portas" aria-labelledby="titulo-portas">
-    <h2 id="titulo-portas">O que você precisa hoje?</h2>
-    <p>Escreva sua necessidade ou escolha uma das opções abaixo. A busca acontece neste aparelho.</p>
+<header class="hero">
+  <div class="hero-miolo">
+    <h1>Mapa do Cuidado Rio-Clarense</h1>
+    <p>Trabalho, cursos, saúde, filhos, direitos e proteção: escreva o que você precisa e veja os caminhos e serviços de Rio Claro.</p>
     <form id="form-necessidade" class="busca-necessidade" autocomplete="off">
       <label for="necessidade">O que você está procurando?</label>
       <div class="linha">
-        <input id="necessidade" type="search" maxlength="100" placeholder="Emprego, creche, orientação jurídica..." autocomplete="off" aria-describedby="ajuda-necessidade">
+        <input id="necessidade" type="search" maxlength="100" placeholder="Ex.: emprego, creche, saúde" autocomplete="off" aria-describedby="ajuda-necessidade">
         <button type="submit">Encontrar caminhos</button>
       </div>
       <p id="ajuda-necessidade" class="privacidade">Não escreva nomes, documentos ou detalhes pessoais. O texto não é enviado a nenhum servidor.</p>
       <p id="mensagem-necessidade" class="mensagem" role="status" hidden></p>
     </form>
+  </div>
+</header>
+
+<main>
+  <section class="portas" aria-labelledby="titulo-portas">
+    <h2 id="titulo-portas" class="secao-titulo">Ou escolha um assunto</h2>
+    <p class="secao-sub">Cada assunto abre os serviços e contatos de Rio Claro. A busca acontece neste aparelho.</p>
     <div class="grade-portas">
-      <button class="porta" type="button" data-categoria="emprego_curso"><strong>Emprego e renda</strong><small>Vagas, cursos e qualificação</small></button>
-      <button class="porta" type="button" data-categoria="saude"><strong>Saúde</strong><small>Atendimento e orientação</small></button>
-      <button class="porta" type="button" data-categoria="estudo"><strong>Educação</strong><small>Escolas e formação</small></button>
-      <button class="porta" type="button" data-categoria="filhos"><strong>Filhos e cuidado</strong><small>Creche, escola e apoio</small></button>
-      <button class="porta" type="button" data-categoria="casamento"><strong>Direitos e separação</strong><small>Orientação jurídica e apoio</small></button>
-      <button class="porta" type="button" data-categoria="violencia"><strong>Proteção e violência</strong><small>Orientação e rede de apoio</small></button>
-      <button class="porta" type="button" id="porta-m2m" data-categoria="mulher_para_mulher" hidden><strong>De mulher para mulher</strong><small>Serviços feitos por mulheres</small></button>
-      <button class="porta" type="button" data-categoria="familia"><strong>Família e assistência</strong><small>Proteção social e serviços</small></button>
+      <button class="porta" type="button" data-categoria="emprego_curso"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg><strong>Emprego e renda</strong><small>Vagas, cursos e qualificação</small></button>
+      <button class="porta" type="button" data-categoria="saude"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.600-7 10-7 10z"/></svg><strong>Saúde</strong><small>Atendimento e orientação</small></button>
+      <button class="porta" type="button" data-categoria="estudo"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9l9-5 9 5-9 5-9-5z"/><path d="M7 11.500V16c0 1 2.200 2.500 5 2.500s5-1.500 5-2.500v-4.500"/></svg><strong>Educação</strong><small>Escolas e formação</small></button>
+      <button class="porta" type="button" data-categoria="filhos"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="7" r="3"/><circle cx="17" cy="10" r="2"/><path d="M2.500 20v-1.500A4.500 4.500 0 0 1 7 14h2a4.500 4.500 0 0 1 4.500 4.500V20M15 20v-1a3 3 0 0 1 3-3h.5a2.500 2.500 0 0 1 2.500 2.500V20"/></svg><strong>Filhos e cuidado</strong><small>Creche, escola e apoio</small></button>
+      <button class="porta" type="button" data-categoria="casamento"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v17M7 20h10M4 7h16"/><path d="M4 7l-2.500 6a3.500 3.500 0 0 0 5 0L4 7zM20 7l-2.500 6a3.500 3.500 0 0 0 5 0L20 7z"/></svg><strong>Direitos e separação</strong><small>Orientação jurídica e apoio</small></button>
+      <button class="porta" type="button" data-categoria="violencia"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 4.500-3.300 7.800-8 9-4.700-1.200-8-4.500-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg><strong>Proteção e violência</strong><small>Orientação e rede de apoio</small></button>
+      <button class="porta" type="button" id="porta-m2m" data-categoria="mulher_para_mulher" hidden><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M2.500 20a5.500 5.500 0 0 1 11 0M10.500 20a5.500 5.500 0 0 1 11 0"/></svg><strong>De mulher para mulher</strong><small>Serviços feitos por mulheres</small></button>
+      <button class="porta" type="button" data-categoria="familia"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></svg><strong>Família e assistência</strong><small>Proteção social e serviços</small></button>
     </div>
-    <article class="cartao" style="margin-top:1rem">
-      <h3>De Mulher para Mulher <span class="meta">[DEMO]</span></h3>
-      <p>Explore perfis fictícios, níveis demonstrativos e simulações de cadastro e denúncia.</p>
-      <p><a href="rede-mulheres.html">Abrir protótipo da rede entre mulheres</a></p>
-    </article>
-    <article class="cartao" style="margin-top:1rem">
-      <h3>Painel de Gestão <span class="meta">[DEMO]</span></h3>
-      <p>O que as mulheres procuram, o funil até o resultado, demanda e oferta por região e o mapa de setores. Visão pública e visão de gestão.</p>
-      <p><a href="gestao.html">Abrir painel de gestão</a> · <a href="gestao.html?visao=gestao">visão de gestão</a></p>
-    </article>
-    <article class="cartao" style="margin-top:1rem">
-      <h3>Inteligência Pública <span class="meta">[DEMO]</span></h3>
-      <p>Painel conceitual para comparar territórios e acompanhar a proveniência dos dados.</p>
-      <p><a href="inteligencia-publica.html">Abrir painel conceitual</a></p>
-    </article>
+  </section>
+
+  <section class="ferramentas-secao" aria-labelledby="titulo-ferramentas">
+    <h2 id="titulo-ferramentas" class="secao-titulo">Outras áreas do protótipo</h2>
+    <div class="ferramentas">
+      <article class="ferramenta">
+        <h3>De mulher para mulher <span class="etiqueta">DEMO</span></h3>
+        <p>Perfis fictícios, níveis demonstrativos e simulações de cadastro e denúncia.</p>
+        <p class="acoes"><a href="rede-mulheres.html">Abrir a rede entre mulheres →</a></p>
+      </article>
+      <article class="ferramenta">
+        <h3>Painel de gestão <span class="etiqueta">DEMO</span></h3>
+        <p>O que as mulheres procuram, demanda e oferta por região e o mapa de setores.</p>
+        <p class="acoes"><a href="gestao.html">Visão pública</a> · <a href="gestao.html?visao=gestao">Visão de gestão →</a></p>
+      </article>
+      <article class="ferramenta">
+        <h3>Inteligência pública <span class="etiqueta">DEMO</span></h3>
+        <p>Painel conceitual para comparar territórios e acompanhar a origem dos dados.</p>
+        <p class="acoes"><a href="inteligencia-publica.html">Abrir painel conceitual →</a></p>
+      </article>
+    </div>
   </section>
 
   <section id="painel-categoria" class="painel-categoria" hidden aria-live="polite">
@@ -872,6 +954,7 @@ details.outros>summary { display:flex; align-items:center; min-height:44px; curs
   <details class="busca-por-cep">
     <summary>Quero encontrar serviços perto de mim pelo CEP</summary>
     <form id="form-cep" class="busca" autocomplete="off">
+    <p id="aviso-cep-demo" class="aviso-dados" hidden><strong>Dados de demonstração.</strong> Para testar, use os CEPs fictícios 00000-001, 00000-002 ou 00000-003.</p>
     <label for="cep">Digite seu CEP</label>
     <div class="linha">
       <input id="cep" inputmode="numeric" maxlength="9" placeholder="00000-000" autocomplete="off" autocapitalize="off" spellcheck="false">
@@ -1546,7 +1629,7 @@ window.MISM3_CONFIG = {
       dados.demo = !!(r[0].meta && r[0].meta.demo) || !!(r[1].meta && r[1].meta.demo);
       $("faixa-demo").hidden = !dados.demo;
       $("fontes").textContent = "Índice de CEPs: " + (r[0].meta.fonte || "") + " · Serviços gerados em " + (r[1].meta.gerado_em || "?") + ".";
-      if (dados.demo) mostrarMensagem("Modo demonstração: use os CEPs fictícios 00000-001, 00000-002 ou 00000-003.");
+      $("aviso-cep-demo").hidden = !dados.demo;
     }).catch(function () {
       mostrarMensagem("Não foi possível carregar os dados. Abra o site por um servidor local (veja o README).");
     });
@@ -1580,12 +1663,11 @@ window.MISM3_CONFIG = {
   function cartao(s, area) {
     var partes = [];
     var tipoTxt = Acesso.rotuloSubtipo(s.subtipo);
-    if (tipoTxt) partes.push('<p class="meta">' + esc(tipoTxt) + "</p>");
     if (s.distancia_m != null) {
       var aprox = s.geo === "centroide_cep" ? " (localização aproximada pelo CEP do serviço)" : "";
-      partes.push('<p class="dist">' + esc(Acesso.formatarDistancia(s.distancia_m)) + aprox + "</p>");
+      partes.push('<p><span class="dist">' + esc(Acesso.formatarDistancia(s.distancia_m)) + "</span>" + esc(aprox) + "</p>");
     } else if (s.abrangencia === "municipal") {
-      partes.push('<p class="dist">Atende todo o município</p>');
+      partes.push('<p><span class="dist">Atende todo o município</span></p>');
     } else {
       partes.push('<p class="meta">Localização ainda não disponível</p>');
     }
@@ -1594,8 +1676,9 @@ window.MISM3_CONFIG = {
     if (s.horario) partes.push("<p>Horário: " + esc(s.horario) + "</p>");
     if (s.observacao) partes.push("<p>" + esc(s.observacao) + "</p>");
     var fonte = s.fonte_url ? '<a href="' + esc(s.fonte_url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.fonte) + "</a>" : esc(s.fonte);
-    partes.push('<p class="meta">Fonte: ' + fonte + " · verificado em " + esc(s.verificado_em) + "</p>");
-    return '<article class="cartao"><h3>' + esc(s.nome) + "</h3>" + partes.join("") + "</article>";
+    partes.push('<p class="meta fonte">Fonte: ' + fonte + " · verificado em " + esc(s.verificado_em) + "</p>");
+    var selo = tipoTxt ? '<span class="selo-tipo">' + esc(tipoTxt) + "</span>" : "";
+    return '<article class="cartao"><div class="cab-cartao"><h3>' + esc(s.nome) + "</h3>" + selo + "</div>" + partes.join("") + "</article>";
   }
 
   function desenharObjetivos() {

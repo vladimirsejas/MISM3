@@ -20,19 +20,253 @@
 <meta name="referrer" content="no-referrer">
 <title>De Mulher para Mulher — MISM3</title>
 <style>
-:root{--bg:#fbf8f6;--fg:#2a2230;--mut:#6b6275;--pri:#6b2d8a;--pale:#f1e6f6;--bor:#e4dbe9;--warn:#ffd54a}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
-.demo{background:var(--warn);color:#3b2f00;padding:.65rem 1rem;text-align:center;font-weight:800}
-header,main,footer{max-width:1000px;margin:auto;padding:1rem}header h1{margin:.6rem 0 .2rem}a{color:var(--pri)}.back{display:inline-block;margin:.2rem 0 1rem;font-weight:700}
-.note{color:var(--mut);max-width:75ch}.tools{display:flex;gap:.7rem;flex-wrap:wrap;margin:1rem 0}.tools input,.tools select,input,textarea,select{font:inherit;padding:.65rem;border:1px solid var(--bor);border-radius:.5rem;background:white;color:#2a2230}.tools input{flex:1;min-width:200px}
-button{font:inherit;border:0;border-radius:.5rem;background:var(--pri);color:white;font-weight:700;padding:.7rem 1rem;cursor:pointer}button.secondary{background:var(--pale);color:var(--pri);border:1px solid var(--bor)}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}.card{border:1px solid var(--bor);border-radius:.8rem;padding:1rem;background:white;display:flex;flex-direction:column;gap:.45rem}.avatar{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:var(--pale);color:var(--pri);font-size:1.4rem;font-weight:800}.card h2{font-size:1.1rem;margin:.2rem 0}.tags{display:flex;flex-wrap:wrap;gap:.35rem}.tag,.seal{font-size:.78rem;border-radius:99px;padding:.25rem .55rem;background:var(--pale);color:var(--pri);font-weight:700}.seal{background:#e8f4e8;color:#245c2a}.seal.demo{background:#fff0cc;color:#755000}.meta{font-size:.85rem;color:var(--mut)}.card button{margin-top:auto}.panel{margin:1.5rem 0;padding:1rem;border:1px solid var(--bor);border-radius:.8rem;background:var(--pale)}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}.field{display:flex;flex-direction:column;gap:.3rem}.field.full{grid-column:1/-1}textarea{min-height:85px;resize:vertical}.hidden{display:none}.preview{padding:.8rem;background:white;border-radius:.5rem;margin-top:.8rem}.status{padding:.8rem;background:white;border-left:4px solid var(--pri);margin:.8rem 0}.empty{padding:1rem;border:1px dashed var(--bor);border-radius:.5rem}.foot{color:var(--mut);font-size:.85rem}
-@media(max-width:760px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){.grid,.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.tools{flex-direction:column}.tools input,.tools select{width:100%}}
+/* MISM3 – sistema visual institucional.
+   Principios: sobrio, legivel, sem decoracao gratuita. Azul-marinho como unica cor de marca, cinzas neutros,
+   vermelho so para alerta/emergencia. Contraste conferido (texto >= 4.5:1). Nao usa brasao nem marca oficial. */
+:root {
+  color-scheme: light;
+  --bg: #f2f4f7;
+  --surface: #ffffff;
+  --fg: #1b2633;
+  --mut: #4f5b6a;
+  --pri: #14375e;
+  --pri-hover: #0c2543;
+  --pri-2: #1f5a96;
+  --soft: #e6edf5;
+  --bor: #d3dae3;
+  --bor-forte: #aab5c3;
+  --alerta: #a1262b;
+  --alerta-fundo: #fbefef;
+  --alerta-borda: #e3bcbc;
+  --aviso-fundo: #eef1f5;
+  --foco: #0b6bcb;
+  --radius: 6px;
+  --shadow: 0 1px 2px rgba(20, 40, 70, .06), 0 1px 3px rgba(20, 40, 70, .05);
+  --largura: 1120px;
+  --lateral: max(1rem, calc((100% - var(--largura)) / 2));
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", sans-serif; -webkit-font-smoothing: antialiased; }
+a { color: var(--pri-2); text-underline-offset: .18em; }
+a:hover { color: var(--pri); }
+button, input, select, textarea { font: inherit; }
+button, summary { touch-action: manipulation; }
+:where(button,input,summary,select,textarea,a):focus-visible { outline: 3px solid var(--foco); outline-offset: 2px; }
+button { min-height: 44px; cursor: pointer; }
+[hidden] { display: none !important; }
+h1, h2, h3 { color: var(--fg); line-height: 1.25; letter-spacing: -.01em; }
+.icone { width: 1.5rem; height: 1.5rem; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ---------- casca: faixa institucional, emergencia, navegacao ---------- */
+.faixa-institucional { padding: .35rem var(--lateral); background: var(--pri); color: #e8eef6; font-size: .8rem; letter-spacing: .02em; }
+.faixa-institucional strong { color: #fff; font-weight: 650; }
+.faixa-demo { padding: .5rem var(--lateral); background: var(--aviso-fundo); border-bottom: 1px solid var(--bor); color: #2f3b4a; font-size: .85rem; }
+.faixa-demo::before { content: "PROTÓTIPO"; margin-right: .6rem; padding: .1rem .4rem; border: 1px solid #6b7889; border-radius: 3px; font-size: .7rem; font-weight: 700; letter-spacing: .08em; }
+.barra-emergencia { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .5rem 1rem; padding: .5rem var(--lateral); background: var(--alerta-fundo); border-bottom: 1px solid var(--alerta-borda); color: #3b2a2c; font-size: .9rem; }
+.barra-emergencia a { color: var(--alerta); font-weight: 700; white-space: nowrap; }
+#sair-rapido { flex: 0 0 auto; min-height: 36px; padding: .25rem .8rem; border: 1px solid var(--alerta); border-radius: var(--radius); background: #fff; color: var(--alerta); font-weight: 650; font-size: .88rem; }
+#sair-rapido:hover { background: var(--alerta); color: #fff; }
+.navegacao-principal { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .55rem var(--lateral); background: var(--surface); border-bottom: 1px solid var(--bor); box-shadow: var(--shadow); }
+.marca-site { display: flex; align-items: center; gap: .7rem; color: var(--fg); text-decoration: none; white-space: nowrap; }
+.marca-site:hover { color: var(--fg); }
+.marca-selo { display: grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: 6px; background: var(--pri); color: #fff; font-weight: 800; font-size: .95rem; letter-spacing: -.03em; }
+.marca-texto { display: flex; flex-direction: column; line-height: 1.2; }
+.marca-texto strong { font-size: 1.05rem; letter-spacing: -.01em; }
+.marca-texto span { color: var(--mut); font-size: .78rem; }
+.links-navegacao { display: flex; flex-wrap: wrap; align-items: center; gap: .15rem; }
+.links-navegacao a { display: inline-flex; align-items: center; min-height: 44px; padding: .4rem .85rem; border-bottom: 3px solid transparent; color: var(--fg); text-decoration: none; font-weight: 600; font-size: .95rem; }
+.links-navegacao a:hover { background: var(--soft); color: var(--pri); }
+.links-navegacao a[aria-current="page"] { border-bottom-color: var(--pri); color: var(--pri); }
+
+/* ---------- estrutura ---------- */
+.conteudo, main, .rodape { width: min(100% - 2rem, var(--largura)); margin-inline: auto; }
+main { padding-bottom: 2.5rem; }
+.topo { padding: 1.6rem var(--lateral) .6rem; }
+.topo h1 { margin: 0 0 .4rem; font-size: clamp(1.7rem, 3vw, 2.2rem); }
+.topo > p { max-width: 72ch; margin: .3rem 0; color: var(--mut); }
+.breadcrumb { margin: 0 0 .6rem; color: var(--mut); font-size: .85rem; }
+.breadcrumb a { color: var(--mut); }
+
+/* ---------- abertura (hero) com a busca ---------- */
+.hero { padding: 2rem var(--lateral) 2.4rem; background: var(--pri); color: #fff; border-bottom: 4px solid #0c2543; }
+.hero-miolo { max-width: 780px; }
+.hero h1 { margin: 0 0 .5rem; color: #fff; font-size: clamp(1.9rem, 4vw, 2.7rem); letter-spacing: -.02em; }
+.hero p { margin: .3rem 0 1.1rem; max-width: 62ch; color: #dbe5f1; font-size: 1.05rem; }
+.hero .busca-necessidade { margin: 0; padding: 1rem 1.1rem 1.1rem; border: 0; border-radius: var(--radius); background: var(--surface); color: var(--fg); box-shadow: 0 6px 20px rgba(0, 0, 0, .22); }
+.hero .busca-necessidade .privacidade { color: var(--mut); }
+
+/* ---------- formularios ---------- */
+.busca-necessidade label, .busca label, .escrever label { display: block; font-weight: 650; }
+.linha { display: flex; gap: .6rem; margin-top: .45rem; }
+.linha input, #necessidade, #cep, .escrever input { width: 100%; min-width: 0; min-height: 48px; padding: .6rem .8rem; border: 1px solid var(--bor-forte); border-radius: var(--radius); background: var(--surface); color: var(--fg); }
+.linha input:focus, #necessidade:focus, #cep:focus, .escrever input:focus { border-color: var(--pri-2); }
+.linha button, .escrever button { flex: 0 0 auto; min-height: 48px; padding: .6rem 1.2rem; border: 1px solid var(--pri); border-radius: var(--radius); background: var(--pri); color: #fff; font-weight: 650; }
+.linha button:hover, .escrever button:hover { background: var(--pri-hover); }
+.privacidade, .meta { color: var(--mut); font-size: .86rem; }
+.privacidade { margin: .55rem 0 0; }
+.mensagem { padding: .7rem 1rem; border-left: 4px solid var(--alerta); border-radius: 3px; background: var(--alerta-fundo); color: #3b2a2c; }
+
+/* ---------- portas (categorias) ---------- */
+.secao-titulo { margin: 2rem 0 .3rem; font-size: 1.35rem; }
+.secao-sub { max-width: 70ch; margin: 0 0 1rem; color: var(--mut); }
+.portas { margin: 0 0 1.5rem; }
+.grade-portas { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .8rem; margin: 1rem 0; }
+.porta { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: .35rem; min-width: 0; min-height: 138px; padding: 1rem; border: 1px solid var(--bor); border-top: 3px solid var(--pri); border-radius: var(--radius); background: var(--surface); color: var(--fg); text-align: left; box-shadow: var(--shadow); transition: border-color .15s, box-shadow .15s, transform .15s; }
+.porta:hover, .porta:focus-visible { border-color: var(--pri-2); border-top-color: var(--pri-2); box-shadow: 0 4px 14px rgba(20, 40, 70, .12); transform: translateY(-1px); }
+.porta .icone { width: 1.7rem; height: 1.7rem; margin-bottom: .2rem; color: var(--pri-2); }
+.porta strong { font-size: 1rem; line-height: 1.3; font-weight: 650; }
+.porta small { color: var(--mut); font-size: .86rem; line-height: 1.4; }
+.porta::after { content: "→"; position: absolute; right: .9rem; bottom: .7rem; color: var(--pri-2); font-weight: 700; }
+.porta[hidden] { display: none; }
+
+/* ---------- ferramentas (cartoes de link) ---------- */
+.ferramentas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8rem; margin: 1rem 0 0; }
+.ferramenta { display: flex; flex-direction: column; gap: .35rem; padding: 1rem; border: 1px solid var(--bor); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
+.ferramenta h3 { margin: 0; font-size: 1.02rem; }
+.ferramenta p { margin: 0; color: var(--mut); font-size: .92rem; }
+.ferramenta .acoes { margin-top: auto; padding-top: .5rem; font-weight: 650; font-size: .92rem; }
+.etiqueta { display: inline-block; margin-left: .4rem; padding: .05rem .4rem; border: 1px solid var(--bor-forte); border-radius: 3px; background: var(--aviso-fundo); color: var(--mut); font-size: .68rem; font-weight: 700; letter-spacing: .06em; vertical-align: .12em; }
+
+/* ---------- painel de uma categoria ---------- */
+.painel-categoria { margin: 1.5rem 0 2rem; padding: 1.2rem 1.3rem; border: 1px solid var(--bor); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
+.painel-categoria h2 { margin: .1rem 0 .35rem; font-size: 1.45rem; }
+.painel-categoria > p { max-width: 70ch; color: var(--mut); margin: .25rem 0 .8rem; }
+.voltar { display: inline-flex; align-items: center; min-height: 40px; margin: 0 0 .8rem; padding: .35rem .7rem; border: 1px solid var(--bor-forte); border-radius: var(--radius); background: var(--surface); color: var(--pri); font-weight: 650; }
+.voltar:hover { background: var(--soft); }
+.entendimento { margin: .8rem 0 1rem; }
+.entendimento p { margin: .2rem 0; font-weight: 600; }
+.entendimento .chips, .objetivos { display: flex; flex-wrap: wrap; gap: .5rem; margin: .6rem 0 1rem; }
+.entendimento button, .objetivos button { min-height: 40px; padding: .4rem .85rem; border: 1px solid var(--pri); border-radius: 999px; background: var(--surface); color: var(--pri); font-weight: 600; }
+.entendimento button:hover, .objetivos button:hover { background: var(--soft); }
+.objetivos button[aria-pressed="true"] { background: var(--pri); color: #fff; }
+.subcaminho { margin: 1.2rem 0; padding-top: .9rem; border-top: 1px solid var(--bor); }
+.subcaminho > h3 { margin: .2rem 0 .5rem; font-size: 1.1rem; }
+.porque { margin: .5rem 0 0; padding-left: 1.2rem; font-size: .95rem; }
+
+/* ---------- busca por CEP ---------- */
+.busca-por-cep { margin: 1.4rem 0; border: 1px solid var(--bor); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
+.busca-por-cep summary { display: flex; align-items: center; min-height: 52px; padding: 0 1.1rem; color: var(--pri); font-weight: 650; cursor: pointer; }
+.busca-por-cep[open] summary { border-bottom: 1px solid var(--bor); }
+.busca { margin: 0; padding: 1rem 1.1rem; }
+.aviso-dados { margin: 0 0 .8rem; padding: .6rem .8rem; border: 1px solid var(--bor); border-left: 4px solid var(--bor-forte); border-radius: 3px; background: var(--aviso-fundo); color: #2f3b4a; font-size: .88rem; }
+
+/* ---------- resultados e cartoes de servico ---------- */
+.resumo { color: var(--mut); }
+#mapa, #mapa-gestao { width: 100%; min-height: 300px; border: 1px solid var(--bor); border-radius: var(--radius); background: var(--soft); }
+#mapa { height: 340px; }
+.tiles { display: block; margin: .7rem 0 1rem; color: var(--mut); font-size: .88rem; }
+.tiles input { width: 1.1rem; height: 1.1rem; vertical-align: middle; }
+.grupo { margin: 1.6rem 0; }
+.grupo h2 { margin: 0 0 .7rem; padding-bottom: .5rem; border-bottom: 2px solid var(--pri); font-size: 1.2rem; }
+.subtitulo { font-size: 1.05rem; margin: 1.2rem 0 .4rem; }
+.cartao { margin: .6rem 0; padding: .95rem 1.1rem; border: 1px solid var(--bor); border-left: 4px solid var(--pri-2); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
+.cartao h3 { margin: 0; font-size: 1.02rem; }
+.cartao p { margin: .3rem 0; font-size: .93rem; }
+.cartao .cab-cartao { display: flex; align-items: flex-start; justify-content: space-between; gap: .8rem; }
+.cartao .selo-tipo { flex: 0 0 auto; padding: .1rem .5rem; border: 1px solid var(--bor-forte); border-radius: 3px; background: var(--soft); color: var(--pri); font-size: .74rem; font-weight: 650; }
+.cartao .dist { display: inline-block; padding: .05rem .5rem; border-radius: 999px; background: var(--soft); color: var(--pri); font-weight: 650; font-size: .86rem; }
+.cartao .meta { color: var(--mut); font-size: .83rem; }
+.cartao .fonte { margin-top: .5rem; padding-top: .45rem; border-top: 1px dashed var(--bor); }
+.cartao.urgente { border-left-color: var(--alerta); background: var(--alerta-fundo); }
+.vazio { color: var(--mut); }
+details.outros { margin-top: 1rem; }
+details.outros > summary { display: flex; align-items: center; min-height: 44px; color: var(--pri); cursor: pointer; font-weight: 650; }
+#resultado { margin-top: 1.4rem; }
+
+/* ---------- rodape ---------- */
+.rodape { padding-top: 1.2rem; padding-bottom: 2.5rem; border-top: 1px solid var(--bor); color: var(--mut); font-size: .88rem; }
+.rodape p { max-width: 90ch; }
+.rodape-faixa { margin-top: 2rem; padding: 1.2rem var(--lateral); background: var(--pri); color: #cfdbea; font-size: .86rem; }
+.rodape-faixa strong { color: #fff; }
+.rodape-faixa a { color: #fff; }
+
+/* ---------- responsivo ---------- */
+@media (max-width: 900px) {
+  .grade-portas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ferramentas { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 620px) {
+  .faixa-institucional { font-size: .74rem; }
+  .navegacao-principal { align-items: flex-start; flex-direction: column; gap: .2rem; padding-block: .6rem; }
+  .links-navegacao { width: 100%; margin-left: -.4rem; }
+  .barra-emergencia { align-items: flex-start; }
+  .hero { padding-block: 1.4rem 1.6rem; }
+  .linha { flex-direction: column; }
+  .linha button { width: 100%; }
+  .grade-portas { gap: .6rem; }
+  .porta { min-height: 128px; padding: .85rem; }
+  #mapa { height: 290px; }
+  .painel-categoria { padding: 1rem; }
+}
+@media (max-width: 360px) { .grade-portas { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; } }
+@media (forced-colors: active) { .porta, .cartao, .ferramenta { border: 1px solid CanvasText; } }
+@media print { .barra-emergencia, .navegacao-principal, .faixa-institucional, #sair-rapido { display: none; } }
+
+</style>
+<style>
+/* Estilos das paginas internas (rede-mulheres, inteligencia-publica) sobre o sistema visual de estilo.css. */
+.pagina button:not(.voltar):not([id="sair-rapido"]) { border: 1px solid var(--pri); border-radius: var(--radius); background: var(--pri); color: #fff; font-weight: 650; padding: .6rem 1rem; }
+.pagina button:not(.voltar):not([id="sair-rapido"]):hover { background: var(--pri-hover); }
+.pagina button.secondary { background: var(--surface); color: var(--pri); border-color: var(--bor-forte); }
+.pagina button.secondary:hover { background: var(--soft); }
+.button { display: inline-block; padding: .6rem 1rem; border: 1px solid var(--pri); border-radius: var(--radius); background: var(--pri); color: #fff; font-weight: 650; }
+.pagina input, .pagina textarea, .pagina select { padding: .6rem .75rem; border: 1px solid var(--bor-forte); border-radius: var(--radius); background: var(--surface); color: var(--fg); }
+.pagina textarea { min-height: 90px; resize: vertical; }
+.note, .muted { max-width: 75ch; color: var(--mut); }
+.small, .foot { color: var(--mut); font-size: .85rem; }
+.hidden { display: none; }
+.tools { display: flex; gap: .7rem; flex-wrap: wrap; margin: 1rem 0; }
+.tools input { flex: 1; min-width: 200px; }
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.card { display: flex; flex-direction: column; gap: .45rem; padding: 1.05rem; border: 1px solid var(--bor); border-top: 3px solid var(--pri); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
+.card h2 { margin: .2rem 0; font-size: 1.05rem; }
+.card button { margin-top: auto; }
+.avatar { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--soft); color: var(--pri); font-size: 1.2rem; font-weight: 700; }
+.tags { display: flex; flex-wrap: wrap; gap: .35rem; }
+.tag, .seal { display: inline-block; padding: .1rem .5rem; border: 1px solid var(--bor-forte); border-radius: 3px; background: var(--soft); color: var(--pri); font-size: .76rem; font-weight: 650; }
+.seal { background: #fff; }
+.seal.demo { border-style: dashed; color: var(--mut); background: var(--aviso-fundo); }
+.panel { margin: 1.5rem 0; padding: 1.1rem 1.2rem; border: 1px solid var(--bor); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
+.panel > h2 { margin-top: 0; padding-bottom: .5rem; border-bottom: 2px solid var(--pri); font-size: 1.2rem; }
+.formgrid { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
+.field { display: flex; flex-direction: column; gap: .3rem; }
+.field.full { grid-column: 1 / -1; }
+.preview { margin-top: .8rem; padding: .8rem; border: 1px solid var(--bor); border-radius: var(--radius); background: var(--bg); }
+.status { margin: .8rem 0; padding: .8rem 1rem; border: 1px solid var(--bor); border-left: 4px solid var(--pri); border-radius: 3px; background: var(--surface); }
+.empty { padding: 1rem; border: 1px dashed var(--bor-forte); border-radius: var(--radius); color: var(--mut); }
+.callout { padding: .8rem 1rem; border: 1px solid var(--bor); border-left: 4px solid var(--pri); border-radius: 3px; background: var(--soft); }
+.warn { padding: .8rem 1rem; border: 1px solid var(--bor); border-left: 4px solid var(--bor-forte); border-radius: 3px; background: var(--aviso-fundo); color: #2f3b4a; }
+.metric { color: var(--pri); font-size: 1.9rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.barrow { display: grid; grid-template-columns: 9rem 1fr 3rem; align-items: center; gap: .6rem; margin: .7rem 0; }
+.track { height: .85rem; overflow: hidden; border-radius: 3px; background: var(--soft); }
+.bar { height: 100%; width: 0; background: var(--pri); }
+.bar.demo { background: #86a8cf; }
+table { width: 100%; border-collapse: collapse; background: var(--surface); }
+th, td { padding: .65rem; border-bottom: 1px solid var(--bor); text-align: left; }
+th { background: var(--soft); color: var(--pri); font-size: .88rem; }
+@media (max-width: 760px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 720px) { .barrow { grid-template-columns: 7rem 1fr 2rem; } table { font-size: .9rem; } }
+@media (max-width: 520px) { .grid, .formgrid { grid-template-columns: 1fr; } .field.full { grid-column: auto; } .tools { flex-direction: column; } .tools input, .tools select { width: 100%; } }
+
 </style>
 </head>
-<body>
-<div class="demo">MISM3 · PROTÓTIPO FECHADO · PERFIS, SELOS E DENÚNCIAS SÃO FICTÍCIOS [DEMO]</div>
-<header>
-<a class="back" href="index.html">← Voltar ao Mapa do Cuidado</a>
+<body class="pagina">
+<div class="faixa-institucional"><strong>Protótipo acadêmico</strong> · Fatec Rio Claro · Curso de Inteligência Artificial · não é um serviço oficial da Prefeitura</div>
+<div class="faixa-demo" role="note">Perfis, selos e denúncias desta página são fictícios e servem apenas para demonstração.</div>
+
+<nav class="navegacao-principal" aria-label="Navegação principal">
+  <a class="marca-site" href="index.html"><span class="marca-selo" aria-hidden="true">M3</span><span class="marca-texto"><strong>MISM3</strong><span>Mapa do Cuidado · Rio Claro/SP</span></span></a>
+  <div class="links-navegacao">
+    <a href="index.html">Início</a>
+    <a href="rede-mulheres.html" aria-current="page">De mulher para mulher</a>
+    <a href="gestao.html">Painel de gestão</a>
+    <a href="inteligencia-publica.html">Inteligência pública</a>
+  </div>
+</nav>
+<header class="topo">
+<p class="breadcrumb"><a href="index.html">Início</a> › De mulher para mulher</p>
 <h1>De Mulher para Mulher</h1>
 <p>Uma ideia de rede para compartilhar experiências, indicar oportunidades e encontrar apoio entre mulheres.</p>
 <p class="note">Esta tela demonstra uma possível experiência de navegação. Não existe cadastro real, verificação de identidade, publicação ou envio de denúncias. Os selos são exemplos visuais, não atestados de confiança.</p>
@@ -76,7 +310,7 @@ button{font:inherit;border:0;border-radius:.5rem;background:var(--pri);color:whi
 <div id="retorno-denuncia" class="status hidden" role="status"></div>
 </section>
 </main>
-<footer><p class="foot">Decisão para uma versão futura: definir critérios claros, evidências necessárias, revisão humana, recurso contra decisões e proteção contra denúncias abusivas. Nenhum nível deve ser apresentado como “identidade verificada” enquanto não houver um processo real de verificação.</p></footer>
+<footer class="rodape"><p class="foot">Decisão para uma versão futura: definir critérios claros, evidências necessárias, revisão humana, recurso contra decisões e proteção contra denúncias abusivas. Nenhum nível deve ser apresentado como “identidade verificada” enquanto não houver um processo real de verificação.</p></footer>
 <script>
 (function(){
 "use strict";

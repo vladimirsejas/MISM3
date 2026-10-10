@@ -236,7 +236,7 @@
       dados.demo = !!(r[0].meta && r[0].meta.demo) || !!(r[1].meta && r[1].meta.demo);
       $("faixa-demo").hidden = !dados.demo;
       $("fontes").textContent = "Índice de CEPs: " + (r[0].meta.fonte || "") + " · Serviços gerados em " + (r[1].meta.gerado_em || "?") + ".";
-      if (dados.demo) mostrarMensagem("Modo demonstração: use os CEPs fictícios 00000-001, 00000-002 ou 00000-003.");
+      $("aviso-cep-demo").hidden = !dados.demo;
     }).catch(function () {
       mostrarMensagem("Não foi possível carregar os dados. Abra o site por um servidor local (veja o README).");
     });
@@ -270,12 +270,11 @@
   function cartao(s, area) {
     var partes = [];
     var tipoTxt = Acesso.rotuloSubtipo(s.subtipo);
-    if (tipoTxt) partes.push('<p class="meta">' + esc(tipoTxt) + "</p>");
     if (s.distancia_m != null) {
       var aprox = s.geo === "centroide_cep" ? " (localização aproximada pelo CEP do serviço)" : "";
-      partes.push('<p class="dist">' + esc(Acesso.formatarDistancia(s.distancia_m)) + aprox + "</p>");
+      partes.push('<p><span class="dist">' + esc(Acesso.formatarDistancia(s.distancia_m)) + "</span>" + esc(aprox) + "</p>");
     } else if (s.abrangencia === "municipal") {
-      partes.push('<p class="dist">Atende todo o município</p>');
+      partes.push('<p><span class="dist">Atende todo o município</span></p>');
     } else {
       partes.push('<p class="meta">Localização ainda não disponível</p>');
     }
@@ -284,8 +283,9 @@
     if (s.horario) partes.push("<p>Horário: " + esc(s.horario) + "</p>");
     if (s.observacao) partes.push("<p>" + esc(s.observacao) + "</p>");
     var fonte = s.fonte_url ? '<a href="' + esc(s.fonte_url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.fonte) + "</a>" : esc(s.fonte);
-    partes.push('<p class="meta">Fonte: ' + fonte + " · verificado em " + esc(s.verificado_em) + "</p>");
-    return '<article class="cartao"><h3>' + esc(s.nome) + "</h3>" + partes.join("") + "</article>";
+    partes.push('<p class="meta fonte">Fonte: ' + fonte + " · verificado em " + esc(s.verificado_em) + "</p>");
+    var selo = tipoTxt ? '<span class="selo-tipo">' + esc(tipoTxt) + "</span>" : "";
+    return '<article class="cartao"><div class="cab-cartao"><h3>' + esc(s.nome) + "</h3>" + selo + "</div>" + partes.join("") + "</article>";
   }
 
   function desenharObjetivos() {
