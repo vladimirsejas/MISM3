@@ -694,17 +694,17 @@ svg.leaflet-image-layer.leaflet-interactive path {
   --surface: #ffffff;
   --fg: #352b32;
   --mut: #766a73;
-  --pri: #87556f;
-  --pri-hover: #6d4058;
-  --pri-2: #8d5a75;
-  --soft: #f5eaf0;
+  --pri: #94798a;
+  --pri-hover: #765d70;
+  --pri-2: #8a7180;
+  --soft: #f7f1f5;
   --bor: #e7dce2;
   --bor-forte: #c9b5c0;
   --alerta: #b43b4b;
   --alerta-fundo: #fff5f6;
   --alerta-borda: #e8c6cc;
   --aviso-fundo: #f7eff3;
-  --foco: #b17a98;
+  --foco: #b99aaa;
   --radius: 10px;
   --shadow: 0 3px 12px rgba(89, 53, 72, .06);
   --largura: 1120px;
@@ -1936,11 +1936,11 @@ window.MISM3_CONFIG = {
   "use strict";
   var MENU = [
     { href: "index.html", rotulo: "Início" },
-    { href: "saude.html", rotulo: "Saúde" }
-  ];
-  var MAIS = [
+    { href: "saude.html", rotulo: "Saúde" },
+    { href: "rede-mulheres.html", rotulo: "De Mulher para Mulher" },
     { href: "secretarias.html", rotulo: "Secretarias e telefones úteis" }
   ];
+  var MAIS = [];
   var atual = (window.location.pathname.split("/").pop() || "index.html").toLowerCase();
 
   function ehAtual(item) { return item.href === atual || (item.tambem || []).indexOf(atual) !== -1; }
@@ -1954,13 +1954,15 @@ window.MISM3_CONFIG = {
 
   var rodape = document.querySelector("footer.rodape");
   if (!rodape) { rodape = document.createElement("footer"); rodape.className = "rodape"; document.body.appendChild(rodape); }
-  var mais = document.createElement("nav");
-  mais.className = "rodape-links";
-  mais.setAttribute("aria-label", "Mais páginas");
-  mais.innerHTML = "<strong>Mais:</strong> " + MAIS.map(function (m) {
-    return '<a href="' + m.href + '"' + (m.href === atual ? ' aria-current="page"' : "") + ">" + m.rotulo + "</a>";
-  }).join(" · ");
-  rodape.insertBefore(mais, rodape.firstChild);
+  if (MAIS.length) {
+    var mais = document.createElement("nav");
+    mais.className = "rodape-links";
+    mais.setAttribute("aria-label", "Mais páginas");
+    mais.innerHTML = "<strong>Mais:</strong> " + MAIS.map(function (m) {
+      return '<a href="' + m.href + '"' + (m.href === atual ? ' aria-current="page"' : "") + ">" + m.rotulo + "</a>";
+    }).join(" · ");
+    rodape.insertBefore(mais, rodape.firstChild);
+  }
 })();
 
 </script>
