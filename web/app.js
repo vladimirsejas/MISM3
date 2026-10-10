@@ -2,7 +2,7 @@
 (function () {
   "use strict";
   var $ = function (id) { return document.getElementById(id); };
-  var dados = { indice: null, servicos: null, demo: false };
+  var dados = { indice: null, servicos: null };
   var mapa = null, camadas = null, tiles = null;
   var ultimo = null, objetivo = null, necessidades = [];  /* so em memoria: nada vai para storage, cookie ou rede */
 
@@ -198,21 +198,22 @@
 
   function iniciar() {
     carregar("dados/cep_indice.json").then(function (idx) {
-      return carregar("dados/servicos.json").then(function (sv) { return [idx, sv, false]; });
-    }).catch(function () {
-      return Promise.all([carregar("dados/demo/cep_indice.json"), carregar("dados/demo/servicos.json")])
-        .then(function (r) { return [r[0], r[1], true]; });
+      return carregar("dados/servicos.json").then(function (sv) { return [idx, sv]; });
     }).then(function (r) {
-      dados.indice = r[0].ceps;
-      /* cadastro "de mulher para mulher" vence: depois de renovar_ate nao aparece, mesmo que o arquivo seja antigo */
-      dados.servicos = r[1].servicos.filter(function (x) { return x.tipo !== "mulher_para_mulher" || (x.renovar_ate && x.renovar_ate >= hojeISO()); });
+      dados.indice = r[0].ceps || {};
+      /* Publica somente cadastros válidos e dentro do prazo de renovação. */
+      dados.servicos = (r[1].servicos || []).filter(function (x) {
+        return x.tipo !== "mulher_para_mulher" || (x.renovar_ate && x.renovar_ate >= hojeISO());
+      });
       $("porta-m2m").hidden = !dados.servicos.some(function (x) { return x.tipo === "mulher_para_mulher"; });
-      dados.demo = !!(r[0].meta && r[0].meta.demo) || !!(r[1].meta && r[1].meta.demo);
-      $("faixa-demo").hidden = !dados.demo;
-      $("fontes").textContent = "Índice de CEPs: " + (r[0].meta.fonte || "") + " · Serviços gerados em " + (r[1].meta.gerado_em || "?") + ".";
-      if (dados.demo) mostrarMensagem("Modo demonstração: use os CEPs fictícios 00000-001, 00000-002 ou 00000-003.");
+      $("fontes").textContent = "Fontes: " + (r[0].meta && r[0].meta.fonte || "índice oficial de CEPs") + " · Catálogo atualizado em " + (r[1].meta && r[1].meta.gerado_em || "data não informada") + ".";
     }).catch(function () {
-      mostrarMensagem("Não foi possível carregar os dados. Abra o site por um servidor local (veja o README).");
+      dados.indice = null;
+      dados.servicos = [];
+      $("porta-m2m").hidden = true;
+      $("form-cep").querySelectorAll("input, button").forEach(function (el) { el.disabled = true; });
+      mostrarMensagem("A busca por CEP está temporariamente indisponível porque o catálogo real ainda não foi gerado nesta instalação. Nenhum dado fictício será exibido. Os caminhos e contatos oficiais continuam disponíveis acima.");
+      $("fontes").textContent = "Catálogo real não carregado. A busca por CEP só será habilitada quando os arquivos oficiais estiverem disponíveis.";
     });
   }
 
