@@ -867,10 +867,14 @@ details.tabela td.n,details.tabela th.n{text-align:right;font-variant-numeric:ta
 }
 @media (max-width:520px){.tile.heroi .val{font-size:2.6rem}.medidor{grid-template-columns:1fr 1fr}.medidor .cab{display:none}.medidor .tipo{grid-column:1/-1;margin-top:.7rem}}
 
+/* avisos que so valem para dados de demonstracao (ou so para dados reais) */
+body:not([data-dados="demo"]) [data-demo]{display:none}
+body[data-dados="demo"] [data-real]{display:none}
+
 </style>
 </head>
 <body data-visao="publica">
-<div class="faixa-demo" role="note">DADOS FICTÍCIOS — protótipo. Nenhum número deste painel é medição real.</div>
+<div id="faixa-demo" class="faixa-demo" role="note" hidden>DADOS FICTÍCIOS — protótipo. Nenhum número deste painel é medição real.</div>
 
 <header class="topo">
   <p class="voltar-site"><a href="index.html">← Voltar ao Mapa do Cuidado</a></p>
@@ -897,7 +901,7 @@ details.tabela td.n,details.tabela th.n{text-align:right;font-variant-numeric:ta
 
   <section class="cartao-viz" aria-labelledby="t-mes">
     <h2 id="t-mes">Buscas por mês</h2>
-    <p class="sub">Picos em janeiro e agosto (volta às aulas e ao trabalho), no cenário fictício.</p>
+    <p class="sub">Picos em janeiro e agosto (volta às aulas e ao trabalho), <span data-demo>no cenário fictício</span>.</p>
     <div id="g-meses"></div>
     <div id="t-meses"></div>
   </section>
@@ -918,8 +922,8 @@ details.tabela td.n,details.tabela th.n{text-align:right;font-variant-numeric:ta
 
   <section class="cartao-viz painel-largo" aria-labelledby="t-mapa">
     <h2 id="t-mapa">Crianças de 0 a 4 anos por setor censitário</h2>
-    <p class="sub">Valores fictícios sobre a malha real de 408 setores de Rio Claro. Os círculos são serviços de exemplo. <strong>Perto de um serviço não prova que há vaga</strong>: o mapa serve para escolher onde investigar, não para concluir.</p>
-    <div id="mapa-gestao" role="img" aria-label="Mapa de setores censitários coloridos pela quantidade fictícia de crianças de 0 a 4 anos"></div>
+    <p class="sub">Crianças de 0 a 4 anos sobre a malha de setores de Rio Claro. <span data-demo>Os valores são fictícios e os círculos são serviços de exemplo.</span> <strong>Perto de um serviço não prova que há vaga</strong>: o mapa serve para escolher onde investigar, não para concluir.</p>
+    <div id="mapa-gestao" role="img" aria-label="Mapa de setores censitários coloridos pela quantidade de crianças de 0 a 4 anos"></div>
     <div id="legenda-mapa" class="legenda-mapa"></div>
     <div id="t-mapa-tab" data-somente-gestao></div>
   </section>
@@ -939,11 +943,96 @@ details.tabela td.n,details.tabela th.n{text-align:right;font-variant-numeric:ta
 </main>
 
 <footer class="rodape">
-  <p><strong>Como ler este painel.</strong> Todos os números são fictícios e foram gerados por <code>pipeline/gerar_demo_gestao.py</code> com semente fixa. Contagens abaixo de 5 são ocultadas ("menos de 5"), para que um número pequeno nunca identifique alguém. A <em>visão pública</em> mostra totais; a <em>visão de gestão</em> acrescenta o detalhe por região e as buscas sem resultado.</p>
+  <p><strong>Como ler este painel.</strong> <span data-demo>Todos os números são fictícios e foram gerados por <code>pipeline/gerar_demo_gestao.py</code> com semente fixa.</span><span data-real>Os números vêm da fonte indicada abaixo.</span> Contagens abaixo de 5 são ocultadas ("menos de 5"), para que um número pequeno nunca identifique alguém. A <em>visão pública</em> mostra totais; a <em>visão de gestão</em> acrescenta o detalhe por região e as buscas sem resultado.</p>
   <p id="fonte-gestao"></p>
 </footer>
 
 <div id="dica" class="dica" role="tooltip" hidden></div>
+<script>
+/* Configuracao do site. Editavel; o servidor (pipeline/servidor.py) substitui este arquivo automaticamente.
+   modo "local":  le os arquivos de web/dados (funciona sem servidor e sem internet).
+   modo "api":    le da API em apiBase (ver docs/api_contrato.md) e, se ela falhar, cai para os arquivos locais.
+   pesquisaRemota: true  => a frase digitada e enviada a {apiBase}/pesquisar. Isso muda o aviso de privacidade na tela;
+                            por seguranca, frases com sinal de violencia NUNCA sao enviadas. */
+window.MISM3_CONFIG = {
+  modo: "local",
+  apiBase: "/api",
+  pesquisaRemota: false,
+  usarLocalSeApiFalhar: true
+};
+
+</script>
+<script>
+/* Camada de dados do MISM3: UM unico lugar que decide de onde vem cada dado (arquivo local ou API).
+   O resto do site nao sabe se ha API: chama Api.json("dados/servicos.json") e recebe o JSON.
+   Contrato completo em docs/api_contrato.md. */
+(function (raiz, fabrica) {
+  if (typeof module === "object" && module.exports) module.exports = fabrica();
+  else raiz.Api = fabrica();
+})(typeof self !== "undefined" ? self : this, function () {
+  var PADRAO = { modo: "local", apiBase: "/api", pesquisaRemota: false, usarLocalSeApiFalhar: true };
+  /* arquivo local -> rota da API. Arquivo que nao esta aqui e sempre lido do disco. */
+  var ROTAS = { "dados/cep_indice.json": "/cep_indice", "dados/servicos.json": "/servicos", "dados/vagas.json": "/vagas", "dados/gestao.json": "/gestao" };
+
+  function global_() { return typeof window !== "undefined" ? window : (typeof globalThis !== "undefined" ? globalThis : {}); }
+  function cfg() {
+    var c = global_().MISM3_CONFIG || {}, o = {};
+    Object.keys(PADRAO).forEach(function (k) { o[k] = c[k] !== undefined ? c[k] : PADRAO[k]; });
+    return o;
+  }
+  function lerJson(url) {
+    return fetch(url, { cache: "no-store" }).then(function (r) {
+      if (!r.ok) throw new Error(url + " " + r.status);
+      return r.json();
+    });
+  }
+
+  /* Le um JSON do projeto. Em modo "api" tenta a API primeiro; se falhar (offline, 404, 500) usa o arquivo local. */
+  function json(caminho) {
+    var c = cfg(), rota = ROTAS[caminho];
+    if (c.modo === "api" && rota) {
+      return lerJson(c.apiBase + rota).catch(function (e) {
+        if (c.usarLocalSeApiFalhar) return lerJson(caminho);
+        throw e;
+      });
+    }
+    return lerJson(caminho);
+  }
+
+  /* So aceita o que tem FONTE: resultado sem titulo ou sem link http(s) e descartado ("nada sem fonte"). */
+  function normalizarResposta(j) {
+    var saida = { necessidades: [], resultados: [] };
+    if (j && Array.isArray(j.necessidades)) {
+      saida.necessidades = j.necessidades.filter(function (x) { return typeof x === "string"; }).slice(0, 3);
+    }
+    if (j && Array.isArray(j.resultados)) {
+      saida.resultados = j.resultados.filter(function (r) {
+        return r && typeof r.titulo === "string" && r.titulo && typeof r.url === "string" && /^https?:\/\//i.test(r.url);
+      }).slice(0, 10).map(function (r) {
+        return { titulo: r.titulo.slice(0, 200), descricao: String(r.descricao || "").slice(0, 600), url: r.url,
+          fonte: String(r.fonte || "").slice(0, 120), consultado_em: String(r.consultado_em || "").slice(0, 40) };
+      });
+    }
+    return saida;
+  }
+
+  /* Pesquisa real (provedor plugado no servidor). Devolve null se desligada ou se falhar: a busca local continua valendo. */
+  function pesquisar(texto, contexto) {
+    var c = cfg();
+    if (c.modo !== "api" || !c.pesquisaRemota) return Promise.resolve(null);
+    return fetch(c.apiBase + "/pesquisar", {
+      method: "POST", headers: { "Content-Type": "application/json" }, cache: "no-store",
+      body: JSON.stringify({ texto: String(texto == null ? "" : texto).slice(0, 300), contexto: contexto || {} })
+    }).then(function (r) {
+      if (!r.ok) throw new Error("pesquisar " + r.status);
+      return r.json();
+    }).then(normalizarResposta).catch(function () { return null; });
+  }
+
+  return { cfg: cfg, json: json, pesquisar: pesquisar, normalizarResposta: normalizarResposta, ROTAS: ROTAS };
+});
+
+</script>
 <script>
 /* @preserve
  * Leaflet 1.9.4, a JS library for interactive maps. https://leafletjs.com
@@ -1065,7 +1154,8 @@ details.tabela td.n,details.tabela th.n{text-align:right;font-variant-numeric:ta
   function pctTxt(p) { return String(p).replace(".", ",") + "%"; }
   function compacto(n) { return n >= 1000 ? (Math.round(n / 100) / 10).toString().replace(".", ",") + " mil" : String(n); }
   function css(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
-  function carregar(url) { return fetch(url, { cache: "no-store" }).then(function (r) { if (!r.ok) throw new Error(url); return r.json(); }); }
+  function carregar(url) { return Api.json(url); }  /* arquivo local ou API: decide api.js */
+  var SUFIXO = " (fictício)";  // so quando os dados forem de demonstracao
   function larg(el) { return Math.max(260, Math.floor(el.clientWidth || el.parentNode.clientWidth || 320)); }
   var MESES_ABREV = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
   function mesRot(m) { var p = m.split("-"); return MESES_ABREV[+p[1] - 1] + "/" + p[0].slice(2); }
@@ -1286,7 +1376,7 @@ details.tabela td.n,details.tabela th.n{text-align:right;font-variant-numeric:ta
       style: function (f) { return { fillColor: cores[cls(vals[f.properties.setor] || 0)], fillOpacity: 0.92, color: css("--surface-1"), weight: 0.6 }; },
       onEachFeature: function (f, l) {
         var v = vals[f.properties.setor] || 0;
-        l.bindTooltip("<b>" + esc(f.properties.bairro || "Setor sem bairro") + "</b>" + (v < D.meta.k_minimo ? "menos de " + D.meta.k_minimo : "cerca de " + fmt(v)) + " crianças de 0 a 4 anos (fictício)", { sticky: true });
+        l.bindTooltip("<b>" + esc(f.properties.bairro || "Setor sem bairro") + "</b>" + (v < D.meta.k_minimo ? "menos de " + D.meta.k_minimo : "cerca de " + fmt(v)) + " crianças de 0 a 4 anos" + SUFIXO, { sticky: true });
       }
     }).addTo(camada);
     SERVICOS.filter(function (x) { return (x.tipo === "creche" || x.tipo === "educacao_infantil") && x.lat != null; }).forEach(function (x) {
@@ -1325,7 +1415,7 @@ details.tabela td.n,details.tabela th.n{text-align:right;font-variant-numeric:ta
       tabela($("t-sem-tab"), "buscas sem resultado", ["Tema", "Ocorrências"], sem.map(function (x) { return [x.tema, fmt(x.ocorrencias)]; }));
       var top = GEO ? GEO.features.map(function (f) { return [f.properties.bairro || "Setor sem bairro", D.criancas_0_4_por_setor[f.properties.setor] || 0]; })
         .sort(function (a, b) { return b[1] - a[1]; }).slice(0, 10) : [];
-      tabela($("t-mapa-tab"), "10 setores com mais crianças (fictício)", ["Bairro", "Crianças de 0 a 4 anos"], top.map(function (t) { return [t[0], t[1] < D.meta.k_minimo ? "menos de " + D.meta.k_minimo : fmt(t[1])]; }));
+      tabela($("t-mapa-tab"), "10 setores com mais crianças" + SUFIXO, ["Bairro", "Crianças de 0 a 4 anos"], top.map(function (t) { return [t[0], t[1] < D.meta.k_minimo ? "menos de " + D.meta.k_minimo : fmt(t[1])]; }));
     }
   }
 
@@ -1344,12 +1434,15 @@ details.tabela td.n,details.tabela th.n{text-align:right;font-variant-numeric:ta
   if (window.matchMedia) window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", montar);
 
   Promise.all([
-    carregar("dados/demo/gestao.json"),
+    carregar("dados/gestao.json").catch(function () { return carregar("dados/demo/gestao.json"); }),  // dado real primeiro, demonstracao como reserva
     carregar("dados/servicos.json").catch(function () { return carregar("dados/demo/servicos.json"); }).catch(function () { return { servicos: [] }; }),
     carregar("dados/setores.geojson").catch(function () { return null; })
   ]).then(function (r) {
     D = r[0]; SERVICOS = r[1].servicos || []; GEO = r[2];
-    $("fonte-gestao").textContent = "Período fictício: " + mesRot(D.meses[0]) + " a " + mesRot(D.meses[D.meses.length - 1]) + ". Malha de setores: IBGE (Censo 2022), usada só como geometria.";
+    var demo = !D.meta || D.meta.demo !== false;  // sem a marca explicita "demo: false", trata como demonstracao
+    SUFIXO = demo ? " (fictício)" : "";
+    document.body.setAttribute("data-dados", demo ? "demo" : "real"); $("faixa-demo").hidden = !demo;
+    $("fonte-gestao").textContent = (demo ? "Período fictício: " : "Período: ") + mesRot(D.meses[0]) + " a " + mesRot(D.meses[D.meses.length - 1]) + ". Malha de setores: IBGE (Censo 2022), usada só como geometria.";
     var q = /[?&]visao=(gestao|publica)/.exec(location.search);
     definirVisao(q ? q[1] : "publica");
   }).catch(function () {

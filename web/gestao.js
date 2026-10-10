@@ -16,7 +16,8 @@
   function pctTxt(p) { return String(p).replace(".", ",") + "%"; }
   function compacto(n) { return n >= 1000 ? (Math.round(n / 100) / 10).toString().replace(".", ",") + " mil" : String(n); }
   function css(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
-  function carregar(url) { return fetch(url, { cache: "no-store" }).then(function (r) { if (!r.ok) throw new Error(url); return r.json(); }); }
+  function carregar(url) { return Api.json(url); }  /* arquivo local ou API: decide api.js */
+  var SUFIXO = " (fictício)";  // so quando os dados forem de demonstracao
   function larg(el) { return Math.max(260, Math.floor(el.clientWidth || el.parentNode.clientWidth || 320)); }
   var MESES_ABREV = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
   function mesRot(m) { var p = m.split("-"); return MESES_ABREV[+p[1] - 1] + "/" + p[0].slice(2); }
@@ -237,7 +238,7 @@
       style: function (f) { return { fillColor: cores[cls(vals[f.properties.setor] || 0)], fillOpacity: 0.92, color: css("--surface-1"), weight: 0.6 }; },
       onEachFeature: function (f, l) {
         var v = vals[f.properties.setor] || 0;
-        l.bindTooltip("<b>" + esc(f.properties.bairro || "Setor sem bairro") + "</b>" + (v < D.meta.k_minimo ? "menos de " + D.meta.k_minimo : "cerca de " + fmt(v)) + " crianças de 0 a 4 anos (fictício)", { sticky: true });
+        l.bindTooltip("<b>" + esc(f.properties.bairro || "Setor sem bairro") + "</b>" + (v < D.meta.k_minimo ? "menos de " + D.meta.k_minimo : "cerca de " + fmt(v)) + " crianças de 0 a 4 anos" + SUFIXO, { sticky: true });
       }
     }).addTo(camada);
     SERVICOS.filter(function (x) { return (x.tipo === "creche" || x.tipo === "educacao_infantil") && x.lat != null; }).forEach(function (x) {
@@ -276,7 +277,7 @@
       tabela($("t-sem-tab"), "buscas sem resultado", ["Tema", "Ocorrências"], sem.map(function (x) { return [x.tema, fmt(x.ocorrencias)]; }));
       var top = GEO ? GEO.features.map(function (f) { return [f.properties.bairro || "Setor sem bairro", D.criancas_0_4_por_setor[f.properties.setor] || 0]; })
         .sort(function (a, b) { return b[1] - a[1]; }).slice(0, 10) : [];
-      tabela($("t-mapa-tab"), "10 setores com mais crianças (fictício)", ["Bairro", "Crianças de 0 a 4 anos"], top.map(function (t) { return [t[0], t[1] < D.meta.k_minimo ? "menos de " + D.meta.k_minimo : fmt(t[1])]; }));
+      tabela($("t-mapa-tab"), "10 setores com mais crianças" + SUFIXO, ["Bairro", "Crianças de 0 a 4 anos"], top.map(function (t) { return [t[0], t[1] < D.meta.k_minimo ? "menos de " + D.meta.k_minimo : fmt(t[1])]; }));
     }
   }
 
@@ -295,12 +296,15 @@
   if (window.matchMedia) window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", montar);
 
   Promise.all([
-    carregar("dados/demo/gestao.json"),
+    carregar("dados/gestao.json").catch(function () { return carregar("dados/demo/gestao.json"); }),  // dado real primeiro, demonstracao como reserva
     carregar("dados/servicos.json").catch(function () { return carregar("dados/demo/servicos.json"); }).catch(function () { return { servicos: [] }; }),
     carregar("dados/setores.geojson").catch(function () { return null; })
   ]).then(function (r) {
     D = r[0]; SERVICOS = r[1].servicos || []; GEO = r[2];
-    $("fonte-gestao").textContent = "Período fictício: " + mesRot(D.meses[0]) + " a " + mesRot(D.meses[D.meses.length - 1]) + ". Malha de setores: IBGE (Censo 2022), usada só como geometria.";
+    var demo = !D.meta || D.meta.demo !== false;  // sem a marca explicita "demo: false", trata como demonstracao
+    SUFIXO = demo ? " (fictício)" : "";
+    document.body.setAttribute("data-dados", demo ? "demo" : "real"); $("faixa-demo").hidden = !demo;
+    $("fonte-gestao").textContent = (demo ? "Período fictício: " : "Período: ") + mesRot(D.meses[0]) + " a " + mesRot(D.meses[D.meses.length - 1]) + ". Malha de setores: IBGE (Censo 2022), usada só como geometria.";
     var q = /[?&]visao=(gestao|publica)/.exec(location.search);
     definirVisao(q ? q[1] : "publica");
   }).catch(function () {

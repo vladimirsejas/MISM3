@@ -42,6 +42,7 @@ Se um download automático falhar (os sites mudam), o script diz onde baixar à 
     node web/tests/recomendar.test.js
     node web/tests/vagas.test.js
     node web/tests/necessidades.test.js
+    node web/tests/api.test.js
 
 ## Conferir o catálogo contra as páginas oficiais
 Com internet, rode `python pipeline/verificar_catalogo.py`. Ele abre a fonte de cada serviço e confere se os telefones cadastrados aparecem na página. "ATENCAO" não é erro certo: abra a fonte e confira.
@@ -54,6 +55,9 @@ Na tela inicial a pessoa toca numa "porta" (Emprego, Saúde, Estudo, Filhos, Cas
 
 ## De mulher para mulher
 Área para mulheres que oferecem serviços a outras mulheres. **Quem verifica é a Secretaria da Mulher**: o site não tem como garantir que só mulheres participam, então só publica cadastros já conferidos por ela (o que foi conferido, por quem e quando). `catalogo/mulher_para_mulher.csv` está vazio e a porta só aparece quando há cadastro válido; no modo demonstração aparecem dois exemplos marcados [DEMO]. O validador exige consentimento, só bairro (nunca endereço) e validade de até 180 dias. Papéis, fluxo, limites e roteiro para a banca em `docs/de_mulher_para_mulher.md`. Não prometemos segurança, não há pagamento nem notas.
+
+## Dados e pesquisas reais (API)
+O MISM3 é funcional com ou sem usuárias: o site tem uma **camada de dados plugável** (`web/api.js`). Sem servidor, lê os arquivos de `web/dados/`; com o servidor (`abrir_servidor.bat` ou `python pipeline/servidor.py`) fala com a API e, se ela falhar, volta para os arquivos. Para **pesquisas reais**, crie `pipeline/provedor_pesquisa.py` a partir de `provedor_pesquisa.exemplo.py`; a chave fica em variável de ambiente, nunca no navegador. Frases sobre violência nunca vão à API. Contrato, regras e limites em `docs/api_contrato.md`.
 
 ## Abrir o protótipo com um clique (sem servidor, sem internet)
 Dê dois cliques em **`abrir_demo.bat`** (Windows) ou abra `demo_unico/index.html` no navegador. Cada página é um arquivo único, com estilos, scripts e dados embutidos; os links entre telas funcionam (Mapa do Cuidado, Painel de Gestão, Inteligência Pública, De Mulher para Mulher). Depois de qualquer mudança em `web/`, rode `python pipeline/gerar_demo_unico.py` para atualizar. O `abrir_site.bat` (servidor local com Python) continua valendo para quem está desenvolvendo.

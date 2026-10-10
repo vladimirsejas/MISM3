@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="gestao.css">
 </head>
 <body data-visao="publica">
-<div class="faixa-demo" role="note">DADOS FICTÍCIOS — protótipo. Nenhum número deste painel é medição real.</div>
+<div id="faixa-demo" class="faixa-demo" role="note" hidden>DADOS FICTÍCIOS — protótipo. Nenhum número deste painel é medição real.</div>
 
 <header class="topo">
   <p class="voltar-site"><a href="index.html">← Voltar ao Mapa do Cuidado</a></p>
@@ -37,7 +37,7 @@
 
   <section class="cartao-viz" aria-labelledby="t-mes">
     <h2 id="t-mes">Buscas por mês</h2>
-    <p class="sub">Picos em janeiro e agosto (volta às aulas e ao trabalho), no cenário fictício.</p>
+    <p class="sub">Picos em janeiro e agosto (volta às aulas e ao trabalho), <span data-demo>no cenário fictício</span>.</p>
     <div id="g-meses"></div>
     <div id="t-meses"></div>
   </section>
@@ -58,8 +58,8 @@
 
   <section class="cartao-viz painel-largo" aria-labelledby="t-mapa">
     <h2 id="t-mapa">Crianças de 0 a 4 anos por setor censitário</h2>
-    <p class="sub">Valores fictícios sobre a malha real de 408 setores de Rio Claro. Os círculos são serviços de exemplo. <strong>Perto de um serviço não prova que há vaga</strong>: o mapa serve para escolher onde investigar, não para concluir.</p>
-    <div id="mapa-gestao" role="img" aria-label="Mapa de setores censitários coloridos pela quantidade fictícia de crianças de 0 a 4 anos"></div>
+    <p class="sub">Crianças de 0 a 4 anos sobre a malha de setores de Rio Claro. <span data-demo>Os valores são fictícios e os círculos são serviços de exemplo.</span> <strong>Perto de um serviço não prova que há vaga</strong>: o mapa serve para escolher onde investigar, não para concluir.</p>
+    <div id="mapa-gestao" role="img" aria-label="Mapa de setores censitários coloridos pela quantidade de crianças de 0 a 4 anos"></div>
     <div id="legenda-mapa" class="legenda-mapa"></div>
     <div id="t-mapa-tab" data-somente-gestao></div>
   </section>
@@ -79,11 +79,13 @@
 </main>
 
 <footer class="rodape">
-  <p><strong>Como ler este painel.</strong> Todos os números são fictícios e foram gerados por <code>pipeline/gerar_demo_gestao.py</code> com semente fixa. Contagens abaixo de 5 são ocultadas ("menos de 5"), para que um número pequeno nunca identifique alguém. A <em>visão pública</em> mostra totais; a <em>visão de gestão</em> acrescenta o detalhe por região e as buscas sem resultado.</p>
+  <p><strong>Como ler este painel.</strong> <span data-demo>Todos os números são fictícios e foram gerados por <code>pipeline/gerar_demo_gestao.py</code> com semente fixa.</span><span data-real>Os números vêm da fonte indicada abaixo.</span> Contagens abaixo de 5 são ocultadas ("menos de 5"), para que um número pequeno nunca identifique alguém. A <em>visão pública</em> mostra totais; a <em>visão de gestão</em> acrescenta o detalhe por região e as buscas sem resultado.</p>
   <p id="fonte-gestao"></p>
 </footer>
 
 <div id="dica" class="dica" role="tooltip" hidden></div>
+<script src="config.js"></script>
+<script src="api.js"></script>
 <script src="vendor/leaflet.js"></script>
 <script src="acesso.js"></script>
 <script src="gestao.js"></script>

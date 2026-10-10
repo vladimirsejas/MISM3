@@ -11,12 +11,7 @@
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
     });
   }
-  function carregar(url) {
-    return fetch(url, { cache: "no-store" }).then(function (r) {
-      if (!r.ok) throw new Error(url + " " + r.status);
-      return r.json();
-    });
-  }
+  function carregar(url) { return Api.json(url); }  /* de onde vem (arquivo local ou API) e decisao de api.js */
 
 
   var CATEGORIAS = {
@@ -167,6 +162,26 @@
     abrirCaminho(restantes);
   });
 
+  /* ---- pesquisa real (API): so aparece quando o servidor tem um provedor plugado (docs/api_contrato.md) ---- */
+  function htmlResultadosReais(r) {
+    if (!r || !r.resultados.length) return "";
+    return '<section class="subcaminho resultados-reais"><h3>Resultados da pesquisa</h3><p class="meta">Pesquisa feita agora em fontes externas. Confira sempre a informação na fonte antes de ir.</p>' +
+      r.resultados.map(function (x) {
+        return '<article class="cartao"><h3><a href="' + esc(x.url) + '" target="_blank" rel="noopener noreferrer">' + esc(x.titulo) + "</a></h3>" +
+          (x.descricao ? "<p>" + esc(x.descricao) + "</p>" : "") +
+          '<p class="meta">Fonte: ' + esc(x.fonte || x.url) + (x.consultado_em ? " · consultado em " + esc(x.consultado_em) : "") + "</p></article>";
+      }).join("") + "</section>";
+  }
+  function mostrarResultadosReais(r, semCaminho) {
+    var alvo = $("resultados-reais");
+    alvo.innerHTML = htmlResultadosReais(r);
+    if (semCaminho && alvo.innerHTML) {  /* a pesquisa achou algo que a busca local nao reconheceu */
+      $("painel-categoria").hidden = false; document.querySelector(".portas").hidden = true;
+      $("titulo-categoria").textContent = "Resultados da pesquisa"; $("descricao-categoria").textContent = "";
+      $("opcoes-categoria").innerHTML = ""; $("entendimento").innerHTML = "";
+    }
+  }
+
   $("form-necessidade").addEventListener("submit", function (ev) {
     ev.preventDefault();
     var texto = $("necessidade").value;
@@ -177,20 +192,31 @@
       return;
     }
     var achadas = Necessidades.identificar(texto);  /* violencia sempre primeiro; ate 3 necessidades */
-    if (!achadas.length) {
-      aviso.textContent = "Ainda não reconheci o que você escreveu. Tente com outras palavras, como emprego, saúde, estudo, filhos, família, casamento, violência ou ônibus.";
+    /* Frase com sinal de violencia NUNCA vai para a API: a protecao local aparece na hora e nada sai do aparelho. */
+    var pesquisa = achadas.some(function (n) { return n.urgente; }) ? Promise.resolve(null) : Api.pesquisar(texto);
+    if (achadas.length) {
+      aviso.hidden = true; veioDoTexto = true;
+      abrirCaminho(achadas.map(function (n) { return chaveDe(n.id); }));  /* aparece ja; nao espera a rede */
+    } else {
+      aviso.textContent = Api.cfg().pesquisaRemota ? "Pesquisando…" : "Ainda não reconheci o que você escreveu. Tente com outras palavras, como emprego, saúde, estudo, filhos, família, casamento, violência ou ônibus.";
       aviso.hidden = false;
-      return;
     }
-    aviso.hidden = true;
-    veioDoTexto = true;
-    abrirCaminho(achadas.map(function (n) { return chaveDe(n.id); }));
+    pesquisa.then(function (r) {
+      if (!r) { if (!achadas.length && Api.cfg().pesquisaRemota) aviso.textContent = "Não encontrei nada com essas palavras. Tente de outro jeito."; return; }
+      var ids = achadas.map(function (n) { return n.id; });
+      r.necessidades.forEach(function (id) { if (ids.indexOf(id) < 0 && Necessidades.porId(id) && ids.length < 3) ids.push(id); });
+      if (ids.length > achadas.length) { aviso.hidden = true; veioDoTexto = true; abrirCaminho(ids.map(chaveDe)); }
+      if (r.resultados.length) aviso.hidden = true;
+      mostrarResultadosReais(r, !ids.length);
+      if (!ids.length && !r.resultados.length) aviso.textContent = "Não encontrei nada com essas palavras. Tente de outro jeito.";
+    });
   });
 
   document.querySelectorAll("[data-categoria]").forEach(function (b) {
     b.addEventListener("click", function () { abrirCategoria(b.getAttribute("data-categoria")); });
   });
   $("voltar-portas").addEventListener("click", function () {
+    $("resultados-reais").innerHTML = "";
     $("painel-categoria").hidden = true;
     document.querySelector(".portas").hidden = false;
     document.querySelector(".portas").scrollIntoView({behavior:"smooth", block:"start"});
@@ -378,10 +404,13 @@
 
   $("sair-rapido").addEventListener("click", function () {
     $("cep").value = ""; $("necessidade").value = ""; $("grupos").innerHTML = ""; $("sugestoes").innerHTML = "";
-    $("painel-categoria").hidden = true; $("opcoes-categoria").innerHTML = ""; $("entendimento").innerHTML = ""; veioDoTexto = false; ultimo = null; objetivo = null; necessidades = [];
+    $("painel-categoria").hidden = true; $("opcoes-categoria").innerHTML = ""; $("entendimento").innerHTML = ""; $("resultados-reais").innerHTML = ""; veioDoTexto = false; ultimo = null; objetivo = null; necessidades = [];
     window.location.replace("https://www.google.com.br/");
   });
 
+  if (Api.cfg().modo === "api" && Api.cfg().pesquisaRemota) {
+    $("ajuda-necessidade").textContent = "Não escreva nomes, documentos ou detalhes pessoais. Para pesquisar, sua frase é enviada ao servidor do projeto (frases sobre violência nunca são enviadas).";
+  }
   iniciar();
   carregarVagas();
 })();

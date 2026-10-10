@@ -95,3 +95,7 @@ details.tabela td.n,details.tabela th.n{text-align:right;font-variant-numeric:ta
   .trilho>span{background:CanvasText}
 }
 @media (max-width:520px){.tile.heroi .val{font-size:2.6rem}.medidor{grid-template-columns:1fr 1fr}.medidor .cab{display:none}.medidor .tipo{grid-column:1/-1;margin-top:.7rem}}
+
+/* avisos que so valem para dados de demonstracao (ou so para dados reais) */
+body:not([data-dados="demo"]) [data-demo]{display:none}
+body[data-dados="demo"] [data-real]{display:none}

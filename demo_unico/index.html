@@ -828,6 +828,7 @@ details.outros > summary { cursor: pointer; font-weight: 600; padding: .6rem 0; 
     <p id="descricao-categoria"></p>
     <div id="entendimento" class="entendimento" aria-live="polite"></div>
     <div id="opcoes-categoria"></div>
+    <div id="resultados-reais"></div>
   </section>
 
   <details class="busca-por-cep">
@@ -869,6 +870,91 @@ details.outros > summary { cursor: pointer; font-weight: 600; padding: .6rem 0; 
   <p id="fontes"></p>
 </footer>
 
+<script>
+/* Configuracao do site. Editavel; o servidor (pipeline/servidor.py) substitui este arquivo automaticamente.
+   modo "local":  le os arquivos de web/dados (funciona sem servidor e sem internet).
+   modo "api":    le da API em apiBase (ver docs/api_contrato.md) e, se ela falhar, cai para os arquivos locais.
+   pesquisaRemota: true  => a frase digitada e enviada a {apiBase}/pesquisar. Isso muda o aviso de privacidade na tela;
+                            por seguranca, frases com sinal de violencia NUNCA sao enviadas. */
+window.MISM3_CONFIG = {
+  modo: "local",
+  apiBase: "/api",
+  pesquisaRemota: false,
+  usarLocalSeApiFalhar: true
+};
+
+</script>
+<script>
+/* Camada de dados do MISM3: UM unico lugar que decide de onde vem cada dado (arquivo local ou API).
+   O resto do site nao sabe se ha API: chama Api.json("dados/servicos.json") e recebe o JSON.
+   Contrato completo em docs/api_contrato.md. */
+(function (raiz, fabrica) {
+  if (typeof module === "object" && module.exports) module.exports = fabrica();
+  else raiz.Api = fabrica();
+})(typeof self !== "undefined" ? self : this, function () {
+  var PADRAO = { modo: "local", apiBase: "/api", pesquisaRemota: false, usarLocalSeApiFalhar: true };
+  /* arquivo local -> rota da API. Arquivo que nao esta aqui e sempre lido do disco. */
+  var ROTAS = { "dados/cep_indice.json": "/cep_indice", "dados/servicos.json": "/servicos", "dados/vagas.json": "/vagas", "dados/gestao.json": "/gestao" };
+
+  function global_() { return typeof window !== "undefined" ? window : (typeof globalThis !== "undefined" ? globalThis : {}); }
+  function cfg() {
+    var c = global_().MISM3_CONFIG || {}, o = {};
+    Object.keys(PADRAO).forEach(function (k) { o[k] = c[k] !== undefined ? c[k] : PADRAO[k]; });
+    return o;
+  }
+  function lerJson(url) {
+    return fetch(url, { cache: "no-store" }).then(function (r) {
+      if (!r.ok) throw new Error(url + " " + r.status);
+      return r.json();
+    });
+  }
+
+  /* Le um JSON do projeto. Em modo "api" tenta a API primeiro; se falhar (offline, 404, 500) usa o arquivo local. */
+  function json(caminho) {
+    var c = cfg(), rota = ROTAS[caminho];
+    if (c.modo === "api" && rota) {
+      return lerJson(c.apiBase + rota).catch(function (e) {
+        if (c.usarLocalSeApiFalhar) return lerJson(caminho);
+        throw e;
+      });
+    }
+    return lerJson(caminho);
+  }
+
+  /* So aceita o que tem FONTE: resultado sem titulo ou sem link http(s) e descartado ("nada sem fonte"). */
+  function normalizarResposta(j) {
+    var saida = { necessidades: [], resultados: [] };
+    if (j && Array.isArray(j.necessidades)) {
+      saida.necessidades = j.necessidades.filter(function (x) { return typeof x === "string"; }).slice(0, 3);
+    }
+    if (j && Array.isArray(j.resultados)) {
+      saida.resultados = j.resultados.filter(function (r) {
+        return r && typeof r.titulo === "string" && r.titulo && typeof r.url === "string" && /^https?:\/\//i.test(r.url);
+      }).slice(0, 10).map(function (r) {
+        return { titulo: r.titulo.slice(0, 200), descricao: String(r.descricao || "").slice(0, 600), url: r.url,
+          fonte: String(r.fonte || "").slice(0, 120), consultado_em: String(r.consultado_em || "").slice(0, 40) };
+      });
+    }
+    return saida;
+  }
+
+  /* Pesquisa real (provedor plugado no servidor). Devolve null se desligada ou se falhar: a busca local continua valendo. */
+  function pesquisar(texto, contexto) {
+    var c = cfg();
+    if (c.modo !== "api" || !c.pesquisaRemota) return Promise.resolve(null);
+    return fetch(c.apiBase + "/pesquisar", {
+      method: "POST", headers: { "Content-Type": "application/json" }, cache: "no-store",
+      body: JSON.stringify({ texto: String(texto == null ? "" : texto).slice(0, 300), contexto: contexto || {} })
+    }).then(function (r) {
+      if (!r.ok) throw new Error("pesquisar " + r.status);
+      return r.json();
+    }).then(normalizarResposta).catch(function () { return null; });
+  }
+
+  return { cfg: cfg, json: json, pesquisar: pesquisar, normalizarResposta: normalizarResposta, ROTAS: ROTAS };
+});
+
+</script>
 <script>
 /* @preserve
  * Leaflet 1.9.4, a JS library for interactive maps. https://leafletjs.com
@@ -1196,12 +1282,7 @@ details.outros > summary { cursor: pointer; font-weight: 600; padding: .6rem 0; 
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
     });
   }
-  function carregar(url) {
-    return fetch(url, { cache: "no-store" }).then(function (r) {
-      if (!r.ok) throw new Error(url + " " + r.status);
-      return r.json();
-    });
-  }
+  function carregar(url) { return Api.json(url); }  /* de onde vem (arquivo local ou API) e decisao de api.js */
 
 
   var CATEGORIAS = {
@@ -1352,6 +1433,26 @@ details.outros > summary { cursor: pointer; font-weight: 600; padding: .6rem 0; 
     abrirCaminho(restantes);
   });
 
+  /* ---- pesquisa real (API): so aparece quando o servidor tem um provedor plugado (docs/api_contrato.md) ---- */
+  function htmlResultadosReais(r) {
+    if (!r || !r.resultados.length) return "";
+    return '<section class="subcaminho resultados-reais"><h3>Resultados da pesquisa</h3><p class="meta">Pesquisa feita agora em fontes externas. Confira sempre a informação na fonte antes de ir.</p>' +
+      r.resultados.map(function (x) {
+        return '<article class="cartao"><h3><a href="' + esc(x.url) + '" target="_blank" rel="noopener noreferrer">' + esc(x.titulo) + "</a></h3>" +
+          (x.descricao ? "<p>" + esc(x.descricao) + "</p>" : "") +
+          '<p class="meta">Fonte: ' + esc(x.fonte || x.url) + (x.consultado_em ? " · consultado em " + esc(x.consultado_em) : "") + "</p></article>";
+      }).join("") + "</section>";
+  }
+  function mostrarResultadosReais(r, semCaminho) {
+    var alvo = $("resultados-reais");
+    alvo.innerHTML = htmlResultadosReais(r);
+    if (semCaminho && alvo.innerHTML) {  /* a pesquisa achou algo que a busca local nao reconheceu */
+      $("painel-categoria").hidden = false; document.querySelector(".portas").hidden = true;
+      $("titulo-categoria").textContent = "Resultados da pesquisa"; $("descricao-categoria").textContent = "";
+      $("opcoes-categoria").innerHTML = ""; $("entendimento").innerHTML = "";
+    }
+  }
+
   $("form-necessidade").addEventListener("submit", function (ev) {
     ev.preventDefault();
     var texto = $("necessidade").value;
@@ -1362,20 +1463,31 @@ details.outros > summary { cursor: pointer; font-weight: 600; padding: .6rem 0; 
       return;
     }
     var achadas = Necessidades.identificar(texto);  /* violencia sempre primeiro; ate 3 necessidades */
-    if (!achadas.length) {
-      aviso.textContent = "Ainda não reconheci o que você escreveu. Tente com outras palavras, como emprego, saúde, estudo, filhos, família, casamento, violência ou ônibus.";
+    /* Frase com sinal de violencia NUNCA vai para a API: a protecao local aparece na hora e nada sai do aparelho. */
+    var pesquisa = achadas.some(function (n) { return n.urgente; }) ? Promise.resolve(null) : Api.pesquisar(texto);
+    if (achadas.length) {
+      aviso.hidden = true; veioDoTexto = true;
+      abrirCaminho(achadas.map(function (n) { return chaveDe(n.id); }));  /* aparece ja; nao espera a rede */
+    } else {
+      aviso.textContent = Api.cfg().pesquisaRemota ? "Pesquisando…" : "Ainda não reconheci o que você escreveu. Tente com outras palavras, como emprego, saúde, estudo, filhos, família, casamento, violência ou ônibus.";
       aviso.hidden = false;
-      return;
     }
-    aviso.hidden = true;
-    veioDoTexto = true;
-    abrirCaminho(achadas.map(function (n) { return chaveDe(n.id); }));
+    pesquisa.then(function (r) {
+      if (!r) { if (!achadas.length && Api.cfg().pesquisaRemota) aviso.textContent = "Não encontrei nada com essas palavras. Tente de outro jeito."; return; }
+      var ids = achadas.map(function (n) { return n.id; });
+      r.necessidades.forEach(function (id) { if (ids.indexOf(id) < 0 && Necessidades.porId(id) && ids.length < 3) ids.push(id); });
+      if (ids.length > achadas.length) { aviso.hidden = true; veioDoTexto = true; abrirCaminho(ids.map(chaveDe)); }
+      if (r.resultados.length) aviso.hidden = true;
+      mostrarResultadosReais(r, !ids.length);
+      if (!ids.length && !r.resultados.length) aviso.textContent = "Não encontrei nada com essas palavras. Tente de outro jeito.";
+    });
   });
 
   document.querySelectorAll("[data-categoria]").forEach(function (b) {
     b.addEventListener("click", function () { abrirCategoria(b.getAttribute("data-categoria")); });
   });
   $("voltar-portas").addEventListener("click", function () {
+    $("resultados-reais").innerHTML = "";
     $("painel-categoria").hidden = true;
     document.querySelector(".portas").hidden = false;
     document.querySelector(".portas").scrollIntoView({behavior:"smooth", block:"start"});
@@ -1563,10 +1675,13 @@ details.outros > summary { cursor: pointer; font-weight: 600; padding: .6rem 0; 
 
   $("sair-rapido").addEventListener("click", function () {
     $("cep").value = ""; $("necessidade").value = ""; $("grupos").innerHTML = ""; $("sugestoes").innerHTML = "";
-    $("painel-categoria").hidden = true; $("opcoes-categoria").innerHTML = ""; $("entendimento").innerHTML = ""; veioDoTexto = false; ultimo = null; objetivo = null; necessidades = [];
+    $("painel-categoria").hidden = true; $("opcoes-categoria").innerHTML = ""; $("entendimento").innerHTML = ""; $("resultados-reais").innerHTML = ""; veioDoTexto = false; ultimo = null; objetivo = null; necessidades = [];
     window.location.replace("https://www.google.com.br/");
   });
 
+  if (Api.cfg().modo === "api" && Api.cfg().pesquisaRemota) {
+    $("ajuda-necessidade").textContent = "Não escreva nomes, documentos ou detalhes pessoais. Para pesquisar, sua frase é enviada ao servidor do projeto (frases sobre violência nunca são enviadas).";
+  }
   iniciar();
   carregarVagas();
 })();
