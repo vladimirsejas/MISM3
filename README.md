@@ -2,7 +2,7 @@
 
 > **Orientação:** este README é somente um mapa resumido do trabalho, não uma fonte de verdade nem uma base para decisões. Antes de decidir ou afirmar que algo existe, confira o código, os testes executados, os dados/fontes originais e o [registro de decisões de desenvolvimento](docs/registro_decisoes_desenvolvimento.md).
 
-Comece escrevendo uma necessidade ou escolhendo uma porta: **Emprego, Saúde, Estudo, Filhos, Casamento e direitos, Violência ou Família**. A busca por palavras é processada localmente no navegador e abre caminhos, links oficiais e serviços cadastrados em Rio Claro/SP. Também é possível buscar serviços próximos pelo CEP; o CEP **nunca sai do navegador**. O catálogo está em expansão e informa quando faltam dados.
+Comece escrevendo uma necessidade ou escolhendo uma porta: **Emprego, Saúde, Educação, Filhos e cuidado, Benefícios e assistência social, Lazer, cultura e esporte, Direitos e separação, Proteção e violência, Moradia ou Dívidas e aposentadoria**. A busca por palavras é processada localmente no navegador e abre caminhos, links oficiais e serviços cadastrados em Rio Claro/SP. Também é possível buscar serviços próximos pelo CEP; o CEP **nunca sai do navegador**. O catálogo está em expansão e informa quando faltam dados.
 
 ## Privacidade (por desenho)
 - Consulta 100% no navegador; sem servidor próprio, sem cookies, sem localStorage, sem estatísticas.
@@ -19,6 +19,12 @@ Dê dois cliques em **`abrir_site.bat`** (Windows). Ele acha o Python, atualiza 
 - Ver o protótipo **sem Python e sem servidor**: abra `demo_unico/index.html` no navegador (depois de mudar `web/`, rode `python pipeline/gerar_demo_unico.py`).
 
 Manualmente: `python pipeline/institucional.py` e `python pipeline/servidor.py`, ou `python -m http.server 8000 --directory web`, e abra http://localhost:8000. A faixa **DADOS ILUSTRATIVOS** da tela inicial (busca por CEP e mapa) só some quando existirem `cep_indice.json` e `servicos.json` reais; as páginas **Saúde** e **Secretarias** já usam dados reais e dizem isso na tela. CEPs de teste do modo demonstração: 00000-001, 00000-002 ou 00000-003.
+
+## Navegação única e Lazer, cultura e esporte
+- `web/nav.js` é a fonte única do menu e do rodapé compartilhados. As páginas carregam esse script em vez de copiar links de navegação em cada HTML. **Saúde e Lazer** ficam no menu principal; Secretarias e os painéis conceituais ficam no rodapé, em **Mais**.
+- `web/lazer.html` oferece uma agenda semanal com filtros por dia, categoria, gratuidade e público. A página usa `web/dados/institucional.json`, gerado por `python pipeline/institucional.py` a partir de `catalogo/lazer.csv`.
+- `catalogo/lazer.csv` está vazio enquanto não houver programação confirmada. Até lá, a página usa exemplos fictícios de `web/dados/demo/lazer.json` com aviso [DEMO]. Não inventamos horários, locais ou atividades reais: cada registro real precisa de fonte oficial `https` e data de conferência.
+- Na home, o atalho **“Qual é a minha unidade de saúde?”** leva diretamente a `web/saude.html`. A busca reconhece lazer sem reutilizar a palavra “horário”, que continua associada à necessidade de transporte.
 
 ## Saúde por bairro e secretarias (dados reais, sem CEP)
 - `web/saude.html` — "Qual é a minha unidade de saúde?": o bairro digitado é comparado **no navegador** com a área de abrangência de cada UBS (guia da Fundação de Saúde). Mostra a UBS de referência, as unidades que ficam no bairro, urgências 24 horas, saúde da mulher e todas as unidades, com botão de ligar, horário, fonte e data. Quando as duas fontes oficiais **divergem** (ex.: telefone da UBS Vila Cristina), mostra as duas versões e pede confirmação, em vez de escolher uma.
