@@ -37,7 +37,7 @@
     }).join(" · ");
   }
 
-  function cartaoServico(s) {
+  function cartaoServico(s, semFonte) {
     var partes = [];
     var tipoTxt = Acesso.rotuloSubtipo(s.subtipo);
     if (tipoTxt) partes.push('<p class="meta">' + esc(tipoTxt) + "</p>");
@@ -54,7 +54,9 @@
     if (s.observacao) partes.push('<p class="meta">' + esc(s.observacao) + "</p>");
     if (s.bairros) partes.push('<details class="bairros"><summary>Bairros atendidos</summary><p>' + esc(s.bairros) + ".</p></details>");
     var fonte = s.fonte_url ? '<a href="' + esc(s.fonte_url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.fonte) + "</a>" : esc(s.fonte);
-    if (s.conferido === false) {
+    if (semFonte) {
+      /* a fonte comum aparece uma vez no fim do bloco */
+    } else if (s.conferido === false) {
       partes.push('<p class="aviso-nao-conferido">' + (s.aviso ? esc(s.aviso) : "<strong>Ainda não conferido na página oficial.</strong> Ligue antes de ir.") + "</p>");
       partes.push('<p class="meta">Para conferir: ' + fonte + " · informado em " + esc(s.verificado_em) + "</p>");
     } else {
@@ -75,9 +77,11 @@
   /* Em Assistência Social, CRAS e CREAS vêm antes dos demais serviços. */
   var ORDEM_SUBTIPO = { cras: 0, creas: 1, conselho_tutelar: 2, sede: 3, scfv: 5 };
 
-  function servicosDosTipos(tipos, vistos) {
+  /* Serviços de um bloco: do tipo certo, do subtipo pedido (se houver) e ainda não mostrados em outro bloco. */
+  function servicosDaSecao(sec, vistos) {
     var lista = dados.servicos.filter(function (s) {
-      if (tipos.indexOf(s.tipo) === -1 || vistos[s.id]) return false;
+      if (sec.tipos.indexOf(s.tipo) === -1 || vistos[s.id]) return false;
+      if (sec.subtipos && sec.subtipos.indexOf(s.subtipo) === -1) return false;
       vistos[s.id] = true;
       return true;
     });
@@ -87,39 +91,80 @@
     });
   }
 
+  var BUSCA_BAIRRO = '<div class="busca-area" id="busca-bairro"><label for="bairro">Qual CRAS atende o meu bairro?</label><input id="bairro" type="search" maxlength="60" placeholder="Digite o nome do bairro" autocomplete="off" aria-describedby="ajuda-bairro"><p id="ajuda-bairro" class="privacidade">A busca usa a lista de bairros publicada pela Prefeitura e acontece neste aparelho. Ruas não constam na lista: confirme por telefone.</p><p id="resposta-bairro" class="status" role="status" hidden></p></div>';
+
+  function cartaoCanal(c) {
+    return '<article class="cartao"><h3>' + esc(c.nome) + '</h3><p><a class="tel-grande" href="tel:' + esc(c.tel) + '">' + esc(c.tel) + "</a></p><p>" + esc(c.texto) + '</p><p class="meta">' +
+      (c.fonte ? 'Fonte: <a href="' + esc(c.fonte[1]) + '" target="_blank" rel="noopener noreferrer">' + esc(c.fonte[0]) + "</a> · " + esc(c.fonte[2]) + "." : "Canal nacional oficial.") + "</p></article>";
+  }
+
+  /* Blocos "agrupar": os serviços ficam em grupos recolhidos (por público), para a página não ficar carregada. */
+  function htmlGrupos(servicos) {
+    var ordem = [], porGrupo = Object.create(null);
+    servicos.forEach(function (s) {
+      var g = s.grupo || "Outros serviços";
+      if (!porGrupo[g]) { porGrupo[g] = []; ordem.push(g); }
+      porGrupo[g].push(s);
+    });
+    /* Ordem lógica por público; grupos novos (não listados) vão para o fim. */
+    var PREFERIDA = ["Crianças e adolescentes", "Adultos (30 a 59 anos)", "Pessoas idosas (65 anos ou mais)", "APAE — pessoas com deficiência"];
+    ordem.sort(function (x, y) {
+      var a = PREFERIDA.indexOf(x), b = PREFERIDA.indexOf(y);
+      return (a === -1 ? 99 : a) - (b === -1 ? 99 : b);
+    });
+    return ordem.map(function (g) {
+      return '<details class="grupo-recolhido"><summary>' + esc(g) + " <span class=\"contagem\">(" + porGrupo[g].length + ')</span></summary><div class="lista-cartoes">' +
+        porGrupo[g].map(function (s) { return cartaoServico(s, false); }).join("") + "</div></details>";
+    }).join("");
+  }
+
   function htmlArea(area) {
     var html = "";
     var vistos = Object.create(null);
-    if (area.id === "assistencia") {
-      html += '<div class="busca-area" id="busca-bairro"><label for="bairro">Qual CRAS atende o meu bairro?</label><input id="bairro" type="search" maxlength="60" placeholder="Digite o nome do bairro" autocomplete="off" aria-describedby="ajuda-bairro"><p id="ajuda-bairro" class="privacidade">A busca usa a lista de bairros publicada pela Prefeitura e acontece neste aparelho. Ruas não constam na lista: confirme por telefone.</p><p id="resposta-bairro" class="status" role="status" hidden></p></div>';
-    }
     area.secoes.forEach(function (sec, i) {
-      var cartoes = "";
+      var cartoes = "", notaFonte = "";
       if (sec.urgente) {
         cartoes += '<article class="cartao urgente"><h3>Ajuda imediata</h3><p>Perigo imediato: <a class="tel-grande" href="tel:190">190</a> (Polícia)</p><p>Violência contra a mulher: <a class="tel-grande" href="tel:180">180</a> (24 horas, gratuito)</p><p class="meta">Mais contatos no botão “Em perigo agora?”. Não é necessário contar sua história a este sistema.</p></article>';
       }
-      if (i === 0 && area.canais) {
-        area.canais.forEach(function (c) {
-          cartoes += '<article class="cartao"><h3>' + esc(c.nome) + '</h3><p><a class="tel-grande" href="tel:' + esc(c.tel) + '">' + esc(c.tel) + "</a></p><p>" + esc(c.texto) + '</p><p class="meta">' + (c.fonte ? 'Fonte: <a href="' + esc(c.fonte[1]) + '" target="_blank" rel="noopener noreferrer">' + esc(c.fonte[0]) + "</a> · " + esc(c.fonte[2]) + "." : "Canal nacional oficial.") + "</p></article>";
-        });
-      }
+      (sec.canais || []).forEach(function (c) { cartoes += cartaoCanal(c); });
       if (i === 0 && area.checklist) cartoes += CHECKLIST;
-      var servicos = servicosDosTipos(sec.tipos, vistos);
+      var servicos = servicosDaSecao(sec, vistos);
       var nomes = servicos.map(function (s) { return String(s.nome).toLowerCase(); });
       sec.links.forEach(function (l) { if (nomes.indexOf(l[0].toLowerCase()) === -1) cartoes += cartaoLink(l); });
-      var visiveis = servicos.slice(0, LIMITE_CARTOES);
-      visiveis.forEach(function (s) { cartoes += cartaoServico(s); });
-      html += '<section class="secao"><h2>' + esc(sec.titulo) + '</h2>';
-      if (cartoes) html += '<div class="lista-cartoes">' + cartoes + "</div>";
-      if (servicos.length > visiveis.length) {
-        html += '<p class="mais"><button type="button" class="btn secundario" data-mais="' + i + '">Mostrar todos (' + servicos.length + ")</button></p>";
+      var limitar = !sec.recolhida && !sec.agrupar;
+      var visiveis = limitar ? servicos.slice(0, LIMITE_CARTOES) : servicos;
+      var corpo = "";
+      if (sec.busca === "bairro") corpo += BUSCA_BAIRRO;
+      if (sec.agrupar) {
+        corpo += htmlGrupos(visiveis);
+      } else {
+        /* Se todos os cartões do bloco têm a mesma fonte e data (e estão conferidos), a fonte aparece uma vez no fim. */
+      var comum = !sec.agrupar && visiveis.length >= 3 && visiveis.every(function (s) {
+        return s.conferido !== false && s.fonte === visiveis[0].fonte && s.fonte_url === visiveis[0].fonte_url && s.verificado_em === visiveis[0].verificado_em;
+      });
+      visiveis.forEach(function (s) { cartoes += cartaoServico(s, comum); });
+      if (comum) {
+        notaFonte = '<p class="meta fonte-comum">Fonte de todos os cartões acima: <a href="' + esc(visiveis[0].fonte_url) + '" target="_blank" rel="noopener noreferrer">' + esc(visiveis[0].fonte) + "</a> · verificado em " + esc(visiveis[0].verificado_em) + ".</p>";
       }
-      if (sec.tipos.length && !servicos.length) {
-        html += '<p class="vazio">' + (dados.falhou
+      }
+      if (cartoes) corpo += '<div class="lista-cartoes">' + cartoes + "</div>" + notaFonte;
+      if (servicos.length > visiveis.length) {
+        corpo += '<p class="mais"><button type="button" class="btn secundario" data-mais="' + i + '">Mostrar todos (' + servicos.length + ")</button></p>";
+      }
+      if (sec.tipos.length && !servicos.length && !sec.links.length && !(sec.canais || []).length) {
+        corpo += '<p class="vazio">' + (dados.falhou
           ? "Não foi possível carregar o catálogo de serviços. Abra o sistema pelo procedimento do README."
           : "Nenhum serviço desta categoria está carregado nesta versão. Isso não significa que não exista: significa que ainda não temos o dado.") + "</p>";
+      } else if (sec.tipos.length && !servicos.length && !cartoes && !corpo) {
+        corpo += '<p class="vazio">Nenhum serviço cadastrado neste bloco ainda.</p>';
       }
-      html += "</section>";
+      var total = servicos.length + sec.links.length + (sec.canais || []).length;
+      if (sec.recolhida) {
+        html += '<section class="secao"><details class="secao-recolhida"><summary><h2>' + esc(sec.titulo) + ' <span class="contagem">(' + total + ")</span></h2></summary>" +
+          (sec.descricao ? "<p class=\"meta\">" + esc(sec.descricao) + "</p>" : "") + corpo + "</details></section>";
+      } else {
+        html += '<section class="secao"><h2>' + esc(sec.titulo) + "</h2>" + (sec.descricao ? '<p class="meta">' + esc(sec.descricao) + "</p>" : "") + corpo + "</section>";
+      }
     });
     if (area.avisos && area.avisos.length) {
       html += '<div class="status" role="note"><strong>Importante.</strong> ' + area.avisos.map(esc).join(" ") + "</div>";
@@ -134,8 +179,8 @@
   function mostrarTodos(area, indiceSecao, botao) {
     var vistos = Object.create(null);
     var alvo = [];
-    area.secoes.forEach(function (s, i) {
-      var lista = servicosDosTipos(s.tipos, vistos);
+    area.secoes.forEach(function (sec, i) {
+      var lista = servicosDaSecao(sec, vistos);
       if (i === indiceSecao) alvo = lista;
     });
     var cont = botao.parentNode.previousElementSibling;
