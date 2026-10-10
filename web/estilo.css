@@ -243,3 +243,26 @@ details.outros > summary { display: flex; align-items: center; min-height: 44px;
   .grade-areas { grid-template-columns: 1fr; }
   .area-rede { min-height: 0; }
 }
+
+
+/* Home: uma única grade em três grupos, sem caixas aninhadas. */
+.atalho-saude { display: flex; align-items: center; justify-content: space-between; gap: 1.2rem; margin: 1.2rem 0 1.6rem; padding: 1.2rem 1.3rem; border: 2px solid var(--pri); border-radius: var(--radius); background: var(--soft); }
+.atalho-saude h2 { margin: .1rem 0 .35rem; font-size: 1.3rem; }
+.atalho-saude p { margin: .25rem 0; color: var(--mut); }
+.atalho-saude .rotulo-atalho { color: var(--pri); font-size: .75rem; font-weight: 750; letter-spacing: .07em; }
+.atalho-saude > a { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; flex: 0 0 auto; min-height: 46px; padding: .65rem .9rem; border-radius: var(--radius); background: var(--pri); color: #fff; font-weight: 700; text-decoration: none; }
+.grade-portas-principal { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; align-items: start; }
+.grupo-portas-home { min-width: 0; }
+.grupo-portas-home h3 { margin: .2rem 0 .65rem; padding-bottom: .45rem; border-bottom: 2px solid var(--bor); font-size: 1.05rem; }
+.grupo-portas-home .porta { width: 100%; min-height: 100px; margin: 0 0 .55rem; box-shadow: none; }
+.grupo-portas-home .porta .icone { display: inline-block; width: auto; height: auto; color: var(--pri); font-size: 1.35rem; font-weight: 750; }
+.grupo-portas-home .porta::after { bottom: .5rem; }
+.grupo-portas-home .porta-saude { border: 2px solid var(--pri); background: var(--soft); }
+.rodape-acesso { margin: 1rem 0 0; padding: 1rem 0 0; border: 0; border-top: 1px solid var(--bor); border-radius: 0; background: transparent; }
+.rodape-acesso h2 { font-size: 1rem; }
+@media (max-width: 760px) {
+  .grade-portas-principal { grid-template-columns: 1fr; gap: 1rem; }
+  .grupo-portas-home .porta { min-height: 76px; }
+  .atalho-saude { align-items: flex-start; flex-direction: column; }
+  .atalho-saude > a { width: 100%; }
+}

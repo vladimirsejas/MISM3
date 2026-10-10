@@ -80,8 +80,8 @@
       ]
     },
     familia: {
-      titulo: "Família e assistência",
-      descricao: "Encontre serviços cadastrados de assistência, saúde, apoio à mulher e educação. Se uma informação estiver ausente, isso não significa que o serviço não exista.",
+      titulo: "Benefícios e assistência social",
+      descricao: "Encontre caminhos para benefícios, CRAS e serviços de apoio. Se uma informação estiver ausente, isso não significa que o serviço não exista.",
       tipos: ["assistencia", "mulher", "saude", "creche"],
       links: [
         ["Secretaria de Desenvolvimento Social", "https://rioclaro.sp.gov.br/secretaria/secretaria-de-desenvolvimento-social/", "Informações institucionais sobre assistência social."],

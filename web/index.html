@@ -26,11 +26,11 @@
 <header class="hero">
   <div class="hero-miolo">
     <h1>Mapa do Cuidado Rio-Clarense</h1>
-    <p>Trabalho, cursos, saúde, filhos, direitos e proteção: escreva o que você precisa e veja os caminhos e serviços de Rio Claro.</p>
+    <p>Trabalho, saúde, educação, lazer, direitos e proteção: escreva o que você precisa e veja caminhos de Rio Claro.</p>
     <form id="form-necessidade" class="busca-necessidade" autocomplete="off">
       <label for="necessidade">O que você está procurando?</label>
       <div class="linha">
-        <input id="necessidade" type="search" maxlength="100" placeholder="Ex.: emprego, creche, saúde" autocomplete="off" aria-describedby="ajuda-necessidade">
+        <input id="necessidade" type="search" maxlength="100" placeholder="Ex.: emprego, creche, lazer, saúde" autocomplete="off" aria-describedby="ajuda-necessidade">
         <button type="submit">Encontrar caminhos</button>
       </div>
       <p id="ajuda-necessidade" class="privacidade">Não escreva nomes, documentos ou detalhes pessoais. O texto não é enviado a nenhum servidor.</p>
@@ -40,88 +40,41 @@
 </header>
 
 <main>
-  <section class="ferramentas-secao oficial" aria-labelledby="titulo-oficial">
-    <h2 id="titulo-oficial" class="secao-titulo">Informações oficiais de Rio Claro</h2>
-    <p class="secao-sub">Endereços, telefones e links copiados de páginas da Prefeitura e da Fundação de Saúde, cada um com a data da conferência. Confirme sempre por telefone antes de ir.</p>
-    <div class="ferramentas">
-      <article class="ferramenta">
-        <h3>Qual é a minha unidade de saúde?</h3>
-        <p>Digite o bairro e veja a UBS de referência, telefones, horários e as unidades 24 horas.</p>
-        <p class="acoes"><a href="saude.html">Encontrar minha unidade →</a></p>
-      </article>
-      <article class="ferramenta">
-        <h3>Saúde da mulher</h3>
-        <p>Onde fazer o Papanicolau, o pronto atendimento ginecológico 24 horas e os protocolos do município.</p>
-        <p class="acoes"><a href="saude.html#saude-mulher">Ver saúde da mulher →</a></p>
-      </article>
-      <article class="ferramenta">
-        <h3>Secretarias e canais oficiais</h3>
-        <p>Links das secretarias, Ouvidoria, Portal de Serviços e Transparência, com a situação de cada link.</p>
-        <p class="acoes"><a href="secretarias.html">Ver secretarias →</a></p>
-      </article>
+  <section class="atalho-saude" aria-labelledby="titulo-atalho-saude">
+    <div>
+      <p class="rotulo-atalho">ATALHO EM DESTAQUE</p>
+      <h2 id="titulo-atalho-saude">Qual é a minha unidade de saúde?</h2>
+      <p>Digite seu bairro para encontrar a UBS de referência, telefones e informações de atendimento.</p>
     </div>
+    <a href="saude.html">Encontrar minha unidade <span aria-hidden="true">→</span></a>
   </section>
 
   <section class="portas" aria-labelledby="titulo-portas">
-    <h2 id="titulo-portas" class="secao-titulo">Ou escolha um assunto</h2>
-    <p class="secao-sub">Os assuntos estão agrupados por jornada. Cada um abre os serviços e contatos de Rio Claro. A busca acontece neste aparelho.</p>
-    <div class="blocos-portas">
-      <section class="bloco-portas" aria-labelledby="titulo-renda">
-        <h3 id="titulo-renda">Trabalho e desenvolvimento</h3>
-        <div class="grade-portas">
-          <button class="porta" type="button" data-categoria="emprego_curso"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg><strong>Emprego e renda</strong><small>Vagas, cursos e qualificação</small></button>
-          <button class="porta" type="button" data-categoria="estudo"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9l9-5 9 5-9 5-9-5z"/><path d="M7 11.500V16c0 1 2.200 2.500 5 2.500s5-1.500 5-2.500v-4.500"/></svg><strong>Educação</strong><small>Escolas e formação</small></button>
-        </div>
+    <h2 id="titulo-portas" class="secao-titulo">Escolha uma área</h2>
+    <p class="secao-sub">Três grupos curtos para chegar direto ao assunto. A busca por palavras continua disponível acima.</p>
+    <div class="grade-portas grade-portas-principal">
+      <section class="grupo-portas-home" aria-labelledby="titulo-trabalho">
+        <h3 id="titulo-trabalho">Trabalho e desenvolvimento</h3>
+        <button class="porta" type="button" data-categoria="emprego_curso"><span class="icone" aria-hidden="true">↗</span><strong>Emprego e renda</strong><small>Vagas, cursos e qualificação</small></button>
+        <button class="porta" type="button" data-categoria="estudo"><span class="icone" aria-hidden="true">▤</span><strong>Educação</strong><small>Escolas e formação</small></button>
+        <button class="porta" type="button" data-categoria="lazer"><span class="icone" aria-hidden="true">✦</span><strong>Lazer, cultura e esporte</strong><small>Agenda e atividades [DEMO quando aplicável]</small></button>
       </section>
-      <section class="bloco-portas" aria-labelledby="titulo-cuidado">
-        <h3 id="titulo-cuidado">Saúde e rede de cuidado</h3>
-        <div class="grade-portas">
-          <button class="porta" type="button" data-categoria="saude"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.600-7 10-7 10z"/></svg><strong>Saúde</strong><small>Atendimento e orientação</small></button>
-          <button class="porta" type="button" data-categoria="filhos"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="7" r="3"/><circle cx="17" cy="10" r="2"/><path d="M2.500 20v-1.500A4.500 4.500 0 0 1 7 14h2a4.500 4.500 0 0 1 4.500 4.500V20M15 20v-1a3 3 0 0 1 3-3h.5a2.500 2.500 0 0 1 2.500 2.500V20"/></svg><strong>Filhos e cuidado</strong><small>Creche, escola e apoio</small></button>
-          <button class="porta" type="button" data-categoria="familia"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.2"/><path d="M3 20a6 6 0 0 1 12 0M15 20a4.5 4.5 0 0 1 6 0"/></svg><strong>Família e assistência</strong><small>Benefícios e serviços de apoio</small></button>
-        </div>
-      </section>
-      <section class="bloco-portas" aria-labelledby="titulo-direitos">
-        <h3 id="titulo-direitos">Direitos e proteção</h3>
-        <div class="grade-portas">
-          <button class="porta" type="button" data-categoria="casamento"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v17M7 20h10M4 7h16"/><path d="M4 7l-2.500 6a3.500 3.500 0 0 0 5 0L4 7zM20 7l-2.500 6a3.500 3.500 0 0 0 5 0L20 7z"/></svg><strong>Direitos e separação</strong><small>Orientação jurídica e apoio</small></button>
-          <button class="porta" type="button" data-categoria="violencia"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 4.500-3.300 7.800-8 9-4.700-1.200-8-4.500-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg><strong>Proteção e violência</strong><small>Orientação e rede de apoio</small></button>
-          <button class="porta" type="button" id="porta-m2m" data-categoria="mulher_para_mulher" hidden><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M2.500 20a5.500 5.500 0 0 1 11 0M10.500 20a5.500 5.500 0 0 1 11 0"/></svg><strong>De mulher para mulher</strong><small>Serviços feitos por mulheres</small></button>
-        </div>
-      </section>
-      <section class="bloco-portas" aria-labelledby="titulo-moradia-financas">
-        <h3 id="titulo-moradia-financas">Moradia e vida financeira</h3>
-        <div class="grade-portas">
-          <button class="porta" type="button" data-categoria="moradia"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></svg><strong>Moradia e aluguel</strong><small>Habitação, assistência e benefícios a confirmar</small></button>
-          <button class="porta" type="button" data-categoria="dividas"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M16 14.5h2"/></svg><strong>Dívidas e aposentadoria</strong><small>Orientação financeira e previdenciária</small></button>
-        </div>
-      </section>
-    </div>
-    <section class="acesso-digital" aria-labelledby="titulo-acesso-digital">
-      <h3 id="titulo-acesso-digital">Acesso digital e privacidade</h3>
-      <p>O texto da busca por necessidade é processado neste aparelho. Ainda não há navegação sem franquia de dados, login Gov.br integrado, atendimento por áudio nem garantia de apagar o histórico do navegador.</p>
-      <p>Se estiver usando um aparelho compartilhado, evite informar dados pessoais. O botão “Sair rápido” abre outro site, mas não apaga o histórico.</p>
-    </section>
-  </section>
 
-  <section class="outras-areas" aria-labelledby="titulo-outras-areas">
-    <h3 id="titulo-outras-areas">Outras áreas da plataforma</h3>
-    <div class="grade-outras-areas">
-      <article class="cartao">
-        <h4>De Mulher para Mulher <span class="meta">[DEMO]</span></h4>
-        <p>Protótipo de diretório e rede de apoio entre mulheres. Os perfis e selos são fictícios; não há cadastro nem verificação real.</p>
-        <p><a href="rede-mulheres.html">Explorar o protótipo</a></p>
-      </article>
-      <article class="cartao">
-        <h4>Painel de gestão <span class="meta">[DEMO]</span></h4>
-        <p>O que as mulheres procuram, demanda e oferta por região e o mapa de setores. Todos os números são fictícios.</p>
-        <p><a href="gestao.html">Visão pública</a> · <a href="gestao.html?visao=gestao">Visão de gestão</a></p>
-      </article>
-      <article class="cartao">
-        <h4>Inteligência Pública <span class="meta">[DEMO]</span></h4>
-        <p>Painel conceitual para gestores: dados territoriais, qualidade das fontes e exemplos de análise. Gráficos ilustrativos não são estatísticas oficiais.</p>
-        <p><a href="inteligencia-publica.html">Abrir painel conceitual</a></p>
-      </article>
+      <section class="grupo-portas-home" aria-labelledby="titulo-saude-cuidado">
+        <h3 id="titulo-saude-cuidado">Saúde e cuidado</h3>
+        <button class="porta porta-saude" type="button" data-categoria="saude"><span class="icone" aria-hidden="true">+</span><strong>Saúde</strong><small>Atendimento e orientação</small></button>
+        <button class="porta" type="button" data-categoria="filhos"><span class="icone" aria-hidden="true">♡</span><strong>Filhos e cuidado</strong><small>Creche, escola e apoio</small></button>
+        <button class="porta" type="button" data-categoria="familia"><span class="icone" aria-hidden="true">⌂</span><strong>Benefícios e assistência social</strong><small>Benefícios e serviços de apoio</small></button>
+      </section>
+
+      <section class="grupo-portas-home" aria-labelledby="titulo-direitos-autonomia">
+        <h3 id="titulo-direitos-autonomia">Direitos e autonomia</h3>
+        <button class="porta" type="button" data-categoria="casamento"><span class="icone" aria-hidden="true">§</span><strong>Direitos e separação</strong><small>Orientação jurídica e apoio</small></button>
+        <button class="porta" type="button" data-categoria="violencia"><span class="icone" aria-hidden="true">盾</span><strong>Proteção e violência</strong><small>Ajuda e rede de apoio</small></button>
+        <button class="porta" type="button" data-categoria="moradia"><span class="icone" aria-hidden="true">⌂</span><strong>Moradia e aluguel</strong><small>Habitação e assistência</small></button>
+        <button class="porta" type="button" data-categoria="dividas"><span class="icone" aria-hidden="true">¤</span><strong>Dívidas e aposentadoria</strong><small>Orientação financeira e previdenciária</small></button>
+        <button class="porta" type="button" id="porta-m2m" data-categoria="mulher_para_mulher" hidden><span class="icone" aria-hidden="true">♡</span><strong>De mulher para mulher</strong><small>Serviços feitos por mulheres</small></button>
+      </section>
     </div>
   </section>
 
@@ -172,6 +125,11 @@
 <footer class="rodape">
   <p><strong>Como ler este mapa.</strong> A lista mostra serviços cadastrados em fontes públicas (CNES, Censo Escolar/INEP, páginas da Prefeitura). Isso <em>não</em> informa se há vaga, fila ou horário atual: confirme sempre com o serviço. Distâncias são em linha reta a partir do centro do CEP.</p>
   <p id="fontes"></p>
+  <section class="acesso-digital rodape-acesso" aria-labelledby="titulo-acesso-digital">
+    <h2 id="titulo-acesso-digital">Acesso digital e privacidade</h2>
+    <p>O texto da busca por necessidade é processado neste aparelho. Ainda não há navegação sem franquia de dados, login Gov.br integrado, atendimento por áudio nem garantia de apagar o histórico do navegador.</p>
+    <p>Se estiver usando um aparelho compartilhado, evite informar dados pessoais. O botão “Sair rápido” abre outro site, mas não apaga o histórico.</p>
+  </section>
 </footer>
 
 <script src="config.js"></script>
