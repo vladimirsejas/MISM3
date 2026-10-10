@@ -1,5 +1,4 @@
-/* Menu e rodape COMPARTILHADOS: uma unica lista para todas as paginas (antes era copiada a mao em cada HTML).
-   Saude e lazer ficam em primeiro plano; secretarias e paineis de gestao ficam no rodape ("Mais"). */
+/* Menu e rodapé compartilhados. Só são destacados os caminhos que existem e usam conteúdo institucional versionado. */
 (function () {
   "use strict";
   var MENU = [
