@@ -147,3 +147,86 @@ a:hover {
     transition-duration: .01ms !important;
   }
 }
+
+
+/* Redesign de consistência visual: paleta curta, alinhamento previsível e menos ruído. */
+:root {
+  color-scheme: light;
+  --bg: #f5f5f1;
+  --fg: #202d32;
+  --mut: #596a70;
+  --pri: #245b57;
+  --pri2: #e8efec;
+  --bor: #d6dfdb;
+  --alerta: #a83232;
+  --surface-1: #ffffff;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --bg: #171f20;
+    --fg: #edf2ef;
+    --mut: #b6c4c0;
+    --pri: #8fc7bb;
+    --pri2: #243331;
+    --bor: #3b4a46;
+    --alerta: #ff9690;
+    --surface-1: #202a2a;
+  }
+}
+body { background: var(--bg); color: var(--fg); }
+.topo, main, .rodape { max-width: 1080px; }
+.topo { padding-top: 1.15rem; padding-bottom: .6rem; }
+.topo h1 { font-size: clamp(1.8rem, 3vw, 2.35rem); line-height: 1.15; letter-spacing: -.025em; }
+.topo > p { max-width: 68ch; color: var(--mut); }
+.navegacao-principal {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: .7rem max(1rem, calc((100% - 1080px) / 2));
+  background: var(--surface-1); border-bottom: 1px solid var(--bor);
+}
+.marca-site { display: flex; align-items: baseline; gap: .65rem; color: var(--fg); text-decoration: none; }
+.marca-site strong { font-size: 1.15rem; letter-spacing: -.02em; }
+.marca-site span { color: var(--mut); font-size: .9rem; }
+.links-navegacao { display: flex; align-items: center; gap: .35rem; }
+.links-navegacao a { color: var(--fg); text-decoration: none; padding: .55rem .8rem; border-radius: .45rem; font-weight: 600; }
+.links-navegacao a[aria-current="page"] { background: var(--pri2); color: var(--pri); }
+.links-navegacao a:hover { background: var(--pri2); }
+.barra-emergencia { background: var(--surface-1); border-bottom: 2px solid var(--alerta); }
+.faixa-demo { background: #f2e4bc; color: #493a18; text-align: left; padding: .55rem max(1rem, calc((100% - 1080px) / 2)); }
+.portas { margin: 1.2rem 0 2rem; }
+.portas h2, .painel-categoria h2 { font-size: 1.35rem; line-height: 1.25; }
+.portas > p, .painel-categoria > p { max-width: 72ch; }
+.busca-necessidade { background: var(--surface-1); border: 1px solid var(--bor); border-radius: .65rem; padding: 1.1rem; margin: 1.2rem 0; }
+.busca-necessidade .linha button, .linha button, .escrever button {
+  background: var(--pri); color: #fff; border-radius: .45rem; font-size: 1rem;
+}
+.busca-necessidade .linha button:hover, .linha button:hover, .escrever button:hover { filter: brightness(.94); }
+.grade-portas { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8rem; }
+.porta {
+  min-height: 112px; background: var(--surface-1); border: 1px solid var(--bor);
+  border-radius: .55rem; box-shadow: none; padding: 1rem 1.05rem;
+}
+.porta span { display: none; }
+.porta strong { font-size: 1rem; font-weight: 650; }
+.porta small { font-size: .88rem; line-height: 1.4; }
+.porta:hover, .porta:focus-visible { border-color: var(--pri); background: var(--pri2); transform: none; box-shadow: none; }
+.objetivos button, .entendimento button { border-radius: .45rem; border-color: var(--pri); color: var(--pri); }
+.objetivos button[aria-pressed="true"] { background: var(--pri); color: #fff; }
+.cartao { background: var(--surface-1); border-radius: .55rem; box-shadow: none; }
+.cartao.urgente { background: color-mix(in srgb, var(--alerta) 6%, var(--surface-1)); }
+.busca-por-cep { border-top-color: var(--bor); }
+.busca-por-cep summary { color: var(--pri); }
+#mapa { border-radius: .55rem; }
+.grupo h2 { border-bottom: 1px solid var(--bor); }
+.voltar { display: inline-flex; align-items: center; gap: .35rem; margin: .3rem 0 .8rem; padding: .5rem .65rem; border: 1px solid var(--bor); border-radius: .45rem; background: var(--surface-1); }
+.voltar:hover { background: var(--pri2); }
+:where(button, input, summary, select, textarea, a):focus-visible { outline: 3px solid var(--pri); outline-offset: 3px; }
+@media (max-width: 620px) {
+  .navegacao-principal { align-items: flex-start; flex-direction: column; gap: .35rem; padding: .75rem 1rem; }
+  .links-navegacao { width: 100%; flex-wrap: wrap; }
+  .links-navegacao a { padding: .45rem .65rem; }
+  .grade-portas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .porta { min-height: 104px; }
+  .topo { padding-top: .75rem; }
+}
+@media (max-width: 360px) { .grade-portas { grid-template-columns: 1fr; } }
