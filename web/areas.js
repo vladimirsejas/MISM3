@@ -40,8 +40,9 @@
     {
       id: "saude", nome: "Saúde", icone: "saude",
       intro: "Unidades de saúde e serviços de atendimento. Em urgência médica, ligue 192.",
-      secoes: [{ titulo: "Unidades de saúde cadastradas", tipos: ["saude"], links: [] }],
-      pendencias: ["A lista completa de unidades de saúde vem do CNES (Ministério da Saúde) e só aparece quando essa base é carregada pelo pipeline. Por enquanto há poucas unidades cadastradas aqui; isso não significa que não existam outras. Confirme sempre com a Secretaria Municipal de Saúde."]
+      secoes: [{ titulo: "Unidades de saúde", tipos: ["saude"], agrupar: true, links: [] }],
+      pendenciasSemBase: ["A lista completa de unidades de saúde vem do CNES (Ministério da Saúde) e só aparece quando essa base é carregada pelo pipeline. Por enquanto há poucas unidades cadastradas aqui; isso não significa que não existam outras. Confirme sempre com a Secretaria Municipal de Saúde."],
+      pendencias: ["Os dados do CNES (cadastro nacional) podem estar desatualizados e não informam vaga nem horário de atendimento: confirme com a unidade ou com a Secretaria Municipal de Saúde."]
     },
     {
       id: "direitos", nome: "Direitos", icone: "direitos",
