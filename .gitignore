@@ -23,3 +23,9 @@ pipeline/provedor_pesquisa.py
 .env
 .env.*
 !.env.exemplo
+
+# Dados REAIS gerados por pipeline/montar_dados.py (se refazem a partir das fontes publicas)
+web/dados/cep_indice.json
+web/dados/servicos.json
+web/dados/vagas.json
+web/dados/gestao.json

@@ -10,7 +10,8 @@ Como funciona:
     cai para os dados de demonstracao, exatamente como no servidor local;
   * os links entre paginas continuam funcionando (mesmos nomes de arquivo, na mesma pasta).
 
-Uso:  python pipeline/gerar_demo_unico.py      (rode de novo depois de qualquer mudanca em web/)
+Uso:  python pipeline/gerar_demo_unico.py                    (rode de novo depois de qualquer mudanca em web/)
+      python pipeline/gerar_demo_unico.py --com-dados-reais   (inclui os dados reais montados; so para uso LOCAL, nao suba)
 """
 from __future__ import annotations
 
@@ -41,6 +42,11 @@ SHIM = """<script>
 </script>"""
 
 
+# Dados gerados a partir das fontes reais (montar_dados.py). Ficam FORA do arquivo unico por padrao, porque
+# demo_unico/ vai para o GitHub; com --com-dados-reais voce gera uma copia so para uso local.
+DADOS_REAIS = {"dados/cep_indice.json", "dados/servicos.json", "dados/vagas.json", "dados/gestao.json"}
+
+
 def _seguro(texto: str) -> str:
     """Evita fechar a tag <script>/<style> sem querer dentro do conteudo embutido."""
     return texto.replace("</script", "<\\/script").replace("</style", "<\\/style")
@@ -68,6 +74,8 @@ def gerar_pagina(html_path: Path) -> tuple[str, list[str], int]:
     # dados que a pagina busca (no HTML e em todos os scripts, inclusive os inline)
     texto_total = html + "\n".join(fontes_js)
     refs = sorted(set(re.findall(r'["\'](dados/[A-Za-z0-9_./-]+\.(?:json|geojson))["\']', texto_total)))
+    if "--com-dados-reais" not in sys.argv:
+        refs = [r for r in refs if r not in DADOS_REAIS]
     embutidos = {r: (WEB / r).read_text(encoding="utf-8") for r in refs if (WEB / r).exists()}
     shim = SHIM % json.dumps(embutidos, ensure_ascii=False).replace("</", "<\\/")
     html = html.replace("<head>", "<head>\n" + shim, 1)
