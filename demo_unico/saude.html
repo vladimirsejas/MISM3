@@ -234,6 +234,7 @@ details.outros > summary { display: flex; align-items: center; min-height: 44px;
 }
 @media (max-width: 360px) { .bloco-portas .grade-portas { grid-template-columns: 1fr; } }
 
+ .botao-home{display:inline-flex;align-items:center;gap:.3rem;min-height:40px;padding:.35rem .7rem;border:1px solid var(--bor, var(--line));border-radius:999px;background:#fff;color:var(--pri, var(--plum-dark));font-weight:700;text-decoration:none;white-space:nowrap}.botao-home:hover{background:var(--soft, var(--lilac))}.links-navegacao,.navlinks{display:flex;align-items:center;gap:.35rem;flex-wrap:wrap}.links-navegacao a,.navlinks a{white-space:nowrap}
 </style>
 <style>
 /* Paginas "Saude" e "Secretarias" (dados reais de paginas oficiais), sobre o sistema visual de estilo.css.
@@ -330,7 +331,7 @@ details.outros > summary { display: flex; align-items: center; min-height: 44px;
 <body>
 <div class="faixa-dados" role="note">Endereços e telefones copiados de páginas oficiais da Prefeitura e da Fundação de Saúde em 09/10/2026. Podem estar desatualizados: <strong>ligue e confirme antes de ir</strong>.</div>
 
-<div class="barra-emergencia" role="region" aria-label="Emergência">
+<div id="emergencia" class="barra-emergencia" role="region" aria-label="Emergência">
   <span><strong>Em perigo agora?</strong> Polícia <a href="tel:190">190</a> · SAMU <a href="tel:192">192</a> · Violência contra a mulher: <a href="tel:180">Ligue 180</a> (24h, gratuito)</span>
   <button id="sair-rapido" type="button" title="Fecha esta página e abre outro site">Sair rápido</button>
 </div>
@@ -338,7 +339,7 @@ details.outros > summary { display: flex; align-items: center; min-height: 44px;
 <nav class="navegacao-principal" aria-label="Navegação principal">
   <button class="voltar-pagina" type="button" aria-label="Voltar à página anterior" title="Voltar" onclick="if (history.length > 1) history.back(); else location.href='index.html'"><span aria-hidden="true">←</span><span class="voltar-texto">Voltar</span></button>
   <a class="marca-site" href="index.html"><span class="marca-selo" aria-hidden="true">M3</span><span class="marca-texto"><strong>MISM3</strong><span>Mapa do Cuidado · Rio Claro/SP</span></span></a>
-  <div class="links-navegacao" data-menu><a href="index.html">Início</a></div>
+  <div class="links-navegacao" data-menu></div>
 </nav>
 
 <header class="hero hero-compacto">
@@ -853,41 +854,45 @@ window.MISM3_CONFIG = {
 
 </script>
 <script>
-/* Menu e rodape COMPARTILHADOS: uma unica lista para todas as paginas (antes era copiada a mao em cada HTML).
-   Saude e lazer ficam em primeiro plano; secretarias e paineis de gestao ficam no rodape ("Mais"). */
+/* Navegação global do MISM3: áreas acessíveis a partir de qualquer página. */
 (function () {
-  "use strict";
-  var MENU = [
-    { href: "index.html", rotulo: "Início" },
-    { href: "saude.html", rotulo: "Saúde" },
-    { href: "rede-mulheres.html", rotulo: "De Mulher para Mulher" },
-    { href: "index.html#assistencia-social", rotulo: "Assistência social" },
-    { href: "secretarias.html", rotulo: "Secretarias e telefones úteis" },
-    { href: "lazer.html", rotulo: "Lazer, cultura e esporte" }
+  var links = [
+    ["index.html", "Home"],
+    ["index.html?categoria=emprego_curso", "Trabalho"],
+    ["index.html?categoria=estudo", "Educação"],
+    ["index.html?categoria=saude", "Saúde"],
+    ["index.html?categoria=casamento", "Direitos"],
+    ["index.html?categoria=moradia", "Moradia"],
+    ["index.html#assistencia-social", "Assistência social"],
+    ["rede-mulheres.html", "De Mulher para Mulher"]
   ];
-  var MAIS = [];
-  var atual = (window.location.pathname.split("/").pop() || "index.html").toLowerCase();
-
-  function ehAtual(item) { return item.href === atual || (item.tambem || []).indexOf(atual) !== -1; }
-
-  var menu = document.querySelector("[data-menu]");
-  if (menu) {
-    menu.innerHTML = MENU.map(function (m) {
-      return '<a href="' + m.href + '"' + (ehAtual(m) ? ' aria-current="page"' : "") + ">" + m.rotulo + "</a>";
+  document.querySelectorAll("[data-menu]").forEach(function (nav) {
+    nav.innerHTML = links.map(function (item) {
+      var page = item[0].split("?")[0].split("#")[0];
+      var current = (location.pathname.split("/").pop() || "index.html") === page && !item[0].includes("?");
+      return '<a href="' + item[0] + '"' + (current ? ' aria-current="page"' : "") + '>' + item[1] + '</a>';
     }).join("");
+  });
+  var emergency = document.getElementById("sair-rapido");
+  if (emergency) {
+    emergency.textContent = "Emergência";
+    emergency.title = "Ir para os contatos de emergência";
+    emergency.onclick = function () {
+      if (location.pathname.endsWith("index.html") || location.pathname.endsWith("/")) {
+        var bar = document.querySelector(".barra-emergencia");
+        if (bar) bar.scrollIntoView({behavior:"smooth",block:"start"});
+      } else location.href = "index.html#emergencia";
+    };
   }
-
-  var rodape = document.querySelector("footer.rodape");
-  if (!rodape) { rodape = document.createElement("footer"); rodape.className = "rodape"; document.body.appendChild(rodape); }
-  var mais = document.createElement("nav");
-  mais.className = "rodape-links";
-  mais.setAttribute("aria-label", "Mais páginas");
-  mais.innerHTML = "<strong>Mais:</strong> " + MAIS.map(function (m) {
-    return '<a href="' + m.href + '"' + (m.href === atual ? ' aria-current="page"' : "") + ">" + m.rotulo + "</a>";
-  }).join(" · ");
-  rodape.insertBefore(mais, rodape.firstChild);
+  if ((location.pathname.split("/").pop() || "index.html") === "index.html") {
+    var key = new URLSearchParams(location.search).get("categoria");
+    var allowed = ["emprego_curso","estudo","saude","casamento","moradia"];
+    if (allowed.indexOf(key) !== -1) {
+      var target = document.querySelector('[data-categoria="' + key + '"]');
+      if (target) target.click();
+    }
+  }
 })();
-
 </script>
 </body>
 </html>
