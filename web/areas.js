@@ -109,7 +109,7 @@
       ],
       pendencias: [
         "CREAS: endereço e telefone ainda não verificados nesta versão.",
-        "Conselho Tutelar: endereço e telefone ainda não verificados nesta versão."
+        "Conselho Tutelar: endereço e telefone ainda não verificados nesta versão. Para localizar o Conselho que atende o seu bairro, comece pela página da Secretaria de Desenvolvimento Social (link acima)."
       ]
     }
   ];
