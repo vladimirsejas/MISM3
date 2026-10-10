@@ -55,7 +55,7 @@
     if (s.bairros) partes.push('<details class="bairros"><summary>Bairros atendidos</summary><p>' + esc(s.bairros) + ".</p></details>");
     var fonte = s.fonte_url ? '<a href="' + esc(s.fonte_url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.fonte) + "</a>" : esc(s.fonte);
     if (s.conferido === false) {
-      partes.push('<p class="aviso-nao-conferido"><strong>Ainda não conferido na página oficial.</strong> Ligue antes de ir.</p>');
+      partes.push('<p class="aviso-nao-conferido">' + (s.aviso ? esc(s.aviso) : "<strong>Ainda não conferido na página oficial.</strong> Ligue antes de ir.") + "</p>");
       partes.push('<p class="meta">Para conferir: ' + fonte + " · informado em " + esc(s.verificado_em) + "</p>");
     } else {
       partes.push('<p class="meta">Fonte: ' + fonte + " · verificado em " + esc(s.verificado_em) + "</p>");

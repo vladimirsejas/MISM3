@@ -127,3 +127,10 @@ Ao concluir mudanças relevantes, registrar o que foi alterado, o teste executad
 - Fonte: captura de tela do blog https://chipv.wordpress.com/ (WordPress.com, sem data de atualização), enviada pelo mantenedor. Cadastrado em **Saúde** como **não conferido**: Avenida José Felício Castellano, 1.700, Vila Cristina; atende crianças e adolescentes de 0 a 14 anos (para admissão) com deficiências físicas, visual, auditiva, má formação labiopalatal, deficiências múltiplas ou atraso neuro-psicomotor.
 - O telefone do blog, (19) 535-1461, tem 7 dígitos (formato antigo) e **não foi convertido nem virou link de ligar**; aparece só como texto, com a recomendação de confirmar o número atual.
 - Não usados: o número de atendidos e a lista de especialidades de um texto colado junto, que parece resposta de IA e cita páginas não lidas (por exemplo saude-rioclaro.org.br/UBS/centros.html). Falta a página da Secretaria Municipal de Saúde para conferir.
+
+### Centro de Especialidade Infantil (CEI) — 10/10/2026
+- Fonte: notícia da Prefeitura de Rio Claro (Fundação de Saúde), https://rioclaro.sp.gov.br/fundacao-de-saude/rio-claro-ganha-centro-de-especialidade-infantil-neste-sabado/, **publicada em 11/10/2019**, impressa em PDF pelo mantenedor em 10/10/2026.
+- Cadastrado em Saúde o CEI "Antonio Carlos Rodrigues – Tute" (Rua 15, entre as avenidas 23 e 25, Bairro do Estádio; telefones 3523-3754, 3533-4055 e 3524-5770, com DDD 19 acrescentado), que reúne o Criari, o Caps IJ, o CEO Infantil e a odontologia do CHI Princesa Victória.
+- Marcado como **não conferido** com aviso próprio: a notícia tem 7 anos, então endereço, telefones e composição dos serviços podem ter mudado. Novo campo opcional `aviso` no catálogo para texto de alerta específico. Criari, Caps IJ e CEO Infantil não receberam cadastro próprio por falta de endereço e telefone específicos na fonte.
+- O cartão do CHI registra, com a mesma fonte, que a odontologia dele passou a funcionar no CEI.
+- O texto de IA colado antes sobre o CRIARI (3 a 18 anos, "consultas psiquiátricas") não foi usado: não há fonte lida que o sustente.

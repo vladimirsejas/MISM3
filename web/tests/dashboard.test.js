@@ -78,6 +78,11 @@ assert(porNome["Conselho Tutelar – Região Norte"].observacao.includes("també
 const chi = porNome["Centro de Habilitação Infantil “Princesa Victória” (CHI)"];
 assert(chi && chi.tipo === "saude" && chi.conferido === false, "o CHI vem de um blog e deve constar como não conferido, na área de saúde");
 assert(!chi.telefone && chi.observacao.includes("(19) 535-1461") && /formato antigo/.test(chi.observacao), "telefone de 7 dígitos não pode virar link de ligar");
+const cei = porNome["Centro de Especialidade Infantil (CEI) “Antonio Carlos Rodrigues – Tute”"];
+assert(cei && cei.tipo === "saude" && cei.conferido === false && /11\/10\/2019/.test(cei.aviso + cei.fonte), "o CEI vem de notícia de 2019: deve constar como informação antiga");
+assert.strictEqual(cei.telefone, "(19) 3523-3754 / (19) 3533-4055 / (19) 3524-5770");
+assert(/Rua 15, entre as avenidas 23 e 25/.test(cei.endereco) && /Criari/.test(cei.observacao) && /Caps IJ/.test(cei.observacao) && /CEO/.test(cei.observacao));
+assert(/odontologia do CHI/.test(porNome["Centro de Habilitação Infantil “Princesa Victória” (CHI)"].observacao), "a mudança da odontologia do CHI deve constar no cartão do CHI");
 const apae = catalogo.servicos.filter((s) => s.subtipo === "apae");
 assert.strictEqual(apae.length, 2, "o site da APAE lista duas unidades de atendimento");
 assert.strictEqual(porNome["APAE Rio Claro – Unidade Central"].telefone, "(19) 2112-2700 / (19) 99694-2420 (WhatsApp)");
@@ -87,8 +92,8 @@ apae.forEach((s) => assert(s.fonte_url === "https://apaerioclaro.com.br/" && /Ca
 assert.strictEqual(catalogo.servicos.filter((s) => s.subtipo === "scfv").length, 13, "a página oficial lista 13 unidades de convivência");
 catalogo.servicos.filter((s) => ["cras", "creas", "scfv"].includes(s.subtipo)).forEach((s) =>
   assert(s.conferido !== false && s.fonte_url.startsWith("https://desenvolvimentosocial.rc.sp.gov.br/"), "fonte da Secretaria: " + s.nome));
-catalogo.servicos.filter((s) => s.conferido === false).forEach((s) => assert(/não conferida/.test(s.fonte), "item não conferido com fonte enganosa: " + s.nome));
-assert(app.includes("Ainda não conferido na página oficial") && app.includes("s.conferido === false"), "a interface deve avisar quando o item não foi conferido");
+catalogo.servicos.filter((s) => s.conferido === false).forEach((s) => assert(/não conferida/.test(s.fonte) || (s.aviso && s.aviso.length > 20), "item não conferido sem alerta: " + s.nome));
+assert(app.includes("Ainda não conferido na página oficial") && app.includes("s.aviso") && app.includes("s.conferido === false"), "a interface deve avisar quando o item não foi conferido");
 
 /* ---- 6. Conteúdo das áreas ---- */
 Areas.AREAS.forEach((a) => {
