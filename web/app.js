@@ -21,7 +21,7 @@
   var CATEGORIAS = {
     emprego_curso: {
       titulo: "Emprego, renda e cursos",
-      descricao: "Comece pelas oportunidades e confirme prazos, requisitos e inscrições diretamente na fonte.",
+      descricao: "Consulte oportunidades e cursos nas fontes oficiais. Antes de aceitar uma vaga, considere também a rotina de cuidado, o deslocamento, os horários e as condições do contrato.",
       tipos: ["emprego_curso"],
       links: [
         ["Portal da Empregabilidade de Rio Claro", "https://vagas.rioclaro.sp.gov.br/", "Consultar oportunidades e informações para trabalhadores."],
@@ -96,18 +96,38 @@
       ? CATEGORIAS[validas[0]].descricao
       : "Identificamos mais de uma necessidade. Veja os caminhos abaixo.";
     var html = "";
+    var linksExibidos = Object.create(null);
+    var servicosExibidos = Object.create(null);
+    if (validas.length > 1) {
+      html += '<p class="nota-redundancia">Como você indicou mais de uma necessidade, links e serviços comuns aparecem uma única vez para evitar repetição.</p>';
+    }
     validas.forEach(function (chave) {
       var c = CATEGORIAS[chave];
       html += '<section class="resultado-necessidade"><h3 class="subtitulo">' + esc(c.titulo) + '</h3><p>' + esc(c.descricao) + '</p>';
+      if (chave === "emprego_curso") {
+        html += '<article class="cartao"><h4>Checklist para avaliar uma oportunidade</h4><ul><li>O horário e a escala combinam com sua rotina?</li><li>Quanto tempo e dinheiro o deslocamento vai exigir?</li><li>Como ficam os cuidados com crianças ou outros dependentes?</li><li>Salário, contrato, local de trabalho e custos estão claros?</li><li>Desconfie de anúncios que exigem pagamento para participar do processo seletivo.</li></ul><p class="meta">Este checklist ajuda a avaliar a viabilidade; não substitui a conferência da empresa e da vaga.</p></article>';
+      }
       c.links.forEach(function (l) {
+        var chaveLink = String(l[1] || "").toLowerCase();
+        if (linksExibidos[chaveLink]) return;
+        linksExibidos[chaveLink] = true;
         html += '<article class="cartao"><h3><a href="' + esc(l[1]) + '" target="_blank" rel="noopener noreferrer">' + esc(l[0]) + '</a></h3><p>' + esc(l[2]) + '</p><p class="meta">Fonte externa oficial; confira os dados e a disponibilidade no site de origem.</p></article>';
       });
-      var encontrados = dados.servicos ? dados.servicos.filter(function (s) { return c.tipos.indexOf(s.tipo) !== -1; }) : [];
+      var candidatos = dados.servicos ? dados.servicos.filter(function (s) { return c.tipos.indexOf(s.tipo) !== -1; }) : [];
+      var encontrados = [];
+      candidatos.forEach(function (s) {
+        var chaveServico = String(s.id || [s.nome, s.tipo, s.fonte_url || s.fonte].join("|")).toLowerCase();
+        if (servicosExibidos[chaveServico]) return;
+        servicosExibidos[chaveServico] = true;
+        encontrados.push(s);
+      });
       if (encontrados.length) {
         html += '<h4>Serviços cadastrados em Rio Claro</h4>';
         encontrados.forEach(function (s) { html += cartao(s, null); });
-      } else {
+      } else if (!candidatos.length) {
         html += '<p class="vazio">Ainda não há serviços dessa categoria carregados no catálogo desta versão. Consulte também as fontes oficiais acima.</p>';
+      } else {
+        html += '<p class="meta">Os serviços que também atendem a esta necessidade já aparecem acima.</p>';
       }
       if (chave === "violencia") {
         html += '<article class="cartao urgente"><h3>Ajuda imediata</h3><p>Polícia: <a href="tel:190">190</a></p><p>Central de Atendimento à Mulher: <a href="tel:180">180</a></p><p>Atendimento médico de urgência: <a href="tel:192">192</a></p><p class="meta">Protótipo: não escreva detalhes pessoais. O botão “Sair rápido” não apaga o histórico do navegador.</p></article>';
