@@ -54,6 +54,10 @@ assert(fs.existsSync(path.join(web, "dados/catalogo_manual.json")), "o catálogo
 const catalogo = JSON.parse(dadosVisiveis);
 assert.strictEqual(catalogo.meta.demo, false, "o catálogo do site não pode ser de demonstração");
 catalogo.servicos.forEach((s) => assert(s.fonte_url && s.verificado_em && !/\[DEMO\]/.test(s.nome), "serviço sem fonte/data ou de demonstração: " + s.nome));
+const naoConferidos = catalogo.servicos.filter((s) => s.conferido === false);
+assert(naoConferidos.length >= 2, "os Conselhos Tutelares devem constar como não conferidos");
+naoConferidos.forEach((s) => assert(/não conferida/.test(s.fonte), "item não conferido com fonte enganosa: " + s.nome));
+assert(app.includes("Ainda não conferido na página oficial") && app.includes("s.conferido === false"), "a interface deve avisar quando o item não foi conferido");
 
 /* ---- 6. Conteúdo das áreas ---- */
 Areas.AREAS.forEach((a) => {
@@ -87,6 +91,7 @@ assert(index.includes('class="pular"'), "falta o link para pular ao conteúdo");
 /* ---- 7. Comportamento esperado no código ---- */
 assert(app.includes("sv.meta && sv.meta.demo"), "dados de demonstração nunca devem ser exibidos");
 assert(app.includes("history.state && history.state.app"), "Voltar deve usar o histórico apenas quando a navegação começou no sistema");
+assert(app.includes("linksTelefone") && !/replace\(\/\[\^\\d\+\]\/g, ""\)\) \+ '">' \+ esc\(s\.telefone/.test(app), "telefones múltiplos devem ter um link cada");
 assert(app.includes("busca-por-cep"), "a busca por CEP deve continuar existindo");
 assert(css.includes(".emergencia>summary") && css.includes("min-height:44px"), "alvos de toque devem ter pelo menos 44px");
 assert(!/prefers-color-scheme:\s*dark/.test(css), "a interface deve manter o fundo claro");

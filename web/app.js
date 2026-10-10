@@ -23,6 +23,14 @@
   function mostrarMensagem(t) { var m = $("mensagem"); m.textContent = t; m.hidden = !t; }
 
   /* ------------------------------------------------------------ cartões */
+  /* Um campo pode ter mais de um número separado por " / ": cada um recebe o seu link (nunca um número emendado). */
+  function linksTelefone(txt) {
+    return String(txt).split(/\s+\/\s+/).map(function (t) {
+      var num = t.replace(/[^\d+]/g, "");
+      return num ? '<a href="tel:' + esc(num) + '">' + esc(t) + "</a>" : esc(t);
+    }).join(" · ");
+  }
+
   function cartaoServico(s) {
     var partes = [];
     var tipoTxt = Acesso.rotuloSubtipo(s.subtipo);
@@ -35,11 +43,16 @@
     }
     if (s.endereco) partes.push("<p>" + esc(s.endereco) + "</p>");
     else partes.push('<p class="meta">Endereço não informado na fonte: ligue para confirmar.</p>');
-    if (s.telefone) partes.push('<p>Telefone: <a href="tel:' + esc(String(s.telefone).replace(/[^\d+]/g, "")) + '">' + esc(s.telefone) + "</a></p>");
+    if (s.telefone) partes.push("<p>Telefone: " + linksTelefone(s.telefone) + "</p>");
     if (s.horario) partes.push("<p>Horário: " + esc(s.horario) + "</p>");
     if (s.observacao) partes.push('<p class="meta">' + esc(s.observacao) + "</p>");
     var fonte = s.fonte_url ? '<a href="' + esc(s.fonte_url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.fonte) + "</a>" : esc(s.fonte);
-    partes.push('<p class="meta">Fonte: ' + fonte + " · verificado em " + esc(s.verificado_em) + "</p>");
+    if (s.conferido === false) {
+      partes.push('<p class="aviso-nao-conferido"><strong>Ainda não conferido na página oficial.</strong> Ligue antes de ir.</p>');
+      partes.push('<p class="meta">Para conferir: ' + fonte + " · informado em " + esc(s.verificado_em) + "</p>");
+    } else {
+      partes.push('<p class="meta">Fonte: ' + fonte + " · verificado em " + esc(s.verificado_em) + "</p>");
+    }
     return '<article class="cartao"><h3>' + esc(s.nome) + "</h3>" + partes.join("") + "</article>";
   }
 

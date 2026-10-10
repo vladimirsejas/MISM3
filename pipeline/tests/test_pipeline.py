@@ -137,3 +137,15 @@ def test_catalogo_manual_do_site_nao_tem_demonstracao_e_tem_fonte():
     for s in d["servicos"]:
         assert s["fonte_url"].startswith("http") and s["verificado_em"], s["nome"]
         assert "[DEMO]" not in s["nome"]
+
+
+def test_manual_nao_conferido_nao_aparece_como_verificado():
+    import pandas as pd
+    from servicos import servicos_manuais
+    df = pd.DataFrame([
+        {"tipo": "assistencia", "nome": "A", "fonte_url": "https://x.gov.br", "verificado_em": "2026-10-10", "conferido": "nao"},
+        {"tipo": "assistencia", "nome": "B", "fonte_url": "https://x.gov.br", "verificado_em": "2026-10-10", "conferido": ""},
+    ])
+    a, b = servicos_manuais(df, {})
+    assert a["conferido"] is False and "não conferida" in a["fonte"]
+    assert b["conferido"] is True and a["fonte"] != b["fonte"]
