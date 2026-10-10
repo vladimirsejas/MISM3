@@ -15,9 +15,8 @@ Dê dois cliques em `abrir_site.bat` (Windows; ele serve a pasta `web`) ou rode:
 
     python -m http.server 8000 --directory web
 
-e abra http://localhost:8000. Sem o pipeline completo, o site usa `web/dados/catalogo_manual.json` (serviços verificados à mão, com fonte e data) e avisa o que falta; não há mais dados de demonstração na interface. Para regenerar esse catálogo depois de editar o CSV: `python pipeline/servicos.py --somente-manual`.
+e abra http://localhost:8000. Sem o pipeline completo, o site usa `web/dados/catalogo_manual.json` (serviços verificados à mão, com fonte e data) e avisa o que falta. Para regenerar esse catálogo depois de editar o CSV: `python pipeline/servicos.py --somente-manual`.
 
-Protótipos antigos com dados fictícios foram preservados em `web/prototipos/`, fora da navegação.
 
 ## Usar dados reais (na sua máquina, com internet)
 Requer Python 3.10+ e `pip install pandas numpy`.
@@ -54,4 +53,4 @@ Edite `catalogo/servicos_manuais.csv`. Obrigatórios: `tipo` (creche, saude, ass
 2. Setores censitários + Censo 2022 (crianças de 0 a 4 anos): "desertos de cuidado" e simulador de nova creche.
 3. Relatórios automáticos explicados; vagas e cursos; transporte.
 
-Veja o [registro de decisões de desenvolvimento](docs/registro_decisoes_desenvolvimento.md), o [roteiro de demonstração](docs/roteiro_demo_mism3.md), `docs/inventario_de_fontes.md`, a [análise competitiva](docs/analise_competitiva_mism3.md), o [plano de fontes externas](docs/plano_fontes_externas_e_expansao.md) e o [benchmark externo](docs/benchmark_externo_ideias_funcionais.md).
+Veja o [registro de decisões de desenvolvimento](docs/registro_decisoes_desenvolvimento.md), `docs/inventario_de_fontes.md`, a [análise competitiva](docs/analise_competitiva_mism3.md), o [plano de fontes externas](docs/plano_fontes_externas_e_expansao.md) e o [benchmark externo](docs/benchmark_externo_ideias_funcionais.md).

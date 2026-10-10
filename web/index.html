@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
+<a class="pular" href="#principal">Pular para o conteúdo</a>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <symbol id="i-trabalho" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/></symbol>
@@ -39,7 +40,7 @@
           <li><a class="tel" href="tel:192" aria-label="Ligar para 192, SAMU">192</a><div><strong>SAMU</strong><span>Urgência médica ou pessoa ferida.</span></div></li>
           <li><a class="tel" href="tel:193" aria-label="Ligar para 193, Bombeiros">193</a><div><strong>Bombeiros</strong><span>Incêndio, resgate ou acidente.</span></div></li>
           <li><a class="tel" href="tel:180" aria-label="Ligar para 180, Central de Atendimento à Mulher">180</a><div><strong>Central de Atendimento à Mulher</strong><span>Violência contra a mulher: orientação, denúncia e encaminhamento. 24 horas, gratuito.</span></div></li>
-          <li><a class="tel" href="tel:100" aria-label="Ligar para 100, Disque Direitos Humanos">100</a><div><strong>Disque Direitos Humanos</strong><span>Violações de direitos de crianças, adolescentes, idosos e outros grupos.</span></div></li>
+          <li><a class="tel" href="tel:100" aria-label="Ligar para 100, Disque Direitos Humanos">100</a><div><strong>Disque Direitos Humanos</strong><span>Violações de direitos humanos, como contra crianças, idosos e pessoas com deficiência. 24 horas, gratuito.</span></div></li>
           <li><a class="tel" href="tel:188" aria-label="Ligar para 188, CVV">188</a><div><strong>CVV — apoio emocional</strong><span>Conversa de apoio em momentos de sofrimento. 24 horas, gratuito.</span></div></li>
         </ul>
         <button id="sair-rapido" class="sair" type="button">Sair desta página agora</button>
@@ -76,6 +77,16 @@
     <p id="intro-area" class="intro"></p>
     <div id="conteudo-area"></div>
 
+    <form id="form-necessidade" class="busca-area" autocomplete="off">
+      <label for="necessidade">Não encontrou? Escreva o que você precisa e eu indico a área.</label>
+      <div class="linha">
+        <input id="necessidade" type="search" maxlength="100" placeholder="Ex.: creche, separação, aluguel" autocomplete="off" aria-describedby="ajuda-necessidade">
+        <button type="submit" class="btn">Indicar área</button>
+      </div>
+      <p id="ajuda-necessidade" class="privacidade">Não escreva nomes, documentos ou detalhes pessoais. O texto fica neste aparelho e não é enviado a nenhum servidor.</p>
+      <p id="resposta-necessidade" class="status" role="status" hidden></p>
+    </form>
+
     <details class="busca-por-cep" id="busca-por-cep" hidden>
       <summary>Encontrar serviços perto de mim pelo CEP</summary>
       <form id="form-cep" autocomplete="off">
@@ -104,6 +115,7 @@
 
 <script src="vendor/leaflet.js"></script>
 <script src="acesso.js"></script>
+<script src="necessidades.js"></script>
 <script src="areas.js"></script>
 <script src="app.js"></script>
 </body>
