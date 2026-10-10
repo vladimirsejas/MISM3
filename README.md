@@ -54,6 +54,7 @@ Se um download automático falhar (os sites mudam), o script diz onde baixar à 
     node web/tests/necessidades.test.js
     node web/tests/api.test.js
     node web/tests/institucional.test.js
+    node web/tests/dashboard.test.js
 
 ## Conferir o catálogo contra as páginas oficiais
 Com internet, rode `python pipeline/verificar_catalogo.py`. Ele abre a fonte de cada serviço e confere se os telefones cadastrados aparecem na página. "ATENCAO" não é erro certo: abra a fonte e confira.

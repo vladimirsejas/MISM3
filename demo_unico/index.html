@@ -870,6 +870,31 @@ details.outros > summary { display: flex; align-items: center; min-height: 44px;
 @media (forced-colors: active) { .porta, .cartao, .ferramenta { border: 1px solid CanvasText; } }
 @media print { .barra-emergencia, .navegacao-principal, .faixa-institucional, #sair-rapido { display: none; } }
 
+/* ---------- organizacao por jornadas (vinda da main, traduzida para o sistema visual institucional) ---------- */
+.blocos-portas { display: grid; gap: 1rem; margin: 1rem 0; }
+.bloco-portas { padding: .9rem 1rem 1rem; border: 1px solid var(--bor); border-radius: var(--radius); background: var(--soft); }
+.bloco-portas h3, .outras-areas h3 { margin: .1rem 0 .3rem; font-size: 1.05rem; }
+.bloco-portas .grade-portas { margin: .5rem 0 0; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.bloco-portas .secao-sub, .bloco-portas > p { margin: 0 0 .4rem; color: var(--mut); font-size: .92rem; }
+.acesso-digital { margin: 1rem 0; padding: 1rem; border: 1px solid var(--bor); border-left: 4px solid var(--pri); border-radius: var(--radius); background: var(--soft); }
+.acesso-digital h3 { margin: .1rem 0 .5rem; font-size: 1rem; }
+.acesso-digital p { margin: .35rem 0; }
+.outras-areas { margin: 1.5rem 0; padding-top: 1rem; border-top: 2px solid var(--bor); }
+.grade-outras-areas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+.grade-outras-areas .cartao { margin: 0; }
+.grade-outras-areas h4 { margin: 0; font-size: 1rem; }
+.resultado-necessidade { margin: 1rem 0; padding: 1rem; border: 1px solid var(--bor); border-radius: var(--radius); background: var(--surface); }
+.nota-redundancia { padding: .75rem 1rem; border-left: 4px solid var(--pri); border-radius: 3px; background: var(--soft); color: var(--fg); }
+.resultado-necessidade ul { padding-left: 1.25rem; margin: .5rem 0; }
+.resultado-necessidade li { margin: .35rem 0; }
+.resultado-necessidade .cartao h4 { margin: .1rem 0 .5rem; font-size: 1rem; }
+.resultado-necessidade > p { color: var(--mut); }
+@media (max-width: 620px) {
+  .bloco-portas .grade-portas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grade-outras-areas { grid-template-columns: 1fr; }
+}
+@media (max-width: 360px) { .bloco-portas .grade-portas { grid-template-columns: 1fr; } }
+
 </style>
 </head>
 <body>
@@ -934,36 +959,63 @@ details.outros > summary { display: flex; align-items: center; min-height: 44px;
 
   <section class="portas" aria-labelledby="titulo-portas">
     <h2 id="titulo-portas" class="secao-titulo">Ou escolha um assunto</h2>
-    <p class="secao-sub">Cada assunto abre os serviços e contatos de Rio Claro. A busca acontece neste aparelho.</p>
-    <div class="grade-portas">
-      <button class="porta" type="button" data-categoria="emprego_curso"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg><strong>Emprego e renda</strong><small>Vagas, cursos e qualificação</small></button>
-      <button class="porta" type="button" data-categoria="saude"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.600-7 10-7 10z"/></svg><strong>Saúde</strong><small>Atendimento e orientação</small></button>
-      <button class="porta" type="button" data-categoria="estudo"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9l9-5 9 5-9 5-9-5z"/><path d="M7 11.500V16c0 1 2.200 2.500 5 2.500s5-1.500 5-2.500v-4.500"/></svg><strong>Educação</strong><small>Escolas e formação</small></button>
-      <button class="porta" type="button" data-categoria="filhos"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="7" r="3"/><circle cx="17" cy="10" r="2"/><path d="M2.500 20v-1.500A4.500 4.500 0 0 1 7 14h2a4.500 4.500 0 0 1 4.500 4.500V20M15 20v-1a3 3 0 0 1 3-3h.5a2.500 2.500 0 0 1 2.500 2.500V20"/></svg><strong>Filhos e cuidado</strong><small>Creche, escola e apoio</small></button>
-      <button class="porta" type="button" data-categoria="casamento"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v17M7 20h10M4 7h16"/><path d="M4 7l-2.500 6a3.500 3.500 0 0 0 5 0L4 7zM20 7l-2.500 6a3.500 3.500 0 0 0 5 0L20 7z"/></svg><strong>Direitos e separação</strong><small>Orientação jurídica e apoio</small></button>
-      <button class="porta" type="button" data-categoria="violencia"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 4.500-3.300 7.800-8 9-4.700-1.200-8-4.500-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg><strong>Proteção e violência</strong><small>Orientação e rede de apoio</small></button>
-      <button class="porta" type="button" id="porta-m2m" data-categoria="mulher_para_mulher" hidden><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M2.500 20a5.500 5.500 0 0 1 11 0M10.500 20a5.500 5.500 0 0 1 11 0"/></svg><strong>De mulher para mulher</strong><small>Serviços feitos por mulheres</small></button>
-      <button class="porta" type="button" data-categoria="familia"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></svg><strong>Família e assistência</strong><small>Proteção social e serviços</small></button>
+    <p class="secao-sub">Os assuntos estão agrupados por jornada. Cada um abre os serviços e contatos de Rio Claro. A busca acontece neste aparelho.</p>
+    <div class="blocos-portas">
+      <section class="bloco-portas" aria-labelledby="titulo-renda">
+        <h3 id="titulo-renda">Trabalho e desenvolvimento</h3>
+        <div class="grade-portas">
+          <button class="porta" type="button" data-categoria="emprego_curso"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg><strong>Emprego e renda</strong><small>Vagas, cursos e qualificação</small></button>
+          <button class="porta" type="button" data-categoria="estudo"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9l9-5 9 5-9 5-9-5z"/><path d="M7 11.500V16c0 1 2.200 2.500 5 2.500s5-1.500 5-2.500v-4.500"/></svg><strong>Educação</strong><small>Escolas e formação</small></button>
+        </div>
+      </section>
+      <section class="bloco-portas" aria-labelledby="titulo-cuidado">
+        <h3 id="titulo-cuidado">Saúde e rede de cuidado</h3>
+        <div class="grade-portas">
+          <button class="porta" type="button" data-categoria="saude"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.600-7 10-7 10z"/></svg><strong>Saúde</strong><small>Atendimento e orientação</small></button>
+          <button class="porta" type="button" data-categoria="filhos"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="7" r="3"/><circle cx="17" cy="10" r="2"/><path d="M2.500 20v-1.500A4.500 4.500 0 0 1 7 14h2a4.500 4.500 0 0 1 4.500 4.500V20M15 20v-1a3 3 0 0 1 3-3h.5a2.500 2.500 0 0 1 2.500 2.500V20"/></svg><strong>Filhos e cuidado</strong><small>Creche, escola e apoio</small></button>
+          <button class="porta" type="button" data-categoria="familia"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.2"/><path d="M3 20a6 6 0 0 1 12 0M15 20a4.5 4.5 0 0 1 6 0"/></svg><strong>Família e assistência</strong><small>Benefícios e serviços de apoio</small></button>
+        </div>
+      </section>
+      <section class="bloco-portas" aria-labelledby="titulo-direitos">
+        <h3 id="titulo-direitos">Direitos e proteção</h3>
+        <div class="grade-portas">
+          <button class="porta" type="button" data-categoria="casamento"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v17M7 20h10M4 7h16"/><path d="M4 7l-2.500 6a3.500 3.500 0 0 0 5 0L4 7zM20 7l-2.500 6a3.500 3.500 0 0 0 5 0L20 7z"/></svg><strong>Direitos e separação</strong><small>Orientação jurídica e apoio</small></button>
+          <button class="porta" type="button" data-categoria="violencia"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 4.500-3.300 7.800-8 9-4.700-1.200-8-4.500-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg><strong>Proteção e violência</strong><small>Orientação e rede de apoio</small></button>
+          <button class="porta" type="button" id="porta-m2m" data-categoria="mulher_para_mulher" hidden><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M2.500 20a5.500 5.500 0 0 1 11 0M10.500 20a5.500 5.500 0 0 1 11 0"/></svg><strong>De mulher para mulher</strong><small>Serviços feitos por mulheres</small></button>
+        </div>
+      </section>
+      <section class="bloco-portas" aria-labelledby="titulo-moradia-financas">
+        <h3 id="titulo-moradia-financas">Moradia e vida financeira</h3>
+        <div class="grade-portas">
+          <button class="porta" type="button" data-categoria="moradia"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></svg><strong>Moradia e aluguel</strong><small>Habitação, assistência e benefícios a confirmar</small></button>
+          <button class="porta" type="button" data-categoria="dividas"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M16 14.5h2"/></svg><strong>Dívidas e aposentadoria</strong><small>Orientação financeira e previdenciária</small></button>
+        </div>
+      </section>
     </div>
+    <section class="acesso-digital" aria-labelledby="titulo-acesso-digital">
+      <h3 id="titulo-acesso-digital">Acesso digital e privacidade</h3>
+      <p>O texto da busca por necessidade é processado neste aparelho. Ainda não há navegação sem franquia de dados, login Gov.br integrado, atendimento por áudio nem garantia de apagar o histórico do navegador.</p>
+      <p>Se estiver usando um aparelho compartilhado, evite informar dados pessoais. O botão “Sair rápido” abre outro site, mas não apaga o histórico.</p>
+    </section>
   </section>
 
-  <section class="ferramentas-secao" aria-labelledby="titulo-ferramentas">
-    <h2 id="titulo-ferramentas" class="secao-titulo">Outras áreas do protótipo</h2>
-    <div class="ferramentas">
-      <article class="ferramenta">
-        <h3>De mulher para mulher <span class="etiqueta">DEMO</span></h3>
-        <p>Perfis fictícios, níveis demonstrativos e simulações de cadastro e denúncia.</p>
-        <p class="acoes"><a href="rede-mulheres.html">Abrir a rede entre mulheres →</a></p>
+  <section class="outras-areas" aria-labelledby="titulo-outras-areas">
+    <h3 id="titulo-outras-areas">Outras áreas da plataforma</h3>
+    <div class="grade-outras-areas">
+      <article class="cartao">
+        <h4>De Mulher para Mulher <span class="meta">[DEMO]</span></h4>
+        <p>Protótipo de diretório e rede de apoio entre mulheres. Os perfis e selos são fictícios; não há cadastro nem verificação real.</p>
+        <p><a href="rede-mulheres.html">Explorar o protótipo</a></p>
       </article>
-      <article class="ferramenta">
-        <h3>Painel de gestão <span class="etiqueta">DEMO</span></h3>
-        <p>O que as mulheres procuram, demanda e oferta por região e o mapa de setores.</p>
-        <p class="acoes"><a href="gestao.html">Visão pública</a> · <a href="gestao.html?visao=gestao">Visão de gestão →</a></p>
+      <article class="cartao">
+        <h4>Painel de gestão <span class="meta">[DEMO]</span></h4>
+        <p>O que as mulheres procuram, demanda e oferta por região e o mapa de setores. Todos os números são fictícios.</p>
+        <p><a href="gestao.html">Visão pública</a> · <a href="gestao.html?visao=gestao">Visão de gestão</a></p>
       </article>
-      <article class="ferramenta">
-        <h3>Inteligência pública <span class="etiqueta">DEMO</span></h3>
-        <p>Painel conceitual para comparar territórios e acompanhar a origem dos dados.</p>
-        <p class="acoes"><a href="inteligencia-publica.html">Abrir painel conceitual →</a></p>
+      <article class="cartao">
+        <h4>Inteligência Pública <span class="meta">[DEMO]</span></h4>
+        <p>Painel conceitual para gestores: dados territoriais, qualidade das fontes e exemplos de análise. Gráficos ilustrativos não são estatísticas oficiais.</p>
+        <p><a href="inteligencia-publica.html">Abrir painel conceitual</a></p>
       </article>
     </div>
   </section>
@@ -1271,7 +1323,8 @@ window.MISM3_CONFIG = {
         "nao deixa eu sair", "nao me deixa sair", "nao deixa eu trabalhar", "nao me deixa trabalhar", "me proibe", "me proibiu",
         "controla meu dinheiro", "controla tudo", "tenho medo dele", "medo dele", "medo do marido", "medo do meu marido",
         "medo do companheiro", "medo do meu companheiro", "medo do namorado", "medo do ex", "medo de apanhar",
-        "bate em mim", "me empurrou", "me machucou", "me controla", "estou em perigo", "em perigo"],
+        "bate em mim", "me empurrou", "me machucou", "me controla", "estou em perigo", "em perigo",
+        "preciso sair de casa", "quero sair de casa com seguranca", "sair de casa com seguranca"],
       tipos: ["mulher", "assistencia", "saude"],
       aviso: "Em perigo agora: ligue 190 (polícia) ou 192 (SAMU). Violência contra a mulher: Ligue 180, 24 horas, gratuito. Você não precisa se identificar para pedir orientação." },
     { id: "casamento", rotulo: "Casamento, separação, guarda, pensão",
@@ -1282,10 +1335,21 @@ window.MISM3_CONFIG = {
       aviso: "Para divórcio, guarda e pensão normalmente é preciso orientação jurídica gratuita (Defensoria Pública) ou advogado. Ainda não cadastramos esse serviço: pergunte à Secretaria da Mulher, abaixo. Se há violência no relacionamento, use também “Violência”." },
     { id: "familia", rotulo: "Família e assistência social",
       palavras: ["familia", "familias", "cras", "creas", "cadunico", "cad unico", "bolsa familia", "cesta basica", "beneficio*",
-        "aluguel", "moradia", "despejo", "sem casa", "comida", "fome", "comer", "o que comer", "passando necessidade",
+        "comida", "fome", "comer", "o que comer", "passando necessidade",
         "sem dinheiro", "nao tenho dinheiro", "falta de dinheiro", "pouco dinheiro", "sem renda", "assistencia", "assistente social",
         "conta de luz", "luz cortada", "agua cortada"],
       tipos: ["assistencia", "mulher"] },
+    { id: "moradia", rotulo: "Moradia e aluguel",
+      palavras: ["moradia", "habitacao", "aluguel", "aluguel social", "casa para morar", "sem casa", "despejo", "despejada",
+        "regularizacao fundiaria", "cadastro habitacional", "casa popular", "moradia popular", "preciso sair de casa"],
+      tipos: ["assistencia", "mulher"],
+      aviso: "Esta página não faz inscrição em programas nem confirma vaga, aluguel social ou prioridade habitacional: pergunte à Prefeitura quais critérios e programas estão vigentes. Se a saída de casa é por medo de alguém, use também “Violência”." },
+    { id: "dividas", rotulo: "Dívidas, orçamento e aposentadoria",
+      palavras: ["divida", "dividas", "endividad*", "superendividamento", "nome sujo", "renegociar divida", "renegociar dividas",
+        "renegociacao de dividas", "renegociac*", "cartao atrasado", "emprestimo consignado", "consignado", "nao consigo pagar as contas",
+        "contas atrasadas", "orcamento domestico", "aposentadoria", "aposentar*", "inss", "tempo de contribuicao", "simular aposentadoria", "procon"],
+      tipos: [],
+      aviso: "Use canais oficiais e não compartilhe senhas, códigos de acesso ou documentos com intermediários. Simulações de aposentadoria são projeções e não garantem benefício." },
     { id: "filhos", rotulo: "Filhos e cuidado infantil",
       palavras: ["filho*", "filha*", "crianc*", "bebe*", "creche*", "maternidade", "escola infantil", "educacao infantil", "emei",
         "baba", "com quem deixar", "deixar meu filho", "deixar meus filhos", "ninguem para cuidar",
@@ -1436,7 +1500,7 @@ window.MISM3_CONFIG = {
   var CATEGORIAS = {
     emprego_curso: {
       titulo: "Emprego, renda e cursos",
-      descricao: "Comece pelas oportunidades e confirme prazos, requisitos e inscrições diretamente na fonte.",
+      descricao: "Consulte oportunidades e cursos nas fontes oficiais. Antes de aceitar uma vaga, considere também a rotina de cuidado, o deslocamento, os horários e as condições do contrato.",
       tipos: ["emprego_curso"],
       links: [
         ["Portal da Empregabilidade de Rio Claro", "https://vagas.rioclaro.sp.gov.br/", "Consultar oportunidades e informações para trabalhadores."],
@@ -1506,20 +1570,56 @@ window.MISM3_CONFIG = {
         ["Secretaria de Desenvolvimento Social", "https://rioclaro.sp.gov.br/secretaria/secretaria-de-desenvolvimento-social/", "Informações institucionais sobre assistência social."],
         ["Secretaria Municipal da Mulher", "https://rioclaro.sp.gov.br/secretaria/secretaria-da-mulher/", "Informações e contatos da Secretaria."]
       ]
+    },
+    moradia: {
+      titulo: "Moradia, habitação e apoio para permanecer em segurança",
+      descricao: "Comece pelos canais oficiais de habitação e assistência social. Esta página não faz inscrição em programas nem confirma vaga, aluguel social ou prioridade habitacional; pergunte quais critérios e programas estão vigentes.",
+      tipos: ["assistencia", "mulher"],
+      links: [
+        ["Secretaria de Habitação de Rio Claro", "https://rioclaro.sp.gov.br/secretaria/secretaria-de-planejamento-e-habitacao/", "A Prefeitura publica os contatos da secretaria e links para cadastro habitacional e critérios de elegibilidade."],
+        ["CRAS — Centros de Referência de Assistência Social", "https://rioclaro.sp.gov.br/centro-ref-assistencia-social/", "Consulte a unidade de referência e peça orientação sobre benefícios e proteção social."],
+        ["Tarifa social de água e esgoto de Rio Claro", "https://rioclaro.sp.gov.br/daae/familias-em-vulnerabilidade-social-podem-solicitar-tarifa-social-na-conta-de-agua-e-esgoto/", "Informação municipal sobre desconto para famílias que atendam aos critérios publicados; confirme requisitos e vigência com o DAAE."]
+      ]
+    },
+    dividas: {
+      titulo: "Dívidas, orçamento e aposentadoria",
+      descricao: "Use canais oficiais para buscar orientação. Não compartilhe senhas, códigos de acesso ou documentos com intermediários; simulações previdenciárias não garantem concessão de benefício.",
+      tipos: [],
+      links: [
+        ["Procon de Rio Claro", "https://rioclaro.sp.gov.br/secretaria/secretaria-de-justica/", "A página municipal informa os contatos das unidades do Procon. Procure orientação sobre dívidas de consumo e seus direitos."],
+        ["Procon-SP — Apoio ao Superendividado", "https://www.procon.sp.gov.br/espaco-consumidor/#ApoioSuperendividado", "Programa estadual com inscrição online e triagem para pessoas que não conseguem pagar dívidas sem comprometer a subsistência."],
+        ["Meu INSS — Simular aposentadoria", "https://www.gov.br/pt-br/servicos/simular-aposentadoria", "Simule o tempo que falta com base nos vínculos previdenciários registrados. Confira dados ausentes; o resultado é apenas uma projeção."]
+      ]
     }
   };
 
   /* Conteudo de UMA categoria (links oficiais + servicos cadastrados + ajuda imediata). */
-  function blocoCategoria(chave) {
+  var CHECKLIST_EMPREGO = '<article class="cartao"><h4>Checklist para avaliar uma oportunidade</h4><ul><li>O horário e a escala combinam com sua rotina?</li><li>Quanto tempo e dinheiro o deslocamento vai exigir?</li><li>Como ficam os cuidados com crianças ou outros dependentes?</li><li>Salário, contrato, local de trabalho e custos estão claros?</li><li>Desconfie de anúncios que exigem pagamento para participar do processo seletivo.</li></ul><p class="meta">Este checklist ajuda a avaliar a viabilidade; não substitui a conferência da empresa e da vaga.</p></article>';
+
+  /* Estado de uma busca com varias necessidades: o que ja foi mostrado nao se repete. Sozinha, cada categoria comeca do zero. */
+  function novosVistos() { return { links: Object.create(null), servicos: Object.create(null), rodape: false }; }
+
+  function blocoCategoria(chave, vistos) {
     var c = CATEGORIAS[chave];
+    vistos = vistos || novosVistos();
     var html = "";
+    if (chave === "emprego_curso") html += CHECKLIST_EMPREGO;
     c.links.forEach(function (l) {
+      var chaveLink = String(l[1] || "").toLowerCase();
+      if (vistos.links[chaveLink]) return;
+      vistos.links[chaveLink] = true;
       html += '<article class="cartao"><h3><a href="' + esc(l[1]) + '" target="_blank" rel="noopener noreferrer">' + esc(l[0]) + '</a></h3><p>' + esc(l[2]) + '</p><p class="meta">Fonte externa oficial; confira os dados e a disponibilidade no site de origem.</p></article>';
     });
     if (chave === "saude") {  /* pagina propria, com dados reais e busca por bairro (nao depende do CEP) */
       html = '<article class="cartao cartao-destaque"><h3><a href="saude.html">Qual é a minha unidade de saúde?</a></h3><p>Digite o seu bairro e veja a UBS de referência, telefones, horários, unidades 24 horas e saúde da mulher.</p><p class="meta">Dados de páginas oficiais, com a data da conferência.</p></article>' + html;
     }
-    var encontrados = dados.servicos ? dados.servicos.filter(function (s) { return c.tipos.indexOf(s.tipo) !== -1; }) : [];
+    var candidatos = dados.servicos ? dados.servicos.filter(function (s) { return c.tipos.indexOf(s.tipo) !== -1; }) : [];
+    var encontrados = candidatos.filter(function (s) {
+      var chaveServico = String(s.id || [s.nome, s.tipo, s.fonte_url || s.fonte].join("|")).toLowerCase();
+      if (vistos.servicos[chaveServico]) return false;
+      vistos.servicos[chaveServico] = true;
+      return true;
+    });
     if (encontrados.length) {
       html += '<h3 class="subtitulo">Serviços cadastrados em Rio Claro</h3>';
       var LIMITE = 6;  /* com dados reais uma categoria pode ter dezenas de servicos */
@@ -1529,10 +1629,15 @@ window.MISM3_CONFIG = {
           encontrados.slice(LIMITE).map(function (s) { return cartao(s, null); }).join("") + "</details>";
       }
       html += '<p class="meta">Esta lista não está ordenada por distância. Para ver o que fica mais perto de você, use “Quero encontrar serviços perto de mim pelo CEP”.</p>';
-    } else {
+    } else if (!candidatos.length) {
       html += '<p class="vazio">Ainda não há serviços dessa categoria carregados no catálogo desta versão. Estamos ampliando e validando os registros. Consulte também as fontes oficiais acima.</p>';
+    } else {
+      html += '<p class="meta">Os serviços que também atendem a esta necessidade já aparecem acima.</p>';
     }
-    html += '<p class="meta">Veja também <a href="secretarias.html">todas as secretarias e canais oficiais</a>.</p>';
+    if (!vistos.rodape) {
+      vistos.rodape = true;
+      html += '<p class="meta">Veja também <a href="secretarias.html">todas as secretarias e canais oficiais</a>.</p>';
+    }
     if (chave === "violencia") {
       html += '<article class="cartao urgente"><h3>Ajuda imediata</h3><p>Polícia: <a href="tel:190">190</a></p><p>Central de Atendimento à Mulher: <a href="tel:180">180</a></p><p>Atendimento médico de urgência: <a href="tel:192">192</a></p><p class="meta">Se o aparelho puder estar sendo monitorado, considere usar um dispositivo seguro. O botão “Sair rápido” não apaga o histórico do navegador.</p></article>';
     }
@@ -1567,9 +1672,11 @@ window.MISM3_CONFIG = {
     } else {
       $("titulo-categoria").textContent = "Seu caminho";
       $("descricao-categoria").textContent = "Reunimos o que se relaciona com o que você escreveu, uma parte de cada vez.";
-      $("opcoes-categoria").innerHTML = validas.map(function (k) {
-        return '<section class="subcaminho"><h3>' + esc(CATEGORIAS[k].titulo) + "</h3><p>" + esc(CATEGORIAS[k].descricao) + "</p>" + blocoCategoria(k) + "</section>";
-      }).join("");
+      var vistos = novosVistos();  /* links e servicos comuns a varias necessidades aparecem uma unica vez */
+      $("opcoes-categoria").innerHTML = '<p class="nota-redundancia">Como você indicou mais de uma necessidade, links e serviços comuns aparecem uma única vez para evitar repetição.</p>' +
+        validas.map(function (k) {
+          return '<section class="subcaminho"><h3>' + esc(CATEGORIAS[k].titulo) + "</h3><p>" + esc(CATEGORIAS[k].descricao) + "</p>" + blocoCategoria(k, vistos) + "</section>";
+        }).join("");
     }
     if (ultimo) desenhar(ultimo);  /* ja ha busca por CEP na tela: reorganiza pelos servicos da necessidade */
     $("painel-categoria").scrollIntoView({behavior:"smooth", block:"start"});

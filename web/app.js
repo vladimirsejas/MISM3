@@ -17,7 +17,7 @@
   var CATEGORIAS = {
     emprego_curso: {
       titulo: "Emprego, renda e cursos",
-      descricao: "Comece pelas oportunidades e confirme prazos, requisitos e inscrições diretamente na fonte.",
+      descricao: "Consulte oportunidades e cursos nas fontes oficiais. Antes de aceitar uma vaga, considere também a rotina de cuidado, o deslocamento, os horários e as condições do contrato.",
       tipos: ["emprego_curso"],
       links: [
         ["Portal da Empregabilidade de Rio Claro", "https://vagas.rioclaro.sp.gov.br/", "Consultar oportunidades e informações para trabalhadores."],
@@ -87,20 +87,56 @@
         ["Secretaria de Desenvolvimento Social", "https://rioclaro.sp.gov.br/secretaria/secretaria-de-desenvolvimento-social/", "Informações institucionais sobre assistência social."],
         ["Secretaria Municipal da Mulher", "https://rioclaro.sp.gov.br/secretaria/secretaria-da-mulher/", "Informações e contatos da Secretaria."]
       ]
+    },
+    moradia: {
+      titulo: "Moradia, habitação e apoio para permanecer em segurança",
+      descricao: "Comece pelos canais oficiais de habitação e assistência social. Esta página não faz inscrição em programas nem confirma vaga, aluguel social ou prioridade habitacional; pergunte quais critérios e programas estão vigentes.",
+      tipos: ["assistencia", "mulher"],
+      links: [
+        ["Secretaria de Habitação de Rio Claro", "https://rioclaro.sp.gov.br/secretaria/secretaria-de-planejamento-e-habitacao/", "A Prefeitura publica os contatos da secretaria e links para cadastro habitacional e critérios de elegibilidade."],
+        ["CRAS — Centros de Referência de Assistência Social", "https://rioclaro.sp.gov.br/centro-ref-assistencia-social/", "Consulte a unidade de referência e peça orientação sobre benefícios e proteção social."],
+        ["Tarifa social de água e esgoto de Rio Claro", "https://rioclaro.sp.gov.br/daae/familias-em-vulnerabilidade-social-podem-solicitar-tarifa-social-na-conta-de-agua-e-esgoto/", "Informação municipal sobre desconto para famílias que atendam aos critérios publicados; confirme requisitos e vigência com o DAAE."]
+      ]
+    },
+    dividas: {
+      titulo: "Dívidas, orçamento e aposentadoria",
+      descricao: "Use canais oficiais para buscar orientação. Não compartilhe senhas, códigos de acesso ou documentos com intermediários; simulações previdenciárias não garantem concessão de benefício.",
+      tipos: [],
+      links: [
+        ["Procon de Rio Claro", "https://rioclaro.sp.gov.br/secretaria/secretaria-de-justica/", "A página municipal informa os contatos das unidades do Procon. Procure orientação sobre dívidas de consumo e seus direitos."],
+        ["Procon-SP — Apoio ao Superendividado", "https://www.procon.sp.gov.br/espaco-consumidor/#ApoioSuperendividado", "Programa estadual com inscrição online e triagem para pessoas que não conseguem pagar dívidas sem comprometer a subsistência."],
+        ["Meu INSS — Simular aposentadoria", "https://www.gov.br/pt-br/servicos/simular-aposentadoria", "Simule o tempo que falta com base nos vínculos previdenciários registrados. Confira dados ausentes; o resultado é apenas uma projeção."]
+      ]
     }
   };
 
   /* Conteudo de UMA categoria (links oficiais + servicos cadastrados + ajuda imediata). */
-  function blocoCategoria(chave) {
+  var CHECKLIST_EMPREGO = '<article class="cartao"><h4>Checklist para avaliar uma oportunidade</h4><ul><li>O horário e a escala combinam com sua rotina?</li><li>Quanto tempo e dinheiro o deslocamento vai exigir?</li><li>Como ficam os cuidados com crianças ou outros dependentes?</li><li>Salário, contrato, local de trabalho e custos estão claros?</li><li>Desconfie de anúncios que exigem pagamento para participar do processo seletivo.</li></ul><p class="meta">Este checklist ajuda a avaliar a viabilidade; não substitui a conferência da empresa e da vaga.</p></article>';
+
+  /* Estado de uma busca com varias necessidades: o que ja foi mostrado nao se repete. Sozinha, cada categoria comeca do zero. */
+  function novosVistos() { return { links: Object.create(null), servicos: Object.create(null), rodape: false }; }
+
+  function blocoCategoria(chave, vistos) {
     var c = CATEGORIAS[chave];
+    vistos = vistos || novosVistos();
     var html = "";
+    if (chave === "emprego_curso") html += CHECKLIST_EMPREGO;
     c.links.forEach(function (l) {
+      var chaveLink = String(l[1] || "").toLowerCase();
+      if (vistos.links[chaveLink]) return;
+      vistos.links[chaveLink] = true;
       html += '<article class="cartao"><h3><a href="' + esc(l[1]) + '" target="_blank" rel="noopener noreferrer">' + esc(l[0]) + '</a></h3><p>' + esc(l[2]) + '</p><p class="meta">Fonte externa oficial; confira os dados e a disponibilidade no site de origem.</p></article>';
     });
     if (chave === "saude") {  /* pagina propria, com dados reais e busca por bairro (nao depende do CEP) */
       html = '<article class="cartao cartao-destaque"><h3><a href="saude.html">Qual é a minha unidade de saúde?</a></h3><p>Digite o seu bairro e veja a UBS de referência, telefones, horários, unidades 24 horas e saúde da mulher.</p><p class="meta">Dados de páginas oficiais, com a data da conferência.</p></article>' + html;
     }
-    var encontrados = dados.servicos ? dados.servicos.filter(function (s) { return c.tipos.indexOf(s.tipo) !== -1; }) : [];
+    var candidatos = dados.servicos ? dados.servicos.filter(function (s) { return c.tipos.indexOf(s.tipo) !== -1; }) : [];
+    var encontrados = candidatos.filter(function (s) {
+      var chaveServico = String(s.id || [s.nome, s.tipo, s.fonte_url || s.fonte].join("|")).toLowerCase();
+      if (vistos.servicos[chaveServico]) return false;
+      vistos.servicos[chaveServico] = true;
+      return true;
+    });
     if (encontrados.length) {
       html += '<h3 class="subtitulo">Serviços cadastrados em Rio Claro</h3>';
       var LIMITE = 6;  /* com dados reais uma categoria pode ter dezenas de servicos */
@@ -110,10 +146,15 @@
           encontrados.slice(LIMITE).map(function (s) { return cartao(s, null); }).join("") + "</details>";
       }
       html += '<p class="meta">Esta lista não está ordenada por distância. Para ver o que fica mais perto de você, use “Quero encontrar serviços perto de mim pelo CEP”.</p>';
-    } else {
+    } else if (!candidatos.length) {
       html += '<p class="vazio">Ainda não há serviços dessa categoria carregados no catálogo desta versão. Estamos ampliando e validando os registros. Consulte também as fontes oficiais acima.</p>';
+    } else {
+      html += '<p class="meta">Os serviços que também atendem a esta necessidade já aparecem acima.</p>';
     }
-    html += '<p class="meta">Veja também <a href="secretarias.html">todas as secretarias e canais oficiais</a>.</p>';
+    if (!vistos.rodape) {
+      vistos.rodape = true;
+      html += '<p class="meta">Veja também <a href="secretarias.html">todas as secretarias e canais oficiais</a>.</p>';
+    }
     if (chave === "violencia") {
       html += '<article class="cartao urgente"><h3>Ajuda imediata</h3><p>Polícia: <a href="tel:190">190</a></p><p>Central de Atendimento à Mulher: <a href="tel:180">180</a></p><p>Atendimento médico de urgência: <a href="tel:192">192</a></p><p class="meta">Se o aparelho puder estar sendo monitorado, considere usar um dispositivo seguro. O botão “Sair rápido” não apaga o histórico do navegador.</p></article>';
     }
@@ -148,9 +189,11 @@
     } else {
       $("titulo-categoria").textContent = "Seu caminho";
       $("descricao-categoria").textContent = "Reunimos o que se relaciona com o que você escreveu, uma parte de cada vez.";
-      $("opcoes-categoria").innerHTML = validas.map(function (k) {
-        return '<section class="subcaminho"><h3>' + esc(CATEGORIAS[k].titulo) + "</h3><p>" + esc(CATEGORIAS[k].descricao) + "</p>" + blocoCategoria(k) + "</section>";
-      }).join("");
+      var vistos = novosVistos();  /* links e servicos comuns a varias necessidades aparecem uma unica vez */
+      $("opcoes-categoria").innerHTML = '<p class="nota-redundancia">Como você indicou mais de uma necessidade, links e serviços comuns aparecem uma única vez para evitar repetição.</p>' +
+        validas.map(function (k) {
+          return '<section class="subcaminho"><h3>' + esc(CATEGORIAS[k].titulo) + "</h3><p>" + esc(CATEGORIAS[k].descricao) + "</p>" + blocoCategoria(k, vistos) + "</section>";
+        }).join("");
     }
     if (ultimo) desenhar(ultimo);  /* ja ha busca por CEP na tela: reorganiza pelos servicos da necessidade */
     $("painel-categoria").scrollIntoView({behavior:"smooth", block:"start"});

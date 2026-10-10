@@ -24,7 +24,7 @@ const FRASES = [
   ["meu marido não deixa eu sair de casa", ["violencia", "casamento"]],
   // trabalho e renda
   ["estou desempregada", ["emprego"]], ["quero abrir um negócio", ["emprego"]], ["preciso ganhar dinheiro", ["emprego"]],
-  ["perdi meu emprego e não consigo pagar o aluguel", ["emprego", "familia"]],
+  ["perdi meu emprego e não consigo pagar o aluguel", ["emprego", "moradia"]],   // aluguel agora e MORADIA (decisao vinda da main)
   // familia e assistencia
   ["Preciso de Bolsa Família", ["familia"]], ["não tenho dinheiro para comer", ["familia"]], ["preciso de cesta básica", ["familia"]],
   // direitos
@@ -57,6 +57,23 @@ const FRASES = [
   ["estou grávida e preciso de atendimento", ["saude"]],               // gestante e SAUDE, nao creche
   ["preciso de curso de qualificação", ["emprego", "estudo"]],           // qualificar serve ao trabalho e ao estudo
   ["quero conversar sobre escola de samba", []],                         // "escola de samba" nao e estudo
+  ["preciso de aluguel social", ["moradia"]],
+  ["estou com medo de despejo e preciso de moradia", ["moradia"]],
+  ["preciso sair de casa", ["violencia", "moradia"]],
+  ["quero fazer cadastro habitacional", ["moradia"]],
+  ["quero renegociar minhas dívidas", ["dividas"]],
+  ["não consigo pagar as contas do cartão", ["dividas"]],
+  ["quero simular minha aposentadoria no INSS", ["dividas"]],
+  ["estou sem dinheiro para comer e com contas atrasadas", ["dividas", "familia"]],
+  // lacunas achadas na auditoria: palavras flexionadas que a busca por palavra inteira nao reconhecia
+  ["estou endividada", ["dividas"]],
+  ["quero me aposentar", ["dividas"]],
+  ["estou endividada e quero me aposentar", ["dividas"]],
+  ["preciso de aluguel e estou desempregada", ["moradia", "emprego"]],
+  // seguranca: pedido para sair de casa SEMPRE traz a violencia (com o aviso do 180), mesmo junto de moradia
+  ["preciso sair de casa, ele me bate", ["violencia", "moradia"]],
+  ["", []],
+  ["   ", []]
 ];
 FRASES.forEach(([frase, esperado]) => mesmoConjunto(frase, esperado));
 assert.deepStrictEqual(ids(null), []);
@@ -88,5 +105,9 @@ const s = N.separar(grupos, [N.porId("filhos")]);
 assert.deepStrictEqual(s.destaque.map(g => g.tipo), ["creche", "educacao_infantil", "saude", "assistencia"]);
 assert.deepStrictEqual(s.outros.map(g => g.tipo), ["mulher", "emprego_curso"]);
 assert.deepStrictEqual(N.separar(grupos, []).destaque, []);
+
+// ordem: violencia sempre primeiro
+assert.strictEqual(ids("preciso sair de casa")[0], "violencia");
+assert.strictEqual(ids("preciso de aluguel social e tenho medo dele")[0], "violencia");
 
 console.log("necessidades.js: todos os testes passaram (" + FRASES.length + " frases)");

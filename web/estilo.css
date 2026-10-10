@@ -182,3 +182,28 @@ details.outros > summary { display: flex; align-items: center; min-height: 44px;
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; } }
 @media (forced-colors: active) { .porta, .cartao, .ferramenta { border: 1px solid CanvasText; } }
 @media print { .barra-emergencia, .navegacao-principal, .faixa-institucional, #sair-rapido { display: none; } }
+
+/* ---------- organizacao por jornadas (vinda da main, traduzida para o sistema visual institucional) ---------- */
+.blocos-portas { display: grid; gap: 1rem; margin: 1rem 0; }
+.bloco-portas { padding: .9rem 1rem 1rem; border: 1px solid var(--bor); border-radius: var(--radius); background: var(--soft); }
+.bloco-portas h3, .outras-areas h3 { margin: .1rem 0 .3rem; font-size: 1.05rem; }
+.bloco-portas .grade-portas { margin: .5rem 0 0; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.bloco-portas .secao-sub, .bloco-portas > p { margin: 0 0 .4rem; color: var(--mut); font-size: .92rem; }
+.acesso-digital { margin: 1rem 0; padding: 1rem; border: 1px solid var(--bor); border-left: 4px solid var(--pri); border-radius: var(--radius); background: var(--soft); }
+.acesso-digital h3 { margin: .1rem 0 .5rem; font-size: 1rem; }
+.acesso-digital p { margin: .35rem 0; }
+.outras-areas { margin: 1.5rem 0; padding-top: 1rem; border-top: 2px solid var(--bor); }
+.grade-outras-areas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+.grade-outras-areas .cartao { margin: 0; }
+.grade-outras-areas h4 { margin: 0; font-size: 1rem; }
+.resultado-necessidade { margin: 1rem 0; padding: 1rem; border: 1px solid var(--bor); border-radius: var(--radius); background: var(--surface); }
+.nota-redundancia { padding: .75rem 1rem; border-left: 4px solid var(--pri); border-radius: 3px; background: var(--soft); color: var(--fg); }
+.resultado-necessidade ul { padding-left: 1.25rem; margin: .5rem 0; }
+.resultado-necessidade li { margin: .35rem 0; }
+.resultado-necessidade .cartao h4 { margin: .1rem 0 .5rem; font-size: 1rem; }
+.resultado-necessidade > p { color: var(--mut); }
+@media (max-width: 620px) {
+  .bloco-portas .grade-portas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grade-outras-areas { grid-template-columns: 1fr; }
+}
+@media (max-width: 360px) { .bloco-portas .grade-portas { grid-template-columns: 1fr; } }
