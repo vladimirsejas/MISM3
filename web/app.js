@@ -23,6 +23,12 @@
   function mostrarMensagem(t) { var m = $("mensagem"); m.textContent = t; m.hidden = !t; }
 
   /* ------------------------------------------------------------ cartões */
+  /* Normaliza nomes de bairro para comparar: sem acento, minúsculas e abreviações da fonte por extenso. */
+  var ABREV = { jd: "jardim", pq: "parque", res: "residencial", cond: "condominio", conj: "conjunto", hab: "habitacional" };
+  function normBairro(t) {
+    return MISM3Necessidades.normalizar(t).split(" ").map(function (p) { return ABREV[p] || p; }).join(" ");
+  }
+
   /* Um campo pode ter mais de um número separado por " / ": cada um recebe o seu link (nunca um número emendado). */
   function linksTelefone(txt) {
     return String(txt).split(/\s+\/\s+/).map(function (t) {
@@ -46,6 +52,7 @@
     if (s.telefone) partes.push("<p>Telefone: " + linksTelefone(s.telefone) + "</p>");
     if (s.horario) partes.push("<p>Horário: " + esc(s.horario) + "</p>");
     if (s.observacao) partes.push('<p class="meta">' + esc(s.observacao) + "</p>");
+    if (s.bairros) partes.push('<details class="bairros"><summary>Bairros atendidos</summary><p>' + esc(s.bairros) + ".</p></details>");
     var fonte = s.fonte_url ? '<a href="' + esc(s.fonte_url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.fonte) + "</a>" : esc(s.fonte);
     if (s.conferido === false) {
       partes.push('<p class="aviso-nao-conferido"><strong>Ainda não conferido na página oficial.</strong> Ligue antes de ir.</p>');
@@ -53,7 +60,8 @@
     } else {
       partes.push('<p class="meta">Fonte: ' + fonte + " · verificado em " + esc(s.verificado_em) + "</p>");
     }
-    return '<article class="cartao"><h3>' + esc(s.nome) + "</h3>" + partes.join("") + "</article>";
+    var dados_bairros = s.bairros ? ' data-bairros="' + esc(normBairro(s.bairros)) + '"' : "";
+    return '<article class="cartao"' + dados_bairros + '><h3>' + esc(s.nome) + "</h3>" + partes.join("") + "</article>";
   }
 
   function cartaoLink(l) {
@@ -64,18 +72,27 @@
   var CHECKLIST = '<article class="cartao"><h3>Antes de aceitar uma oportunidade</h3><ul><li>O horário e a escala combinam com sua rotina?</li><li>Quanto tempo e dinheiro o deslocamento vai exigir?</li><li>Como ficam os cuidados com crianças ou outros dependentes?</li><li>Salário, contrato, local de trabalho e custos estão claros?</li><li>Desconfie de anúncios que exigem pagamento para participar do processo seletivo.</li></ul><p class="meta">Este roteiro ajuda a avaliar a viabilidade; não substitui a conferência da empresa e da vaga.</p></article>';
 
   /* ------------------------------------------------------------ áreas */
+  /* Em Assistência Social, CRAS e CREAS vêm antes dos demais serviços. */
+  var ORDEM_SUBTIPO = { cras: 0, creas: 1, conselho_tutelar: 2, sede: 3, scfv: 5 };
+
   function servicosDosTipos(tipos, vistos) {
     var lista = dados.servicos.filter(function (s) {
       if (tipos.indexOf(s.tipo) === -1 || vistos[s.id]) return false;
       vistos[s.id] = true;
       return true;
     });
-    return lista.sort(function (a, b) { return String(a.nome).localeCompare(String(b.nome), "pt-BR"); });
+    return lista.sort(function (a, b) {
+      var d = (ORDEM_SUBTIPO[a.subtipo] != null ? ORDEM_SUBTIPO[a.subtipo] : 4) - (ORDEM_SUBTIPO[b.subtipo] != null ? ORDEM_SUBTIPO[b.subtipo] : 4);
+      return d || String(a.nome).localeCompare(String(b.nome), "pt-BR");
+    });
   }
 
   function htmlArea(area) {
     var html = "";
     var vistos = Object.create(null);
+    if (area.id === "assistencia") {
+      html += '<div class="busca-area" id="busca-bairro"><label for="bairro">Qual CRAS atende o meu bairro?</label><input id="bairro" type="search" maxlength="60" placeholder="Digite o nome do bairro" autocomplete="off" aria-describedby="ajuda-bairro"><p id="ajuda-bairro" class="privacidade">A busca usa a lista de bairros publicada pela Prefeitura e acontece neste aparelho. Ruas não constam na lista: confirme por telefone.</p><p id="resposta-bairro" class="status" role="status" hidden></p></div>';
+    }
     area.secoes.forEach(function (sec, i) {
       var cartoes = "";
       if (sec.urgente) {
@@ -83,7 +100,7 @@
       }
       if (i === 0 && area.canais) {
         area.canais.forEach(function (c) {
-          cartoes += '<article class="cartao"><h3>' + esc(c.nome) + '</h3><p><a class="tel-grande" href="tel:' + esc(c.tel) + '">' + esc(c.tel) + "</a></p><p>" + esc(c.texto) + '</p><p class="meta">Canal nacional oficial.</p></article>';
+          cartoes += '<article class="cartao"><h3>' + esc(c.nome) + '</h3><p><a class="tel-grande" href="tel:' + esc(c.tel) + '">' + esc(c.tel) + "</a></p><p>" + esc(c.texto) + '</p><p class="meta">' + (c.fonte ? 'Fonte: <a href="' + esc(c.fonte[1]) + '" target="_blank" rel="noopener noreferrer">' + esc(c.fonte[0]) + "</a> · " + esc(c.fonte[2]) + "." : "Canal nacional oficial.") + "</p></article>";
         });
       }
       if (i === 0 && area.checklist) cartoes += CHECKLIST;
@@ -188,6 +205,25 @@
   });
   $("inicio").addEventListener("click", function (e) { e.preventDefault(); irPara(""); });
   $("marca").addEventListener("click", function (e) { e.preventDefault(); if (areaAtual) irPara(""); });
+
+  /* ------------------------------------------------------------ "qual CRAS atende o meu bairro?" */
+  document.addEventListener("input", function (e) {
+    if (e.target.id !== "bairro") return;
+    var q = normBairro(e.target.value), r = $("resposta-bairro");
+    var cards = document.querySelectorAll("article[data-bairros]");
+    cards.forEach(function (c) { c.classList.remove("destaque"); });
+    if (q.length < 3) { r.hidden = true; return; }
+    var achados = [];
+    cards.forEach(function (c) {
+      if ((" " + c.getAttribute("data-bairros") + " ").indexOf(" " + q + " ") !== -1 || c.getAttribute("data-bairros").indexOf(q) !== -1) {
+        c.classList.add("destaque"); achados.push(c.querySelector("h3").textContent);
+      }
+    });
+    r.textContent = achados.length
+      ? "Na lista da Prefeitura, este bairro aparece em: " + achados.join("; ") + "." + (achados.length > 1 ? " Aparece em mais de um: ligue para confirmar qual atende a sua rua." : " Os cartões destacados abaixo têm endereço e telefone.")
+      : "Não encontrei esse bairro na lista dos CRAS. Confira a grafia ou ligue para a Secretaria de Desenvolvimento Social, (19) 3522-1930.";
+    r.hidden = false;
+  });
 
   /* ------------------------------------------------------------ "indicar área" (classificador local) */
   $("form-necessidade").addEventListener("submit", function (e) {

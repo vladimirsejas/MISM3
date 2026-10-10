@@ -156,3 +156,11 @@ def test_manual_usa_fonte_informada_quando_conferido():
     from servicos import servicos_manuais
     df = pd.DataFrame([{"tipo": "assistencia", "nome": "A", "fonte_url": "https://x.org.br", "verificado_em": "2026-10-10", "fonte": "Site do órgão X"}])
     assert servicos_manuais(df, {})[0]["fonte"] == "Site do órgão X"
+
+
+def test_manual_repassa_lista_de_bairros():
+    import pandas as pd
+    from servicos import servicos_manuais
+    df = pd.DataFrame([{"tipo": "assistencia", "nome": "CRAS X", "fonte_url": "https://x.gov.br", "verificado_em": "2026-10-10",
+                        "bairros": "Jd. A, Jd. B"}])
+    assert servicos_manuais(df, {})[0]["bairros"] == "Jd. A, Jd. B"

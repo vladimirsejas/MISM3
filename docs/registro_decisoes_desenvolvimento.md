@@ -108,3 +108,12 @@ Ao concluir mudanças relevantes, registrar o que foi alterado, o teste executad
 - Removidos também as verificações de `meta.demo` no código e o campo `"demo": false` dos arquivos gerados pelo pipeline. Um teste agora impede que esses caminhos voltem.
 - Mantidos `web/dados/setores.geojson` e `setores_resumo.json` (dados reais do IBGE, para o marco de setores censitários); a página que os exibia era o painel conceitual removido, então hoje nada na interface os usa.
 - Ainda não confirmado e sem dado para cadastrar: CRAS e CREAS (página oficial não pôde ser lida), unidades de saúde (CNES), fonte oficial do Disque 100, tarifa social de energia.
+
+### CRAS, CREAS, unidades de convivência e Disque 100 com fonte oficial — 10/10/2026
+- Páginas da Secretaria de Desenvolvimento Social de Rio Claro (impressas pelo mantenedor em 10/10/2026, 03:31 e 03:32) e página do gov.br "Denunciar violação de direitos humanos (Disque 100)" (03:34; última modificação 15/12/2025). A rede da sessão não alcança esses sites, então o conteúdo foi lido nos PDFs enviados.
+- Cadastrados 6 CRAS (com a lista de bairros atendidos publicada), o CREAS (Rua 6, 640; (19) 3523-6420 / 3523-6439; e-mail creas@rioclaro.sp.gov.br; atende todo o município) e 13 unidades de convivência (SCFV). Telefones sem DDD na fonte receberam "(19)", o DDD de Rio Claro.
+- O CRAS Região Jardim Brasília consta na fonte como "em endereço provisório", sem endereço e sem telefone; a interface não inventa e remete à Secretaria, (19) 3522-1930 (telefone já verificado no catálogo).
+- **Inconsistência sinalizada:** (19) 3523-6439 aparece como telefone do Conselho Tutelar Norte (CMDCA) e do CREAS (Prefeitura). Ambos foram cadastrados como publicados, com aviso no cartão do Conselho Norte. Conferir por telefone qual é o número correto.
+- Novos recursos: campo `bairros` no catálogo e busca "Qual CRAS atende o meu bairro?" (sem acento, abreviações como Jd./Pq. por extenso; roda no aparelho). Aviso: a lista é de bairros, não de ruas.
+- Disque 100: texto do cartão conforme a fonte (24 horas, todos os dias, gratuito de qualquer telefone, discando 100), com link e data. O painel de emergência passou a dizer "24 horas, gratuito" para o 100.
+- Ainda sem dado: horário de funcionamento de CRAS, CREAS, SCFV e Conselhos Tutelares; unidades de saúde (CNES); tarifa social de energia.
