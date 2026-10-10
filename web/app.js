@@ -99,7 +99,10 @@
       : "Canal nacional oficial.";
     return '<article class="cartao"><h3>' + esc(c.nome) + "</h3>" +
       (c.sem_tel ? "" : '<p><a class="tel-grande" href="tel:' + esc(c.tel) + '">' + esc(c.tel) + "</a></p>") +
-      "<p>" + esc(c.texto) + "</p>" + (c.aviso ? '<p class="aviso-nao-conferido">' + esc(c.aviso) + "</p>" : "") +
+      "<p>" + esc(c.texto) + "</p>" +
+      (c.topicos ? '<details class="detalhes-canal"><summary>Ver quem tem direito, documentos e prazos</summary><dl>' +
+        c.topicos.map(function (t) { return "<dt>" + esc(t[0]) + "</dt><dd>" + esc(t[1]) + "</dd>"; }).join("") + "</dl></details>" : "") +
+      (c.aviso ? '<p class="aviso-nao-conferido">' + esc(c.aviso) + "</p>" : "") +
       '<p class="meta">' + fonteTxt + "</p></article>";
   }
 
