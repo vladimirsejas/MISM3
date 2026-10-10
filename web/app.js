@@ -232,7 +232,6 @@
     var temServicos = area.secoes.some(function (s) { return s.tipos.length; });
     $("busca-por-cep").hidden = !(dados.indice && temServicos);
     limparResultadoCep();
-    $("necessidade").value = ""; $("resposta-necessidade").hidden = true;
     document.title = area.nome + " – Mulher em Rede";
   }
 
@@ -283,23 +282,6 @@
     r.textContent = achados.length
       ? "Na lista da Prefeitura, este bairro aparece em: " + achados.join("; ") + "." + (achados.length > 1 ? " Aparece em mais de um: ligue para confirmar qual atende a sua rua." : " Os cartões destacados abaixo têm endereço e telefone.")
       : "Não encontrei esse bairro na lista dos CRAS. Confira a grafia ou ligue para a Secretaria de Desenvolvimento Social, (19) 3522-1930.";
-    r.hidden = false;
-  });
-
-  /* ------------------------------------------------------------ "indicar área" (classificador local) */
-  $("form-necessidade").addEventListener("submit", function (e) {
-    e.preventDefault();
-    var r = $("resposta-necessidade");
-    var texto = $("necessidade").value;
-    if (!texto.trim()) { r.textContent = "Digite o que você precisa, como emprego, creche, aluguel ou separação."; r.hidden = false; return; }
-    var achadas = AREAS.areasDaNecessidade(MISM3Necessidades.identificarCategorias(texto));
-    if (!achadas.length) {
-      r.textContent = "Não reconheci essa necessidade. Volte ao início e escolha uma das áreas.";
-    } else {
-      r.innerHTML = "Veja: " + achadas.map(function (a) {
-        return a === areaAtual ? esc(a.nome) + " (você já está aqui)" : '<a href="#' + esc(a.id) + '">' + esc(a.nome) + "</a>";
-      }).join(" · ");
-    }
     r.hidden = false;
   });
 

@@ -185,26 +185,10 @@
     { tel: "188", nome: "CVV — apoio emocional", quando: "Conversa de apoio em momentos de sofrimento. 24 horas, gratuito." }
   ];
 
-  /* O classificador local (necessidades.js) usa chaves antigas; aqui cada uma aponta para uma das seis áreas. */
-  var AREA_DA_NECESSIDADE = {
-    emprego_curso: "trabalho", estudo: "educacao", filhos: "educacao", saude: "saude",
-    casamento: "direitos", violencia: "direitos", dividas: "direitos",
-    moradia: "moradia", familia: "assistencia"
-  };
-
-  function areasDaNecessidade(chaves) {
-    var ids = [];
-    chaves.forEach(function (c) {
-      var id = AREA_DA_NECESSIDADE[c];
-      if (id && ids.indexOf(id) === -1) ids.push(id);
-    });
-    return ids.map(porId).filter(Boolean);
-  }
-
   function porId(id) {
     for (var i = 0; i < AREAS.length; i++) if (AREAS[i].id === id) return AREAS[i];
     return null;
   }
 
-  return { AREAS: AREAS, EMERGENCIA: EMERGENCIA, NOTA_FONTE: NOTA_FONTE, AREA_DA_NECESSIDADE: AREA_DA_NECESSIDADE, areasDaNecessidade: areasDaNecessidade, porId: porId };
+  return { AREAS: AREAS, EMERGENCIA: EMERGENCIA, NOTA_FONTE: NOTA_FONTE, porId: porId };
 });
