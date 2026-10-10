@@ -728,6 +728,9 @@ h1, h2, h3 { color: var(--fg); line-height: 1.25; letter-spacing: -.01em; }
 .barra-emergencia a { display:inline-flex; align-items:center; min-height:32px; padding:.2rem .65rem; margin:.1rem; border:1px solid #e6b9bf; border-radius:999px; background:#fff1f2; color:#a52f43; font-weight:750; text-decoration:none; white-space:nowrap; }
 #sair-rapido { flex: 0 0 auto; min-height: 32px; padding: .2rem .7rem; border: 1px solid var(--bor); border-radius: 999px; background: #fff; color: var(--mut); font-weight: 650; font-size: .84rem; }
 #sair-rapido:hover { background: var(--soft); color:var(--fg); }
+.voltar-pagina { display:inline-flex; align-items:center; justify-content:center; gap:.35rem; flex:0 0 auto; min-height:40px; padding:.35rem .65rem; border:1px solid var(--bor); border-radius:999px; background:#fff; color:var(--pri); font-weight:650; white-space:nowrap; }
+.voltar-pagina:hover { background:var(--soft); }
+.voltar-pagina span:first-child { font-size:1.35rem; line-height:1; }
 .navegacao-principal { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .55rem var(--lateral); background: var(--surface); border-bottom: 1px solid var(--bor); box-shadow: var(--shadow); }
 .marca-site { display: flex; align-items: center; gap: .7rem; color: var(--fg); text-decoration: none; white-space: nowrap; }
 .marca-site:hover { color: var(--fg); }
@@ -908,6 +911,7 @@ details.outros > summary { display: flex; align-items: center; min-height: 44px;
 </div>
 
 <nav class="navegacao-principal" aria-label="Navegação principal">
+  <button class="voltar-pagina" type="button" aria-label="Voltar à página anterior" title="Voltar" onclick="if (history.length > 1) history.back(); else location.href='index.html'"><span aria-hidden="true">←</span><span class="voltar-texto">Voltar</span></button>
   <a class="marca-site" href="index.html"><span class="marca-selo" aria-hidden="true">M3</span><span class="marca-texto"><strong>MISM3</strong><span>Mapa do Cuidado · Rio Claro/SP</span></span></a>
   <div class="links-navegacao" data-menu><a href="index.html">Início</a></div>
 </nav>
