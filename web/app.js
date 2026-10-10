@@ -77,6 +77,26 @@
         ["Secretaria de Desenvolvimento Social", "https://rioclaro.sp.gov.br/secretaria/secretaria-de-desenvolvimento-social/", "Informações institucionais sobre assistência social."],
         ["Secretaria Municipal da Mulher", "https://rioclaro.sp.gov.br/secretaria/secretaria-da-mulher/", "Informações e contatos da Secretaria."]
       ]
+    },
+    moradia: {
+      titulo: "Moradia, habitação e apoio para permanecer em segurança",
+      descricao: "Comece pelos canais oficiais de habitação e assistência social. Esta página não faz inscrição em programas nem confirma vaga, aluguel social ou prioridade habitacional; pergunte quais critérios e programas estão vigentes.",
+      tipos: ["assistencia", "mulher"],
+      links: [
+        ["Secretaria de Habitação de Rio Claro", "https://rioclaro.sp.gov.br/secretaria/secretaria-de-planejamento-e-habitacao/", "A Prefeitura publica os contatos da secretaria e links para cadastro habitacional e critérios de elegibilidade."],
+        ["CRAS — Centros de Referência de Assistência Social", "https://rioclaro.sp.gov.br/centro-ref-assistencia-social/", "Consulte a unidade de referência e peça orientação sobre benefícios e proteção social."],
+        ["Tarifa social de água e esgoto de Rio Claro", "https://rioclaro.sp.gov.br/daae/familias-em-vulnerabilidade-social-podem-solicitar-tarifa-social-na-conta-de-agua-e-esgoto/", "Informação municipal sobre desconto para famílias que atendam aos critérios publicados; confirme requisitos e vigência com o DAAE."]
+      ]
+    },
+    dividas: {
+      titulo: "Dívidas, orçamento e aposentadoria",
+      descricao: "Use canais oficiais para buscar orientação. Não compartilhe senhas, códigos de acesso ou documentos com intermediários; simulações previdenciárias não garantem concessão de benefício.",
+      tipos: [],
+      links: [
+        ["Procon de Rio Claro", "https://rioclaro.sp.gov.br/secretaria/secretaria-de-justica/", "A página municipal informa os contatos das unidades do Procon. Procure orientação sobre dívidas de consumo e seus direitos."],
+        ["Procon-SP — Apoio ao Superendividado", "https://www.procon.sp.gov.br/espaco-consumidor/#ApoioSuperendividado", "Programa estadual com inscrição online e triagem para pessoas que não conseguem pagar dívidas sem comprometer a subsistência."],
+        ["Meu INSS — Simular aposentadoria", "https://www.gov.br/pt-br/servicos/simular-aposentadoria", "Simule o tempo que falta com base nos vínculos previdenciários registrados. Confira dados ausentes; o resultado é apenas uma projeção."]
+      ]
     }
   };
 
