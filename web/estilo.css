@@ -106,6 +106,10 @@ a.tel-grande{display:inline-block;font-weight:800;font-size:1.2rem;color:var(--a
 .fonte-comum{margin-top:.6rem}
 .lista-rede{margin:.2rem 0 0;padding-left:1.2rem}
 .lista-rede li{margin:.3rem 0;font-size:.95rem}
+.detalhes-canal{margin:.5rem 0}
+.detalhes-canal>summary{cursor:pointer;color:var(--pri-esc);font-weight:700;min-height:44px;display:flex;align-items:center}
+.detalhes-canal dt{font-weight:700;margin-top:.7rem}
+.detalhes-canal dd{margin:.15rem 0 0;font-size:.95rem}
 .pendente{background:var(--aviso);border:1px solid var(--aviso-bor);border-radius:var(--raio);padding:.8rem 1rem;margin:1.4rem 0}
 .pendente h2{font-size:.98rem;margin-bottom:.3rem}
 .pendente ul{margin:.2rem 0 0;padding-left:1.2rem}
