@@ -14,6 +14,7 @@ main{width:min(calc(100% - 2rem),var(--width));margin:auto;padding-bottom:3rem}.
 .status{margin:1.25rem 0;padding:clamp(1.2rem,3vw,2rem);border:1px solid #dfcce5;border-radius:22px;background:#fff;display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:center}.status h2{margin:0 0 .4rem;font-size:1.4rem}.status p{margin:.25rem 0;color:var(--muted)}.status-label{display:inline-block;margin-bottom:.5rem;padding:.25rem .65rem;border-radius:999px;background:var(--lilac);color:var(--plum-dark);font-size:.78rem;font-weight:800}
 .contact{display:grid;grid-template-columns:1.2fr .8fr;gap:1rem;margin-top:1.3rem}.contact-main,.contact-details{border-radius:22px;padding:1.4rem;background:#fff;border:1px solid var(--line)}.contact-main{background:var(--plum);color:#fff}.contact-main h2{margin:.1rem 0 .5rem;color:#fff}.contact-main p{color:#f0e8f3}.contact-main a{color:#fff}.contact-details h3{margin:.1rem 0 .5rem}.contact-details p{margin:.35rem 0;color:var(--muted)}.small{font-size:.88rem;color:var(--muted)}.footer{margin-top:2rem;padding:1.2rem 0;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
 @media(max-width:760px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.status,.contact{grid-template-columns:1fr}.status .btn{justify-self:start}}@media(max-width:480px){.grid{grid-template-columns:1fr}.nav{align-items:flex-start}.hero{border-radius:20px}.tile{min-height:0}}
+ .botao-home{display:inline-flex;align-items:center;gap:.3rem;min-height:40px;padding:.35rem .7rem;border:1px solid var(--bor, var(--line));border-radius:999px;background:#fff;color:var(--pri, var(--plum-dark));font-weight:700;text-decoration:none;white-space:nowrap}.botao-home:hover{background:var(--soft, var(--lilac))}.links-navegacao,.navlinks{display:flex;align-items:center;gap:.35rem;flex-wrap:wrap}.links-navegacao a,.navlinks a{white-space:nowrap}
 </style>
 </head>
 <body>
@@ -21,7 +22,7 @@ main{width:min(calc(100% - 2rem),var(--width));margin:auto;padding-bottom:3rem}.
 <nav class="nav" aria-label="Navegação principal">
 <button class="voltar-pagina" type="button" aria-label="Voltar à página anterior" title="Voltar" onclick="if (history.length > 1) history.back(); else location.href='index.html'"><span aria-hidden="true">←</span><span>Voltar</span></button>
 <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">M3</span><span><strong>MISM3</strong><small>Mapa do Cuidado</small></span></a>
-<div class="navlinks" data-menu><a href="index.html">Início</a><a href="saude.html">Saúde</a></div>
+<div class="navlinks" data-menu></div>
 </nav>
 <main>
 <header class="hero">
@@ -66,5 +67,45 @@ var alvo=document.querySelector("[data-menu]");
 if(alvo)alvo.innerHTML=MENU.map(function(x){return '<a href="'+x.href+'"'+(x.href===atual?' aria-current="page"':"")+'>'+x.rotulo+'</a>';}).join("");
 })();
 </script>
-</body>
+<script>
+/* Navegação global do MISM3: áreas acessíveis a partir de qualquer página. */
+(function () {
+  var links = [
+    ["index.html", "Home"],
+    ["index.html?categoria=emprego_curso", "Trabalho"],
+    ["index.html?categoria=estudo", "Educação"],
+    ["index.html?categoria=saude", "Saúde"],
+    ["index.html?categoria=casamento", "Direitos"],
+    ["index.html?categoria=moradia", "Moradia"],
+    ["index.html#assistencia-social", "Assistência social"],
+    ["rede-mulheres.html", "De Mulher para Mulher"]
+  ];
+  document.querySelectorAll("[data-menu]").forEach(function (nav) {
+    nav.innerHTML = links.map(function (item) {
+      var page = item[0].split("?")[0].split("#")[0];
+      var current = (location.pathname.split("/").pop() || "index.html") === page && !item[0].includes("?");
+      return '<a href="' + item[0] + '"' + (current ? ' aria-current="page"' : "") + '>' + item[1] + '</a>';
+    }).join("");
+  });
+  var emergency = document.getElementById("sair-rapido");
+  if (emergency) {
+    emergency.textContent = "Emergência";
+    emergency.title = "Ir para os contatos de emergência";
+    emergency.onclick = function () {
+      if (location.pathname.endsWith("index.html") || location.pathname.endsWith("/")) {
+        var bar = document.querySelector(".barra-emergencia");
+        if (bar) bar.scrollIntoView({behavior:"smooth",block:"start"});
+      } else location.href = "index.html#emergencia";
+    };
+  }
+  if ((location.pathname.split("/").pop() || "index.html") === "index.html") {
+    var key = new URLSearchParams(location.search).get("categoria");
+    var allowed = ["emprego_curso","estudo","saude","casamento","moradia"];
+    if (allowed.indexOf(key) !== -1) {
+      var target = document.querySelector('[data-categoria="' + key + '"]');
+      if (target) target.click();
+    }
+  }
+})();
+</script></body>
 </html>
