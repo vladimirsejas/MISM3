@@ -15,8 +15,9 @@ Rotas
   GET  /api/gestao         web/dados/gestao.json
   POST /api/pesquisar      {"texto": "...", "contexto": {}} -> pesquisa real pelo PROVEDOR (501 se nao houver)
 
-Provedor de pesquisa: crie pipeline/provedor_pesquisa.py com a funcao  pesquisar(texto, contexto) -> dict
-(modelo em pipeline/provedor_pesquisa.exemplo.py). Sem esse arquivo a pesquisa fica desligada.
+Provedor de pesquisa (um dos dois; sem nenhum, a pesquisa fica desligada):
+  * MISM3_PROVEDOR=gemini no .env  -> pipeline/provedor_gemini.py (Google Gemini com Pesquisa Google, a mesma API do MISM2)
+  * pipeline/provedor_pesquisa.py com  pesquisar(texto, contexto) -> dict  (modelo: provedor_pesquisa.exemplo.py)
 
 Privacidade: o servidor NUNCA registra o texto digitado nem o corpo das requisicoes; so metodo e caminho.
 """
@@ -25,6 +26,7 @@ from __future__ import annotations
 import argparse
 import importlib.util
 import json
+import os
 import sys
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -42,9 +44,36 @@ ROTAS_ARQUIVO = {
 }
 
 
+def carregar_env(arquivo: Path | None = None) -> list[str]:
+    """Le CHAVE=valor de um .env (por padrao o da raiz do projeto) para o ambiente, sem sobrescrever o que ja existe.
+    Devolve so os NOMES carregados, nunca os valores (para nunca ir parar em log)."""
+    arquivo = arquivo or RAIZ / ".env"
+    carregadas: list[str] = []
+    if not arquivo.is_file():
+        return carregadas
+    for linha in arquivo.read_text(encoding="utf-8").splitlines():
+        linha = linha.strip()
+        if not linha or linha.startswith("#") or "=" not in linha:
+            continue
+        chave, _, valor = linha.partition("=")
+        chave, valor = chave.strip(), valor.strip().strip('"').strip("'")
+        if chave and chave not in os.environ:
+            os.environ[chave] = valor
+            carregadas.append(chave)
+    return carregadas
+
+
 def carregar_provedor(caminho: Path | None = None):
-    """Importa pipeline/provedor_pesquisa.py se existir. Devolve o modulo ou None (pesquisa desligada)."""
-    caminho = caminho or Path(__file__).resolve().parent / "provedor_pesquisa.py"
+    """Escolhe o provedor de pesquisa: pipeline/provedor_pesquisa.py (o seu) ou, com MISM3_PROVEDOR=gemini,
+    pipeline/provedor_gemini.py. Devolve o modulo ou None (pesquisa desligada)."""
+    pasta = Path(__file__).resolve().parent
+    if caminho is None:
+        if (pasta / "provedor_pesquisa.py").exists():
+            caminho = pasta / "provedor_pesquisa.py"
+        elif os.environ.get("MISM3_PROVEDOR", "").strip().lower() == "gemini":
+            caminho = pasta / "provedor_gemini.py"
+        else:
+            return None
     if not caminho.exists():
         return None
     spec = importlib.util.spec_from_file_location("provedor_pesquisa", caminho)
@@ -78,7 +107,8 @@ def criar_servidor(web: Path = WEB_PADRAO, provedor=None, porta: int = 8000, hos
         def do_GET(self):
             caminho = urlparse(self.path).path
             if caminho == "/config.js":
-                cfg = {"modo": "api", "apiBase": "/api", "pesquisaRemota": provedor is not None, "usarLocalSeApiFalhar": True}
+                cfg = {"modo": "api", "apiBase": "/api", "pesquisaRemota": provedor is not None, "usarLocalSeApiFalhar": True,
+                       "pesquisaDestino": getattr(provedor, "NOME", "") if provedor is not None else ""}
                 corpo = ("window.MISM3_CONFIG = %s;\n" % json.dumps(cfg)).encode("utf-8")
                 self.send_response(200)
                 self.send_header("Content-Type", "application/javascript; charset=utf-8")
@@ -139,10 +169,13 @@ def main() -> None:
     ap.add_argument("--porta", type=int, default=8000)
     ap.add_argument("--web", default=str(WEB_PADRAO))
     args = ap.parse_args()
+    carregadas = carregar_env()
+    if carregadas:
+        print("Lido do .env (so os nomes): %s" % ", ".join(carregadas))
     provedor = carregar_provedor()
     srv = criar_servidor(Path(args.web), provedor, args.porta)
     print("MISM3 em http://localhost:%d  |  pesquisa real: %s" % (
-        args.porta, "LIGADA (provedor_pesquisa.py)" if provedor else "desligada (sem pipeline/provedor_pesquisa.py)"))
+        args.porta, ("LIGADA (%s)" % getattr(provedor, "NOME", "provedor_pesquisa.py")) if provedor else "desligada (veja docs/api_contrato.md)"))
     try:
         srv.serve_forever()
     except KeyboardInterrupt:

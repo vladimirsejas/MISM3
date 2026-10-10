@@ -14,6 +14,9 @@ const Api = require("../api.js");
 const novo = (cfg, resp) => { chamadas = []; respostas = resp || {}; global.window.MISM3_CONFIG = cfg; };
 
 (async () => {
+  // ---- configuracao: padroes seguros
+  novo({}, {}); assert.deepStrictEqual(Api.cfg(), { modo: "local", apiBase: "/api", pesquisaRemota: false, usarLocalSeApiFalhar: true, pesquisaDestino: "" });
+
   // ---- modo local: le o arquivo, nunca toca a API
   novo({ modo: "local" }, { "dados/servicos.json": { servicos: [1] } });
   assert.deepStrictEqual(await Api.json("dados/servicos.json"), { servicos: [1] });

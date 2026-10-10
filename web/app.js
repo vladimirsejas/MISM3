@@ -409,7 +409,7 @@
   });
 
   if (Api.cfg().modo === "api" && Api.cfg().pesquisaRemota) {
-    $("ajuda-necessidade").textContent = "Não escreva nomes, documentos ou detalhes pessoais. Para pesquisar, sua frase é enviada ao servidor do projeto (frases sobre violência nunca são enviadas).";
+    $("ajuda-necessidade").textContent = "Não escreva nomes, documentos ou detalhes pessoais. Para pesquisar, sua frase é enviada ao servidor do projeto" + (Api.cfg().pesquisaDestino ? " e ao serviço " + Api.cfg().pesquisaDestino : "") + " (frases sobre violência nunca são enviadas).";
   }
   iniciar();
   carregarVagas();

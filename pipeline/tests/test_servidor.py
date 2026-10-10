@@ -132,3 +132,18 @@ def test_provedor_precisa_ter_funcao(tmp_path):
     with pytest.raises(RuntimeError):
         servidor.carregar_provedor(ruim)
     assert servidor.carregar_provedor(tmp_path / "nao_existe.py") is None
+
+
+def test_config_informa_o_destino_da_pesquisa(web):
+    class ComNome(Provedor):
+        NOME = "Servico Externo X"
+    srv, base = subir(web, ComNome)
+    try:
+        assert '"pesquisaDestino": "Servico Externo X"' in pedir(base + "/config.js")[1]
+    finally:
+        srv.shutdown()
+    srv, base = subir(web, None)
+    try:
+        assert '"pesquisaDestino": ""' in pedir(base + "/config.js")[1]
+    finally:
+        srv.shutdown()

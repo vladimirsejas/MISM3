@@ -18,3 +18,8 @@ __pycache__/
 
 # Provedor de pesquisa real (credenciais so por variavel de ambiente, mas nao arrisque)
 pipeline/provedor_pesquisa.py
+
+# Chaves de API: NUNCA no git
+.env
+.env.*
+!.env.exemplo

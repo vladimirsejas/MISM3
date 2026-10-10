@@ -5,7 +5,7 @@
   if (typeof module === "object" && module.exports) module.exports = fabrica();
   else raiz.Api = fabrica();
 })(typeof self !== "undefined" ? self : this, function () {
-  var PADRAO = { modo: "local", apiBase: "/api", pesquisaRemota: false, usarLocalSeApiFalhar: true };
+  var PADRAO = { modo: "local", apiBase: "/api", pesquisaRemota: false, usarLocalSeApiFalhar: true, pesquisaDestino: "" };
   /* arquivo local -> rota da API. Arquivo que nao esta aqui e sempre lido do disco. */
   var ROTAS = { "dados/cep_indice.json": "/cep_indice", "dados/servicos.json": "/servicos", "dados/vagas.json": "/vagas", "dados/gestao.json": "/gestao" };
 

@@ -7,5 +7,6 @@ window.MISM3_CONFIG = {
   modo: "local",
   apiBase: "/api",
   pesquisaRemota: false,
+  pesquisaDestino: "",   // nome do servico externo que recebe a frase (aparece no aviso de privacidade)
   usarLocalSeApiFalhar: true
 };
