@@ -94,3 +94,12 @@ Ao concluir mudanças relevantes, registrar o que foi alterado, o teste executad
 - A interface mostra "Ainda não conferido na página oficial. Ligue antes de ir." e "informado em", nunca "verificado em", para esses itens. Horários, bairros atendidos e CEP do Conselho Norte não foram informados e não foram inventados.
 - Correção: telefones múltiplos num mesmo campo (separados por " / ") agora têm um link `tel:` cada; antes seriam emendados num único número inexistente.
 - Pendente: conferir os dois Conselhos na página oficial e então trocar `conferido` para vazio; cadastrar CRAS e CREAS; o texto colado cita um "Segundo Conselho Tutelar" na Rua 1 com Avenida 14, e não está confirmado que seja o mesmo que o da Região Norte.
+
+### Conselhos Tutelares: conferidos na página do CMDCA — 10/10/2026 (corrige a entrada anterior)
+- O mantenedor enviou a impressão (PDF) da página https://cmdcarioclaro.com.br/contato/ de 10/10/2026, 03:27. Com ela, os dois Conselhos passaram a constar como **verificados**, com a fonte "CMDCA Rio Claro (página de contato, consultada em 10/10/2026)":
+  - Sul: Avenida 05, nº 760, Centro, CEP 13500-380; (19) 3533-5411 / (19) 3532-5221.
+  - Norte: Rua 01, nº 1809, Centro, CEP 13537-035; (19) 3523-6439.
+- **Correção:** o telefone (19) 99336-6682 (plantão/WhatsApp) e o detalhe "entre as ruas 8 e 9", vindos do texto colado antes, **não constam na página** e foram removidos. O CEP do Norte, antes ausente, agora vem da página.
+- A página também lista o administrativo do CMDCA (Casa dos Conselhos, Rua 8, nº 3.131, Alto do Santana, CEP 13504-096, (19) 3533-2507; atendimento de segunda a sexta, 8h às 17h). Não foi cadastrado: é o conselho de direitos, não o Conselho Tutelar, e o horário da página não está claramente atribuído aos Conselhos Tutelares.
+- Horário e plantão dos Conselhos Tutelares **não constam** na fonte; a interface manda ligar antes. O campo `conferido=nao` e o aviso na interface continuam disponíveis para futuros itens não conferidos.
+- Nova coluna opcional `fonte` no catálogo manual, para nomear a fonte quando não for a Prefeitura.
