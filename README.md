@@ -8,12 +8,12 @@ Comece escrevendo uma necessidade ou escolhendo uma porta: **Emprego, Saúde, Es
 - O mapa começa **sem** imagens externas. As ruas (OpenStreetMap) só carregam se a usuária marcar a caixa.
 - Barra fixa com 190 e Ligue 180, e botão "Sair rápido". Não prometemos que o uso é invisível: o histórico do navegador pode guardar a visita.
 
-## Ver agora (modo demonstração)
-Dê dois cliques em `abrir_site.bat` (Windows) ou rode:
+## Abrir o site localmente
+Gere primeiro o índice de CEP e o catálogo real seguindo os comandos da seção abaixo. Depois, no Windows, dê dois cliques em `abrir_site.bat` ou rode:
 
     python -m http.server 8000 --directory web
 
-e abra http://localhost:8000. Sem dados reais aparece a faixa amarela **DADOS ILUSTRATIVOS**; use os CEPs 00000-001, 00000-002 ou 00000-003.
+e abra http://localhost:8000. A busca por CEP só funciona quando `web/dados/cep_indice.json` e `web/dados/servicos.json` foram gerados com dados reais. Se os arquivos não existirem, a busca fica indisponível; o site não substitui os dados por exemplos fictícios.
 
 ## Usar dados reais (na sua máquina, com internet)
 Requer Python 3.10+ e `pip install pandas numpy`.
@@ -30,7 +30,7 @@ O CNES é a base completa baixada à mão do site do CNES e descompactada em `do
     pip install pyshp
     python pipeline/setores.py caminho/SP_setores_CD2022.zip   # malha de setores de Rio Claro
 
-Se um download automático falhar (os sites mudam), o script diz onde baixar à mão e em qual pasta colocar. Quando os dois JSON existirem, a faixa de demonstração some sozinha.
+Se um download automático falhar (os sites mudam), o script diz onde baixar à mão e em qual pasta colocar. A página usa apenas os arquivos reais gerados por esses comandos.
 
 ## Testes
 
@@ -51,12 +51,7 @@ Edite `catalogo/servicos_manuais.csv`. Obrigatórios: `tipo` (creche, saude, ass
 Na tela inicial a pessoa toca numa "porta" (Emprego, Saúde, Estudo, Filhos, Casamento e direitos, Violência, Família) ou **escreve uma frase** ("preciso de emprego, mas tenho uma criança pequena"). A frase pode ter até 3 necessidades: o site mostra "Entendemos que você procura: [Emprego ✕] [Filhos ✕]" e a pessoa tira o que não serve. A regra está em `web/necessidades.js` e compara **palavras inteiras, radicais e expressões** (não pedaços de palavra, por isso "divagar" não vira "vaga"); palavras amplas como "dinheiro" e "bolsa" só valem dentro de expressões. "Violência" sempre vem primeiro e também é reconhecida de forma indireta ("ele me bate", "não deixa eu sair"). A lista de **47 frases de aceitação** em `web/tests/necessidades.test.js` é o roteiro da apresentação: para ensinar uma frase nova, acrescente-a lá primeiro. O texto digitado não sai do navegador.
 
 ## De mulher para mulher
-Área para mulheres que oferecem serviços a outras mulheres. **Quem verifica é a Secretaria da Mulher**: o site não tem como garantir que só mulheres participam, então só publica cadastros já conferidos por ela (o que foi conferido, por quem e quando). `catalogo/mulher_para_mulher.csv` está vazio e a porta só aparece quando há cadastro válido; no modo demonstração aparecem dois exemplos marcados [DEMO]. O validador exige consentimento, só bairro (nunca endereço) e validade de até 180 dias. Papéis, fluxo, limites e roteiro para a banca em `docs/de_mulher_para_mulher.md`. Não prometemos segurança, não há pagamento nem notas.
-
-## Painel de Gestão (protótipo, dados fictícios)
-Abra `web/gestao.html` (ou `gestao.html?visao=gestao`). Mostra necessidades, evolução mensal, funil, demanda × oferta, malha de setores, qualidade do catálogo, buscas sem resultado e **cartões de próximos passos para a gestão** (sinal, ação a validar, responsável sugerido, indicador e o que confirmar antes de decidir). **Todos os números de demonstração são fictícios**; a malha real de 408 setores é usada só como geometria e os valores de crianças por setor são inventados.
-
-As visões Pública e Gestão são apenas modos de apresentação no navegador. **Não há autenticação:** o seletor não protege conteúdo e o protótipo não pode receber dados reais. O gerador aplica supressão de valores fictícios menores que cinco no próprio JSON, mas essa regra isolada não garante anonimato para dados reais. Leia `docs/painel_gestao_criterios.md` antes de alterar ou reutilizar o painel.
+Área para mulheres que oferecem serviços a outras mulheres. **Quem verifica é a Secretaria da Mulher**: o site não tem como garantir que só mulheres participam, então só publica cadastros já conferidos por ela (o que foi conferido, por quem e quando). `catalogo/mulher_para_mulher.csv` está vazio e a porta só aparece quando há cadastro válido; nenhum exemplo fictício é exibido. O validador exige consentimento, só bairro (nunca endereço) e validade de até 180 dias. Papéis, fluxo, limites e roteiro para a banca em `docs/de_mulher_para_mulher.md`. Não prometemos segurança, não há pagamento nem notas.
 
 ## Trilha de autonomia (recomendação sem banco de dados)
 Depois de buscar o CEP, a usuária escolhe um objetivo (trabalhar, fazer curso, empreender) e vê os serviços de trabalho/renda em ordem, cada um com o **porquê** (objetivo confirmado no cadastro, gratuidade, distância). É uma regra aberta e explicável em `web/recomendar.js`, não um modelo treinado, e roda no navegador: nada é gravado. Só entra quem tem `objetivos` preenchido no catálogo (`trabalhar`, `curso`, `empreender`, separados por `;`) e `gratuito=sim` apenas quando a página oficial diz. Sem a informação confirmada, o serviço não é sugerido para o objetivo: não adivinhamos.
