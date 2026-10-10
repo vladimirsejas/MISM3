@@ -19,3 +19,10 @@ __pycache__/
 # Segredos locais: nunca versionar
 .env
 .env.*
+
+# Bancos de dados e cópias de segurança: podem conter dados pessoais; nunca versionar
+*.db
+*.sqlite
+*.sqlite3
+*.backup
+*.bak

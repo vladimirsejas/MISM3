@@ -177,6 +177,20 @@ assert.deepStrictEqual(Areas.areasDaNecessidade(Busca.identificarCategorias("que
 assert.deepStrictEqual(Areas.areasDaNecessidade(Busca.identificarCategorias("não tenho o que comer")).map((a) => a.id), ["assistencia"]);
 assert(index.includes('class="pular"'), "falta o link para pular ao conteúdo");
 
+/* ---- 6c. Fontes arquivadas: todo PDF citado no LEIA-ME existe, e todo PDF da pasta está explicado ---- */
+const pastaFontes = path.join(web, "..", "docs", "documetacao");
+const leia = fs.readFileSync(path.join(pastaFontes, "LEIA-ME.md"), "utf8");
+const citados = Array.from(leia.matchAll(/`([\w.-]+\.pdf)`/g), (m) => m[1]).filter((f, i, a) => a.indexOf(f) === i);
+const existentes = fs.readdirSync(pastaFontes).filter((f) => f.endsWith(".pdf"));
+citados.forEach((f) => assert(existentes.includes(f), "PDF citado no LEIA-ME não existe: " + f));
+existentes.forEach((f) => assert(citados.includes(f), "PDF sem explicação no LEIA-ME: " + f));
+assert(existentes.length >= 10, "as dez fontes arquivadas devem estar na pasta");
+assert(!existentes.some((f) => /matrix|regrasaneel/i.test(f)), "o blog comercial não é fonte e não deve ser arquivado");
+
+/* ---- 6d. Arquivos sensíveis nunca vão ao GitHub por engano ---- */
+const ignorados = fs.readFileSync(path.join(web, "..", ".gitignore"), "utf8").split(/\r?\n/).map((l) => l.trim());
+[".env", "*.db", "*.sqlite", "*.backup"].forEach((p) => assert(ignorados.includes(p), ".gitignore deve bloquear " + p));
+
 /* ---- 7. Comportamento esperado no código ---- */
 ["web/dados/demo", "web/prototipos", "docs/roteiro_demo_mism3.md"].forEach((c) => assert(!fs.existsSync(path.join(web, "..", c)), "conteúdo de demonstração removido não pode voltar: " + c));
 assert(app.includes("history.state && history.state.app"), "Voltar deve usar o histórico apenas quando a navegação começou no sistema");

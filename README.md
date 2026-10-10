@@ -54,3 +54,5 @@ Edite `catalogo/servicos_manuais.csv`. Obrigatórios: `tipo` (creche, saude, ass
 3. Relatórios automáticos explicados; vagas e cursos; transporte.
 
 Veja o [registro de decisões de desenvolvimento](docs/registro_decisoes_desenvolvimento.md), `docs/inventario_de_fontes.md`, a [análise competitiva](docs/analise_competitiva_mism3.md), o [plano de fontes externas](docs/plano_fontes_externas_e_expansao.md) e o [benchmark externo](docs/benchmark_externo_ideias_funcionais.md).
+
+As páginas oficiais usadas nos cadastros estão arquivadas em PDF em [docs/documetacao](docs/documetacao/LEIA-ME.md), com a origem e a data de cada uma.
