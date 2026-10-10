@@ -144,6 +144,7 @@ def servicos_manuais(df, indice: dict) -> list[dict]:
             "bairros": g("bairros"),
             "aviso": g("aviso"),
             "grupo": g("grupo"),
+            "cnes": g("cnes"),
         })
     return saida
 
@@ -159,6 +160,9 @@ def montar(indice: dict, cnes=None, escolas=None, manuais=None, hoje: str | None
         a = servicos_creches(escolas, indice, hoje); itens += a; contagem["creches_inep"] = len(a)
     if manuais is not None:
         a = servicos_manuais(manuais, indice); itens += a; contagem["manuais"] = len(a)
+    # Unidade cadastrada à mão com o código CNES vence o registro do CNES (traz telefone e horário da fonte oficial).
+    codigos_manuais = {str(s["cnes"]) for s in itens if s.get("cnes")}
+    itens = [s for s in itens if not (str(s["id"]).startswith("cnes-") and str(s["id"])[5:] in codigos_manuais)]
     vistos, unicos = set(), []
     for s in itens:
         if s["id"] in vistos:

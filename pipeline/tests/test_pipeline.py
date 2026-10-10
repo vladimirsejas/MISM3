@@ -172,3 +172,18 @@ def test_manual_repassa_aviso_proprio():
     df = pd.DataFrame([{"tipo": "saude", "nome": "X", "fonte_url": "https://x.gov.br", "verificado_em": "2026-10-10", "conferido": "nao", "aviso": "Notícia antiga."}])
     r = servicos_manuais(df, {})[0]
     assert r["aviso"] == "Notícia antiga." and r["conferido"] is False
+
+
+def test_unidade_manual_com_codigo_cnes_vence_o_registro_do_cnes():
+    """Sem isso, cada unidade cadastrada à mão apareceria duas vezes ao gerar a base completa."""
+    import pandas as pd
+    from servicos import servicos_manuais, montar
+    manuais = pd.DataFrame([{"tipo": "saude", "nome": "USF X", "fonte_url": "https://x.gov.br", "verificado_em": "2026-10-10", "cnes": "1234567", "telefone": "(19) 3000-0000"}])
+    cnes = [
+        {"id": "cnes-1234567", "tipo": "saude", "subtipo": "ubs", "nome": "UBS X (CNES)"},
+        {"id": "cnes-7654321", "tipo": "saude", "subtipo": "ubs", "nome": "UBS Y (CNES)"},
+    ]
+    saida = montar({}, cnes=cnes, manuais=manuais)
+    nomes = sorted(s["nome"] for s in saida["servicos"])
+    assert nomes == ["UBS Y (CNES)", "USF X"], nomes
+    assert [s for s in saida["servicos"] if s["nome"] == "USF X"][0]["cnes"] == "1234567"
