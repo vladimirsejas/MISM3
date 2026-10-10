@@ -75,6 +75,12 @@ assert.strictEqual(creas.length, 1);
 assert.strictEqual(creas[0].telefone, "(19) 3523-6420 / (19) 3523-6439");
 assert(creas[0].endereco.includes("Rua 6, 640") && creas[0].observacao.includes("creas@rioclaro.sp.gov.br"));
 assert(porNome["Conselho Tutelar – Região Norte"].observacao.includes("também aparece como telefone do CREAS"), "o número repetido entre Conselho Norte e CREAS deve ser sinalizado");
+const apae = catalogo.servicos.filter((s) => s.subtipo === "apae");
+assert.strictEqual(apae.length, 2, "o site da APAE lista duas unidades de atendimento");
+assert.strictEqual(porNome["APAE Rio Claro – Unidade Central"].telefone, "(19) 2112-2700 / (19) 99694-2420 (WhatsApp)");
+assert.strictEqual(porNome["APAE Rio Claro – Unidade Assistência Social I"].telefone, "(19) 3597-0323");
+apae.forEach((s) => assert(s.fonte_url === "https://apaerioclaro.com.br/" && /residência|Casa 1|Casa 2|Jardim Claret \(Bairro\)/i.test(s.observacao + s.endereco) === false,
+  "APAE: fonte do site oficial e sem localização das residências inclusivas: " + s.nome));
 assert.strictEqual(catalogo.servicos.filter((s) => s.subtipo === "scfv").length, 13, "a página oficial lista 13 unidades de convivência");
 catalogo.servicos.filter((s) => ["cras", "creas", "scfv"].includes(s.subtipo)).forEach((s) =>
   assert(s.conferido !== false && s.fonte_url.startsWith("https://desenvolvimentosocial.rc.sp.gov.br/"), "fonte da Secretaria: " + s.nome));

@@ -117,3 +117,8 @@ Ao concluir mudanças relevantes, registrar o que foi alterado, o teste executad
 - Novos recursos: campo `bairros` no catálogo e busca "Qual CRAS atende o meu bairro?" (sem acento, abreviações como Jd./Pq. por extenso; roda no aparelho). Aviso: a lista é de bairros, não de ruas.
 - Disque 100: texto do cartão conforme a fonte (24 horas, todos os dias, gratuito de qualquer telefone, discando 100), com link e data. O painel de emergência passou a dizer "24 horas, gratuito" para o 100.
 - Ainda sem dado: horário de funcionamento de CRAS, CREAS, SCFV e Conselhos Tutelares; unidades de saúde (CNES); tarifa social de energia.
+
+### APAE Rio Claro — 10/10/2026
+- Fonte: captura de tela do rodapé do site oficial https://apaerioclaro.com.br/ enviada pelo mantenedor (o site não permite impressão em PDF). Cadastradas as duas unidades de atendimento: Unidade Central (Av. Presidente Tancredo Neves, 249, Cidade Claret; (19) 2112-2700 e WhatsApp (19) 99694-2420) e Unidade Assistência Social I (Rua 15, 843, Consolação; (19) 3597-0323). O endereço da Central coincide com o do SCFV "Pessoa Adulta APAE" na página da Prefeitura.
+- **Decisão:** as residências inclusivas (Casa 1, Casa 2 e residência masculina) citadas no site **não foram cadastradas**. São moradias de pessoas com deficiência; sua localização não é um serviço de atendimento ao público e divulgá-la pode expor moradores.
+- Limite: a captura mostra só o rodapé; horário de funcionamento e público atendido não constam e não foram inventados.
