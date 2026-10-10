@@ -16,6 +16,14 @@
   <button id="sair-rapido" type="button" title="Fecha esta página e abre outro site">Sair rápido</button>
 </div>
 
+<nav class="navegacao-principal" aria-label="Navegação principal">
+  <a class="marca-site" href="index.html"><strong>MISM3</strong><span>Mapa do Cuidado</span></a>
+  <div class="links-navegacao">
+    <a href="index.html" aria-current="page">Início</a>
+    <a href="gestao.html">Painel de gestão</a>
+  </div>
+</nav>
+
 <header class="topo">
   <h1>Mapa do Cuidado</h1>
   <p>Escreva o que você precisa. O MISM3 abre caminhos, serviços e contatos úteis em Rio Claro.</p>
@@ -28,21 +36,21 @@
     <form id="form-necessidade" class="busca-necessidade" autocomplete="off">
       <label for="necessidade">O que você está procurando?</label>
       <div class="linha">
-        <input id="necessidade" type="search" maxlength="100" placeholder="Ex.: emprego, creche, separação, violência" autocomplete="off" aria-describedby="ajuda-necessidade">
+        <input id="necessidade" type="search" maxlength="100" placeholder="Emprego, creche, orientação jurídica..." autocomplete="off" aria-describedby="ajuda-necessidade">
         <button type="submit">Encontrar caminhos</button>
       </div>
       <p id="ajuda-necessidade" class="privacidade">Não escreva nomes, documentos ou detalhes pessoais. O texto não é enviado a nenhum servidor.</p>
       <p id="mensagem-necessidade" class="mensagem" role="status" hidden></p>
     </form>
     <div class="grade-portas">
-      <button class="porta" type="button" data-categoria="emprego_curso"><span aria-hidden="true">💼</span><strong>Emprego</strong><small>Vagas, renda e cursos</small></button>
-      <button class="porta" type="button" data-categoria="saude"><span aria-hidden="true">＋</span><strong>Saúde</strong><small>Atendimento e cuidado</small></button>
-      <button class="porta" type="button" data-categoria="estudo"><span aria-hidden="true">📚</span><strong>Estudo</strong><small>Escolas e qualificação</small></button>
-      <button class="porta" type="button" data-categoria="filhos"><span aria-hidden="true">👨‍👩‍👧</span><strong>Filhos</strong><small>Creche, escola e apoio</small></button>
-      <button class="porta" type="button" data-categoria="casamento"><span aria-hidden="true">⚖</span><strong>Casamento e direitos</strong><small>Orientação e apoio</small></button>
-      <button class="porta" type="button" data-categoria="violencia"><span aria-hidden="true">🛡</span><strong>Violência</strong><small>Proteção e ajuda</small></button>
-      <button class="porta" type="button" id="porta-m2m" data-categoria="mulher_para_mulher" hidden><span aria-hidden="true">🤝</span><strong>De mulher para mulher</strong><small>Serviços feitos por mulheres</small></button>
-      <button class="porta" type="button" data-categoria="familia"><span aria-hidden="true">🏠</span><strong>Família</strong><small>Assistência e serviços</small></button>
+      <button class="porta" type="button" data-categoria="emprego_curso"><strong>Emprego e renda</strong><small>Vagas, cursos e qualificação</small></button>
+      <button class="porta" type="button" data-categoria="saude"><strong>Saúde</strong><small>Atendimento e orientação</small></button>
+      <button class="porta" type="button" data-categoria="estudo"><strong>Educação</strong><small>Escolas e formação</small></button>
+      <button class="porta" type="button" data-categoria="filhos"><strong>Filhos e cuidado</strong><small>Creche, escola e apoio</small></button>
+      <button class="porta" type="button" data-categoria="casamento"><strong>Direitos e separação</strong><small>Orientação jurídica e apoio</small></button>
+      <button class="porta" type="button" data-categoria="violencia"><strong>Proteção e violência</strong><small>Orientação e rede de apoio</small></button>
+      <button class="porta" type="button" id="porta-m2m" data-categoria="mulher_para_mulher" hidden><strong>De mulher para mulher</strong><small>Serviços feitos por mulheres</small></button>
+      <button class="porta" type="button" data-categoria="familia"><strong>Família e assistência</strong><small>Proteção social e serviços</small></button>
     </div>
     <article class="cartao" style="margin-top:1rem">
       <h3>De Mulher para Mulher <span class="meta">[DEMO]</span></h3>

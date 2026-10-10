@@ -17,7 +17,7 @@
   function compacto(n) { return n >= 1000 ? (Math.round(n / 100) / 10).toString().replace(".", ",") + " mil" : String(n); }
   function css(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
   function carregar(url) { return Api.json(url); }  /* arquivo local ou API: decide api.js */
-  var SUFIXO = " (fictício)";  // so quando os dados forem de demonstracao
+  var SUFIXO = " (simulado)";  // so quando os dados forem de demonstracao
   function larg(el) { return Math.max(260, Math.floor(el.clientWidth || el.parentNode.clientWidth || 320)); }
   var MESES_ABREV = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
   function mesRot(m) { var p = m.split("-"); return MESES_ABREV[+p[1] - 1] + "/" + p[0].slice(2); }
@@ -195,7 +195,7 @@
     var h = '<div class="tile heroi"><div><p class="rot">Buscas por necessidade nos últimos 12 meses</p><p class="val">' + fmt(total) + '</p>' +
       '<p class="delta">' + (delta >= 0 ? "▲ +" : "▼ ") + delta + "% em " + esc(mesRot(D.meses[n - 1])) + " em relação ao mês anterior</p></div>" + sparkline(D.buscas_por_mes) + "</div>";
     function t(rot, val, nota) { return '<div class="tile"><p class="rot">' + rot + '</p><p class="val">' + val + '</p><p class="delta">' + nota + "</p></div>"; }
-    h += t("Buscas sem resultado", pctTxt(pct(sem, total)), "ampliar o catálogo reduz este número");
+    h += t("Buscas sem resultado", pctTxt(pct(sem, total)), "sinal para revisar a cobertura do catálogo");
     h += t("Concluem o que começam", pctTxt(pct(f[3].valor, f[2].valor)), "concluíram, entre as que participaram");
     h += t("Chegam a algo novo", pctTxt(pct(f[4].valor, f[3].valor)), "nova oportunidade, entre as que concluíram");
     h += t("Catálogo com horário", comHorario == null ? "—" : pctTxt(comHorario), "dos serviços cadastrados informam o horário");
@@ -243,13 +243,90 @@
     }).addTo(camada);
     SERVICOS.filter(function (x) { return (x.tipo === "creche" || x.tipo === "educacao_infantil") && x.lat != null; }).forEach(function (x) {
       L.circleMarker([x.lat, x.lon], { radius: 6, fillColor: css("--s2"), fillOpacity: 1, color: css("--surface-1"), weight: 2 })
-        .bindTooltip(esc(x.nome) + " (serviço de exemplo)").addTo(camada);
+        .bindTooltip(esc(x.nome) + " (marcador ilustrativo)").addTo(camada);
     });
     mapa.fitBounds(layer.getBounds(), { padding: [4, 4] });
     setTimeout(function () { mapa.invalidateSize(); }, 50);
     var lim = [0].concat(cortes), rot = lim.map(function (a, i) { return i < lim.length - 1 ? fmt(a) + " a " + fmt(lim[i + 1] - 1) : fmt(a) + " ou mais"; });
     $("legenda-mapa").innerHTML = "<span>Crianças de 0 a 4 anos por setor:</span>" + rot.map(function (r, i) { return '<span><i style="background:' + cores[i] + '"></i>' + r + "</span>"; }).join("") +
       '<span><i style="background:var(--s2);border-radius:50%;width:12px"></i>serviço de exemplo</span>';
+  }
+
+  /* ---------------------------------------------------------------- decisões possíveis (sempre identificadas como cenário fictício) */
+  function montarAcoes() {
+    var alvo = $("acoes-gestao");
+    if (!alvo || !D) return;
+    var cards = [];
+    var sem = (D.sem_resultado || []).slice().sort(function (a, b) { return b.ocorrencias - a.ocorrencias; });
+    var juridico = sem.find(function (x) { return /jur[ií]dic|advogad|defensoria|guarda|pens[aã]o/i.test(x.tema); });
+    var creche = sem.find(function (x) { return /creche|educa[cç][aã]o infantil/i.test(x.tema); });
+    var transporte = sem.find(function (x) { return /[ôo]nibus|transporte/i.test(x.tema); });
+
+    function card(prioridade, titulo, sinal, acao, responsavel, indicador, confirmar) {
+      cards.push('<article class="acao-card"><p class="acao-prioridade">' + esc(prioridade) + '</p>' +
+        '<h3>' + esc(titulo) + '</h3><p><strong>Sinal do cenário:</strong> ' + esc(sinal) + '</p>' +
+        '<p><strong>Próximo passo:</strong> ' + esc(acao) + '</p>' +
+        '<p><strong>Responsável sugerido:</strong> ' + esc(responsavel) + '</p>' +
+        '<p><strong>Como acompanhar:</strong> ' + esc(indicador) + '</p>' +
+        '<p class="acao-confirmar"><strong>Antes de decidir:</strong> ' + esc(confirmar) + '</p></article>');
+    }
+
+    if (juridico) {
+      card("Prioridade de validação", "Fechar a lacuna de orientação jurídica",
+        juridico.tema + " aparece nas buscas sem resultado (" + fmt(juridico.ocorrencias) + " ocorrências fictícias).",
+        "Mapear Defensoria Pública, serviços públicos de assistência jurídica e advogadas com atuação em Direito de Família e violência contra a mulher. Confirmar critérios, custo, horários, acessibilidade e forma segura de contato.",
+        "Coordenação da política para mulheres, assistência social e parceiros da rede de justiça.",
+        "Percentual de encaminhamentos jurídicos que encontram um serviço confirmado; tempo até a primeira orientação.",
+        "Validar a oferta com os próprios serviços e profissionais. Não divulgar contatos ou disponibilidade sem confirmação.");
+    }
+    if (creche) {
+      card("Investigar oferta e acesso", "Verificar a procura por creche e cuidado infantil",
+        creche.tema + " aparece nas buscas sem resultado (" + fmt(creche.ocorrencias) + " ocorrências fictícias).",
+        "Cruzar demanda oficial por faixa etária e fila de espera com vagas efetivamente disponíveis por unidade e período. Identificar opções de cuidado e horários que permitam trabalhar ou estudar.",
+        "Secretaria de Educação, assistência social e área de trabalho e renda.",
+        "Demanda registrada, vagas disponíveis, tempo de espera e encaminhamentos atendidos.",
+        "Usar bases oficiais comparáveis e atuais. Crianças estimadas por setor neste painel são fictícias e não medem demanda real.");
+    }
+    if (transporte) {
+      card("Investigar acesso", "Conferir barreiras de transporte",
+        transporte.tema + " aparece nas buscas sem resultado (" + fmt(transporte.ocorrencias) + " ocorrências fictícias).",
+        "Confirmar linhas, horários, acessibilidade e conexões com creches, cursos, serviços de saúde e oportunidades de trabalho. Registrar onde a informação oficial está ausente ou difícil de encontrar.",
+        "Área municipal de mobilidade, operadores de transporte e serviços parceiros.",
+        "Serviços com horários oficiais atualizados e rotas úteis documentadas.",
+        "Não concluir que falta transporte apenas porque falta informação no catálogo.");
+    }
+
+    var maiorRazao = (D.regioes || []).slice().sort(function (a, b) {
+      return (b.interessadas / Math.max(1, b.vagas)) - (a.interessadas / Math.max(1, a.vagas));
+    })[0];
+    if (maiorRazao) {
+      card("Validar antes de alocar recursos", "Investigar diferença entre procura e vagas",
+        maiorRazao.regiao + " apresenta " + fmt(maiorRazao.interessadas) + " interessadas e " + fmt(maiorRazao.vagas) + " vagas no cenário fictício.",
+        "Confirmar com os serviços locais se as vagas estão abertas, se os requisitos são compatíveis e se há barreiras de horário, deslocamento ou cuidado infantil. Só depois avaliar novas turmas ou redistribuição.",
+        "Gestão de trabalho e qualificação, com os prestadores das oportunidades.",
+        "Vagas realmente abertas, inscrições concluídas, comparecimento e conclusão.",
+        "Os nomes das regiões e todos os volumes de procura/oferta são demonstrativos; não usar para escolher bairros reais.");
+    }
+
+    var totalServicos = SERVICOS.length;
+    var semHorario = SERVICOS.filter(function (x) { return !x.horario; }).length;
+    if (totalServicos) {
+      card("Melhorar a informação disponível", "Completar e revisar o catálogo de serviços",
+        semHorario + " de " + totalServicos + " serviços carregados não informam horário no cadastro atual.",
+        "Revisar primeiro os serviços de proteção, saúde, apoio jurídico, assistência social e cuidado infantil. Confirmar telefone, endereço institucional, horário, acessibilidade, custo e data da última verificação.",
+        "Equipe responsável pelo catálogo, com confirmação de cada órgão ou profissional.",
+        "Percentual de cadastros verificados e atualizados; quantidade de encaminhamentos que chegam ao destino.",
+        "Campo preenchido não garante que a informação esteja correta; registrar fonte e data de confirmação.");
+    } else {
+      card("Preparar para uso real", "Definir a rotina de manutenção do catálogo",
+        "Nenhum serviço real foi carregado nesta execução.",
+        "Antes de usar o painel fora da demonstração, atribuir um responsável por categoria, uma fonte oficial e uma frequência de revisão para cada serviço.",
+        "Equipe responsável pelo MISM3 e instituições parceiras.",
+        "Percentual de serviços com fonte, data de verificação e responsável definidos.",
+        "Não apresentar serviços fictícios como disponíveis para a população.");
+    }
+
+    alvo.innerHTML = cards.join("");
   }
 
   /* ---------------------------------------------------------------- montagem */
@@ -268,6 +345,7 @@
     funil($("g-funil"), D.funil);
     tabela($("t-funil-tab"), "etapas do funil", ["Etapa", "Pessoas", "% da etapa anterior"], D.funil.map(function (e, i) { return [e.etapa, fmt(e.valor), i ? pctTxt(pct(e.valor, D.funil[i - 1].valor)) : "—"]; }));
     qualidade();
+    montarAcoes();
     desenharMapa();
     if (gestao) {
       agrupadas($("g-regioes"), D.regioes);
@@ -277,7 +355,7 @@
       tabela($("t-sem-tab"), "buscas sem resultado", ["Tema", "Ocorrências"], sem.map(function (x) { return [x.tema, fmt(x.ocorrencias)]; }));
       var top = GEO ? GEO.features.map(function (f) { return [f.properties.bairro || "Setor sem bairro", D.criancas_0_4_por_setor[f.properties.setor] || 0]; })
         .sort(function (a, b) { return b[1] - a[1]; }).slice(0, 10) : [];
-      tabela($("t-mapa-tab"), "10 setores com mais crianças" + SUFIXO, ["Bairro", "Crianças de 0 a 4 anos"], top.map(function (t) { return [t[0], t[1] < D.meta.k_minimo ? "menos de " + D.meta.k_minimo : fmt(t[1])]; }));
+      tabela($("t-mapa-tab"), "Setores com maior valor" + SUFIXO, ["Bairro", "Crianças de 0 a 4 anos"], top.map(function (t) { return [t[0], t[1] < D.meta.k_minimo ? "menos de " + D.meta.k_minimo : fmt(t[1])]; }));
     }
   }
 
@@ -285,8 +363,8 @@
     document.body.setAttribute("data-visao", v);
     Array.prototype.forEach.call(document.querySelectorAll(".visao button"), function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-visao") === v)); });
     $("aviso-visao").textContent = v === "publica"
-      ? "Visão pública: totais e tendências. Sem detalhe por região nem buscas sem resultado."
-      : "Visão de gestão: acrescenta o detalhe por região e as buscas sem resultado. Decisão em aberto: o grupo ainda vai decidir o que será público.";
+      ? "Visão demonstrativa pública: resumo e tendências fictícias."
+      : "Visão demonstrativa de gestão: inclui hipóteses de ação e detalhes fictícios. O seletor apenas esconde elementos na tela; não é controle de acesso.";
     montar();
   }
   Array.prototype.forEach.call(document.querySelectorAll(".visao button"), function (b) {
@@ -302,9 +380,9 @@
   ]).then(function (r) {
     D = r[0]; SERVICOS = r[1].servicos || []; GEO = r[2];
     var demo = !D.meta || D.meta.demo !== false;  // sem a marca explicita "demo: false", trata como demonstracao
-    SUFIXO = demo ? " (fictício)" : "";
+    SUFIXO = demo ? " (simulado)" : "";
     document.body.setAttribute("data-dados", demo ? "demo" : "real"); $("faixa-demo").hidden = !demo;
-    $("fonte-gestao").textContent = (demo ? "Período fictício: " : "Período: ") + mesRot(D.meses[0]) + " a " + mesRot(D.meses[D.meses.length - 1]) + ". Malha de setores: IBGE (Censo 2022), usada só como geometria.";
+    $("fonte-gestao").textContent = (demo ? "Período simulado: " : "Período: ") + mesRot(D.meses[0]) + " a " + mesRot(D.meses[D.meses.length - 1]) + ". Malha de setores: IBGE (Censo 2022), usada só como geometria.";
     var q = /[?&]visao=(gestao|publica)/.exec(location.search);
     definirVisao(q ? q[1] : "publica");
   }).catch(function () {
