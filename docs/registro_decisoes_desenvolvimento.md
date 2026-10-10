@@ -84,3 +84,10 @@ Ao concluir mudanças relevantes, registrar o que foi alterado, o teste executad
 - **Navegador:** primeira inspeção visual (Chromium, 390 px, modo demonstração). As sete portas abrem; sem erro de JavaScript. Um 404 de favicon foi corrigido. O 404 de `cep_indice.json` é esperado sem dados reais. A porta Saúde não tem link oficial, só serviços `[DEMO]`.
 - **Dados:** `cep_indice.json` e `servicos.json` reais não estão no repositório. Os números de CNES (977 estabelecimentos, 45 publicados) citados em conversa não constam em nenhum documento e não puderam ser conferidos.
 - **README:** reescrito como registro do estado verificado, sem diretrizes nem lista de marcos futuros.
+
+### Links oficiais na porta Saúde — 10/10/2026
+- Antes, a porta Saúde só tinha serviços gerados pelo pipeline; sem eles, só `[DEMO]`. Foram adicionados dois links: https://rioclaro.sp.gov.br/unidades-basicas-de-saude/ e https://rioclaro.sp.gov.br/autarquia/fundacao-de-saude/.
+- **Limite da verificação:** os endereços vieram de uma busca (títulos "Unidades Básicas de Saúde" e "Fundação de Saúde"). O domínio `rioclaro.sp.gov.br` está bloqueado na rede do ambiente de desenvolvimento, então as páginas **não foram abertas**. Pendente: abrir os dois links num navegador comum e confirmar conteúdo e atualidade.
+- As descrições dos links repetem só o que o título indica. Telefones e endereços de UBS **não foram copiados**: a busca mostrou números e endereços diferentes para a mesma unidade em páginas distintas (UBS 29, UBS Wenzel), o que indica dado desatualizado em alguma delas.
+- A página "Postos de Saúde" (`/postos-de-saude/`) apareceu na busca, mas parece duplicar a lista de UBS; não foi incluída.
+- Teste: `dashboard.test.js` passou a exigir link oficial na porta Saúde.

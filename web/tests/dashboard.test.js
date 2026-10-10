@@ -20,6 +20,7 @@ assert(html.includes('class="acesso-digital"'), "a tela deve explicar os limites
 assert(app.includes("var linksExibidos = Object.create(null)"), "busca combinada deve deduplicar links");
 assert(app.includes("var servicosExibidos = Object.create(null)"), "busca combinada deve deduplicar serviços");
 assert(app.includes("Checklist para avaliar uma oportunidade"), "emprego deve exibir o checklist de viabilidade");
+assert(/saude: \{[^}]*?links: \[\s*\["[^"]+", "https:\/\/rioclaro\.sp\.gov\.br\/unidades-basicas-de-saude\//s.test(app), "a porta Saúde deve ter link oficial mesmo sem dados gerados");
 assert(css.includes(".grade-outras-areas"), "as áreas complementares devem ter estilo próprio");
 
 console.log("dashboard.test.js: sete portas, quatro jornadas, acesso digital e prevenção de redundância passaram");

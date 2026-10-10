@@ -16,7 +16,7 @@ Outras áreas, separadas das portas de atendimento: protótipo *De Mulher para M
 
 ## Estado dos dados neste repositório
 - **Versionado:** catálogo manual com 10 serviços (`catalogo/servicos_manuais.csv`), malha e resumo de setores censitários, `horarios_onibus.json` e dados de **demonstração** (`web/dados/demo/`).
-- **Não versionado:** `web/dados/cep_indice.json` e `web/dados/servicos.json`, gerados localmente pelo pipeline. Sem eles o site abre em **modo demonstração**, com a faixa "DADOS ILUSTRATIVOS" e os CEPs fictícios 00000-001, 00000-002 e 00000-003. Nesse modo, as portas mostram serviços `[DEMO]` e links oficiais, e a porta Saúde não traz link oficial, só serviços de exemplo.
+- **Não versionado:** `web/dados/cep_indice.json` e `web/dados/servicos.json`, gerados localmente pelo pipeline. Sem eles o site abre em **modo demonstração**, com a faixa "DADOS ILUSTRATIVOS" e os CEPs fictícios 00000-001, 00000-002 e 00000-003. Nesse modo, as portas mostram serviços `[DEMO]` e links oficiais. A porta Saúde traz dois links da Prefeitura (lista de Unidades Básicas de Saúde e Fundação Municipal de Saúde), localizados por busca e **ainda não abertos nem conferidos**; endereços e telefones das unidades não foram copiados.
 - Números gerados localmente em 09/10/2026 (ver [inventário de fontes](docs/inventario_de_fontes.md)): 104.236 linhas do CNEFE lidas e 1.387 CEPs indexados; 142 escolas do INEP em Rio Claro, 69 com indicação de Educação Infantil (nenhum campo identifica creche).
 
 ## Como rodar
