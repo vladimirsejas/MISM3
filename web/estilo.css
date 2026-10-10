@@ -80,3 +80,70 @@ details.outros > summary { cursor: pointer; font-weight: 600; padding: .6rem 0; 
 .subcaminho{margin:1.2rem 0;padding-top:.6rem;border-top:2px solid var(--bor)}
 .subcaminho>h3{margin:.2rem 0}
 .entendimento p.meta{font-weight:400}
+
+
+/* Usabilidade e acessibilidade — critérios aplicados ao MISM3.
+   Base: WCAG 2.2, alvos de interação e foco visível. */
+:where(button, input, summary, a) {
+  -webkit-tap-highlight-color: transparent;
+}
+:where(button, input, summary, select, textarea, a):focus-visible {
+  outline: 3px solid var(--pri);
+  outline-offset: 3px;
+}
+:where(button, input, summary, select, textarea) {
+  font: inherit;
+}
+button, summary {
+  touch-action: manipulation;
+}
+button {
+  min-height: 44px;
+}
+#sair-rapido,
+.linha button,
+.busca-necessidade .linha button,
+.objetivos button,
+.entendimento button,
+.voltar {
+  min-height: 44px;
+}
+.porta {
+  min-height: 124px;
+  transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
+}
+.porta:hover {
+  box-shadow: 0 4px 14px #00000012;
+}
+.linha input,
+#necessidade,
+#cep {
+  min-height: 48px;
+}
+.busca-por-cep summary,
+details.outros > summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+a {
+  text-underline-offset: .15em;
+  text-decoration-thickness: .08em;
+}
+a:hover {
+  text-decoration-thickness: .12em;
+}
+@media (max-width: 620px) {
+  .grade-portas { gap: .65rem; }
+  .porta { min-height: 116px; padding: .85rem; }
+  .linha { flex-wrap: wrap; }
+  .linha input, .linha button { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
