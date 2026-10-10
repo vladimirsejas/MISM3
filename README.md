@@ -1,55 +1,51 @@
-# Mapa do Cuidado Rio-Clarense (marco 1)
+# Mapa do Cuidado Rio-Clarense (MISM3)
 
-> **Orientação:** este README é somente um mapa resumido do trabalho, não uma fonte de verdade nem uma base para decisões. Antes de decidir ou afirmar que algo existe, confira o código, os testes executados, os dados/fontes originais e o [registro de decisões de desenvolvimento](docs/registro_decisoes_desenvolvimento.md).
+> Este README registra **o que existe e foi verificado**. Não é plano nem diretriz. As decisões e o histórico estão em [docs/registro_decisoes_desenvolvimento.md](docs/registro_decisoes_desenvolvimento.md).
+> Última verificação: 10/10/2026.
 
-Comece escrevendo uma necessidade ou escolhendo uma porta: **Emprego, Saúde, Estudo, Filhos, Casamento e direitos, Violência ou Família**. A busca por palavras é processada localmente no navegador e abre caminhos, links oficiais e serviços cadastrados em Rio Claro/SP. Também é possível buscar serviços próximos pelo CEP; o CEP **nunca sai do navegador**. O catálogo está em expansão e informa quando faltam dados.
+## O que o site faz hoje
+A pessoa escreve uma necessidade ou escolhe uma de **sete portas**: Emprego e renda, Estudo e qualificação, Saúde, Separação e direitos, Violência e proteção, Moradia e aluguel, Dívidas e aposentadoria. A busca por palavras roda no navegador e devolve links oficiais e serviços cadastrados em Rio Claro/SP. Também há busca por CEP, que mostra serviços próximos; o CEP não sai do navegador.
 
-## Privacidade (por desenho)
-- Consulta 100% no navegador; sem servidor próprio, sem cookies, sem localStorage, sem estatísticas.
-- O índice de CEP guarda só `CEP → centro aproximado + raio`; nenhum endereço ou nome.
-- O mapa começa **sem** imagens externas. As ruas (OpenStreetMap) só carregam se a usuária marcar a caixa.
-- Barra fixa com 190 e Ligue 180, e botão "Sair rápido". Não prometemos que o uso é invisível: o histórico do navegador pode guardar a visita.
+Outras áreas, separadas das portas de atendimento: protótipo *De Mulher para Mulher* (`web/rede-mulheres.html`) e painel conceitual *Inteligência Pública* (`web/inteligencia-publica.html`).
 
-## Ver agora (modo demonstração)
-Dê dois cliques em `abrir_site.bat` (Windows) ou rode:
+## Privacidade (como está implementado)
+- Consulta no navegador; sem servidor próprio, cookies, localStorage ou estatísticas.
+- O índice de CEP guarda só `CEP → centro aproximado + raio`.
+- O mapa começa sem imagens externas; as ruas (OpenStreetMap) só carregam se a usuária marcar a caixa, e então o servidor de mapas vê a região aproximada.
+- Barra fixa com 190 e Ligue 180 e botão "Sair rápido". O botão não apaga o histórico do navegador.
+
+## Estado dos dados neste repositório
+- **Versionado:** catálogo manual com 10 serviços (`catalogo/servicos_manuais.csv`), malha e resumo de setores censitários, `horarios_onibus.json` e dados de **demonstração** (`web/dados/demo/`).
+- **Não versionado:** `web/dados/cep_indice.json` e `web/dados/servicos.json`, gerados localmente pelo pipeline. Sem eles o site abre em **modo demonstração**, com a faixa "DADOS ILUSTRATIVOS" e os CEPs fictícios 00000-001, 00000-002 e 00000-003. Nesse modo, as portas mostram serviços `[DEMO]` e links oficiais, e a porta Saúde não traz link oficial, só serviços de exemplo.
+- Números gerados localmente em 09/10/2026 (ver [inventário de fontes](docs/inventario_de_fontes.md)): 104.236 linhas do CNEFE lidas e 1.387 CEPs indexados; 142 escolas do INEP em Rio Claro, 69 com indicação de Educação Infantil (nenhum campo identifica creche).
+
+## Como rodar
+Demonstração (Windows: `abrir_site.bat`; ou):
 
     python -m http.server 8000 --directory web
 
-e abra http://localhost:8000. Sem dados reais aparece a faixa amarela **DADOS ILUSTRATIVOS**; use os CEPs 00000-001, 00000-002 ou 00000-003.
+e abrir http://localhost:8000.
 
-## Usar dados reais (na sua máquina, com internet)
-Requer Python 3.10+ e `pip install pandas numpy`.
-O CNES é a base completa baixada à mão do site do CNES e descompactada em `docs/cnes` (ou `dados/bruto/cnes`).
+Dados reais (Python 3.10+, `pip install pandas numpy pyshp`):
 
-    python pipeline/baixar.py cnefe       # IBGE CNEFE de Rio Claro
-    python pipeline/baixar.py escolas     # Censo Escolar do INEP (grande; retoma se cair)
-    # se o INEP nao baixar: baixe o zip pelo navegador e rode
-    python pipeline/baixar.py escolas --zip "C:\\caminho\\microdados_censo_escolar_2025.zip"
-    python pipeline/inspecionar_arquivo.py dados/bruto   # mostra só a ESTRUTURA dos arquivos
-    python pipeline/indice_cep.py         # gera web/dados/cep_indice.json
-    python pipeline/cnes.py docs/cnes     # diagnóstico: só contagens, confere as regras do CNES
-    python pipeline/servicos.py           # gera web/dados/servicos.json
-    pip install pyshp
-    python pipeline/setores.py caminho/SP_setores_CD2022.zip   # malha de setores de Rio Claro
+    python pipeline/baixar.py cnefe
+    python pipeline/baixar.py escolas      # ou --zip caminho/microdados.zip
+    python pipeline/indice_cep.py          # gera web/dados/cep_indice.json
+    python pipeline/cnes.py docs/cnes      # diagnóstico do CNES (base baixada à mão)
+    python pipeline/servicos.py            # gera web/dados/servicos.json
+    python pipeline/setores.py caminho/SP_setores_CD2022.zip
 
-Se um download automático falhar (os sites mudam), o script diz onde baixar à mão e em qual pasta colocar. Quando os dois JSON existirem, a faixa de demonstração some sozinha.
+Catálogo: edite `catalogo/servicos_manuais.csv` (obrigatórios `tipo`, `nome`, `fonte_url`, `verificado_em`; com `cep` o serviço entra no mapa; `abrangencia=municipal` aparece para todas) e rode `python pipeline/servicos.py`. `python pipeline/verificar_catalogo.py` confere os telefones contra as páginas-fonte; "ATENCAO" não é erro certo, é para conferir.
 
-## Testes
+## Testes (executados em 10/10/2026)
 
     pip install pytest
-    python -m pytest pipeline/tests -q
-    node web/tests/acesso.test.js
-    node web/tests/necessidades.test.js
-    node web/tests/dashboard.test.js
+    python -m pytest pipeline/tests -q     # 33 passaram
+    node web/tests/acesso.test.js          # passou
+    node web/tests/necessidades.test.js    # 47 cenários passaram
+    node web/tests/dashboard.test.js       # passou (sete portas, quatro jornadas)
 
-## Conferir o catálogo contra as páginas oficiais
-Com internet, rode `python pipeline/verificar_catalogo.py`. Ele abre a fonte de cada serviço e confere se os telefones cadastrados aparecem na página. "ATENCAO" não é erro certo: abra a fonte e confira.
+Verificação no navegador (Chromium, tela de 390 px, modo demonstração): as sete portas abrem e mostram conteúdo, sem erro de JavaScript. Não verificados: mapa por CEP, dados reais, leitor de tela e contraste.
 
-## Acrescentar um serviço verificado
-Edite `catalogo/servicos_manuais.csv`. Obrigatórios: `tipo` (creche, saude, assistencia, mulher, emprego_curso), `nome`, `fonte_url`, `verificado_em`. Com `cep`, o serviço entra no mapa; `abrangencia=municipal` faz aparecer para todas. Depois rode `python pipeline/servicos.py`.
-
-## Próximos marcos
-2. Setores censitários + Censo 2022 (crianças de 0 a 4 anos): "desertos de cuidado" e simulador de nova creche.
-3. Relatórios automáticos explicados; vagas e cursos; transporte.
-
-Veja o [registro de decisões de desenvolvimento](docs/registro_decisoes_desenvolvimento.md), o [protótipo De Mulher para Mulher](web/rede-mulheres.html), o [painel conceitual Inteligência Pública](web/inteligencia-publica.html) e o [roteiro de demonstração com três histórias fictícias](docs/roteiro_demo_mism3.md), `docs/inventario_de_fontes.md`, a [análise competitiva e roadmap funcional](docs/analise_competitiva_mism3.md), o [plano de fontes externas e expansão](docs/plano_fontes_externas_e_expansao.md) e o [benchmark externo de ideias funcionais](docs/benchmark_externo_ideias_funcionais.md), que transforma referências de outros produtos em melhorias priorizadas para o MISM3.
+## Documentos
+[Inventário de fontes](docs/inventario_de_fontes.md) · [Registro de decisões](docs/registro_decisoes_desenvolvimento.md) · [Roteiro de demonstração](docs/roteiro_demo_mism3.md) · [Análise competitiva](docs/analise_competitiva_mism3.md) · [Plano de fontes externas](docs/plano_fontes_externas_e_expansao.md) · [Benchmark de ideias](docs/benchmark_externo_ideias_funcionais.md) · [Pedidos LAI](docs/pedidos_LAI.md) · [Transporte](docs/transporte/README.md)
