@@ -856,11 +856,12 @@ window.MISM3_CONFIG = {
   var MENU = [
     { href: "index.html", rotulo: "Início" },
     { href: "saude.html", rotulo: "Saúde" },
-    { href: "rede-mulheres.html", rotulo: "De Mulher para Mulher" }
+    { href: "rede-mulheres.html", rotulo: "De Mulher para Mulher" },
+    { href: "index.html#assistencia-social", rotulo: "Assistência social" },
+    { href: "secretarias.html", rotulo: "Secretarias e telefones úteis" },
+    { href: "lazer.html", rotulo: "Lazer, cultura e esporte" }
   ];
-  var MAIS = [
-    { href: "secretarias.html", rotulo: "Secretarias e telefones úteis" }
-  ];
+  var MAIS = [];
   var atual = (window.location.pathname.split("/").pop() || "index.html").toLowerCase();
 
   function ehAtual(item) { return item.href === atual || (item.tambem || []).indexOf(atual) !== -1; }
