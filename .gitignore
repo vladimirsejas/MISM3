@@ -29,3 +29,7 @@ web/dados/cep_indice.json
 web/dados/servicos.json
 web/dados/vagas.json
 web/dados/gestao.json
+
+# Documentos que ficam so no computador (PDFs de horarios da SOU; CEPs com coordenadas fornecidos ao projeto)
+docs/transporte/*.pdf
+docs/cep_Rio_Claro/
