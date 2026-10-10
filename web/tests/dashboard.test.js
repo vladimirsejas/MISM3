@@ -73,6 +73,17 @@ assert(assistencia.pendencias.some((p) => /CREAS/.test(p)) && assistencia.penden
 assert(Areas.porId("saude").pendencias.length, "Saúde deve declarar a lacuna quando o CNES não está carregado");
 assert.strictEqual(Areas.porId("inexistente"), null);
 
+/* ---- 6b. Busca dentro das áreas: cobre todas as chaves do classificador ---- */
+const Busca = require("../necessidades.js");
+assert(!inicio.includes('id="form-necessidade"') && index.includes('id="form-necessidade"'), "a busca fica dentro das áreas, nunca na tela inicial");
+const chavesClassificador = Array.from(fs.readFileSync(path.join(web, "necessidades.js"), "utf8").matchAll(/^\s+\["(\w+)", \[$/gm), (m) => m[1]);
+assert(chavesClassificador.length >= 9, "não achei as chaves do classificador");
+chavesClassificador.forEach((c) => assert(Areas.AREA_DA_NECESSIDADE[c], "necessidade sem área: " + c));
+assert.deepStrictEqual(Areas.areasDaNecessidade(Busca.identificarCategorias("preciso de creche e aluguel")).map((a) => a.id), ["educacao", "moradia"]);
+assert.deepStrictEqual(Areas.areasDaNecessidade(Busca.identificarCategorias("quero me separar")).map((a) => a.id), ["direitos"]);
+assert.deepStrictEqual(Areas.areasDaNecessidade(Busca.identificarCategorias("não tenho o que comer")).map((a) => a.id), ["assistencia"]);
+assert(index.includes('class="pular"'), "falta o link para pular ao conteúdo");
+
 /* ---- 7. Comportamento esperado no código ---- */
 assert(app.includes("sv.meta && sv.meta.demo"), "dados de demonstração nunca devem ser exibidos");
 assert(app.includes("history.state && history.state.app"), "Voltar deve usar o histórico apenas quando a navegação começou no sistema");
