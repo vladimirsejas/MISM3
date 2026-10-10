@@ -1,0 +1,130 @@
+{
+  "meta": {
+    "demo": true,
+    "aviso": "DADOS FICTÍCIOS. Nenhum horário desta agenda é real."
+  },
+  "lazer": [
+    {
+      "id": "demo-lz-1",
+      "categoria": "esporte",
+      "nome": "[DEMO] Caminhada em grupo (exemplo)",
+      "local": "Praça de exemplo",
+      "dias": [
+        "sab"
+      ],
+      "horario": "7h às 8h",
+      "gratuito": "sim",
+      "publico": "todas",
+      "fonte_url": "",
+      "verificado_em": "",
+      "observacao": "Dado fictício de demonstração: não é um horário real."
+    },
+    {
+      "id": "demo-lz-2",
+      "categoria": "esporte",
+      "nome": "[DEMO] Hidroginástica (exemplo)",
+      "local": "Clube de exemplo",
+      "dias": [
+        "ter",
+        "qui"
+      ],
+      "horario": "8h às 9h",
+      "gratuito": "nao",
+      "publico": "todas",
+      "fonte_url": "",
+      "verificado_em": "",
+      "observacao": "Dado fictício de demonstração: não é um horário real."
+    },
+    {
+      "id": "demo-lz-3",
+      "categoria": "cultura",
+      "nome": "[DEMO] Cinema na praça (exemplo)",
+      "local": "Praça de exemplo",
+      "dias": [
+        "sex"
+      ],
+      "horario": "19h30",
+      "gratuito": "sim",
+      "publico": "todas",
+      "fonte_url": "",
+      "verificado_em": "",
+      "observacao": "Dado fictício de demonstração: não é um horário real."
+    },
+    {
+      "id": "demo-lz-4",
+      "categoria": "cultura",
+      "nome": "[DEMO] Sarau de poesia (exemplo)",
+      "local": "Biblioteca de exemplo",
+      "dias": [
+        "qua"
+      ],
+      "horario": "18h às 20h",
+      "gratuito": "sim",
+      "publico": "todas",
+      "fonte_url": "",
+      "verificado_em": "",
+      "observacao": "Dado fictício de demonstração: não é um horário real."
+    },
+    {
+      "id": "demo-lz-5",
+      "categoria": "parques",
+      "nome": "[DEMO] Piquenique e brincadeiras (exemplo)",
+      "local": "Parque de exemplo",
+      "dias": [
+        "dom"
+      ],
+      "horario": "15h às 17h",
+      "gratuito": "sim",
+      "publico": "criancas",
+      "fonte_url": "",
+      "verificado_em": "",
+      "observacao": "Dado fictício de demonstração: não é um horário real."
+    },
+    {
+      "id": "demo-lz-6",
+      "categoria": "oficinas",
+      "nome": "[DEMO] Oficina de artesanato (exemplo)",
+      "local": "Centro comunitário de exemplo",
+      "dias": [
+        "seg",
+        "qua"
+      ],
+      "horario": "14h às 16h",
+      "gratuito": "sim",
+      "publico": "todas",
+      "fonte_url": "",
+      "verificado_em": "",
+      "observacao": "Dado fictício de demonstração: não é um horário real."
+    },
+    {
+      "id": "demo-lz-7",
+      "categoria": "biblioteca",
+      "nome": "[DEMO] Hora do conto (exemplo)",
+      "local": "Biblioteca de exemplo",
+      "dias": [
+        "sab"
+      ],
+      "horario": "10h às 11h",
+      "gratuito": "sim",
+      "publico": "criancas",
+      "fonte_url": "",
+      "verificado_em": "",
+      "observacao": "Dado fictício de demonstração: não é um horário real."
+    },
+    {
+      "id": "demo-lz-8",
+      "categoria": "eventos",
+      "nome": "[DEMO] Feira de artesanato (exemplo)",
+      "local": "Praça de exemplo",
+      "dias": [
+        "dom"
+      ],
+      "horario": "9h às 14h",
+      "gratuito": "sim",
+      "publico": "todas",
+      "fonte_url": "",
+      "verificado_em": "",
+      "observacao": "Dado fictício de demonstração: não é um horário real."
+    }
+  ]
+}

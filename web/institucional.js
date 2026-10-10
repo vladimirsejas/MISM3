@@ -117,6 +117,7 @@
   var TEMAS = [
     { chave: "mulher", rotulo: "Mulher e proteção" },
     { chave: "saude", rotulo: "Saúde" },
+    { chave: "lazer", rotulo: "Lazer, cultura e esporte" },
     { chave: "assistencia", rotulo: "Assistência social e direitos" },
     { chave: "trabalho", rotulo: "Trabalho e renda" },
     { chave: "educacao", rotulo: "Educação" },
@@ -142,6 +143,75 @@
     }).map(function (x) { return x.c; });
   }
 
+  /* ---------- lazer: agenda por dia da semana ---------- */
+  var DIAS = [
+    { chave: "seg", rotulo: "Segunda" }, { chave: "ter", rotulo: "Terça" }, { chave: "qua", rotulo: "Quarta" },
+    { chave: "qui", rotulo: "Quinta" }, { chave: "sex", rotulo: "Sexta" }, { chave: "sab", rotulo: "Sábado" }, { chave: "dom", rotulo: "Domingo" }
+  ];
+  var LAZER_CATEGORIAS = {
+    esporte: "Esporte e atividade física", cultura: "Cultura", parques: "Parques e natureza",
+    oficinas: "Oficinas e cursos livres", biblioteca: "Bibliotecas e leitura", eventos: "Eventos e feiras"
+  };
+  var PUBLICOS = { todas: "Para todas", criancas: "Para crianças", jovens: "Para jovens", idosos: "Para idosos" };
+
+  function chaveDoDia(data) { return ["dom", "seg", "ter", "qua", "qui", "sex", "sab"][(data || new Date()).getDay()]; }
+  function ocorreNoDia(item, dia) { return item.dias.indexOf(dia) !== -1 || item.dias.indexOf("diario") !== -1; }
+  /* "7h as 8h" -> 7 ; "19h30" -> 19.5 ; "a confirmar" -> 99 (vai para o fim do dia) */
+  function horaInicial(h) {
+    var m = /(\d{1,2})\s*(?:h|:)\s*(\d{2})?/i.exec(String(h || ""));
+    return m ? Number(m[1]) + (m[2] ? Number(m[2]) / 60 : 0) : 99;
+  }
+  function ordenarPorHora(itens) {
+    return itens.slice().sort(function (a, b) { return horaInicial(a.horario) - horaInicial(b.horario) || a.nome.localeCompare(b.nome, "pt-BR"); });
+  }
+  function agendaSemanal(itens) {
+    return DIAS.map(function (d) { return { dia: d, itens: ordenarPorHora(itens.filter(function (i) { return ocorreNoDia(i, d.chave); })) }; });
+  }
+  /* atividades sem dia fixo (so "variavel") nao cabem na grade: aparecem a parte */
+  function semDiaFixo(itens) {
+    return itens.filter(function (i) { return !i.dias.some(function (d) { return d !== "variavel"; }); });
+  }
+  /* filtro: categoria, gratuito (true), publico ("criancas" mostra tambem o que e "para todas"), dia ("hoje" ja vem resolvido em chave) */
+  function filtrarLazer(itens, f) {
+    f = f || {};
+    return itens.filter(function (i) {
+      if (f.categoria && i.categoria !== f.categoria) return false;
+      if (f.gratuito && i.gratuito !== "sim") return false;
+      if (f.publico && i.publico !== f.publico && i.publico !== "todas") return false;
+      if (f.dia && !ocorreNoDia(i, f.dia)) return false;
+      return true;
+    });
+  }
+  function rotuloDias(dias) {
+    if (dias.indexOf("diario") !== -1) return "Todos os dias";
+    var nomes = DIAS.filter(function (d) { return dias.indexOf(d.chave) !== -1; }).map(function (d) { return d.rotulo; });
+    return nomes.length ? nomes.join(", ") : "Dia a confirmar";
+  }
+
+  /* ---------- rede "De mulher para mulher": por AREA de servico, nao por nome ---------- */
+  var ONDE_ATENDE = { estabelecimento: "No estabelecimento", casa_da_cliente: "Na casa da cliente", casa_da_profissional: "Na casa da profissional", online: "Online", a_combinar: "A combinar" };
+
+  /* cadastro vencido (renovar_ate no passado) nao aparece, mesmo que o arquivo seja antigo */
+  function cadastrosVigentes(cadastros, hojeISO) {
+    return cadastros.filter(function (c) { return !c.renovar_ate || !hojeISO || c.renovar_ate >= hojeISO; });
+  }
+  function contarPorArea(cadastros) {
+    var m = {};
+    cadastros.forEach(function (c) { m[c.subtipo] = (m[c.subtipo] || 0) + 1; });
+    return m;
+  }
+  /* filtro por area e/ou texto livre (servico, descricao, bairro). Ordem: area na ordem do arquivo de areas, depois nome. */
+  function filtrarCadastros(cadastros, f) {
+    f = f || {};
+    var q = normalizar(f.texto || "");
+    return cadastros.filter(function (c) {
+      if (f.area && c.subtipo !== f.area) return false;
+      if (!q) return true;
+      var alvo = normalizar([c.nome, c.descricao, c.bairro, c.subtipo].join(" "));
+      return q.split(" ").every(function (p) { return alvo.indexOf(p) !== -1; });
+    });
+  }
+
   function dataBR(iso) {
     var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || "");
     return m ? m[3] + "/" + m[2] + "/" + m[1] : (iso || "");
@@ -149,5 +219,8 @@
 
   return { normalizar: normalizar, rotuloBairro: rotuloBairro, listaBairros: listaBairros, casa: casa,
     buscarPorBairro: buscarPorBairro, agruparUnidades: agruparUnidades, ehVinteEQuatroHoras: ehVinteEQuatroHoras,
-    limparObservacao: limparObservacao, telefones: telefones, filtrarCanais: filtrarCanais, dataBR: dataBR, TEMAS: TEMAS, GRUPOS_CANAL: GRUPOS_CANAL };
+    limparObservacao: limparObservacao, telefones: telefones, filtrarCanais: filtrarCanais, dataBR: dataBR,
+    ONDE_ATENDE: ONDE_ATENDE, cadastrosVigentes: cadastrosVigentes, contarPorArea: contarPorArea, filtrarCadastros: filtrarCadastros,
+    DIAS: DIAS, LAZER_CATEGORIAS: LAZER_CATEGORIAS, PUBLICOS: PUBLICOS, chaveDoDia: chaveDoDia, ocorreNoDia: ocorreNoDia, horaInicial: horaInicial,
+    agendaSemanal: agendaSemanal, semDiaFixo: semDiaFixo, filtrarLazer: filtrarLazer, rotuloDias: rotuloDias, TEMAS: TEMAS, GRUPOS_CANAL: GRUPOS_CANAL };
 });

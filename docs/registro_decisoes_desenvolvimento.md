@@ -138,3 +138,21 @@ Python 105 passaram; JS: `acesso`, `recomendar`, `vagas`, `api`, `institucional`
 - Os textos dos cartões novos de moradia, dívidas e aposentadoria (por exemplo, que a página de Justiça traz contatos do Procon, ou que a de Habitação traz cadastro habitacional) **não foram conferidos nas páginas oficiais** (rede bloqueada neste ambiente). Os endereços de Habitação e Justiça constam como "só listados" em `catalogo/secretarias.csv`.
 - "Aluguel" deixou de ser "família": o mesmo conjunto de serviços de assistência continua sendo mostrado, mas o rótulo mudou.
 - A `main` ainda não recebeu este merge.
+
+## 2026-10-10 (noite) — Reorganização em andamento: o que está pronto e o que falta
+
+Retorno do usuário após ver o site integrado: "bagunça", poucos serviços, "De mulher para mulher" deveria ser por **área de serviço** (artesanato, cuidadoras, acompanhantes…) e não por nome, "Família" não faz sentido, faltou **lazer com horários**, e **saúde deve ter prioridade sobre secretarias**. Também pediu **um único `.bat`**.
+
+### Feito (testado)
+- **Um único `.bat`:** `abrir_site.bat`. Removidos `abrir_demo`, `abrir_mism3`, `abrir_servidor`, `mism3` e `montar_dados` (eram variações do mesmo servidor ou atalhos de comando); referências corrigidas. Para dados reais: `python pipeline/montar_dados.py`. Sem Python: `demo_unico/index.html`.
+- **Menu único e prioridades:** `web/nav.js` gera o menu de **todas** as páginas (Início · **Saúde** · Lazer · De mulher para mulher · Gestão) e um rodapé "Mais" onde ficam **Secretarias e telefones úteis** e os dois painéis de gestão. Antes o menu era copiado à mão em cada HTML.
+- **Lazer (`web/lazer.html`):** agenda por dia da semana, "Hoje", "Fim de semana", "Grátis", "Para crianças" e tipo de atividade; links das Secretarias de Cultura, Esportes e Turismo (marcados "só listada"). **Nenhum horário real foi inventado:** `catalogo/lazer.csv` está vazio e só aceita linha com fonte https e data (validado em `pipeline/institucional.py`); enquanto vazio, a página mostra uma agenda de **exemplo fictício [DEMO]** (`web/dados/demo/lazer.json`) com faixa de aviso.
+- **Áreas da rede de mulheres:** `web/dados/areas_mulheres.json` é a fonte única de 10 áreas (Artesanato e costura, Beleza, Comidas e doces, **Cuidadoras e acompanhantes**, Diarista e limpeza, Reformas e reparos, Aulas, Saúde e bem-estar, Serviços profissionais, Transporte). O validador Python lê esse arquivo; a antiga categoria `servicos_na_casa` foi **dividida** em áreas próprias; as áreas de alto risco (cuidadoras, limpeza, reparos, transporte) têm texto de cuidado. O validador agora entrega também `descricao`, `bairro`, `onde_atende` e `verificacao`. Os dados DEMO têm 13 exemplos, **pelo menos um em cada área**. Suposição registrada: "acompanhantes" = acompanhante de idosos, hospitalar e de consultas.
+- Testes: pytest 121; JS (`institucional` 206 verificações, `necessidades` 87, `dashboard`, `acesso`, `recomendar`, `vagas`, `api`) passam; navegador: 7 páginas sem erro de JS, menu igual em todas, Lazer com 7 dias e filtros funcionando.
+
+### Ainda NÃO feito (as queixas visíveis abaixo continuam valendo)
+1. **Página `rede-mulheres.html` ainda é a antiga** (perfis por nome com "níveis" fictícios). Precisa ser reescrita **por área**, usando `areas_mulheres.json` e os cadastros de `servicos.json`; a lógica pura (`contarPorArea`, `filtrarCadastros`, `cadastrosVigentes`) já existe e está testada em `web/institucional.js`.
+2. **Tela inicial ainda é a antiga:** simplificar (hoje empilha várias caixas), renomear a porta **"Família e assistência"** (sugestão: "Benefícios e assistência social"), acrescentar a porta **Lazer**, tirar as "outras áreas" do corpo da página (já estão no rodapé "Mais") e deixar **Saúde em destaque**.
+3. **Busca:** acrescentar a necessidade "lazer" ao classificador (cuidado: "horário" já pertence a transporte) e a categoria Lazer em `web/app.js`.
+4. README ainda não descreve Lazer nem o menu compartilhado.
+5. Conteúdo real de lazer: depende de alguém conferir as páginas oficiais e preencher `catalogo/lazer.csv` (rede bloqueada neste ambiente).

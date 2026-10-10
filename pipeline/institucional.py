@@ -3,6 +3,7 @@
 Alimenta as paginas "Saude" (qual e a minha UBS?) e "Secretarias" (links oficiais). Le dois CSV versionados:
   catalogo/servicos_manuais.csv   (so as linhas tipo=saude)
   catalogo/secretarias.csv        (secretarias, canais de atendimento, paginas da Saude e documentos)
+  catalogo/lazer.csv              (agenda de lazer, cultura e esporte: so com fonte e data)
 
 Usa so a biblioteca padrao do Python (nao precisa de pandas), para rodar em qualquer computador, inclusive
 pelo abrir_site.bat. O JSON gerado SOBE para o GitHub: ele vem de CSV que ja esta versionado e nao contem dado
@@ -23,9 +24,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import CATALOGO, WEB_DADOS, agora_iso, salvar_json  # noqa: E402
 
 GRUPOS = ("secretaria", "canal", "saude", "documento")
-TEMAS = ("mulher", "saude", "assistencia", "trabalho", "educacao", "cidade", "cidadania", "outras")
+TEMAS = ("mulher", "saude", "lazer", "assistencia", "trabalho", "educacao", "cidade", "cidadania", "outras")
 SITUACOES = ("conferido", "listado")
 SUBTIPOS_SAUDE = ("urgencia", "ubs", "usf", "caps", "vigilancia")
+LAZER_CATEGORIAS = ("esporte", "cultura", "parques", "oficinas", "biblioteca", "eventos")
+LAZER_DIAS = ("seg", "ter", "qua", "qui", "sex", "sab", "dom", "diario", "variavel")
+LAZER_PUBLICOS = ("todas", "criancas", "jovens", "idosos")
 
 
 def _ler(caminho: Path) -> list[dict]:
@@ -108,19 +112,51 @@ def validar_canais(linhas: list[dict]) -> list[dict]:
     return saida
 
 
-def montar(servicos_csv: Path | None = None, canais_csv: Path | None = None, hoje: str | None = None) -> dict:
+def validar_lazer(linhas: list[dict]) -> list[dict]:
+    """Agenda de lazer: so entra com fonte https e data de verificacao (nada de horario de memoria)."""
+    saida, vistos = [], set()
+    for r in linhas:
+        nome = r.get("nome") or "(sem nome)"
+        if not r.get("id") or r["id"] in vistos:
+            raise ValueError("'%s': id ausente ou repetido (%s)." % (nome, r.get("id")))
+        vistos.add(r["id"])
+        if r.get("categoria") not in LAZER_CATEGORIAS:
+            raise ValueError("'%s': categoria '%s' invalida (use: %s)." % (nome, r.get("categoria"), ", ".join(LAZER_CATEGORIAS)))
+        dias = _lista(r.get("dias", ""))
+        if not dias or any(d not in LAZER_DIAS for d in dias):
+            raise ValueError("'%s': dias invalidos %s (use: %s)." % (nome, dias, ", ".join(LAZER_DIAS)))
+        if not r.get("horario"):
+            raise ValueError("'%s': falta o horario (ou escreva 'a confirmar' e deixe claro na observacao)." % nome)
+        if r.get("gratuito") not in ("", "sim", "nao"):
+            raise ValueError("'%s': gratuito deve ser sim, nao ou vazio." % nome)
+        publico = r.get("publico") or "todas"
+        if publico not in LAZER_PUBLICOS:
+            raise ValueError("'%s': publico '%s' invalido (use: %s)." % (nome, publico, ", ".join(LAZER_PUBLICOS)))
+        saida.append({
+            "id": r["id"], "categoria": r["categoria"], "nome": nome, "local": r.get("local", ""), "dias": dias,
+            "horario": r["horario"], "gratuito": r.get("gratuito", ""), "publico": publico,
+            "observacao": r.get("observacao", ""), "fonte_url": _url_https(r.get("fonte_url", ""), nome),
+            "verificado_em": _data(r.get("verificado_em", ""), nome, True),
+        })
+    return saida
+
+
+def montar(servicos_csv: Path | None = None, canais_csv: Path | None = None, hoje: str | None = None,
+           lazer_csv: Path | None = None) -> dict:
     unidades = validar_unidades(_ler(servicos_csv or CATALOGO / "servicos_manuais.csv"))
     canais = validar_canais(_ler(canais_csv or CATALOGO / "secretarias.csv"))
+    lazer = validar_lazer(_ler(lazer_csv or CATALOGO / "lazer.csv"))
     return {
         "meta": {
             "gerado_em": hoje or agora_iso(),
             "demo": False,
             "aviso": "Cadastros copiados de paginas publicas e que podem estar desatualizados. Confirme por telefone antes de ir.",
             "contagem": {"unidades_saude": len(unidades), "canais": len(canais),
-                         "canais_conferidos": sum(1 for c in canais if c["situacao"] == "conferido")},
+                         "canais_conferidos": sum(1 for c in canais if c["situacao"] == "conferido"), "lazer": len(lazer)},
         },
         "saude": unidades,
         "canais": canais,
+        "lazer": lazer,
     }
 
 
@@ -132,8 +168,8 @@ def main() -> None:
         sys.exit(1)
     salvar_json(dados, WEB_DADOS / "institucional.json")
     c = dados["meta"]["contagem"]
-    print("web/dados/institucional.json: %d unidades de saude, %d canais (%d conferidos)."
-          % (c["unidades_saude"], c["canais"], c["canais_conferidos"]))
+    print("web/dados/institucional.json: %d unidades de saude, %d canais (%d conferidos), %d atividades de lazer."
+          % (c["unidades_saude"], c["canais"], c["canais_conferidos"], c["lazer"]))
 
 
 if __name__ == "__main__":

@@ -217,6 +217,9 @@ def test_mulher_para_mulher_ok_e_sem_promessa_de_seguranca():
     assert out["tipo"] == "mulher_para_mulher" and out["abrangencia"] == "municipal" and out["lat"] is None
     assert "verificado por Secretaria da Mulher" in out["observacao"] and "não garante" in out["observacao"]
     assert out["endereco"] == "Bairro/região: Centro"
+    assert out["bairro"] == "Centro" and out["descricao"] == "Manicure e pedicure" and out["onde_atende"] == "estabelecimento"
+    assert out["verificacao"].startswith("Cadastro verificado por Secretaria da Mulher")
+    assert out["subtipo"] == "beleza"
 
 
 def test_mulher_para_mulher_recusa_o_que_expoe_ou_nao_tem_consentimento():
@@ -260,3 +263,12 @@ def test_catalogo_manual_todas_as_linhas_tem_o_mesmo_numero_de_colunas():
     n = len(linhas[0])
     ruins = [(l[0], len(l)) for l in linhas[1:] if len(l) != n]
     assert not ruins, "linhas com colunas a mais/menos (coloque o texto entre aspas): %s" % ruins
+
+
+def test_mulher_para_mulher_aceita_todas_as_areas_e_recusa_a_antiga():
+    import mulher_para_mulher as m
+    for area in m.CATEGORIAS:
+        assert m.validar(_mm(categoria=area), "2026-10-09")[0]["subtipo"] == area
+    assert {"cuidadoras", "limpeza", "reparos", "costura_artesanato"} <= set(m.CATEGORIAS)
+    with pytest.raises(ValueError):
+        m.validar(_mm(categoria="servicos_na_casa"), "2026-10-09")  # categoria antiga foi dividida em areas proprias

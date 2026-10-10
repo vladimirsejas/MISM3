@@ -118,3 +118,40 @@ def test_csv_manual_continua_aceito_pelo_pipeline_de_servicos():
     wenzel = next(i for i in itens if i["id"] == "municipal-ubs-wenzel")
     assert wenzel["bairro"] == "Wenzel" and "Jd. Wenzel" in wenzel["bairros"] and wenzel["divergencia"]
     assert all("bairros" not in i for i in itens if i["id"] == "municipal-upa-av29")
+
+
+# ---------------- lazer: agenda so com fonte e data
+def lazer(**kw):
+    base = {"id": "lz1", "categoria": "esporte", "nome": "Caminhada", "local": "Praca X", "dias": "sab", "horario": "7h as 8h",
+            "gratuito": "sim", "publico": "todas", "fonte_url": "https://exemplo.gov.br/agenda", "verificado_em": "2026-10-09", "observacao": ""}
+    base.update(kw)
+    return base
+
+
+def test_lazer_valido():
+    a = institucional.validar_lazer([lazer(dias="ter;qui")])[0]
+    assert a["dias"] == ["ter", "qui"] and a["publico"] == "todas" and a["verificado_em"] == "2026-10-09"
+
+
+def test_lazer_publico_vazio_vira_todas():
+    assert institucional.validar_lazer([lazer(publico="")])[0]["publico"] == "todas"
+
+
+@pytest.mark.parametrize("kw", [
+    {"fonte_url": ""}, {"fonte_url": "http://sem-https.gov.br"}, {"verificado_em": ""}, {"verificado_em": "10/10/2026"},
+    {"categoria": "balada"}, {"dias": "segunda"}, {"dias": ""}, {"horario": ""}, {"gratuito": "talvez"}, {"publico": "adultos"}, {"id": ""},
+])
+def test_lazer_invalido_e_recusado(kw):
+    with pytest.raises(ValueError):
+        institucional.validar_lazer([lazer(**kw)])
+
+
+def test_lazer_id_repetido_e_recusado():
+    with pytest.raises(ValueError):
+        institucional.validar_lazer([lazer(), lazer()])
+
+
+def test_lazer_real_valido_e_demo_e_separado():
+    d = institucional.montar(hoje="2026-10-10")
+    assert "lazer" in d and d["meta"]["contagem"]["lazer"] == len(d["lazer"])
+    assert not any("[DEMO]" in a["nome"] for a in d["lazer"]), "dado de exemplo nunca entra no arquivo real"

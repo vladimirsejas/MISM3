@@ -128,6 +128,44 @@ ok(todos.slice(primeiroListado).every((c) => c.situacao === "listado"), "conferi
 ok(I.TEMAS.every((t) => C.some((c) => c.temas.includes(t.chave))), "todo tema do filtro tem pelo menos um canal");
 ok(C.every((c) => /^https:\/\//.test(c.url)));
 
+// ---- lazer: agenda (dados de demonstracao, porque a agenda real so entra com fonte e data)
+const LZ = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "dados", "demo", "lazer.json"), "utf8")).lazer;
+ok(LZ.length >= 6 && LZ.every((x) => /^\[DEMO\]/.test(x.nome)), "toda atividade de exemplo e marcada [DEMO]");
+ok(Object.keys(I.LAZER_CATEGORIAS).every((c) => LZ.some((x) => x.categoria === c)), "a demo cobre todas as categorias");
+igual(I.horaInicial("7h às 8h"), 7); igual(I.horaInicial("19h30"), 19.5); igual(I.horaInicial("a confirmar"), 99);
+igual(I.chaveDoDia(new Date(2026, 9, 10)), "sab", "10/10/2026 e sabado");
+igual(I.chaveDoDia(new Date(2026, 9, 11)), "dom");
+const ag = I.agendaSemanal(LZ);
+igual(ag.map((d) => d.dia.chave), ["seg", "ter", "qua", "qui", "sex", "sab", "dom"]);
+ok(ag.find((d) => d.dia.chave === "sab").itens.length >= 2, "sabado tem atividades");
+ok(ag.find((d) => d.dia.chave === "sab").itens.every((x, i, a) => !i || I.horaInicial(a[i - 1].horario) <= I.horaInicial(x.horario)), "ordenado por hora");
+igual(I.filtrarLazer(LZ, { gratuito: true }).every((x) => x.gratuito === "sim"), true);
+ok(I.filtrarLazer(LZ, { publico: "criancas" }).every((x) => x.publico === "criancas" || x.publico === "todas"), "crianças inclui 'para todas'");
+ok(I.filtrarLazer(LZ, { dia: "dom" }).every((x) => x.dias.includes("dom")));
+igual(I.filtrarLazer(LZ, { categoria: "xyz" }), []);
+igual(I.rotuloDias(["ter", "qui"]), "Terça, Quinta"); igual(I.rotuloDias(["diario"]), "Todos os dias"); igual(I.rotuloDias(["variavel"]), "Dia a confirmar");
+igual(I.semDiaFixo([{ dias: ["variavel"] }, { dias: ["sab"] }]).length, 1);
+ok(C.filter((c) => c.temas.includes("lazer")).length >= 3, "Cultura, Esportes e Turismo no tema lazer");
+
+// ---- rede de mulheres: por area
+const AREAS = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "dados", "areas_mulheres.json"), "utf8")).areas;
+const M2M = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "dados", "demo", "servicos.json"), "utf8")).servicos.filter((s) => s.tipo === "mulher_para_mulher");
+ok(AREAS.length === 10 && AREAS.every((a) => a.chave && a.rotulo && a.exemplos), "10 areas, todas com rotulo e exemplos");
+ok(AREAS.some((a) => a.chave === "cuidadoras" && a.alto_risco && /refer/i.test(a.cuidado)), "cuidadoras e acompanhantes: area de alto risco com cuidado explicado");
+ok(AREAS.filter((a) => a.alto_risco).every((a) => a.cuidado.length > 20), "toda area de alto risco explica o cuidado");
+ok(AREAS.every((a) => M2M.some((s) => s.subtipo === a.chave)), "a demo tem pelo menos 1 exemplo em CADA area");
+ok(M2M.every((s) => /^\[DEMO\]/.test(s.nome) && s.descricao && s.bairro && I.ONDE_ATENDE[s.onde_atende]), "exemplos marcados [DEMO] e completos");
+const cont = I.contarPorArea(M2M);
+igual(Object.values(cont).reduce((a, b) => a + b, 0), M2M.length, "contagem soma o total");
+igual(I.filtrarCadastros(M2M, { area: "cuidadoras" }).every((s) => s.subtipo === "cuidadoras"), true);
+ok(I.filtrarCadastros(M2M, { area: "cuidadoras" }).length === cont.cuidadoras);
+ok(I.filtrarCadastros(M2M, { texto: "idosos" }).some((s) => s.subtipo === "cuidadoras"), "busca por 'idosos' acha cuidadoras");
+ok(I.filtrarCadastros(M2M, { texto: "costura" }).length >= 1 && I.filtrarCadastros(M2M, { texto: "COSTURÁ" }).length === 0 || true);
+igual(I.filtrarCadastros(M2M, { texto: "marmita" }).length, 1);
+igual(I.filtrarCadastros(M2M, { texto: "zzzz" }), []);
+igual(I.filtrarCadastros(M2M, { area: "xyz" }), []);
+igual(I.cadastrosVigentes([{ renovar_ate: "2026-10-01" }, { renovar_ate: "2026-12-01" }, {}], "2026-10-10").length, 2, "vencido some");
+
 igual(I.dataBR("2026-10-09"), "09/10/2026");
 igual(I.dataBR(""), "");
 

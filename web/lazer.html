@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>Lazer, cultura e esporte — MISM3</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%2314375e%27/%3E%3Ctext x=%2716%27 y=%2722%27 font-family=%27Arial,sans-serif%27 font-size=%2714%27 font-weight=%27bold%27 text-anchor=%27middle%27 fill=%27white%27%3EM3%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="estilo.css">
+<link rel="stylesheet" href="institucional.css">
+</head>
+<body>
+<div class="faixa-institucional"><strong>Protótipo acadêmico</strong> · Fatec Rio Claro · Curso de Inteligência Artificial · não é um serviço oficial da Prefeitura</div>
+<div id="faixa-demo" class="faixa-demo" role="note" hidden>A agenda abaixo é um <strong>exemplo fictício</strong>: nenhum horário é real. Horários reais só entram aqui depois de conferidos em fonte oficial, com a data.</div>
+
+<div class="barra-emergencia" role="region" aria-label="Emergência">
+  <span><strong>Em perigo agora?</strong> Polícia <a href="tel:190">190</a> · SAMU <a href="tel:192">192</a> · Violência contra a mulher: <a href="tel:180">Ligue 180</a> (24h, gratuito)</span>
+  <button id="sair-rapido" type="button" title="Fecha esta página e abre outro site">Sair rápido</button>
+</div>
+
+<nav class="navegacao-principal" aria-label="Navegação principal">
+  <a class="marca-site" href="index.html"><span class="marca-selo" aria-hidden="true">M3</span><span class="marca-texto"><strong>MISM3</strong><span>Mapa do Cuidado · Rio Claro/SP</span></span></a>
+  <div class="links-navegacao" data-menu><a href="index.html">Início</a></div>
+</nav>
+
+<header class="hero hero-compacto">
+  <div class="hero-miolo">
+    <h1>Lazer, cultura e esporte</h1>
+    <p>Veja o que fazer na cidade, dia a dia: atividades, horários e se é gratuito. Cuidar de você também é importante.</p>
+  </div>
+</header>
+
+<main>
+  <section class="bloco" aria-labelledby="t-filtros">
+    <h2 id="t-filtros">Quando e o quê</h2>
+    <div id="filtros" class="chips-filtro" role="group" aria-label="Filtros da agenda"></div>
+    <label class="campo-inline">Tipo de atividade
+      <select id="categoria"><option value="">Todas</option></select>
+    </label>
+    <p id="contagem" class="contagem" aria-live="polite"></p>
+  </section>
+
+  <section class="bloco" aria-labelledby="t-agenda">
+    <h2 id="t-agenda">Agenda da semana</h2>
+    <div id="agenda" class="agenda-semana"></div>
+    <div id="sem-dia" class="bloco" hidden>
+      <h3>Sem dia fixo</h3>
+      <div id="lista-sem-dia" class="grade-cartoes"></div>
+    </div>
+  </section>
+
+  <section class="bloco" aria-labelledby="t-fontes">
+    <h2 id="t-fontes">Onde conferir a programação oficial</h2>
+    <p class="sub">Estas secretarias publicam a programação. Confirme sempre o dia e o horário na fonte: eles mudam.</p>
+    <div id="fontes-lazer" class="grade-cartoes"></div>
+  </section>
+</main>
+
+<footer class="rodape">
+  <p><strong>Sobre os horários.</strong> O MISM3 não inventa horários: cada atividade só entra na agenda com o link da fonte oficial e a data em que foi conferida (arquivo <code>catalogo/lazer.csv</code>). Enquanto a agenda real estiver vazia, você vê um exemplo fictício, sempre marcado como [DEMO].</p>
+  <p id="fontes"></p>
+</footer>
+
+<script src="config.js"></script>
+<script src="api.js"></script>
+<script src="institucional.js"></script>
+<script src="nav.js"></script>
+<script src="lazer.js"></script>
+</body>
+</html>

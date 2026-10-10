@@ -74,6 +74,8 @@ def validar(df, hoje: str) -> list[dict]:
         saida.append({
             "id": g("id") or "m2m-" + re.sub(r"[^a-z0-9]+", "-", nome.lower()).strip("-"),
             "tipo": TIPO_SERVICO, "subtipo": g("categoria"), "nome": nome, "cep": None,
+            # campos estruturados: a pagina da rede mostra por AREA, sem precisar extrair texto da observacao
+            "descricao": g("descricao"), "bairro": g("bairro_ou_regiao"), "onde_atende": g("onde_atende"), "verificacao": verif,
             "endereco": "Bairro/região: %s" % g("bairro_ou_regiao"), "telefone": g("contato_publico"), "horario": None,
             "lat": None, "lon": None, "geo": "sem_local", "abrangencia": "municipal",
             "fonte": "Cadastro De mulher para mulher, verificado por %s" % g("verificada_por"),
