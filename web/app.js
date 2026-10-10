@@ -32,7 +32,10 @@
       titulo: "Saúde",
       descricao: "Encontre serviços de saúde cadastrados. Em urgência médica, ligue 192.",
       tipos: ["saude"],
-      links: []
+      links: [
+        ["Unidades Básicas de Saúde — Prefeitura de Rio Claro", "https://rioclaro.sp.gov.br/unidades-basicas-de-saude/", "Página oficial com a relação de unidades básicas. Confirme endereço, telefone e horário antes de ir."],
+        ["Fundação Municipal de Saúde", "https://rioclaro.sp.gov.br/autarquia/fundacao-de-saude/", "Página oficial do órgão responsável pela saúde municipal."]
+      ]
     },
     estudo: {
       titulo: "Estudo e qualificação",
