@@ -13,7 +13,7 @@
 <body>
 <div class="demo">MISM3 · PAINEL CONCEITUAL · INDICADORES DE EXEMPLO [DEMO] NÃO SÃO ESTATÍSTICAS OFICIAIS</div>
 <header>
-<a class="back" href="index.html">← Voltar ao Mapa do Cuidado</a>
+<a class="back" href="../index.html">← Voltar ao sistema</a>
 <h1>Inteligência Pública</h1>
 <p class="muted">Uma visão para ajudar gestores a formular perguntas sobre demanda de cuidado, oferta de serviços e possíveis lacunas territoriais. O painel separa o que foi carregado de fonte original do que é apenas uma simulação.</p>
 <div class="warn"><strong>Estado dos dados:</strong> este protótipo não presume que os dados reais estejam presentes. A malha do IBGE, quando carregada, pode mostrar setores, pessoas e domicílios. Isso, sozinho, não permite estimar quantas crianças precisam de creche. Para essa análise, precisamos de uma fonte adequada para a faixa etária e de dados comparáveis de oferta.</div>
@@ -65,7 +65,7 @@ var exemplo=[
 ];
 var max=100;
 document.getElementById("grafico").innerHTML=exemplo.map(function(x){return '<div class="barrow"><strong>'+safe(x.rotulo)+'</strong><div><div class="small">Demanda ilustrativa: '+x.demanda+'</div><div class="track"><div class="bar demo" style="width:'+(x.demanda/max*100)+'%"></div></div><div class="small">Oferta ilustrativa: '+x.oferta+'</div><div class="track"><div class="bar" style="width:'+(x.oferta/max*100)+'%"></div></div></div><span class="small">[DEMO]</span></div>';}).join("");
-fetch("dados/setores_resumo.json",{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error("arquivo ausente");return r.json();}).then(function(data){
+fetch("../dados/setores_resumo.json",{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error("arquivo ausente");return r.json();}).then(function(data){
 var setores=data.setores||{},lista=Object.keys(setores),pessoas=0,dom=0,temP=false,temD=false;
 lista.forEach(function(k){var x=setores[k];if(x.pessoas!=null){pessoas+=Number(x.pessoas);temP=true;}if(x.domicilios!=null){dom+=Number(x.domicilios);temD=true;}});
 document.getElementById("setores").textContent=num(lista.length);

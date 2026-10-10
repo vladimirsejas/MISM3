@@ -1,0 +1,7 @@
+Protótipos de DEMONSTRAÇÃO preservados do trabalho anterior. Não fazem parte do sistema real
+e não são ligados a partir da tela inicial. Os perfis, selos, denúncias e gráficos destes arquivos são FICTÍCIOS.
+
+  rede-mulheres-demo.html        primeira ideia da área "De Mulher para Mulher" (perfis de exemplo)
+  inteligencia-publica-demo.html painel conceitual para gestores (gráfico com valores inventados)
+
+Para vê-los: python -m http.server 8000 --directory web   e abra http://localhost:8000/prototipos/<arquivo>
