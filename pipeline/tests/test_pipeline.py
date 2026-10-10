@@ -164,3 +164,11 @@ def test_manual_repassa_lista_de_bairros():
     df = pd.DataFrame([{"tipo": "assistencia", "nome": "CRAS X", "fonte_url": "https://x.gov.br", "verificado_em": "2026-10-10",
                         "bairros": "Jd. A, Jd. B"}])
     assert servicos_manuais(df, {})[0]["bairros"] == "Jd. A, Jd. B"
+
+
+def test_manual_repassa_aviso_proprio():
+    import pandas as pd
+    from servicos import servicos_manuais
+    df = pd.DataFrame([{"tipo": "saude", "nome": "X", "fonte_url": "https://x.gov.br", "verificado_em": "2026-10-10", "conferido": "nao", "aviso": "Notícia antiga."}])
+    r = servicos_manuais(df, {})[0]
+    assert r["aviso"] == "Notícia antiga." and r["conferido"] is False
