@@ -4,124 +4,108 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="referrer" content="no-referrer">
-<title>Mapa do Cuidado – Rio Claro</title>
+<meta name="theme-color" content="#7a4a8f">
+<title>Mulher em Rede – Rio Claro</title>
 <link rel="stylesheet" href="vendor/leaflet.css">
 <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
-<div id="faixa-demo" class="faixa-demo" hidden>DADOS ILUSTRATIVOS — nenhum serviço abaixo é real. Rode o pipeline para usar dados reais.</div>
+<a class="pular" href="#principal">Pular para o conteúdo</a>
 
-<div class="barra-emergencia" role="region" aria-label="Emergência">
-  <span><strong>Em perigo agora?</strong> Polícia <a href="tel:190">190</a> · Saúde (SAMU) <a href="tel:192">192</a> · Violência contra a mulher: <a href="tel:180">Ligue 180</a> (24h, gratuito)</span>
-  <button id="sair-rapido" type="button" title="Fecha esta página e abre outro site">Sair rápido</button>
-</div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-trabalho" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/></symbol>
+  <symbol id="i-educacao" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.5"/></symbol>
+  <symbol id="i-saude" viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11z"/></symbol>
+  <symbol id="i-direitos" viewBox="0 0 24 24"><path d="M12 3v18M7 21h10M5 7h14"/><path d="M5 7l-3 7a3 3 0 0 0 6 0zM19 7l-3 7a3 3 0 0 0 6 0z"/></symbol>
+  <symbol id="i-moradia" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h14V10M10 20v-6h4v6"/></symbol>
+  <symbol id="i-assistencia" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14.5c2.5 0 4.5 2 4.5 4.5"/></symbol>
+  <symbol id="i-mulheres" viewBox="0 0 24 24"><circle cx="9" cy="12" r="5"/><circle cx="15" cy="12" r="5"/></symbol>
+  <symbol id="i-alerta" viewBox="0 0 24 24"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></symbol>
+</svg>
 
 <header class="topo">
-  <h1>Mapa do Cuidado</h1>
-  <p>Escreva o que você precisa. O MISM3 abre caminhos, serviços e contatos úteis em Rio Claro.</p>
+  <div class="topo-in">
+    <a class="marca" href="index.html" id="marca">Mulher em Rede</a>
+    <nav class="navegacao" aria-label="Navegação" id="navegacao" hidden>
+      <a class="btn-nav" id="voltar" href="index.html">← Voltar</a>
+      <a class="btn-nav" id="inicio" href="index.html">Início</a>
+    </nav>
+    <details class="emergencia" id="emergencia">
+      <summary aria-label="Emergência: abrir contatos"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-alerta"/></svg>Em perigo agora?</summary>
+      <div class="painel-emergencia" role="region" aria-labelledby="titulo-emergencia">
+        <h2 id="titulo-emergencia">Ligue agora</h2>
+        <p class="orientacao">Se puder, vá para um lugar seguro e diga seu endereço. A ligação é gratuita.</p>
+        <ul class="contatos">
+          <li><a class="tel" href="tel:190" aria-label="Ligar para 190, Polícia Militar">190</a><div><strong>Polícia Militar</strong><span>Perigo imediato, agressão em andamento ou ameaça.</span></div></li>
+          <li><a class="tel" href="tel:192" aria-label="Ligar para 192, SAMU">192</a><div><strong>SAMU</strong><span>Urgência médica ou pessoa ferida.</span></div></li>
+          <li><a class="tel" href="tel:193" aria-label="Ligar para 193, Bombeiros">193</a><div><strong>Bombeiros</strong><span>Incêndio, resgate ou acidente.</span></div></li>
+          <li><a class="tel" href="tel:180" aria-label="Ligar para 180, Central de Atendimento à Mulher">180</a><div><strong>Central de Atendimento à Mulher</strong><span>Violência contra a mulher: orientação, denúncia e encaminhamento. 24 horas, gratuito.</span></div></li>
+          <li><a class="tel" href="tel:100" aria-label="Ligar para 100, Disque Direitos Humanos">100</a><div><strong>Disque Direitos Humanos</strong><span>Violações de direitos humanos, como contra crianças, idosos e pessoas com deficiência. 24 horas, gratuito.</span></div></li>
+          <li><a class="tel" href="tel:188" aria-label="Ligar para 188, CVV">188</a><div><strong>CVV — apoio emocional</strong><span>Conversa de apoio em momentos de sofrimento. 24 horas, gratuito.</span></div></li>
+        </ul>
+        <button id="sair-rapido" class="sair" type="button">Sair desta página agora</button>
+        <p class="sair-nota">Abre outro site, mas <strong>não apaga</strong> o histórico do navegador. Em aparelho compartilhado, use uma janela anônima.</p>
+      </div>
+    </details>
+    <p class="secao-atual" id="secao-atual" hidden>Você está em: <strong id="nome-secao"></strong></p>
+  </div>
 </header>
 
-<main>
-  <section class="portas" aria-labelledby="titulo-portas">
-    <h2 id="titulo-portas">O que você precisa hoje?</h2>
-    <p>Escreva sua necessidade ou escolha uma das opções abaixo. A busca acontece neste aparelho.</p>
-    <form id="form-necessidade" class="busca-necessidade" autocomplete="off">
-      <label for="necessidade">O que você está procurando?</label>
-      <div class="linha">
-        <input id="necessidade" type="search" maxlength="100" placeholder="Ex.: emprego, creche, separação, violência" autocomplete="off" aria-describedby="ajuda-necessidade">
-        <button type="submit">Encontrar caminhos</button>
-      </div>
-      <p id="ajuda-necessidade" class="privacidade">Não escreva nomes, documentos ou detalhes pessoais. O texto não é enviado a nenhum servidor.</p>
-      <p id="mensagem-necessidade" class="mensagem" role="status" hidden></p>
-    </form>
-    <div class="blocos-portas">
-      <section class="bloco-portas" aria-labelledby="titulo-renda">
-        <h3 id="titulo-renda">Trabalho e desenvolvimento</h3>
-        <div class="grade-portas">
-          <button class="porta" type="button" data-categoria="emprego_curso"><span aria-hidden="true">💼</span><strong>Emprego e renda</strong><small>Vagas, cursos e caminhos para trabalhar</small></button>
-          <button class="porta" type="button" data-categoria="estudo"><span aria-hidden="true">📚</span><strong>Estudo e qualificação</strong><small>Escolas, formação e cursos</small></button>
-        </div>
-      </section>
-      <section class="bloco-portas" aria-labelledby="titulo-cuidado">
-        <h3 id="titulo-cuidado">Saúde e cuidado</h3>
-        <div class="grade-portas">
-          <button class="porta" type="button" data-categoria="saude"><span aria-hidden="true">＋</span><strong>Saúde</strong><small>Atendimento e cuidado</small></button>
-        </div>
-      </section>
-      <section class="bloco-portas" aria-labelledby="titulo-direitos">
-        <h3 id="titulo-direitos">Direitos e proteção</h3>
-        <div class="grade-portas">
-          <button class="porta" type="button" data-categoria="casamento"><span aria-hidden="true">⚖</span><strong>Separação e direitos</strong><small>Orientação jurídica e familiar</small></button>
-          <button class="porta" type="button" data-categoria="violencia"><span aria-hidden="true">🛡</span><strong>Violência e proteção</strong><small>Ajuda segura e canais oficiais</small></button>
-        </div>
-      </section>
-      <section class="bloco-portas" aria-labelledby="titulo-moradia-financas">
-        <h3 id="titulo-moradia-financas">Moradia e vida financeira</h3>
-        <div class="grade-portas">
-          <button class="porta" type="button" data-categoria="moradia"><span aria-hidden="true">⌂</span><strong>Moradia e aluguel</strong><small>Habitação, assistência e benefícios a confirmar</small></button>
-          <button class="porta" type="button" data-categoria="dividas"><span aria-hidden="true">$</span><strong>Dívidas e aposentadoria</strong><small>Orientação financeira e previdenciária</small></button>
-        </div>
-      </section>
+<main class="conteudo" id="principal">
+
+  <!-- TELA INICIAL: propósito, sete portas e emergência (acima). Nada além disso. -->
+  <section id="inicio-tela" aria-labelledby="titulo-inicio">
+    <div class="apresentacao">
+      <h1 id="titulo-inicio">Mulher em Rede</h1>
+      <p>Caminhos, contatos e serviços oficiais de Rio Claro (SP) para mulheres: trabalho, estudo, saúde, direitos, moradia e apoio.</p>
+      <p class="escolha">Escolha uma área:</p>
     </div>
-    <section class="acesso-digital" aria-labelledby="titulo-acesso-digital">
-      <h3 id="titulo-acesso-digital">Acesso digital e privacidade</h3>
-      <p>O texto da busca por necessidade é processado neste aparelho. Ainda não há navegação sem franquia de dados, login Gov.br integrado, atendimento por áudio nem garantia de apagar o histórico do navegador.</p>
-      <p>Se estiver usando um aparelho compartilhado, evite informar dados pessoais. O botão “Sair rápido” abre outro site, mas não apaga o histórico.</p>
-    </section>
-    <section class="outras-areas" aria-labelledby="titulo-outras-areas">
-      <h3 id="titulo-outras-areas">Outras áreas da plataforma</h3>
-      <div class="grade-outras-areas">
-        <article class="cartao">
-          <h4>De Mulher para Mulher <span class="meta">[DEMO]</span></h4>
-          <p>Protótipo de diretório e rede de apoio entre mulheres. Os perfis e selos são fictícios; não há cadastro nem verificação real.</p>
-          <p><a href="rede-mulheres.html">Explorar o protótipo</a></p>
-        </article>
-        <article class="cartao">
-          <h4>Inteligência Pública <span class="meta">[DEMO]</span></h4>
-          <p>Painel separado para gestores: dados territoriais, qualidade das fontes e exemplos de análise. Gráficos ilustrativos não são estatísticas oficiais.</p>
-          <p><a href="inteligencia-publica.html">Abrir painel de gestão</a></p>
-        </article>
-      </div>
-    </section>
+    <ul class="portas">
+      <li><a class="porta" href="#trabalho"><span class="icone"><svg aria-hidden="true"><use href="#i-trabalho"/></svg></span>Trabalho</a></li>
+      <li><a class="porta" href="#educacao"><span class="icone"><svg aria-hidden="true"><use href="#i-educacao"/></svg></span>Educação</a></li>
+      <li><a class="porta" href="#saude"><span class="icone"><svg aria-hidden="true"><use href="#i-saude"/></svg></span>Saúde</a></li>
+      <li><a class="porta" href="#direitos"><span class="icone"><svg aria-hidden="true"><use href="#i-direitos"/></svg></span>Direitos</a></li>
+      <li><a class="porta" href="#moradia"><span class="icone"><svg aria-hidden="true"><use href="#i-moradia"/></svg></span>Moradia</a></li>
+      <li><a class="porta" href="#assistencia"><span class="icone"><svg aria-hidden="true"><use href="#i-assistencia"/></svg></span>Assistência Social</a></li>
+      <li><a class="porta" href="rede-mulheres.html"><span class="icone"><svg aria-hidden="true"><use href="#i-mulheres"/></svg></span>De Mulher para Mulher</a></li>
+    </ul>
   </section>
 
-  <section id="painel-categoria" class="painel-categoria" hidden aria-live="polite">
-    <button id="voltar-portas" class="voltar" type="button">← Todas as opções</button>
-    <h2 id="titulo-categoria"></h2>
-    <p id="descricao-categoria"></p>
-    <div id="opcoes-categoria"></div>
-  </section>
-
-  <details class="busca-por-cep">
-    <summary>Quero encontrar serviços perto de mim pelo CEP</summary>
-    <form id="form-cep" class="busca" autocomplete="off">
-    <label for="cep">Digite seu CEP</label>
-    <div class="linha">
-      <input id="cep" inputmode="numeric" maxlength="9" placeholder="00000-000" autocomplete="off" autocapitalize="off" spellcheck="false">
-      <button type="submit">Buscar</button>
-    </div>
-    <p class="privacidade">Seu CEP fica só neste aparelho: a consulta é feita aqui no navegador, nada é enviado, gravado ou contado. Usamos o centro do CEP, nunca o seu endereço.</p>
-    </form>
-  </details>
-
-  <p id="mensagem" role="status" class="mensagem" hidden></p>
-
-  <section id="resultado" hidden>
-    <p id="resumo-area" class="resumo"></p>
-    <div id="mapa" aria-label="Mapa dos serviços próximos"></div>
-    <label class="tiles"><input type="checkbox" id="usar-tiles"> Mostrar ruas (carrega imagens do OpenStreetMap; o servidor do mapa saberá a região aproximada)</label>
-    <div id="grupos"></div>
+  <!-- ÁREAS: preenchidas por app.js a partir de areas.js quando a usuária escolhe uma porta. -->
+  <section id="area" class="area" hidden aria-live="polite">
+    <h1 id="titulo-area" tabindex="-1"></h1>
+    <p id="intro-area" class="intro"></p>
+    <div id="conteudo-area"></div>
+    <details class="busca-por-cep" id="busca-por-cep" hidden>
+      <summary>Encontrar serviços perto de mim pelo CEP</summary>
+      <form id="form-cep" autocomplete="off">
+        <label for="cep">Digite seu CEP</label>
+        <div class="linha">
+          <input id="cep" inputmode="numeric" maxlength="9" placeholder="00000-000" autocomplete="off" autocapitalize="off" spellcheck="false">
+          <button type="submit" class="btn">Buscar</button>
+        </div>
+        <p class="privacidade">Seu CEP fica só neste aparelho: a consulta é feita aqui no navegador, nada é enviado, gravado ou contado. Usamos o centro do CEP, nunca o seu endereço.</p>
+      </form>
+    </details>
+    <p id="mensagem" role="status" class="mensagem" hidden></p>
+    <section id="resultado" hidden>
+      <p id="resumo-area" class="resumo"></p>
+      <div id="mapa" aria-label="Mapa dos serviços próximos"></div>
+      <label class="tiles"><input type="checkbox" id="usar-tiles"> Mostrar ruas (carrega imagens do OpenStreetMap; o servidor do mapa saberá a região aproximada)</label>
+      <div id="grupos"></div>
+    </section>
   </section>
 </main>
 
 <footer class="rodape">
-  <p><strong>Como ler este mapa.</strong> A lista mostra serviços cadastrados em fontes públicas (CNES, Censo Escolar/INEP, páginas da Prefeitura). Isso <em>não</em> informa se há vaga, fila ou horário atual: confirme sempre com o serviço. Distâncias são em linha reta a partir do centro do CEP.</p>
-  <p id="fontes"></p>
+  <p>Os dados vêm de páginas e bases públicas oficiais e podem estar desatualizados. Um serviço cadastrado não garante vaga nem horário: confirme sempre com o órgão.</p>
+  <p id="fontes" hidden></p>
 </footer>
 
 <script src="vendor/leaflet.js"></script>
 <script src="acesso.js"></script>
 <script src="necessidades.js"></script>
+<script src="areas.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

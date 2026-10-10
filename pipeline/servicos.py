@@ -10,6 +10,7 @@ Localizacao: se a fonte traz coordenada valida, usa; senao usa o centro do CEP
 mostra isso a usuaria. Sem CEP e sem coordenada = "sem_local" (aparece na lista, nao no mapa).
 
 Uso:  python pipeline/servicos.py
+      python pipeline/servicos.py --somente-manual   # so o catalogo manual -> web/dados/catalogo_manual.json
 """
 from __future__ import annotations
 
@@ -129,12 +130,21 @@ def servicos_manuais(df, indice: dict) -> list[dict]:
         if not g("fonte_url") or not g("verificado_em"):
             raise ValueError("Registro '%s' sem fonte_url/verificado_em: todo item manual precisa de fonte e data." % g("nome"))
         lat, lon, geo = localizar(g("cep"), g("lat"), g("lon"), indice)
+        # "conferido=nao": a informacao veio de pesquisa na internet e ainda nao foi lida na pagina oficial.
+        # O site mostra isso a usuaria e nunca escreve "verificado" nesses itens.
+        nao_conferido = (g("conferido") or "").lower() in ("nao", "não", "n")
         saida.append({
             "id": g("id") or "man-%s" % _norm(g("nome") or ""), "tipo": tipo, "subtipo": g("subtipo"),
             "nome": g("nome"), "cep": normalizar_cep(g("cep")), "endereco": g("endereco"),
             "telefone": g("telefone"), "horario": g("horario"), "lat": lat, "lon": lon, "geo": geo,
-            "abrangencia": g("abrangencia") or "local", "fonte": "Pagina oficial (cadastro manual)",
+            "abrangencia": g("abrangencia") or "local",
+            "fonte": (g("fonte") or "Pesquisa na internet; não conferida na página oficial") if nao_conferido else (g("fonte") or "Página oficial do órgão"),
             "fonte_url": g("fonte_url"), "verificado_em": g("verificado_em"), "observacao": g("observacao"),
+            "conferido": not nao_conferido,
+            "bairros": g("bairros"),
+            "aviso": g("aviso"),
+            "grupo": g("grupo"),
+            "cnes": g("cnes"),
         })
     return saida
 
@@ -150,17 +160,31 @@ def montar(indice: dict, cnes=None, escolas=None, manuais=None, hoje: str | None
         a = servicos_creches(escolas, indice, hoje); itens += a; contagem["creches_inep"] = len(a)
     if manuais is not None:
         a = servicos_manuais(manuais, indice); itens += a; contagem["manuais"] = len(a)
+    # Unidade cadastrada à mão com o código CNES vence o registro do CNES (traz telefone e horário da fonte oficial).
+    codigos_manuais = {str(s["cnes"]) for s in itens if s.get("cnes")}
+    itens = [s for s in itens if not (str(s["id"]).startswith("cnes-") and str(s["id"])[5:] in codigos_manuais)]
     vistos, unicos = set(), []
     for s in itens:
         if s["id"] in vistos:
             continue
         vistos.add(s["id"]); unicos.append(s)
-    return {"meta": {"gerado_em": hoje, "demo": False, "contagem_por_origem": contagem,
+    return {"meta": {"gerado_em": hoje, "contagem_por_origem": contagem,
                      "aviso": "Cadastros oficiais podem estar desatualizados. Confirme antes de ir."},
             "servicos": unicos}
 
 
+def main_somente_manual() -> None:
+    """Gera web/dados/catalogo_manual.json so com o catalogo manual verificado (sem CNES/INEP).
+    O site usa este arquivo quando servicos.json (base completa) ainda nao foi gerado."""
+    m = CATALOGO / "servicos_manuais.csv"
+    saida = montar({}, None, None, ler_csv_flex(m))
+    salvar_json(saida, WEB_DADOS / "catalogo_manual.json")
+    print("catalogo_manual.json: %d servicos (so catalogo manual; sem CNES nem Censo Escolar)" % len(saida["servicos"]))
+
+
 def main() -> None:
+    if "--somente-manual" in sys.argv[1:]:
+        return main_somente_manual()
     import pandas as pd  # noqa: F401
 
     caminho_idx = WEB_DADOS / "cep_indice.json"
