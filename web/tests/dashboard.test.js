@@ -118,6 +118,18 @@ assert(!assistencia.pendencias.some((p) => /CREAS: endereço/.test(p)), "o CREAS
 assert(assistencia.pendencias.some((p) => /Horário de funcionamento dos CRAS/.test(p)), "a falta de horário dos CRAS/CREAS deve estar declarada");
 assert(assistencia.pendencias.some((p) => /Conselho Tutelar/.test(p)), "a falta de horário/plantão do Conselho Tutelar deve estar declarada");
 assert(Areas.porId("saude").pendencias.length, "Saúde deve declarar a lacuna quando o CNES não está carregado");
+const redeSaude = Areas.porId("saude").listaRede;
+const nGrupo = Object.fromEntries(redeSaude.grupos.map((g) => [g.titulo, g.itens.length]));
+assert.strictEqual(nGrupo["Pronto atendimento 24 horas (UPA)"], 2, "Rio Claro tem 2 UPAs 24 horas");
+assert.strictEqual(nGrupo["Hospital"], 1);
+assert.strictEqual(nGrupo["Saúde mental (CAPS)"], 3);
+assert.strictEqual(nGrupo["Unidades básicas de saúde (UBS e USF)"], 21);
+const codigos = redeSaude.grupos.flatMap((g) => g.itens.map((i) => i[0]));
+assert.strictEqual(codigos.length, 32);
+assert.strictEqual(new Set(codigos).size, codigos.length, "código CNES repetido");
+codigos.forEach((c) => assert(/^\d{7}$/.test(c), "código CNES inválido: " + c));
+assert(redeSaude.grupos.every((g) => g.itens.every((i) => i[1].length > 8)), "nome de unidade vazio ou curto");
+assert(/cnes2\.datasus\.gov\.br/.test(redeSaude.fonte[1]) && /3522-3600/.test(redeSaude.nota));
 assert.strictEqual(Areas.porId("inexistente"), null);
 
 /* ---- 6b. Busca dentro das áreas: cobre todas as chaves do classificador ---- */

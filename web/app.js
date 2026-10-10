@@ -168,6 +168,16 @@
         html += '<section class="secao"><h2>' + esc(sec.titulo) + "</h2>" + (sec.descricao ? '<p class="meta">' + esc(sec.descricao) + "</p>" : "") + corpo + "</section>";
       }
     });
+    if (area.listaRede && !dados.servicos.some(function (s) { return /^cnes-/.test(String(s.id || "")); })) {
+      var L = area.listaRede, total = 0;
+      var gruposRede = L.grupos.map(function (g) {
+        total += g.itens.length;
+        return '<details class="grupo-recolhido"><summary>' + esc(g.titulo) + ' <span class="contagem">(' + g.itens.length + ')</span></summary><ul class="lista-rede">' +
+          g.itens.map(function (it) { return "<li>" + esc(it[1]) + ' <span class="meta">CNES ' + esc(it[0]) + "</span></li>"; }).join("") + "</ul></details>";
+      }).join("");
+      html += '<section class="secao"><details class="secao-recolhida"><summary><h2>' + esc(L.titulo) + ' <span class="contagem">(' + total + ")</span></h2></summary><p class=\"meta\">" + esc(L.nota) +
+        ' Fonte: <a href="' + esc(L.fonte[1]) + '" target="_blank" rel="noopener noreferrer">' + esc(L.fonte[0]) + "</a>.</p>" + gruposRede + "</details></section>";
+    }
     if (area.avisos && area.avisos.length) {
       html += '<div class="status" role="note"><strong>Importante.</strong> ' + area.avisos.map(esc).join(" ") + "</div>";
     }
