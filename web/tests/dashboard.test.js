@@ -122,7 +122,11 @@ const elektro = Areas.porId("moradia").secoes[0].canais.find((c) => /Elektro/.te
 assert(elektro && elektro.sem_tel === true && /Avenida 7, nº 190/.test(elektro.texto) && /8h às 17h/.test(elektro.texto) && /2122-1696/.test(elektro.texto), "canal da Elektro conforme a notícia");
 assert(/17\/12\/2020/.test(elektro.aviso) && /17\/12\/2020/.test(elektro.fonte[2]), "notícia de 2020 deve ser sinalizada como possivelmente desatualizada");
 assert(!/tel:.*2122/.test(JSON.stringify(elektro)), "o número do WhatsApp não pode virar link de ligação");
-assert(Areas.porId("moradia").pendencias.some((p) => /Elektro/.test(p) && /link oficial ainda não foi verificado/.test(p)), "a tarifa social de energia segue sem link verificado");
+assert(Areas.porId("moradia").secoes[0].links.some((l) => l[1] === "https://www.gov.br/aneel/pt-br/assuntos/tarifas/tarifa-social" && /ANEEL/.test(l[0])), "link da ANEEL sobre a tarifa social");
+assert(Areas.porId("moradia").pendencias.some((p) => /Elektro/.test(p) && /não verifica critérios/.test(p)), "o sistema não deve afirmar critérios de elegibilidade da tarifa social");
+assert(!Areas.porId("moradia").pendencias.some((p) => /link oficial ainda não foi verificado/.test(p)), "pendência de link resolvida");
+const neo = Areas.porId("moradia").secoes[0].links.find((l) => l[1] === "https://www.neoenergia.com/tarifa-social");
+assert(neo && /confirme se as regras e os canais valem para a Elektro/.test(neo[2]), "a página da Neoenergia pode cobrir outros estados: o cartão deve pedir para confirmar que vale para a Elektro");
 const redeSaude = Areas.porId("saude").listaRede;
 const nGrupo = Object.fromEntries(redeSaude.grupos.map((g) => [g.titulo, g.itens.length]));
 assert.strictEqual(nGrupo["Pronto atendimento 24 horas (UPA)"], 2, "Rio Claro tem 2 UPAs 24 horas");

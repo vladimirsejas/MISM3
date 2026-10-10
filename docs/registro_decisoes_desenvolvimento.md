@@ -169,3 +169,8 @@ Ao concluir mudanças relevantes, registrar o que foi alterado, o teste executad
 - Confirma que a distribuidora de Rio Claro é a Elektro. Cadastrado em Moradia o atendimento ao cliente: Avenida 7, nº 190, bairro Cidade Nova; das 8h às 17h; serviços (ligação nova, alteração da data de vencimento, troca de titularidade, pedido de desligamento); canal de WhatsApp (19) 2122-1696, exibido só como texto, sem link de ligação.
 - Aviso na interface: a notícia tem seis anos e endereço, horário e canais podem ter mudado.
 - A notícia **não trata de tarifa social de energia**. O aviso de Moradia segue dizendo que o link oficial dessa tarifa não foi verificado; falta a página da Elektro sobre o tema.
+
+### Link da ANEEL sobre a tarifa social — 10/10/2026
+- Adicionado em Moradia o link https://www.gov.br/aneel/pt-br/assuntos/tarifas/tarifa-social, informado pelo mantenedor. **O conteúdo da página não foi lido** (a rede da sessão não alcança gov.br); por isso a descrição no site é neutra e diz que o sistema não confere os critérios de quem tem direito.
+- A pendência "link oficial ainda não verificado" foi substituída por uma orientação: ver a página da ANEEL e procurar a Elektro e o CRAS. A elegibilidade (por exemplo CadÚnico) não foi afirmada no site porque nenhuma página lida a confirma.
+- Adicionado também https://www.neoenergia.com/tarifa-social (Neoenergia, grupo da Elektro), informado pelo mantenedor e **não lido** (site inacessível à sessão). Como o grupo atende outros estados, o cartão pede para confirmar que regras e canais valem para a Elektro em Rio Claro.
