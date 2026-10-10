@@ -225,3 +225,8 @@ Ao concluir mudanças relevantes, registrar o que foi alterado, o teste executad
 - **Regras de publicação (testadas):** oferta só entra com categoria existente, nome, descrição, contato escolhido por ela e **data de consentimento**. Não há selo de "identidade verificada".
 - **Em aberto (decisão do mantenedor):** por onde a mulher envia o cadastro (formulário externo, e-mail, WhatsApp da Secretaria) e quem confere. A página declara que o canal ainda não foi definido.
 - **Layout intacto:** `estilo.css`, `index.html`, `app.js`, `acesso.js` e `necessidades.js` com o mesmo SHA-256; só componentes já existentes.
+
+### Canal de cadastro de De Mulher para Mulher — 10/10/2026
+- **Direção do mantenedor:** no futuro a página será da Secretaria Municipal da Mulher e o cadastro tende a ser feito pelo gov.br, para que só mulheres de fato consigam se cadastrar. Isso substitui as três opções levantadas (formulário externo, WhatsApp/e-mail, cadastro próprio).
+- **Como está no site:** a página diz que o cadastro ainda não existe e que a previsão (Secretaria + gov.br) **não está confirmada**. Nada é prometido como já verificado.
+- **Em aberto:** o gov.br confirma a identidade de quem entra; se e como ele permite comprovar que a pessoa é mulher é uma pergunta para a Secretaria e para quem opera a integração, não algo que este projeto afirma.
