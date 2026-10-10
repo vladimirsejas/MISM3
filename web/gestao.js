@@ -242,7 +242,7 @@
     }).addTo(camada);
     SERVICOS.filter(function (x) { return (x.tipo === "creche" || x.tipo === "educacao_infantil") && x.lat != null; }).forEach(function (x) {
       L.circleMarker([x.lat, x.lon], { radius: 6, fillColor: css("--s2"), fillOpacity: 1, color: css("--surface-1"), weight: 2 })
-        .bindTooltip(esc(x.nome) + " (serviço de exemplo)").addTo(camada);
+        .bindTooltip(esc(x.nome) + " (marcador ilustrativo)").addTo(camada);
     });
     mapa.fitBounds(layer.getBounds(), { padding: [4, 4] });
     setTimeout(function () { mapa.invalidateSize(); }, 50);
@@ -272,7 +272,7 @@
 
     if (juridico) {
       card("Prioridade de validação", "Fechar a lacuna de orientação jurídica",
-        juridico.tema + " aparece entre os exemplos de buscas sem resultado (" + fmt(juridico.ocorrencias) + " ocorrências fictícias).",
+        juridico.tema + " aparece nas buscas sem resultado (" + fmt(juridico.ocorrencias) + " ocorrências fictícias).",
         "Mapear Defensoria Pública, serviços públicos de assistência jurídica e advogadas com atuação em Direito de Família e violência contra a mulher. Confirmar critérios, custo, horários, acessibilidade e forma segura de contato.",
         "Coordenação da política para mulheres, assistência social e parceiros da rede de justiça.",
         "Percentual de encaminhamentos jurídicos que encontram um serviço confirmado; tempo até a primeira orientação.",
@@ -280,7 +280,7 @@
     }
     if (creche) {
       card("Investigar oferta e acesso", "Verificar a procura por creche e cuidado infantil",
-        creche.tema + " aparece entre os exemplos sem resultado (" + fmt(creche.ocorrencias) + " ocorrências fictícias).",
+        creche.tema + " aparece nas buscas sem resultado (" + fmt(creche.ocorrencias) + " ocorrências fictícias).",
         "Cruzar demanda oficial por faixa etária e fila de espera com vagas efetivamente disponíveis por unidade e período. Identificar opções de cuidado e horários que permitam trabalhar ou estudar.",
         "Secretaria de Educação, assistência social e área de trabalho e renda.",
         "Demanda registrada, vagas disponíveis, tempo de espera e encaminhamentos atendidos.",
@@ -288,7 +288,7 @@
     }
     if (transporte) {
       card("Investigar acesso", "Conferir barreiras de transporte",
-        transporte.tema + " aparece entre os exemplos sem resultado (" + fmt(transporte.ocorrencias) + " ocorrências fictícias).",
+        transporte.tema + " aparece nas buscas sem resultado (" + fmt(transporte.ocorrencias) + " ocorrências fictícias).",
         "Confirmar linhas, horários, acessibilidade e conexões com creches, cursos, serviços de saúde e oportunidades de trabalho. Registrar onde a informação oficial está ausente ou difícil de encontrar.",
         "Área municipal de mobilidade, operadores de transporte e serviços parceiros.",
         "Serviços com horários oficiais atualizados e rotas úteis documentadas.",
@@ -354,7 +354,7 @@
       tabela($("t-sem-tab"), "buscas sem resultado", ["Tema", "Ocorrências"], sem.map(function (x) { return [x.tema, fmt(x.ocorrencias)]; }));
       var top = GEO ? GEO.features.map(function (f) { return [f.properties.bairro || "Setor sem bairro", D.criancas_0_4_por_setor[f.properties.setor] || 0]; })
         .sort(function (a, b) { return b[1] - a[1]; }).slice(0, 10) : [];
-      tabela($("t-mapa-tab"), "10 setores com mais crianças (fictício)", ["Bairro", "Crianças de 0 a 4 anos"], top.map(function (t) { return [t[0], t[1] < D.meta.k_minimo ? "menos de " + D.meta.k_minimo : fmt(t[1])]; }));
+      tabela($("t-mapa-tab"), "Setores com maior valor simulado", ["Bairro", "Crianças de 0 a 4 anos"], top.map(function (t) { return [t[0], t[1] < D.meta.k_minimo ? "menos de " + D.meta.k_minimo : fmt(t[1])]; }));
     }
   }
 
