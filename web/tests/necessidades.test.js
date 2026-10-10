@@ -41,6 +41,7 @@ const casos = [
   ["Meu marido me ameaça e não deixa eu sair", ["violencia", "casamento"]],
   ["preciso de aluguel social", ["moradia"]],
   ["estou com medo de despejo e preciso de moradia", ["moradia"]],
+  ["preciso sair de casa", ["violencia", "moradia"]],
   ["quero fazer cadastro habitacional", ["moradia"]],
   ["quero renegociar minhas dívidas", ["dividas"]],
   ["não consigo pagar as contas do cartão", ["dividas"]],
