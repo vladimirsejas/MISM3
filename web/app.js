@@ -126,7 +126,7 @@
     /* Ordem lógica por público; grupos novos (não listados) vão para o fim. */
     var PREFERIDA = ["Secretaria de Saúde", "Pronto atendimento 24 horas", "Unidades básicas de saúde (UBS e USF)", "Saúde mental (CAPS)", "Especialidades, reabilitação e saúde do trabalhador",
       "Hospitais e ambulatórios", "Farmácia, exames e transporte",
-      "Emprego e orientação", "Cursos gratuitos de qualificação", "Cursos profissionalizantes e técnicos", "Cursos superiores de tecnologia",
+      "Emprego e orientação", "Cursos gratuitos de qualificação", "Cursos profissionalizantes e técnicos", "Cursos superiores de tecnologia", "Concluir os estudos e graduação (SESI)",
       "Crianças e adolescentes", "Adultos (30 a 59 anos)", "Pessoas idosas (65 anos ou mais)", "APAE — pessoas com deficiência"];
     ordem.sort(function (x, y) {
       var a = PREFERIDA.indexOf(x), b = PREFERIDA.indexOf(y);
