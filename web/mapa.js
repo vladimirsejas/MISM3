@@ -7,7 +7,7 @@
   var $ = function (id) { return document.getElementById(id); };
   var POR_PAGINA = 24;
 
-  var estado = { todos: [], indice: null, ativas: {}, texto: "", origem: null, origemRaio: 0, limite: POR_PAGINA };
+  var estado = { todos: [], indice: null, apelidos: [], ativas: {}, texto: "", origem: null, origemRaio: 0, limite: POR_PAGINA };
   var mapa = null, camadaPontos = null, camadaOrigem = null, tiles = null, marcadores = {}, primeiraVez = true;
 
   function el(tag, classe, texto) {
@@ -129,7 +129,7 @@
 
   /* ---------------------------------------------------------------- lista e resumo */
   function atualizar() {
-    var visiveis = MS.ordenar(MS.filtrar(estado.todos, estado.ativas, estado.texto), estado.origem);
+    var visiveis = MS.ordenar(MS.filtrar(estado.todos, estado.ativas, estado.texto, estado.apelidos), estado.origem);
     var n = MS.contagem(visiveis);
     $("resumo-mapa").textContent = visiveis.length
       ? "Mostrando " + visiveis.length + " serviço" + (visiveis.length === 1 ? "" : "s") + ": " + n.endereco + " com posição pelo endereço, " +
@@ -203,7 +203,39 @@
     atualizar();
   }
 
+  /* ---------------------------------------------------------------- qual CRAS atende o bairro */
+  function mostrarCras(ev) {
+    ev.preventDefault();
+    var saida = $("resultado-cras");
+    saida.textContent = "";
+    var texto = $("bairro-cras").value;
+    var r = MS.crasDoBairro(texto, estado.todos, estado.apelidos);
+    if (r.status === "vazio") { saida.appendChild(el("p", "mensagem", "Escreva o nome do bairro.")); return; }
+    if (r.status === "nao_encontrado") {
+      var p = el("p", "mensagem", "Não encontramos este bairro nas listas dos CRAS. Confira a escrita, ou veja a lista de CRAS abaixo e ligue para confirmar qual atende o seu endereço.");
+      saida.appendChild(p);
+      if (r.sugestoes.length) {
+        saida.appendChild(el("p", "meta", "Nomes parecidos nas listas oficiais:"));
+        var ul = el("ul", "mapa-sugestoes");
+        r.sugestoes.forEach(function (x) { ul.appendChild(el("li", null, x.bairro + " (" + x.servico.nome + ")")); });
+        saida.appendChild(ul);
+      }
+      return;
+    }
+    var vistos = {};
+    var unicos = r.cras.filter(function (a) { if (vistos[a.servico.id]) return false; vistos[a.servico.id] = 1; return true; });
+    var nomes = r.cras.map(function (a) { return "“" + a.bairro + "” (" + a.servico.nome + ")"; });
+    var frase;
+    if (r.metodo === "sem_tipo") frase = "Encontramos nomes parecidos na lista oficial: " + nomes.join("; ") + ". Confirme se é o seu bairro antes de ir:";
+    else if (r.status === "ok") frase = "Pela lista oficial da Prefeitura, o bairro “" + r.cras[0].bairro + "” é atendido por:";
+    else frase = "Este nome aparece na lista de mais de um CRAS (" + nomes.join("; ") + "). Confirme por telefone qual atende o seu endereço:";
+    saida.appendChild(el("p", "mapa-cras-frase", frase));
+    unicos.forEach(function (a) { saida.appendChild(cartao(a.servico, false)); });
+    saida.appendChild(el("p", "meta", "A lista é da página oficial indicada em “Fonte”. Antes de ir, ligue para confirmar o atendimento e a área do seu endereço."));
+  }
+
   /* ---------------------------------------------------------------- ligações da página */
+  $("form-cras").addEventListener("submit", mostrarCras);
   $("form-cep-mapa").addEventListener("submit", aplicarCep);
   $("limpar-cep").addEventListener("click", limparCep);
   $("cep-mapa").addEventListener("input", function (e) {
@@ -224,9 +256,11 @@
     window.location.replace("https://www.google.com.br/");
   });
 
-  Promise.all([carregar("dados/catalogo_manual.json", true), carregar("dados/cep_indice.json", false), carregar("dados/setores.geojson", false)])
+  Promise.all([carregar("dados/catalogo_manual.json", true), carregar("dados/cep_indice.json", false), carregar("dados/setores.geojson", false),
+    carregar("dados/bairros_apelidos.json", false)])
     .then(function (r) {
       estado.indice = r[1] && r[1].ceps ? r[1].ceps : null;
+      estado.apelidos = r[3] && r[3].apelidos ? r[3].apelidos : [];
       estado.todos = MS.preparar(r[0].servicos || [], estado.indice);
       montarFiltros();
       iniciarMapa(r[2]);

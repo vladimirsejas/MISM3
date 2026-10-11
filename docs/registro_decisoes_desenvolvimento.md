@@ -827,3 +827,11 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - *IndexedDB / `localStorage.clear()`*: contraria o princípio de não guardar nada no aparelho.
 
 **Observações válidas, não feitas agora:** unificar `territorio.html` e `painel-secretaria.html` na documentação (já descritos em `docs/estado_do_projeto.md` como protótipos fora do site público); compressão de JSON (o servidor já comprime).
+
+## 11/10/2026 - Qual CRAS atende o meu bairro? e apelidos de bairro
+
+- **Origem:** os pareceres do Copilot e do Gemini (e o plano reduzido) pediram uma busca que entenda como a moradora fala o nome do bairro. O que o projeto já tinha: os 6 CRAS trazem a lista oficial de bairros que atendem. A caixa nova usa só essa lista, sem inventar fronteira nem adivinhar por distância.
+- **Busca em etapas:** nome exato; nome sem sufixo ("Jd. Brasília I e II" = "Jd Brasília"); nome sem "Jd./Vila" (aproximado: a tela lista os nomes oficiais achados e pede confirmação). Normaliza acento, "Jd./Jardim", "Vl./Vila", "Pq./Parque", "Cond./Condomínio" etc.
+- **Dois defeitos achados só na conferência na tela (não nos testes):** (1) meus testes usavam o nome exatamente como na lista oficial e passavam, mas a moradora digitando "Jd Brasilia" ou "Bom Sucesso" não achava nada; os testes ganharam os casos de escrita natural. (2) "Jd. Paulista" (CRAS Jd. Brasília) e "Jd. Paulista II" (CRAS Panorama) são bairros distintos de CRAS diferentes; uma correspondência exata escondia essa ambiguidade. Agora, sem o numeral escrito, mostra os dois e pede confirmação. "Paulista" aparece nas listas de três CRAS e mostra os três.
+- **Apelidos (`web/dados/bairros_apelidos.json`):** só os marcados "confirmado" valem. Entraram dois candidatos, ambos "a confirmar" e sem efeito: Cervezão (indício: o mesmo endereço, Rua M-9, 66, aparece como Jd. Chervezon e como Jd. Independência; pode ser uma região com vários bairros) e CVZ (abreviação citada pelo autor, significado não confirmado). O parecer do Copilot colocava "cvz" como apelido de Mãe Preta; não há base para isso e não foi usado. Teste: cada nome de destino precisa existir nas fontes.
+- **Limite:** só CRAS tem lista oficial de área de atendimento; para UBS/USF e creche só existe "mais próximo", e só onde há posição no mapa.
