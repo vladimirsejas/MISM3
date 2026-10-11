@@ -121,7 +121,7 @@ Os dois pediram foco: sem público e sem equipe, o ganho está em **orientação
 |---|---|
 | Busca por bairro e "Qual CRAS atende o meu bairro?" | **Feita** (PR #31). Falta confirmar os apelidos (Cervezão, CVZ), que só quem conhece os bairros pode fazer. |
 | Jornada de Educação (vaga do filho; estudar) | **Feita**. |
-| Jornada de assistência social | Próxima: depende só de dados que já estão no catálogo (CRAS com lista de bairros, CREAS, Conselho Tutelar). |
+| Jornada de assistência social | **Feita** (usa só o que o catálogo e a área já afirmam; sem benefício específico). |
 | Jornada de violência e proteção | **Espera os contatos confirmados** (CRAM, Delegacia, Patrulha). Será mínima e só com fonte. |
 | Contatos críticos (CRAM, Delegacia, Patrulha) | **Espera você**: páginas oficiais impressas em `docs/documetacao/`. |
 | Localizar CRAS e UBS (`atualizar_localizacoes.py`) | **Espera você**: rodar e mandar o que ele imprime. |

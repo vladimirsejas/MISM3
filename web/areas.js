@@ -336,7 +336,7 @@
       ]
     },
     {
-      id: "assistencia", nome: "Assistência Social", icone: "assistencia",
+      id: "assistencia", nome: "Assistência Social", icone: "assistencia", jornada: "assistencia",
       intro: "CRAS, CREAS, Conselho Tutelar e serviços de convivência de Rio Claro.",
       secoes: [
         {
