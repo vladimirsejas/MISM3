@@ -19,6 +19,9 @@ Cada arquivo é a **impressão em PDF** de uma página, feita pelo mantenedor em
 | `senai-rio-claro.pdf` | SENAI Rio Claro, Escola “Manoel José Ferreira”: cursos livres, Aprendiz SENAI e cursos técnicos gratuitos | https://sp.senai.br/unidade/rioclaro/sobre-a-unidade | 10/10/2026 20:53 | Trabalho (cursos profissionalizantes) |
 | `senac-rio-claro-cursos-livres.pdf` | Senac Rio Claro: endereço (Av. Dois, 720), horário de atendimento e cursos livres por área | https://www.sp.senac.br/senac-rio-claro/cursos-livres (o endereço não aparece na impressão; consta no cadastro) | 10/10/2026 20:52 | Trabalho (cursos profissionalizantes) |
 | `sestsenat-unidades.pdf` | SEST SENAT: busca de unidades. **A impressão mostra só o formulário “Selecione seu estado”, sem a unidade de Rio Claro** | https://www.sestsenat.org.br/unidades | 10/10/2026 20:55 | Trabalho (cadastrado como “não conferido”) |
+| `fatec-rio-claro-inteligencia-artificial.pdf` | Fatec Rio Claro: CST em Inteligência Artificial (4 semestres, presencial, eixo Informação e Comunicação) e Projeto Pedagógico | https://fatecrioclaro.cps.sp.gov.br/ia/ | 10/10/2026 21:41 | Trabalho (cursos) |
+| `fatec-rio-claro-esg.pdf` | Fatec Rio Claro: CST em Gestão da Sustentabilidade Ambiental, Social e Governança Corporativa (4 semestres, presencial, eixo Gestão e Negócios) | https://fatecrioclaro.cps.sp.gov.br/esg/ | 10/10/2026 21:42 | Trabalho (cursos) |
+| `etec-cursos-oferecidos.pdf` | Centro Paula Souza: catálogo de todos os cursos das Etecs do estado (20 páginas). **Não informa quais cursos a Etec de Rio Claro oferece** | https://www.cps.sp.gov.br/etec/cursos-oferecidos-pelas-etecs/ | 10/10/2026 21:43 | Trabalho (cursos) |
 
 ## Não arquivado, de propósito
 - Artigo de blog da Matrix Energia sobre tarifa de energia: é de empresa privada, trata de tarifa em geral e não da Tarifa Social; **não foi usado**.
