@@ -133,7 +133,8 @@ Areas.AREAS.forEach((a) => {
   assert(index.includes('id="i-' + a.icone + '"'), a.id + ": falta o ícone no sprite");
   const urls = [];
   a.secoes.forEach((s) => s.links.forEach((l) => {
-    assert(/^https:\/\//.test(l[1]), a.id + ": link sem https: " + l[1]);
+    const interno = l[1].charAt(0) === "#";
+    assert(/^https:\/\//.test(l[1]) || (interno && Areas.AREAS.some((x) => "#" + x.id === l[1])), a.id + ": link sem https e que não aponta para uma área existente: " + l[1]);
     assert(l[0] && l[2], a.id + ": link sem título ou descrição");
     urls.push(l[1]);
   }));
@@ -233,6 +234,13 @@ assert(sestCursos.fonte_url === "https://www.sestsenat.org.br/cursos" && /mudam|
 assert(!/NR ?35|Liderança|Webaula de|Transporte de Cargas/i.test(JSON.stringify(sestCursos)), "o SEST SENAT não deve enumerar cursos, que mudam a cada período");
 lista.filter((x) => x.tipo === "emprego_curso").forEach((x) => assert(x.grupo, "serviço de Trabalho sem grupo ficaria escondido atrás de \"Mostrar todos\": " + x.id));
 assert(Areas.AREAS.find((a) => a.id === "trabalho").secoes[0].agrupar === true, "a lista de Trabalho deve ser agrupada, não limitada a 12 cartões");
+const trab = Areas.AREAS.find((a) => a.id === "trabalho").secoes[0], edu = Areas.AREAS.find((a) => a.id === "educacao").secoes[1];
+["curso_profissionalizante", "curso_tecnico", "curso_superior_tecnologia", "graduacao", "eja", "escola_sesi"].forEach((st) => {
+  assert(!trab.subtipos.includes(st) && edu.subtipos.includes(st), "educação pertence à área Educação, não à de Trabalho: " + st);
+});
+lista.filter((x) => x.tipo === "emprego_curso").forEach((x) =>
+  assert(trab.subtipos.includes(x.subtipo) || edu.subtipos.includes(x.subtipo), "serviço sem área (subtipo não coberto): " + x.id + " " + x.subtipo));
+assert(Areas.AREAS.find((a) => a.id === "trabalho").secoes[0].links.some((l) => l[1] === "#educacao"), "Trabalho deve apontar para a área Educação");
 assert(/@media print/.test(css) && /folha-impressao/.test(css), "deve haver estilo de impressão para o plano e o currículo");
 assert(!/localStorage|sessionStorage|document\.cookie/.test(ler("jornada-ui.js") + ler("jornada.js")), "a jornada não pode guardar nada no aparelho");
 assert(!/fetch\(|XMLHttpRequest|sendBeacon/.test(ler("jornada-ui.js") + ler("jornada.js")), "a jornada não pode enviar nada pela rede");

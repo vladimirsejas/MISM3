@@ -331,3 +331,11 @@ Nenhuma branch foi apagada nem alterada. O que **não** foi trazido para a base,
 ### Endereço do site do SESI-SP e fim das pendências do SEST SENAT — 11/10/2026
 - O autor indicou o site oficial do SESI-SP: **https://www.sesisp.org.br/**, que já era o `fonte_url` dos cartões do SESI. A pendência "URL exata das páginas do SESI" foi encerrada: o link permanece e os textos passam a dizer que é o site oficial indicado pelo autor (as impressões não mostram o endereço de cada página).
 - **SEST SENAT:** o autor informa que não sabe mais nada além do que já está no cartão. Ficam sem resposta, e assim escritos no cartão: como alguém se torna sócio e se cada curso da página exige isso. Nenhuma ação pendente do lado do desenvolvimento.
+
+### Educação é Educação: serviços de ensino saem de Trabalho — 11/10/2026
+- **Correção apontada pelo autor:** SESI, Fatec, Etec, SENAI, Senac e SEST SENAT são educação e estavam só na área Trabalho. Passam a aparecer na área **Educação**, numa nova seção "Estudar, concluir os estudos e se qualificar", agrupada: "Concluir os estudos e graduação (SESI)" (3), "Cursos profissionalizantes e técnicos" (6) e "Cursos superiores de tecnologia" (2).
+- **Trabalho** ficou com "Emprego e orientação" (4) e "Cursos gratuitos de qualificação" (3, Fundo Social e Centros de Qualificação) e ganhou um cartão-link "Cursos e estudos: SENAI, Senac, Etec, Fatec, SESI e SEST SENAT" que leva à área Educação, na mesma aba. A seção de cada área filtra por `subtipos`; o catálogo não mudou.
+- **Plano de trabalho:** os passos "Concluir o ensino médio" e "Escolher um curso" passaram a incluir o link para a área Educação (o impresso mostra "área Educação deste site").
+- **Regra de links:** o teste que exigia `https` em todo link de área passou a aceitar também `#área` quando a área existe, o que permite links internos sem enfraquecer a proteção contra links externos estranhos.
+- **Travas novas no teste:** nenhum subtipo de ensino pode ficar em Trabalho; todo serviço do tipo `emprego_curso` precisa ter um subtipo coberto por Trabalho ou Educação (para nada ficar sem área); Trabalho precisa apontar para Educação.
+- **Verificação no navegador (390 px):** Educação com 11 serviços em 3 grupos; Trabalho com 7 em 2 grupos; link interno abre Educação na mesma aba; sem rolagem lateral e sem erro de JavaScript.

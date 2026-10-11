@@ -52,7 +52,7 @@
 
   /* ------------------------------------------------------------ saída */
   function ehInterno(url) { return String(url).charAt(0) === "#"; }
-  function nomeArea(url) { return url === "#assistencia" ? "área Assistência Social deste site" : "este site"; }
+  function nomeArea(url) { return url === "#assistencia" ? "área Assistência Social deste site" : url === "#educacao" ? "área Educação deste site" : "este site"; }
 
   function htmlPlano(plano, paraPapel) {
     if (!plano.passos.length) {

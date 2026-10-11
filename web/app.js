@@ -71,6 +71,9 @@
   }
 
   function cartaoLink(l) {
+    if (String(l[1]).charAt(0) === "#") {
+      return '<article class="cartao"><h3><a href="' + esc(l[1]) + '">' + esc(l[0]) + '</a></h3><p>' + esc(l[2]) + "</p></article>";
+    }
     return '<article class="cartao"><h3><a href="' + esc(l[1]) + '" target="_blank" rel="noopener noreferrer">' + esc(l[0]) + '</a></h3><p>' + esc(l[2]) +
       '</p><p class="meta">' + esc(AREAS.NOTA_FONTE) + "</p></article>";
   }
@@ -126,7 +129,7 @@
     /* Ordem lógica por público; grupos novos (não listados) vão para o fim. */
     var PREFERIDA = ["Secretaria de Saúde", "Pronto atendimento 24 horas", "Unidades básicas de saúde (UBS e USF)", "Saúde mental (CAPS)", "Especialidades, reabilitação e saúde do trabalhador",
       "Hospitais e ambulatórios", "Farmácia, exames e transporte",
-      "Emprego e orientação", "Cursos gratuitos de qualificação", "Cursos profissionalizantes e técnicos", "Cursos superiores de tecnologia", "Concluir os estudos e graduação (SESI)",
+      "Emprego e orientação", "Cursos gratuitos de qualificação", "Concluir os estudos e graduação (SESI)", "Cursos profissionalizantes e técnicos", "Cursos superiores de tecnologia",
       "Crianças e adolescentes", "Adultos (30 a 59 anos)", "Pessoas idosas (65 anos ou mais)", "APAE — pessoas com deficiência"];
     ordem.sort(function (x, y) {
       var a = PREFERIDA.indexOf(x), b = PREFERIDA.indexOf(y);
