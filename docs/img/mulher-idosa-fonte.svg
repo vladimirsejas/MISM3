@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="170" height="298" viewBox="0 0 170 298">
+<defs>
+  <linearGradient id="pele" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0cdb4"/><stop offset="1" stop-color="#dfae92"/></linearGradient>
+  <linearGradient id="cab" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e8e6ea"/><stop offset=".55" stop-color="#c3c0c8"/><stop offset="1" stop-color="#a39fab"/></linearGradient>
+  <linearGradient id="xale" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#cdb6d6"/><stop offset="1" stop-color="#a98fb9"/></linearGradient>
+  <linearGradient id="fol" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a9c0a1"/><stop offset="1" stop-color="#7c9c82"/></linearGradient>
+  <radialGradient id="flor"><stop offset="0" stop-color="#fff5f2"/><stop offset="1" stop-color="#f3c3cb"/></radialGradient>
+  <filter id="suave" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation=".35"/></filter>
+</defs>
+<!-- folhagem ao fundo, à esquerda -->
+<g fill="url(#fol)" filter="url(#suave)">
+  <path d="M8 250 C-2 200, 6 140, 24 92" stroke="#86a58b" stroke-width="2.4" fill="none"/>
+  <ellipse cx="12" cy="214" rx="6.5" ry="15" transform="rotate(-38 12 214)"/>
+  <ellipse cx="22" cy="186" rx="6" ry="14" transform="rotate(28 22 186)"/>
+  <ellipse cx="9" cy="162" rx="6" ry="14" transform="rotate(-30 9 162)"/>
+  <ellipse cx="20" cy="136" rx="5.5" ry="13" transform="rotate(30 20 136)"/>
+  <ellipse cx="12" cy="112" rx="5" ry="12" transform="rotate(-25 12 112)"/>
+  <ellipse cx="26" cy="96" rx="5" ry="11" transform="rotate(25 26 96)"/>
+</g>
+<g transform="translate(34 4)">
+  <!-- corpo e xale -->
+  <path d="M-6 298 C-4 236, 8 206, 34 192 L72 186 C100 196, 118 222, 124 298 Z" fill="url(#xale)"/>
+  <path d="M34 192 C50 214, 70 224, 96 226 C108 238, 114 260, 116 298 L124 298 C118 222, 100 196, 72 186 Z" fill="#b79dc6" opacity=".55"/>
+  <!-- decote e pescoço -->
+  <path d="M40 192 L66 150 L74 188 C62 202, 50 202, 40 192 Z" fill="url(#pele)"/>
+  <path d="M42 196 C52 210, 66 212, 76 192" stroke="#e9d9c2" stroke-width="2.2" fill="none"/>
+  <!-- cabeça + pescoço -->
+  <path d="M88 50 C96 60,97 72,95 80 C94 86,93 90,96 96 L108 106 C109 109,103 110,99 111 C101 114,102 116,99 119 C102 121,102 124,99 126 C100 131,99 136,92 140 C84 143,74 143,66 140 L66 192 L24 192 C24 150,18 120,18 90 C18 60,50 40,88 50 Z" fill="url(#pele)"/>
+  <!-- sombra do pescoço -->
+  <path d="M66 142 C74 150, 84 152, 92 148 C86 158, 76 164, 66 166 Z" fill="#c99a82" opacity=".45"/>
+  <!-- cabelo grisalho -->
+  <ellipse cx="14" cy="40" rx="25" ry="21" fill="url(#cab)"/>
+  <path d="M91 52 C82 34,46 28,24 46 C6 62,6 98,22 126 C30 132,37 122,39 108 C45 92,57 80,63 64 C73 57,83 57,91 52 Z" fill="url(#cab)"/>
+  <path d="M30 40 C44 34, 62 38, 78 48 M22 58 C34 50, 56 52, 70 58 M16 78 C26 70, 40 70, 50 76 M14 30 C22 24, 30 24, 36 28" stroke="#f1eff3" stroke-width="1.4" fill="none" opacity=".75"/>
+  <path d="M20 100 C24 112, 30 120, 36 118" stroke="#9a96a3" stroke-width="1.4" fill="none" opacity=".7"/>
+  <!-- orelha e brinco -->
+  <path d="M55 88 C50 88,49 98,54 102 C58 106,63 102,63 96 C63 90,60 87,55 88 Z" fill="#e3b79c"/>
+  <path d="M55 92 C54 96,56 99,59 98" stroke="#c99a82" stroke-width="1" fill="none"/>
+  <circle cx="57" cy="109" r="3.2" fill="#fffaf5"/><circle cx="57" cy="109" r="3.2" fill="none" stroke="#e1c9a6" stroke-width=".8"/>
+  <!-- rosto: sobrancelha, olho fechado, cílios, bochecha, lábios, expressões -->
+  <path d="M71 77 Q82 71 93 75" stroke="#a9a3ad" stroke-width="2.3" fill="none" stroke-linecap="round"/>
+  <path d="M74 85 Q81 90 89 85" stroke="#5e4044" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+  <path d="M89 85 l3 -1.5 M86 87.5 l2.5 .8 M80 89 l0 2" stroke="#5e4044" stroke-width="1" fill="none" stroke-linecap="round"/>
+  <ellipse cx="79" cy="104" rx="9" ry="6" fill="#ee9aa0" opacity=".16"/>
+  <path d="M99 115 C106 118,105 123,99 127 C94 124,95 118,99 115 Z" fill="#c9707c"/>
+  <path d="M96 121 L103 121" stroke="#a9505c" stroke-width=".8"/>
+  <path d="M68 86 l-6 -1.5 M68 89 l-6 1 M68.5 92 l-5.5 3.5" stroke="#c99a85" stroke-width=".9" opacity=".7" fill="none"/>
+  <path d="M90 108 Q85 118 86 128" stroke="#c99a85" stroke-width="1" opacity=".55" fill="none"/>
+  <path d="M70 62 Q80 58 90 62 M72 67 Q81 64 89 67" stroke="#c99a85" stroke-width=".9" opacity=".4" fill="none"/>
+  <path d="M68 156 Q78 160 88 158 M68 164 Q78 168 86 166" stroke="#c99a85" stroke-width=".9" opacity=".45" fill="none"/>
+  <!-- colar -->
+  <path d="M44 194 C54 214, 70 214, 80 194" stroke="#e2c58f" stroke-width="1.2" fill="none"/>
+  <circle cx="62" cy="209" r="2.6" fill="#fffaf5"/>
+</g>
+<!-- flores à frente, embaixo -->
+<g>
+  <g transform="translate(20 262)"><g fill="url(#flor)" stroke="#e9aeb8" stroke-width=".6">
+    <ellipse cx="0" cy="-9" rx="6" ry="9"/><ellipse cx="0" cy="-9" rx="6" ry="9" transform="rotate(72)"/><ellipse cx="0" cy="-9" rx="6" ry="9" transform="rotate(144)"/><ellipse cx="0" cy="-9" rx="6" ry="9" transform="rotate(216)"/><ellipse cx="0" cy="-9" rx="6" ry="9" transform="rotate(288)"/></g><circle r="3.4" fill="#f0b64e"/></g>
+  <g transform="translate(62 280) scale(.8)"><g fill="url(#flor)" stroke="#e9aeb8" stroke-width=".6">
+    <ellipse cx="0" cy="-9" rx="6" ry="9"/><ellipse cx="0" cy="-9" rx="6" ry="9" transform="rotate(72)"/><ellipse cx="0" cy="-9" rx="6" ry="9" transform="rotate(144)"/><ellipse cx="0" cy="-9" rx="6" ry="9" transform="rotate(216)"/><ellipse cx="0" cy="-9" rx="6" ry="9" transform="rotate(288)"/></g><circle r="3.4" fill="#f0b64e"/></g>
+  <g fill="url(#fol)"><ellipse cx="42" cy="276" rx="6" ry="14" transform="rotate(-62 42 276)"/><ellipse cx="2" cy="280" rx="6" ry="13" transform="rotate(60 2 280)"/><ellipse cx="88" cy="288" rx="6" ry="13" transform="rotate(-70 88 288)"/></g>
+</g>
+</svg>
