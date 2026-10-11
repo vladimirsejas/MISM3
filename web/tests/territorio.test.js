@@ -46,6 +46,19 @@ if (dados.distancia_ate_servico) {
   assert(dados.meta.aviso_distancia && /não prova falta de serviço/.test(dados.meta.aviso_distancia));
 }
 
+/* ---- categoria com poucos serviços localizados não ganha distância: fica "pendente" e a página diz o que falta ---- */
+assert(/distancia_pendente/.test(js) && /ainda não disponível/i.test(js) && /id="nota-dist-pendente"/.test(html), "a página deve explicar por que uma distância não aparece");
+Object.keys(dados.distancia_pendente || {}).forEach((k) => {
+  const p = dados.distancia_pendente[k];
+  assert(p.localizados / p.cadastrados < p.minimo_pct / 100, "pendente só com cobertura abaixo do mínimo: " + k);
+  assert(!dados.distancia_ate_servico || !(k in dados.distancia_ate_servico), "categoria pendente não pode ter distância: " + k);
+  assert(!Object.values(dados.setores).some((s) => ("dist_" + k) in s), "nem a distância por setor: " + k);
+});
+Object.keys(dados.distancia_ate_servico || {}).forEach((k) => {
+  const d = dados.distancia_ate_servico[k];
+  assert(d.localizados / d.cadastrados >= 0.7, "distância só com pelo menos 70% dos serviços localizados: " + k);
+});
+
 /* ---- o texto vale nos dois temas: no escuro, valor maior é tom mais CLARO, então não se pode dizer "mais escuro" ---- */
 assert(!/mais escuro|mais clar/i.test(html + js), "a explicação das cores não pode depender do tema; use a legenda");
 

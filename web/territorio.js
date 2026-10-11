@@ -370,6 +370,15 @@
       rotulo.appendChild(document.createTextNode(" Distância até " + estado.dados.distancia_ate_servico[k].rotulo));
       grupo.appendChild(rotulo);
     });
+    var pendentes = estado.dados.distancia_pendente || {}, chaves = Object.keys(pendentes);
+    if (chaves.length) {
+      var nota = document.getElementById("nota-dist-pendente");
+      nota.hidden = false;
+      nota.textContent = "Distância ainda não disponível: " + chaves.map(function (k) {
+        var p = pendentes[k];
+        return p.rotulo + " (só " + inteiro(p.localizados) + " de " + inteiro(p.cadastrados) + " estão localizados no mapa; o mínimo é " + inteiro(p.minimo_pct) + "%)";
+      }).join("; ") + ". Com poucos serviços no mapa, a distância sairia errada: os que faltam estão em algum lugar.";
+    }
     Array.prototype.forEach.call(document.querySelectorAll('input[name="metrica"]'), function (r) {
       r.addEventListener("change", function () { estado.metrica = r.value; colorir(); });
     });
