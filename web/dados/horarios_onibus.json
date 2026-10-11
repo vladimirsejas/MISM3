@@ -745,8 +745,7 @@
   }
  ],
  "lacunas": [
-  "Circular I (linha 07): só temos o sentido Volta. O sentido Ida ainda não foi cadastrado.",
-  "Linha Arco-Íris/Mãe Preta e outras linhas da SOU em Rio Claro: ainda não foram cadastradas. Veja a lista completa no site da SOU.",
+  "Circular I (linha 07): cadastramos só o sentido Volta, que é o publicado pela SOU nas páginas que usamos.",
   "Feriados não constam nas páginas da SOU que usamos: confirme com a SOU se vai viajar em feriado."
  ],
  "total_horarios": 382,

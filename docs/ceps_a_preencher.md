@@ -8,7 +8,7 @@ A análise territorial localiza cada serviço pelo CEP. Só as escolas municipai
 | caps | CAPS I — Centro de Atenção Psicossocial Infantojuvenil | Rua 15, nº 51, Consolação |
 | caps | CAPS III “18 de Maio” | Rua M-9, 66, Jd. Chervezon |
 | cras | CRAS Região Bom Sucesso/Novo Wenzel/Bom Retiro | Rua 5, 1201, Jardim Bom Retiro |
-| cras | CRAS Região Jardim Brasília | (sem endereço) |
+| cras | CRAS Região Jardim Brasília | Av. 30, 290, Jd. Brasília |
 | cras | CRAS Região Jardim Independência | Rua M7, 1031, Jd. Hipódromo |
 | cras | CRAS Região Mãe Preta | Av. 1-MP, 159, Jardim Mãe Preta |
 | cras | CRAS Região Panorama | Rua 14, 2763, Jd. Wenzel |

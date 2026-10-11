@@ -74,8 +74,12 @@ cras.forEach((s) => assert(s.bairros && s.bairros.split(",").length >= 10, "CRAS
 const porNome = Object.fromEntries(catalogo.servicos.map((s) => [s.nome, s]));
 assert.strictEqual(porNome["CRAS Região Mãe Preta"].telefone, "(19) 3524-9954");
 assert.strictEqual(porNome["CRAS Região Panorama"].endereco, "Rua 14, 2763, Jd. Wenzel");
-assert(/endereço provisório/.test(porNome["CRAS Região Jardim Brasília"].observacao) && !porNome["CRAS Região Jardim Brasília"].telefone,
-  "o CRAS Jardim Brasília está em endereço provisório e sem telefone na fonte: nada pode ser inventado");
+const jb = porNome["CRAS Região Jardim Brasília"];
+assert.strictEqual(jb.endereco, "Av. 30, 290, Jd. Brasília", "endereço da página oficial da Prefeitura (11/10/2026)");
+assert.strictEqual(jb.telefone, "(19) 3533-3752", "telefone da página oficial da Prefeitura (11/10/2026)");
+assert.strictEqual(jb.fonte_url, "https://rioclaro.sp.gov.br/centro-ref-assistencia-social/");
+assert(!jb.horario, "o horário não consta na fonte conferida: não pode ser inventado");
+assert.strictEqual(porNome["CRAS Região Bom Sucesso/Novo Wenzel/Bom Retiro"].telefone, "(19) 3531-3243");
 const creas = catalogo.servicos.filter((s) => s.subtipo === "creas");
 assert.strictEqual(creas.length, 1);
 assert.strictEqual(creas[0].telefone, "(19) 3523-6420 / (19) 3523-6439");
@@ -129,7 +133,7 @@ apae.forEach((s) => assert(s.fonte_url === "https://apaerioclaro.com.br/" && /Ca
   "APAE: fonte do site oficial e sem localização das residências inclusivas: " + s.nome));
 assert.strictEqual(catalogo.servicos.filter((s) => s.subtipo === "scfv").length, 13, "a página oficial lista 13 unidades de convivência");
 catalogo.servicos.filter((s) => ["cras", "creas", "scfv"].includes(s.subtipo)).forEach((s) =>
-  assert(s.conferido !== false && s.fonte_url.startsWith("https://desenvolvimentosocial.rc.sp.gov.br/"), "fonte da Secretaria: " + s.nome));
+  assert(s.conferido !== false && (s.fonte_url.startsWith("https://desenvolvimentosocial.rc.sp.gov.br/") || s.fonte_url === "https://rioclaro.sp.gov.br/centro-ref-assistencia-social/"), "fonte oficial (Secretaria ou Prefeitura): " + s.nome));
 catalogo.servicos.filter((s) => s.conferido === false).forEach((s) => assert(/não conferida/.test(s.fonte) || (s.aviso && s.aviso.length > 20), "item não conferido sem alerta: " + s.nome));
 assert(app.includes("Ainda não conferido na página oficial") && app.includes("s.aviso") && app.includes("s.conferido === false"), "a interface deve avisar quando o item não foi conferido");
 
@@ -397,7 +401,7 @@ onibus.linhas.forEach((l) => l.sentidos.forEach((s) => s.quadros.forEach((q) => 
 assert(contados === onibus.total_horarios, "a soma dos horários deve bater com o total");
 const circ1 = onibus.linhas.find((l) => l.numero === "07");
 assert(circ1 && circ1.sentidos.length === 1 && circ1.sentidos[0].sentido === "Volta", "a Circular I só tem a Volta: o site não pode inventar a Ida");
-assert(onibus.lacunas.some((t) => /Circular I/.test(t) && /Ida/.test(t)) && onibus.lacunas.some((t) => /Arco-Íris/.test(t)) && onibus.lacunas.some((t) => /Feriados/.test(t)), "as lacunas devem estar declaradas ao usuário");
+assert(onibus.lacunas.some((t) => /Circular I/.test(t) && /Volta/.test(t)) && onibus.lacunas.some((t) => /Feriados/.test(t)) && !onibus.lacunas.some((t) => /Arco-Íris/.test(t)), "as lacunas devem estar declaradas ao usuário (Rio Claro só tem as 5 linhas cadastradas, segundo o mantenedor)");
 assert(!/\.pdf|OCR|docs\/|desenvolvedor/i.test(JSON.stringify(onibus)), "o JSON de horários não pode expor detalhes internos");
 assert(/Só temos o sentido/.test(app) && /Essa data já passou/.test(app) && /Em feriados os horários podem mudar/.test(app), "o site deve avisar sentido faltante, validade vencida e feriados");
 console.log("dashboard.test.js: sete portas, emergência, navegação, nenhum conteúdo de demonstração, links locais e conteúdo das áreas passaram");
