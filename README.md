@@ -58,6 +58,17 @@ O CNES é a base completa baixada à mão do site do CNES e descompactada em `do
 
 Se um download automático falhar (os sites mudam), o script diz onde baixar à mão e em qual pasta colocar. O catálogo verificado (`catalogo_manual.json`) vale sempre. Com `servicos.json` gerado, o site **acrescenta** as unidades do CNES e do Censo Escolar que não estão no catálogo (sem duplicar as já cadastradas à mão com o código CNES). Com `cep_indice.json`, o site oferece a busca por CEP. Depois de editar `catalogo/servicos_manuais.csv`, rode `python pipeline/servicos.py --somente-manual` para atualizar o catálogo.
 
+## Levar os dados gerados na sua máquina para o GitHub
+Os arquivos gerados pelo pipeline (`web/dados/cep_indice.json`, `web/dados/servicos.json`) e a documentação nova ficam só no seu computador até serem versionados. O script `pipeline/preparar_versionamento.py` faz isso com segurança, **sem enviar nada para a internet**: confere o tamanho (o GitHub recusa 100 MB ou mais), procura possíveis CPFs, avisa sobre dado bruto e só adiciona ao Git os arquivos classificados `PODE`.
+
+    python pipeline/preparar_versionamento.py            # só mostra o relatório; não altera nada
+    python pipeline/preparar_versionamento.py --filtrar-inep docs\educacao\microdados_ed_basica_2025.csv   # recorte de Rio Claro (arquivo pequeno)
+    python pipeline/preparar_versionamento.py --aplicar  # git add somente dos arquivos PODE
+    git commit -m "Adiciona dados gerados e documentação"
+    git push
+
+Os microdados nacionais do INEP (`microdados_ed_basica_AAAA.csv`) ficam no `.gitignore`; versione só o recorte de Rio Claro (`microdados_ed_basica_rio_claro.csv`). O pipeline lê qualquer arquivo `microdados_ed_basica*.csv` em `docs/`, então o recorte funciona no lugar do arquivo completo.
+
 ## Testes
 
     pip install pytest
