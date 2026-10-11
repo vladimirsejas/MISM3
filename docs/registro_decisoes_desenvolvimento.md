@@ -854,3 +854,12 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - **Mulher em violência:** esta jornada **não substitui** a de violência e proteção, que espera a confirmação de CRAM, Delegacia e Patrulha. Ela aponta o Ligue 180 e a área Direitos e mantém o aviso do botão "Em perigo agora?" em todo plano.
 - **Tela:** o "100" passou a virar link de ligar (antes só números de 10 dígitos viravam). Conferido no Chromium: os quatro caminhos, o botão do passo do CRAS abre a página do mapa na caixa do bairro, 0 requisições externas, 0 erros.
 - **Erro meu corrigido antes de enviar:** no primeiro rascunho usei a observação do Fundo Social (um telefone) como "se não der certo"; troquei por uma alternativa de verdade.
+
+### Atualização cadastral da Delegacia de Defesa da Mulher — 11/10/2026
+
+- **Endereço:** a publicação oficial da Prefeitura de Rio Claro, de 12/04/2017, informa a DDM na Avenida 23, nº 1.300, entre as ruas 12 e 13, Bairro do Estádio: https://rioclaro.sp.gov.br/seguranca/apos-seis-anos-delegacia-da-mulher-volta-a-ter-predio-proprio-em-rio-claro/
+- **Telefone:** a publicação oficial da Prefeitura de 27/08/2025 informa o telefone (19) 3533-9009 para a Delegacia da Mulher: https://rioclaro.sp.gov.br/desenvolvimento-social/rio-claro-participa-de-campanha-estadual-de-combate-a-violencia-contra-a-mulher/
+- **Cadastro:** preenchidos endereço e telefone em `catalogo/servicos_manuais.csv` e no JSON manual gerado (`web/dados/catalogo_manual.json`). A fonte principal vinculada ao registro é a publicação municipal de 2025; a publicação municipal de 2017 fica citada na observação por sustentar o endereço.
+- **Cuidado com atualidade:** o endereço não foi republicado na fonte municipal de 2025. Por isso, embora esteja documentado numa fonte oficial e coincida com a informação trazida na pesquisa complementar, o cadastro mantém um aviso explícito para confirmar se continua vigente antes de ir. Horário, CEP e coordenadas ficam vazios; não foram inferidos.
+- **Escopo:** nenhuma alteração ao registro do CRAM nesta proposta. O CRAM continua sujeito à decisão do mantenedor de não preencher dados sem referência segura para uso atual.
+- **Validação técnica:** o catálogo manual permanece com 164 serviços; o registro da DDM agora contribui com endereço e telefone. Os testes automatizados do PR devem ser considerados pendentes até a conclusão da execução do GitHub Actions.
