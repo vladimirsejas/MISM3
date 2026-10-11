@@ -640,3 +640,10 @@ Nenhuma branch foi apagada nem alterada. O que **não** foi trazido para a base,
 - **Fontes para refazer:** `docs/img/mulher-idosa-fonte.svg`, `docs/img/heroi-original-4-mulheres.webp` (as quatro mulheres originais, intocadas) e `docs/img/compor_ilustracao.py`.
 - **Limites honestos:** é desenho vetorial feito por código, não pintura; o traço dela continua um pouco mais liso que o das outras quatro. Se o autor preferir, pode gerar numa ferramenta de imagens uma versão única com cinco mulheres e trocar o arquivo (atualizando as dimensões em `index.html`).
 - **Erro de processo corrigido no caminho:** numa das tentativas usei como base o arquivo já alterado e apareceram duas mulheres idosas; a base correta foi recuperada do histórico do Git.
+
+### Um nome só para o projeto: "Mulher em Rede" — 11/10/2026
+- **Pedido do autor:** não deixar o projeto com dois nomes.
+- **Decisão:** o nome do projeto e do site é **Mulher em Rede**. **MISM3** continua só como nome de código/repositório (aparece como "Mulher em Rede (MISM3)" e nos nomes de módulos JavaScript). **Entre Mulheres** é o nome da área de troca entre mulheres, e não do projeto.
+- **O que mudou:** o nome antigo "Mapa do Cuidado Rio-Clarense" saiu do título do README, de três documentos, do comentário do pipeline e do `acesso.js`; "De Mulher para Mulher" saiu dos documentos de planejamento (o nome continua proibido no site, por ser slogan de uma rede de lojas).
+- **O que ficou como está:** este registro conta a história com os nomes da época, então os nomes antigos nas entradas acima são históricos. "Observatório da Mulher Rio-Clarense" é o programa da Secretaria Municipal da Mulher, e não um nome do projeto.
+

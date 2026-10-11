@@ -80,7 +80,7 @@ Referência:
 
 O diretório apresenta fornecedores certificados e informa a origem da certificação, a data de obtenção da informação e o link para a entidade certificadora.
 
-**Ideias para o futuro marketplace De Mulher para Mulher:**
+**Ideias para o futuro marketplace Entre Mulheres:**
 - Separar “identidade verificada”, “qualificação profissional verificada” e “negócio declarado pela própria profissional”; não misturar esses selos.
 - Exibir data e método de cada verificação, em vez de um selo vago.
 - Permitir filtros por tipo de serviço, região atendida, atendimento domiciliar/remoto, faixa de preço declarada e acessibilidade informada.
@@ -195,7 +195,7 @@ Essas métricas medem a qualidade da base do projeto, não a qualidade dos servi
 - Criar indicadores da qualidade e atualização do catálogo.
 - Fazer testes com pessoas usando tarefas fictícias, sem recolher histórias pessoais.
 
-### P3 — futuro: De Mulher para Mulher
+### P3 — futuro: Entre Mulheres
 - Definir política de cadastro, verificação, moderação, avaliações, denúncia e proteção de dados.
 - Testar primeiro um catálogo pequeno de profissionais voluntárias.
 - Só depois considerar conta de usuária, mensagens, pagamentos ou integração de autenticação.
