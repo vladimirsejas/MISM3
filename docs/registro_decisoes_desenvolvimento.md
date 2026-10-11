@@ -304,3 +304,8 @@ Nenhuma branch foi apagada nem alterada. O que **não** foi trazido para a base,
 - O autor enviou o endereço e o telefone da **Unidade de Rio Claro (B80)**: Rodovia Washington Luís (SP-310), s/n, km 176, Jardim Rio Claro, CEP 13503-750; telefone (19) 3522-1710. Os registros cadastrais também descrevem a localização entre os km 174 e 176,999. Coerente com a informação anterior do autor ("em frente à pista Washington").
 - **Fonte:** o texto cita a Memória do Transporte Brasileiro e uma publicação da Prefeitura de Rio Claro, ambas fontes secundárias que **não foram abertas** pelo assistente. Por isso o cartão continua **"não conferido"**, com aviso para ligar antes e perguntar os cursos. Para passar a "conferido": abrir a página da unidade no site do SEST SENAT, ou a publicação da Prefeitura, e arquivar uma impressão em PDF (Ctrl+P, destino "Salvar como PDF").
 - Substitui a localização aproximada ("em frente à pista Washington") registrada antes.
+
+### SEST SENAT: acesso só para sócios — 11/10/2026
+- O autor informa que a opção da cidade no site do SEST SENAT **só abre para quem é sócio**. Isso explica por que a aba de Rio Claro não abria e por que as impressões mostravam só o formulário vazio.
+- O cartão e o link do plano passaram a dizer que o acesso é para sócios (segundo o autor) e a orientar a perguntar à unidade se há curso aberto ao público e como se cadastrar. O SEST SENAT permanece cadastrado por decisão do autor, como "não conferido".
+- **Efeito no produto:** o SEST SENAT não deve ser apresentado como opção aberta a todas as mulheres. Os demais cursos listados (SENAI, Senac, Etec, Fatec, SESI) não têm essa restrição nas páginas arquivadas.
