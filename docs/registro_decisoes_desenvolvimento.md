@@ -770,3 +770,10 @@ Nenhuma branch foi apagada nem alterada. O que **não** foi trazido para a base,
 - **Pedido do autor:** "o botão bat em funcionamento". Entendido como arquivo de duplo clique no Windows (se a intenção era outra, corrigir aqui).
 - **Erro meu, corrigido a pedido do autor ("cuidado que você criou um bat lá"):** o `abrir_site.bat` **já existia** na `main` (acha o Python, escolhe porta livre, espera o servidor) e eu o havia sobrescrito com uma versão mais simples sem olhar antes. Restaurei o original. Lição: ver `git ls-files` antes de criar arquivo com nome de atalho.
 - **Novo:** só `atualizar_localizacoes.bat`, que chama `pipeline/atualizar_localizacoes.py` e continua pedindo confirmação antes de alterar o catálogo. Texto sem acentos, CRLF (`.gitattributes`). Verifiquei só o formato: **não o executei, porque este ambiente é Linux**.
+
+## 11/10/2026 - Marcação de CEP exige bairro coincidente
+
+- **Achado na primeira rodada real (autor, 11/10/2026):** 39 sugestões de CEP vinham marcadas `aprovar`, mas o critério (número a até 200 do pedido) não protege contra o caso mais provável de erro: **ruas numeradas se repetem entre bairros** ("Rua 5", "Avenida 30"), e o CNEFE não traz bairro, então o número mais próximo pode estar numa rua homônima de outro bairro.
+- **Correção:** a lista de CEPs traz o bairro de cada CEP. `propor` grava `bairro_cep` e `bairro_confere` (sim/não/vazio; compara o bairro do endereço do catálogo com o do CEP ignorando "Jd.", "Vila" etc.), e `--marcar-baixas-cep` só marca `aprovar` quando `bairro_confere = sim`. As não marcadas são listadas **com o motivo** (bairro difere, sem bairro para conferir, número distante).
+- **Limites:** a checagem compara texto de bairro; bairros escritos de forma muito diferente podem cair em "não" mesmo estando certos (vão para revisão manual, que é o lado seguro). Coincidência de bairro aumenta a confiança, não prova o CEP.
+- Observados para conferir à mão: três serviços com o número 1043 (CRAS Terra Nova, SCFV Clareriano e USF Terra Nova), e correspondências em que o catálogo diz "Avenida" e a lista diz "Rua" (ou o contrário), como o Centro de Habilitação Infantil.
