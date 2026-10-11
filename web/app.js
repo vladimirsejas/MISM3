@@ -349,14 +349,28 @@
     var t = $("ia-texto"); if (!t) return;
     t.value = ""; $("ia-saida").innerHTML = ""; $("ia-limpar").hidden = true;
   }
-  function htmlSugestoes(lista) {
+  function telDoServico(tel) {
+    var m = /\(?(\d{2})\)?\s*(9?\s?\d{4})[-\s]?(\d{4})/.exec(String(tel || ""));
+    return m ? "tel:+55" + m[1] + (m[2] + m[3]).replace(/\s/g, "") : null;
+  }
+  function htmlServicoIA(sv) {
+    var href = telDoServico(sv.telefone), data = dataBr(sv.verificado_em);
+    var contato = sv.telefone
+      ? (href ? '<a class="tel" href="' + esc(href) + '">' + esc(sv.telefone) + "</a>" : esc(sv.telefone))
+      : (sv.fonte_url ? '<a href="' + esc(sv.fonte_url) + '" target="_blank" rel="noopener noreferrer">Ver na fonte oficial</a>' : "");
+    return "<li><strong>" + esc(sv.nome) + "</strong>" + (contato ? "<span>" + contato + "</span>" : "") +
+      (data ? '<span class="meta">Conferido em ' + esc(data) + "</span>" : "") + "</li>";
+  }
+  function htmlSugestoes(lista, servicos) {
     if (!lista.length) {
       return '<p class="ia-vazio">Não consegui entender por onde começar. Tente descrever de outro jeito, ou escolha uma das áreas abaixo.</p>';
     }
     var urgente = lista[0].urgente
       ? '<p class="ia-urgente" role="alert"><strong>Se você corre perigo agora, ligue 190 (Polícia Militar) ou 180 (Central de Atendimento à Mulher), ou toque em “Em perigo agora?”.</strong></p>' : "";
-    return urgente + '<p class="meta">Sugestões da ferramenta. Ela pode errar: confira em cada área.</p><ul class="ia-lista">' + lista.map(function (s) {
-      return '<li><a class="ia-card' + (s.urgente ? " urgente" : "") + '" href="' + esc(s.href) + '"><strong>' + esc(s.titulo) + "</strong><span>" + esc(s.texto) + "</span></a></li>";
+    return urgente + '<p class="meta">Sugestões da ferramenta. Ela pode errar: confira em cada área e confirme horário e vaga por telefone.</p><ul class="ia-lista">' + lista.map(function (sg) {
+      var sv = (servicos && servicos[sg.id]) || [];
+      return '<li><a class="ia-card' + (sg.urgente ? " urgente" : "") + '" href="' + esc(sg.href) + '"><strong>' + esc(sg.titulo) + "</strong><span>" + esc(sg.texto) + "</span></a>" +
+        (sv.length ? '<ul class="ia-servicos"><li class="ia-rotulo">Serviços que podem ajudar:</li>' + sv.map(htmlServicoIA).join("") + "</ul>" : "") + "</li>";
     }).join("") + "</ul>";
   }
   function usarIA() {
@@ -364,7 +378,8 @@
     if (!t.value.replace(/\s/g, "")) { saida.innerHTML = '<p class="ia-vazio">Escreva uma frase para eu poder ajudar.</p>'; return; }
     saida.innerHTML = '<p class="meta">Lendo…</p>';
     carregarModeloIA().then(function () {
-      saida.innerHTML = htmlSugestoes(MISM3IA.sugerir(t.value));
+      var sug = MISM3IA.sugerir(t.value);
+      saida.innerHTML = htmlSugestoes(sug, MISM3IA.servicosPara(t.value, sug, 2));
       $("ia-limpar").hidden = false;
     });
   }
@@ -497,6 +512,8 @@
         return !idsManuais[id] && !(/^cnes-/.test(id) && codigosManuais[id.slice(5)]);
       });
       dados.servicos = manual.concat(acrescimos);
+      /* A IA só recomenda serviços do catálogo verificado à mão (ids "man-"), nunca os cartões crus do CNES. */
+      if (window.MISM3IA) MISM3IA.usarCatalogo(dados.servicos.filter(function (s) { return /^man-/.test(String(s.id)); }));
       /* O plano do Trabalho busca os telefones no mesmo catálogo verificado (uma só fonte, nada digitado duas vezes). */
       if (window.JornadaUI) JornadaUI.usarCatalogo(function (id) {
         for (var i = 0; i < dados.servicos.length; i++) if (dados.servicos[i].id === id) return dados.servicos[i];
