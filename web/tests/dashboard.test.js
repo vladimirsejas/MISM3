@@ -270,7 +270,9 @@ assert(caduCard && caduCard.topicos.length >= 5, "falta o passo a passo da matr�
 ["Serviços", "Educação", "Matrícula e Rematrícula", "Iniciar nova solicitação", "Matrícula Escolar"].forEach((t) =>
   assert(JSON.stringify(caduCard).includes(t), "o passo a passo do CADU deve citar: " + t));
 assert(/17 de outubro de 2025/.test(JSON.stringify(caduCard)) && /2027/.test(JSON.stringify(caduCard)), "o CADU deve citar a fonte oficial e lembrar que 2027 precisa de confirmação");
-assert(/não foi conferido por nós/.test(JSON.stringify(caduCard)), "o que veio só de pesquisa deve estar marcado como não conferido");
+assert(/biometria/.test(JSON.stringify(caduCard)) && /notificação/.test(JSON.stringify(caduCard)), "o passo a passo deve cobrir cadastro (biometria) e acompanhamento por notificação");
+const secEdu = Areas.AREAS.find((a) => a.id === "educacao");
+assert(/não foi conferida por nós/.test(JSON.stringify(secEdu.secoes[0].canais.find((c) => /tipo de escola/i.test(c.nome)))), "a consulta da SED (rede estadual) continua marcada como não conferida");
 const solo = maesSec.canais.find((c) => /sozinha/i.test(c.nome));
 assert(solo && solo.topicos.length >= 6, "falta o cartão de apoio para mães que criam os filhos sozinhas");
 ["Documentos", "Prioridade na vaga", "Horário", "Quem busca a criança", "violência", "Pensão e guarda", "assistência social"].forEach((t) =>
