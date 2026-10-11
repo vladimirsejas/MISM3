@@ -263,7 +263,7 @@ assert(maesSec.canais.some((c) => /tipo de escola/i.test(c.nome)), "falta o cart
 assert(JSON.stringify(maesSec).includes("Inscrição não é vaga"), "deve explicar a diferença entre inscrição e vaga");
 assert(/2027/.test(JSON.stringify(maesSec)) && /não valem para 2027/.test(JSON.stringify(maesSec)), "o calendário de 2026 não pode ser apresentado como o de 2027");
 assert(/2027/.test(Areas.AREAS.find((a) => a.id === "educacao").pendencias.join(" ")), "a pendência deve citar o calendário de 2027");
-assert(!/\(\d{2}\)\s?\d{4}|\d{4}-\d{4}/.test(JSON.stringify(maesSec)), "o passo a passo das mães não deve conter telefones sem fonte");
+assert(!/\(\d{2}\)\s?\d{4}|\d{4}-\d{4}/.test(JSON.stringify(maesSec).replace(/https?:[^"\s]*/g, "")), "o passo a passo das mães não deve conter telefones sem fonte (endereços de links não contam)");
 assert(Areas.AREAS.find((a) => a.id === "educacao").pendencias.some((p) => /Rio Claro/.test(p) && /fonte oficial/.test(p)), "Educação deve declarar que as regras locais ainda não vieram de fonte oficial");
 const caduCard = maesSec.canais.find((c) => /CADU/.test(c.nome));
 assert(caduCard && caduCard.topicos.length >= 5, "falta o passo a passo da matrícula pelo aplicativo CADU");
@@ -277,6 +277,11 @@ const docsCard = maesSec.canais.find((c) => /Documentos em situações específi
 assert(docsCard && docsCard.topicos.length >= 6 && /não foi conferida em fonte oficial/.test(docsCard.aviso), "os documentos indicados só pela pesquisa devem estar marcados como não conferidos");
 const negada = maesSec.canais.find((c) => /negada/.test(c.nome));
 ["Conselho Tutelar", "Defensoria", "Ministério Público", "registro de que não há vaga"].forEach((t) => assert(JSON.stringify(negada).includes(t), "vaga negada deve citar: " + t));
+const estadual = maesSec.canais.find((c) => /Calendário de 2027 das escolas estaduais/.test(c.nome));
+assert(estadual && /Resolução SEDUC nº 80/.test(estadual.fonte[0]) && /conferido por nós/.test(estadual.fonte[2]), "o calendário estadual deve citar a Resolução SEDUC nº 80, conferida");
+["11 de fevereiro de 2027", "22 de dezembro de 2027", "6 de julho de 2027", "26 de julho de 2027", "19 de janeiro", "200 dias letivos"].forEach((t) =>
+  assert(JSON.stringify(estadual).includes(t), "calendário estadual deve conter: " + t));
+assert(/não menciona a Copa/.test(JSON.stringify(estadual)) && /rede estadual/.test(estadual.texto) && /rede municipal de Rio Claro/.test(JSON.stringify(estadual)), "o calendário estadual não pode ser apresentado como o da rede municipal de Rio Claro");
 const ferias = maesSec.canais.find((c) => /Férias escolares de 2027/.test(c.nome));
 assert(ferias && /15\.421/.test(JSON.stringify(ferias)) && /art\. 67/.test(JSON.stringify(ferias)), "o cartão das férias de 2027 deve citar a Lei 15.421, art. 67");
 assert(/A lei não traz as datas/.test(JSON.stringify(ferias)) && /não foi conferida por nós/.test(JSON.stringify(ferias)), "as datas da Copa não estão na lei e não podem ser apresentadas como oficiais");

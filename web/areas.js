@@ -97,12 +97,26 @@
             topicos: [
               ["O que a lei determina", "A Lei nº 15.421, de 1º de junho de 2026 (art. 67), manda os sistemas de ensino ajustarem os calendários para que as férias escolares do primeiro semestre de 2027, nas redes pública e privada, abranjam todo o período entre a abertura e o encerramento da Copa do Mundo Feminina da FIFA 2027."],
               ["Quais são as datas", "A lei não traz as datas. Reportagens indicam que a Copa vai de 24 de junho a 25 de julho de 2027, mas essa informação não foi conferida por nós em fonte oficial. Use sempre o calendário da escola do seu filho."],
-              ["Como Rio Claro vai aplicar", "Ainda não sabemos como a rede municipal, a rede estadual e as escolas particulares de Rio Claro vão ajustar o calendário. Pergunte à Secretaria Municipal da Educação ou à escola quando o calendário de 2027 estiver publicado."],
+              ["Como Rio Claro vai aplicar", "A rede estadual já publicou o calendário de 2027 (veja o cartão “Calendário de 2027 das escolas estaduais”), mas a resolução não menciona a Copa. Ainda não sabemos como a rede municipal e as escolas particulares de Rio Claro vão ajustar o calendário. Pergunte à Secretaria Municipal da Educação ou à escola."],
               ["Se você trabalha ou estuda", "Combine com antecedência quem cuida das crianças nesse período e pergunte à escola ou à Secretaria se haverá alguma atividade ou programa durante as férias. Este site não confirmou que haja."],
               ["Isto não é o calendário de matrícula", "O período de matrículas e rematrículas de 2027 em Rio Claro continua sem data confirmada: veja “Datas” em “Matricular meu filho pela primeira vez”."]
             ],
             aviso: "A regra do art. 67 foi conferida no texto original da lei. As datas da Copa e a forma como Rio Claro aplicará o calendário ainda precisam ser confirmadas.",
             fonte: ["Lei nº 15.421, de 1º de junho de 2026, art. 67 (texto original, Câmara dos Deputados; DOU de 2/6/2026, Seção 1, p. 2)", null, "regra nacional conferida; datas e aplicação local a confirmar"] },
+          { nome: "Calendário de 2027 das escolas estaduais", sem_tel: true, resumo: "Ver as datas",
+            texto: "Datas fixadas pela Secretaria da Educação do Estado de São Paulo para as escolas da rede estadual (em geral, ensino fundamental II e médio). Não valem automaticamente para a rede municipal de Rio Claro nem para escolas particulares.",
+            topicos: [
+              ["Começo e fim das aulas", "O ano letivo de 2027 começa em 11 de fevereiro de 2027 e termina em 22 de dezembro de 2027."],
+              ["Semestres", "O 1º semestre termina em 6 de julho de 2027 e o 2º semestre começa em 26 de julho de 2027. As férias de julho dos alunos ficam entre essas duas datas."],
+              ["Bimestres", "1º: 11/02 a 23/04. 2º: 26/04 a 06/07. 3º: 26/07 a 05/10. 4º: 06/10 a 22/12 (todos em 2027)."],
+              ["Recesso escolar", "De 19 de janeiro a 3 de fevereiro de 2027 (antes do início das aulas) e de 23 a 31 de dezembro de 2027 (depois do encerramento)."],
+              ["Dias sem aula para os professores planejarem", "Planejamento: 4 e 5 de fevereiro de 2027. Replanejamento: 22 e 23 de julho de 2027. São períodos não letivos: confirme com a escola se haverá aula."],
+              ["Dias letivos", "As escolas devem garantir o mínimo de 200 dias letivos. Dias de aula que deixarem de acontecer devem ser repostos, inclusive em sábados e recessos."],
+              ["Quem segue este calendário", "A resolução vale para a rede estadual. As redes municipais podem adotar as mesmas diretrizes por adesão (art. 4º); ainda não sabemos se a rede municipal de Rio Claro adotou. Escolas particulares definem o próprio calendário."],
+              ["E a Copa do Mundo Feminina?", "O texto da resolução, publicada em 29 de julho de 2026, não menciona a Copa. A Lei nº 15.421/2026 (art. 67) manda as férias do 1º semestre de 2027 abrangerem o período da Copa; pergunte à escola ou à Diretoria de Ensino se o calendário da sua escola será ajustado. Este site não sabe."]
+            ],
+            aviso: "Cada escola aprova o seu calendário, com base na resolução, e pode ter pequenas diferenças. Confirme sempre o calendário da escola do seu filho.",
+            fonte: ["Resolução SEDUC nº 80, de 28 de julho de 2026 (Diário Oficial do Estado de São Paulo, 29/07/2026)", "https://doe.sp.gov.br/executivo/secretaria-da-educacao/resolucao-seduc-n-80-de-28-de-julho-de-2026-20260728112412202010205", "texto oficial conferido por nós"] },
           { nome: "Documentos em situações específicas: o que a pesquisa indica", sem_tel: true, resumo: "Ver o passo a passo",
             texto: "Além da lista geral, alguns casos costumam pedir papéis a mais. Use como roteiro de perguntas para a Secretaria, não como lista oficial.",
             topicos: [
