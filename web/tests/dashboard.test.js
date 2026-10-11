@@ -241,6 +241,8 @@ const trab = Areas.AREAS.find((a) => a.id === "trabalho").secoes[0], edu = Areas
 lista.filter((x) => x.tipo === "emprego_curso").forEach((x) =>
   assert(trab.subtipos.includes(x.subtipo) || edu.subtipos.includes(x.subtipo), "serviço sem área (subtipo não coberto): " + x.id + " " + x.subtipo));
 assert(Areas.AREAS.find((a) => a.id === "trabalho").secoes[0].links.some((l) => l[1] === "#educacao"), "Trabalho deve apontar para a área Educação");
+lista.filter((x) => x.subtipo === "curso_profissionalizante").forEach((x) => assert(/profissionalizantes/.test(x.grupo) && !/técnicos/.test(x.grupo), "curso profissionalizante deve ficar no grupo próprio: " + x.id));
+lista.filter((x) => x.subtipo === "curso_tecnico").forEach((x) => assert(/técnicos/.test(x.grupo) && !/profissionalizantes/.test(x.grupo), "curso técnico deve ficar no grupo próprio: " + x.id));
 assert(/@media print/.test(css) && /folha-impressao/.test(css), "deve haver estilo de impressão para o plano e o currículo");
 assert(!/localStorage|sessionStorage|document\.cookie/.test(ler("jornada-ui.js") + ler("jornada.js")), "a jornada não pode guardar nada no aparelho");
 assert(!/fetch\(|XMLHttpRequest|sendBeacon/.test(ler("jornada-ui.js") + ler("jornada.js")), "a jornada não pode enviar nada pela rede");

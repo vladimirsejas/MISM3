@@ -339,3 +339,9 @@ Nenhuma branch foi apagada nem alterada. O que **não** foi trazido para a base,
 - **Regra de links:** o teste que exigia `https` em todo link de área passou a aceitar também `#área` quando a área existe, o que permite links internos sem enfraquecer a proteção contra links externos estranhos.
 - **Travas novas no teste:** nenhum subtipo de ensino pode ficar em Trabalho; todo serviço do tipo `emprego_curso` precisa ter um subtipo coberto por Trabalho ou Educação (para nada ficar sem área); Trabalho precisa apontar para Educação.
 - **Verificação no navegador (390 px):** Educação com 11 serviços em 3 grupos; Trabalho com 7 em 2 grupos; link interno abre Educação na mesma aba; sem rolagem lateral e sem erro de JavaScript.
+
+### Cursos profissionalizantes separados dos técnicos — 11/10/2026
+- **Pedido do autor:** os cursos profissionalizantes devem ficar separados dos outros cursos. O grupo único "Cursos profissionalizantes e técnicos" foi dividido por subtipo.
+- **Educação agora tem quatro grupos:** "Concluir os estudos e graduação (SESI)" (3), "Cursos profissionalizantes (qualificação profissional)" (4: SENAI, Senac, SEST SENAT e o cartão de cursos abertos do SEST SENAT), "Cursos técnicos (ensino técnico)" (2: catálogo geral das Etecs e a Etec de Rio Claro) e "Cursos superiores de tecnologia" (2: Fatec).
+- Trava no teste: serviço `curso_profissionalizante` só pode estar no grupo de profissionalizantes e `curso_tecnico` só no de técnicos.
+- **Ressalva:** o SENAI também oferece cursos técnicos (a página da unidade os lista), mas o cartão é um só e ficou entre os profissionalizantes por ser a unidade e a aprendizagem industrial o foco da página; se preferir, o cartão pode ser dividido em dois.
