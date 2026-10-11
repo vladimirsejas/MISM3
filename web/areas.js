@@ -201,7 +201,37 @@
     {
       id: "saude", nome: "Saúde", icone: "saude",
       intro: "Unidades de saúde e serviços de atendimento. Em urgência médica, ligue 192.",
-      secoes: [{ titulo: "Unidades de saúde", tipos: ["saude"], agrupar: true, links: [] }],
+      guia: {
+        titulo: "O que você encontra nesta página",
+        texto: "Cuidar de quem você ama também cansa. Aqui estão a saúde para você e os caminhos para quando um filho ou outro familiar usa álcool ou drogas.",
+        itens: [
+          { titulo: "Meu filho ou familiar usa álcool ou drogas", texto: "Por onde começar, o que fazer numa crise, onde ligar e como cuidar de você nesse caminho. A culpa não é sua.", ancora: "saude-familia-drogas", botao: "Ver o que fazer" },
+          { titulo: "Unidades de saúde", texto: "Postos, UPAs, hospitais e especialidades, com endereço e telefone.", ancora: "saude-unidades", botao: "Ver as unidades" }
+        ]
+      },
+      secoes: [
+        {
+          titulo: "Meu filho ou familiar usa álcool ou drogas", ancora: "saude-familia-drogas",
+          descricao: "Muitas mães passam por isso, e ninguém precisa enfrentar sozinha. Você pode ligar e pedir orientação mesmo que a pessoa ainda não queira se tratar.",
+          tipos: ["saude"], subtipos: ["caps"], links: [],
+          canais: [
+            { nome: "Por onde começar", sem_tel: true, resumo: "Ver o passo a passo",
+              texto: "Ligue antes e conte a situação em poucas palavras. Peça orientação sobre como a pessoa e a sua família podem ser atendidas.",
+              topicos: [
+                ["Se a pessoa já é adulta", "O CAPS AD (Centro de Atenção Psicossocial Álcool e Drogas) é o serviço de saúde de Rio Claro para quem usa álcool ou drogas. Ligue e pergunte como é o primeiro atendimento e se a família pode ser orientada."],
+                ["Se tem menos de 18 anos", "O CAPS Infantojuvenil atende crianças e adolescentes. O Conselho Tutelar (área Assistência Social) também orienta sobre a proteção de crianças e adolescentes."],
+                ["Se é uma crise (agitação, risco de vida, overdose)", "Ligue 192 (SAMU). O CAPS III funciona 24 horas, segundo a fonte abaixo: confirme por telefone."],
+                ["Se há violência em casa", "Se você tem medo, ou se alguém a agride ou ameaça, use o botão “Em perigo agora?”. Sua segurança vem primeiro."],
+                ["Para você", "O CRAS e o CREAS (área Assistência Social) orientam famílias. Pergunte também se há grupo ou acolhimento para quem cuida. Procure cuidar da sua própria saúde e do seu descanso."]
+              ],
+              fonte: ["Fundação Municipal de Saúde — endereços das unidades", "https://www.saude-rioclaro.org.br/enderecos.htm", "conferido em 10/10/2026; horários e formas de acesso devem ser confirmados por telefone"] },
+            { nome: "Apoio fora da rede pública", sem_tel: true, resumo: "Ver o que perguntar",
+              texto: "Existem grupos de ajuda mútua para familiares, e o CAPS AD ou o CRAS podem indicar os que funcionam em Rio Claro. Este site ainda não tem a lista conferida.",
+              fonte: ["Pesquisa em andamento", null, "sem endereço nem telefone conferidos: não publicamos o que não foi verificado"] }
+          ]
+        },
+        { titulo: "Unidades de saúde", ancora: "saude-unidades", tipos: ["saude"], agrupar: true, links: [] }
+      ],
       pendencias: [
         "A lista segue a página “Endereços das unidades de saúde” da Fundação Municipal de Saúde (10/10/2026), conferida com o cadastro do CNES. Telefones e horários podem mudar: confirme com a unidade.",
         "Hospital Público Municipal Maria Thereza Ramos Vitti: o nome consta no CNES, mas nenhuma fonte consultada traz o endereço e o telefone. Ligue para a Fundação Municipal de Saúde."

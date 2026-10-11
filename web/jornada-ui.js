@@ -64,6 +64,7 @@
   function ehInterno(url) { return String(url).charAt(0) === "#"; }
   function nomeDestino(url) {
     if (url === "#transporte") return "área Transporte deste site";
+    if (url === "#saude" || /^#saude\//.test(url)) return "área Saúde deste site";
     if (url === "#assistencia") return "área Assistência Social deste site";
     if (/^#educacao/.test(url)) return "área Educação deste site";
     return "este site";
@@ -123,6 +124,12 @@
     }
     var n = plano.primeiros || 3, todos = plano.passos;
     var avisos = '<div class="status" role="note">' + plano.avisos.map(function (a) { return "<p>" + esc(a) + "</p>"; }).join("") + "</div>";
+    var ap = plano.apoio;
+    if (ap) {
+      avisos = (paraPapel
+        ? "<p>" + esc(ap.texto) + " (" + esc(ap.rotulo) + ")</p>"
+        : '<aside class="apoio-extra"><p>' + esc(ap.texto) + '</p><p><a class="btn secundario" href="' + esc(ap.alvo) + '">' + esc(ap.rotulo) + "</a></p></aside>") + avisos;
+    }
     if (paraPapel) {
       return '<ol class="plano">' + todos.map(function (p, i) { return htmlPasso(p, i === 0, true); }).join("") + "</ol>" + avisos;
     }
