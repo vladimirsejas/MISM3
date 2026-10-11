@@ -63,6 +63,7 @@ O CNES é a base completa baixada à mão do site do CNES e descompactada em `do
     python pipeline/cnes.py docs/cnes     # diagnóstico: só contagens, confere as regras do CNES
     python pipeline/servicos.py           # gera web/dados/servicos.json
     python pipeline/geocodificar_catalogo.py   # SUGERE CEP/coordenada (planilha dados/geocodificacao_proposta.csv); só muda o catálogo com --aplicar-aprovadas, e só linhas que uma pessoa marcou "aprovar"
+    python pipeline/oferta_educacao_infantil.py   # oferta real de creche e pré-escola de Rio Claro (Censo Escolar 2025 do INEP, em docs/educacao/dados/) -> web/dados/oferta_educacao_infantil.json
     pip install pyshp
     python pipeline/setores.py caminho/SP_setores_CD2022.zip   # malha de setores de Rio Claro
 
