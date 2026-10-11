@@ -34,8 +34,8 @@
         titulo: "O que você encontra nesta página",
         texto: "A área Educação é para os seus filhos e também para você.",
         itens: [
-          { titulo: "Para os seus filhos", texto: "Matrícula, transferência, vaga em creche, calendário de 2027, documentos e o que fazer se não houver vaga. Há também apoio para quem cria os filhos sozinha e a lista das escolas municipais, com endereço e telefone.", ancora: "educacao-filhos", botao: "Ver o guia dos filhos" },
-          { titulo: "Para você", texto: "Terminar o ensino médio (EJA), fazer faculdade e cursos profissionalizantes e técnicos para trabalhar: SENAI, Senac, SEST SENAT, Etec e Fatec.", ancora: "educacao-voce", botao: "Ver cursos e estudos para você" },
+          { titulo: "Para os seus filhos", texto: "Matrícula, transferência, vaga em creche, calendário de 2027, documentos e o que fazer se não houver vaga. Há também apoio para quem cria os filhos sozinha e a lista das escolas municipais, com endereço e telefone. O cursinho gratuito para o vestibular e o ENEM, que serve aos filhos, está em “Para você”.", ancora: "educacao-filhos", botao: "Ver o guia dos filhos" },
+          { titulo: "Para você", texto: "Terminar o ensino médio (EJA), fazer faculdade e cursos profissionalizantes e técnicos para trabalhar: SENAI, Senac, SEST SENAT, Etec e Fatec, além do cursinho gratuito para o vestibular e o ENEM e do EJA da Unesp.", ancora: "educacao-voce", botao: "Ver cursos e estudos para você" },
           { titulo: "Emprego e renda", texto: "Vagas de emprego, crédito e um plano para voltar a trabalhar ficam na área Trabalho.", href: "#trabalho", botao: "Ir para Trabalho" }
         ]
       },
@@ -187,9 +187,9 @@
         tipos: ["creche"], subtipos: ["escola_municipal"], links: []
       }, {
         titulo: "Para você: concluir os estudos e se qualificar", ancora: "educacao-voce",
-        descricao: "Você também pode estudar. Terminar o ensino médio, fazer faculdade e cursos profissionalizantes ou técnicos abre caminho para o trabalho. Cada cartão diz quem oferece e como confirmar vagas, datas e custos com a própria instituição.",
+        descricao: "Você também pode estudar. Terminar o ensino médio, fazer faculdade e cursos profissionalizantes ou técnicos abre caminho para o trabalho. Há também um cursinho gratuito para o vestibular e o ENEM (as provas que dão acesso à faculdade), que serve para você e para os seus filhos, com contato pelo Instagram. Cada cartão diz quem oferece e como confirmar vagas, datas e custos com a própria instituição.",
         tipos: ["emprego_curso"], agrupar: true,
-        subtipos: ["eja", "escola_sesi", "graduacao", "curso_superior_tecnologia", "curso_tecnico", "curso_profissionalizante"],
+        subtipos: ["eja", "escola_sesi", "graduacao", "curso_superior_tecnologia", "curso_tecnico", "curso_profissionalizante", "cursinho_popular", "eja_unesp"],
         links: []
       }],
       avisos: ["Uma escola ou creche cadastrada não confirma que há vaga. Confirme com a Secretaria da Educação."],

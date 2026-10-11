@@ -20,6 +20,7 @@ const casos = [
   ["preciso de creche e emprego", ["filhos", "emprego_curso"]],
   ["estudar e conseguir vaga na creche", ["filhos", "estudo"]],
   ["quero voltar a estudar", ["estudo"]],
+  ["cursinho gratuito para meu filho", ["filhos", "estudo"]],
   ["bolsa família", ["familia"]],
   ["quero bolsa de estudos", ["estudo"]],
   ["não tenho dinheiro para comer", ["familia"]],

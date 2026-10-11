@@ -58,7 +58,8 @@
     ]],
     ["estudo", [
       "estudo", "estudar", "faculdade", "universidade", "escola", "ensino",
-      "alfabetizacao", "voltar a estudar", "bolsa de estudos"
+      "alfabetizacao", "voltar a estudar", "bolsa de estudos",
+      "cursinho", "vestibular", "pre vestibular", "enem"
     ]],
     ["moradia", [
       "moradia", "habitacao", "aluguel", "aluguel social", "casa para morar",

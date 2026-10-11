@@ -115,6 +115,15 @@ def test_manuais_exigem_fonte_e_tipo():
         servicos.servicos_manuais(pd.DataFrame([{"tipo": "mulher", "nome": "X"}]), INDICE)
 
 
+def test_catalogo_manual_cursinho_e_peja():
+    df = common.ler_csv_flex(common.CATALOGO / "servicos_manuais.csv")
+    por_id = {x["id"]: x for x in servicos.servicos_manuais(df, INDICE)}
+    assert por_id["man-metamorfose"]["instagram"] == "metamorfose.rc"
+    assert por_id["man-peja-unesp"]["instagram"] == "peja.gepepdh.unesp"
+    assert "instagram" not in por_id["man-pat"]
+    assert por_id["man-metamorfose"]["subtipo"] == "cursinho_popular"
+
+
 def test_catalogo_manual_real_valido():
     df = common.ler_csv_flex(common.CATALOGO / "servicos_manuais.csv")
     s = servicos.servicos_manuais(df, INDICE)
