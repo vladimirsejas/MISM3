@@ -92,6 +92,20 @@
               ["O que perguntar", "Em que período a matrícula ou a inscrição está aberta? Onde faço (pessoalmente, na escola ou pela internet)? Quais documentos levo? Qual escola atende o meu endereço? Como acompanho o pedido? Peça tudo por escrito ou anote o nome de quem atendeu."]
             ],
             fonte: ["Constituição Federal, art. 208; LDB (Lei 9.394/1996), art. 6º; ECA (Lei 8.069/1990), art. 53", null, "regras gerais; procedimentos de Rio Claro devem ser confirmados na Secretaria da Educação"] },
+          { nome: "Documentos em situações específicas: o que a pesquisa indica", sem_tel: true, resumo: "Ver o passo a passo",
+            texto: "Além da lista geral, alguns casos costumam pedir papéis a mais. Use como roteiro de perguntas para a Secretaria, não como lista oficial.",
+            topicos: [
+              ["Creche em período integral", "A pesquisa indica que podem pedir comprovante de trabalho dos pais (carteira assinada, holerite ou declaração de trabalho autônomo) e, em alguns casos, comprovante de renda ou NIS/Bolsa Família como critério de prioridade. Pergunte se há prioridade em Rio Claro e quais comprovantes são aceitos."],
+              ["Comprovante de residência", "Em geral, conta recente de água, luz, internet ou telefone fixo. Se você mora de aluguel e a conta não está no seu nome, pergunte se aceitam o contrato de aluguel ou a declaração do proprietário. O endereço pode influenciar a escola oferecida."],
+              ["Cartão do SUS", "A pesquisa indica que também pode ser pedido o Cartão do SUS da criança. Leve, se tiver."],
+              ["Depois da solicitação no CADU", "Pergunte se é preciso levar cópias dos documentos à escola indicada depois da confirmação."],
+              ["Vindo de outra escola (transferência)", "Costuma ser pedida a declaração de transferência e o histórico escolar da escola de origem. Se vier de escola particular, pergunte se pedem declaração de quitação de débitos."],
+              ["Criança que vive com avós, tios ou outro cuidador", "Pergunte o que vale quando não há guarda judicial. A pesquisa indica que pode ser pedido o termo de guarda."],
+              ["Educação especial (deficiência, TEA)", "Leve laudo médico atualizado e relatórios pedagógicos anteriores, se houver, para a escola organizar o atendimento especializado. Peça à Secretaria a orientação sobre apoio."],
+              ["Ensino médio à noite, de 16 a 18 anos (rede estadual)", "A pesquisa indica que a rede estadual pode priorizar quem trabalha e pedir comprovação de trabalho. Confirme na escola estadual."]
+            ],
+            aviso: "Esta lista vem de pesquisa (inclui informações da rede estadual e de outras cidades) e não foi conferida em fonte oficial de Rio Claro. A Secretaria Municipal da Educação informa os documentos exigidos em cada caso.",
+            fonte: ["Pesquisa; sem fonte oficial local conferida", null, "a ser confirmada"] },
           { nome: "Pedir transferência de escola", sem_tel: true, resumo: "Ver o passo a passo",
             texto: "Para mudar o filho de escola (mudança de bairro, de cidade ou de rede).",
             topicos: [
@@ -115,6 +129,8 @@
             topicos: [
               ["Conselho Tutelar", "Recebe casos de direitos de crianças e adolescentes. Veja o contato na área Assistência Social deste site."],
               ["Defensoria Pública", "Orienta e pode atuar, sem custo para quem não pode pagar, para garantir o direito à vaga. Link nesta área, na seção de direitos."],
+              ["Peça o registro de que não há vaga", "Se disserem que não há vaga, pergunte se podem dar um documento ou protocolo que registre a falta de vaga e a posição do seu pedido na lista de espera. Não deixe de concluir o pedido no CADU só porque não há vaga: pergunte à Secretaria se o cadastro e o protocolo colocam o seu filho na lista de espera."],
+              ["Ministério Público (Promotoria da Infância e Juventude)", "Se o Conselho Tutelar e a Secretaria não resolverem, a família pode procurar a Promotoria da Infância e Juventude. Confirme o endereço e a forma de atendimento antes de ir."],
               ["Guarde as provas", "Protocolo, nomes de atendentes, datas e respostas por escrito ajudam em qualquer pedido de ajuda."]
             ],
             fonte: ["ECA (Lei 8.069/1990), arts. 53 e 54", null, "regra geral"] }
