@@ -604,7 +604,8 @@
     });
     $("grupos").innerHTML = html;
     $("resumo-area").textContent = "Resultados a partir do centro do CEP " + r.cep.slice(0, 5) + "-" + r.cep.slice(5) +
-      " (área aproximada de " + r.area.raio_m + " m de raio, " + r.area.n + " endereços no IBGE).";
+      " (área aproximada de " + r.area.raio_m + " m de raio" +
+      (r.area.n > 0 ? ", " + r.area.n + " endereços no IBGE)." : ", ponto único da lista de CEPs).");
     desenharMapa(r);
   }
 
