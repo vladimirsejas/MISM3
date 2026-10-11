@@ -257,3 +257,7 @@ Nenhuma branch foi apagada nem alterada. O que **não** foi trazido para a base,
 - **Defeito encontrado e corrigido no teste de navegador:** o plano sumia ao abrir um link do plano (ex.: Assistência Social) e voltar, porque a área era redesenhada. Agora o conteúdo é restaurado ao reabrir a área e só apagado ao voltar ao Início, ao clicar em Limpar ou ao fechar a página.
 - **Não implementado de propósito:** acompanhamento de casos, comunidade de apoio, reserva de vaga de creche, lista de vagas de emprego (não há base com fonte) e acordos com empresas; dependem de parcerias ou dados que não existem.
 - **Verificação:** testes de Python (39), acesso, classificador (47), dashboard e jornada passam. No navegador, em 390 px: plano de 6 passos no caso central, link interno e volta, currículo com texto malicioso sem injeção, impressão mostrando só a folha, sem rolagem lateral e sem erro de JavaScript.
+
+### SEST SENAT: unidade de Rio Claro não abre — 11/10/2026
+- O autor informou que a aba de Rio Claro não abre no site do SEST SENAT. O cadastro continua (decisão do autor), como **não conferido**, e o aviso passou a dizer que a cidade talvez não tenha unidade e que, nesse caso, é preciso ver a unidade mais próxima ou ligar antes.
+- **Causa de os PDFs não ajudarem:** o rodapé das impressões traz "Anotações Rápidas", a impressora virtual do OneNote, que gera imagem sem texto. Para o assistente conseguir ler uma página, usar "Salvar como PDF" do navegador (Ctrl+P, destino "Salvar como PDF") ou colar o texto copiado da página.
