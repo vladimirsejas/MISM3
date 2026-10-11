@@ -405,3 +405,9 @@ Nenhuma branch foi apagada nem alterada. O que **não** foi trazido para a base,
 - Continuam pendentes e não vêm da Prefeitura de forma confirmada: calendário e procedimento de 2027; como pedir vaga em creche sem disponibilidade; se há atendimento presencial do CADU (a sigla na peça oficial é "Central de Atendimento Digital Unidades") e onde.
 - Os testes do passo a passo das mães (sem telefones sem fonte) continuam valendo: os números ficam no cadastro da Secretaria, não no texto do guia.
 - Verificação: testes de `web/tests` passam; `pytest pipeline/tests`: 34 passaram, 1 ignorado. O verificador de links (`verificar_catalogo.py`) não consegue abrir sites externos neste ambiente (bloqueio de rede), então não valida os links.
+
+### Convenção: vários telefones na mesma unidade são linhas de PABX — 11/10/2026
+- O autor explicou que unidades e autarquias da Prefeitura costumam divulgar **vários números porque usam PABX** (central telefônica com várias linhas). Isso é comum, por exemplo, na UPA, que tem três números. Portanto, **vários telefones na mesma unidade não indicam divergência**.
+- Convenção para o catálogo: cadastrar todos os números publicados na coluna `telefone`, separados por " / ", e dizer na observação de onde vem cada um. Só tratar como divergência quando a fonte oficial dá **números diferentes para o mesmo serviço sem explicação** ou quando o endereço, o nome ou o horário não batem.
+- A observação da Secretaria Municipal da Educação foi corrigida: os três telefones (3522-1950, 3522-1957 e 3522-1970) são linhas do PABX da Secretaria; "se uma linha estiver ocupada, ligue em outra". A afirmação anterior de que haveria "divergência" estava errada.
+- **Pendente:** a UPA está cadastrada com um só número, (19) 3522-1818. Quando o autor informar os outros dois, acrescentar ao cadastro. Não foram inventados números.
