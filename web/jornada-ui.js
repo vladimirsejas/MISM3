@@ -85,6 +85,7 @@
     return "este site";
   }
   function telHref(tel) {
+    if (/^\d{3}$/.test(String(tel).trim())) return "tel:" + String(tel).trim(); /* 100, 180, 190... */
     var m = /\(?(\d{2})\)?\s*(\d{4,5})[-\s]?(\d{4})/.exec(String(tel));
     return m ? "tel:+55" + m[1] + m[2] + m[3] : null;
   }
