@@ -98,3 +98,7 @@ Ao concluir mudanças relevantes, registrar o que foi alterado, o teste executad
 - A regra está em `Acesso.idadeVerificacao` (`web/acesso.js`), separada da interface e coberta por testes nas bordas (hoje, 1 dia, 90 e 91 dias, vazio, futuro, texto inválido). O limite de 90 dias é uma escolha de partida, não um critério oficial.
 - Verificação no navegador: com datas recentes, 0 avisos; com data trocada para 2026-03-01 apenas no navegador, 3 avisos; nenhum erro de JavaScript.
 - Não resolvido: o pipeline grava `verificado_em` de escolas e CNES como a data de geração do arquivo, não a data de conferência na fonte. Esses cartões dizem "verificado hoje" logo após rodar o pipeline, o que pode superestimar a atualidade.
+
+### Confirmação dos números do CNES — 11/10/2026
+- O autor do projeto, que trabalha na Fundação Municipal de Saúde de Rio Claro (FMSRC), confirmou que os números de saúde estão corretos: 977 estabelecimentos na base do CNES e 45 selecionados para publicação (UBS, urgência, hospitais, CAPS e serviços especializados).
+- A confirmação vem do autor, não de um arquivo do repositório. A base do CNES (`docs/cnes`) não está versionada, então `python pipeline/cnes.py` não pode reproduzir esses números neste ambiente. Pendente: registrar a data de download do CNES e os critérios de seleção dos 45 em `docs/inventario_de_fontes.md`, para que a seleção seja auditável por outras pessoas.

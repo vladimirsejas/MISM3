@@ -20,6 +20,7 @@ Cada serviço mostra a fonte, a data de verificação e há quantos dias ela foi
 ## Estado dos dados neste repositório
 - **Versionado:** catálogo manual com 10 serviços (`catalogo/servicos_manuais.csv`), malha e resumo de setores censitários, `horarios_onibus.json` e dados de **demonstração** (`web/dados/demo/`).
 - **Não versionado:** `web/dados/cep_indice.json` e `web/dados/servicos.json`, gerados localmente pelo pipeline. Sem eles o site abre em **modo demonstração**, com a faixa "DADOS ILUSTRATIVOS" e os CEPs fictícios 00000-001, 00000-002 e 00000-003. Nesse modo, as portas mostram serviços `[DEMO]` e links oficiais. A porta Saúde traz dois links da Prefeitura (lista de Unidades Básicas de Saúde e Fundação Municipal de Saúde), confirmados como funcionando pelo autor em 11/10/2026; endereços e telefones das unidades não foram copiados.
+- CNES: 977 estabelecimentos na base e 45 selecionados para publicação, números confirmados pelo autor do projeto, que trabalha na Fundação Municipal de Saúde de Rio Claro (FMSRC). A base do CNES não está versionada aqui, então esses números não são reproduzíveis a partir do repositório.
 - Números gerados localmente em 09/10/2026 (ver [inventário de fontes](docs/inventario_de_fontes.md)): 104.236 linhas do CNEFE lidas e 1.387 CEPs indexados; 142 escolas do INEP em Rio Claro, 69 com indicação de Educação Infantil (nenhum campo identifica creche).
 
 ## Como rodar
