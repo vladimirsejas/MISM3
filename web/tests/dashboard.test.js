@@ -273,6 +273,11 @@ assert(/17 de outubro de 2025/.test(JSON.stringify(caduCard)) && /2027/.test(JSO
 assert(/biometria/.test(JSON.stringify(caduCard)) && /notificação/.test(JSON.stringify(caduCard)), "o passo a passo deve cobrir cadastro (biometria) e acompanhamento por notificação");
 const secEdu = Areas.AREAS.find((a) => a.id === "educacao");
 assert(/não foi conferida por nós/.test(JSON.stringify(secEdu.secoes[0].canais.find((c) => /tipo de escola/i.test(c.nome)))), "a consulta da SED (rede estadual) continua marcada como não conferida");
+const docsCard = maesSec.canais.find((c) => /Documentos em situações específicas/.test(c.nome));
+assert(docsCard && docsCard.topicos.length >= 6 && /não foi conferida em fonte oficial/.test(docsCard.aviso), "os documentos indicados só pela pesquisa devem estar marcados como não conferidos");
+const negada = maesSec.canais.find((c) => /negada/.test(c.nome));
+["Conselho Tutelar", "Defensoria", "Ministério Público", "registro de que não há vaga"].forEach((t) => assert(JSON.stringify(negada).includes(t), "vaga negada deve citar: " + t));
+assert(!/15\.421|Copa/.test(JSON.stringify(maesSec)), "a lei da Copa não conferida não pode entrar no guia");
 const solo = maesSec.canais.find((c) => /sozinha/i.test(c.nome));
 assert(solo && solo.topicos.length >= 6, "falta o cartão de apoio para mães que criam os filhos sozinhas");
 ["Documentos", "Prioridade na vaga", "Horário", "Quem busca a criança", "violência", "Pensão e guarda", "assistência social"].forEach((t) =>
