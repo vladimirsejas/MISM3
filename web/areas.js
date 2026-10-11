@@ -8,7 +8,7 @@
 
   var NOTA_FONTE = "Fonte oficial externa; confira os dados e a disponibilidade no site de origem.";
 
-  /* Ordem = ordem dos botões na tela inicial. A sétima porta (De Mulher para Mulher) é uma página própria. */
+  /* Ordem = ordem dos botões na tela inicial. A sétima porta (Entre Mulheres) é uma página própria. */
   var AREAS = [
     {
       id: "trabalho", nome: "Trabalho", icone: "trabalho",
@@ -386,7 +386,7 @@
     { tel: "188", nome: "CVV — apoio emocional", quando: "Conversa de apoio em momentos de sofrimento. 24 horas, gratuito." }
   ];
 
-  /* Página "De Mulher para Mulher": serviços que mulheres oferecem a outras mulheres.
+  /* Página "Entre Mulheres": serviços que mulheres oferecem a outras mulheres.
      Só as categorias ficam aqui; as ofertas reais ficam em dados/ofertas_mulheres.json (hoje vazio: nada é inventado). */
   var REDE_OFERTAS = {
     categorias: [

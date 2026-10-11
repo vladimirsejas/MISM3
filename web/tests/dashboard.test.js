@@ -10,14 +10,16 @@ const ler = (f) => fs.readFileSync(path.join(web, f), "utf8");
 const index = ler("index.html"), rede = ler("rede-mulheres.html"), app = ler("app.js"), css = ler("estilo.css");
 
 /* ---- 1. Tela inicial: exatamente sete portas, com os nomes pedidos ---- */
-const NOMES = ["Trabalho", "Educação", "Saúde", "Direitos", "Moradia", "Assistência Social", "De Mulher para Mulher"];
+/* O nome antigo ("De Mulher para Mulher") é slogan conhecido de uma rede de lojas: não pode voltar a aparecer no site. */
+["index.html", "rede-mulheres.html", "areas.js", "app.js"].forEach((f) => assert(!/de mulher (para|pra) mulher/i.test(fs.readFileSync(path.join(__dirname, "..", f), "utf8")), "nome antigo em " + f));
+const NOMES = ["Trabalho", "Educação", "Saúde", "Direitos", "Moradia", "Assistência Social", "Entre Mulheres"];
 const inicio = index.slice(index.indexOf('<section id="inicio-tela"'), index.indexOf('<section id="area"'));
 const portas = Array.from(inicio.matchAll(/<a class="porta" href="([^"]+)">.*?<strong>([^<]+)<\/strong>/g), (m) => ({ href: m[1], nome: m[2].trim() }));
 assert.deepStrictEqual(portas.map((p) => p.nome), NOMES, "a tela inicial deve ter exatamente as sete portas, na ordem definida");
 assert.strictEqual((index.match(/class="porta"/g) || []).length, 7, "não pode haver outros botões de porta");
 assert.deepStrictEqual(portas.slice(0, 6).map((p) => p.href), Areas.AREAS.map((a) => "#" + a.id), "cada porta deve apontar para a sua área");
 assert.deepStrictEqual(Areas.AREAS.map((a) => a.nome), NOMES.slice(0, 6), "os nomes das áreas devem ser os mesmos das portas");
-assert.strictEqual(portas[6].href, "rede-mulheres.html", "De Mulher para Mulher é uma página independente");
+assert.strictEqual(portas[6].href, "rede-mulheres.html", "Entre Mulheres é uma página independente");
 
 /* ---- 2. A tela inicial acolhe e orienta, mas não traz o detalhe das áreas ----
    Pode citar serviços em frases curtas e nos contatos essenciais (CRAS, CREAS, Conselho Tutelar). Não pode trazer o conteúdo
@@ -194,7 +196,7 @@ const ignorados = fs.readFileSync(path.join(web, "..", ".gitignore"), "utf8").sp
 assert(app.includes("dados/catalogo_manual.json") && app.includes("idsManuais") && app.includes("codigosManuais"), "o catálogo verificado deve ser carregado sempre e prevalecer sobre o servicos.json");
 assert(!/tentativas\s*=/.test(app), "um servicos.json antigo não pode substituir o catálogo verificado (voltaria a esconder CRAS e CREAS)");
 
-/* ---- 6f. De Mulher para Mulher: mulheres oferecem serviços a mulheres; categorias fixas, ofertas só com consentimento, nada inventado ---- */
+/* ---- 6f. Entre Mulheres: mulheres oferecem serviços a mulheres; categorias fixas, ofertas só com consentimento, nada inventado ---- */
 const cats = Areas.REDE_OFERTAS.categorias;
 assert(cats.length >= 8 && new Set(cats.map((c) => c.id)).size === cats.length, "categorias únicas");
 cats.forEach((c) => assert(c.titulo && c.exemplo.length > 20, "categoria incompleta: " + c.id));
