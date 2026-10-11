@@ -339,3 +339,40 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:#8a1c1c!im
 /* etapas que a escola oferece (Censo Escolar) */
 .cartao .etapas { margin: .35rem 0; }
 
+
+/* ---------- mapa de serviços (mapa.html) ---------- */
+.mapa-pagina{padding-bottom:2rem}
+.mapa-titulo{font-family:var(--serif);font-weight:500;font-size:clamp(1.8rem,6vw,2.4rem);color:var(--pri-esc);margin:1.3rem 0 .3rem}
+.mapa-controles{margin:1rem 0;padding:1rem;border:1px solid var(--bor);border-radius:var(--raio);background:var(--lilas)}
+.mapa-filtros{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.9rem}
+.mapa-chip{display:inline-flex;align-items:center;gap:.4rem;min-height:44px;padding:.35rem .9rem .35rem .5rem;border-radius:999px;border:1.5px solid var(--bor);background:#fff;color:var(--fg);font:inherit;font-weight:600;cursor:pointer}
+.mapa-chip[aria-pressed="true"]{border-color:var(--pri-esc);background:#fff;box-shadow:inset 0 0 0 1px var(--pri-esc)}
+.mapa-chip[aria-pressed="false"]{opacity:.55;background:var(--lilas)}
+.mapa-amostra{display:inline-flex;width:28px;height:28px}
+.mapa-amostra svg{width:28px;height:28px}
+.mapa-linha{display:grid;grid-template-columns:minmax(0,1fr);gap:.9rem}
+.mapa-campo label{display:block;font-weight:700;margin-bottom:.25rem}
+.mapa-campo input{display:block;width:100%;min-height:44px;font:inherit;padding:.55rem .8rem;border:1px solid var(--bor);border-radius:10px;background:#fff;color:var(--fg)}
+.mapa-campo .linha{display:flex;flex-wrap:wrap;gap:.5rem}
+.mapa-campo .linha input{flex:1 1 auto;min-width:9rem;width:auto}
+.mapa-resumo{margin:.8rem 0 .5rem;font-weight:600}
+.mapa-caixa{height:min(62vh,520px);min-height:340px;border:1px solid var(--bor);border-radius:var(--raio);background:#fbf1ec;overflow:hidden;z-index:0}
+.mapa-legenda{font-size:.9rem;color:var(--mut)}
+.mapa-pino{background:none;border:0}
+.mapa-pino svg{display:block;filter:drop-shadow(0 1px 2px rgba(60,20,30,.45))}
+.mapa-lista{list-style:none;margin:.5rem 0 1rem;padding:0;display:grid;gap:.7rem}
+.mapa-cartao{background:var(--card);border:1px solid var(--bor);border-left:6px solid var(--pri);border-radius:14px;padding:.8rem 1rem}
+.mapa-nome{display:block;font-family:var(--serif);font-size:1.1rem;line-height:1.2}
+.mapa-tipo{font-size:.88rem;color:var(--mut);margin:.15rem 0 .4rem}
+.mapa-linha-info{margin:.2rem 0;font-size:.95rem}
+.mapa-precisao{margin:.4rem 0 .2rem;font-size:.85rem;font-weight:700;color:var(--pri-esc)}
+.mapa-precisao.p-sem{color:var(--mut);font-weight:600}
+.mapa-meta{margin:.2rem 0;font-size:.82rem;color:var(--mut)}
+.mapa-acoes{display:flex;flex-wrap:wrap;gap:.4rem .9rem;align-items:center;margin:.5rem 0 0}
+.mapa-link{font-weight:700}
+.mapa-ver{min-height:40px;padding:.3rem .9rem;border-radius:999px;border:1px solid var(--pri-esc);background:#fff;color:var(--pri-esc);font:inherit;font-weight:700;cursor:pointer}
+.leaflet-popup-content .mapa-cartao{border:0;padding:.2rem;border-left:0}
+@media(min-width:760px){
+  .mapa-linha{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .mapa-lista{grid-template-columns:repeat(2,minmax(0,1fr))}
+}

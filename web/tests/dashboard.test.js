@@ -366,7 +366,8 @@ links.forEach((l) => {
   if (l.secao) assert(area.secoes.some((sec) => sec.ancora === l.secao), "atalho para seção inexistente: " + l.area + "/" + l.secao);
 });
 assert(/split\("\/"\)/.test(app) && /rolarPara\(secao\)/.test(app), "a rota deve entender #área/seção");
-assert(!/Mapa de serviços|Buscar no site|Legislação/.test(inicio), "a tela inicial não pode mostrar o que ainda não existe");
+assert(!/Buscar no site|Legislação/.test(inicio), "a tela inicial não pode mostrar o que ainda não existe");
+assert(/href="mapa\.html"/.test(inicio) && fs.existsSync(path.join(web, "mapa.html")), "o mapa de serviços existe e deve ser acessível pela tela inicial");
 
 /* Contraste da paleta (WCAG): lido do :root do CSS */
 const vars = Object.fromEntries(Array.from(css.slice(0, css.indexOf("}")).matchAll(/--([a-z-]+):(#[0-9a-f]{6})/g), (m) => [m[1], m[2]]));
