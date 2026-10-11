@@ -225,8 +225,18 @@
                 ["Para você", "O CRAS e o CREAS (área Assistência Social) orientam famílias. Pergunte também se há grupo ou acolhimento para quem cuida. Procure cuidar da sua própria saúde e do seu descanso."]
               ],
               fonte: ["Fundação Municipal de Saúde — endereços das unidades", "https://www.saude-rioclaro.org.br/enderecos.htm", "conferido em 10/10/2026; horários e formas de acesso devem ser confirmados por telefone"] },
+            { nome: "Peniel Rio Claro — apoio e internação (informação não confirmada por ligação)", sem_tel: true, resumo: "Ver o que perguntar antes de ir",
+              texto: "Av. Brasil, 6620, Distrito Industrial. Telefone: (19) 3534-3227. Está no cadastro nacional de estabelecimentos de saúde (CNES) como clínica/centro de especialidade, e quem conhece o lugar, inclusive o autor deste site, informa que ali pessoas ficam internadas para tratar a dependência. Isso ainda não foi confirmado por telefone nem por fonte oficial.",
+              topicos: [
+                ["Pergunte ao ligar", "Se atende o caso do seu familiar (idade, álcool, crack, outras drogas), se aceita mulheres e adolescentes, como é a primeira conversa e se a pessoa pode visitá-lo."],
+                ["A internação deve ser decisão da pessoa", "Pergunte como funciona a entrada voluntária, por quanto tempo, quanto custa (se custa) e quais regras a família precisa cumprir. Desconfie de quem promete cura ou pede dinheiro adiantado."],
+                ["Confira se o lugar é regular", "Pergunte se tem licença e quem acompanha o trabalho. O CAPS AD e o CREAS podem orientar a família e dizer o que é preciso olhar antes de decidir."],
+                ["Se houver maus-tratos", "Se souber de ameaça, agressão ou pessoa impedida de sair contra a vontade, procure o Conselho Tutelar (se for menor de 18 anos), a Polícia (190) ou o Ligue 180, conforme o caso."]
+              ],
+              aviso: "Não conferimos o que o lugar oferece, nem se há vaga, nem se atende mulheres. O Peniel não substitui o CAPS AD: ligue também para a rede de saúde.",
+              fonte: ["CNES/DATASUS (cadastro nacional) e relato do autor do site", null, "endereço e telefone vistos no cadastro em 10/10/2026; atendimento não confirmado"] },
             { nome: "Apoio fora da rede pública", sem_tel: true, resumo: "Ver o que perguntar",
-              texto: "Existem grupos de ajuda mútua para familiares, e o CAPS AD ou o CRAS podem indicar os que funcionam em Rio Claro. Este site ainda não tem a lista conferida.",
+              texto: "Existem também grupos de ajuda mútua para familiares, e o CAPS AD ou o CRAS podem indicar os que funcionam em Rio Claro. Este site ainda não tem essa lista conferida.",
               fonte: ["Pesquisa em andamento", null, "sem endereço nem telefone conferidos: não publicamos o que não foi verificado"] }
           ]
         },
