@@ -23,37 +23,43 @@
     });
   }
 
-  var estado = { metrica: "densidade", bairro: null, area: "todo", geo: null, dados: null, caminhos: [], caixas: {}, vista: null };
+  var estado = { metrica: "densidade", bairro: null, area: "todo", geo: null, dados: null, caminhos: [], caixas: {}, vista: null, projetar: null };
 
   function nomeDoBairro(propriedades) {
     return propriedades.bairro || estado.dados.meta.sem_bairro.rotulo;   /* a malha do IBGE não traz bairro para parte dos setores */
   }
 
   /* ---------- classes e legenda ---------- */
+  function ehDistancia() { return estado.metrica.indexOf("dist_") === 0; }
+  function blocoDaMetrica() {
+    return ehDistancia() ? estado.dados.distancia_ate_servico[estado.metrica.slice(5)] : estado.dados.classes[estado.metrica];
+  }
+
   function classeDoSetor(codigo) {
     var s = estado.dados.setores[codigo];
-    var valor = estado.metrica === "densidade" ? s.d : s.p;
+    var valor = ehDistancia() ? s[estado.metrica] : (estado.metrica === "densidade" ? s.d : s.p);
     if (valor == null) return "cn";
-    var limites = estado.dados.classes[estado.metrica].limites;
+    var limites = blocoDaMetrica().limites;
     var i = 0;
     while (i < limites.length && valor >= limites[i]) i++;
     return "c" + i;
   }
 
   function rotulosDaLegenda() {
-    var c = estado.dados.classes[estado.metrica];
+    var c = blocoDaMetrica();
     var f = estado.metrica === "densidade" ? inteiro : function (n) { return decimal(n, 1); };
+    var km = ehDistancia() ? " km" : "";
     var l = c.limites, r = [];
-    r.push("Menos de " + f(l[0]));
-    for (var i = 0; i < l.length - 1; i++) r.push(f(l[i]) + " a " + f(l[i + 1]));
-    r.push(f(l[l.length - 1]) + " ou mais");
+    r.push("Menos de " + f(l[0]) + km);
+    for (var i = 0; i < l.length - 1; i++) r.push(f(l[i]) + " a " + f(l[i + 1]) + km);
+    r.push(f(l[l.length - 1]) + (km ? " km ou mais" : " ou mais"));
     return r;
   }
 
   function desenharLegenda() {
     var ul = document.getElementById("legenda");
     limpar(ul);
-    var c = estado.dados.classes[estado.metrica];
+    var c = blocoDaMetrica();
     var rotulos = rotulosDaLegenda();
     rotulos.forEach(function (txt, i) {
       var li = el("li");
@@ -61,7 +67,7 @@
       li.appendChild(el("span", null, txt + " (" + inteiro(c.contagem[i]) + " setores)"));
       ul.appendChild(li);
     });
-    var semBase = estado.metrica === "densidade" ? 0 : c.sem_base_suficiente;
+    var semBase = estado.metrica === "pessoas_por_domicilio" ? c.sem_base_suficiente : 0;
     if (semBase) {
       var li = el("li");
       li.appendChild(el("span", "amostra cn"));
@@ -69,6 +75,7 @@
       ul.appendChild(li);
     }
     var unidade = estado.metrica === "densidade" ? "pessoas por km²" : "pessoas por domicílio";
+    if (ehDistancia()) unidade = "distância em linha reta até o serviço mais próximo (" + c.rotulo + ")";
     document.getElementById("sub-mapa").textContent = "Cada setor é colorido por " + unidade + ". Os tons seguem a legenda, do menor valor (primeiro item) ao maior (último).";
   }
 
@@ -77,6 +84,7 @@
       p.setAttribute("class", classeDoSetor(p.getAttribute("data-setor")) + (p.getAttribute("data-bairro") === estado.bairro ? " sel" : ""));
     });
     desenharLegenda();
+    if (estado.vista) desenharPontos();
   }
 
   /* ---------- mapa ---------- */
@@ -95,6 +103,7 @@
     var largura = 1000, escala = largura / ((maxLon - minLon) * kx), altura = (maxLat - minLat) * escala;
     svg.setAttribute("viewBox", "0 0 " + largura + " " + Math.round(altura));
     estado.vista = { todo: [0, 0, largura, altura] };
+    estado.projetar = function (lat, lon) { return [(lon - minLon) * kx * escala, (maxLat - lat) * escala]; };
     function ponto(c) { return ((c[0] - minLon) * kx * escala).toFixed(1) + " " + ((maxLat - c[1]) * escala).toFixed(1); }
     function caminho(geom) {
       var poligonos = geom.type === "Polygon" ? [geom.coordinates] : geom.coordinates, d = [];
@@ -119,6 +128,9 @@
       })(f.geometry.coordinates);
       estado.caixas[f.properties.setor] = [x0, y0, x1, y1];
     });
+    var camada = document.createElementNS(NS, "g");
+    camada.setAttribute("id", "pontos");
+    svg.appendChild(camada);
     calcularAreaUrbana();
     aplicarArea();
     svg.setAttribute("aria-label", "Mapa de Rio Claro dividido em " + feicoes.length + " setores censitários, coloridos pelo indicador escolhido.");
@@ -142,9 +154,36 @@
     estado.densa = { limite: limite, setores: n, pessoas: pessoas };
   }
 
+  /* ---------- serviços no mapa ---------- */
+  function desenharPontos() {
+    var camada = document.getElementById("pontos"), lista = document.getElementById("lista-pontos");
+    limpar(camada); limpar(lista);
+    var resumo = document.getElementById("resumo-dist"), detalhes = document.getElementById("lista-servicos");
+    limpar(resumo);
+    resumo.hidden = detalhes.hidden = !ehDistancia();
+    if (!ehDistancia()) return;
+    var b = blocoDaMetrica(), v = estado.vista[estado.area], r = v[2] / 75;
+    b.pontos.forEach(function (p) {
+      var xy = estado.projetar(p.lat, p.lon), c = document.createElementNS(NS, "circle");
+      c.setAttribute("cx", xy[0].toFixed(1)); c.setAttribute("cy", xy[1].toFixed(1)); c.setAttribute("r", r.toFixed(1));
+      c.setAttribute("class", "ponto" + (p.precisao === "cep" ? " aprox" : ""));
+      c.setAttribute("data-nome", p.nome); c.setAttribute("data-precisao", p.precisao); c.setAttribute("data-raio", p.raio_m);
+      camada.appendChild(c);
+      lista.appendChild(el("li", null, p.nome + (p.precisao === "cep" ? " (localização aproximada pelo CEP, raio de cerca de " + inteiro(p.raio_m) + " m)" : " (localização pelo endereço)")));
+    });
+    var pct = 100 * b.pessoas_3_km_ou_mais / b.pessoas_total;
+    resumo.appendChild(el("p", null, "Serviços localizados no mapa (" + b.rotulo + "): " + inteiro(b.localizados) + " de " + inteiro(b.cadastrados) +
+      " cadastrados no catálogo (" + inteiro(b.localizados_pelo_endereco) + " pelo endereço). Círculo cheio = localização pelo endereço; círculo vazado = aproximada pelo CEP."));
+    resumo.appendChild(el("p", null, inteiro(b.pessoas_3_km_ou_mais) + " pessoas (" + decimal(pct, 1) + "%) moram a 3 km ou mais do serviço localizado mais próximo, em linha reta. Metade das pessoas está a " +
+      decimal(b.mediana_km, 1) + " km ou menos."));
+    if (b.nota) resumo.appendChild(el("p", "nota", b.nota));
+    resumo.appendChild(el("p", "nota", estado.dados.meta.aviso_distancia));
+  }
+
   function aplicarArea() {
     var v = estado.vista[estado.area];
     document.getElementById("mapa").setAttribute("viewBox", v.map(function (n) { return Math.round(n); }).join(" "));
+    desenharPontos();
     var nota = document.getElementById("nota-area");
     nota.hidden = estado.area !== "densa";
     if (!nota.hidden) {
@@ -161,16 +200,30 @@
     estado.geo.features.forEach(function (f) { propriedades[f.properties.setor] = f.properties; });
 
     function mostrar(e) {
+      var ponto = e.target.closest ? e.target.closest("circle.ponto") : null;
       var alvo = e.target.closest ? e.target.closest("path") : null;
-      if (!alvo) { dica.style.display = "none"; return; }
-      var cod = alvo.getAttribute("data-setor"), pr = propriedades[cod], s = estado.dados.setores[cod];
+      if (!alvo && !ponto) { dica.style.display = "none"; return; }
       limpar(dica);
+      if (ponto) {
+        dica.appendChild(el("strong", null, ponto.getAttribute("data-nome")));
+        dica.appendChild(el("div", "sec", ponto.getAttribute("data-precisao") === "cep"
+          ? "Localização aproximada pelo CEP (raio de cerca de " + inteiro(ponto.getAttribute("data-raio")) + " m)" : "Localização pelo endereço"));
+        posicionar(e);
+        return;
+      }
+      var cod = alvo.getAttribute("data-setor"), pr = propriedades[cod], s = estado.dados.setores[cod];
       dica.appendChild(el("strong", null, nomeDoBairro(pr)));
       dica.appendChild(el("div", "sec", "Setor " + cod + " · " + pr.situacao));
       dica.appendChild(el("div", null, inteiro(pr.pessoas) + " pessoas · " + inteiro(pr.domicilios) + " domicílios"));
       dica.appendChild(el("div", null, s.d == null ? "Densidade: sem área" : inteiro(s.d) + " pessoas por km²"));
       dica.appendChild(el("div", null, s.p == null ? "Pessoas por domicílio: sem base suficiente (menos de " + estado.dados.classes.pessoas_por_domicilio.min_domicilios + " domicílios)"
                                                    : decimal(s.p, 2) + " pessoas por domicílio"));
+      Object.keys(estado.dados.distancia_ate_servico || {}).forEach(function (k) {
+        if (s["dist_" + k] != null) dica.appendChild(el("div", "sec", "Serviço mais próximo (" + estado.dados.distancia_ate_servico[k].rotulo + "): " + decimal(s["dist_" + k], 1) + " km, em linha reta"));
+      });
+      posicionar(e);
+    }
+    function posicionar(e) {
       dica.style.display = "block";
       var r = moldura.getBoundingClientRect();
       var x = e.clientX - r.left + 14, y = e.clientY - r.top + 14;
@@ -309,6 +362,14 @@
     }
     educacao();
     rodape();
+    var grupo = document.querySelector('input[name="metrica"]').closest("fieldset");
+    Object.keys(estado.dados.distancia_ate_servico || {}).forEach(function (k) {
+      var rotulo = el("label"), entrada = el("input");
+      entrada.type = "radio"; entrada.name = "metrica"; entrada.value = "dist_" + k;
+      rotulo.appendChild(entrada);
+      rotulo.appendChild(document.createTextNode(" Distância até " + estado.dados.distancia_ate_servico[k].rotulo));
+      grupo.appendChild(rotulo);
+    });
     Array.prototype.forEach.call(document.querySelectorAll('input[name="metrica"]'), function (r) {
       r.addEventListener("change", function () { estado.metrica = r.value; colorir(); });
     });
