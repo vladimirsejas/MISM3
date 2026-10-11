@@ -2,6 +2,8 @@
 
 > Este README registra **o que existe e foi verificado**; não é plano nem diretriz. Decisões e histórico: [registro de decisões](docs/registro_decisoes_desenvolvimento.md). Última verificação: 11/10/2026.
 
+> **Princípio:** o Mulher em Rede oferece orientação baseada nas evidências disponíveis. Não substitui a avaliação de profissionais, não determina automaticamente as necessidades de uma pessoa e explicita a origem, a data e os limites de cada informação. **O que existe, o que foi testado e o que ainda é proposta:** [estado do projeto](docs/estado_do_projeto.md). Validação com usuárias: [roteiro](docs/roteiro_validacao_navegacao.md) (ainda não realizada).
+
 A tela inicial (**Mulher em Rede**) acolhe com **"Você não está sozinha"** e uma ilustração, e traz as **sete portas** (Trabalho, Educação, Saúde, Direitos, Moradia, Assistência Social e Entre Mulheres) em cartões coloridos com uma frase curta, um botão **Emergência** que abre o painel de contatos, os **contatos essenciais** (190, 192, 180 e 100, mais CRAM, Secretaria da Mulher, UPA, Conselho Tutelar e CREAS, lidos do catálogo verificado) e um **acesso rápido** com atalhos diretos para seções (por exemplo, `#educacao/educacao-escolas`). O detalhe de cada área (serviços, endereços, horários, critérios) só aparece depois de escolhê-la. Onde há dados de CEP reais, também é possível buscar serviços próximos; o CEP **nunca sai do navegador**. A paleta (rosa, pêssego e verde-sálvia) tem contraste conferido por teste: texto principal ≥ 13:1, texto suave ≥ 5,5:1 e botões e links ≥ 6,5:1.
 
 ## Trabalho: plano e currículo
