@@ -17,7 +17,7 @@
 #    belavista2.pdf = linha 01 Ida; cervezaoida/cervezaovolta = linha 06 Ida/Volta; circular2ida/circular2volta = linha 08 Ida/Volta;
 #    paineirasvolta.pdf = linha 09 Volta; paimeirasida.pdf e arcoirismaepretaida.pdf = a MESMA página (linha 09 Ida, repetida);
 #    circular1ida.pdf e circular1volta.pdf = a MESMA página (linha 07 VOLTA, repetida). O arquivo arcoirismaepreta.pdf não foi recebido.
-#  - Em 11/10/2026 o mantenedor informou que Rio Claro só tem estas 5 linhas (01, 06, 07, 08, 09) e que os horários de ida e volta dentro dos PDFs estão certos; só os NOMES dos arquivos estavam trocados. Reconferir no site da SOU quando os horários vencerem.
+#  - Em 11/10/2026 o mantenedor enviou foto da lista de linhas do site da SOU: são 6 linhas (01 Bela Vista, 02 Arco-Íris/Mãe Preta, 06 Cervezão, 07 Circular I, 08 Circular 2, 09 Paineiras; a lista termina na 09). Temos horários de 5; falta a linha 02. Os horários de ida e volta dos PDFs estão certos, só os NOMES dos arquivos estavam trocados.
 meta | valido_ate | 2027-02-04
 meta | impresso_em | 2026-10-09
 meta | fonte_url | https://soutransportes.com.br/rio-claro/linhas-e-horarios/
@@ -91,4 +91,5 @@ quadro | 09 | Paineiras | Volta | Sábados | 2 | 05:20 06:35 07:50 09:05 10:20 1
 quadro | 09 | Paineiras | Volta | Domingos | 2 | 06:40 07:50 09:00 11:10 12:20 13:30 15:40 16:50 18:00 19:10 21:20 22:30
 
 lacuna | Circular I (linha 07): cadastramos só o sentido Volta, que é o publicado pela SOU nas páginas que usamos.
+lacuna | Linha 02 Arco-Íris/Mãe Preta: existe no site da SOU, mas ainda não cadastramos os horários dela. Veja no site da SOU.
 lacuna | Feriados não constam nas páginas da SOU que usamos: confirme com a SOU se vai viajar em feriado.

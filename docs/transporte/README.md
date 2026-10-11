@@ -34,7 +34,8 @@ Os nomes dos arquivos **não correspondem** ao conteúdo em vários casos:
 
 ## O que ainda falta (não inventar)
 
-- **Linhas:** em 11/10/2026 o mantenedor informou que Rio Claro só tem as linhas 01, 06, 07, 08 e 09, e que os horários de ida e volta dentro dos PDFs estão certos; os **nomes dos arquivos** é que estavam trocados (tabela acima). A Circular I está cadastrada só no sentido Volta, o publicado nas páginas usadas.
+- **Linha 02 Arco-Íris/Mãe Preta:** existe no site da SOU (foto da lista conferida pelo mantenedor em 11/10/2026: o site tem 6 linhas, 01, 02, 06, 07, 08 e 09, e a lista termina na 09). Ainda **falta cadastrar os horários dela**: baixar a página no site da SOU, ida e volta.
+- Os horários de ida e volta dos PDFs recebidos estão certos; só os **nomes dos arquivos** estavam trocados (tabela acima). A Circular I está cadastrada só no sentido Volta.
 - Se a SOU publicar outra linha ou outro sentido, baixar a página, acrescentar ao `.txt` e rodar `python pipeline/horarios_onibus.py`.
 - Feriados: não constam nas páginas recebidas.
 - Os horários **vencem em 04/02/2027**: o site avisa quando a data passa. Quando a SOU publicar novos horários, baixar de novo, atualizar o `.txt` e rodar `python pipeline/horarios_onibus.py`.
