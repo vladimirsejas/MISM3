@@ -320,3 +320,10 @@ Nenhuma branch foi apagada nem alterada. O que **não** foi trazido para a base,
 - Do rodapé do site oficial (captura de 10/10/2026 22:18, https://www.sestsenat.org.br/home): **0800 700 9393** (central nacional; sede em Brasília). Foi acrescentado ao cartão, identificado como central nacional.
 - O cartão deixou de constar como "não conferido": endereço e telefone vieram direto da unidade. O link passou a ser `https://www.sestsenat.org.br/home`, como pediu o autor.
 - **Ainda não informado:** quais cursos a unidade oferece ao público e como alguém se torna sócio (a página da cidade só abre para sócios, segundo o autor). O cartão manda perguntar ao ligar. O teste foi atualizado para exigir o telefone local, o 0800, o link e a menção aos sócios.
+
+### SEST SENAT: cursos mudam a cada período — 11/10/2026
+- **Decisão do autor:** os cursos do SEST SENAT não são fixos (cada período tem outros); portanto o site **não enumera nem descreve cursos**. Foi cadastrado o cartão "SEST SENAT – cursos abertos agora (a lista muda a cada período)" apontando para https://www.sestsenat.org.br/cursos, e o cartão da unidade passou a remeter a ele.
+- **O que as capturas de 10/10/2026 (22:22 a 22:24) mostram sobre a página:** ela é pública e lista, para cada turma, a área, a modalidade (webaula ou presencial), a data de início e a cidade; incluía turmas em webaula associadas a Rio Claro/SP, com início a partir de 13/10/2026. Nenhum curso foi copiado para o cadastro.
+- O plano de trabalho passou a listar esse link no passo "Escolher um curso". Um teste impede que nomes de cursos sejam copiados para o cartão.
+- **Observação:** a página de cursos é aberta, enquanto, segundo o autor, a página da cidade só abre para sócios; se cada curso exige ser sócio é algo a conferir em "Saiba mais" de cada turma.
+- As capturas de tela não foram arquivadas como PDF; ficam como evidência apenas no registro (lista que muda a cada período).

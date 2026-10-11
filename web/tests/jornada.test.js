@@ -41,7 +41,7 @@ assert(!ids(J.montarPlano({ objetivo: "emprego", curriculo: "sim" })).includes("
 const curso = J.montarPlano({ objetivo: "curso", curriculo: "sim" });
 assert.deepStrictEqual(ids(curso), ["curso"]);
 const nomesCurso = curso.passos[0].links.map((l) => l[0]).join("|");
-["SENAI Rio Claro", "Senac Rio Claro", "SEST SENAT", "Centros de Qualificação Profissional", "Etec", "Fatec Rio Claro — Inteligência Artificial", "Fatec Rio Claro — Gestão ESG", "Faculdade SESI de Educação", "SESI Rio Claro"].forEach((n) =>
+["SENAI Rio Claro", "Senac Rio Claro", "SEST SENAT", "Centros de Qualificação Profissional", "Etec", "Fatec Rio Claro — Inteligência Artificial", "Fatec Rio Claro — Gestão ESG", "Faculdade SESI de Educação", "SESI Rio Claro", "SEST SENAT — cursos abertos agora"].forEach((n) =>
   assert(nomesCurso.includes(n), "o passo de curso deve listar " + n));
 const negocio = J.montarPlano({ objetivo: "negocio", curriculo: "sim" });
 assert.deepStrictEqual(ids(negocio), ["negocio"], "quem quer renda própria não recebe o passo de procurar vagas");
