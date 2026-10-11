@@ -29,7 +29,7 @@
       pendencias: ["Este sistema não lista vagas abertas. Para ver vagas atuais, use os portais acima."]
     },
     {
-      id: "educacao", nome: "Educação", icone: "educacao",
+      id: "educacao", nome: "Educação", icone: "educacao", jornada: "educacao",
       intro: "Para os seus filhos: matrícula, transferência e vagas em creches e escolas. Para você: concluir os estudos (EJA), fazer faculdade e cursos profissionalizantes e técnicos, em Rio Claro.",
       guia: {
         titulo: "O que você encontra nesta página",
