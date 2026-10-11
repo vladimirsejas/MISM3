@@ -764,3 +764,8 @@ Nenhuma branch foi apagada nem alterada. O que **não** foi trazido para a base,
 - **O que mudou:** a imagem (`img/heroi-mulheres.webp`, removida) deu lugar a uma **rede** desenhada em SVG inline (círculos rosa, pêssego e sálvia ligados por fios), decorativa (`aria-hidden`) e sem arquivo externo; combina com o nome Mulher em Rede e não representa pessoas. O topo ganhou um segundo botão ("Prefiro escrever o que preciso", leva à caixa de IA). As sete portas e a Emergência viraram cartões horizontais (ícone, título, descrição e seta), em uma coluna no celular e duas no computador, ficando "Entre Mulheres" ao lado da Emergência.
 - **Mantido de propósito:** paleta, tipografia, ids e classes usados pelo JS, a marcação das sete portas (verificada por teste) e a regra de que a tela inicial não traz endereço, horário nem formulário.
 - **Verificação:** os 9 arquivos de teste JS passam (a regra do teste sobre a imagem do topo virou "SVG decorativo, sem arquivo de imagem"); capturas no Chromium em 1280 e 390 px sem requisições externas. Não foi testado com leitor de tela nem com usuárias.
+
+## 11/10/2026 - Arquivos .bat para o Windows
+
+- **Pedido do autor:** "o botão bat em funcionamento". Entendido como arquivos de duplo clique no Windows (se a intenção era outra, corrigir aqui).
+- `abrir_site.bat` abre `web/` em `http://localhost:8000`; `atualizar_localizacoes.bat` chama `pipeline/atualizar_localizacoes.py`, que continua pedindo confirmação antes de alterar o catálogo. Texto sem acentos e com CRLF (`.gitattributes`). Verifiquei só o formato dos arquivos: **não os executei, porque este ambiente é Linux**.
