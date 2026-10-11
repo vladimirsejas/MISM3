@@ -295,10 +295,14 @@ def bairro_confere(endereco: str, bairro_lista: str) -> str:
 
 
 def aviso_de_bairro(r: dict) -> str:
-    """Texto curto para a listagem: só avisa quando o bairro do catálogo e o do CEP na lista diferem. Não bloqueia nada."""
+    """Texto da listagem: sempre mostra o bairro do CEP na lista (quem conhece a cidade julga) e destaca quando difere do catálogo.
+    Não bloqueia nada: a mesma rua atravessa vários bairros, a numeração muda conforme as avenidas e às vezes há outra rua de mesmo número."""
+    bairro = (r.get("bairro_cep") or "").strip()
+    if not bairro:
+        return ""
     if (r.get("bairro_confere") or "") == "não":
-        return " | ATENÇÃO bairro do CEP na lista: %s" % r.get("bairro_cep")
-    return ""
+        return " | bairro do CEP: %s  <<< DIFERE do catálogo" % bairro
+    return " | bairro do CEP: %s" % bairro
 
 
 def indexar_ruas_da_lista(linhas: list[dict]) -> dict:

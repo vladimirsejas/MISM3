@@ -95,9 +95,11 @@ def test_marcar_baixas_cep_respeita_limite_e_cep_divergente_mas_nao_trava_por_ba
     assert lidas["dif"]["decisao"] == "" and lidas["longe"]["decisao"] == "" and lidas["feita"]["decisao"] == "recusar"
 
 
-def test_aviso_de_bairro_so_aparece_quando_difere():
-    assert "Vila Alemã" in g.aviso_de_bairro({"bairro_confere": "não", "bairro_cep": "Vila Alemã"})
-    assert g.aviso_de_bairro({"bairro_confere": "sim", "bairro_cep": "x"}) == "" and g.aviso_de_bairro({"bairro_confere": ""}) == ""
+def test_aviso_de_bairro_mostra_sempre_o_bairro_e_destaca_quando_difere():
+    assert "DIFERE" in g.aviso_de_bairro({"bairro_confere": "não", "bairro_cep": "Vila Alemã"})
+    sim = g.aviso_de_bairro({"bairro_confere": "sim", "bairro_cep": "Centro"})
+    assert "Centro" in sim and "DIFERE" not in sim
+    assert g.aviso_de_bairro({"bairro_confere": "", "bairro_cep": ""}) == ""
 
 
 def test_bairro_do_endereco_nos_dois_formatos_e_sem_cep():
