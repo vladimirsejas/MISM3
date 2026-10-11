@@ -113,7 +113,7 @@ h1[tabindex="-1"]:focus{outline:none}
 .lista-acesso a::after{content:"›";color:var(--pri);font-size:1.5rem;line-height:1}
 .lista-acesso a:hover{color:var(--pri-esc)}
 @media(min-width:760px){
-  .heroi{grid-template-columns:1.05fr .95fr;padding:2.2rem 0 0 2.2rem}
+  .heroi{grid-template-columns:.88fr 1.12fr;padding:2.2rem 0 0 2.2rem}
   .heroi-arte{margin:0}
   .heroi-arte img{max-width:none}
   .portas{grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem}
