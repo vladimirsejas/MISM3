@@ -337,6 +337,44 @@
     botao.parentNode.remove();
   }
 
+  /* ------------------------------------------------------------ IA: "Conte com suas palavras" */
+  /* O modelo só é baixado quando a pessoa usa a caixa. O texto nunca sai do aparelho e é apagado ao sair da tela inicial. */
+  var modeloIA = null;
+  function carregarModeloIA() {
+    if (modeloIA) return modeloIA;
+    modeloIA = carregar("dados/modelo_necessidades.json").then(function (m) { MISM3IA.usarModelo(m); }).catch(function () { /* sem o modelo, só as regras */ });
+    return modeloIA;
+  }
+  function limparIA() {
+    var t = $("ia-texto"); if (!t) return;
+    t.value = ""; $("ia-saida").innerHTML = ""; $("ia-limpar").hidden = true;
+  }
+  function htmlSugestoes(lista) {
+    if (!lista.length) {
+      return '<p class="ia-vazio">Não consegui entender por onde começar. Tente descrever de outro jeito, ou escolha uma das áreas abaixo.</p>';
+    }
+    var urgente = lista[0].urgente
+      ? '<p class="ia-urgente" role="alert"><strong>Se você corre perigo agora, ligue 190 (Polícia Militar) ou 180 (Central de Atendimento à Mulher), ou toque em “Em perigo agora?”.</strong></p>' : "";
+    return urgente + '<p class="meta">Sugestões da ferramenta. Ela pode errar: confira em cada área.</p><ul class="ia-lista">' + lista.map(function (s) {
+      return '<li><a class="ia-card' + (s.urgente ? " urgente" : "") + '" href="' + esc(s.href) + '"><strong>' + esc(s.titulo) + "</strong><span>" + esc(s.texto) + "</span></a></li>";
+    }).join("") + "</ul>";
+  }
+  function usarIA() {
+    var t = $("ia-texto"), saida = $("ia-saida");
+    if (!t.value.replace(/\s/g, "")) { saida.innerHTML = '<p class="ia-vazio">Escreva uma frase para eu poder ajudar.</p>'; return; }
+    saida.innerHTML = '<p class="meta">Lendo…</p>';
+    carregarModeloIA().then(function () {
+      saida.innerHTML = htmlSugestoes(MISM3IA.sugerir(t.value));
+      $("ia-limpar").hidden = false;
+    });
+  }
+  if ($("ia-enviar")) {
+    $("ia-enviar").addEventListener("click", usarIA);
+    $("ia-limpar").addEventListener("click", function () { limparIA(); $("ia-texto").focus(); });
+    $("ia-texto").addEventListener("focus", carregarModeloIA, { once: true });
+    $("ia-texto").addEventListener("keydown", function (e) { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) usarIA(); });
+  }
+
   /* ------------------------------------------------------------ navegação */
   var areaAtual = null;
 
@@ -347,6 +385,7 @@
   function mostrarInicio() {
     areaAtual = null;
     if (window.JornadaUI) JornadaUI.limpar();
+    limparIA();
     $("inicio-tela").hidden = false; $("area").hidden = true; $("fontes").hidden = true;
     $("navegacao").hidden = true; $("secao-atual").hidden = true;
     document.title = "Mulher em Rede – Rio Claro";
@@ -355,6 +394,7 @@
 
   function mostrarArea(area) {
     areaAtual = area;
+    limparIA();
     $("inicio-tela").hidden = true; $("area").hidden = false; $("fontes").hidden = false;
     $("navegacao").hidden = false; $("secao-atual").hidden = false;
     $("nome-secao").textContent = "Início › " + area.nome;
@@ -437,6 +477,7 @@
   });
   $("sair-rapido").addEventListener("click", function () {
     limparResultadoCep();
+    limparIA();
     window.location.replace("https://www.google.com.br/");
   });
 

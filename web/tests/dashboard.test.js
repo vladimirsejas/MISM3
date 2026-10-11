@@ -28,6 +28,7 @@ assert.strictEqual(portas[6].href, "rede-mulheres.html", "Entre Mulheres é uma 
   assert(!inicio.includes(t), "a tela inicial não deve expor conteúdo detalhado de área: " + t));
 assert(!/\b(Rua|Avenida|Av\.)\s/.test(inicio) && !/\d{1,2}h\b|\d{1,2}:\d{2}/.test(inicio), "a tela inicial não deve trazer endereço nem horário");
 assert(!/<form/.test(inicio) && !/<input/.test(inicio), "a tela inicial não tem formulários nem campos de busca");
+assert.strictEqual((inicio.match(/<textarea/g) || []).length, 1, "o único campo da tela inicial é a caixa da IA (Conte com suas palavras)");
 
 /* ---- 3. Emergência: botão compacto com os contatos oficiais, em todas as páginas ---- */
 [["index.html", index], ["rede-mulheres.html", rede]].forEach(([nome, html]) => {
@@ -172,8 +173,11 @@ const neo = moradiaLinks.find((l) => l[1] === "https://www.neoenergia.com/tarifa
 assert(neo && /confirme se as regras e os canais valem para a Elektro/.test(neo[2]), "a página da Neoenergia pode cobrir outros estados: o cartão deve pedir para confirmar que vale para a Elektro");
 assert.strictEqual(Areas.porId("inexistente"), null);
 
-/* ---- 6b. Sem caixa de busca por necessidade: nem na tela inicial nem dentro das áreas ---- */
-assert(!/id="form-necessidade"|id="necessidade"|Não encontrou\?/.test(index), "a caixa de busca por necessidade foi retirada");
+/* ---- 6b. A caixa "Conte com suas palavras" é a IA da tela inicial: um campo só, que não envia nem guarda nada ---- */
+assert(/id="ia-caixa"/.test(index) && /id="ia-texto"/.test(index) && /Conte com suas palavras/.test(index), "falta a caixa da IA na tela inicial");
+assert(/aprendizado de máquina/.test(index) && /n[ãa]o é enviado/.test(index) && /pode errar/.test(index), "a caixa deve explicar o que é, que não envia o texto e que pode errar");
+assert(index.includes('src="ia.js"') && index.indexOf('src="ia.js"') > index.indexOf('src="necessidades.js"'), "ia.js deve carregar depois de necessidades.js");
+assert(/limparIA\(\)/.test(app) && /sair-rapido[\s\S]{0,200}limparIA\(\)/.test(app), "o texto digitado deve ser apagado ao sair da tela e no botão de sair rápido");
 assert(!/form-necessidade|resposta-necessidade|areasDaNecessidade|AREA_DA_NECESSIDADE/.test(app + ler("areas.js")), "não pode sobrar código da caixa retirada");
 assert(app.includes("MISM3Necessidades.normalizar") && index.includes('src="necessidades.js"'), "a busca de bairro usa a normalização de texto do módulo, que deve continuar carregado");
 assert(index.includes('class="pular"'), "falta o link para pular ao conteúdo");

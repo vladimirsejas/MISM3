@@ -67,6 +67,19 @@
       <div class="heroi-arte"><img src="img/heroi-mulheres.webp" width="592" height="298" alt="" decoding="async"></div>
     </div>
 
+    <section class="ia-caixa" id="ia-caixa" aria-labelledby="titulo-ia">
+      <h2 id="titulo-ia">Conte com suas palavras</h2>
+      <p>Escreva o que você precisa, do seu jeito. Uma ferramenta de inteligência artificial sugere por onde começar. O que você escreve fica só neste aparelho e some quando você sai da página.</p>
+      <label for="ia-texto" class="so-leitor">Escreva o que você precisa</label>
+      <textarea id="ia-texto" rows="3" maxlength="300" autocomplete="off" spellcheck="false" placeholder="Ex.: preciso de uma vaga na creche e de um emprego"></textarea>
+      <div class="acoes"><button type="button" class="btn" id="ia-enviar">Ver por onde começar</button><button type="button" class="btn secundario" id="ia-limpar" hidden>Limpar</button></div>
+      <div id="ia-saida" aria-live="polite"></div>
+      <details class="ia-como"><summary>Como isso funciona?</summary>
+        <p>É um modelo de aprendizado de máquina, treinado pela equipe do projeto (Fatec Rio Claro) com frases escritas por nós. Ele roda no seu aparelho: o texto não é enviado, guardado nem registrado em lugar nenhum.</p>
+        <p>Ele pode errar e não decide direitos nem faz diagnóstico. Sempre confira a informação na área indicada e com o órgão responsável.</p>
+      </details>
+    </section>
+
     <h2 id="areas-inicio" class="titulo-bloco" tabindex="-1">O que você procura hoje?</h2>
     <ul class="portas">
       <li class="t-rosa"><a class="porta" href="#trabalho"><span class="icone"><svg aria-hidden="true"><use href="#i-trabalho"/></svg></span><strong>Trabalho</strong><span class="sub">Vagas, cursos, currículo e um plano para voltar a trabalhar.</span></a></li>
@@ -146,6 +159,7 @@
 <script src="vendor/leaflet.js"></script>
 <script src="acesso.js"></script>
 <script src="necessidades.js"></script>
+<script src="ia.js"></script>
 <script src="areas.js"></script>
 <script src="jornada.js"></script>
 <script src="jornada-ui.js"></script>
