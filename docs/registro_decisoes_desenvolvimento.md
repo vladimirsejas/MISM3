@@ -425,3 +425,12 @@ Nenhuma branch foi apagada nem alterada. O que **não** foi trazido para a base,
 - **UPA:** o autor não tem outros números; a UPA permanece com o telefone já cadastrado e a pendência foi encerrada.
 - Continuam pendentes: calendário e procedimento de matrícula de 2027 em Rio Claro e documentos exigidos hoje (confirmação da Secretaria).
 - Verificação: testes de `web/tests` passam, com novas verificações dos dois cartões.
+
+### Educação: férias escolares de 2027 e a Lei nº 15.421/2026 (conferida no texto original) — 11/10/2026
+- O autor trouxe o **texto original da Lei nº 15.421, de 1º de junho de 2026** (Câmara dos Deputados; DOU de 2/6/2026, Seção 1, p. 2). Isso **corrige o registro anterior**, que tratava a lei como não verificada: ela existe.
+- O que o texto diz e interessa à escola: o **art. 67** manda os sistemas de ensino ajustarem os calendários para que as férias do primeiro semestre de 2027, nas redes pública e privada, abranjam todo o período entre a abertura e o encerramento da Copa do Mundo Feminina da FIFA 2027. O resto da lei (ingressos, vistos, trabalho, marcas, prêmio às jogadoras) não afeta o guia.
+- **Correção da pesquisa anterior:** as datas "24/06 a 25/07/2027" **não estão na lei** (o texto não as traz); vêm do calendário da Copa, reportado em notícias, e não foram conferidas em fonte oficial. O site as apresenta como reportadas e manda usar o calendário da escola.
+- Novo cartão **"Férias escolares de 2027 e a Copa do Mundo Feminina"** na área Educação: a regra do art. 67 (conferida), as datas (não conferidas), como Rio Claro vai aplicar (desconhecido: perguntar à Secretaria), o impacto para quem trabalha ou estuda (planejar o cuidado das crianças; o site não confirma programas nas férias) e um aviso de que **isto não é o calendário de matrícula**, que continua pendente.
+- O teste que proibia mencionar a lei foi trocado por verificações positivas: o cartão deve citar a Lei 15.421 e o art. 67, dizer que a lei não traz as datas e distinguir férias de matrícula.
+- Não verificados e fora do site: o Parecer CNE/CEB nº 7/2026 e a Resolução SEDUC nº 80/2026 (citados na pesquisa); só entram quando o texto for conferido. A calendarização de 2027 da rede municipal de Rio Claro segue pendente.
+- Verificação: testes de `web/tests` passam; o cartão abre em Chromium 390 px sem erros de JavaScript.

@@ -277,7 +277,10 @@ const docsCard = maesSec.canais.find((c) => /Documentos em situações específi
 assert(docsCard && docsCard.topicos.length >= 6 && /não foi conferida em fonte oficial/.test(docsCard.aviso), "os documentos indicados só pela pesquisa devem estar marcados como não conferidos");
 const negada = maesSec.canais.find((c) => /negada/.test(c.nome));
 ["Conselho Tutelar", "Defensoria", "Ministério Público", "registro de que não há vaga"].forEach((t) => assert(JSON.stringify(negada).includes(t), "vaga negada deve citar: " + t));
-assert(!/15\.421|Copa/.test(JSON.stringify(maesSec)), "a lei da Copa não conferida não pode entrar no guia");
+const ferias = maesSec.canais.find((c) => /Férias escolares de 2027/.test(c.nome));
+assert(ferias && /15\.421/.test(JSON.stringify(ferias)) && /art\. 67/.test(JSON.stringify(ferias)), "o cartão das férias de 2027 deve citar a Lei 15.421, art. 67");
+assert(/A lei não traz as datas/.test(JSON.stringify(ferias)) && /não foi conferida por nós/.test(JSON.stringify(ferias)), "as datas da Copa não estão na lei e não podem ser apresentadas como oficiais");
+assert(/Isto não é o calendário de matrícula/.test(JSON.stringify(ferias)), "férias não podem ser confundidas com o calendário de matrícula");
 const solo = maesSec.canais.find((c) => /sozinha/i.test(c.nome));
 assert(solo && solo.topicos.length >= 6, "falta o cartão de apoio para mães que criam os filhos sozinhas");
 ["Documentos", "Prioridade na vaga", "Horário", "Quem busca a criança", "violência", "Pensão e guarda", "assistência social"].forEach((t) =>
