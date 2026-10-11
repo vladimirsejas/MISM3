@@ -566,3 +566,9 @@ Nenhuma branch foi apagada nem alterada. O que **não** foi trazido para a base,
 - **Busca por necessidade:** termos como "usa drogas", "dependente químico", "viciado", "alcoólatra" e "overdose" levam à necessidade Saúde (3 cenários novos no teste).
 - **Plano do Trabalho:** não pergunta nada sobre o assunto (é íntimo e o questionário é curto). Todo plano traz um lembrete fixo com link para essa seção.
 - **Pendências:** conferir com a Fundação de Saúde como é o primeiro atendimento no CAPS AD e se há acolhimento para famílias; levantar grupos de ajuda mútua de Rio Claro (com telefone confirmado) para incluir.
+
+### Peniel Rio Claro na seção de álcool e drogas — 11/10/2026
+- **Origem:** o autor viu "Peniel Rio Claro" na lista de Saúde (cartão do CNES, vindo do `servicos.json` local, não do catálogo manual) e informou, por experiência própria (foi lá e conheceu pessoas internadas), que o local recebe pessoas para tratar a dependência.
+- **Fatos do cadastro (CNES, 10/10/2026):** clínica/centro de especialidade, Av. Brasil, 6620, Distrito Industrial, (19) 3534-3227, turnos manhã, tarde e noite. O CNES **não informa** o que o lugar trata.
+- **Decisão:** entra na seção "Meu filho ou familiar usa álcool ou drogas" como cartão **marcado "informação não confirmada por ligação"**, com a fonte dupla (CNES e relato do autor), sem prometer vaga, cura nem que atenda mulheres. Traz perguntas para a família (entrada voluntária, custo, regras, regularidade do lugar) e o que fazer diante de maus-tratos (Conselho Tutelar, 190, Ligue 180). Reforça que não substitui o CAPS AD.
+- **Pendência:** ligar para (19) 3534-3227 e confirmar: atende álcool e drogas, atende mulheres e adolescentes, como é a admissão, custo, licenças. Com a confirmação, o cartão passa a "verificado" com a data da ligação. O CNES crítico: o cartão genérico de Saúde (cru, em maiúsculas) segue como está até padronizarmos a exibição.
