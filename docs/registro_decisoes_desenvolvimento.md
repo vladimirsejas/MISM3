@@ -345,3 +345,10 @@ Nenhuma branch foi apagada nem alterada. O que **não** foi trazido para a base,
 - **Educação agora tem quatro grupos:** "Concluir os estudos e graduação (SESI)" (3), "Cursos profissionalizantes (qualificação profissional)" (4: SENAI, Senac, SEST SENAT e o cartão de cursos abertos do SEST SENAT), "Cursos técnicos (ensino técnico)" (2: catálogo geral das Etecs e a Etec de Rio Claro) e "Cursos superiores de tecnologia" (2: Fatec).
 - Trava no teste: serviço `curso_profissionalizante` só pode estar no grupo de profissionalizantes e `curso_tecnico` só no de técnicos.
 - **Ressalva:** o SENAI também oferece cursos técnicos (a página da unidade os lista), mas o cartão é um só e ficou entre os profissionalizantes por ser a unidade e a aprendizagem industrial o foco da página; se preferir, o cartão pode ser dividido em dois.
+
+### Cursos profissionalizantes e técnicos servem a Educação e a Trabalho — 11/10/2026
+- **Orientação do autor:** a Etec (e os cursos profissionalizantes em geral) são educacionais e profissionais ao mesmo tempo: servem a quem está saindo da escola e a quem já se formou e quer fazer esses cursos. SESI e Fatec seguem como educação pura.
+- **Etec nos dois grupos:** o campo `grupo` do catálogo aceita vários valores separados por ";" (a interface coloca o serviço em cada grupo). As duas Etec aparecem em "Cursos profissionalizantes (qualificação profissional)" e em "Cursos técnicos (ensino técnico)".
+- **Duas áreas:** os cursos profissionalizantes e técnicos aparecem em **Educação** e em **Trabalho**; a educação pura (EJA e escola SESI, Faculdade SESI, cursos superiores da Fatec) fica só na Educação. O cartão-link de Trabalho passou a falar de concluir o ensino médio, faculdade e cursos superiores. A divisão por área é feita por `subtipos`; o catálogo não duplica registros.
+- **Travas no teste:** educação pura só na área Educação; profissionalizantes e técnicos nas duas; a Etec nos dois grupos.
+- **Verificação no navegador (390 px):** Educação com 4 grupos (3, 6, 2 e 2 serviços); Trabalho com 4 grupos (4, 3, 6 e 2); sem rolagem lateral e sem erro de JavaScript.

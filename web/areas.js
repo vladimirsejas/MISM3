@@ -17,11 +17,11 @@
       secoes: [{
         titulo: "Canais oficiais",
         tipos: ["emprego_curso"], agrupar: true,
-        subtipos: ["pat", "conecta", "credito", "secretaria", "qualificacao", "fundo_social"],
+        subtipos: ["pat", "conecta", "credito", "secretaria", "qualificacao", "fundo_social", "curso_profissionalizante", "curso_tecnico"],
         links: [
           ["Portal da Empregabilidade de Rio Claro", "https://vagas.rioclaro.sp.gov.br/", "Consultar oportunidades e informações para trabalhadores."],
           ["Trampolim — Governo de São Paulo", "https://www.trampolim.sp.gov.br/", "Consultar oportunidades e cursos disponíveis na plataforma."],
-          ["Cursos e estudos: SENAI, Senac, Etec, Fatec, SESI e SEST SENAT", "#educacao", "Cursos técnicos, superiores e para concluir os estudos estão na área Educação."]
+          ["Estudar: concluir o ensino médio, faculdade e cursos superiores", "#educacao", "EJA gratuita, Faculdade SESI e os cursos superiores da Fatec estão na área Educação, que também reúne os cursos técnicos e profissionalizantes."]
         ]
       }],
       pendencias: ["Este sistema não lista vagas abertas. Para ver vagas atuais, use os portais acima."]

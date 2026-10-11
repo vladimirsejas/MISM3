@@ -122,9 +122,14 @@
     var abrir = servicos.length <= 6; /* poucos serviços: já abertos; muitos: recolhidos com contagem */
     var ordem = [], porGrupo = Object.create(null);
     servicos.forEach(function (s) {
-      var g = s.grupo || GRUPO_POR_SUBTIPO[s.subtipo] || Acesso.rotuloSubtipo(s.subtipo) || "Outros serviços";
-      if (!porGrupo[g]) { porGrupo[g] = []; ordem.push(g); }
-      porGrupo[g].push(s);
+      /* "grupo" pode ter mais de um valor, separados por ";": o serviço aparece em cada um deles. */
+      var nomes = String(s.grupo || GRUPO_POR_SUBTIPO[s.subtipo] || Acesso.rotuloSubtipo(s.subtipo) || "Outros serviços").split(";");
+      nomes.forEach(function (g) {
+        g = g.trim();
+        if (!g) return;
+        if (!porGrupo[g]) { porGrupo[g] = []; ordem.push(g); }
+        porGrupo[g].push(s);
+      });
     });
     /* Ordem lógica por público; grupos novos (não listados) vão para o fim. */
     var PREFERIDA = ["Secretaria de Saúde", "Pronto atendimento 24 horas", "Unidades básicas de saúde (UBS e USF)", "Saúde mental (CAPS)", "Especialidades, reabilitação e saúde do trabalhador",
