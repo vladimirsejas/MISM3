@@ -757,3 +757,10 @@ Nenhuma branch foi apagada nem alterada. O que **não** foi trazido para a base,
 - **Sugestões não adotadas agora, e por quê:** mapa Leaflet com camadas e rotas OSMnx. O projeto não faz requisições externas e usa JavaScript puro; rota a pé a partir de ponto de CEP daria precisão falsa. Fica como ideia para depois que os pontos exatos forem auditados.
 - **Limite:** coordenada vinda do CNEFE comprova rua e número, **não** que o ponto está na porta do serviço. Os 45 pontos ainda não foram conferidos contra a fonte de cada serviço.
 - **Testes:** 160 de Python e 9 arquivos de JavaScript passando localmente.
+
+## 11/10/2026 - Novo visual da tela inicial
+
+- **Pedido do autor:** a ilustração das mulheres no topo não agradava; novo layout mantendo as cores suaves, com liberdade para mudar funções e botões.
+- **O que mudou:** a imagem (`img/heroi-mulheres.webp`, removida) deu lugar a uma **rede** desenhada em SVG inline (círculos rosa, pêssego e sálvia ligados por fios), decorativa (`aria-hidden`) e sem arquivo externo; combina com o nome Mulher em Rede e não representa pessoas. O topo ganhou um segundo botão ("Prefiro escrever o que preciso", leva à caixa de IA). As sete portas e a Emergência viraram cartões horizontais (ícone, título, descrição e seta), em uma coluna no celular e duas no computador, ficando "Entre Mulheres" ao lado da Emergência.
+- **Mantido de propósito:** paleta, tipografia, ids e classes usados pelo JS, a marcação das sete portas (verificada por teste) e a regra de que a tela inicial não traz endereço, horário nem formulário.
+- **Verificação:** os 9 arquivos de teste JS passam (a regra do teste sobre a imagem do topo virou "SVG decorativo, sem arquivo de imagem"); capturas no Chromium em 1280 e 390 px sem requisições externas. Não foi testado com leitor de tela nem com usuárias.
