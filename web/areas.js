@@ -44,6 +44,19 @@
               ["Jovem ou adulto que não concluiu os estudos", "Veja a EJA (Educação de Jovens e Adultos), no grupo “Concluir os estudos e graduação”, mais abaixo, ou pergunte na Secretaria Municipal da Educação."]
             ],
             fonte: ["Constituição Federal, art. 211", null, "regra geral; a organização de Rio Claro deve ser confirmada na Secretaria da Educação"] },
+          { nome: "Crio meu filho sozinha: o que perguntar e a quem pedir apoio", sem_tel: true, resumo: "Ver o passo a passo",
+            texto: "Você não precisa se justificar para pedir ajuda. Estas perguntas servem para combinar a vaga e a escola com a sua rotina de mãe que cuida sozinha.",
+            topicos: [
+              ["Documentos", "Diga à Secretaria ou à escola que você é a única responsável e pergunte quais documentos valem no seu caso, por exemplo quando o pai não consta na certidão de nascimento ou não convive com a criança. Não tente adivinhar: confirme antes de ir."],
+              ["Prioridade na vaga", "Pergunte se existe critério de prioridade para vaga em creche (por exemplo, mãe que trabalha ou família em situação de vulnerabilidade) e quais comprovantes são pedidos. Este site não confirmou se esse critério existe em Rio Claro."],
+              ["Horário que cabe na sua rotina", "Pergunte o horário de funcionamento e se há período integral ou parcial. Se o horário não couber no seu trabalho ou estudo, diga isso ao pedir a vaga e peça orientação sobre outras opções."],
+              ["Quem busca a criança", "Pergunte como cadastrar uma pessoa de confiança autorizada a buscar a criança nos dias em que você não puder."],
+              ["Se você está sozinha por causa de violência", "Se houver medida protetiva ou restrição de contato com alguém, avise a escola por um canal seguro e peça que a informação seja tratada com cuidado. Veja a área Direitos para orientação e para o Ligue 180."],
+              ["Pensão e guarda", "Para pedir pensão alimentícia ou regularizar a guarda, veja a área Direitos (Defensoria Pública), que orienta quem não pode pagar advogado."],
+              ["Apoio da assistência social", "O CRAS orienta sobre benefícios e apoio à família. Veja a área Assistência Social e pergunte lá se há serviços para famílias com uma só responsável."]
+            ],
+            aviso: "São perguntas para levar, não regras confirmadas: os critérios e procedimentos de Rio Claro dependem da Secretaria Municipal da Educação.",
+            fonte: ["Orientação geral; sem fonte oficial local", null, "a ser confirmada"] },
           { nome: "Cada tipo de escola tem um caminho", sem_tel: true, resumo: "Ver o passo a passo",
             texto: "O pedido de vaga não é o mesmo em todo lugar. Comece pelo caminho da escola que você procura.",
             topicos: [

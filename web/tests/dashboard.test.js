@@ -265,6 +265,12 @@ assert(/2027/.test(JSON.stringify(maesSec)) && /não valem para 2027/.test(JSON.
 assert(/2027/.test(Areas.AREAS.find((a) => a.id === "educacao").pendencias.join(" ")), "a pendência deve citar o calendário de 2027");
 assert(!/\(\d{2}\)\s?\d{4}|\d{4}-\d{4}/.test(JSON.stringify(maesSec)), "o passo a passo das mães não deve conter telefones sem fonte");
 assert(Areas.AREAS.find((a) => a.id === "educacao").pendencias.some((p) => /Rio Claro/.test(p) && /fonte oficial/.test(p)), "Educação deve declarar que as regras locais ainda não vieram de fonte oficial");
+const solo = maesSec.canais.find((c) => /sozinha/i.test(c.nome));
+assert(solo && solo.topicos.length >= 6, "falta o cartão de apoio para mães que criam os filhos sozinhas");
+["Documentos", "Prioridade na vaga", "Horário", "Quem busca a criança", "violência", "Pensão e guarda", "assistência social"].forEach((t) =>
+  assert(JSON.stringify(solo).includes(t), "o cartão de mães solo deve tratar de: " + t));
+assert(/não confirmou se esse critério existe/.test(JSON.stringify(solo)), "a prioridade de vaga não pode ser afirmada sem fonte");
+assert(!/\(\d{2}\)\s?\d{4}|\d{4}-\d{4}/.test(JSON.stringify(solo)), "o cartão de mães solo não deve conter telefones sem fonte");
 assert(/@media print/.test(css) && /folha-impressao/.test(css), "deve haver estilo de impressão para o plano e o currículo");
 assert(!/localStorage|sessionStorage|document\.cookie/.test(ler("jornada-ui.js") + ler("jornada.js")), "a jornada não pode guardar nada no aparelho");
 assert(!/fetch\(|XMLHttpRequest|sendBeacon/.test(ler("jornada-ui.js") + ler("jornada.js")), "a jornada não pode enviar nada pela rede");
