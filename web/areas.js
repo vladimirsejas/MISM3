@@ -40,15 +40,30 @@
             topicos: [
               ["Creche e pré-escola (0 a 5 anos)", "Em geral são organizadas pelo município. Procure a Secretaria Municipal da Educação."],
               ["Ensino fundamental", "É atendido por escolas do município e do estado. Pergunte na Secretaria qual escola e qual rede atendem o seu bairro."],
-              ["Ensino médio", "Em geral é responsabilidade do estado. Também há o ensino médio da rede SESI-SP (veja o grupo “Concluir os estudos e graduação”, mais abaixo) e escolas particulares."]
+              ["Ensino médio", "Em geral é responsabilidade do estado. Também há o ensino médio da rede SESI-SP (veja o grupo “Concluir os estudos e graduação”, mais abaixo) e escolas particulares."],
+              ["Jovem ou adulto que não concluiu os estudos", "Veja a EJA (Educação de Jovens e Adultos), no grupo “Concluir os estudos e graduação”, mais abaixo, ou pergunte na Secretaria Municipal da Educação."]
             ],
             fonte: ["Constituição Federal, art. 211", null, "regra geral; a organização de Rio Claro deve ser confirmada na Secretaria da Educação"] },
+          { nome: "Cada tipo de escola tem um caminho", sem_tel: true, resumo: "Ver o passo a passo",
+            texto: "O pedido de vaga não é o mesmo em todo lugar. Comece pelo caminho da escola que você procura.",
+            topicos: [
+              ["Creche, pré-escola e ensino fundamental municipais", "Procure a Secretaria Municipal da Educação. Segundo a Prefeitura, as matrículas e rematrículas da rede municipal para 2026 foram feitas pelo aplicativo CADU; essa informação não foi conferida por nós, e é preciso confirmar se o procedimento é o mesmo para 2027."],
+              ["Escola estadual", "Procure a própria escola estadual ou a Secretaria Estadual da Educação."],
+              ["Escola particular", "Procure a secretaria da própria escola."],
+              ["Escola do SESI", "O SESI-SP tem processo seletivo próprio e regras de vagas (veja o cartão SESI Rio Claro, mais abaixo). Não é o mesmo processo da rede municipal."],
+              ["EJA", "Pergunte na Secretaria Municipal da Educação ou na unidade que oferece a EJA (por exemplo, o SESI)."]
+            ],
+            aviso: "Os caminhos acima são uma orientação inicial. O que falta confirmar com a Secretaria está em “Pendências”, no fim desta página.",
+            fonte: ["Pesquisa sobre o procedimento de Rio Claro", null, "não conferida em fonte oficial por nós"] },
           { nome: "Matricular meu filho pela primeira vez", sem_tel: true, resumo: "Ver o passo a passo",
             texto: "Antes de ir, saiba o que levar e o que perguntar. Datas e procedimentos mudam a cada ano.",
             topicos: [
               ["A matrícula é obrigatória?", "Dos 4 aos 17 anos, sim: a família tem o dever de matricular e o Estado de oferecer a vaga. Para crianças de 0 a 3 anos (creche) a vaga é um direito, mas a matrícula não é obrigatória e depende de vagas."],
               ["Idade mínima", "As normas nacionais costumam usar uma data de corte (em geral 31 de março) para definir a idade de entrada em cada etapa. Confirme a data e a idade da sua criança na Secretaria."],
-              ["Documentos que costumam ser pedidos", "Certidão de nascimento ou documento da criança; documento e CPF do responsável; comprovante de residência; cartão de vacinação. Pode haver outros: confirme a lista na Secretaria ou na escola."],
+              ["Documentos que costumam ser pedidos", "Certidão de nascimento ou documento da criança; CPF da criança, se tiver; RG e CPF do responsável; comprovante de residência atualizado; carteira de vacinação; documentos escolares anteriores, quando houver. É uma lista para ir preparada, não a lista oficial: a Secretaria informa os documentos exigidos em cada caso."],
+              ["Inscrição não é vaga", "São etapas diferentes: inscrição ou cadastro, pedido de vaga, convocação e matrícula efetivada. Ter protocolo ou cadastro não significa que a criança já tem a vaga. Pergunte em que etapa o seu pedido está."],
+              ["Datas", "Os prazos mudam a cada ano. A Prefeitura divulgou em outubro de 2025 o calendário para o ano letivo de 2026 (informação não conferida por nós); essas datas não valem para 2027. Confirme o calendário novo na Secretaria."],
+              ["Sem internet ou sem conseguir preencher o cadastro", "Procure a Secretaria Municipal da Educação pessoalmente (endereço e telefone no cartão da Secretaria, mais abaixo) e peça ajuda para fazer o pedido. O CRAS também pode orientar."],
               ["O que perguntar", "Em que período a matrícula ou a inscrição está aberta? Onde faço (pessoalmente, na escola ou pela internet)? Quais documentos levo? Qual escola atende o meu endereço? Como acompanho o pedido? Peça tudo por escrito ou anote o nome de quem atendeu."]
             ],
             fonte: ["Constituição Federal, art. 208; LDB (Lei 9.394/1996), art. 6º; ECA (Lei 8.069/1990), art. 53", null, "regras gerais; procedimentos de Rio Claro devem ser confirmados na Secretaria da Educação"] },
@@ -94,7 +109,7 @@
       }],
       avisos: ["Uma escola ou creche cadastrada não confirma que há vaga. Confirme com a Secretaria da Educação."],
       pendencias: [
-        "As regras de Rio Claro (datas de matrícula, documentos exigidos, onde se inscrever para creche e como funciona a lista de espera) ainda não foram arquivadas de fonte oficial: o passo a passo acima segue a regra geral e as dúvidas devem ser tiradas na Secretaria Municipal da Educação.",
+        "As regras de Rio Claro ainda não foram arquivadas de fonte oficial: o passo a passo acima segue a regra geral e as informações de pesquisa, e três pontos precisam ser confirmados com a Secretaria Municipal da Educação: (1) o calendário e o procedimento de novas matrículas para 2027, inclusive se o aplicativo CADU continua sendo o canal; (2) como solicitar e acompanhar vaga em creche, e o que fazer quando não há vaga; (3) quais documentos e canais são exigidos hoje em cada etapa (creche, pré-escola, ensino fundamental e EJA).",
         "A lista de escolas públicas (municipais e estaduais) com endereço e telefone ainda não está neste site."
       ]
     },

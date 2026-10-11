@@ -257,8 +257,12 @@ lista.filter((x) => x.subtipo === "curso_tecnico").forEach((x) => assert(/técni
   assert(g.some((x) => /técnicos/.test(x)) && !g.some((x) => /profissionalizantes/.test(x)), "a Etec fica nos grupos de técnicos (e no conjunto), sem repetir em profissionalizantes: " + id);
 });
 const maesSec = Areas.AREAS.find((a) => a.id === "educacao").secoes[0];
-assert(/mães/.test(maesSec.titulo) && maesSec.canais.length >= 5, "Educação deve começar com o passo a passo para as mães (matrícula, transferência, vagas)");
+assert(/mães/.test(maesSec.titulo) && maesSec.canais.length >= 6, "Educação deve começar com o passo a passo para as mães (matrícula, transferência, vagas)");
 ["matricular", "transferência", "vaga"].forEach((t) => assert(maesSec.canais.some((c) => c.nome.toLowerCase().includes(t)), "falta o cartão sobre: " + t));
+assert(maesSec.canais.some((c) => /tipo de escola/i.test(c.nome)), "falta o cartão com o caminho de cada tipo de escola");
+assert(JSON.stringify(maesSec).includes("Inscrição não é vaga"), "deve explicar a diferença entre inscrição e vaga");
+assert(/2027/.test(JSON.stringify(maesSec)) && /não valem para 2027/.test(JSON.stringify(maesSec)), "o calendário de 2026 não pode ser apresentado como o de 2027");
+assert(/2027/.test(Areas.AREAS.find((a) => a.id === "educacao").pendencias.join(" ")), "a pendência deve citar o calendário de 2027");
 assert(!/\(\d{2}\)\s?\d{4}|\d{4}-\d{4}/.test(JSON.stringify(maesSec)), "o passo a passo das mães não deve conter telefones sem fonte");
 assert(Areas.AREAS.find((a) => a.id === "educacao").pendencias.some((p) => /Rio Claro/.test(p) && /fonte oficial/.test(p)), "Educação deve declarar que as regras locais ainda não vieram de fonte oficial");
 assert(/@media print/.test(css) && /folha-impressao/.test(css), "deve haver estilo de impressão para o plano e o currículo");
