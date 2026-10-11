@@ -158,4 +158,10 @@ const papel = UI.htmlPlano(J.montarPlano({ objetivo: "emprego", curriculo: "sim"
 assert(!/<a /.test(papel) && /https:\/\/vagas\.rioclaro\.sp\.gov\.br/.test(papel), "na versão impressa o endereço aparece como texto");
 assert(!/Ver mais/.test(UI.htmlPlano(caso, true)), "a versão impressa mostra todos os passos");
 
+/* ---- Lei 14.542/2023: prioridade do Sine, sem prometer vaga e com a fonte oficial ---- */
+const passoVagas = planos.flatMap((pl) => pl.passos).find((p) => p.id === "vagas");
+assert(passoVagas, "o plano de quem procura vaga deve ter o passo de vagas");
+assert(passoVagas.pergunte.some((t) => /14\.542/.test(t) && /PAT/.test(t)), "a prioridade do Sine deve aparecer, mandando perguntar no PAT");
+assert(passoVagas.extras.some((l) => /camara\.leg\.br\/legin\/fed\/lei\/2023\/lei-14542/.test(l[1])), "link da lei na fonte oficial");
+
 console.log("jornada.test.js: perguntas, ordem e tamanho do plano, telefones do catálogo, links, promessas proibidas e currículo passaram");
