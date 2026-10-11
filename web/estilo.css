@@ -152,3 +152,27 @@ a.tel-grande{display:inline-block;font-weight:800;font-size:1.2rem;color:var(--a
 }
 @media(max-width:340px){.portas li{flex-basis:100%}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+/* ---------- jornada Trabalho e cuidado e currículo ---------- */
+.jornada .pergunta{border:1px solid var(--bor);border-radius:var(--raio);background:var(--card);padding:.7rem .9rem;margin:.6rem 0}
+.jornada .pergunta legend{font-weight:700;padding:0 .3rem}
+.opcoes{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.3rem}
+.opcao{display:inline-flex;align-items:center;gap:.45rem;min-height:44px;padding:.4rem .9rem;border:1px solid var(--bor);border-radius:999px;background:var(--lilas);cursor:pointer}
+.opcao input{width:1.15rem;height:1.15rem;accent-color:var(--pri-esc)}
+.opcao:has(input:checked){background:var(--lav);border-color:var(--pri);font-weight:700}
+.acoes{display:flex;flex-wrap:wrap;gap:.6rem;margin:.9rem 0}
+.plano{list-style:none;padding:0;margin:1rem 0}
+.passo{border:1px solid var(--bor);border-left:5px solid var(--pri);border-radius:var(--raio);background:var(--card);padding:.8rem 1rem;margin:.8rem 0}
+.passo ul{margin:.3rem 0;padding-left:1.2rem}
+.passo .onde{list-style:disc}
+.campo{margin:.7rem 0}
+.campo label{display:block;font-weight:700;margin-bottom:.2rem}
+.campo input,.campo textarea{display:block;width:100%;font:inherit;padding:.6rem .75rem;border:1px solid var(--bor);border-radius:10px;background:var(--card);color:var(--fg)}
+.curriculo-folha{border:1px solid var(--bor);border-radius:var(--raio);background:#fff;padding:1rem 1.2rem;margin:1rem 0}
+.curriculo-folha h4{margin-top:.9rem;border-bottom:1px solid var(--lav)}
+.folha-impressao{display:none}
+@media print{
+  body>*:not(.folha-impressao){display:none!important}
+  .folha-impressao{display:block!important;color:#000;background:#fff;font-size:12pt}
+  .folha-impressao .passo,.folha-impressao .curriculo-folha{border:0;border-left:0;padding:0;margin:.6rem 0;break-inside:avoid}
+}

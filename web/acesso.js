@@ -23,6 +23,7 @@
     conecta: "Emprego e oportunidades",
     credito: "Crédito para empreender",
     qualificacao: "Cursos gratuitos de qualificação",
+    curso_profissionalizante: "Curso profissionalizante",
     fundo_social: "Fundo Social de Solidariedade",
     sede: "Sede administrativa",
     municipal: "Rede municipal",
