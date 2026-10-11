@@ -1,0 +1,357 @@
+# Frases para treinar o modelo de necessidades (aprendizado de máquina que roda no aparelho).
+# ATENÇÃO: estas frases foram ESCRITAS PELA EQUIPE do projeto, imitando como as pessoas falam. Não são frases reais de mulheres
+# e nenhuma vem de usuárias do site. Elas servem para o primeiro treino; o modelo melhora quando houver frases reais, coletadas
+# com consentimento. Os resultados do modelo precisam ser lidos com isso em mente.
+#
+# Formato: rótulo[,rótulo] | frase     (rótulo "nenhuma" = a frase não é sobre nenhuma necessidade do site)
+# Rótulos: violencia, casamento, filhos, emprego_curso, saude, estudo, moradia, dividas, familia, nenhuma
+# Cada frase é ÚNICA. As frases com dois rótulos aparecem na seção final.
+
+# ---------------------------------------------------------------- violencia
+violencia | meu marido me bateu ontem e eu não sei o que fazer
+violencia | tenho medo de voltar pra casa porque ele fica nervoso e me ameaça
+violencia | ele quebrou as minhas coisas e disse que vai me matar
+violencia | meu ex não me deixa em paz, fica me seguindo na rua
+violencia | sofro agressão dentro de casa há anos
+violencia | ele me proíbe de sair, de ver minha família e de trabalhar
+violencia | preciso fugir de casa com meus filhos, estou com medo
+violencia | o pai dos meus filhos me xingou e me empurrou na frente das crianças
+violencia | como peço uma medida protetiva contra meu companheiro
+violencia | sou xingada e humilhada todo dia pelo meu namorado
+violencia | fui forçada a ter relação e não consigo contar pra ninguém
+violencia | meu patrão me assedia e me toca sem eu querer
+violencia | ele controla meu celular e meu dinheiro e me ameaça se eu reclamo
+violencia | acho que vou ser agredida de novo, preciso de ajuda urgente
+violencia | tem um homem que fica rondando minha casa e me manda mensagens de ameaça
+violencia | apanhei do meu esposo e estou machucada
+violencia | minha vizinha apanha do marido todo dia, como eu posso ajudar ela
+violencia | ele diz que se eu for embora ele me acha e me mata
+violencia | estou numa relação abusiva e quero sair
+violencia | onde posso me abrigar hoje, estou fugindo de casa
+violencia | meu companheiro joga as coisas em mim quando bebe
+violencia | quero denunciar o que ele faz comigo
+
+# ---------------------------------------------------------------- casamento
+casamento | quero me separar do meu marido, por onde começo
+casamento | preciso de um advogado de graça pra fazer meu divórcio
+casamento | o pai do meu filho não paga a pensão
+casamento | como funciona a guarda dos filhos quando o casal se separa
+casamento | meu ex quer ficar com as crianças e eu não concordo
+casamento | quero entrar com pedido de pensão alimentícia
+casamento | como divido os bens depois da separação
+casamento | moramos juntos há dez anos, tenho direitos se terminar
+casamento | defensoria pública atende divórcio
+casamento | meu marido saiu de casa e largou a gente sem nada
+casamento | como faço pra ter o nome do pai na certidão do meu filho
+casamento | quero a guarda compartilhada, como peço
+casamento | o juiz mandou ele pagar pensão e ele não cumpre
+casamento | não aguento mais o casamento e quero o divórcio sem gastar
+casamento | preciso de orientação jurídica sobre união estável
+casamento | meu ex não deixa eu ver as crianças
+casamento | como dar entrada na separação litigiosa
+casamento | quanto se paga de pensão por mês pra dois filhos
+casamento | tenho advogada pra me explicar meus direitos de esposa
+
+# ---------------------------------------------------------------- filhos
+filhos | preciso de vaga na creche pro meu bebê
+filhos | como matricular minha filha na escola
+filhos | criei meus filhos sozinha e preciso de ajuda com eles
+filhos | não tenho com quem deixar as crianças pra trabalhar
+filhos | quero transferir meu filho de escola
+filhos | minha creche não tem vaga e agora?
+filhos | qual escola atende crianças de cinco anos perto de casa
+filhos | sou mãe solteira e preciso de apoio
+filhos | como funciona o cadu pra matrícula do meu filho
+filhos | meu neném tem seis meses e eu preciso voltar a trabalhar
+filhos | meu filho está sem escola e o ano já começou
+filhos | preciso de uma babá ou creche gratuita
+filhos | quais documentos pra matricular filho na escola municipal
+filhos | filho de quatro anos pode entrar na pré-escola
+filhos | sou mãe e pai ao mesmo tempo, tem alguma ajuda
+filhos | tenho gêmeos de dois anos e não consegui vaga
+filhos | escola integral para o meu menino
+filhos | como conseguir vaga pra criança com deficiência na escola
+filhos | quando abre a matrícula do ano que vem
+filhos | meu filho pequeno fica sozinho em casa enquanto trabalho
+
+# ---------------------------------------------------------------- emprego_curso
+emprego_curso | estou desempregada e preciso trabalhar
+emprego_curso | onde tem vaga de emprego aqui em Rio Claro
+emprego_curso | quero fazer um curso para arrumar serviço
+emprego_curso | como faço um currículo bom
+emprego_curso | procuro trabalho meio período
+emprego_curso | tem curso de graça de cabeleireira ou costura
+emprego_curso | quero abrir um negócio em casa pra ter renda
+emprego_curso | fui mandada embora e preciso de um novo emprego
+emprego_curso | nunca trabalhei de carteira assinada, por onde começo
+emprego_curso | curso técnico gratuito para quem quer entrar no mercado
+emprego_curso | preciso de uma renda extra
+emprego_curso | como é a entrevista de emprego, nunca fiz uma
+emprego_curso | tenho 45 anos, ainda consigo emprego
+emprego_curso | quero vender doces e preciso de orientação pra começar
+emprego_curso | senai tem curso para mulheres
+emprego_curso | onde fica o posto de atendimento ao trabalhador
+emprego_curso | sou diarista e quero algo melhor
+emprego_curso | quero ser microempreendedora, como faço o mei
+emprego_curso | crédito pequeno pra comprar material do meu trabalho
+emprego_curso | qualificação profissional para recomeçar a vida
+
+# ---------------------------------------------------------------- saude
+saude | preciso marcar consulta com ginecologista
+saude | estou grávida e não sei onde fazer o pré-natal
+saude | onde fica o posto de saúde do meu bairro
+saude | estou com muita dor e preciso de um médico
+saude | preciso de um exame e não consigo marcar
+saude | quero conversar com uma psicóloga, estou muito ansiosa
+saude | minha pressão está alta e acabou meu remédio
+saude | fui na UPA e não resolveram, o que faço
+saude | como faço papanicolau
+saude | estou na menopausa e me sinto mal
+saude | meu filho está doente e precisa de pediatra
+saude | passo mal à noite, qual o pronto atendimento mais perto
+saude | estou deprimida e sem vontade de nada
+saude | onde tem atendimento de saúde mental
+saude | preciso de mamografia
+saude | preciso de remédio e não tenho dinheiro pra comprar
+saude | dor de cabeça forte há três dias
+saude | quero fazer o teste de gravidez
+saude | atendimento odontológico gratuito
+saude | como tiro a carteirinha do SUS
+
+# ---------------------------------------------------------------- estudo
+estudo | quero voltar a estudar
+estudo | parei na oitava série e quero terminar os estudos
+estudo | como faço supletivo
+estudo | tem EJA à noite aqui em Rio Claro
+estudo | quero entrar na faculdade e não tenho condições
+estudo | preciso terminar o ensino médio para conseguir emprego
+estudo | existe bolsa para fazer faculdade
+estudo | quero aprender a ler melhor, tenho vergonha
+estudo | vestibular da Fatec, como me inscrever
+estudo | curso técnico com ensino médio junto
+estudo | estudar de noite porque trabalho de dia
+estudo | quero fazer o Enem pra conseguir bolsa
+estudo | faculdade pública perto de Rio Claro
+estudo | tenho 50 anos e quero concluir a escola
+estudo | alfabetização para adultos
+estudo | quero fazer pedagogia e não sei por onde começar
+estudo | sesi tem ensino médio para quem trabalha
+estudo | posso estudar mesmo tendo filhos pequenos
+estudo | meu diploma do ensino fundamental, preciso refazer
+estudo | tem cursinho gratuito
+
+# ---------------------------------------------------------------- moradia
+moradia | estou sem casa e preciso de um lugar pra morar
+moradia | o dono do imóvel quer me despejar
+moradia | não consigo pagar o aluguel
+moradia | como me inscrevo na casa popular
+moradia | minha conta de luz veio altíssima
+moradia | quero a tarifa social da água
+moradia | moro de favor e preciso de moradia própria
+moradia | minha casa tem risco de cair
+moradia | programa de habitação do município
+moradia | conta de energia atrasada e vão cortar
+moradia | a prefeitura tem aluguel social
+moradia | regularizar o terreno onde moro
+moradia | quero financiar uma casa com meu salário
+moradia | preciso de ajuda pra reformar meu telhado
+moradia | estou dormindo na rua com meu filho
+moradia | fui despejada e não tenho pra onde ir
+moradia | cadastro para conseguir uma casa
+moradia | desconto na conta de água pra quem é pobre
+moradia | tenho água cortada há uma semana
+moradia | falta de saneamento no meu bairro
+
+# ---------------------------------------------------------------- dividas
+dividas | estou com o nome sujo e não consigo pagar
+dividas | quero renegociar minhas dívidas
+dividas | cartão de crédito estourado e juros altos
+dividas | como saber quando posso me aposentar
+dividas | não consigo pagar as contas e já devo muito
+dividas | empréstimo no banco que virou bola de neve
+dividas | cobrança no meu telefone todos os dias
+dividas | procon pode me ajudar com dívida
+dividas | quero simular minha aposentadoria
+dividas | meu inss foi negado, o que eu faço
+dividas | fiz um empréstimo consignado que não reconheço
+dividas | serasa limpa nome como funciona
+dividas | financeira fica ligando e me ameaçando por dívida
+dividas | acabou meu dinheiro e tenho muita conta pra pagar
+dividas | quanto tempo de contribuição falta pra mim
+dividas | estou endividada e preciso organizar o orçamento
+dividas | benefício do inss para quem não pode trabalhar
+dividas | fui enganada num empréstimo
+dividas | preciso parcelar uma dívida antiga
+
+# ---------------------------------------------------------------- familia
+familia | estou sem comida em casa
+familia | preciso de cesta básica
+familia | como me cadastro no bolsa família
+familia | meu dinheiro não dá pra nada, preciso de ajuda
+familia | onde fica o cras do meu bairro
+familia | não tenho o que dar de comer pros meus filhos
+familia | quero saber de benefícios sociais
+familia | quem pode receber o bpc
+familia | cadastro único como fazer
+familia | perdi o emprego e a família está passando necessidade
+familia | preciso de ajuda do governo
+familia | assistente social pode me atender
+familia | estou passando fome
+familia | tenho um filho com deficiência e preciso de benefício
+familia | auxílio para quem não tem renda nenhuma
+familia | o que é o creas
+familia | pessoa idosa na minha casa precisa de assistência
+familia | só tenho arroz em casa
+familia | falta tudo pra mim e minha família
+familia | programa social pra mulher sozinha
+
+# ---------------------------------------------------------------- nenhuma (fora do escopo)
+nenhuma | oi tudo bem
+nenhuma | qual a previsão do tempo para amanhã
+nenhuma | quero uma receita de bolo de cenoura
+nenhuma | quem ganhou o jogo ontem
+nenhuma | bom dia
+nenhuma | qual o melhor celular para comprar
+nenhuma | como instalar um aplicativo no computador
+nenhuma | quero ouvir música
+nenhuma | me conta uma piada
+nenhuma | que horas são
+nenhuma | quanto é dois mais dois
+nenhuma | filme bom para assistir hoje
+nenhuma | como fazer unha em casa
+nenhuma | obrigada
+nenhuma | teste teste um dois três
+nenhuma | quem é o prefeito
+nenhuma | como plantar tomate
+nenhuma | qual o signo de quem nasceu em maio
+
+# ---------------------------------------------------------------- necessidades combinadas (dois rótulos)
+violencia,filhos | tenho medo do meu marido e não posso sair de casa por causa das crianças
+violencia,casamento | ele me agride e eu quero me separar com segurança
+violencia,moradia | preciso fugir do meu companheiro e não tenho onde morar
+violencia,saude | apanhei e estou machucada, preciso ser atendida
+casamento,filhos | quero me separar mas tenho medo de perder a guarda das crianças
+casamento,dividas | depois do divórcio fiquei com as dívidas dele
+casamento,familia | meu ex abandonou a gente e estamos sem dinheiro
+filhos,emprego_curso | preciso trabalhar mas não tenho com quem deixar o bebê
+filhos,emprego_curso | sou mãe solo, desempregada e sem vaga na creche
+filhos,estudo | quero voltar a estudar mas tenho filho pequeno
+filhos,saude | meu bebê está doente e eu não tenho como levar ao médico
+filhos,familia | tenho três filhos, estamos sem comida e sem renda
+filhos,moradia | moro de aluguel com meus filhos e vão nos despejar
+emprego_curso,estudo | quero terminar o ensino médio pra poder conseguir emprego melhor
+emprego_curso,dividas | perdi o emprego e as contas estão atrasando
+emprego_curso,familia | estou desempregada e passando necessidade
+emprego_curso,saude | preciso trabalhar mas estou doente e sem consulta
+estudo,dividas | queria fazer faculdade mas estou endividada
+saude,familia | estou doente, sem renda e sem remédio
+saude,moradia | moro num lugar sem esgoto e minha filha está sempre doente
+moradia,dividas | atrasei o aluguel e a luz, estou endividada
+moradia,familia | perdi a casa e estou sem comida
+moradia,emprego_curso | preciso de emprego para pagar o aluguel
+dividas,familia | não consigo pagar as contas nem comprar comida
+violencia,emprego_curso | ele não me deixa trabalhar e eu preciso de renda pra sair de casa
+casamento,emprego_curso | estou me separando e preciso arrumar emprego
+estudo,filhos | tem escola noturna e creche pra eu estudar
+saude,estudo | estou com depressão e queria voltar a estudar
+filhos,dividas | tenho filhos pequenos e uma dívida enorme
+familia,estudo | sem dinheiro e queria terminar a escola
+
+# ---------------------------------------------------------------- segunda rodada de frases (vocabulário variado)
+violencia | ele me trancou no quarto e não me deixa ir ao trabalho
+violencia | vivo com medo, ele grita e ameaça bater
+violencia | meu pai me bate desde criança e eu quero sair daí
+violencia | ele já levantou a mão pra mim várias vezes
+violencia | minha filha apanha do namorado e eu não sei como agir
+violencia | fui seguida até em casa por um homem que me ameaça
+violencia | ele pegou meus documentos pra eu não poder ir embora
+violencia | apanho quando ele chega bêbado
+violencia | estou escondida na casa de uma amiga porque ele quer me machucar
+violencia | tem alguém me perseguindo e me mandando recado de morte
+casamento | quero acabar com o casamento mas não sei como funciona
+casamento | o pai da minha filha sumiu e não ajuda em nada
+casamento | preciso de documentação para pedir o divórcio
+casamento | meu marido quer tirar meus filhos de mim
+casamento | como é feito o acordo de pensão pros meus filhos
+casamento | fui abandonada com duas crianças e quero cobrar o pai
+casamento | advogada que atenda mulher que não tem como pagar
+casamento | como proceder se meu ex não devolve o meu filho no domingo
+casamento | tenho direito à casa se me separar
+casamento | quero oficializar a separação de corpos
+filhos | onde deixo meu filho enquanto trabalho
+filhos | minha menina de três anos precisa de escola
+filhos | não consegui vaga para minha criança no berçário
+filhos | preciso inscrever meu filho no ensino fundamental
+filhos | tenho criança pequena e nenhum parente pra ajudar
+filhos | ajuda pra mãe que cria filho sem o pai
+filhos | em qual creche eu procuro vaga
+filhos | como faço a rematrícula do meu filho
+filhos | existe lista de espera para berçário
+filhos | meu filho de seis anos precisa começar a escola
+emprego_curso | procuro serviço de qualquer coisa, tô precisando
+emprego_curso | quero aprender uma profissão
+emprego_curso | onde faço curso de informática barato
+emprego_curso | tem alguma empresa contratando mulher
+emprego_curso | quero montar meu currículo
+emprego_curso | como consigo trabalho de carteira assinada
+emprego_curso | preciso de capacitação para entrar no mercado de trabalho
+emprego_curso | queria vender marmita, por onde começo
+emprego_curso | moro em Rio Claro e quero uma oportunidade de emprego
+emprego_curso | quero me formar numa área pra ganhar melhor
+saude | estou com sintomas estranhos e preciso de atendimento
+saude | minha filha está com febre alta
+saude | onde faço pré-natal gratuito
+saude | tô com muita angústia e não consigo dormir
+saude | quero marcar um clínico geral
+saude | preciso de atendimento psicológico pelo SUS
+saude | onde fica o hospital público
+saude | me sinto muito triste há semanas
+saude | preciso fazer exames de rotina
+saude | tenho diabetes e preciso de acompanhamento
+estudo | quero terminar a escola que larguei
+estudo | onde posso concluir o ensino médio
+estudo | tem faculdade gratuita pra mim
+estudo | como entrar na universidade pública
+estudo | quero estudar à noite
+estudo | tem curso supletivo na minha cidade
+estudo | desejo me matricular num curso técnico
+estudo | queria fazer a prova do Enem
+estudo | parei de estudar muito cedo e quero voltar
+estudo | como me inscrevo numa faculdade com bolsa
+moradia | não tenho onde morar com meus filhos
+moradia | o proprietário mandou eu sair da casa
+moradia | quero entrar num programa de casa própria
+moradia | minha energia vai ser cortada por falta de pagamento
+moradia | não consigo pagar o aluguel nesse mês
+moradia | moro em área de risco
+moradia | preciso de ajuda com a conta de água
+moradia | meu barraco pegou fogo e perdi tudo
+moradia | como faço pra conseguir uma moradia popular
+moradia | a água da minha casa está cortada
+dividas | devo muito dinheiro e não sei por onde começar
+dividas | estou com restrição no meu nome
+dividas | quero limpar meu nome no SPC
+dividas | contrato de empréstimo com juros abusivos
+dividas | como pedir aposentadoria por idade
+dividas | fui negativada injustamente
+dividas | preciso renegociar meu cartão
+dividas | quero entender quanto falta pra me aposentar
+dividas | as parcelas do carnê estão me sufocando
+dividas | tem como parcelar a conta atrasada
+familia | estou desesperada, não tenho dinheiro nem comida
+familia | quero me cadastrar no CadÚnico
+familia | preciso de uma cesta básica pra essa semana
+familia | onde pedir auxílio do governo
+familia | não consigo sustentar minha família
+familia | meu marido perdeu o emprego e estamos sem nada
+familia | como solicito benefício assistencial
+familia | tenho idosa em casa e preciso de ajuda do cras
+familia | passamos fome quase todo dia
+familia | quem pode me orientar sobre benefícios
+nenhuma | qual a melhor marca de arroz
+nenhuma | como faço pra salvar uma foto
+nenhuma | me recomenda um livro
+nenhuma | que dia é hoje
+nenhuma | horário do shopping
+nenhuma | como cuidar de uma planta
+nenhuma | oi, estou testando o site
