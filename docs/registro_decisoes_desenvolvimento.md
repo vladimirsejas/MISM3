@@ -327,3 +327,7 @@ Nenhuma branch foi apagada nem alterada. O que **não** foi trazido para a base,
 - O plano de trabalho passou a listar esse link no passo "Escolher um curso". Um teste impede que nomes de cursos sejam copiados para o cartão.
 - **Observação:** a página de cursos é aberta, enquanto, segundo o autor, a página da cidade só abre para sócios; se cada curso exige ser sócio é algo a conferir em "Saiba mais" de cada turma.
 - As capturas de tela não foram arquivadas como PDF; ficam como evidência apenas no registro (lista que muda a cada período).
+
+### Endereço do site do SESI-SP e fim das pendências do SEST SENAT — 11/10/2026
+- O autor indicou o site oficial do SESI-SP: **https://www.sesisp.org.br/**, que já era o `fonte_url` dos cartões do SESI. A pendência "URL exata das páginas do SESI" foi encerrada: o link permanece e os textos passam a dizer que é o site oficial indicado pelo autor (as impressões não mostram o endereço de cada página).
+- **SEST SENAT:** o autor informa que não sabe mais nada além do que já está no cartão. Ficam sem resposta, e assim escritos no cartão: como alguém se torna sócio e se cada curso da página exige isso. Nenhuma ação pendente do lado do desenvolvimento.
