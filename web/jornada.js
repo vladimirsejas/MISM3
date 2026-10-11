@@ -28,7 +28,7 @@
     fatecESG: ["Fatec Rio Claro — Gestão ESG", "https://fatecrioclaro.cps.sp.gov.br/esg/", "Curso superior de tecnologia presencial, 4 semestres."],
     sesi: ["SESI Rio Claro — EJA gratuita, ensino fundamental e médio", "https://www.sesisp.org.br/", "Endereço e telefone no cartão abaixo. Confirme turmas, vagas e ingresso."],
     faculdadeSesi: ["Faculdade SESI de Educação", "https://www.faculdadesesi.edu.br/", "Licenciaturas gratuitas, com aulas presenciais à noite em São Paulo (capital). Confirme as regras atuais no edital."],
-    sestsenat: ["SEST SENAT — busca de unidades", "https://www.sestsenat.org.br/unidades", "Selecione São Paulo e Rio Claro e confirme se há unidade."]
+    sestsenat: ["SEST SENAT — unidade de Rio Claro (para sócios)", "https://www.sestsenat.org.br/unidades", "Segundo o autor, a página da cidade só abre para sócios. Pergunte se há curso aberto a você."]
   };
 
   var PERGUNTAS = [
