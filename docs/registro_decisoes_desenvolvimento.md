@@ -411,3 +411,8 @@ Nenhuma branch foi apagada nem alterada. O que **não** foi trazido para a base,
 - Convenção para o catálogo: cadastrar todos os números publicados na coluna `telefone`, separados por " / ", e dizer na observação de onde vem cada um. Só tratar como divergência quando a fonte oficial dá **números diferentes para o mesmo serviço sem explicação** ou quando o endereço, o nome ou o horário não batem.
 - A observação da Secretaria Municipal da Educação foi corrigida: os três telefones (3522-1950, 3522-1957 e 3522-1970) são linhas do PABX da Secretaria; "se uma linha estiver ocupada, ligue em outra". A afirmação anterior de que haveria "divergência" estava errada.
 - **Pendente:** a UPA está cadastrada com um só número, (19) 3522-1818. Quando o autor informar os outros dois, acrescentar ao cadastro. Não foram inventados números.
+
+### Correção: o CADU é um aplicativo, sem endereço físico — 11/10/2026
+- O autor esclareceu que o **CADU é um aplicativo e não tem endereço**. A suposição anterior, baseada na sigla "Central de Atendimento Digital Unidades" que aparece na peça oficial, de que poderia haver unidades de atendimento presencial, **foi retirada** do texto do site e deixou de ser pendência.
+- Quem não tem celular ou internet, ou tem dificuldade com o aplicativo, é orientado a procurar a **Secretaria Municipal da Educação** pessoalmente (endereço e telefones no cartão da Secretaria).
+- Pendências de educação que restam: calendário e procedimento de 2027; como pedir vaga em creche sem disponibilidade; documentos exigidos hoje.
