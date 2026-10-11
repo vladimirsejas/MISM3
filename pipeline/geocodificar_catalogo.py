@@ -27,6 +27,7 @@ from __future__ import annotations
 import argparse
 import csv
 import difflib
+import io
 import re
 import sys
 import unicodedata
@@ -275,8 +276,9 @@ def ler_cnefe(caminho: Path):
     return ler_csv_flex(caminho)
 
 
-CAMPOS_PROPOSTA = ["id", "nome", "endereco_catalogo", "situacao", "confianca", "metodo", "candidatos", "cep", "lat",
-                   "lon", "setor", "registros", "rua_cnefe", "numero_cnefe", "alternativas", "observacao", "decisao"]
+CAMPOS_PROPOSTA = ["id", "nome", "endereco_catalogo", "cep_catalogo", "situacao", "confianca", "metodo", "candidatos",
+                   "cep", "cep_confere", "lat", "lon", "setor", "registros", "rua_cnefe", "numero_cnefe", "alternativas",
+                   "observacao", "decisao"]
 
 
 def amostra_de_ruas(indice: dict, n: int = 15) -> list[str]:
@@ -299,9 +301,62 @@ def propor(linhas: list[dict], indice: dict) -> list[dict]:
             continue
         if (s.get("cep") or "").strip() and (s.get("lat") or "").strip() and (s.get("lon") or "").strip():
             continue
-        saida.append({"id": s["id"], "nome": s["nome"], "endereco_catalogo": s["endereco"], "decisao": "",
-                      **casar(s["endereco"], indice)})
+        r = casar(s["endereco"], indice)
+        cep_catalogo = normalizar_cep(s.get("cep")) or ""
+        confere = ""
+        if cep_catalogo and r["cep"]:
+            confere = "sim" if cep_catalogo == r["cep"] else "não"
+            if confere == "não":
+                r["observacao"] = (r["observacao"] + " " if r["observacao"] else "") + (
+                    "O CEP do catálogo (%s) é diferente do CEP do CNEFE (%s): conferir qual está certo." % (cep_catalogo, r["cep"]))
+                r["situacao"] = "pendente"
+        saida.append({"id": s["id"], "nome": s["nome"], "endereco_catalogo": s["endereco"], "cep_catalogo": cep_catalogo,
+                      "cep_confere": confere, "decisao": "", **r})
     return saida
+
+
+def _ler_planilha(caminho: Path) -> tuple[list[dict], list[str], str]:
+    """Lê a planilha de revisão mesmo depois de salva pelo Excel: UTF-8 ou Windows-1252, separador ';' ou ','."""
+    bruto = caminho.read_bytes()
+    for codificacao in ("utf-8-sig", "cp1252"):
+        try:
+            texto = bruto.decode(codificacao)
+            break
+        except UnicodeDecodeError:
+            continue
+    cabecalho = texto.splitlines()[0] if texto else ""
+    separador = ";" if cabecalho.count(";") > cabecalho.count(",") else ","
+    leitor = csv.DictReader(io.StringIO(texto, newline=""), delimiter=separador)
+    return list(leitor), list(leitor.fieldnames or []), separador
+
+
+def _gravar_planilha(caminho: Path, campos: list[str], linhas: list[dict]) -> None:
+    """Separador ';' e UTF-8 com marca (BOM): é o que o Excel em português abre sem estragar colunas nem acentos."""
+    with caminho.open("w", encoding="utf-8-sig", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=campos, delimiter=";", lineterminator="\n", extrasaction="ignore")
+        w.writeheader()
+        w.writerows(linhas)
+
+
+def marcar_altas(planilha: Path) -> tuple[list[dict], list[dict]]:
+    """Escreve 'aprovar' nas linhas de confiança alta ainda sem decisão, exceto onde o CEP do catálogo difere do CNEFE.
+
+    Atalho para não digitar linha por linha. NÃO altera o catálogo (isso só acontece em --aplicar-aprovadas) e a pessoa
+    continua podendo apagar o 'aprovar' de qualquer linha antes de aplicar. Devolve (marcadas, altas_puladas).
+    """
+    linhas, campos, _ = _ler_planilha(planilha)
+    marcadas, puladas = [], []
+    for r in linhas:
+        if (r.get("confianca") or "").strip() != "alta" or (r.get("decisao") or "").strip():
+            continue
+        if (r.get("cep_confere") or "").strip() == "não":
+            puladas.append(r)
+            continue
+        r["decisao"] = "aprovar"
+        marcadas.append(r)
+    if marcadas:
+        _gravar_planilha(planilha, campos, linhas)
+    return marcadas, puladas
 
 
 def _valida(campo: str, valor: str) -> str:
@@ -327,8 +382,7 @@ def aplicar_aprovadas(catalogo: Path, planilha: Path, registro: Path | None = No
 
     Devolve (mudanças, avisos). Valores inválidos ou fora de Rio Claro não são aplicados e geram aviso.
     """
-    with planilha.open(encoding="utf-8", newline="") as f:
-        aprovadas = [r for r in csv.DictReader(f) if (r.get("decisao") or "").strip().lower() in APROVADOS]
+    aprovadas = [r for r in _ler_planilha(planilha)[0] if (r.get("decisao") or "").strip().lower() in APROVADOS]
     with catalogo.open(encoding="utf-8", newline="") as f:
         leitor = csv.DictReader(f)
         campos = leitor.fieldnames
@@ -378,7 +432,23 @@ def main() -> int:
     ap.add_argument("--aplicar-aprovadas", nargs="?", const=True, default=False, metavar="PLANILHA",
                     help="copia para o catálogo as linhas com decisao=aprovar (por padrão, a planilha de --saida); "
                          "não lê o CNEFE")
+    ap.add_argument("--marcar-altas", nargs="?", const=True, default=False, metavar="PLANILHA",
+                    help="escreve 'aprovar' nas linhas de confiança alta e lista cada uma para você conferir; "
+                         "não altera o catálogo e não lê o CNEFE")
     a = ap.parse_args()
+    if a.marcar_altas:
+        planilha = a.saida if a.marcar_altas is True else Path(a.marcar_altas)
+        if not planilha.exists():
+            erro("Planilha não encontrada: %s" % planilha)
+        marcadas, puladas = marcar_altas(planilha)
+        print("%d linhas de confiança alta marcadas 'aprovar' em %s. O catálogo NÃO foi alterado." % (len(marcadas), planilha))
+        print("CONFIRA cada uma (serviço | endereço do catálogo | rua no CNEFE | CEP). Para recusar, apague 'aprovar' na planilha:")
+        for r in marcadas:
+            print("  %-46s | %-40s | %s %s | %s" % (r["nome"][:46], r["endereco_catalogo"][:40], r["rua_cnefe"], r["numero_cnefe"], r["cep"]))
+        for r in puladas:
+            print("  NÃO MARCADA (CEP do catálogo difere do CNEFE): %s | catálogo %s | CNEFE %s" % (r["nome"][:50], r.get("cep_catalogo"), r["cep"]))
+        print("Depois de conferir: python pipeline/geocodificar_catalogo.py --aplicar-aprovadas")
+        return 0
     if a.aplicar_aprovadas:
         planilha = a.saida if a.aplicar_aprovadas is True else Path(a.aplicar_aprovadas)
         if not planilha.exists():
@@ -398,17 +468,15 @@ def main() -> int:
         linhas = list(csv.DictReader(f))
     propostas = propor(linhas, indice)
     a.saida.parent.mkdir(parents=True, exist_ok=True)
-    with a.saida.open("w", encoding="utf-8", newline="") as f:
-        g = csv.DictWriter(f, fieldnames=CAMPOS_PROPOSTA, lineterminator="\n")
-        g.writeheader()
-        g.writerows(propostas)
+    _gravar_planilha(a.saida, CAMPOS_PROPOSTA, propostas)
     print("Sugestões gravadas em %s (%d serviços). O catálogo NÃO foi alterado." % (a.saida, len(propostas)))
     for (conf, met), n in sorted(Counter((p["confianca"], p["metodo"]) for p in propostas).items()):
         print("  %-8s %-26s %d" % (conf, met, n))
     print("--- Diagnóstico (pode colar no chat; só nomes de rua) ---")
     for linha in amostra_de_ruas(indice):
         print(linha)
-    print("Revise a planilha, escreva 'aprovar' na coluna decisao e rode com --aplicar-aprovadas.")
+    print("Revise a planilha (abre no Excel). Para aprovar de uma vez as de confiança alta: --marcar-altas. "
+          "Depois, --aplicar-aprovadas.")
     return 0
 
 

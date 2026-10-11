@@ -200,10 +200,11 @@ def test_main_gera_planilha_sem_tocar_no_catalogo(tmp_path, monkeypatch):
     monkeypatch.setattr(sys, "argv", ["x", "--cnefe", str(zip_cnefe), "--catalogo", str(cat), "--saida", str(saida)])
     assert g.main() == 0
     assert cat.read_bytes() == bytes_antes
-    lidas = list(csv.DictReader(saida.open(encoding="utf-8")))
+    lidas, campos, separador = g._ler_planilha(saida)
+    assert separador == ";" and saida.read_bytes().startswith(b"\xef\xbb\xbf")   # formato que o Excel em português abre
+    assert campos == g.CAMPOS_PROPOSTA
     assert [r["id"] for r in lidas] == ["a", "c", "d"]
     assert lidas[0]["confianca"] == "alta" and lidas[1]["confianca"] == "ambigua"
-    assert list(lidas[0]) == g.CAMPOS_PROPOSTA
 
 
 # ------------------------------------------------------------- só entra no catálogo o que uma pessoa aprovou
@@ -324,3 +325,73 @@ def test_catalogo_com_numero_arabe_casa_com_cnefe_por_extenso(idx):
 
 def test_numero_arabe_ainda_casa_quando_o_cnefe_tem_digitos(idx):
     assert g.casar("Av. 30, 290, X", idx)["confianca"] == "alta"  # "AVENIDA 30" do fixture antigo
+
+
+# ------------------------------------------------------------- CEP do catálogo que difere do CNEFE
+def test_cep_do_catalogo_que_difere_do_cnefe_fica_pendente(idx):
+    linhas = [
+        {"id": "ok", "nome": "OK", "cep": "13502000", "endereco": "Av. 30, 290, X", "lat": "", "lon": ""},
+        {"id": "dif", "nome": "DIF", "cep": "13599999", "endereco": "Av. 30, 290, X", "lat": "", "lon": ""},
+        {"id": "sem", "nome": "SEM", "cep": "", "endereco": "Av. 30, 290, X", "lat": "", "lon": ""},
+    ]
+    por_id = {p["id"]: p for p in g.propor(linhas, idx)}
+    assert por_id["ok"]["cep_confere"] == "sim" and por_id["ok"]["situacao"] == "sugestao"
+    assert por_id["dif"]["cep_confere"] == "não" and por_id["dif"]["situacao"] == "pendente"
+    assert "13599999" in por_id["dif"]["observacao"] and "13502000" in por_id["dif"]["observacao"]
+    assert por_id["sem"]["cep_confere"] == "" and por_id["sem"]["cep_catalogo"] == ""
+
+
+# ------------------------------------------------------------- atalho: marcar as de confiança alta
+def planilha_para_marcar(tmp_path, idx):
+    linhas = servicos() + [{"id": "dif", "nome": "DIF", "cep": "13599999", "endereco": "Av. 30, 290, X", "lat": "", "lon": "", "observacao": ""}]
+    plan = tmp_path / "p.csv"
+    g._gravar_planilha(plan, g.CAMPOS_PROPOSTA, g.propor(linhas, idx))
+    return plan
+
+
+def test_marcar_altas_marca_so_alta_sem_decisao_e_nao_toca_no_catalogo(tmp_path, idx):
+    cat = tmp_path / "cat.csv"
+    escrever_catalogo(cat, servicos())
+    antes = cat.read_bytes()
+    plan = planilha_para_marcar(tmp_path, idx)
+    marcadas, puladas = g.marcar_altas(plan)
+    assert sorted(r["id"] for r in marcadas) == ["a"]                     
+    lidas = {r["id"]: r for r in g._ler_planilha(plan)[0]}
+    assert lidas["a"]["decisao"] == "aprovar" and lidas["c"]["decisao"] == ""
+    assert [r["id"] for r in puladas] == ["d", "dif"] and lidas["d"]["decisao"] == "" and lidas["dif"]["decisao"] == ""
+    assert cat.read_bytes() == antes                                          # o catálogo só muda em aplicar_aprovadas
+
+
+def test_marcar_altas_nao_sobrescreve_decisao_humana(tmp_path, idx):
+    plan = planilha_para_marcar(tmp_path, idx)
+    linhas, campos, _ = g._ler_planilha(plan)
+    for r in linhas:
+        if r["id"] == "a":
+            r["decisao"] = "recusar"
+    g._gravar_planilha(plan, campos, linhas)
+    marcadas, _ = g.marcar_altas(plan)
+    assert marcadas == [] and {r["id"]: r for r in g._ler_planilha(plan)[0]}["a"]["decisao"] == "recusar"
+
+
+def test_planilha_salva_pelo_excel_com_ponto_e_virgula_e_cp1252_ainda_e_lida_e_aplicada(tmp_path, idx):
+    cat = tmp_path / "cat.csv"
+    escrever_catalogo(cat, servicos())
+    plan = tmp_path / "p.csv"
+    linhas = g.propor(servicos(), idx)
+    linhas[0]["decisao"] = "aprovar"
+    linhas[0]["nome"] = "A com acentuação: ção"
+    texto = ";".join(g.CAMPOS_PROPOSTA) + "\n" + "\n".join(";".join(str(r.get(c, "")) for c in g.CAMPOS_PROPOSTA) for r in linhas) + "\n"
+    plan.write_bytes(texto.encode("cp1252"))                                  # como o Excel em português pode salvar
+    lidas, _, separador = g._ler_planilha(plan)
+    assert separador == ";" and lidas[0]["nome"] == "A com acentuação: ção"
+    mud, _ = g.aplicar_aprovadas(cat, plan)
+    assert {m["campo"] for m in mud} == {"cep", "lat", "lon"} and lido(cat)["a"]["cep"] == "13502000"
+
+
+def test_cli_marcar_altas_lista_e_nao_precisa_do_cnefe(tmp_path, idx, monkeypatch, capsys):
+    plan = planilha_para_marcar(tmp_path, idx)
+    monkeypatch.setattr(sys, "argv", ["x", "--saida", str(plan), "--cnefe", str(tmp_path / "nao_existe.zip"), "--marcar-altas"])
+    assert g.main() == 0
+    saida = capsys.readouterr().out
+    assert "1 linhas de confiança alta marcadas" in saida and "NÃO MARCADA (CEP do catálogo difere" in saida
+    assert "O catálogo NÃO foi alterado" in saida
