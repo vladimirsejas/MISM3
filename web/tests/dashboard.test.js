@@ -221,7 +221,7 @@ assert(Areas.AREAS.find((a) => a.id === "trabalho").jornada === true, "a área T
 const ordemScripts = Array.from(index.matchAll(/<script src="([^"]+)"/g), (m) => m[1]);
 assert(ordemScripts.indexOf("jornada.js") !== -1 && ordemScripts.indexOf("jornada.js") < ordemScripts.indexOf("jornada-ui.js") && ordemScripts.indexOf("jornada-ui.js") < ordemScripts.indexOf("app.js"), "scripts da jornada devem carregar antes do app.js");
 const cat = JSON.parse(ler("dados/catalogo_manual.json")); const lista = Array.isArray(cat) ? cat : cat.servicos;
-["man-senai-rio-claro", "man-senac-rio-claro", "man-sestsenat", "man-etec-cps", "man-fatec-ia", "man-fatec-esg"].forEach((id) => {
+["man-senai-rio-claro", "man-senac-rio-claro", "man-sestsenat", "man-etec-cps", "man-etec-rio-claro", "man-fatec-ia", "man-fatec-esg"].forEach((id) => {
   const s = lista.find((x) => x.id === id);
   assert(s && s.tipo === "emprego_curso" && s.fonte_url && s.verificado_em, "curso profissionalizante ausente ou sem fonte/data: " + id);
 });
