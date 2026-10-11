@@ -76,7 +76,7 @@
               ["3. Peça a matrícula", "Com o cadastro feito, abra o aplicativo e toque em “Serviços”, depois em “Educação”. Selecione “Matrícula e Rematrícula” e toque em “Iniciar nova solicitação”."],
               ["4. Escolha o aluno e a escola", "Escolha o nome do aluno ou da aluna e depois selecione a escola desejada. Finalize tocando em “Matrícula Escolar – Alunos”."],
               ["5. Acompanhe", "A Secretaria Escolar valida o pedido e a confirmação chega por notificação no próprio aplicativo. Lembre: enviar a solicitação não é o mesmo que ter a vaga garantida (veja “Inscrição não é vaga”)."],
-              ["Sem celular, sem internet ou com dificuldade no aplicativo", "Procure a Secretaria Municipal da Educação pessoalmente e peça ajuda para fazer o pedido. Pergunte também se há atendimento presencial para o CADU: este site ainda não tem o endereço de unidades de atendimento."]
+              ["Sem celular, sem internet ou com dificuldade no aplicativo", "O CADU é um aplicativo e não tem endereço. Para pedir ajuda, procure a Secretaria Municipal da Educação pessoalmente (endereço e telefones no cartão da Secretaria, mais abaixo) e peça apoio para fazer o pedido."]
             ],
             aviso: "Os nomes dos botões podem mudar quando o aplicativo for atualizado, e o calendário de 2027 ainda precisa ser confirmado na Secretaria.",
             fonte: ["Prefeitura de Rio Claro: publicação oficial (17/10/2025) e página sobre rematrículas", "https://rioclaro.sp.gov.br/educacao/rio-claro-abre-rematriculas-para-estudantes-da-educacao-infantil/", "passo a passo conforme a publicação e os materiais oficiais da Prefeitura"] },
