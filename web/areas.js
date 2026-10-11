@@ -17,7 +17,8 @@
       secoes: [{
         titulo: "Canais oficiais",
         tipos: ["emprego_curso"], agrupar: true,
-        subtipos: ["pat", "conecta", "credito", "secretaria", "qualificacao", "fundo_social", "curso_profissionalizante", "curso_tecnico"],
+        subtipos: ["pat", "conecta", "credito", "secretaria", "qualificacao", "fundo_social", "curso_profissionalizante", "curso_tecnico", "eja", "escola_sesi"],
+        grupos: ["Emprego e orientação", "Cursos gratuitos de qualificação", "Cursos profissionalizantes (qualificação profissional)", "Cursos técnicos (ensino técnico)", "Estudar e se qualificar ao mesmo tempo"],
         links: [
           ["Portal da Empregabilidade de Rio Claro", "https://vagas.rioclaro.sp.gov.br/", "Consultar oportunidades e informações para trabalhadores."],
           ["Trampolim — Governo de São Paulo", "https://www.trampolim.sp.gov.br/", "Consultar oportunidades e cursos disponíveis na plataforma."],

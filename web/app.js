@@ -118,7 +118,7 @@
     especialidades: "Especialidades, reabilitação e saúde do trabalhador", hospital: "Hospitais e ambulatórios" };
 
   /* Blocos "agrupar": os serviços ficam em grupos recolhidos (por público), para a página não ficar carregada. */
-  function htmlGrupos(servicos) {
+  function htmlGrupos(servicos, sec) {
     var abrir = servicos.length <= 6; /* poucos serviços: já abertos; muitos: recolhidos com contagem */
     var ordem = [], porGrupo = Object.create(null);
     servicos.forEach(function (s) {
@@ -127,6 +127,7 @@
       nomes.forEach(function (g) {
         g = g.trim();
         if (!g) return;
+        if (sec && sec.grupos && sec.grupos.indexOf(g) === -1) return; /* a seção só mostra os grupos que lhe cabem */
         if (!porGrupo[g]) { porGrupo[g] = []; ordem.push(g); }
         porGrupo[g].push(s);
       });
@@ -134,7 +135,7 @@
     /* Ordem lógica por público; grupos novos (não listados) vão para o fim. */
     var PREFERIDA = ["Secretaria de Saúde", "Pronto atendimento 24 horas", "Unidades básicas de saúde (UBS e USF)", "Saúde mental (CAPS)", "Especialidades, reabilitação e saúde do trabalhador",
       "Hospitais e ambulatórios", "Farmácia, exames e transporte",
-      "Emprego e orientação", "Cursos gratuitos de qualificação", "Concluir os estudos e graduação (SESI)", "Cursos profissionalizantes (qualificação profissional)", "Cursos técnicos (ensino técnico)", "Cursos superiores de tecnologia",
+      "Emprego e orientação", "Cursos gratuitos de qualificação", "Concluir os estudos e graduação (SESI)", "Estudar e se qualificar ao mesmo tempo", "Cursos profissionalizantes (qualificação profissional)", "Cursos técnicos (ensino técnico)", "Cursos superiores de tecnologia",
       "Crianças e adolescentes", "Adultos (30 a 59 anos)", "Pessoas idosas (65 anos ou mais)", "APAE — pessoas com deficiência"];
     ordem.sort(function (x, y) {
       var a = PREFERIDA.indexOf(x), b = PREFERIDA.indexOf(y);
@@ -164,7 +165,7 @@
       var corpo = "";
       if (sec.busca === "bairro") corpo += BUSCA_BAIRRO;
       if (sec.agrupar) {
-        corpo += htmlGrupos(visiveis);
+        corpo += htmlGrupos(visiveis, sec);
       } else {
         /* Se todos os cartões do bloco têm a mesma fonte e data (e estão conferidos), a fonte aparece uma vez no fim. */
       var comum = !sec.agrupar && visiveis.length >= 3 && visiveis.every(function (s) {
