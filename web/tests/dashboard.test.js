@@ -235,20 +235,26 @@ assert(!/NR ?35|Liderança|Webaula de|Transporte de Cargas/i.test(JSON.stringify
 lista.filter((x) => x.tipo === "emprego_curso").forEach((x) => assert(x.grupo, "serviço de Trabalho sem grupo ficaria escondido atrás de \"Mostrar todos\": " + x.id));
 assert(Areas.AREAS.find((a) => a.id === "trabalho").secoes[0].agrupar === true, "a lista de Trabalho deve ser agrupada, não limitada a 12 cartões");
 const trab = Areas.AREAS.find((a) => a.id === "trabalho").secoes[0], edu = Areas.AREAS.find((a) => a.id === "educacao").secoes[1];
-["curso_superior_tecnologia", "graduacao", "eja", "escola_sesi"].forEach((st) => {
+["curso_superior_tecnologia", "graduacao"].forEach((st) => {
   assert(!trab.subtipos.includes(st) && edu.subtipos.includes(st), "educação pura pertence só à área Educação: " + st);
 });
+assert(!trab.grupos.includes("Concluir os estudos e graduação (SESI)"), "Trabalho não mostra o grupo de conclusão dos estudos: isso é da Educação");
+const JUNTO = "Estudar e se qualificar ao mesmo tempo";
+assert(trab.grupos.includes(JUNTO), "Trabalho deve mostrar o grupo que combina estudo e qualificação");
+["man-etec-rio-claro", "man-sesi-eja", "man-sesi-rio-claro"].forEach((id) =>
+  assert(lista.find((x) => x.id === id).grupo.split(";").includes(JUNTO), "oferta que combina escolaridade e qualificação deve estar no grupo conjunto: " + id));
 ["curso_profissionalizante", "curso_tecnico"].forEach((st) => {
   assert(trab.subtipos.includes(st) && edu.subtipos.includes(st), "cursos profissionalizantes e técnicos servem a Educação e a Trabalho: " + st);
 });
+const aparece = (sec, x) => sec.subtipos.includes(x.subtipo) && (!sec.grupos || x.grupo.split(";").some((g) => sec.grupos.includes(g)));
 lista.filter((x) => x.tipo === "emprego_curso").forEach((x) =>
-  assert(trab.subtipos.includes(x.subtipo) || edu.subtipos.includes(x.subtipo), "serviço sem área (subtipo não coberto): " + x.id + " " + x.subtipo));
+  assert(aparece(trab, x) || aparece(edu, x), "serviço sem área (subtipo ou grupo não coberto): " + x.id + " " + x.subtipo));
 assert(Areas.AREAS.find((a) => a.id === "trabalho").secoes[0].links.some((l) => l[1] === "#educacao"), "Trabalho deve apontar para a área Educação");
 lista.filter((x) => x.subtipo === "curso_profissionalizante").forEach((x) => assert(/profissionalizantes/.test(x.grupo) && !/técnicos/.test(x.grupo), "curso profissionalizante deve ficar no grupo próprio: " + x.id));
 lista.filter((x) => x.subtipo === "curso_tecnico").forEach((x) => assert(/técnicos/.test(x.grupo), "curso técnico deve estar no grupo de técnicos: " + x.id));
 ["man-etec-cps", "man-etec-rio-claro"].forEach((id) => {
   const g = lista.find((x) => x.id === id).grupo.split(";");
-  assert(g.length === 2 && /profissionalizantes/.test(g[0]) && /técnicos/.test(g[1]), "a Etec se encaixa nos dois grupos (profissionalizantes e técnicos): " + id);
+  assert(g.some((x) => /profissionalizantes/.test(x)) && g.some((x) => /técnicos/.test(x)), "a Etec se encaixa nos dois grupos (profissionalizantes e técnicos): " + id);
 });
 assert(/@media print/.test(css) && /folha-impressao/.test(css), "deve haver estilo de impressão para o plano e o currículo");
 assert(!/localStorage|sessionStorage|document\.cookie/.test(ler("jornada-ui.js") + ler("jornada.js")), "a jornada não pode guardar nada no aparelho");
