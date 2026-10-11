@@ -60,14 +60,26 @@
           { nome: "Cada tipo de escola tem um caminho", sem_tel: true, resumo: "Ver o passo a passo",
             texto: "O pedido de vaga não é o mesmo em todo lugar. Comece pelo caminho da escola que você procura.",
             topicos: [
-              ["Creche, pré-escola e ensino fundamental municipais", "Procure a Secretaria Municipal da Educação. Segundo a Prefeitura, as matrículas e rematrículas da rede municipal para 2026 foram feitas pelo aplicativo CADU; essa informação não foi conferida por nós, e é preciso confirmar se o procedimento é o mesmo para 2027."],
-              ["Escola estadual", "Procure a própria escola estadual ou a Secretaria Estadual da Educação."],
+              ["Creche, pré-escola e ensino fundamental municipais", "Use o aplicativo CADU (veja o passo a passo no cartão seguinte). Em publicação oficial de 17 de outubro de 2025, a Prefeitura informou que as matrículas e rematrículas da rede municipal passaram a ser 100% digitais pelo CADU. Em caso de dúvida, procure a Secretaria Municipal da Educação. Ainda é preciso confirmar se o procedimento é o mesmo para 2027."],
+              ["Escola estadual", "Procure a própria escola estadual ou a Secretaria Estadual da Educação. A pesquisa indica que a Secretaria Escolar Digital (SED) tem uma consulta pública de matrícula, em que se informa o RA (Registro do Aluno) e a data de nascimento; essa informação não foi conferida por nós."],
               ["Escola particular", "Procure a secretaria da própria escola."],
               ["Escola do SESI", "O SESI-SP tem processo seletivo próprio e regras de vagas (veja o cartão SESI Rio Claro, mais abaixo). Não é o mesmo processo da rede municipal."],
               ["EJA", "Pergunte na Secretaria Municipal da Educação ou na unidade que oferece a EJA (por exemplo, o SESI)."]
             ],
             aviso: "Os caminhos acima são uma orientação inicial. O que falta confirmar com a Secretaria está em “Pendências”, no fim desta página.",
             fonte: ["Pesquisa sobre o procedimento de Rio Claro", null, "não conferida em fonte oficial por nós"] },
+          { nome: "Matrícula pelo aplicativo CADU: passo a passo no celular", sem_tel: true, resumo: "Ver o passo a passo",
+            texto: "A Prefeitura informou, em publicação oficial de 17 de outubro de 2025, que as matrículas da rede municipal de Rio Claro são 100% digitais e que o CADU, o aplicativo da Prefeitura, permite matricular ou rematricular o filho direto pelo celular.",
+            topicos: [
+              ["1. Baixe o aplicativo", "O aplicativo CADU está disponível para Android (Google Play) e para iPhone (App Store). Procure pelo nome “CADU”."],
+              ["2. Faça o seu cadastro", "Cadastre-se como responsável e adicione o aluno como dependente. A pesquisa indica que o cadastro pede CPF, nome completo, e-mail, telefone e data de nascimento, e que pode haver validação de biometria e envio de documentos; isso não foi conferido por nós, então tenha os documentos à mão."],
+              ["3. Peça a matrícula", "Com o cadastro feito, abra o aplicativo e toque em “Serviços”, depois em “Educação”. Selecione “Matrícula e Rematrícula” e toque em “Iniciar nova solicitação”."],
+              ["4. Escolha o aluno e a escola", "Escolha o nome do aluno ou da aluna e depois selecione a escola desejada. Finalize tocando em “Matrícula Escolar – Alunos”."],
+              ["5. Acompanhe", "A pesquisa indica que a Secretaria Escolar valida o pedido e que a confirmação chega por notificação no aplicativo; isso não foi conferido por nós. Lembre: enviar a solicitação não é o mesmo que ter a vaga garantida (veja “Inscrição não é vaga”)."],
+              ["Sem celular, sem internet ou com dificuldade no aplicativo", "Procure a Secretaria Municipal da Educação pessoalmente e peça ajuda para fazer o pedido. Pergunte também se há atendimento presencial para o CADU. Este site não confirmou onde fica nem se existe."]
+            ],
+            aviso: "Os nomes dos botões podem mudar quando o aplicativo for atualizado, e o calendário de 2027 ainda precisa ser confirmado na Secretaria.",
+            fonte: ["Prefeitura de Rio Claro: publicação oficial (17/10/2025) e página sobre rematrículas", "https://rioclaro.sp.gov.br/educacao/rio-claro-abre-rematriculas-para-estudantes-da-educacao-infantil/", "o caminho dentro do aplicativo segue as imagens da publicação oficial; o restante vem de pesquisa e não foi conferido por nós"] },
           { nome: "Matricular meu filho pela primeira vez", sem_tel: true, resumo: "Ver o passo a passo",
             texto: "Antes de ir, saiba o que levar e o que perguntar. Datas e procedimentos mudam a cada ano.",
             topicos: [
@@ -112,7 +124,9 @@
         tipos: ["creche"],
         links: [
           ["Secretaria Municipal da Educação", "https://rioclaro.sp.gov.br/secretaria/secretaria-da-educacao/", "Orientações sobre a rede municipal e a matrícula."],
-          ["Consulta pública da demanda escolar", "https://www.educacaorc.com.br/?r=demandaescolar", "Informações disponibilizadas no portal da Educação."]
+          ["Consulta pública da demanda escolar", "https://www.educacaorc.com.br/?r=demandaescolar", "Informações disponibilizadas no portal da Educação."],
+          ["Rematrículas na rede municipal (Prefeitura de Rio Claro)", "https://rioclaro.sp.gov.br/educacao/rio-claro-abre-rematriculas-para-estudantes-da-educacao-infantil/", "Página da Prefeitura sobre as rematrículas pelo aplicativo CADU."],
+          ["Secretaria Escolar Digital (SED): consulta pública de matrícula, rede estadual", "https://sed.educacao.sp.gov.br/ConsultaPublica/Index", "Para escolas estaduais. Indicado pela pesquisa; confira se a página abre e se atende o seu caso."]
         ]
       }, {
         titulo: "Estudar, concluir os estudos e se qualificar",
@@ -122,7 +136,7 @@
       }],
       avisos: ["Uma escola ou creche cadastrada não confirma que há vaga. Confirme com a Secretaria da Educação."],
       pendencias: [
-        "As regras de Rio Claro ainda não foram arquivadas de fonte oficial: o passo a passo acima segue a regra geral e as informações de pesquisa, e três pontos precisam ser confirmados com a Secretaria Municipal da Educação: (1) o calendário e o procedimento de novas matrículas para 2027, inclusive se o aplicativo CADU continua sendo o canal; (2) como solicitar e acompanhar vaga em creche, e o que fazer quando não há vaga; (3) quais documentos e canais são exigidos hoje em cada etapa (creche, pré-escola, ensino fundamental e EJA).",
+        "As regras de Rio Claro ainda não foram arquivadas de fonte oficial: o passo a passo acima segue a regra geral e as informações de pesquisa, e três pontos precisam ser confirmados com a Secretaria Municipal da Educação: (1) o calendário e o procedimento de novas matrículas para 2027, inclusive se o aplicativo CADU continua sendo o canal (a Prefeitura o confirmou como canal de matrícula em publicação de 17/10/2025); (2) como solicitar e acompanhar vaga em creche, e o que fazer quando não há vaga; (3) quais documentos e canais são exigidos hoje em cada etapa (creche, pré-escola, ensino fundamental e EJA).",
         "A lista de escolas públicas (municipais e estaduais) com endereço e telefone ainda não está neste site."
       ]
     },
