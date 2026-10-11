@@ -128,7 +128,7 @@ def test_catalogo_manual_instagram():
     assert por_id["man-peja-unesp"]["instagram"] == "peja.gepepdh.unesp"
     assert por_id["man-pat"]["instagram"] is None
     assert por_id["man-metamorfose"]["portas"] == ["filhos"]
-    assert por_id["man-peja-unesp"]["portas"] == []
+    assert por_id["man-peja-unesp"]["portas"] == ["filhos"]
 
 
 def test_montar_deduplica():
