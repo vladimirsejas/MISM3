@@ -31,6 +31,21 @@ assert(/:root\[data-theme="dark"\]/.test(html), "escuro pelo seletor de tema");
 const claro = html.match(/--c0: (#[0-9a-f]{6}); --c1: (#[0-9a-f]{6}); --c2: (#[0-9a-f]{6}); --c3: (#[0-9a-f]{6}); --c4: (#[0-9a-f]{6});/);
 assert.deepStrictEqual(claro.slice(1), ["#86b6ef", "#5598e7", "#2a78d6", "#1c5cab", "#0d366b"], "rampa clara validada (passos 250 a 700)");
 
+/* ---- distância até o serviço: sempre mostra quantos serviços estão localizados e que a localização pelo CEP é aproximada ---- */
+assert(/desenharPontos/.test(js) && /localizados/.test(js) && /localizados_pelo_endereco/.test(js), "o resumo deve dizer quantos serviços cadastrados estão localizados");
+assert(/aproximada pelo CEP/.test(js) && /\.ponto\.aprox/.test(html), "ponto aproximado pelo CEP deve ser visualmente diferente (círculo vazado) e dito na legenda");
+assert(/Object\.keys\(estado\.dados\.distancia_ate_servico \|\| \{\}\)/.test(js), "as opções de distância só aparecem quando há serviços localizados");
+assert(!/o\(a\)|\(a\)/.test(js), "texto sem 'o(a)': usar redação neutra");
+if (dados.distancia_ate_servico) {
+  Object.keys(dados.distancia_ate_servico).forEach((k) => {
+    const d = dados.distancia_ate_servico[k];
+    assert(d.localizados >= 1 && d.localizados <= d.cadastrados, "serviços localizados nunca passam dos cadastrados: " + k);
+    assert(!("por_setor" in d), "a distância por setor fica em setores, não duplicada");
+    d.pontos.forEach((p) => assert.deepStrictEqual(Object.keys(p).sort(), ["lat", "lon", "nome", "precisao", "raio_m"], "ponto só com o necessário para o mapa"));
+  });
+  assert(dados.meta.aviso_distancia && /não prova falta de serviço/.test(dados.meta.aviso_distancia));
+}
+
 /* ---- o texto vale nos dois temas: no escuro, valor maior é tom mais CLARO, então não se pode dizer "mais escuro" ---- */
 assert(!/mais escuro|mais clar/i.test(html + js), "a explicação das cores não pode depender do tema; use a legenda");
 
