@@ -46,7 +46,7 @@ Se um download automático falhar (os sites mudam), o script diz onde baixar à 
 Com internet, rode `python pipeline/verificar_catalogo.py`. Ele abre a fonte de cada serviço e confere se os telefones cadastrados aparecem na página. "ATENCAO" não é erro certo: abra a fonte e confira.
 
 ## Acrescentar um serviço verificado
-Edite `catalogo/servicos_manuais.csv`. Obrigatórios: `tipo` (creche, saude, assistencia, mulher, emprego_curso), `nome`, `fonte_url`, `verificado_em`. Com `cep`, o serviço entra no mapa; `abrangencia=municipal` faz aparecer para todas. Depois rode `python pipeline/servicos.py`. Quando o contato é só pelo Instagram, preencha `instagram` (sem o @); o cartão mostra o link.
+Edite `catalogo/servicos_manuais.csv`. Obrigatórios: `tipo` (creche, saude, assistencia, mulher, emprego_curso), `nome`, `fonte_url`, `verificado_em`. Com `cep`, o serviço entra no mapa; `abrangencia=municipal` faz aparecer para todas. Depois rode `python pipeline/servicos.py`. Quando o contato é só pelo Instagram, preencha `instagram` (sem o @); o cartão mostra o link. Para o serviço também aparecer em outra porta (ex.: um cursinho na porta Filhos), preencha `portas` (ex.: `filhos`; vários separados por `;`).
 
 ## Próximos marcos
 2. Setores censitários + Censo 2022 (crianças de 0 a 4 anos): "desertos de cuidado" e simulador de nova creche.

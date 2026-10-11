@@ -45,7 +45,7 @@
     },
     filhos: {
       titulo: "Filhos: creche, escola e apoio",
-      descricao: "Reúna os caminhos para educação infantil e apoio à família. A existência de uma unidade não confirma vaga disponível.",
+      descricao: "Reúna os caminhos para educação infantil, cursinho gratuito para adolescentes e apoio à família. A existência de uma unidade não confirma vaga disponível.",
       tipos: ["creche", "assistencia", "saude"],
       links: [
         ["Secretaria Municipal da Educação", "https://rioclaro.sp.gov.br/secretaria/secretaria-da-educacao/", "Orientações sobre a rede e matrícula."],
@@ -133,7 +133,7 @@
         linksExibidos[chaveLink] = true;
         html += '<article class="cartao"><h3><a href="' + esc(l[1]) + '" target="_blank" rel="noopener noreferrer">' + esc(l[0]) + '</a></h3><p>' + esc(l[2]) + '</p><p class="meta">Fonte externa oficial; confira os dados e a disponibilidade no site de origem.</p></article>';
       });
-      var candidatos = dados.servicos ? dados.servicos.filter(function (s) { return c.tipos.indexOf(s.tipo) !== -1; }) : [];
+      var candidatos = dados.servicos ? dados.servicos.filter(function (s) { return c.tipos.indexOf(s.tipo) !== -1 || (s.portas || []).indexOf(chave) !== -1; }) : [];
       var encontrados = [];
       candidatos.forEach(function (s) {
         var chaveServico = String(s.id || [s.nome, s.tipo, s.fonte_url || s.fonte].join("|")).toLowerCase();

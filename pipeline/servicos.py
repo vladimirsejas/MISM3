@@ -133,6 +133,7 @@ def servicos_manuais(df, indice: dict) -> list[dict]:
             "id": g("id") or "man-%s" % _norm(g("nome") or ""), "tipo": tipo, "subtipo": g("subtipo"),
             "nome": g("nome"), "cep": normalizar_cep(g("cep")), "endereco": g("endereco"),
             "telefone": g("telefone"), "instagram": (g("instagram") or "").lstrip("@") or None,
+            "portas": [x.strip() for x in (g("portas") or "").split(";") if x.strip()],
             "horario": g("horario"), "lat": lat, "lon": lon, "geo": geo,
             "abrangencia": g("abrangencia") or "local", "fonte": "Pagina oficial (cadastro manual)",
             "fonte_url": g("fonte_url"), "verificado_em": g("verificado_em"), "observacao": g("observacao"),
