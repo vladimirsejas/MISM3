@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="referrer" content="no-referrer">
-<meta name="theme-color" content="#7a4a8f">
+<meta name="theme-color" content="#7a2b37">
 <title>Mulher em Rede – Rio Claro</title>
 <link rel="stylesheet" href="vendor/leaflet.css">
 <link rel="stylesheet" href="estilo.css">
@@ -25,7 +25,7 @@
 
 <header class="topo">
   <div class="topo-in">
-    <a class="marca" href="index.html" id="marca">Mulher em Rede</a>
+    <a class="marca" href="index.html" id="marca"><img class="marca-brasao" src="img/brasao-48.webp" width="36" height="35" alt="">Mulher em Rede</a>
     <nav class="navegacao" aria-label="Navegação" id="navegacao" hidden>
       <a class="btn-nav" id="voltar" href="index.html">← Voltar</a>
       <a class="btn-nav" id="inicio" href="index.html">Início</a>
@@ -53,22 +53,54 @@
 
 <main class="conteudo" id="principal">
 
-  <!-- TELA INICIAL: propósito, sete portas e emergência (acima). Nada além disso. -->
+  <!-- TELA INICIAL: acolhimento, sete portas, emergência, contatos essenciais e acesso rápido. -->
   <section id="inicio-tela" aria-labelledby="titulo-inicio">
-    <div class="apresentacao">
-      <h1 id="titulo-inicio">Mulher em Rede</h1>
-      <p>Caminhos, contatos e serviços oficiais de Rio Claro (SP) para mulheres: trabalho, estudo, saúde, direitos, moradia e apoio.</p>
-      <p class="escolha">Escolha uma área:</p>
+    <div class="heroi">
+      <div class="heroi-texto">
+        <p class="heroi-etiqueta">Informação que fortalece</p>
+        <h1 id="titulo-inicio" tabindex="-1">Você não está <em>sozinha</em></h1>
+        <p class="heroi-lide">Caminhos, contatos e serviços oficiais de Rio Claro (SP) para apoiar mulheres em todas as fases da vida: trabalho, estudo, saúde, direitos, moradia e apoio.</p>
+        <p class="heroi-nota">Cada informação mostra a fonte e a data em que foi conferida.</p>
+        <button type="button" class="btn-heroi" data-rolar="areas-inicio">Escolha uma área <span aria-hidden="true">↓</span></button>
+      </div>
+      <div class="heroi-arte"><img src="img/heroi-mulheres.webp" width="592" height="298" alt="" decoding="async"></div>
     </div>
+
+    <h2 id="areas-inicio" class="titulo-bloco" tabindex="-1">O que você procura hoje?</h2>
     <ul class="portas">
-      <li><a class="porta" href="#trabalho"><span class="icone"><svg aria-hidden="true"><use href="#i-trabalho"/></svg></span>Trabalho</a></li>
-      <li><a class="porta" href="#educacao"><span class="icone"><svg aria-hidden="true"><use href="#i-educacao"/></svg></span>Educação</a></li>
-      <li><a class="porta" href="#saude"><span class="icone"><svg aria-hidden="true"><use href="#i-saude"/></svg></span>Saúde</a></li>
-      <li><a class="porta" href="#direitos"><span class="icone"><svg aria-hidden="true"><use href="#i-direitos"/></svg></span>Direitos</a></li>
-      <li><a class="porta" href="#moradia"><span class="icone"><svg aria-hidden="true"><use href="#i-moradia"/></svg></span>Moradia</a></li>
-      <li><a class="porta" href="#assistencia"><span class="icone"><svg aria-hidden="true"><use href="#i-assistencia"/></svg></span>Assistência Social</a></li>
-      <li><a class="porta" href="rede-mulheres.html"><span class="icone"><svg aria-hidden="true"><use href="#i-mulheres"/></svg></span>De Mulher para Mulher</a></li>
+      <li class="t-rosa"><a class="porta" href="#trabalho"><span class="icone"><svg aria-hidden="true"><use href="#i-trabalho"/></svg></span><strong>Trabalho</strong><span class="sub">Vagas, cursos, currículo e um plano para voltar a trabalhar.</span></a></li>
+      <li class="t-verde"><a class="porta" href="#educacao"><span class="icone"><svg aria-hidden="true"><use href="#i-educacao"/></svg></span><strong>Educação</strong><span class="sub">Matrícula e vagas para os filhos, escolas, cursos e estudos para você.</span></a></li>
+      <li class="t-pessego"><a class="porta" href="#saude"><span class="icone"><svg aria-hidden="true"><use href="#i-saude"/></svg></span><strong>Saúde</strong><span class="sub">Unidades de saúde, pronto atendimento e urgência.</span></a></li>
+      <li class="t-verde"><a class="porta" href="#direitos"><span class="icone"><svg aria-hidden="true"><use href="#i-direitos"/></svg></span><strong>Direitos</strong><span class="sub">Orientação jurídica, pensão, dívidas e proteção contra a violência.</span></a></li>
+      <li class="t-pessego"><a class="porta" href="#moradia"><span class="icone"><svg aria-hidden="true"><use href="#i-moradia"/></svg></span><strong>Moradia</strong><span class="sub">Água, energia e habitação: tarifas sociais e programas.</span></a></li>
+      <li class="t-rosa"><a class="porta" href="#assistencia"><span class="icone"><svg aria-hidden="true"><use href="#i-assistencia"/></svg></span><strong>Assistência Social</strong><span class="sub">CRAS, CREAS, Conselho Tutelar e serviços de convivência.</span></a></li>
+      <li class="t-verde"><a class="porta" href="rede-mulheres.html"><span class="icone"><svg aria-hidden="true"><use href="#i-mulheres"/></svg></span><strong>De Mulher para Mulher</strong><span class="sub">Rede de apoio entre mulheres. Em construção.</span></a></li>
+      <li class="li-emergencia"><button type="button" class="tile-emergencia" id="abrir-emergencia"><span class="icone"><svg aria-hidden="true"><use href="#i-alerta"/></svg></span><strong>Emergência</strong><span class="sub">Precisa de ajuda agora? Toque aqui.</span></button></li>
     </ul>
+
+    <div class="blocos-inicio">
+      <section class="bloco" aria-labelledby="titulo-contatos">
+        <h2 id="titulo-contatos">Contatos essenciais</h2>
+        <ul class="lista-contatos" id="lista-contatos">
+          <li><span class="c-nome">Polícia Militar</span><a class="c-tel grave" href="tel:190" aria-label="Ligar para 190, Polícia Militar">190</a></li>
+          <li><span class="c-nome">SAMU<small>Urgência médica</small></span><a class="c-tel grave" href="tel:192" aria-label="Ligar para 192, SAMU">192</a></li>
+          <li><span class="c-nome">Central de Atendimento à Mulher<small>Violência contra a mulher. 24 horas, gratuito</small></span><a class="c-tel grave" href="tel:180" aria-label="Ligar para 180, Central de Atendimento à Mulher">180</a></li>
+          <li><span class="c-nome">Disque Direitos Humanos<small>24 horas, gratuito</small></span><a class="c-tel grave" href="tel:100" aria-label="Ligar para 100, Disque Direitos Humanos">100</a></li>
+        </ul>
+        <p class="meta">Os telefones de Rio Claro vêm do cadastro verificado. Confirme antes de ir.</p>
+      </section>
+      <section class="bloco" aria-labelledby="titulo-acesso">
+        <h2 id="titulo-acesso">Acesso rápido</h2>
+        <ul class="lista-acesso">
+          <li><a href="#educacao/educacao-escolas">Escolas municipais, com endereço e telefone</a></li>
+          <li><a href="#educacao/educacao-filhos">Matrícula e vaga para o meu filho</a></li>
+          <li><a href="#educacao/educacao-voce">Cursos e estudos para mim</a></li>
+          <li><a href="#saude">Unidades de saúde</a></li>
+          <li><a href="#assistencia">CRAS e assistência social</a></li>
+          <li><a href="#trabalho">Plano de trabalho e currículo</a></li>
+        </ul>
+      </section>
+    </div>
   </section>
 
   <!-- ÁREAS: preenchidas por app.js a partir de areas.js quando a usuária escolhe uma porta. -->
