@@ -121,6 +121,14 @@ def test_catalogo_manual_real_valido():
     assert len(s) >= 2 and all(x["fonte_url"] and x["verificado_em"] for x in s)
 
 
+def test_catalogo_manual_instagram():
+    df = common.ler_csv_flex(common.CATALOGO / "servicos_manuais.csv")
+    por_id = {x["id"]: x for x in servicos.servicos_manuais(df, INDICE)}
+    assert por_id["man-metamorfose"]["instagram"] == "metamorfose.rc"
+    assert por_id["man-peja-unesp"]["instagram"] == "peja.gepepdh.unesp"
+    assert por_id["man-pat"]["instagram"] is None
+
+
 def test_montar_deduplica():
     m = pd.DataFrame([{"id": "a", "tipo": "mulher", "nome": "X", "fonte_url": "u", "verificado_em": "d"}] * 2)
     out = servicos.montar(INDICE, manuais=m, hoje="2026-10-08")

@@ -218,6 +218,9 @@
     }
     if (s.endereco) partes.push("<p>" + esc(s.endereco) + "</p>");
     if (s.telefone) partes.push('<p>Telefone: <a href="tel:' + esc(String(s.telefone).replace(/[^\d+]/g, "")) + '">' + esc(s.telefone) + "</a></p>");
+    if (s.instagram && /^[A-Za-z0-9._]{1,30}$/.test(s.instagram)) {
+      partes.push('<p>Contato pelo Instagram: <a href="https://www.instagram.com/' + esc(s.instagram) + '/" target="_blank" rel="noopener noreferrer">@' + esc(s.instagram) + "</a></p>");
+    }
     if (s.horario) partes.push("<p>Horário: " + esc(s.horario) + "</p>");
     if (s.observacao) partes.push("<p>" + esc(s.observacao) + "</p>");
     var fonte = s.fonte_url ? '<a href="' + esc(s.fonte_url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.fonte) + "</a>" : esc(s.fonte);
