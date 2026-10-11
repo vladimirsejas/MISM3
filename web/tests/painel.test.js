@@ -1,0 +1,87 @@
+const assert = require("assert");
+const fs = require("fs");
+const path = require("path");
+
+const web = path.resolve(__dirname, "..");
+const ler = (f) => fs.readFileSync(path.join(web, f), "utf8");
+const Q = require("../questionario.js");
+const P = require("../painel.js");
+
+/* registros mínimos para provar as regras */
+const reg = (resp) => Q.registro(Object.assign({ idade: "25_34", autoriza: "sim" }, resp), "2026-10");
+const muitos = (n, resp) => Array.from({ length: n }, () => reg(resp));
+
+/* ---- regra dos 10: nenhum número de grupo pequeno aparece ---- */
+assert.strictEqual(P.K, 10);
+const poucos = muitos(9, { trabalho: "formal" });
+const d9 = P.distribuicao(poucos, "trabalho");
+assert.strictEqual(d9.suprimida, true, "menos de 10 respondentes: a pergunta inteira some");
+assert.strictEqual(d9.respondentes, null);
+assert.strictEqual(d9.itens.length, 0);
+const mistos = muitos(30, { trabalho: "formal" }).concat(muitos(25, { trabalho: "informal" }), muitos(4, { trabalho: "procurando" }));
+const dm = P.distribuicao(mistos, "trabalho");
+const por = Object.fromEntries(dm.itens.map((i) => [i.c, i]));
+assert.strictEqual(por.procurando.n, null, "alternativa com 4 respostas fica oculta");
+assert(por.procurando.oculto === true && por.procurando.pct === null);
+assert.strictEqual(por.formal.n, 30);
+/* supressão complementar: se só uma alternativa ficou oculta, a menor das outras também some (senão total - resto revela o número) */
+const ocultos = dm.itens.filter((i) => i.oculto);
+assert(ocultos.length >= 2, "com uma única célula oculta, a menor das outras também é ocultada");
+assert.strictEqual(por.informal.n, null, "a menor alternativa visível também é ocultada");
+assert.strictEqual(por.formal.n, 30, "a maior continua visível");
+/* pergunta de múltipla escolha: as alternativas não somam o total, então não há supressão complementar */
+const multi = muitos(20, { obstaculos_trabalho: ["vagas", "creche"] }).concat(muitos(3, { obstaculos_trabalho: ["internet"] }));
+const dmu = Object.fromEntries(P.distribuicao(multi, "obstaculos_trabalho").itens.map((i) => [i.c, i]));
+assert.strictEqual(dmu.internet.n, null); assert.strictEqual(dmu.vagas.n, 20); assert.strictEqual(dmu.creche.n, 20);
+
+/* ---- médias por grupo: grupo pequeno nunca aparece ---- */
+const g = P.indicesPorGrupo(muitos(12, { regiao: "cvz", trabalho: "procurando" }).concat(muitos(6, { regiao: "centro", trabalho: "procurando" })), "regiao");
+assert(g.grupos.cvz && !g.grupos.centro, "região com 6 respostas não aparece");
+assert.strictEqual(g.gruposEscondidos, 1);
+
+/* ---- índice: em branco não conta; média só com 10 ou mais ---- */
+const semDados = P.indices(muitos(12, { trabalho: "nd" }));
+assert.strictEqual(semDados.economica.media, null, "quem deixou em branco não vira média zero");
+assert.strictEqual(P.indices(muitos(5, { trabalho: "procurando" })).economica.media, null, "menos de 10 pessoas: sem média");
+assert.strictEqual(P.indices(muitos(10, { trabalho: "procurando" })).economica.media, 100);
+
+/* ---- combinações ---- */
+const duplos = muitos(12, { trabalho: "procurando", obstaculos_trabalho: ["vagas", "creche", "transporte"], estudar: "concluir", obstaculos_estudo: ["dinheiro", "sem_cuidado", "chegar"] });
+const livres = muitos(10, { trabalho: "formal", obstaculos_trabalho: ["nenhum"], estudar: "nao" });
+assert.strictEqual(P.combinacoes(duplos.concat(livres)).n, 12);
+assert.strictEqual(P.combinacoes(duplos.concat(livres)).base, 22);
+assert.strictEqual(P.combinacoes(duplos.slice(0, 5)).suprimido, true);
+assert(P.paresDeTemas(duplos).some((x) => /Trabalho e renda \+ Estudo e cursos/.test(x.par)));
+assert.deepStrictEqual(P.paresDeTemas(muitos(5, { trabalho: "procurando", obstaculos_trabalho: ["vagas", "creche", "transporte"], estudar: "concluir", obstaculos_estudo: ["dinheiro", "sem_cuidado", "chegar"] })), [], "par com menos de 10 não aparece");
+
+/* ---- série por mês e cobertura ---- */
+assert.deepStrictEqual(P.serie(muitos(12, {})).map((x) => x.n), [12]);
+assert.strictEqual(P.serie(muitos(3, {}))[0].n, null);
+assert.strictEqual(P.cobertura(muitos(5, {})).total, null);
+
+/* ---- os dados de teste: marcados como teste, sem identificação, reproduzíveis ---- */
+const teste = JSON.parse(ler("dados/painel_teste.json"));
+assert.strictEqual(teste.meta.dados_de_teste, true, "o arquivo precisa se declarar de teste");
+assert(/DADOS DE TESTE/.test(teste.meta.aviso) && /não representam nenhuma mulher real/i.test(teste.meta.aviso));
+assert.strictEqual(teste.registros.length, teste.meta.registros);
+teste.registros.forEach((r) => {
+  assert.deepStrictEqual(Object.keys(r).sort(), ["indices", "instrumento", "periodo", "respostas", "versao"]);
+  assert(r.respostas.idade !== "m18" && !("autoriza" in r.respostas), "menores e autorização não entram");
+});
+const gerador = fs.readFileSync(path.join(web, "..", "pipeline", "gerar_dados_teste_painel.js"), "utf8");
+assert(/NÃO representam[\s*]+nenhuma mulher real/.test(gerador) && /semente é fixa/.test(gerador));
+
+/* ---- a página: sinaliza teste, não é indexada, não aparece no site público e não envia nada ---- */
+const html = ler("painel-secretaria.html"), ui = ler("painel-ui.js"), logica = ler("painel.js").replace(/\/\*[\s\S]*?\*\//g, "");
+assert(/name="robots" content="noindex, nofollow"/.test(html), "a página não deve ser indexada");
+assert(/PROTÓTIPO COM DADOS DE TESTE/.test(html) && /login da Prefeitura/.test(html), "a faixa de teste e o aviso de login devem estar na página");
+const index = ler("index.html"), app = ler("app.js"), areas = ler("areas.js");
+assert(!/painel-secretaria|painel\.js/.test(index + app + areas), "o painel não pode aparecer no site público");
+assert(!/localStorage|sessionStorage|indexedDB|document\.cookie|sendBeacon/.test(ui + logica), "o painel não grava nada");
+assert(!/fetch\(|XMLHttpRequest|WebSocket/.test(logica), "a agregação não usa rede");
+assert(!/method\s*:\s*["']POST/i.test(ui), "o painel só lê dados, não envia");
+["Como ler este painel", "não são estatística representativa", "nada aqui é diagnóstico", "menos de 10 respostas", "Quem respondeu"].forEach((t) => assert((html + ui).includes(t), "o painel deve dizer: " + t));
+assert(/analise_territorial\.json/.test(ui) && /ainda não foi gerada/.test(ui), "sem a análise territorial, a tela diz que não foi gerada e não inventa números");
+assert(!fs.existsSync(path.join(web, "dados", "analise_territorial.json")) || JSON.parse(ler("dados/analise_territorial.json")).meta.aviso, "se a análise existir, tem de trazer o aviso de método");
+
+console.log("painel.test.js: regra dos 10, supressão complementar, grupos pequenos, em branco ≠ zero, dados de teste marcados e painel fora do site público passaram");
