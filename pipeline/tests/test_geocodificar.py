@@ -395,3 +395,34 @@ def test_cli_marcar_altas_lista_e_nao_precisa_do_cnefe(tmp_path, idx, monkeypatc
     saida = capsys.readouterr().out
     assert "1 linhas de confiança alta marcadas" in saida and "NÃO MARCADA (CEP do catálogo difere" in saida
     assert "O catálogo NÃO foi alterado" in saida
+
+
+# ------------------------------------------------------------- CEP vizinho x CEP errado (usa o índice de CEP)
+def test_cep_vizinho_nao_e_tratado_como_erro_e_entra_no_atalho(idx, tmp_path):
+    # ponto achado ~(-22.40005, -47.56005). Catálogo: CEP 13506808 (centro a ~200 m: vizinho) e 13599999 (centro a ~20 km: errado)
+    indice_cep = {"13506808": [-22.4020, -47.5600, 150, "s", 30], "13599999": [-22.2200, -47.4000, 150, "s", 30]}
+    linhas = [
+        {"id": "viz", "nome": "VIZ", "cep": "13506808", "endereco": "Av. 30, 290, X", "lat": "", "lon": ""},
+        {"id": "err", "nome": "ERR", "cep": "13599999", "endereco": "Av. 30, 290, X", "lat": "", "lon": ""},
+        {"id": "sem", "nome": "SEM", "cep": "13588888", "endereco": "Av. 30, 290, X", "lat": "", "lon": ""},   # CEP fora do índice
+    ]
+    por_id = {p["id"]: p for p in g.propor(linhas, idx, indice_cep)}
+    assert por_id["viz"]["cep_confere"] == "vizinho" and por_id["viz"]["situacao"] == "sugestao"
+    assert 150 < por_id["viz"]["cep_distancia_m"] < 300 and "CEP vizinho" in por_id["viz"]["observacao"]
+    assert por_id["err"]["cep_confere"] == "não" and por_id["err"]["situacao"] == "pendente"
+    assert por_id["err"]["cep_distancia_m"] > 15000 and "conferir qual está certo" in por_id["err"]["observacao"]
+    assert por_id["sem"]["cep_confere"] == "não" and por_id["sem"]["cep_distancia_m"] == ""                  # sem o centro do CEP, continua pendente
+    # sem índice nenhum, tudo o que difere continua "não" (como antes)
+    assert {p["id"]: p["cep_confere"] for p in g.propor(linhas, idx)} == {"viz": "não", "err": "não", "sem": "não"}
+
+    plan = tmp_path / "p.csv"
+    g._gravar_planilha(plan, g.CAMPOS_PROPOSTA, list(por_id.values()))
+    marcadas, puladas = g.marcar_altas(plan)
+    assert [r["id"] for r in marcadas] == ["viz"] and sorted(r["id"] for r in puladas) == ["err", "sem"]
+
+
+def test_carregar_indice_cep(tmp_path):
+    assert g.carregar_indice_cep(None) == {} and g.carregar_indice_cep(tmp_path / "nao_existe.json") == {}
+    p = tmp_path / "i.json"
+    p.write_text('{"ceps": {"13500000": [-22.4, -47.5, 300, "s", 9]}}', encoding="utf-8")
+    assert g.carregar_indice_cep(p) == {"13500000": [-22.4, -47.5, 300, "s", 9]}

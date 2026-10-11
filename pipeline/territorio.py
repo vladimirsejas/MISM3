@@ -14,7 +14,8 @@ Distância até o serviço (só quando há serviços COM LOCALIZAÇÃO no catál
 centro do setor até o CRAS, a UBS/USF e a escola municipal com creche (confirmada no Censo Escolar) mais próximos.
 A localização vem do endereço (latitude e longitude do catálogo, "precisão endereço") ou, na falta dela, do centro do CEP
 (web/dados/cep_indice.json, "precisão CEP", aproximada; CEP com raio acima de RAIO_MAX_CEP_M é vago demais e não conta).
-Sem nenhum serviço localizado, o arquivo simplesmente não traz distâncias: números sem base enganariam.
+Sem nenhum serviço localizado, o arquivo simplesmente não traz distâncias: números sem base enganariam. O mesmo vale para uma
+categoria com poucos serviços localizados (menos de COBERTURA_MINIMA): ela vira "pendente" e a página diz o que falta.
 
 O que NÃO é: não mede vulnerabilidade, renda, nem necessidade. Não há idade, renda nem sexo na malha usada; esses
 campos vêm dos "Agregados por setores censitários" do Censo 2022, que ainda não estão no projeto.
@@ -41,6 +42,9 @@ MIN_DOMICILIOS = 20                 # abaixo disso, pessoas por domicílio não 
 LIMITES_DENSIDADE = [500, 2000, 5000, 10000]        # hab/km²; 5 classes
 LIMITES_PESSOAS_POR_DOMICILIO = [2.0, 2.3, 2.6, 3.0]  # 5 classes
 LIMITES_DISTANCIA_KM = [0.5, 1.0, 2.0, 3.0]   # 5 classes de distância até o serviço
+# Só mostra distância de uma categoria se pelo menos esta parte dos serviços cadastrados estiver localizada. Com 2 de 6 CRAS
+# no mapa, "65 mil pessoas a 3 km ou mais de um CRAS" seria falso: os 4 que faltam estão em algum lugar.
+COBERTURA_MINIMA = 0.70
 RAIO_MAX_CEP_M = 800                           # CEP com raio maior (ex.: CEP geral da cidade) é vago demais para localizar
 CAIXA_RIO_CLARO = (-22.60, -22.20, -47.82, -47.41)  # lat_min, lat_max, lon_min, lon_max
 CATEGORIAS_SERVICO = {
@@ -114,12 +118,13 @@ def _mediana_ponderada(pares) -> float | None:
     return pares[-1][0]
 
 
-def distancias_ate_servicos(geojson: dict, servicos: list[dict], indice_cep: dict | None) -> dict:
-    """Por categoria com serviço localizado: pontos, distância de cada setor e resumo. Categoria sem ponto fica de fora."""
+def distancias_ate_servicos(geojson: dict, servicos: list[dict], indice_cep: dict | None) -> tuple[dict, dict]:
+    """(distâncias, pendentes). Distâncias: por categoria com cobertura suficiente, os pontos, a distância de cada setor e o
+    resumo. Pendentes: categorias com serviço cadastrado, mas poucos localizados (abaixo de COBERTURA_MINIMA); sem distância."""
     centros = {}
     for f in geojson["features"]:
         centros[f["properties"]["setor"]] = (centro(f["geometry"]), int(f["properties"]["pessoas"]))
-    saida = {}
+    saida, pendentes = {}, {}
     for chave, cat in CATEGORIAS_SERVICO.items():
         elegiveis = [s for s in servicos if str(s.get("id", "")).startswith("man-") and cat["serve"](s)]
         pontos = []
@@ -128,6 +133,10 @@ def distancias_ate_servicos(geojson: dict, servicos: list[dict], indice_cep: dic
             if loc:
                 pontos.append({"nome": s["nome"], "lat": round(loc[0], 6), "lon": round(loc[1], 6), "precisao": loc[2], "raio_m": loc[3]})
         if not pontos:
+            continue
+        if len(pontos) / len(elegiveis) < COBERTURA_MINIMA:
+            pendentes[chave] = {"rotulo": cat["rotulo"], "cadastrados": len(elegiveis), "localizados": len(pontos),
+                                "minimo_pct": round(100 * COBERTURA_MINIMA)}
             continue
         por_setor, pesos = {}, []
         for codigo, ((lat, lon), pessoas) in centros.items():
@@ -152,7 +161,7 @@ def distancias_ate_servicos(geojson: dict, servicos: list[dict], indice_cep: dic
             "mediana_km": None if _mediana_ponderada(pesos) is None else round(_mediana_ponderada(pesos), 2),
             "pessoas_total": total,
         }
-    return saida
+    return saida, pendentes
 
 
 def montar(geojson: dict, oferta: dict | None = None, hoje: str | None = None, servicos: list[dict] | None = None,
@@ -229,7 +238,9 @@ def montar(geojson: dict, oferta: dict | None = None, hoje: str | None = None, s
         "bairros": bairros,
         "setores": setores,
     }
-    dist = distancias_ate_servicos(geojson, servicos or [], indice_cep) if servicos else {}
+    dist, pendentes = distancias_ate_servicos(geojson, servicos or [], indice_cep) if servicos else ({}, {})
+    if pendentes:
+        saida["distancia_pendente"] = pendentes
     if dist:
         saida["distancia_ate_servico"] = {k: {kk: vv for kk, vv in v.items() if kk != "por_setor"} for k, v in dist.items()}
         saida["meta"]["aviso_distancia"] = (
@@ -268,7 +279,10 @@ def main() -> int:
     for chave, v in saida.get("distancia_ate_servico", {}).items():
         print("Distância até %s: %d de %d localizados (%d pelo endereço); mediana %.2f km; %d pessoas a 3 km ou mais." %
               (v["rotulo"], v["localizados"], v["cadastrados"], v["localizados_pelo_endereco"], v["mediana_km"], v["pessoas_3_km_ou_mais"]))
-    if "distancia_ate_servico" not in saida:
+    for chave, v in saida.get("distancia_pendente", {}).items():
+        print("SEM distância até %s: só %d de %d localizados (mínimo %d%%). Localize mais serviços antes de mostrar." %
+              (v["rotulo"], v["localizados"], v["cadastrados"], v["minimo_pct"]))
+    if "distancia_ate_servico" not in saida and "distancia_pendente" not in saida:
         print("Sem distâncias: nenhum serviço do catálogo tem localização (latitude/longitude ou CEP no cep_indice.json).")
     return 0
 

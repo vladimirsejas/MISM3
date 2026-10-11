@@ -36,7 +36,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import (BRUTO, CATALOGO, DADOS, MUNICIPIO_IBGE7, achar_coluna, agora_iso, erro, haversine_m,  # noqa: E402
+from common import (BRUTO, CATALOGO, DADOS, MUNICIPIO_IBGE7, WEB_DADOS, achar_coluna, agora_iso, erro, haversine_m,  # noqa: E402
                     ler_csv_flex, normalizar_cep, para_numero)
 
 DISPERSAO_MAX_M = 300  # pontos do mesmo número de rua mais afastados que isso não são tratados como "exato"
@@ -277,8 +277,11 @@ def ler_cnefe(caminho: Path):
 
 
 CAMPOS_PROPOSTA = ["id", "nome", "endereco_catalogo", "cep_catalogo", "situacao", "confianca", "metodo", "candidatos",
-                   "cep", "cep_confere", "lat", "lon", "setor", "registros", "rua_cnefe", "numero_cnefe", "alternativas",
-                   "observacao", "decisao"]
+                   "cep", "cep_confere", "cep_distancia_m", "lat", "lon", "setor", "registros", "rua_cnefe", "numero_cnefe",
+                   "alternativas", "observacao", "decisao"]
+# CEP do catálogo diferente do CNEFE, mas com o centro a até esta distância (mais o raio do CEP) do ponto achado: é CEP
+# vizinho da mesma região, não erro. Mais longe que isso, a pessoa precisa conferir.
+CEP_VIZINHO_M = 1500
 
 
 def amostra_de_ruas(indice: dict, n: int = 15) -> list[str]:
@@ -293,7 +296,16 @@ def amostra_de_ruas(indice: dict, n: int = 15) -> list[str]:
     return linhas
 
 
-def propor(linhas: list[dict], indice: dict) -> list[dict]:
+def carregar_indice_cep(caminho: Path | None) -> dict:
+    """{cep: [lat, lon, raio_m, ...]} do web/dados/cep_indice.json (gerado por indice_cep.py), ou {} se não existir."""
+    if caminho is None or not caminho.exists():
+        return {}
+    import json
+
+    return json.loads(caminho.read_text(encoding="utf-8")).get("ceps", {})
+
+
+def propor(linhas: list[dict], indice: dict, indice_cep: dict | None = None) -> list[dict]:
     """Uma sugestão por serviço que tem endereço e ainda não tem CEP nem coordenada. Não altera as linhas."""
     saida = []
     for s in linhas:
@@ -303,15 +315,27 @@ def propor(linhas: list[dict], indice: dict) -> list[dict]:
             continue
         r = casar(s["endereco"], indice)
         cep_catalogo = normalizar_cep(s.get("cep")) or ""
-        confere = ""
+        confere, distancia = "", ""
         if cep_catalogo and r["cep"]:
-            confere = "sim" if cep_catalogo == r["cep"] else "não"
-            if confere == "não":
-                r["observacao"] = (r["observacao"] + " " if r["observacao"] else "") + (
-                    "O CEP do catálogo (%s) é diferente do CEP do CNEFE (%s): conferir qual está certo." % (cep_catalogo, r["cep"]))
-                r["situacao"] = "pendente"
+            if cep_catalogo == r["cep"]:
+                confere = "sim"
+            else:
+                confere = "não"
+                centro_cep = (indice_cep or {}).get(cep_catalogo)
+                if centro_cep and r["lat"] and r["lon"]:
+                    distancia = round(haversine_m(float(r["lat"]), float(r["lon"]), float(centro_cep[0]), float(centro_cep[1])))
+                    if distancia <= CEP_VIZINHO_M + float(centro_cep[2]):
+                        confere = "vizinho"
+                        r["observacao"] = (r["observacao"] + " " if r["observacao"] else "") + (
+                            "O CEP do catálogo (%s) é diferente do CNEFE (%s), mas o centro dele fica a %d m do ponto: CEP vizinho, mesma região."
+                            % (cep_catalogo, r["cep"], distancia))
+                if confere == "não":
+                    r["observacao"] = (r["observacao"] + " " if r["observacao"] else "") + (
+                        "O CEP do catálogo (%s) é diferente do CNEFE (%s)%s: conferir qual está certo." % (
+                            cep_catalogo, r["cep"], "" if distancia == "" else " e o centro dele fica a %d m do ponto" % distancia))
+                    r["situacao"] = "pendente"
         saida.append({"id": s["id"], "nome": s["nome"], "endereco_catalogo": s["endereco"], "cep_catalogo": cep_catalogo,
-                      "cep_confere": confere, "decisao": "", **r})
+                      "cep_confere": confere, "cep_distancia_m": distancia, "decisao": "", **r})
     return saida
 
 
@@ -339,7 +363,7 @@ def _gravar_planilha(caminho: Path, campos: list[str], linhas: list[dict]) -> No
 
 
 def marcar_altas(planilha: Path) -> tuple[list[dict], list[dict]]:
-    """Escreve 'aprovar' nas linhas de confiança alta ainda sem decisão, exceto onde o CEP do catálogo difere do CNEFE.
+    """Escreve 'aprovar' nas linhas de confiança alta ainda sem decisão, exceto onde o CEP do catálogo difere do CNEFE e não é vizinho (cep_confere = 'não').
 
     Atalho para não digitar linha por linha. NÃO altera o catálogo (isso só acontece em --aplicar-aprovadas) e a pessoa
     continua podendo apagar o 'aprovar' de qualquer linha antes de aplicar. Devolve (marcadas, altas_puladas).
@@ -432,6 +456,8 @@ def main() -> int:
     ap.add_argument("--aplicar-aprovadas", nargs="?", const=True, default=False, metavar="PLANILHA",
                     help="copia para o catálogo as linhas com decisao=aprovar (por padrão, a planilha de --saida); "
                          "não lê o CNEFE")
+    ap.add_argument("--indice-cep", type=Path, default=WEB_DADOS / "cep_indice.json",
+                    help="índice de CEP (indice_cep.py), usado para distinguir CEP vizinho de CEP errado")
     ap.add_argument("--marcar-altas", nargs="?", const=True, default=False, metavar="PLANILHA",
                     help="escreve 'aprovar' nas linhas de confiança alta e lista cada uma para você conferir; "
                          "não altera o catálogo e não lê o CNEFE")
@@ -466,7 +492,10 @@ def main() -> int:
         erro(str(e))
     with a.catalogo.open(encoding="utf-8", newline="") as f:
         linhas = list(csv.DictReader(f))
-    propostas = propor(linhas, indice)
+    indice_cep = carregar_indice_cep(a.indice_cep)
+    if not indice_cep:
+        print("AVISO: sem %s: não dá para distinguir CEP vizinho de CEP errado (rode python pipeline/indice_cep.py)." % a.indice_cep)
+    propostas = propor(linhas, indice, indice_cep)
     a.saida.parent.mkdir(parents=True, exist_ok=True)
     _gravar_planilha(a.saida, CAMPOS_PROPOSTA, propostas)
     print("Sugestões gravadas em %s (%d serviços). O catálogo NÃO foi alterado." % (a.saida, len(propostas)))
