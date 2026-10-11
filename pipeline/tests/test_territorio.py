@@ -146,7 +146,7 @@ def test_localizar_servico_endereco_cep_e_cep_vago():
 
 def test_distancia_ate_o_servico_mais_proximo_e_resumo():
     # CRAS no centro do setor "a": "a" fica a ~0 km, "b" (0,01° a leste) a ~1,03 km e "c" (0,03° a leste) a ~3,08 km
-    d = t.distancias_ate_servicos(tres_setores(), [cras(-22.395, -47.595)], None)["cras"]
+    d = t.distancias_ate_servicos(tres_setores(), [cras(-22.395, -47.595)], None)[0]["cras"]
     a, b, c = (d["por_setor"][k] for k in "abc")
     assert a < 0.05 and 1.0 < b < 1.07 and 3.0 < c < 3.15
     assert d["contagem"] == [1, 0, 1, 0, 1] and sum(d["contagem"]) == 3                    # <0,5 | 0,5-1 | 1-2 | 2-3 | >=3
@@ -156,10 +156,29 @@ def test_distancia_ate_o_servico_mais_proximo_e_resumo():
     assert (d["cadastrados"], d["localizados"], d["localizados_pelo_endereco"]) == (1, 1, 1)
 
 
-def test_cobertura_conta_o_que_nao_foi_localizado():
-    servicos = [cras(-22.395, -47.595), {**cras(None, None), "id": "man-cras-y", "nome": "CRAS Y", "cep": None}]
-    d = t.distancias_ate_servicos(tres_setores(), servicos, None)["cras"]
-    assert (d["cadastrados"], d["localizados"]) == (2, 1)                                  # a página precisa mostrar "1 de 2"
+def test_cobertura_conta_o_que_nao_foi_localizado_e_acima_do_minimo_mostra():
+    # 3 de 4 localizados (75%): mostra, e diz "3 de 4"
+    servicos = [cras(-22.395 + i * 0.001, -47.595, id="man-cras-%d" % i, nome="CRAS %d" % i) for i in range(3)]
+    servicos.append({**cras(None, None), "id": "man-cras-sem", "nome": "CRAS SEM LOCAL"})
+    dist, pendentes = t.distancias_ate_servicos(tres_setores(), servicos, None)
+    assert (dist["cras"]["cadastrados"], dist["cras"]["localizados"]) == (4, 3) and pendentes == {}
+
+
+def test_cobertura_baixa_nao_gera_distancia_e_fica_pendente():
+    # 1 de 3 localizado (33%): "65 mil pessoas longe do CRAS" seria falso, porque faltam 2 CRAS no mapa
+    servicos = [cras(-22.395, -47.595), {**cras(None, None), "id": "man-cras-b", "nome": "B"}, {**cras(None, None), "id": "man-cras-c", "nome": "C"}]
+    dist, pendentes = t.distancias_ate_servicos(tres_setores(), servicos, None)
+    assert "cras" not in dist
+    assert pendentes["cras"] == {"rotulo": "CRAS", "cadastrados": 3, "localizados": 1, "minimo_pct": 70}
+    d = t.montar(tres_setores(), servicos=servicos)
+    assert "distancia_ate_servico" not in d and d["distancia_pendente"]["cras"]["localizados"] == 1
+    assert not any(k.startswith("dist_") for s in d["setores"].values() for k in s)   # nem a distância por setor
+
+
+def test_exatamente_no_minimo_mostra():
+    servicos = [cras(-22.395, -47.595, id="man-cras-%d" % i, nome=str(i)) for i in range(7)]
+    servicos += [{**cras(None, None), "id": "man-cras-s%d" % i, "nome": "s%d" % i} for i in range(3)]   # 7 de 10 = 70%
+    assert "cras" in t.distancias_ate_servicos(tres_setores(), servicos, None)[0]
 
 
 def test_so_servicos_do_catalogo_manual_e_a_categoria_certa():
@@ -168,7 +187,7 @@ def test_so_servicos_do_catalogo_manual_e_a_categoria_certa():
     escola = {"id": "man-em-1", "tipo": "creche", "subtipo": "escola_municipal", "nome": "EM sem etapas", "lat": -22.395, "lon": -47.595}
     com_creche = {**escola, "id": "man-em-2", "nome": "EM com creche", "etapas": {"creche": True, "pre_escola": True, "fonte": "f"}}
     so_pre = {**escola, "id": "man-em-3", "nome": "EM só pré", "etapas": {"creche": False, "pre_escola": True, "fonte": "f"}}
-    r = t.distancias_ate_servicos(tres_setores(), [ubs, cnes, escola, com_creche, so_pre], None)
+    r = t.distancias_ate_servicos(tres_setores(), [ubs, cnes, escola, com_creche, so_pre], None)[0]
     assert set(r) == {"ubs", "creche"}                                                      # sem CRAS localizado, a categoria some
     assert r["ubs"]["cadastrados"] == 1                                                     # o registro do CNES não entra
     assert [p["nome"] for p in r["creche"]["pontos"]] == ["EM com creche"]                  # sem etapa conhecida ou sem creche: fora
