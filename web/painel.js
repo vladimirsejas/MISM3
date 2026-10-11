@@ -89,6 +89,20 @@
       .sort(function (a, b) { return b.n - a.n; });
   }
 
+  var ROTULO_TEMA = { casamento: "Separação, pensão e guarda", filhos: "Filhos, creche e escola", emprego_curso: "Trabalho, renda e cursos", saude: "Saúde", estudo: "Voltar a estudar", moradia: "Moradia, água e energia", dividas: "Dívidas e aposentadoria", familia: "Apoio social (CRAS)" };
+
+  /* Assuntos que as mulheres citaram no espaço "Fale de você". O texto nunca chega ao painel: só os assuntos que o aparelho identificou. */
+  function temas(regs, k) {
+    var lim = k || K, base = regs.filter(function (r) { return r.temas_do_texto && r.temas_do_texto.length; }), saida = [];
+    if (base.length < lim) return { base: null, itens: [], suprimido: true };
+    Object.keys(ROTULO_TEMA).forEach(function (t) {
+      var n = base.filter(function (r) { return r.temas_do_texto.indexOf(t) !== -1; }).length;
+      saida.push({ tema: t, rotulo: ROTULO_TEMA[t], n: n >= lim ? n : null, pct: n >= lim ? pct(n, base.length) : null });
+    });
+    saida.sort(function (a, b) { return (b.n || 0) - (a.n || 0); });
+    return { base: base.length, itens: saida, suprimido: false };
+  }
+
   function serie(regs, k) {
     var lim = k || K, por = {};
     regs.forEach(function (r) { if (r.periodo) por[r.periodo] = (por[r.periodo] || 0) + 1; });
@@ -100,5 +114,5 @@
     return { total: regs.length >= (k || K) ? regs.length : null, idade: distribuicao(regs, "idade", k), regiao: distribuicao(regs, "regiao", k) };
   }
 
-  return { K: K, ALTO: ALTO, distribuicao: distribuicao, indices: indices, indicesPorGrupo: indicesPorGrupo, combinacoes: combinacoes, paresDeTemas: paresDeTemas, serie: serie, cobertura: cobertura };
+  return { K: K, ALTO: ALTO, distribuicao: distribuicao, indices: indices, indicesPorGrupo: indicesPorGrupo, combinacoes: combinacoes, paresDeTemas: paresDeTemas, temas: temas, serie: serie, cobertura: cobertura };
 });

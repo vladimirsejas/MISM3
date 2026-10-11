@@ -31,7 +31,7 @@ while (regs.length < N && tentativas < N * 5) {
   r.regiao = sorteio({ cvz: 3, mae_preta: 3, bom_sucesso: 2, centro: 2, outro: 3, rural: 0.5, nao_sei: 0.6, nd: 0.4 });
   r.trabalho = sorteio({ formal: 3, conta_propria: 2, informal: 2.5, procurando: 3, quer_comecar: 1, estudando: 1, nao_procura: 1 });
   Q.PERGUNTAS.forEach((p) => {
-    if (r[p.id] !== undefined || p.id === "autoriza") return;
+    if (r[p.id] !== undefined || p.id === "autoriza" || p.tipo === "texto") return;
     if (p.tipo === "unica") r[p.id] = sorteio(uniforme(p));
     else {
       const n = 1 + Math.floor(aleatorio() * Math.min(3, p.max)), cods = Object.keys(uniforme(p)), esc = [];
@@ -40,7 +40,9 @@ while (regs.length < N && tentativas < N * 5) {
     }
   });
   r.autoriza = "sim";
-  const reg = Q.registro(r, MESES[Math.floor(aleatorio() * MESES.length)]);
+  const temas = [];
+  if (aleatorio() < 0.45) { const n = 1 + Math.floor(aleatorio() * 2); for (let i = 0; i < n; i++) temas.push(Q.TEMAS_PERMITIDOS[Math.floor(aleatorio() * Q.TEMAS_PERMITIDOS.length)]); r.fale_de_voce = "(texto de teste, nunca guardado)"; }
+  const reg = Q.registro(r, MESES[Math.floor(aleatorio() * MESES.length)], { temas: temas });
   if (reg) regs.push(reg);
 }
 

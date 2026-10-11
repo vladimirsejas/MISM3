@@ -49,6 +49,16 @@
     }).join("") + "</ul>" : "");
   }
 
+  function temasDoTexto(regs) {
+    var t = P.temas(regs);
+    if (t.suprimido) return '<p class="meta">Menos de ' + P.K + " mulheres usaram o espaço “Fale de você”: não é exibido.</p>";
+    var maior = Math.max.apply(null, t.itens.map(function (i) { return i.pct || 0; }).concat([1]));
+    return '<p class="meta">' + t.base + " mulheres escreveram no espaço “Fale de você”. O painel mostra só os <strong>assuntos</strong> que o aparelho de cada uma identificou; <strong>nenhum texto chega até aqui</strong>, e violência nunca é registrada a partir de um texto.</p><ul class=\"barras\">" + t.itens.map(function (i) {
+      if (i.n === null) return '<li><div class="topo"><span>' + esc(i.rotulo) + '</span><span class="oculto">menos de ' + P.K + " respostas</span></div></li>";
+      return '<li><div class="topo"><span>' + esc(i.rotulo) + "</span><strong>" + i.pct.toLocaleString("pt-BR") + "% (" + i.n + ')</strong></div><div class="trilho"><span style="width:' + Math.round(100 * i.pct / maior) + '%"></span></div></li>';
+    }).join("") + "</ul>";
+  }
+
   function evolucao(regs) {
     var s = P.serie(regs);
     return '<ul class="barras">' + s.map(function (m) { var maior = Math.max.apply(null, s.map(function (x) { return x.n || 0; }).concat([1]));
@@ -81,6 +91,7 @@
     html += secao("Onde falta informação", "Quanto as mulheres conseguem achar e usar os serviços públicos.", barras(P.distribuicao(regs, "informacao")) + barras(P.distribuicao(regs, "sabe_procurar")));
     html += secao("Pontuação por tema", "Resumo do que pesa na vida das mulheres que responderam, em média.", tabelaIndices(regs) + "<h3>Por região de referência</h3>" + tabelaRegioes(regs));
     html += secao("Necessidades combinadas", "Quantas mulheres enfrentam vários obstáculos ao mesmo tempo: o argumento para políticas integradas.", combinacoes(regs));
+    html += secao("O que as mulheres contaram sobre si", "Assuntos identificados no espaço opcional “Fale de você”.", temasDoTexto(regs));
     html += secao("Evolução", "", evolucao(regs));
     html += secao("Análise territorial", "Cruza a população de cada bairro (IBGE) com a localização dos serviços.", territorial(terr));
     html += secao("Como ler este painel", "", '<ul><li><strong>Origem:</strong> respostas voluntárias ao questionário do Mulher em Rede, sem nome. Neste protótipo, <strong>dados de teste</strong> gerados por computador.</li>' +

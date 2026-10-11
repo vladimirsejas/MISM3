@@ -3,7 +3,8 @@
    para a Secretaria Municipal da Mulher conhecer as mulheres de Rio Claro. Lógica pura (sem DOM, sem rede, sem armazenamento).
 
    Regras que este módulo cumpre e os testes conferem:
-   - não pede nome, CPF, telefone, endereço nem texto livre; só alternativas;
+   - não pede nome, CPF, telefone nem endereço. Só alternativas, mais UM espaço opcional "Fale de você" cujo TEXTO nunca é enviado:
+     o aparelho identifica os assuntos e, com autorização, só os assuntos (sem violência) acompanham o registro;
    - pergunta em branco NÃO conta como "sem necessidade": fica fora da pontuação;
    - não existe pontuação de risco de violência, de saúde mental nem de capacidade de cuidar: proteção só aparece quando a PRÓPRIA
      mulher a marca como prioridade;
@@ -103,7 +104,9 @@
       o("transporte", "Resolver a dificuldade de transporte"), o("direitos_servico", "Conhecer meus direitos e chegar a um serviço"),
       o("seguranca", "Ter mais segurança e apoio especializado"), o("autonomia", "Ter mais autonomia para organizar minha vida"), o("outro", "Outra coisa")] },
 
-    { id: "autoriza", bloco: "Para terminar", texto: "Você autoriza usar as suas respostas, SEM o seu nome, para a Secretaria da Mulher conhecer as mulheres de Rio Claro?", ajuda: "Você recebe a sua orientação de qualquer jeito. Esta pergunta só decide se as respostas poderão ajudar a Secretaria.", tipo: "unica", opcoes: [
+    { id: "fale_de_voce", bloco: "Fale de você", texto: "Quer falar um pouco de você? (opcional)", tipo: "texto", max_chars: 500,
+      ajuda: "Escreva do seu jeito: o que está difícil, o que você sonha, o que falta na cidade para as mulheres. Se preferir, pule.", opcoes: [] },
+    { id: "autoriza", bloco: "Para terminar", texto: "Você autoriza usar as suas respostas, SEM o seu nome e SEM o seu texto, para a Secretaria da Mulher conhecer as mulheres de Rio Claro?", ajuda: "Você recebe a sua orientação de qualquer jeito. Esta pergunta só decide se as respostas poderão ajudar a Secretaria.", tipo: "unica", opcoes: [
       o("sim", "Sim, autorizo"), o("nao", "Não autorizo")] }
   ];
 
@@ -126,7 +129,10 @@
     PERGUNTAS.forEach(function (p) {
       var v = resp && resp[p.id];
       var validos = p.opcoes.map(function (x) { return x.c; });
-      if (p.tipo === "unica") {
+      if (p.tipo === "texto") {
+        var t = typeof v === "string" ? v.replace(/[ \t]+/g, " ").replace(/\n{3,}/g, "\n\n").trim().slice(0, p.max_chars) : "";
+        if (t) r[p.id] = t;
+      } else if (p.tipo === "unica") {
         if (typeof v === "string" && validos.indexOf(v) !== -1) r[p.id] = v;
       } else if (Array.isArray(v)) {
         var lista = v.filter(function (c, i) { return validos.indexOf(c) !== -1 && v.indexOf(c) === i; });
@@ -293,6 +299,21 @@
     });
   }
 
+  /* Avisa quando o texto parece ter dado que identifica (o texto nunca é enviado, mas ninguém precisa escrever isso). */
+  function dadosPessoais(texto) {
+    var t = String(texto || ""), a = [];
+    if (/\b\d{3}\.?\d{3}\.?\d{3}-?\d{2}\b/.test(t)) a.push("um CPF");
+    if (/\b\d{1,2}\.?\d{3}\.?\d{3}-?[\dxX]\b/.test(t)) a.push("um RG");
+    if (/\(?\b\d{2}\)?\s?9?\d{4}[-\s]?\d{4}\b/.test(t)) a.push("um telefone");
+    if (/[^\s@]+@[^\s@]+\.[^\s@]+/.test(t)) a.push("um e-mail");
+    if (/\b\d{5}-?\d{3}\b/.test(t)) a.push("um CEP");
+    return a;
+  }
+
+  /* Assuntos que podem acompanhar o registro. "violencia" fica DE FORA de propósito: não se infere nem se registra violência a
+     partir de um texto. A mulher a vê e recebe ajuda na hora, no próprio aparelho, e só isso. */
+  var TEMAS_PERMITIDOS = ["casamento", "filhos", "emprego_curso", "saude", "estudo", "moradia", "dividas", "familia"];
+
   /* ------------------------------------------------------------ o que seria enviado à Secretaria */
   function podeEnviar(resp) {
     var r = limpar(resp);
@@ -301,17 +322,22 @@
 
   /* Registro sem identificação: só códigos de alternativas, índices e o MÊS da resposta. Sem texto livre, sem data/hora exata,
      sem identificador, sem IP (o IP depende do servidor: ver docs/questionario_observatorio.md). */
-  function registro(resp, mes) {
+  function registro(resp, mes, extras) {
     var r = limpar(resp);
     if (!podeEnviar(r)) return null;
     var pts = pontuar(r), indices = {}, respostas = {};
     DIMENSOES.forEach(function (d) { indices[d.id] = pts[d.id].indice; });
-    Object.keys(r).forEach(function (q) { if (q !== "autoriza") respostas[q] = r[q]; });
-    return { instrumento: "observatorio-questionario", versao: 1, periodo: /^\d{4}-\d{2}$/.test(mes || "") ? mes : null, respostas: respostas, indices: indices };
+    Object.keys(r).forEach(function (q) { if (q !== "autoriza" && q !== "fale_de_voce") respostas[q] = r[q]; });
+    /* O TEXTO nunca vai no registro. Só os assuntos que o aparelho identificou nele, e só se ela escreveu algo. */
+    var temas = [];
+    if (r.fale_de_voce && extras && Array.isArray(extras.temas)) {
+      temas = extras.temas.filter(function (t, i, a) { return TEMAS_PERMITIDOS.indexOf(t) !== -1 && a.indexOf(t) === i; });
+    }
+    return { instrumento: "observatorio-questionario", versao: 2, periodo: /^\d{4}-\d{2}$/.test(mes || "") ? mes : null, respostas: respostas, temas_do_texto: temas, indices: indices };
   }
 
   return {
     PERGUNTAS: PERGUNTAS, DIMENSOES: DIMENSOES, CAMINHOS: CAMINHOS, limpar: limpar, aplicaveis: aplicaveis, proxima: proxima,
-    pontuar: pontuar, caminhos: caminhos, podeEnviar: podeEnviar, registro: registro, rotulo: rotulo
+    pontuar: pontuar, caminhos: caminhos, podeEnviar: podeEnviar, registro: registro, rotulo: rotulo, dadosPessoais: dadosPessoais, TEMAS_PERMITIDOS: TEMAS_PERMITIDOS
   };
 });

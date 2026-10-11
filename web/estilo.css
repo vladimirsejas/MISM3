@@ -311,3 +311,24 @@ a.tel-grande{display:inline-block;font-weight:800;font-size:1.2rem;color:var(--a
 .barra-indice span{display:block;height:100%;background:var(--pri-esc);border-radius:999px}
 .registro{white-space:pre-wrap;word-break:break-word;background:var(--bg);border:1px solid var(--bor);border-radius:10px;padding:.7rem;font-size:.85rem;max-height:18rem;overflow:auto}
 .plano-tela h4{margin:1.1rem 0 .3rem}
+
+/* ---------- Entre Mulheres: abas por categoria e cadastro dentro de cada uma ---------- */
+.abas{display:flex;gap:.5rem;overflow-x:auto;padding:.3rem .1rem .6rem;margin:.6rem 0;scroll-snap-type:x proximity}
+.aba{flex:none;font:inherit;min-height:44px;padding:.5rem 1rem;border:2px solid var(--bor);border-radius:999px;background:var(--lilas);color:var(--fg);cursor:pointer;scroll-snap-align:start;white-space:nowrap}
+.aba[aria-selected="true"]{background:var(--pri-esc);border-color:var(--pri-esc);color:#fff;font-weight:700}
+.aba:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+.painel-aba{border:1px solid var(--bor);border-radius:var(--raio);background:var(--card);padding:1rem 1.1rem;margin:.4rem 0}
+.painel-aba h3{margin:.1rem 0 .3rem}
+.vazio-cat{background:var(--lilas);border-radius:12px;padding:.7rem .9rem}
+.oferecer{margin-top:1.2rem;padding-top:1rem;border-top:2px dashed var(--bor)}
+.marca-check{display:flex;gap:.6rem;align-items:flex-start;margin:.7rem 0;min-height:44px;cursor:pointer}
+.marca-check input{width:1.3rem;height:1.3rem;margin-top:.15rem;accent-color:var(--pri-esc);flex:none}
+.erro-campo{color:#8a1c1c;font-weight:700;margin:.15rem 0 0;min-height:0}
+.erro-campo:empty{display:none}
+input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:#8a1c1c!important}
+.resultado-cadastro .registro{max-height:none;overflow:visible}
+
+/* Espaço "Fale de você": diferenciado das perguntas de marcar */
+.etapa-texto{border-left:5px solid var(--pri);background:var(--lilas)}
+.area-fale{display:block;width:100%;font:inherit;font-size:1.05rem;line-height:1.5;padding:.8rem 1rem;border:2px solid var(--bor);border-radius:14px;background:#fff;color:var(--fg);resize:vertical;min-height:9rem}
+.area-fale:focus-visible{outline:3px solid var(--pri);outline-offset:2px}

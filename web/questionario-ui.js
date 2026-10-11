@@ -12,10 +12,12 @@
   }
   function $(id) { return document.getElementById(id); }
 
-  function novo() { return { etapa: "intro", resp: {}, ordem: [], puladas: [], pendente: [], envio: { estado: "nao_tentado" } }; }
+  function novo() { return { etapa: "intro", resp: {}, ordem: [], puladas: [], pendente: [], rascunho: "", analise: null, envio: { estado: "nao_tentado" } }; }
   var e = novo();
   var config = { ativa: false, endpoint: null };
   function usarConfig(c) { if (c && typeof c === "object") config = c; }
+  var carregarModelo = null; /* função entregue pelo app.js: garante que o modelo de IA do aparelho está carregado */
+  function usarModelo(fn) { carregarModelo = fn; }
 
   function html() {
     return '<section class="secao questionario" aria-labelledby="titulo-questionario">' +
@@ -31,6 +33,7 @@
       '<ul class="q-garantias"><li>Você <strong>não informa nome, CPF nem telefone</strong>. Só marca alternativas.</li>' +
       '<li>Participar é <strong>voluntário</strong>. Você pode pular qualquer pergunta. Não existe resposta certa ou errada.</li>' +
       '<li>Ele <strong>não substitui atendimento</strong>, não garante vaga e não faz diagnóstico nem avaliação de risco.</li>' +
+      '<li>Perto do fim há um espaço opcional, <strong>“Fale de você”</strong>. O que você escrever <strong>não é enviado para ninguém</strong>: o aparelho só identifica os assuntos (como trabalho ou saúde).</li>' +
       '<li>Só se você autorizar, <strong>no fim</strong>, as respostas poderão ser usadas pela Secretaria, <strong>sem o seu nome</strong>. Menores de 18 anos não têm respostas enviadas.</li></ul>' +
       '<p class="status" role="note"><strong>Situação hoje:</strong> a coleta de dados para a Secretaria ainda <strong>não foi ativada</strong>. Você recebe a sua orientação, e as respostas ficam só neste aparelho e somem quando você sai da página.</p>' +
       '<div class="acoes"><button type="button" class="btn" data-q="comecar">Começar (leva uns 5 minutos)</button></div>' +
@@ -38,7 +41,23 @@
   }
 
   /* ------------------------------------------------------------ perguntas */
+  function htmlTexto(prox) {
+    var p = prox.pergunta, voltar = '<button type="button" class="link-btn" data-q="voltar">← Voltar</button>';
+    return '<div class="etapa etapa-texto"><p class="progresso">' + esc(p.bloco) + " · pergunta " + prox.numero + " de " + prox.total + "</p>" +
+      '<div class="barra" aria-hidden="true"><span style="width:' + Math.round((prox.numero - 1) / prox.total * 100) + '%"></span></div>' +
+      '<h3 class="pergunta-texto" id="q-foco" tabindex="-1">' + esc(p.texto) + '</h3><p class="meta">' + esc(p.ajuda) + "</p>" +
+      '<label for="q-texto" class="so-leitor">Fale de você</label>' +
+      '<textarea id="q-texto" class="area-fale" rows="7" maxlength="' + p.max_chars + '" autocomplete="off" spellcheck="true" placeholder="Ex.: Sou mãe de dois filhos, perdi o emprego e queria voltar a estudar à noite, mas não sei por onde começar.">' + esc(e.rascunho) + "</textarea>" +
+      '<p class="meta"><span id="q-contagem">' + e.rascunho.length + "</span> de " + p.max_chars + " letras</p>" +
+      '<p class="aviso-nao-conferido" id="q-aviso-texto" role="status" hidden></p>' +
+      '<p class="status" role="note"><strong>Seu texto não é enviado para ninguém.</strong> O seu aparelho lê o que você escreveu apenas para identificar assuntos (como trabalho, saúde ou moradia) e mostrar caminhos. Se você autorizar no fim, só esses assuntos poderão ir para a Secretaria, <strong>nunca o seu texto</strong>.</p>' +
+      '<p class="meta">Não escreva nome, telefone nem endereço. Se você sofre violência, não precisa contar aqui: use o botão “Em perigo agora?”.</p>' +
+      '<div class="acoes"><button type="button" class="btn" data-q="continuar">Continuar</button></div>' +
+      '<div class="rodape-etapa">' + voltar + '<button type="button" class="link-btn" data-q="pular">Prefiro não escrever</button></div></div>';
+  }
+
   function htmlPergunta(prox) {
+    if (prox.pergunta.tipo === "texto") return htmlTexto(prox);
     var p = prox.pergunta, multi = p.tipo === "multi";
     var marcadas = multi ? e.pendente : [];
     var opcoes = p.opcoes.map(function (op) {
@@ -93,14 +112,15 @@
     }).join("") + "</ul>";
   }
 
+  function temasAtuais() { return e.analise && e.analise.temas ? e.analise.temas : []; }
   function mesAtual() { var d = new Date(); return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2); }
 
   function htmlEnvio() {
     var r = Q.limpar(e.resp);
     if (r.idade === "m18") return '<p>Como você tem menos de 18 anos, <strong>as suas respostas não são enviadas</strong>. Você recebeu a orientação do mesmo jeito.</p>';
     if (r.autoriza !== "sim") return "<p>Você <strong>não autorizou</strong> o uso das respostas: <strong>nada é enviado</strong>. A sua orientação continua valendo.</p>";
-    var reg = Q.registro(r, mesAtual());
-    var ver = '<details class="ia-como"><summary>Ver exatamente o que seria enviado</summary><pre class="registro">' + esc(JSON.stringify(reg, null, 1)) + '</pre><p class="meta">Só códigos das alternativas e as pontuações, mais o mês. Sem nome, sem texto livre, sem data e hora exatas.</p></details>';
+    var reg = Q.registro(r, mesAtual(), { temas: temasAtuais() });
+    var ver = '<details class="ia-como"><summary>Ver exatamente o que seria enviado</summary><pre class="registro">' + esc(JSON.stringify(reg, null, 1)) + '</pre><p class="meta">Só códigos das alternativas, as pontuações, os assuntos identificados (nunca o seu texto) e o mês. Sem nome, sem data e hora exatas.</p></details>';
     if (e.envio.estado === "enviado") return "<p><strong>Obrigada.</strong> As suas respostas, sem nome, foram enviadas para ajudar a Secretaria da Mulher.</p>" + ver;
     if (e.envio.estado === "falhou") return "<p>Não foi possível enviar agora. As suas respostas <strong>não foram enviadas</strong>. A orientação acima continua valendo.</p>" + ver;
     return "<p>Você autorizou, obrigada. Mas a coleta ainda <strong>não foi ativada</strong> pela Secretaria da Mulher: <strong>nada foi enviado</strong> até agora.</p>" + ver;
@@ -114,12 +134,31 @@
       ? '<ol class="plano">' + cams.map(function (c, i) { return htmlCaminho(c, i + 1); }).join("") + "</ol>"
       : '<p class="vazio">Com as respostas dadas não consegui indicar um caminho. Você pode escolher uma área na tela inicial ou usar “Conte com suas palavras”.</p>';
     return '<div class="plano-tela"><h3 id="q-foco" tabindex="-1">Obrigada por responder</h3>' + urgente +
-      "<h4>Seus caminhos</h4>" + '<p class="meta">Começamos pelo que você marcou como mais importante. Os serviços vêm do cadastro verificado; confirme horário e vaga por telefone.</p>' + corpo +
+      htmlContou() + "<h4>Seus caminhos</h4>" + '<p class="meta">Começamos pelo que você marcou como mais importante. Os serviços vêm do cadastro verificado; confirme horário e vaga por telefone.</p>' + corpo +
       "<h4>Como as suas respostas se distribuem</h4>" +
       '<p class="meta">De 0 a 100 em cada tema: quanto maior o número, mais esse tema pesa na sua vida hoje. Pergunta em branco não conta como “sem necessidade”.</p>' + htmlBarras(pts) +
       '<p class="status" role="note">Esta pontuação só ajuda a organizar prioridades. Não é uma escala validada, não é diagnóstico e não decide direitos nem acesso a serviços.</p>' +
       "<h4>Sobre o uso das suas respostas</h4>" + htmlEnvio() +
       '<div class="acoes"><button type="button" class="btn secundario" data-q="refazer">Refazer o questionário</button><a class="btn secundario" href="#">Voltar ao início</a></div></div>';
+  }
+
+  /* ------------------------------------------------------------ análise do texto (no aparelho) */
+  function analisar(texto) {
+    if (!raiz.MISM3IA) return null;
+    var sug = raiz.MISM3IA.sugerir(texto), srv = raiz.MISM3IA.servicosPara ? raiz.MISM3IA.servicosPara(texto, sug, 2) : {};
+    return { sugestoes: sug, servicos: srv, temas: raiz.MISM3IA.sugerir(texto, 6).map(function (x) { return x.id; }).filter(function (t) { return Q.TEMAS_PERMITIDOS.indexOf(t) !== -1; }) };
+  }
+  function htmlContou() {
+    var a = e.analise, texto = Q.limpar(e.resp).fale_de_voce;
+    if (!texto) return "";
+    if (!a || !a.sugestoes.length) return "<h4>O que você contou</h4><p class=\"meta\">Obrigada por escrever. O seu aparelho não identificou um assunto específico. Se quiser, volte e conte de outro jeito, ou escolha uma área na tela inicial.</p>";
+    var urg = a.sugestoes.some(function (x) { return x.urgente; })
+      ? '<p class="ia-urgente" role="alert"><strong>Se você corre perigo agora, ligue 190 (Polícia Militar) ou 180 (Central de Atendimento à Mulher), ou toque em “Em perigo agora?”.</strong> Isto aparece só para você: não é registrado nem enviado.</p>' : "";
+    return "<h4>O que você contou</h4>" + urg + '<p class="meta">Pelo que você escreveu, o seu aparelho entendeu estes assuntos. Ele pode errar.</p><ul class="ia-lista">' + a.sugestoes.map(function (sg) {
+      var sv = a.servicos[sg.id] || [];
+      return '<li><a class="ia-card' + (sg.urgente ? " urgente" : "") + '" href="' + esc(sg.href) + '"><strong>' + esc(sg.titulo) + "</strong><span>" + esc(sg.texto) + "</span></a>" +
+        (sv.length ? '<ul class="ia-servicos"><li class="ia-rotulo">Serviços que podem ajudar:</li>' + sv.map(htmlServico).join("") + "</ul>" : "") + "</li>";
+    }).join("") + "</ul>";
   }
 
   /* ------------------------------------------------------------ fluxo */
@@ -139,7 +178,7 @@
   /* O envio só acontece com autorização, 18 anos ou mais e coleta ativada. Cada resposta vai UMA vez, sem cookies e sem identificador. */
   function tentarEnviar() {
     if (e.envio.estado !== "nao_tentado") return;
-    var reg = Q.registro(e.resp, mesAtual());
+    var reg = Q.registro(e.resp, mesAtual(), { temas: temasAtuais() });
     if (!reg || !config.ativa || typeof config.endpoint !== "string" || !/^https:\/\//.test(config.endpoint)) return;
     e.envio.estado = "enviando";
     fetch(config.endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(reg), credentials: "omit", referrerPolicy: "no-referrer", cache: "no-store" })
@@ -168,6 +207,7 @@
       if (e.resp[todas[i]] !== undefined || e.puladas.indexOf(todas[i]) !== -1) { anterior = todas[i]; break; }
     }
     if (!anterior) { e.etapa = "intro"; return; }
+    if (anterior === "fale_de_voce") { e.rascunho = e.resp.fale_de_voce || e.rascunho; e.analise = null; }
     delete e.resp[anterior]; e.resp = Q.limpar(e.resp);
     e.ordem = e.ordem.filter(function (x) { return x !== anterior; });
     e.puladas = e.puladas.filter(function (x) { return x !== anterior; });
@@ -190,6 +230,12 @@
       desenhar(false);
       var again = document.querySelector('[data-q-multi="' + c + '"]'); if (again) again.focus({ preventScroll: true });
     });
+    document.addEventListener("input", function (ev) {
+      if (!ev.target || ev.target.id !== "q-texto") return;
+      var v = ev.target.value, av = $("q-aviso-texto"), n = $("q-contagem"), ach = Q.dadosPessoais(v);
+      e.rascunho = v; if (n) n.textContent = v.length;
+      if (av) { av.hidden = !ach.length; av.textContent = ach.length ? "Parece haver " + ach.join(", ") + " no seu texto. Ninguém precisa disso aqui: considere apagar." : ""; }
+    });
     document.addEventListener("click", function (ev) {
       var t = ev.target.closest ? ev.target.closest("[data-q],[data-q-resp]") : null;
       if (!t || !$("questionario-saida")) return;
@@ -200,11 +246,20 @@
       else if (acao === "pular") { var prox = Q.proxima(e.resp, e.puladas); if (prox) e.puladas.push(prox.pergunta.id); e.pendente = []; }
       else if (acao === "continuar") {
         var pr = Q.proxima(e.resp, e.puladas);
-        if (pr) { if (e.pendente.length) responder(pr.pergunta.id, e.pendente.slice()); else { e.puladas.push(pr.pergunta.id); } }
+        if (pr && pr.pergunta.tipo === "texto") {
+          var campoT = $("q-texto"), tx = campoT ? campoT.value : "";
+          e.rascunho = tx;
+          if (!Q.limpar({ fale_de_voce: tx }).fale_de_voce) { e.puladas.push(pr.pergunta.id); }
+          else {
+            var ligado = typeof carregarModelo === "function" ? Promise.resolve(carregarModelo()).catch(function () {}) : Promise.resolve();
+            ligado.then(function () { e.analise = analisar(tx); responder(pr.pergunta.id, tx); desenhar(true); });
+            return;
+          }
+        } else if (pr) { if (e.pendente.length) responder(pr.pergunta.id, e.pendente.slice()); else { e.puladas.push(pr.pergunta.id); } }
       } else if (acao === "refazer") { e = novo(); e.etapa = "perguntas"; }
       desenhar(true);
     });
   }
 
-  raiz.QuestionarioUI = { html: html, ligar: ligar, limpar: limpar, restaurar: restaurar, usarConfig: usarConfig };
+  raiz.QuestionarioUI = { html: html, ligar: ligar, limpar: limpar, restaurar: restaurar, usarConfig: usarConfig, usarModelo: usarModelo };
 })(typeof self !== "undefined" ? self : this);

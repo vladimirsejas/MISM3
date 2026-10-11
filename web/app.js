@@ -450,7 +450,7 @@
   });
   window.addEventListener("popstate", function () { render(true); });
   if (window.JornadaUI) JornadaUI.ligar();
-  if (window.QuestionarioUI) QuestionarioUI.ligar();
+  if (window.QuestionarioUI) { QuestionarioUI.ligar(); QuestionarioUI.usarModelo(carregarModeloIA); }
 
   /* Voltar: se a usuária chegou aqui clicando dentro do sistema, volta no histórico; senão vai ao início.
      Nunca deixa a pessoa presa nem a leva a outra seção. */
