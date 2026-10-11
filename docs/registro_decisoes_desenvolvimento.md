@@ -777,3 +777,8 @@ Nenhuma branch foi apagada nem alterada. O que **não** foi trazido para a base,
 - **Agora:** `bairro_cep` e `bairro_confere` continuam na planilha, mas só geram um **aviso** na listagem ("ATENÇÃO bairro do CEP na lista: ..."); a marcação depende do número (até 200 do pedido), do CEP não divergir do CNEFE e da conferência humana antes de aplicar.
 - **Lição:** não afirmar regra da cidade sem dado; quando o autor conhece a lógica local, ela vale mais que a minha suposição.
 - Continuam para conferir à mão: três serviços com número 1043 (CRAS Terra Nova, SCFV Clareriano, USF Terra Nova) e correspondências em que o catálogo diz "Avenida" e a lista diz "Rua" (Centro de Habilitação Infantil).
+
+## 11/10/2026 - A listagem mostra sempre o bairro do CEP
+
+- **Esclarecimento do autor:** a "Rua 3" cruza a cidade por vários bairros, a numeração muda conforme as avenidas e, às vezes, existe a mesma rua de número igual em outro bairro. Ou seja, as duas observações valem: a mesma rua atravessa bairros (então o bairro do catálogo pode não coincidir), e há homônimas (então o número sozinho não basta).
+- **Decisão:** nenhuma regra automática resolve isso sem conhecer a cidade. A listagem de `--marcar-baixas-cep` passa a mostrar **sempre** o bairro do CEP na lista ao lado de cada sugestão (destacando quando difere do catálogo), e a conferência humana antes de `--aplicar-aprovadas` continua sendo a decisão.
