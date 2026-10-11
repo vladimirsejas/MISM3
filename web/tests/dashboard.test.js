@@ -401,7 +401,7 @@ onibus.linhas.forEach((l) => l.sentidos.forEach((s) => s.quadros.forEach((q) => 
 assert(contados === onibus.total_horarios, "a soma dos horários deve bater com o total");
 const circ1 = onibus.linhas.find((l) => l.numero === "07");
 assert(circ1 && circ1.sentidos.length === 1 && circ1.sentidos[0].sentido === "Volta", "a Circular I só tem a Volta: o site não pode inventar a Ida");
-assert(onibus.lacunas.some((t) => /Circular I/.test(t) && /Volta/.test(t)) && onibus.lacunas.some((t) => /Feriados/.test(t)) && !onibus.lacunas.some((t) => /Arco-Íris/.test(t)), "as lacunas devem estar declaradas ao usuário (Rio Claro só tem as 5 linhas cadastradas, segundo o mantenedor)");
+assert(onibus.lacunas.some((t) => /Circular I/.test(t) && /Volta/.test(t)) && onibus.lacunas.some((t) => /Feriados/.test(t)) && onibus.lacunas.some((t) => /linha 02/i.test(t) && /Arco-Íris/.test(t)), "as lacunas devem estar declaradas ao usuário (a linha 02 Arco-Íris/Mãe Preta existe no site da SOU e ainda não foi cadastrada)");
 assert(!/\.pdf|OCR|docs\/|desenvolvedor/i.test(JSON.stringify(onibus)), "o JSON de horários não pode expor detalhes internos");
 assert(/Só temos o sentido/.test(app) && /Essa data já passou/.test(app) && /Em feriados os horários podem mudar/.test(app), "o site deve avisar sentido faltante, validade vencida e feriados");
 console.log("dashboard.test.js: sete portas, emergência, navegação, nenhum conteúdo de demonstração, links locais e conteúdo das áreas passaram");
