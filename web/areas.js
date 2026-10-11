@@ -17,16 +17,18 @@
       secoes: [{
         titulo: "Canais oficiais",
         tipos: ["emprego_curso"], agrupar: true,
+        subtipos: ["pat", "conecta", "credito", "secretaria", "qualificacao", "fundo_social"],
         links: [
           ["Portal da Empregabilidade de Rio Claro", "https://vagas.rioclaro.sp.gov.br/", "Consultar oportunidades e informações para trabalhadores."],
-          ["Trampolim — Governo de São Paulo", "https://www.trampolim.sp.gov.br/", "Consultar oportunidades e cursos disponíveis na plataforma."]
+          ["Trampolim — Governo de São Paulo", "https://www.trampolim.sp.gov.br/", "Consultar oportunidades e cursos disponíveis na plataforma."],
+          ["Cursos e estudos: SENAI, Senac, Etec, Fatec, SESI e SEST SENAT", "#educacao", "Cursos técnicos, superiores e para concluir os estudos estão na área Educação."]
         ]
       }],
       pendencias: ["Este sistema não lista vagas abertas. Para ver vagas atuais, use os portais acima."]
     },
     {
       id: "educacao", nome: "Educação", icone: "educacao",
-      intro: "Creches, escolas e matrículas na rede de Rio Claro.",
+      intro: "Creches, escolas e matrículas, conclusão dos estudos (EJA), cursos técnicos e superiores em Rio Claro.",
       secoes: [{
         titulo: "Canais oficiais",
         tipos: ["creche"],
@@ -34,6 +36,11 @@
           ["Secretaria Municipal da Educação", "https://rioclaro.sp.gov.br/secretaria/secretaria-da-educacao/", "Orientações sobre a rede municipal e a matrícula."],
           ["Consulta pública da demanda escolar", "https://www.educacaorc.com.br/?r=demandaescolar", "Informações disponibilizadas no portal da Educação."]
         ]
+      }, {
+        titulo: "Estudar, concluir os estudos e se qualificar",
+        tipos: ["emprego_curso"], agrupar: true,
+        subtipos: ["eja", "escola_sesi", "graduacao", "curso_superior_tecnologia", "curso_tecnico", "curso_profissionalizante"],
+        links: []
       }],
       avisos: ["Uma escola ou creche cadastrada não confirma que há vaga. Confirme com a Secretaria da Educação."]
     },

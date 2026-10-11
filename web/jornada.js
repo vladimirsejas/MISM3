@@ -15,6 +15,7 @@
     educacao: ["Secretaria Municipal da Educação", "https://rioclaro.sp.gov.br/secretaria/secretaria-da-educacao/", "Orientações sobre a rede municipal e a matrícula."],
     demanda: ["Consulta pública da demanda escolar", "https://www.educacaorc.com.br/?r=demandaescolar", "Informações disponibilizadas no portal da Educação."],
     cras: ["CRAS — Centros de Referência de Assistência Social", "https://rioclaro.sp.gov.br/centro-ref-assistencia-social/", "Orientação sobre benefícios e proteção social."],
+    educacaoArea: ["Área Educação deste site", "#educacao", "Cursos técnicos e superiores, EJA e Faculdade SESI, com endereço e telefone."],
     assistencia: ["Área Assistência Social deste site", "#assistencia", "CRAS por bairro, CREAS e Secretaria de Desenvolvimento Social."],
     portal: ["Portal da Empregabilidade de Rio Claro", "https://vagas.rioclaro.sp.gov.br/", "Consultar oportunidades e informações para trabalhadores."],
     trampolim: ["Trampolim — Governo de São Paulo", "https://www.trampolim.sp.gov.br/", "Consultar oportunidades e cursos disponíveis na plataforma."],
@@ -107,7 +108,7 @@
         porque: "Muitas vagas e cursos pedem o ensino médio completo. O SESI-SP oferece Educação de Jovens e Adultos (EJA) gratuita para quem não concluiu.",
         fazer: ["Procure o SESI Rio Claro (telefone e WhatsApp no cartão do serviço) e pergunte se a EJA tem turma na unidade, quais documentos levar e até quando é a matrícula.",
           "A idade mínima para o ensino médio na EJA é 18 anos. Se você tem de 18 a 29 anos, pergunte sobre o SEJA PRO+ e a EJA Profissionalizante, que a página do SESI descreve com vagas gratuitas e apoio do SENAI."],
-        links: [LINKS.sesi, LINKS.educacao],
+        links: [LINKS.sesi, LINKS.educacao, LINKS.educacaoArea],
         alternativa: "Se o SESI não tiver turma agora, pergunte na Secretaria Municipal da Educação sobre outras opções de EJA."
       });
     }
@@ -130,7 +131,7 @@
         porque: "Um curso certificado amplia as vagas possíveis. Compare opções gratuitas e pagas antes de decidir.",
         fazer: ["Veja as opções abaixo e pergunte requisitos, duração, horário, custo e se há bolsa ou gratuidade.",
           "Confirme se há turma aberta e prazo de inscrição: a página de uma unidade não garante vaga."],
-        links: [LINKS.senai, LINKS.cqp, LINKS.senac, LINKS.etec, LINKS.fatecIA, LINKS.fatecESG, LINKS.faculdadeSesi, LINKS.sesi, LINKS.sestsenatCursos, LINKS.sestsenat, LINKS.trampolim],
+        links: [LINKS.educacaoArea, LINKS.senai, LINKS.cqp, LINKS.senac, LINKS.etec, LINKS.fatecIA, LINKS.fatecESG, LINKS.faculdadeSesi, LINKS.sesi, LINKS.sestsenatCursos, LINKS.sestsenat, LINKS.trampolim],
         alternativa: "Se um curso não tiver turma, tente outra instituição da lista ou os cursos do Trampolim."
       });
     }
