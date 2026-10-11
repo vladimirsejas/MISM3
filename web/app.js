@@ -52,6 +52,9 @@
     if (s.endereco) partes.push("<p>" + esc(s.endereco) + "</p>");
     else partes.push('<p class="meta">Endereço não informado na fonte: ligue para confirmar.</p>');
     if (s.telefone) partes.push("<p>Telefone: " + linksTelefone(s.telefone) + "</p>");
+    if (s.instagram && /^[A-Za-z0-9._]{1,30}$/.test(s.instagram)) {
+      partes.push('<p>Contato pelo Instagram: <a href="https://www.instagram.com/' + esc(s.instagram) + '/" target="_blank" rel="noopener noreferrer">@' + esc(s.instagram) + "</a></p>");
+    }
     if (s.horario) partes.push("<p>Horário: " + esc(s.horario) + "</p>");
     if (s.observacao) partes.push('<p class="meta">' + esc(s.observacao) + "</p>");
     if (s.bairros) partes.push('<details class="bairros"><summary>Bairros atendidos</summary><p>' + esc(s.bairros) + ".</p></details>");

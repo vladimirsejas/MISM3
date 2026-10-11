@@ -145,6 +145,7 @@ def servicos_manuais(df, indice: dict) -> list[dict]:
             "aviso": g("aviso"),
             "grupo": g("grupo"),
             "cnes": g("cnes"),
+            **({"instagram": g("instagram").lstrip("@")} if g("instagram") else {}),
         })
     return saida
 
