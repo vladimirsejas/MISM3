@@ -26,6 +26,8 @@
     etec: ["Etec Prof. Armando Bayeux da Silva (Rio Claro)", "https://www.cps.sp.gov.br/etecs/etec-prof-armando-bayeux-da-silva/", "Cursos técnicos e ensino médio técnico. Confirme vagas e ingresso."],
     fatecIA: ["Fatec Rio Claro — Inteligência Artificial", "https://fatecrioclaro.cps.sp.gov.br/ia/", "Curso superior de tecnologia presencial, 4 semestres."],
     fatecESG: ["Fatec Rio Claro — Gestão ESG", "https://fatecrioclaro.cps.sp.gov.br/esg/", "Curso superior de tecnologia presencial, 4 semestres."],
+    sesi: ["SESI Rio Claro — EJA gratuita, ensino fundamental e médio", "https://www.sesisp.org.br/", "Endereço e telefone no cartão abaixo. Confirme turmas, vagas e ingresso."],
+    faculdadeSesi: ["Faculdade SESI de Educação", "https://www.faculdadesesi.edu.br/", "Licenciaturas gratuitas, vestibular 2027. Confirme onde e como funciona."],
     sestsenat: ["SEST SENAT — busca de unidades", "https://www.sestsenat.org.br/unidades", "Selecione São Paulo e Rio Claro e confirme se há unidade."]
   };
 
@@ -34,6 +36,7 @@
     { id: "cuidado", texto: "Hoje você tem com quem deixá-las para trabalhar ou estudar?", so_se: ["filhos", "sim"], opcoes: [["sim", "Sim"], ["as_vezes", "Só às vezes"], ["nao", "Não"]] },
     { id: "renda_agora", texto: "Você precisa de dinheiro para as despesas básicas agora?", opcoes: [["sim", "Sim"], ["nao", "Não"]] },
     { id: "deslocamento", texto: "Chegar até um trabalho ou curso é um problema para você?", opcoes: [["sim", "Sim"], ["nao", "Não"]] },
+    { id: "ensino_medio", texto: "Você terminou o ensino médio?", opcoes: [["sim", "Sim"], ["nao", "Não"]] },
     { id: "curriculo", texto: "Você já tem um currículo?", opcoes: [["sim", "Sim"], ["nao", "Não"]] },
     { id: "objetivo", texto: "O que você quer agora?", opcoes: [["emprego", "Conseguir um emprego"], ["curso", "Fazer um curso"], ["negocio", "Gerar renda por conta própria"], ["nao_sei", "Ainda não sei"]] }
   ];
@@ -97,6 +100,17 @@
       });
     }
 
+    if (r.ensino_medio === "nao") {
+      add({
+        id: "estudos", titulo: "Concluir o ensino médio",
+        porque: "Muitas vagas e cursos pedem o ensino médio completo. O SESI-SP oferece Educação de Jovens e Adultos (EJA) gratuita para quem não concluiu.",
+        fazer: ["Procure o SESI Rio Claro (telefone e WhatsApp no cartão do serviço) e pergunte se a EJA tem turma na unidade, quais documentos levar e até quando é a matrícula.",
+          "A idade mínima para o ensino médio na EJA é 18 anos. Se você tem de 18 a 29 anos, pergunte sobre o SEJA PRO+ e a EJA Profissionalizante, que a página do SESI descreve com vagas gratuitas e apoio do SENAI."],
+        links: [LINKS.sesi, LINKS.educacao],
+        alternativa: "Se o SESI não tiver turma agora, pergunte na Secretaria Municipal da Educação sobre outras opções de EJA."
+      });
+    }
+
     var querEmprego = r.objetivo === "emprego" || r.objetivo === "nao_sei" || !r.objetivo;
     if (r.curriculo === "nao" && (querEmprego || r.objetivo === "curso")) {
       add({
@@ -115,7 +129,7 @@
         porque: "Um curso certificado amplia as vagas possíveis. Compare opções gratuitas e pagas antes de decidir.",
         fazer: ["Veja as opções abaixo e pergunte requisitos, duração, horário, custo e se há bolsa ou gratuidade.",
           "Confirme se há turma aberta e prazo de inscrição: a página de uma unidade não garante vaga."],
-        links: [LINKS.senai, LINKS.cqp, LINKS.senac, LINKS.etec, LINKS.fatecIA, LINKS.fatecESG, LINKS.sestsenat, LINKS.trampolim],
+        links: [LINKS.senai, LINKS.cqp, LINKS.senac, LINKS.etec, LINKS.fatecIA, LINKS.fatecESG, LINKS.faculdadeSesi, LINKS.sesi, LINKS.sestsenat, LINKS.trampolim],
         alternativa: "Se um curso não tiver turma, tente outra instituição da lista ou os cursos do Trampolim."
       });
     }

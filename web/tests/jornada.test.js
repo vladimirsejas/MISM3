@@ -30,11 +30,18 @@ assert(!ids(comCuidado).includes("cuidado"), "quem já tem com quem deixar as cr
 const asVezes = J.montarPlano({ filhos: "sim", cuidado: "as_vezes", objetivo: "emprego", curriculo: "sim" });
 assert.strictEqual(ids(asVezes)[0], "cuidado", "cuidado só às vezes também merece atenção");
 
+/* ---- ensino médio: leva à EJA gratuita do SESI, depois do cuidado e antes do currículo ---- */
+const eja = J.montarPlano({ filhos: "sim", cuidado: "nao", ensino_medio: "nao", curriculo: "nao", objetivo: "emprego" });
+assert.deepStrictEqual(ids(eja), ["cuidado", "estudos", "curriculo", "vagas", "formacao"]);
+assert(eja.passos.find((p) => p.id === "estudos").links.some((l) => /SESI/.test(l[0])), "o passo de estudos deve apontar para o SESI");
+assert(!ids(J.montarPlano({ ensino_medio: "sim", objetivo: "emprego", curriculo: "sim" })).includes("estudos"), "quem terminou o ensino médio não recebe o passo");
+assert(!ids(J.montarPlano({ objetivo: "emprego", curriculo: "sim" })).includes("estudos"), "sem resposta, não presume");
+
 /* ---- objetivos ---- */
 const curso = J.montarPlano({ objetivo: "curso", curriculo: "sim" });
 assert.deepStrictEqual(ids(curso), ["curso"]);
 const nomesCurso = curso.passos[0].links.map((l) => l[0]).join("|");
-["SENAI Rio Claro", "Senac Rio Claro", "SEST SENAT", "Centros de Qualificação Profissional", "Etec", "Fatec Rio Claro — Inteligência Artificial", "Fatec Rio Claro — Gestão ESG"].forEach((n) =>
+["SENAI Rio Claro", "Senac Rio Claro", "SEST SENAT", "Centros de Qualificação Profissional", "Etec", "Fatec Rio Claro — Inteligência Artificial", "Fatec Rio Claro — Gestão ESG", "Faculdade SESI de Educação", "SESI Rio Claro"].forEach((n) =>
   assert(nomesCurso.includes(n), "o passo de curso deve listar " + n));
 const negocio = J.montarPlano({ objetivo: "negocio", curriculo: "sim" });
 assert.deepStrictEqual(ids(negocio), ["negocio"], "quem quer renda própria não recebe o passo de procurar vagas");
