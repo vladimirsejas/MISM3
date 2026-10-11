@@ -120,7 +120,40 @@ def servicos_creches(df, indice: dict, hoje: str) -> list[dict]:
 
 
 # ------------------------------------------------------------ catalogo manual
-def servicos_manuais(df, indice: dict) -> list[dict]:
+def carregar_etapas(ligacao: Path | None = None, oferta: Path | None = None) -> dict:
+    """{id do catálogo: etapas que a escola oferece segundo o Censo Escolar}.
+
+    Junta catalogo/inep_escolas.csv (id do catálogo -> código INEP) com web/dados/oferta_educacao_infantil.json. Só
+    entra quem está nos dois arquivos. Devolve só se a escola oferece creche e pré-escola: nada de número de
+    matrículas (matrícula não é vaga e, num cartão, pareceria vaga).
+    """
+    import csv
+
+    ligacao = ligacao or CATALOGO / "inep_escolas.csv"
+    oferta = oferta or WEB_DADOS / "oferta_educacao_infantil.json"
+    if not (ligacao.exists() and oferta.exists()):
+        return {}
+    escolas = {e["inep"]: e for e in json.loads(oferta.read_text(encoding="utf-8")).get("escolas", [])}
+    saida = {}
+    with ligacao.open(encoding="utf-8", newline="") as f:
+        for r in csv.DictReader(f):
+            e = escolas.get(r["inep"])
+            if e is None:
+                print("AVISO: %s ligado ao INEP %s, que não está na oferta do Censo; sem etapas." % (r["id"], r["inep"]))
+                continue
+            saida[r["id"]] = {"creche": bool(e["oferece_creche"]), "pre_escola": bool(e["oferece_pre_escola"]),
+                              "fonte": "Censo Escolar 2025 (INEP)"}
+    return saida
+
+
+# Frase das escolas municipais que o Censo Escolar passa a responder (as etapas). Nas escolas ligadas ao INEP ela deixa
+# de dizer "não diz quais etapas" e fica só com o que continua sendo verdade: a página não diz se há vaga.
+FRASE_SEM_ETAPAS = ("mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: "
+                    "ligue para confirmar a etapa e perguntar sobre vaga.")
+FRASE_COM_ETAPAS = "mas não diz se há vaga: ligue para perguntar sobre vaga."
+
+
+def servicos_manuais(df, indice: dict, etapas: dict | None = None) -> list[dict]:
     saida = []
     for _, r in df.iterrows():
         g = lambda c: (None if str(r.get(c, "")) in ("nan", "None", "") else str(r[c]).strip())  # noqa: E731
@@ -133,25 +166,29 @@ def servicos_manuais(df, indice: dict) -> list[dict]:
         # "conferido=nao": a informacao veio de pesquisa na internet e ainda nao foi lida na pagina oficial.
         # O site mostra isso a usuaria e nunca escreve "verificado" nesses itens.
         nao_conferido = (g("conferido") or "").lower() in ("nao", "não", "n")
+        identificador = g("id") or "man-%s" % _norm(g("nome") or "")
         saida.append({
-            "id": g("id") or "man-%s" % _norm(g("nome") or ""), "tipo": tipo, "subtipo": g("subtipo"),
+            "id": identificador, "tipo": tipo, "subtipo": g("subtipo"),
             "nome": g("nome"), "cep": normalizar_cep(g("cep")), "endereco": g("endereco"),
             "telefone": g("telefone"), "horario": g("horario"), "lat": lat, "lon": lon, "geo": geo,
             "abrangencia": g("abrangencia") or "local",
             "fonte": (g("fonte") or "Pesquisa na internet; não conferida na página oficial") if nao_conferido else (g("fonte") or "Página oficial do órgão"),
-            "fonte_url": g("fonte_url"), "verificado_em": g("verificado_em"), "observacao": g("observacao"),
+            "fonte_url": g("fonte_url"), "verificado_em": g("verificado_em"),
+            "observacao": (g("observacao") or "").replace(FRASE_SEM_ETAPAS, FRASE_COM_ETAPAS)
+            if etapas and identificador in etapas else g("observacao"),
             "conferido": not nao_conferido,
             "bairros": g("bairros"),
             "aviso": g("aviso"),
             "grupo": g("grupo"),
             "cnes": g("cnes"),
             **({"instagram": g("instagram").lstrip("@")} if g("instagram") else {}),
+            **({"etapas": etapas[identificador]} if etapas and identificador in etapas else {}),
         })
     return saida
 
 
 # ------------------------------------------------------------ principal
-def montar(indice: dict, cnes=None, escolas=None, manuais=None, hoje: str | None = None) -> dict:
+def montar(indice: dict, cnes=None, escolas=None, manuais=None, hoje: str | None = None, etapas: dict | None = None) -> dict:
     hoje = hoje or agora_iso()
     itens: list[dict] = []
     contagem = {}
@@ -160,7 +197,7 @@ def montar(indice: dict, cnes=None, escolas=None, manuais=None, hoje: str | None
     if escolas is not None:
         a = servicos_creches(escolas, indice, hoje); itens += a; contagem["creches_inep"] = len(a)
     if manuais is not None:
-        a = servicos_manuais(manuais, indice); itens += a; contagem["manuais"] = len(a)
+        a = servicos_manuais(manuais, indice, etapas); itens += a; contagem["manuais"] = len(a)
     # Unidade cadastrada à mão com o código CNES vence o registro do CNES (traz telefone e horário da fonte oficial).
     codigos_manuais = {str(s["cnes"]) for s in itens if s.get("cnes")}
     itens = [s for s in itens if not (str(s["id"]).startswith("cnes-") and str(s["id"])[5:] in codigos_manuais)]
@@ -178,7 +215,7 @@ def main_somente_manual() -> None:
     """Gera web/dados/catalogo_manual.json so com o catalogo manual verificado (sem CNES/INEP).
     O site usa este arquivo quando servicos.json (base completa) ainda nao foi gerado."""
     m = CATALOGO / "servicos_manuais.csv"
-    saida = montar({}, None, None, ler_csv_flex(m))
+    saida = montar({}, None, None, ler_csv_flex(m), etapas=carregar_etapas())
     salvar_json(saida, WEB_DADOS / "catalogo_manual.json")
     print("catalogo_manual.json: %d servicos (so catalogo manual; sem CNES nem Censo Escolar)" % len(saida["servicos"]))
 
@@ -218,7 +255,7 @@ def main() -> None:
     if m.exists():
         manuais = ler_csv_flex(m)
 
-    saida = montar(indice, cnes, escolas, manuais)
+    saida = montar(indice, cnes, escolas, manuais, etapas=carregar_etapas())
     salvar_json(saida, WEB_DADOS / "servicos.json")
     por_tipo, por_geo = {}, {}
     for s in saida["servicos"]:

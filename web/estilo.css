@@ -332,3 +332,7 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:#8a1c1c!im
 .etapa-texto{border-left:5px solid var(--pri);background:var(--lilas)}
 .area-fale{display:block;width:100%;font:inherit;font-size:1.05rem;line-height:1.5;padding:.8rem 1rem;border:2px solid var(--bor);border-radius:14px;background:#fff;color:var(--fg);resize:vertical;min-height:9rem}
 .area-fale:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+
+/* etapas que a escola oferece (Censo Escolar) */
+.cartao .etapas { margin: .35rem 0; }
+
