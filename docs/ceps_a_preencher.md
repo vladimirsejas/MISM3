@@ -1,5 +1,7 @@
 # Serviços sem CEP no catálogo (necessários para a análise territorial)
 
+> **Atalho (11/10/2026):** em vez de preencher o CEP à mão, rode `python pipeline/geocodificar_catalogo.py`. Ele usa o CNEFE do IBGE (rua, número, CEP e coordenada de cada endereço de Rio Claro) para **propor** CEP, latitude, longitude e setor censitário dos serviços com endereço, e grava a planilha `dados/geocodificacao_proposta.csv` para você revisar. Só com `--aplicar` ele escreve no catálogo, e apenas nos casos "exato". **Ainda não foi rodado com o CNEFE real**, só com um CNEFE de teste; confira a planilha antes de aplicar.
+
 A análise territorial localiza cada serviço pelo CEP. Só as escolas municipais têm CEP no catálogo. Para os serviços abaixo, o endereço já está cadastrado; falta o **CEP**. Procure o CEP no site dos Correios (busca por endereço) ou confirme com a unidade, e preencha a coluna `cep` em `catalogo/servicos_manuais.csv`. Depois rode `python pipeline/servicos.py --somente-manual` e `python pipeline/analise_territorial.py`.
 
 | Tipo | Serviço | Endereço cadastrado |

@@ -660,3 +660,11 @@ Nenhuma branch foi apagada nem alterada. O que **não** foi trazido para a base,
 - **Não verificado por mim:** as URLs e os indicadores das fontes citadas (SISAB, SISCAN, Cadastro Único, CNJ, GTFS) e se existem por setor censitário. As minutas pedem o caminho de acesso, justamente para não presumir.
 - **Nada foi enviado a órgão nenhum.** Os pedidos são minutas.
 
+### Geocodificador do catálogo a partir do CNEFE — 11/10/2026
+- **Pedido do autor:** usar os bancos novos do notebook. O que chegou foi a **estrutura** deles (saída de `inspecionar_arquivo.py`): CNEFE de Rio Claro (34 colunas, com `COD_SETOR`, `CEP`, rua, número, latitude e longitude), um CSV de CEPs com coordenadas (8 colunas, 276 KB) e um `textos_extraidos.txt` vazio. **A planilha do Censo por setor (idade, renda) não está no notebook**: continua faltando, então ainda não há indicador de creche.
+- **O que foi feito:** `pipeline/geocodificar_catalogo.py` casa tipo, nome da rua e número do endereço de cada serviço com o CNEFE e **propõe** CEP, latitude, longitude e setor. Dos 75 serviços com endereço e sem CEP, o interpretador entende o endereço de 65; 8 são "s/n" e 2 são cruzamentos (ficam para localização manual).
+- **Regras de segurança:** só grava no catálogo com `--aplicar`; só casos "exato" (mesmo número na mesma rua, pontos a menos de 300 m, um único CEP); só campos vazios; número próximo, rua com tipo diferente e CEP ambíguo ficam para revisão. Regravar o CSV sem mudanças produz arquivo idêntico (conferido).
+- **Verificado:** 9 testes novos com um CNEFE de mentira; os 72 testes Python passam. **Não verificado:** a execução com o CNEFE real (não está nesta sessão); a taxa de acerto real dos 65 endereços é desconhecida até alguém rodar e revisar a planilha.
+- **Pendente de confirmação do autor:** o CSV `resumido3_com_coordenadas_google.csv` tem logradouro e coordenada por CEP. Se a lista de CEPs veio de uma base de pacientes ou usuárias (e não do cadastro geral da cidade), **não deve ir para o GitHub**: a presença ou ausência de um CEP revelaria onde há atendimento. O CNEFE, que é público e cobre todos os endereços, dispensa esse arquivo.
+- **Backup:** o envio dos 42 commits do notebook falhou com erro 408 (pacote de 105 MiB). Os commits continuam só no notebook.
+
