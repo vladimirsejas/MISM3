@@ -366,4 +366,8 @@ const razao = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) +
 });
 assert(razao("#ffffff", vars["pri-esc"]) >= 6.5 && razao("#ffffff", vars.alerta) >= 6.5, "texto branco sobre botões e emergência deve ter contraste >= 6,5:1");
 ["bg", "card", "rosa", "verde", "pessego"].forEach((f) => assert(razao(vars["pri-esc"], vars[f]) >= 6.5, "links com contraste menor que 6,5:1 sobre " + f));
+// Nome do projeto: o mesmo em todos os lugares, com a cidade ao lado
+assert(/class="marca"[^>]*>.*Mulher em Rede<span class="marca-local">Rio Claro<\/span>/.test(index) && /class="marca"[^>]*>.*Mulher em Rede<span class="marca-local">Rio Claro<\/span>/.test(rede), "o nome deve ser 'Mulher em Rede', com 'Rio Claro' ao lado, nas duas páginas");
+assert(/<title>Mulher em Rede – Rio Claro<\/title>/.test(index) && /Mulher em Rede \(MISM3\)/.test(index), "título e rodapé devem usar o mesmo nome");
+assert(!/Mulheres de Rio Claro/.test(index + rede + app), "o nome 'Mulheres de Rio Claro' sugere um site da cidade e não deve ser usado enquanto o projeto não for oficial");
 console.log("dashboard.test.js: sete portas, emergência, navegação, nenhum conteúdo de demonstração, links locais e conteúdo das áreas passaram");
