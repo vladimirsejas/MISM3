@@ -189,8 +189,11 @@
   });
 
   function iniciar() {
-    carregar("dados/cep_indice.json").then(function (idx) {
-      return carregar("dados/servicos.json").then(function (sv) { return [idx, sv, false]; });
+    // Serviços reais bastam para abrir o site; sem o índice de CEP só a busca por CEP fica indisponível.
+    carregar("dados/servicos.json").then(function (sv) {
+      return carregar("dados/cep_indice.json").catch(function () {
+        return { meta: { fonte: "ainda não gerado (a busca por CEP está indisponível)" }, ceps: {} };
+      }).then(function (idx) { return [idx, sv, false]; });
     }).catch(function () {
       return Promise.all([carregar("dados/demo/cep_indice.json"), carregar("dados/demo/servicos.json")])
         .then(function (r) { return [r[0], r[1], true]; });
@@ -293,6 +296,7 @@
   $("form-cep").addEventListener("submit", function (ev) {
     ev.preventDefault();
     if (!dados.indice) { mostrarMensagem("Os dados ainda estão carregando. Tente de novo."); return; }
+    if (!Object.keys(dados.indice).length) { mostrarMensagem("A busca por CEP ainda não está disponível nesta versão (o índice de CEPs não foi gerado). Use as portas acima."); return; }
     var r = Acesso.buscar($("cep").value, dados.indice, dados.servicos, 3);
     $("resultado").hidden = r.status !== "ok";
     if (r.status === "cep_invalido") { mostrarMensagem("Digite um CEP com 8 números."); return; }
