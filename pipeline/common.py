@@ -1,4 +1,4 @@
-"""Utilidades comuns do pipeline do Mapa do Cuidado Rio-Clarense.
+"""Utilidades comuns do pipeline do Mulher em Rede.
 
 Regras do projeto, valem para todos os scripts:
   1. So entram dados publicos e agregados. Nenhum nome de pessoa, CPF ou endereco

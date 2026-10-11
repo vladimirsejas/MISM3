@@ -2,6 +2,9 @@
 dados/bruto/*
 !dados/bruto/.gitkeep
 docs/cnes/
+# Microdados nacionais do INEP (centenas de MB): versione so o recorte microdados_ed_basica_rio_claro.csv
+docs/educacao/microdados_ed_basica_20[0-9][0-9].csv
+dados/bruto/escolas/microdados_ed_basica_20[0-9][0-9].csv
 docs/ibge/
 *.zip
 *.parte
@@ -15,3 +18,17 @@ __pycache__/
 .pytest_cache/
 *.pyc
 .venv/
+
+# Segredos locais: nunca versionar
+.env
+.env.*
+
+# Bancos de dados e cópias de segurança: podem conter dados pessoais; nunca versionar
+*.db
+*.sqlite
+*.sqlite3
+*.backup
+*.bak
+
+# Sugestões do geocodificador (planilha de trabalho local; o que vale entra no catálogo depois de revisado)
+dados/geocodificacao_*.csv

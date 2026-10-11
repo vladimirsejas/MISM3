@@ -20,6 +20,7 @@ const casos = [
   ["preciso de creche e emprego", ["filhos", "emprego_curso"]],
   ["estudar e conseguir vaga na creche", ["filhos", "estudo"]],
   ["quero voltar a estudar", ["estudo"]],
+  ["cursinho gratuito para meu filho", ["filhos", "estudo"]],
   ["bolsa família", ["familia"]],
   ["quero bolsa de estudos", ["estudo"]],
   ["não tenho dinheiro para comer", ["familia"]],
@@ -30,6 +31,9 @@ const casos = [
   ["quero consulta com ginecologista", ["saude"]],
   ["estou grávida e preciso de atendimento", ["saude"]],
   ["meu filho precisa de consulta", ["filhos", "saude"]],
+  ["meu filho usa drogas e não sei o que fazer", ["filhos", "saude"]],
+  ["meu marido é alcoólatra", ["casamento", "saude"]],
+  ["meu filho é dependente químico", ["filhos", "saude"]],
   ["marido, filhos e emprego", ["casamento", "filhos", "emprego_curso"]],
   ["quero estudar e trabalhar", ["emprego_curso", "estudo"]],
   ["vou divagar sobre esse assunto", []],
@@ -47,6 +51,9 @@ const casos = [
   ["não consigo pagar as contas do cartão", ["dividas"]],
   ["quero simular minha aposentadoria no INSS", ["dividas"]],
   ["estou sem dinheiro para comer e com contas atrasadas", ["dividas", "familia"]],
+  ["sou mãe solo", ["filhos"]],
+  ["sou mãe solteira e preciso de emprego", ["filhos", "emprego_curso"]],
+  ["crio meus filhos sozinha", ["filhos"]],
   ["", []],
   ["   ", []]
 ];

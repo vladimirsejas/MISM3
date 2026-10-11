@@ -38,7 +38,9 @@
     ["filhos", [
       "filho", "filhos", "crianca", "criancas", "bebe", "creche",
       "maternidade", "escola infantil", "baba", "educacao infantil",
-      "vaga na creche", "matricula do filho"
+      "vaga na creche", "matricula do filho",
+      "mae solo", "mae solteira", "mae sozinha", "sozinha com meus filhos",
+      "crio meus filhos sozinha", "criar meus filhos sozinha"
     ]],
     ["emprego_curso", [
       "emprego", "trabalho", "renda", "curriculo",
@@ -49,11 +51,15 @@
     ["saude", [
       "saude", "medico", "medica", "consulta", "exame", "hospital",
       "posto de saude", "psicologa", "psicologo", "menopausa", "gestacao",
-      "gravidez", "gravida", "ginecologista", "dor", "remedio"
+      "gravidez", "gravida", "ginecologista", "dor", "remedio",
+      "drogas", "droga", "usa drogas", "dependente quimico", "dependencia quimica", "dependente quimica",
+      "meu filho usa drogas", "meu filho e viciado", "filho viciado", "viciado", "alcoolismo", "alcoolatra",
+      "bebe demais", "caps", "caps ad", "overdose", "crack"
     ]],
     ["estudo", [
       "estudo", "estudar", "faculdade", "universidade", "escola", "ensino",
-      "alfabetizacao", "voltar a estudar", "bolsa de estudos"
+      "alfabetizacao", "voltar a estudar", "bolsa de estudos",
+      "cursinho", "vestibular", "pre vestibular", "enem"
     ]],
     ["moradia", [
       "moradia", "habitacao", "aluguel", "aluguel social", "casa para morar",
@@ -75,7 +81,7 @@
     ]]
   ];
 
-  function identificarCategorias(texto) {
+  function identificarCategorias(texto, maximo) {
     var t = normalizar(texto);
     if (!t) return [];
     var achadas = [];
@@ -84,7 +90,7 @@
         achadas.push(regra[0]);
       }
     });
-    return achadas.slice(0, 3);
+    return achadas.slice(0, maximo || 3);
   }
 
   return {
