@@ -120,6 +120,11 @@ planos.forEach((pl) => {
 });
 assert(!/ainda não traz horários/.test(JSON.stringify(caso)), "texto desatualizado sobre ônibus");
 
+/* ---- apoio a quem tem familiar com uso de álcool ou drogas: lembrete fixo, sem perguntar nada ---- */
+planos.forEach((pl) => assert.strictEqual(pl.apoio.alvo, "#saude/saude-familia-drogas"));
+const secSaude = Areas.porId("saude").secoes.find((x) => x.ancora === "saude-familia-drogas");
+assert(secSaude, "a área Saúde precisa ter a seção apontada pelo plano");
+
 /* ---- perguntas: nenhuma pede dado sensível ---- */
 J.PERGUNTAS.forEach((p) => assert(!/violên|CPF|renda mensal|salário|nome/i.test(p.texto), "pergunta sensível demais: " + p.texto));
 
@@ -143,6 +148,8 @@ const html = UI.htmlCurriculo(J.montarCurriculo({ nome: "<img src=x onerror=aler
 assert(!/<img|<script/.test(html), "texto digitado deve ser escapado");
 assert(/&lt;img/.test(html));
 const tela = UI.htmlPlano(caso);
+assert(/Ver apoio na área Saúde/.test(tela) && /href="#saude\/saude-familia-drogas"/.test(tela), "o plano mostra o lembrete com link para a seção de Saúde");
+assert(/Ver apoio na área Saúde/.test(UI.htmlPlano(caso, true)) && !/<a /.test(UI.htmlPlano(caso, true)), "a versão impressa nomeia a área, sem link");
 assert(!/target="_blank"[^>]*href="#/.test(tela), "links internos não abrem em outra aba");
 assert(/rel="noopener noreferrer"/.test(UI.htmlPlano(J.montarPlano({ objetivo: "emprego", curriculo: "sim" }, achar))), "links externos com noopener");
 assert(/<details class="resto">/.test(tela) && /Ver mais 3 passos/.test(tela), "passos além dos 3 primeiros ficam dobrados");

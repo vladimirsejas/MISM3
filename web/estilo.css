@@ -275,3 +275,5 @@ a.tel-grande{display:inline-block;font-weight:800;font-size:1.2rem;color:var(--a
 
 /* O cabeçalho fica fixo no topo: ao rolar para a pergunta ou o plano, deixa espaço para ele não cobrir o título. */
 #titulo-jornada{scroll-margin-top:12.5rem}
+.apoio-extra{background:var(--lilas);border:1px solid var(--lav);border-left:5px solid var(--pri);border-radius:var(--raio);padding:.8rem 1rem;margin:1rem 0}
+.apoio-extra p{margin:.2rem 0}

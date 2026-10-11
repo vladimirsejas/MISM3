@@ -51,7 +51,10 @@
     ["saude", [
       "saude", "medico", "medica", "consulta", "exame", "hospital",
       "posto de saude", "psicologa", "psicologo", "menopausa", "gestacao",
-      "gravidez", "gravida", "ginecologista", "dor", "remedio"
+      "gravidez", "gravida", "ginecologista", "dor", "remedio",
+      "drogas", "droga", "usa drogas", "dependente quimico", "dependencia quimica", "dependente quimica",
+      "meu filho usa drogas", "meu filho e viciado", "filho viciado", "viciado", "alcoolismo", "alcoolatra",
+      "bebe demais", "caps", "caps ad", "overdose", "crack"
     ]],
     ["estudo", [
       "estudo", "estudar", "faculdade", "universidade", "escola", "ensino",

@@ -192,6 +192,8 @@
     passos.forEach(function (p, i) { p.numero = i + 1; });
     return {
       respostas: r, passos: passos, primeiros: PRIMEIROS,
+      /* Sem perguntar nada (é um assunto íntimo): um lembrete fixo para quem carrega um peso a mais em casa. */
+      apoio: { texto: "Se um filho ou outro familiar usa álcool ou drogas e isso pesa na sua rotina, você não está sozinha: veja por onde começar.", rotulo: "Ver apoio na área Saúde", alvo: "#saude/saude-familia-drogas" },
       avisos: [
         "Este plano são sugestões de por onde começar. Ele não diz se você tem direito a algum benefício nem garante vaga, emprego ou crédito.",
         "Se você está com medo de alguém ou em risco, use o botão “Em perigo agora?” ou abra a área Direitos antes de qualquer outro passo."
