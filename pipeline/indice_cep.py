@@ -20,6 +20,7 @@ import zipfile
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from ceps_lista import CAMINHO_PADRAO as CAMINHO_LISTA_CEPS, ler_lista_ceps  # noqa: E402
 from common import (BRUTO, MUNICIPIO_IBGE7, MUNICIPIO_NOME, UF, WEB_DADOS, achar_coluna, agora_iso, erro,  # noqa: E402
                     haversine_m, ler_csv_flex, normalizar_cep, para_numero, salvar_json)
 
@@ -27,6 +28,7 @@ RAIO_MIN_M = 150
 RAIO_MIN_POUCOS_M = 300  # CEPs com poucos enderecos: borra mais
 RAIO_MAX_M = 1500
 POUCOS = 5
+RAIO_LISTA_M = 500  # CEP que só existe na lista de CEPs: um único ponto, então a área é larga
 
 
 def construir_indice(df, municipio: str = MUNICIPIO_IBGE7) -> dict:
@@ -75,6 +77,25 @@ def construir_indice(df, municipio: str = MUNICIPIO_IBGE7) -> dict:
     return indice
 
 
+def completar_com_lista(indice: dict, lista: list[dict], raio_m: int = RAIO_LISTA_M) -> dict:
+    """Acrescenta ao índice os CEPs que o CNEFE não cobre, usando o ponto da lista de CEPs (ceps_lista.py).
+
+    Nunca troca um CEP que já veio do CNEFE (ele tem endereços reais por trás). O CEP novo entra com n = 0 (nenhum endereço do IBGE),
+    setor vazio e raio largo, porque é um ponto só. Não grava rua nem bairro: o arquivo continua sem endereços. Devolve só os CEPs novos.
+    """
+    por_cep: dict[str, list[dict]] = {}
+    for r in lista:
+        if r["cep"] not in indice:
+            por_cep.setdefault(r["cep"], []).append(r)
+    novos = {}
+    for cep, linhas in por_cep.items():
+        lat = sum(r["lat"] for r in linhas) / len(linhas)
+        lon = sum(r["lon"] for r in linhas) / len(linhas)
+        novos[cep] = [round(lat, 3), round(lon, 3), raio_m, "", 0]
+    indice.update(novos)
+    return novos
+
+
 def ler_cnefe() -> "pd.DataFrame":  # noqa: F821
     pasta = BRUTO / "cnefe"
     zips = sorted(pasta.glob("*.zip"))
@@ -92,6 +113,11 @@ def ler_cnefe() -> "pd.DataFrame":  # noqa: F821
 
 
 def main() -> None:
+    import argparse
+    ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    ap.add_argument("--ceps-google", type=Path, default=CAMINHO_LISTA_CEPS,
+                    help="lista de CEPs com coordenada; completa os CEPs que o CNEFE não cobre")
+    a = ap.parse_args()
     print("Lendo CNEFE...")
     df = ler_cnefe()
     print("  %d linhas lidas" % len(df))
@@ -99,12 +125,20 @@ def main() -> None:
         indice = construir_indice(df)
     except ValueError as e:
         erro(str(e))
+    lista = ler_lista_ceps(a.ceps_google)
+    novos = completar_com_lista(indice, lista) if lista else {}
+    if lista:
+        print("  %d CEPs a mais vieram da lista de CEPs (o CNEFE não os cobre)." % len(novos))
+    else:
+        print("  AVISO: sem lista de CEPs em %s; só o CNEFE foi usado." % a.ceps_google)
     saida = {
         "meta": {
             "fonte": "IBGE - Cadastro Nacional de Enderecos para Fins Estatisticos (CNEFE), Censo Demografico 2022",
             "municipio": "%s/%s (IBGE %s)" % (MUNICIPIO_NOME, UF, MUNICIPIO_IBGE7),
             "gerado_em": agora_iso(),
             "formato": "cep -> [latitude, longitude, raio_m, setor_censitario, n_enderecos]",
+            "ceps_so_da_lista": sorted(novos),
+            "observacao_lista": "CEPs em 'ceps_so_da_lista' vêm de um ponto único da lista de CEPs (n_enderecos = 0, setor vazio, raio %d m)." % RAIO_LISTA_M,
         },
         "ceps": indice,
     }
