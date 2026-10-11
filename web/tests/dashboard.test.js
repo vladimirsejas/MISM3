@@ -347,12 +347,12 @@ idsLocais.forEach((id) => { const x = lista.find((y) => y.id === id); assert(x &
 const links = Array.from(inicio.matchAll(/<a href="#([a-z-]+)(?:\/([a-z-]+))?">/g), (m) => ({ area: m[1], secao: m[2] }));
 assert(links.length >= 5, "acesso rápido deve ter atalhos");
 links.forEach((l) => {
-  const area = Areas.AREAS.find((a) => a.id === l.area);
+  const area = Areas.AREAS.concat(Areas.EXTRAS).find((a) => a.id === l.area);
   assert(area, "atalho para área inexistente: " + l.area);
   if (l.secao) assert(area.secoes.some((sec) => sec.ancora === l.secao), "atalho para seção inexistente: " + l.area + "/" + l.secao);
 });
 assert(/split\("\/"\)/.test(app) && /rolarPara\(secao\)/.test(app), "a rota deve entender #área/seção");
-assert(!/Transporte|Mapa de serviços|Buscar no site/.test(inicio), "a tela inicial não pode mostrar o que ainda não existe");
+assert(!/Mapa de serviços|Buscar no site|Legislação/.test(inicio), "a tela inicial não pode mostrar o que ainda não existe");
 
 /* Contraste da paleta (WCAG): lido do :root do CSS */
 const vars = Object.fromEntries(Array.from(css.slice(0, css.indexOf("}")).matchAll(/--([a-z-]+):(#[0-9a-f]{6})/g), (m) => [m[1], m[2]]));
@@ -370,4 +370,28 @@ assert(razao("#ffffff", vars["pri-esc"]) >= 6.5 && razao("#ffffff", vars.alerta)
 assert(/class="marca"[^>]*>.*Mulher em Rede<span class="marca-local">Rio Claro<\/span>/.test(index) && /class="marca"[^>]*>.*Mulher em Rede<span class="marca-local">Rio Claro<\/span>/.test(rede), "o nome deve ser 'Mulher em Rede', com 'Rio Claro' ao lado, nas duas páginas");
 assert(/<title>Mulher em Rede – Rio Claro<\/title>/.test(index) && /Mulher em Rede \(MISM3\)/.test(index), "título e rodapé devem usar o mesmo nome");
 assert(!/Mulheres de Rio Claro/.test(index + rede + app), "o nome 'Mulheres de Rio Claro' sugere um site da cidade e não deve ser usado enquanto o projeto não for oficial");
+
+/* ---- Transporte: horários da SOU, sem nada inventado ---- */
+const onibus = JSON.parse(ler("dados/horarios_onibus.json"));
+const transp = Areas.EXTRAS.find((a) => a.id === "transporte");
+assert(transp && transp.horarios === true && transp.secoes.length === 0 && !Areas.AREAS.some((a) => a.id === "transporte"), "Transporte é uma área extra, fora das sete portas");
+assert(Areas.porId("transporte") === transp, "a rota #transporte deve existir");
+assert(/href="#transporte">Horários de ônibus</.test(inicio) && portas.length === 7, "a tela inicial leva ao Transporte por atalho, sem virar uma oitava porta");
+assert(/htmlHorarios/.test(app) && /dados\/horarios_onibus\.json/.test(app) && /onibus: "i-onibus"/.test(app) && /id="i-onibus"/.test(index), "a interface dos horários deve existir");
+assert(onibus.valido_ate === "2027-02-04" && onibus.fonte.url === "https://soutransportes.com.br/rio-claro/linhas-e-horarios/", "validade e fonte da SOU");
+assert(onibus.total_horarios === 382 && onibus.linhas.length === 5, "devem estar cadastrados os 382 horários das 5 linhas recebidas");
+const horaOk = /^([01]\d|2[0-3]):[0-5]\d$/;
+let contados = 0;
+onibus.linhas.forEach((l) => l.sentidos.forEach((s) => s.quadros.forEach((q) => {
+  assert(["Ida", "Volta"].includes(s.sentido) && ["Dias úteis", "Sábados", "Domingos"].includes(q.dia), "sentido ou dia inválido na linha " + l.numero);
+  assert(s.legenda[String(q.variante)], "variante sem trajeto na linha " + l.numero + " " + s.sentido);
+  assert(q.horarios.length && q.horarios.every((x) => horaOk.test(x)) && q.horarios.every((x, i) => i === 0 || q.horarios[i - 1] < x), "horários inválidos ou fora de ordem: " + l.numero + " " + s.sentido + " " + q.dia);
+  contados += q.horarios.length;
+})));
+assert(contados === onibus.total_horarios, "a soma dos horários deve bater com o total");
+const circ1 = onibus.linhas.find((l) => l.numero === "07");
+assert(circ1 && circ1.sentidos.length === 1 && circ1.sentidos[0].sentido === "Volta", "a Circular I só tem a Volta: o site não pode inventar a Ida");
+assert(onibus.lacunas.some((t) => /Circular I/.test(t) && /Ida/.test(t)) && onibus.lacunas.some((t) => /Arco-Íris/.test(t)) && onibus.lacunas.some((t) => /Feriados/.test(t)), "as lacunas devem estar declaradas ao usuário");
+assert(!/\.pdf|OCR|docs\/|desenvolvedor/i.test(JSON.stringify(onibus)), "o JSON de horários não pode expor detalhes internos");
+assert(/Só temos o sentido/.test(app) && /Essa data já passou/.test(app) && /Em feriados os horários podem mudar/.test(app), "o site deve avisar sentido faltante, validade vencida e feriados");
 console.log("dashboard.test.js: sete portas, emergência, navegação, nenhum conteúdo de demonstração, links locais e conteúdo das áreas passaram");

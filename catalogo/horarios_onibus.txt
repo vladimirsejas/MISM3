@@ -1,0 +1,95 @@
+# Horários de ônibus de Rio Claro (SOU Transportes), transcritos das páginas impressas em 09/10/2026.
+#
+# FONTE: SOU Transportes — Rio Claro, https://soutransportes.com.br/rio-claro/linhas-e-horarios/
+# Os PDFs em docs/transporte/ são IMPRESSÕES DE IMAGEM (sem texto), por isso os horários foram lidos das imagens e
+# conferidos por três leituras independentes (leitura visual + OCR a 220 dpi + OCR a 300 dpi): 382 horários, todos iguais.
+# Cada página diz: "Data: 09/10/2026" e "Horários válidos até: 04/02/2027".
+#
+# FORMATO (uma linha por quadro de horários; linhas que começam com # são comentários):
+#   quadro | linha | nome | sentido | dia | variante | horários (hh:mm separados por espaço)
+#   legenda | linha | sentido | variante | trajeto (como a SOU escreve)
+# O número da variante é o número pequeno que aparece acima de cada horário nas páginas da SOU e remete à "Legenda de viagens".
+#
+# LACUNAS CONHECIDAS (não inventar): ver as linhas "lacuna" no fim; elas aparecem no site.
+#
+# NOTAS PARA QUEM MANTÉM OS DADOS (não aparecem no site):
+#  - Os PDFs enviados tinham nomes que não correspondem ao conteúdo. Pelo conteúdo: belavista1.pdf = linha 01 Volta;
+#    belavista2.pdf = linha 01 Ida; cervezaoida/cervezaovolta = linha 06 Ida/Volta; circular2ida/circular2volta = linha 08 Ida/Volta;
+#    paineirasvolta.pdf = linha 09 Volta; paimeirasida.pdf e arcoirismaepretaida.pdf = a MESMA página (linha 09 Ida, repetida);
+#    circular1ida.pdf e circular1volta.pdf = a MESMA página (linha 07 VOLTA, repetida). O arquivo arcoirismaepreta.pdf não foi recebido.
+#  - Falta baixar do site da SOU: Circular I - Ida e a linha Arco-Íris/Mãe Preta (ida e volta), além das demais linhas.
+meta | valido_ate | 2027-02-04
+meta | impresso_em | 2026-10-09
+meta | fonte_url | https://soutransportes.com.br/rio-claro/linhas-e-horarios/
+
+legenda | 01 | Ida | 1 | Bela Vista/São Miguel-Centro
+legenda | 01 | Ida | 2 | Bela Vista-Centro
+legenda | 01 | Ida | 3 | Vila Paulista-Centro
+legenda | 01 | Ida | 4 | Vila Paulista/Flórida-Centro
+legenda | 01 | Ida | 5 | Copacabana-Centro
+quadro | 01 | Bela Vista | Ida | Dias úteis | 1 | 04:30 05:50 07:10 08:30 09:50 11:10 12:30 13:50 15:10 16:30 17:50 19:10 20:25 21:40 22:55
+quadro | 01 | Bela Vista | Ida | Sábados | 2 | 06:05 08:10 11:05 13:10 15:05 17:00 19:05 21:20
+quadro | 01 | Bela Vista | Ida | Sábados | 3 | 10:25 14:15 16:20 20:40 22:35
+quadro | 01 | Bela Vista | Ida | Sábados | 4 | 07:20 12:20 18:15
+quadro | 01 | Bela Vista | Ida | Sábados | 5 | 06:45 08:50 11:45 13:50 15:45 17:40 22:00
+quadro | 01 | Bela Vista | Ida | Domingos | 3 | 11:45 13:40 16:45
+quadro | 01 | Bela Vista | Ida | Domingos | 4 | 08:40 18:40
+quadro | 01 | Bela Vista | Ida | Domingos | 2 | 07:25 12:25 17:25 19:30
+quadro | 01 | Bela Vista | Ida | Domingos | 5 | 08:05 13:05 18:05
+
+legenda | 01 | Volta | 6 | Centro-Bela Vista/São Miguel
+legenda | 01 | Volta | 7 | Centro-Bela Vista
+legenda | 01 | Volta | 8 | Centro-Vila Paulista
+legenda | 01 | Volta | 9 | Centro-Copacabana
+quadro | 01 | Bela Vista | Volta | Dias úteis | 6 | 05:10 06:30 07:50 09:10 10:30 11:50 13:10 14:30 15:50 17:10 18:30 19:50 21:05 22:20 23:30
+quadro | 01 | Bela Vista | Volta | Sábados | 7 | 07:45 10:40 12:45 14:40 16:35 18:40 22:50
+quadro | 01 | Bela Vista | Volta | Sábados | 8 | 07:05 10:10 12:05 14:00 16:05 18:00 20:55 22:20
+quadro | 01 | Bela Vista | Volta | Sábados | 9 | 06:25 08:30 11:25 13:30 15:25 17:20 20:25 21:40
+quadro | 01 | Bela Vista | Volta | Domingos | 8 | 08:25 11:30 13:25 16:30 18:25
+quadro | 01 | Bela Vista | Volta | Domingos | 7 | 12:00 17:00 19:05
+quadro | 01 | Bela Vista | Volta | Domingos | 9 | 07:45 12:45 17:45 19:50
+
+legenda | 06 | Ida | 1 | Cervezão/Regina Picelli-Centro
+legenda | 06 | Ida | 2 | Cervezão-Centro
+quadro | 06 | Cervezão | Ida | Dias úteis | 1 | 05:20 05:50 06:30 07:00 07:40 08:10 08:50 09:20 10:30 11:40 12:55 14:05 15:15 16:25 17:05 17:35 18:15 18:45 19:55 21:00 22:00 23:00
+quadro | 06 | Cervezão | Ida | Sábados | 1 | 05:20 06:30 07:40 08:50 11:10 12:20 13:30 15:50 17:00 18:10 19:20 21:40
+quadro | 06 | Cervezão | Ida | Domingos | 1 | 14:00
+quadro | 06 | Cervezão | Ida | Domingos | 2 | 05:20 07:30 09:40 11:50 16:10 18:20 20:30 22:40
+
+legenda | 06 | Volta | 3 | Centro-Cervezão/Regina Picelli
+legenda | 06 | Volta | 4 | Centro-Cervezão
+quadro | 06 | Cervezão | Volta | Dias úteis | 3 | 05:50 06:20 07:00 07:30 08:10 08:40 09:50 11:00 12:10 13:25 14:35 15:45 16:25 16:55 17:35 18:05 18:45 19:15 20:25 21:25 22:25 23:25
+quadro | 06 | Cervezão | Volta | Sábados | 3 | 05:50 07:00 08:10 10:30 11:40 12:50 15:10 16:20 17:30 18:40 21:00 22:10
+quadro | 06 | Cervezão | Volta | Domingos | 3 | 07:00 13:30 17:50
+quadro | 06 | Cervezão | Volta | Domingos | 4 | 09:10 11:20 15:40 20:00 22:10
+
+legenda | 07 | Volta | 2 | Centro-Circular 1
+quadro | 07 | Circular I | Volta | Dias úteis | 2 | 05:40 06:50 08:10 09:30 10:50 12:10 13:30 14:50 16:10 17:30 18:50 20:00 22:20 23:20
+quadro | 07 | Circular I | Volta | Sábados | 2 | 05:40 06:50 08:00 09:10 11:20 12:30 13:40 14:50 16:00 17:10 18:20 19:30 21:40 22:50
+quadro | 07 | Circular I | Volta | Domingos | 2 | 05:40 06:50 08:00 09:10 11:20 12:30 13:40 14:50 16:00 17:10 18:20 19:30 21:40 22:50
+
+legenda | 08 | Ida | 1 | Circular 2-Centro
+legenda | 08 | Ida | 2 | Centro-Circular 2
+quadro | 08 | Circular 2 | Ida | Dias úteis | 1 | 04:55 06:10 07:25 08:40 09:55 11:10 12:25 13:40 15:10 16:40 18:10 19:40 22:20
+quadro | 08 | Circular 2 | Ida | Sábados | 1 | 06:10 07:25 08:40 09:55 12:15 13:35 14:55 16:15 17:35 18:55 21:15
+quadro | 08 | Circular 2 | Ida | Domingos | 1 | 06:10 07:25 08:40 09:55 12:15 13:35 14:55 16:15 17:35 19:55 21:15
+
+legenda | 08 | Volta | 2 | Centro-Circular 2
+quadro | 08 | Circular 2 | Volta | Dias úteis | 2 | 05:35 06:50 08:05 09:20 10:35 11:50 13:05 14:20 15:50 17:20 18:50 21:40 23:05
+quadro | 08 | Circular 2 | Volta | Sábados | 2 | 06:50 08:05 09:20 11:35 12:55 14:15 15:35 16:55 18:15 20:35 21:55
+quadro | 08 | Circular 2 | Volta | Domingos | 2 | 06:50 08:05 09:20 11:35 12:55 14:15 15:35 16:55 19:15 20:35 21:55
+
+legenda | 09 | Ida | 1 | Paineiras/S. Eliza/V. Olinda-Centro
+legenda | 09 | Ida | 2 | Centro-Paineiras/S. Eliza/V. Olinda
+quadro | 09 | Paineiras | Ida | Dias úteis | 1 | 04:50 06:05 07:30 08:55 10:20 11:45 13:05 14:30 15:55 17:20 17:55 18:45 20:00 21:10 22:25
+quadro | 09 | Paineiras | Ida | Sábados | 1 | 04:50 06:00 07:15 08:30 09:45 11:00 12:15 13:30 14:45 16:00 17:15 18:30 19:45 21:00 22:15
+quadro | 09 | Paineiras | Ida | Domingos | 1 | 06:05 07:15 08:25 09:35 11:45 12:55 14:05 16:15 17:25 18:35 19:45 21:55
+
+legenda | 09 | Volta | 2 | Centro-Paineiras/S. Eliza/V. Olinda
+quadro | 09 | Paineiras | Volta | Dias úteis | 2 | 05:20 06:45 08:10 09:35 11:00 12:25 13:50 15:10 16:35 17:10 18:00 18:35 19:20 20:35 21:50 23:10
+quadro | 09 | Paineiras | Volta | Sábados | 2 | 05:20 06:35 07:50 09:05 10:20 11:35 12:50 14:05 15:20 16:35 17:50 19:05 20:20 21:35 22:50
+quadro | 09 | Paineiras | Volta | Domingos | 2 | 06:40 07:50 09:00 11:10 12:20 13:30 15:40 16:50 18:00 19:10 21:20 22:30
+
+lacuna | Circular I (linha 07): só temos o sentido Volta. O sentido Ida ainda não foi cadastrado.
+lacuna | Linha Arco-Íris/Mãe Preta e outras linhas da SOU em Rio Claro: ainda não foram cadastradas. Veja a lista completa no site da SOU.
+lacuna | Feriados não constam nas páginas da SOU que usamos: confirme com a SOU se vai viajar em feriado.

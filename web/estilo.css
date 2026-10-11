@@ -239,3 +239,20 @@ a.tel-grande{display:inline-block;font-weight:800;font-size:1.2rem;color:var(--a
 .rodape-sobre p{margin:.3rem 0}
 .brasao{flex:none;width:128px;height:auto;border-radius:14px;border:1px solid var(--bor)}
 @media(max-width:480px){.rodape-sobre{flex-direction:column;align-items:flex-start}}
+
+/* ---------- horários de ônibus ---------- */
+.linha-onibus{background:var(--card);border:1px solid var(--bor);border-radius:var(--raio);margin:.7rem 0;padding:0 1rem;box-shadow:var(--sombra)}
+.linha-onibus>summary{cursor:pointer;list-style:none;min-height:60px;display:flex;align-items:center;gap:.8rem;font-weight:700;font-size:1.08rem}
+.linha-onibus>summary::-webkit-details-marker{display:none}
+.linha-onibus>summary::after{content:"＋";margin-left:auto;color:var(--pri-esc);font-weight:800}
+.linha-onibus[open]>summary::after{content:"－"}
+.linha-onibus[open]{padding-bottom:1rem}
+.num-linha{flex:none;display:inline-grid;place-items:center;min-width:44px;height:44px;border-radius:12px;background:var(--pri-esc);color:#fff;font-weight:800}
+.sentido h3{font-family:var(--serif);font-weight:500;font-size:1.2rem;margin:1rem 0 .3rem;color:var(--pri-esc)}
+.proximos{background:var(--lilas);border-radius:10px;padding:.55rem .8rem;font-size:.97rem}
+.dia-horarios{border-top:1px solid var(--bor);margin-top:.5rem}
+.dia-horarios>summary{cursor:pointer;min-height:46px;display:flex;align-items:center;font-weight:700;color:var(--pri-esc)}
+.trajeto{font-size:.88rem;color:var(--mut);margin:.5rem 0 .2rem}
+.horas{list-style:none;margin:.2rem 0 .5rem;padding:0;display:flex;flex-wrap:wrap;gap:.4rem}
+.hora{min-width:60px;text-align:center;padding:.4rem .5rem;border:1px solid var(--bor);border-radius:10px;background:var(--bg);font-weight:700;font-variant-numeric:tabular-nums}
+.hora.proxima{background:var(--pri-esc);border-color:var(--pri-esc);color:#fff}

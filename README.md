@@ -19,6 +19,9 @@ O guia dos filhos tem cartões sobre: quem cuida de cada etapa, o caminho de cad
 ## Sobre este projeto
 O Mulher em Rede (MISM3) é um **estudo acadêmico de demonstração**: não é vendido, não tem fins comerciais e **não é um site oficial da Prefeitura de Rio Claro**. Ele é um mostruário do que se pode fazer para reunir, de forma clara e segura, informações públicas da cidade; a ideia é que, no futuro, possa ser adotado pela Prefeitura. O rodapé do site diz isso e mostra o **brasão de Rio Claro em versão estilizada** (`web/img/brasao-estilizado.webp`, 60 KB), apenas como ilustração. Se o projeto for adotado oficialmente, o brasão estilizado deve ser trocado pelo arquivo oficial da Prefeitura, com autorização.
 
+## Transporte: horários de ônibus
+A área **Transporte** (`#transporte`, atalho "Horários de ônibus" na tela inicial) traz os horários da **SOU Transportes** de **5 linhas** (01 Bela Vista, 06 Cervezão, 07 Circular I, 08 Circular 2 e 09 Paineiras), com **382 horários**. Para cada linha e sentido, mostra as **próximas saídas de hoje** (pelo relógio do aparelho), os horários de dias úteis, sábados e domingos, e o **trajeto de cada variante** como a SOU escreve. Avisa que as páginas são de 09/10/2026 e valem **até 04/02/2027** (e avisa quando essa data passa), que feriados não constam e **o que falta**: a Circular I só tem a Volta, e a linha Arco-Íris/Mãe Preta e as demais ainda não foram cadastradas. Os PDFs da SOU eram impressões de imagem; os horários foram lidos e conferidos por três leituras independentes (veja `docs/transporte/README.md`). Para atualizar: edite `catalogo/horarios_onibus.txt` e rode `python pipeline/horarios_onibus.py` (ele recusa horário inválido, fora de ordem ou repetido).
+
 ## Idade da informação
 Cada serviço mostra a fonte, a data de verificação e há quantos dias ela foi feita. Acima de 90 dias, ou sem data válida, aparece o aviso "Esta informação pode ter mudado. Confirme telefone, endereço e horário na fonte antes de ir." O aviso não diz que o dado está errado; só informa que a conferência é antiga.
 
@@ -72,7 +75,7 @@ Os microdados nacionais do INEP (`microdados_ed_basica_AAAA.csv`) ficam no `.git
 ## Testes
 
     pip install pytest
-    python -m pytest pipeline/tests -q      # 39 passaram em 11/10/2026
+    python -m pytest pipeline/tests -q      # 49 passaram e 1 foi ignorado em 11/10/2026
     node web/tests/acesso.test.js           # passou (inclui a regra dos 90 dias)
     node web/tests/necessidades.test.js     # 50 cenários passaram
     node web/tests/dashboard.test.js        # passou: 7 portas, emergência, sem demonstração, links locais
