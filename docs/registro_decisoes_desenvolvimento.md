@@ -765,7 +765,8 @@ Nenhuma branch foi apagada nem alterada. O que **não** foi trazido para a base,
 - **Mantido de propósito:** paleta, tipografia, ids e classes usados pelo JS, a marcação das sete portas (verificada por teste) e a regra de que a tela inicial não traz endereço, horário nem formulário.
 - **Verificação:** os 9 arquivos de teste JS passam (a regra do teste sobre a imagem do topo virou "SVG decorativo, sem arquivo de imagem"); capturas no Chromium em 1280 e 390 px sem requisições externas. Não foi testado com leitor de tela nem com usuárias.
 
-## 11/10/2026 - Arquivos .bat para o Windows
+## 11/10/2026 - Arquivo .bat para atualizar as localizações
 
-- **Pedido do autor:** "o botão bat em funcionamento". Entendido como arquivos de duplo clique no Windows (se a intenção era outra, corrigir aqui).
-- `abrir_site.bat` abre `web/` em `http://localhost:8000`; `atualizar_localizacoes.bat` chama `pipeline/atualizar_localizacoes.py`, que continua pedindo confirmação antes de alterar o catálogo. Texto sem acentos e com CRLF (`.gitattributes`). Verifiquei só o formato dos arquivos: **não os executei, porque este ambiente é Linux**.
+- **Pedido do autor:** "o botão bat em funcionamento". Entendido como arquivo de duplo clique no Windows (se a intenção era outra, corrigir aqui).
+- **Erro meu, corrigido a pedido do autor ("cuidado que você criou um bat lá"):** o `abrir_site.bat` **já existia** na `main` (acha o Python, escolhe porta livre, espera o servidor) e eu o havia sobrescrito com uma versão mais simples sem olhar antes. Restaurei o original. Lição: ver `git ls-files` antes de criar arquivo com nome de atalho.
+- **Novo:** só `atualizar_localizacoes.bat`, que chama `pipeline/atualizar_localizacoes.py` e continua pedindo confirmação antes de alterar o catálogo. Texto sem acentos, CRLF (`.gitattributes`). Verifiquei só o formato: **não o executei, porque este ambiente é Linux**.

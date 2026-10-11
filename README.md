@@ -47,7 +47,7 @@ python pipeline/atualizar_localizacoes.py                   # localiza serviços
 O último comando só sugere; nada entra no catálogo sem a sua confirmação. A cada alteração no GitHub, os dois primeiros rodam sozinhos (`.github/workflows/testes.yml`).
 
 ### No Windows, sem digitar comandos
-- **`abrir_site.bat`** (duplo clique): abre o site em `http://localhost:8000`. Deixe a janela aberta enquanto usa.
+- **`abrir_site.bat`** (duplo clique; já existia): acha o Python, escolhe uma porta livre (8000 a 8010) e abre o site no navegador. Deixe a janela aberta enquanto usa.
 - **`atualizar_localizacoes.bat`** (duplo clique): roda `atualizar_localizacoes.py`. Mostra a lista de localizações sugeridas e só altera o catálogo depois que você digita `s`.
 
 Os dois precisam do Python no PATH.

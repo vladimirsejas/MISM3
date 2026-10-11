@@ -1,14 +1,68 @@
 @echo off
-rem Abre o site Mulher em Rede no navegador (http://localhost:8000).
-rem Deixe esta janela aberta enquanto usa o site. Para parar, feche a janela.
-cd /d "%~dp0web"
-where python >nul 2>nul
-if errorlevel 1 (
-  echo Python nao encontrado. Instale em python.org e marque "Add python to PATH".
-  pause
-  exit /b 1
+setlocal EnableExtensions
+title MISM3 - Mulher em Rede
+
+rem ======================================================================
+rem  ABRIR O SITE (um clique)
+rem  1) acha o Python   2) escolhe uma porta livre (8000 a 8010)
+rem  3) liga o servidor   4) abre o navegador quando o servidor esta pronto
+rem  Para parar: feche esta janela ou aperte Ctrl+C.
+rem ======================================================================
+
+cd /d "%~dp0web" || goto erro_pasta
+
+set "PY="
+where py >nul 2>&1 && set "PY=py -3"
+if not defined PY where python >nul 2>&1 && set "PY=python"
+if not defined PY goto sem_python
+%PY% --version >nul 2>&1 || goto sem_python
+
+set "PORTA="
+for /l %%P in (8000,1,8010) do (
+  if not defined PORTA (
+    netstat -ano | findstr /r /c:":%%P .*LISTENING" >nul || set "PORTA=%%P"
+  )
 )
-start "" cmd /c "timeout /t 2 /nobreak >nul & start http://localhost:8000"
-echo Servidor em http://localhost:8000  (feche esta janela para parar)
-python -m http.server 8000
+if not defined PORTA goto sem_porta
+
+echo.
+echo  MISM3 - Mulher em Rede
+echo  ----------------------
+echo  Endereco do site: http://localhost:%PORTA%/
+echo  O navegador vai abrir sozinho em instantes.
+echo  Para parar: feche esta janela ou aperte Ctrl+C.
+echo.
+
+start "" /min cmd /c "ping -n 3 127.0.0.1 >nul & start http://localhost:%PORTA%/"
+
+%PY% -m http.server %PORTA% --bind 127.0.0.1
+echo.
+echo  O servidor foi encerrado.
 pause
+exit /b 0
+
+:erro_pasta
+echo.
+echo  Nao encontrei a pasta "web" ao lado deste arquivo.
+echo  Deixe o abrir_site.bat dentro da pasta MISM3, junto da pasta web.
+echo.
+pause
+exit /b 1
+
+:sem_python
+echo.
+echo  Nao encontrei o Python neste computador.
+echo  1) Instale em https://www.python.org/downloads/
+echo  2) Na instalacao, MARQUE a caixa "Add python.exe to PATH".
+echo  3) Feche esta janela e de dois cliques neste arquivo de novo.
+echo.
+pause
+exit /b 1
+
+:sem_porta
+echo.
+echo  As portas 8000 a 8010 estao ocupadas por outros programas.
+echo  Feche janelas antigas do servidor (janelas pretas) e tente de novo.
+echo.
+pause
+exit /b 1
