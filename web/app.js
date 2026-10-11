@@ -45,7 +45,7 @@
     },
     filhos: {
       titulo: "Filhos: creche, escola e apoio",
-      descricao: "Reúna os caminhos para educação infantil, cursinho gratuito para adolescentes e apoio à família. A existência de uma unidade não confirma vaga disponível.",
+      descricao: "Reúna os caminhos para educação infantil, cursinho gratuito para toda a família e apoio à família. A existência de uma unidade não confirma vaga disponível.",
       tipos: ["creche", "assistencia", "saude"],
       links: [
         ["Secretaria Municipal da Educação", "https://rioclaro.sp.gov.br/secretaria/secretaria-da-educacao/", "Orientações sobre a rede e matrícula."],
