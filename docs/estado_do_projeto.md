@@ -34,6 +34,7 @@ Não vendemos o sistema como diagnóstico social, nem como prova de que um servi
 | Cartões com fonte, data e aviso "não conferido" | Sim | Fonte e data obrigatórias em todo registro (`pytest`, `dashboard.test.js`) | Não | |
 | Etapas da escola (creche, pré-escola) | Sim, 43 de 68 escolas municipais | Ligação 1 para 1 com o Censo Escolar 2025; nome parecido não liga | Não | As outras 25 continuam dizendo que a etapa deve ser confirmada |
 | Horários de ônibus | Sim, 5 linhas, 382 horários, válidos até 04/02/2027 | Três leituras independentes das imagens | Não | Falta a linha 02 Arco-Íris/Mãe Preta; Circular I só no sentido Volta |
+| Mapa de serviços (`web/mapa.html`) | Sim, ligado à tela inicial | `mapa.test.js` com os dados reais; conferido no Chromium em 1280 e 390 px, 0 requisições externas | Não | Dos 164 serviços: 45 aparecem pelo endereço, 38 pela posição **aproximada** do CEP (vazados) e 81 só na lista, com link para pesquisar o endereço no Google Maps. Distância em linha reta, não caminho a pé. Mapa de ruas só se a usuária marcar a caixa |
 | Privacidade da busca | Sim: sem servidor próprio, sem cookies, sem localStorage (declarado no README) | Páginas verificadas no Chromium com 0 requisições externas | Não | O histórico do navegador pode guardar a visita; "Sair rápido" não apaga e diz isso |
 | Entre Mulheres | Protótipo | `entre_mulheres.test.js` | Não | 0 ofertas cadastradas; canal de cadastro não definido |
 
