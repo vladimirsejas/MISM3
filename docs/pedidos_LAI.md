@@ -1,4 +1,4 @@
-# Minutas de pedidos de informação — Mapa do Cuidado Rio-Clarense
+# Minutas de pedidos de informação — Mulher em Rede
 
 Objetivo: obter dados públicos, agregados e atualizados para conectar oportunidades de trabalho e formação, transporte e cuidado infantil. Enviar cada pedido separadamente ao canal oficial de Acesso à Informação da Prefeitura, para facilitar o encaminhamento à secretaria responsável.
 
@@ -45,6 +45,32 @@ Solicito os dados sem nomes, CPF, endereço residencial, data de nascimento comp
 Solicito a relação atualizada das unidades municipais que oferecem Educação Infantil, distinguindo claramente creche (0 a 3 anos) e pré-escola (4 e 5 anos). Para cada unidade, solicito, se disponíveis: nome; endereço; telefone institucional; etapas e faixas etárias atendidas; dias e horários de funcionamento; turnos ofertados (integral ou parcial); calendário de funcionamento; existência de atendimento em período integral; critérios de matrícula; e link ou procedimento oficial para solicitar vaga.
 
 Solicito também informar se há unidades com horários ampliados ou atendimento compatível com jornadas de trabalho fora do horário comercial, sem necessidade de identificar crianças ou famílias. Se a relação já existir em planilha ou sistema, peço cópia em formato aberto e a data da última atualização.
+
+## 6. Educação — lista de espera por território (complemento do item 4)
+
+**Assunto:** Contagem agregada de crianças em lista de espera por bairro ou setor censitário de residência
+
+Complementando o pedido anterior, solicito, se a Secretaria já registrar o bairro de residência, a contagem de crianças em lista de espera para creche **por bairro** (ou por setor censitário do IBGE, se for viável à própria Secretaria produzir essa contagem), por etapa e faixa etária, com data de referência. Solicito apenas números agregados; **não** solicito nomes, endereços, documentos ou datas de nascimento. Se algum bairro tiver poucas crianças, pode ser informado como "menos de 10".
+
+## 7. Desenvolvimento Social — CRAS/CREAS: volume e capacidade
+
+**Assunto:** Registro Mensal de Atendimentos (RMA) e capacidade das equipes, em dados agregados
+
+Solicito, por unidade (CRAS e CREAS) e por mês, dos últimos 12 meses disponíveis: número de famílias **referenciadas**, número de famílias **em acompanhamento ativo** e número de atendimentos realizados, conforme o RMA; número de profissionais de nível superior por unidade; e dias e horários de funcionamento. Peço também a data da última atualização do Censo SUAS enviada pelo município. Não solicito nome, CPF, endereço ou qualquer dado de usuários.
+
+## 8. Saúde — indicadores de cobertura da mulher
+
+**Assunto:** Indicadores de Atenção Primária relativos à saúde da mulher, por unidade ou território assistencial
+
+Solicito, em dados agregados e com período indicado, por unidade de saúde ou território assistencial: número de mulheres elegíveis (denominador) e número de mulheres com pré-natal em dia, exame citopatológico e mamografia dentro do intervalo recomendado, conforme os relatórios do SISAB/e-Gestor APS e do SISCAN. Se esses relatórios já são públicos, solicito apenas o caminho para acessá-los. Não solicito dados individuais de pacientes.
+
+## 9. Secretaria da Mulher — estatísticas gerais de atendimento (com cautela)
+
+**Assunto:** Estatísticas agregadas anuais de atendimento e encaminhamento
+
+Solicito apenas totais **municipais**, por semestre ou ano, de: atendimentos realizados, encaminhamentos feitos, encaminhamentos concluídos e tempo médio entre o encaminhamento e o início do acolhimento, quando houver registro. **Não solicito recorte por bairro, rua ou tipo detalhado de ocorrência**, nem qualquer dado que permita identificar mulheres. Se algum número for pequeno a ponto de identificar alguém, pode ser omitido.
+
+> **Antes de enviar o item 9:** conversar com a Secretaria. Em cidade média, mesmo totais pequenos podem expor pessoas. Os itens 6 a 9 são minutas novas, ainda não enviadas, e não há resposta nem protocolo.
 
 ## Orientações de envio e acompanhamento
 

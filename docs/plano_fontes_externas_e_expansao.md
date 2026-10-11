@@ -49,7 +49,7 @@ Cruzar cadastro escolar com campos oficiais de oferta. Distinguir creche, pré-e
 ### 4. Transporte validado
 Obter uma tabela legível por linha, sentido e tipo de dia. Registrar URL, data da coleta e período de validade. Só então criar pesquisa por linha/horário. Não fabricar horários a partir de cabeçalho de PDF.
 
-### 5. Rede De Mulher para Mulher
+### 5. Rede Entre Mulheres
 Planejar como um marketplace separado do catálogo público. A profissional escolhe quais serviços oferece, área atendida, preço ou “sob consulta”, disponibilidade, atendimento domiciliar/remoto e meios de contato. O perfil só é publicado após aceitar regras e passar pelas verificações definidas. A futura verificação de identidade e elegibilidade feminina precisa de avaliação jurídica e técnica; login Gov.br não deve ser tratado como garantia automática de gênero.
 
 ### 6. Indicadores e lacunas de cobertura
@@ -82,7 +82,7 @@ Usar dados agregados para identificar áreas com mais crianças pequenas, distâ
 2. Completar os serviços de saúde e assistência com dados públicos estruturados.
 3. Extrair e validar escolas e oferta de creche com os campos oficiais.
 4. Construir tabela de transporte apenas depois de obter horários legíveis e atuais.
-5. Criar o modelo de dados e as regras do marketplace De Mulher para Mulher.
+5. Criar o modelo de dados e as regras do marketplace Entre Mulheres.
 6. Só depois considerar contas, autenticação, mensagens, avaliações ou pagamentos.
 
 ## Referências externas consultadas

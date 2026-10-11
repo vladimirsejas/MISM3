@@ -1,20 +1,754 @@
 {
-  "municipio": "Rio Claro",
-  "uf": "SP",
-  "fonte_primaria": {
-    "nome": "SOU Transportes — Rio Claro",
-    "url": "https://soutransportes.com.br/rio-claro/",
-    "pagina_linhas_horarios": "https://soutransportes.com.br/rio-claro/linhas-e-horarios/",
-    "tipo": "fonte informada para os PDFs de horários reunidos no projeto",
-    "observacao": "Os 12 PDFs locais em docs/transporte foram obtidos/impressos a partir da fonte da SOU indicada acima, conforme informado durante o levantamento. O texto extraído desses PDFs continha apenas cabeçalhos de impressão/anotações, sem tabelas de horários legíveis."
+ "municipio": "Rio Claro",
+ "uf": "SP",
+ "fonte": {
+  "nome": "SOU Transportes — Rio Claro",
+  "url": "https://soutransportes.com.br/rio-claro/linhas-e-horarios/",
+  "impresso_em": "2026-10-09",
+  "observacao": "Páginas de horários impressas do site da SOU em 2026-10-09; os horários foram lidos das imagens e conferidos por três leituras independentes."
+ },
+ "valido_ate": "2027-02-04",
+ "dias": {
+  "Dias úteis": "segunda a sexta",
+  "Sábados": "",
+  "Domingos": ""
+ },
+ "linhas": [
+  {
+   "numero": "01",
+   "nome": "Bela Vista",
+   "sentidos": [
+    {
+     "sentido": "Ida",
+     "legenda": {
+      "1": "Bela Vista/São Miguel-Centro",
+      "2": "Bela Vista-Centro",
+      "3": "Vila Paulista-Centro",
+      "4": "Vila Paulista/Flórida-Centro",
+      "5": "Copacabana-Centro"
+     },
+     "quadros": [
+      {
+       "dia": "Dias úteis",
+       "variante": 1,
+       "horarios": [
+        "04:30",
+        "05:50",
+        "07:10",
+        "08:30",
+        "09:50",
+        "11:10",
+        "12:30",
+        "13:50",
+        "15:10",
+        "16:30",
+        "17:50",
+        "19:10",
+        "20:25",
+        "21:40",
+        "22:55"
+       ]
+      },
+      {
+       "dia": "Sábados",
+       "variante": 2,
+       "horarios": [
+        "06:05",
+        "08:10",
+        "11:05",
+        "13:10",
+        "15:05",
+        "17:00",
+        "19:05",
+        "21:20"
+       ]
+      },
+      {
+       "dia": "Sábados",
+       "variante": 3,
+       "horarios": [
+        "10:25",
+        "14:15",
+        "16:20",
+        "20:40",
+        "22:35"
+       ]
+      },
+      {
+       "dia": "Sábados",
+       "variante": 4,
+       "horarios": [
+        "07:20",
+        "12:20",
+        "18:15"
+       ]
+      },
+      {
+       "dia": "Sábados",
+       "variante": 5,
+       "horarios": [
+        "06:45",
+        "08:50",
+        "11:45",
+        "13:50",
+        "15:45",
+        "17:40",
+        "22:00"
+       ]
+      },
+      {
+       "dia": "Domingos",
+       "variante": 3,
+       "horarios": [
+        "11:45",
+        "13:40",
+        "16:45"
+       ]
+      },
+      {
+       "dia": "Domingos",
+       "variante": 4,
+       "horarios": [
+        "08:40",
+        "18:40"
+       ]
+      },
+      {
+       "dia": "Domingos",
+       "variante": 2,
+       "horarios": [
+        "07:25",
+        "12:25",
+        "17:25",
+        "19:30"
+       ]
+      },
+      {
+       "dia": "Domingos",
+       "variante": 5,
+       "horarios": [
+        "08:05",
+        "13:05",
+        "18:05"
+       ]
+      }
+     ]
+    },
+    {
+     "sentido": "Volta",
+     "legenda": {
+      "6": "Centro-Bela Vista/São Miguel",
+      "7": "Centro-Bela Vista",
+      "8": "Centro-Vila Paulista",
+      "9": "Centro-Copacabana"
+     },
+     "quadros": [
+      {
+       "dia": "Dias úteis",
+       "variante": 6,
+       "horarios": [
+        "05:10",
+        "06:30",
+        "07:50",
+        "09:10",
+        "10:30",
+        "11:50",
+        "13:10",
+        "14:30",
+        "15:50",
+        "17:10",
+        "18:30",
+        "19:50",
+        "21:05",
+        "22:20",
+        "23:30"
+       ]
+      },
+      {
+       "dia": "Sábados",
+       "variante": 7,
+       "horarios": [
+        "07:45",
+        "10:40",
+        "12:45",
+        "14:40",
+        "16:35",
+        "18:40",
+        "22:50"
+       ]
+      },
+      {
+       "dia": "Sábados",
+       "variante": 8,
+       "horarios": [
+        "07:05",
+        "10:10",
+        "12:05",
+        "14:00",
+        "16:05",
+        "18:00",
+        "20:55",
+        "22:20"
+       ]
+      },
+      {
+       "dia": "Sábados",
+       "variante": 9,
+       "horarios": [
+        "06:25",
+        "08:30",
+        "11:25",
+        "13:30",
+        "15:25",
+        "17:20",
+        "20:25",
+        "21:40"
+       ]
+      },
+      {
+       "dia": "Domingos",
+       "variante": 8,
+       "horarios": [
+        "08:25",
+        "11:30",
+        "13:25",
+        "16:30",
+        "18:25"
+       ]
+      },
+      {
+       "dia": "Domingos",
+       "variante": 7,
+       "horarios": [
+        "12:00",
+        "17:00",
+        "19:05"
+       ]
+      },
+      {
+       "dia": "Domingos",
+       "variante": 9,
+       "horarios": [
+        "07:45",
+        "12:45",
+        "17:45",
+        "19:50"
+       ]
+      }
+     ]
+    }
+   ]
   },
-  "documentos_locais": {
-    "pasta": "docs/transporte/",
-    "quantidade_pdf": 12,
-    "extrator": "pipeline/extrair_texto_onibus.py",
-    "resultado_extracao": "processamento concluído, mas sem horários recuperáveis em texto"
+  {
+   "numero": "06",
+   "nome": "Cervezão",
+   "sentidos": [
+    {
+     "sentido": "Ida",
+     "legenda": {
+      "1": "Cervezão/Regina Picelli-Centro",
+      "2": "Cervezão-Centro"
+     },
+     "quadros": [
+      {
+       "dia": "Dias úteis",
+       "variante": 1,
+       "horarios": [
+        "05:20",
+        "05:50",
+        "06:30",
+        "07:00",
+        "07:40",
+        "08:10",
+        "08:50",
+        "09:20",
+        "10:30",
+        "11:40",
+        "12:55",
+        "14:05",
+        "15:15",
+        "16:25",
+        "17:05",
+        "17:35",
+        "18:15",
+        "18:45",
+        "19:55",
+        "21:00",
+        "22:00",
+        "23:00"
+       ]
+      },
+      {
+       "dia": "Sábados",
+       "variante": 1,
+       "horarios": [
+        "05:20",
+        "06:30",
+        "07:40",
+        "08:50",
+        "11:10",
+        "12:20",
+        "13:30",
+        "15:50",
+        "17:00",
+        "18:10",
+        "19:20",
+        "21:40"
+       ]
+      },
+      {
+       "dia": "Domingos",
+       "variante": 1,
+       "horarios": [
+        "14:00"
+       ]
+      },
+      {
+       "dia": "Domingos",
+       "variante": 2,
+       "horarios": [
+        "05:20",
+        "07:30",
+        "09:40",
+        "11:50",
+        "16:10",
+        "18:20",
+        "20:30",
+        "22:40"
+       ]
+      }
+     ]
+    },
+    {
+     "sentido": "Volta",
+     "legenda": {
+      "3": "Centro-Cervezão/Regina Picelli",
+      "4": "Centro-Cervezão"
+     },
+     "quadros": [
+      {
+       "dia": "Dias úteis",
+       "variante": 3,
+       "horarios": [
+        "05:50",
+        "06:20",
+        "07:00",
+        "07:30",
+        "08:10",
+        "08:40",
+        "09:50",
+        "11:00",
+        "12:10",
+        "13:25",
+        "14:35",
+        "15:45",
+        "16:25",
+        "16:55",
+        "17:35",
+        "18:05",
+        "18:45",
+        "19:15",
+        "20:25",
+        "21:25",
+        "22:25",
+        "23:25"
+       ]
+      },
+      {
+       "dia": "Sábados",
+       "variante": 3,
+       "horarios": [
+        "05:50",
+        "07:00",
+        "08:10",
+        "10:30",
+        "11:40",
+        "12:50",
+        "15:10",
+        "16:20",
+        "17:30",
+        "18:40",
+        "21:00",
+        "22:10"
+       ]
+      },
+      {
+       "dia": "Domingos",
+       "variante": 3,
+       "horarios": [
+        "07:00",
+        "13:30",
+        "17:50"
+       ]
+      },
+      {
+       "dia": "Domingos",
+       "variante": 4,
+       "horarios": [
+        "09:10",
+        "11:20",
+        "15:40",
+        "20:00",
+        "22:10"
+       ]
+      }
+     ]
+    }
+   ]
   },
-  "linhas": [],
-  "status": "fonte documentada; horários ainda precisam ser extraídos de tabelas legíveis",
-  "regra_de_qualidade": "Não inventar horários. Para cada linha estruturada, preservar URL de origem, data de consulta, sentido e tipo de dia."
+  {
+   "numero": "07",
+   "nome": "Circular I",
+   "sentidos": [
+    {
+     "sentido": "Volta",
+     "legenda": {
+      "2": "Centro-Circular 1"
+     },
+     "quadros": [
+      {
+       "dia": "Dias úteis",
+       "variante": 2,
+       "horarios": [
+        "05:40",
+        "06:50",
+        "08:10",
+        "09:30",
+        "10:50",
+        "12:10",
+        "13:30",
+        "14:50",
+        "16:10",
+        "17:30",
+        "18:50",
+        "20:00",
+        "22:20",
+        "23:20"
+       ]
+      },
+      {
+       "dia": "Sábados",
+       "variante": 2,
+       "horarios": [
+        "05:40",
+        "06:50",
+        "08:00",
+        "09:10",
+        "11:20",
+        "12:30",
+        "13:40",
+        "14:50",
+        "16:00",
+        "17:10",
+        "18:20",
+        "19:30",
+        "21:40",
+        "22:50"
+       ]
+      },
+      {
+       "dia": "Domingos",
+       "variante": 2,
+       "horarios": [
+        "05:40",
+        "06:50",
+        "08:00",
+        "09:10",
+        "11:20",
+        "12:30",
+        "13:40",
+        "14:50",
+        "16:00",
+        "17:10",
+        "18:20",
+        "19:30",
+        "21:40",
+        "22:50"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "numero": "08",
+   "nome": "Circular 2",
+   "sentidos": [
+    {
+     "sentido": "Ida",
+     "legenda": {
+      "1": "Circular 2-Centro",
+      "2": "Centro-Circular 2"
+     },
+     "quadros": [
+      {
+       "dia": "Dias úteis",
+       "variante": 1,
+       "horarios": [
+        "04:55",
+        "06:10",
+        "07:25",
+        "08:40",
+        "09:55",
+        "11:10",
+        "12:25",
+        "13:40",
+        "15:10",
+        "16:40",
+        "18:10",
+        "19:40",
+        "22:20"
+       ]
+      },
+      {
+       "dia": "Sábados",
+       "variante": 1,
+       "horarios": [
+        "06:10",
+        "07:25",
+        "08:40",
+        "09:55",
+        "12:15",
+        "13:35",
+        "14:55",
+        "16:15",
+        "17:35",
+        "18:55",
+        "21:15"
+       ]
+      },
+      {
+       "dia": "Domingos",
+       "variante": 1,
+       "horarios": [
+        "06:10",
+        "07:25",
+        "08:40",
+        "09:55",
+        "12:15",
+        "13:35",
+        "14:55",
+        "16:15",
+        "17:35",
+        "19:55",
+        "21:15"
+       ]
+      }
+     ]
+    },
+    {
+     "sentido": "Volta",
+     "legenda": {
+      "2": "Centro-Circular 2"
+     },
+     "quadros": [
+      {
+       "dia": "Dias úteis",
+       "variante": 2,
+       "horarios": [
+        "05:35",
+        "06:50",
+        "08:05",
+        "09:20",
+        "10:35",
+        "11:50",
+        "13:05",
+        "14:20",
+        "15:50",
+        "17:20",
+        "18:50",
+        "21:40",
+        "23:05"
+       ]
+      },
+      {
+       "dia": "Sábados",
+       "variante": 2,
+       "horarios": [
+        "06:50",
+        "08:05",
+        "09:20",
+        "11:35",
+        "12:55",
+        "14:15",
+        "15:35",
+        "16:55",
+        "18:15",
+        "20:35",
+        "21:55"
+       ]
+      },
+      {
+       "dia": "Domingos",
+       "variante": 2,
+       "horarios": [
+        "06:50",
+        "08:05",
+        "09:20",
+        "11:35",
+        "12:55",
+        "14:15",
+        "15:35",
+        "16:55",
+        "19:15",
+        "20:35",
+        "21:55"
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "numero": "09",
+   "nome": "Paineiras",
+   "sentidos": [
+    {
+     "sentido": "Ida",
+     "legenda": {
+      "1": "Paineiras/S. Eliza/V. Olinda-Centro",
+      "2": "Centro-Paineiras/S. Eliza/V. Olinda"
+     },
+     "quadros": [
+      {
+       "dia": "Dias úteis",
+       "variante": 1,
+       "horarios": [
+        "04:50",
+        "06:05",
+        "07:30",
+        "08:55",
+        "10:20",
+        "11:45",
+        "13:05",
+        "14:30",
+        "15:55",
+        "17:20",
+        "17:55",
+        "18:45",
+        "20:00",
+        "21:10",
+        "22:25"
+       ]
+      },
+      {
+       "dia": "Sábados",
+       "variante": 1,
+       "horarios": [
+        "04:50",
+        "06:00",
+        "07:15",
+        "08:30",
+        "09:45",
+        "11:00",
+        "12:15",
+        "13:30",
+        "14:45",
+        "16:00",
+        "17:15",
+        "18:30",
+        "19:45",
+        "21:00",
+        "22:15"
+       ]
+      },
+      {
+       "dia": "Domingos",
+       "variante": 1,
+       "horarios": [
+        "06:05",
+        "07:15",
+        "08:25",
+        "09:35",
+        "11:45",
+        "12:55",
+        "14:05",
+        "16:15",
+        "17:25",
+        "18:35",
+        "19:45",
+        "21:55"
+       ]
+      }
+     ]
+    },
+    {
+     "sentido": "Volta",
+     "legenda": {
+      "2": "Centro-Paineiras/S. Eliza/V. Olinda"
+     },
+     "quadros": [
+      {
+       "dia": "Dias úteis",
+       "variante": 2,
+       "horarios": [
+        "05:20",
+        "06:45",
+        "08:10",
+        "09:35",
+        "11:00",
+        "12:25",
+        "13:50",
+        "15:10",
+        "16:35",
+        "17:10",
+        "18:00",
+        "18:35",
+        "19:20",
+        "20:35",
+        "21:50",
+        "23:10"
+       ]
+      },
+      {
+       "dia": "Sábados",
+       "variante": 2,
+       "horarios": [
+        "05:20",
+        "06:35",
+        "07:50",
+        "09:05",
+        "10:20",
+        "11:35",
+        "12:50",
+        "14:05",
+        "15:20",
+        "16:35",
+        "17:50",
+        "19:05",
+        "20:20",
+        "21:35",
+        "22:50"
+       ]
+      },
+      {
+       "dia": "Domingos",
+       "variante": 2,
+       "horarios": [
+        "06:40",
+        "07:50",
+        "09:00",
+        "11:10",
+        "12:20",
+        "13:30",
+        "15:40",
+        "16:50",
+        "18:00",
+        "19:10",
+        "21:20",
+        "22:30"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "lacunas": [
+  "Circular I (linha 07): cadastramos só o sentido Volta, que é o publicado pela SOU nas páginas que usamos.",
+  "Linha 02 Arco-Íris/Mãe Preta: existe no site da SOU, mas ainda não cadastramos os horários dela. Veja no site da SOU.",
+  "Feriados não constam nas páginas da SOU que usamos: confirme com a SOU se vai viajar em feriado."
+ ],
+ "total_horarios": 382,
+ "regra_de_qualidade": "Não inventar horários. Todo horário vem de um quadro da SOU, com sentido, tipo de dia e variante de trajeto."
 }

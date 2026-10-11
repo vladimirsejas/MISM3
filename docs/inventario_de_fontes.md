@@ -1,4 +1,4 @@
-# Inventário de fontes — Mapa do Cuidado Rio-Clarense
+# Inventário de fontes — Mulher em Rede
 
 Regra do projeto: **nada aqui é dado fingido**. A coluna "Situação" separa o que foi confirmado do que ainda precisa ser baixado ou conferido. Dados locais gerados na máquina não devem ser tratados como se já estivessem no GitHub.
 Município sempre por código IBGE **3543907** (DATASUS: 354390). Nunca filtrar só pelo nome: existe Rio Claro no RJ.

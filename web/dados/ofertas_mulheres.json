@@ -1,0 +1,5 @@
+{
+  "_leia": "Ofertas de serviços feitos por mulheres para mulheres. Cada oferta só entra com consentimento por escrito da própria mulher. Campos: id, categoria (id de areas.js), nome, descricao, atende (bairro ou região), contato (telefone, WhatsApp ou rede social que ELA autorizou publicar), consentimento_em (AAAA-MM-DD), cadastrada_em (AAAA-MM-DD). Nunca inventar ofertas.",
+  "atualizado_em": "2026-10-10",
+  "ofertas": []
+}

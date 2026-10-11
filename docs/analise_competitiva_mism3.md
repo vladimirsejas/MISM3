@@ -1,7 +1,7 @@
 # Análise competitiva — MISM3 e serviços para mulheres em Rio Claro
 
 **Data da análise:** 2026-10-09  
-**Objetivo:** identificar o que já é oferecido publicamente e definir vantagens funcionais concretas para o Mapa do Cuidado Rio-Clarense (MISM3).  
+**Objetivo:** identificar o que já é oferecido publicamente e definir vantagens funcionais concretas para o Mulher em Rede (MISM3).  
 **Método:** consulta a páginas públicas oficiais. Esta análise não presume acesso a sistemas internos nem afirma que um serviço não exista apenas porque não foi encontrado na página consultada.
 
 ## 1. Referências públicas examinadas
