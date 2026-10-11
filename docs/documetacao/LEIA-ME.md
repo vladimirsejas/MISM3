@@ -27,6 +27,7 @@ Cada arquivo é a **impressão em PDF** de uma página, feita pelo mantenedor em
 | `sesi-ensino-fundamental.pdf` | SESI-SP: proposta pedagógica do ensino fundamental. Não trata de custo nem de vagas | https://www.sesisp.org.br/ (página exata não consta) | 10/10/2026 | Trabalho (SESI Rio Claro) |
 | `sesi-ensino-medio.pdf` | SESI-SP: ensino médio com formação integrada e ensino técnico do SENAI; notícia de 24/09/2026 sobre “sorteio e processo seletivo de vagas” para 2027 | https://www.sesisp.org.br/ (página exata não consta) | 10/10/2026 | Trabalho (SESI Rio Claro) |
 | `faculdade-sesi-educacao.pdf` | Faculdade SESI de Educação: vestibular 2027 com 340 vagas em seis licenciaturas gratuitas (notícia de 03/09/2026); endereço da faculdade em São Paulo (capital) | https://www.faculdadesesi.edu.br/ | 10/10/2026 21:56 | Trabalho (graduação) |
+| `faculdade-sesi-vestibular-2022-noticia-2021.pdf` | Faculdade SESI de Educação: notícia de **10/09/2021** sobre o Vestibular 2022 (graduação gratuita, aulas presenciais à noite na Vila Leopoldina/São Paulo, fases do processo, reserva de vagas). **É de 2021: serve de guia, mas as regras de 2027 podem ser diferentes** | https://www.faculdadesesi.edu.br/vestibular/ (citado na notícia; a URL da notícia não aparece na impressão) | 10/10/2026 | Trabalho (graduação) |
 
 ## Não arquivado, de propósito
 - Artigo de blog da Matrix Energia sobre tarifa de energia: é de empresa privada, trata de tarifa em geral e não da Tarifa Social; **não foi usado**.
