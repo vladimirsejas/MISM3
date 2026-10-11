@@ -8,6 +8,9 @@ A pessoa escreve uma necessidade ou escolhe uma de **sete portas**: Emprego e re
 
 Outras áreas, separadas das portas de atendimento: protótipo *De Mulher para Mulher* (`web/rede-mulheres.html`) e painel conceitual *Inteligência Pública* (`web/inteligencia-publica.html`).
 
+## Idade da informação
+Cada serviço mostra a fonte, a data de verificação e há quantos dias ela foi feita. Acima de 90 dias aparece o aviso "Esta informação pode ter mudado. Confirme telefone, endereço e horário na fonte antes de ir." O aviso não diz que o dado está errado; só informa que a conferência é antiga. Sem data válida, o aviso também aparece.
+
 ## Privacidade (como está implementado)
 - Consulta no navegador; sem servidor próprio, cookies, localStorage ou estatísticas.
 - O índice de CEP guarda só `CEP → centro aproximado + raio`.
@@ -16,7 +19,7 @@ Outras áreas, separadas das portas de atendimento: protótipo *De Mulher para M
 
 ## Estado dos dados neste repositório
 - **Versionado:** catálogo manual com 10 serviços (`catalogo/servicos_manuais.csv`), malha e resumo de setores censitários, `horarios_onibus.json` e dados de **demonstração** (`web/dados/demo/`).
-- **Não versionado:** `web/dados/cep_indice.json` e `web/dados/servicos.json`, gerados localmente pelo pipeline. Sem eles o site abre em **modo demonstração**, com a faixa "DADOS ILUSTRATIVOS" e os CEPs fictícios 00000-001, 00000-002 e 00000-003. Nesse modo, as portas mostram serviços `[DEMO]` e links oficiais. A porta Saúde traz dois links da Prefeitura (lista de Unidades Básicas de Saúde e Fundação Municipal de Saúde), localizados por busca e **ainda não abertos nem conferidos**; endereços e telefones das unidades não foram copiados.
+- **Não versionado:** `web/dados/cep_indice.json` e `web/dados/servicos.json`, gerados localmente pelo pipeline. Sem eles o site abre em **modo demonstração**, com a faixa "DADOS ILUSTRATIVOS" e os CEPs fictícios 00000-001, 00000-002 e 00000-003. Nesse modo, as portas mostram serviços `[DEMO]` e links oficiais. A porta Saúde traz dois links da Prefeitura (lista de Unidades Básicas de Saúde e Fundação Municipal de Saúde), confirmados como funcionando pelo autor em 11/10/2026; endereços e telefones das unidades não foram copiados.
 - Números gerados localmente em 09/10/2026 (ver [inventário de fontes](docs/inventario_de_fontes.md)): 104.236 linhas do CNEFE lidas e 1.387 CEPs indexados; 142 escolas do INEP em Rio Claro, 69 com indicação de Educação Infantil (nenhum campo identifica creche).
 
 ## Como rodar
@@ -41,7 +44,7 @@ Catálogo: edite `catalogo/servicos_manuais.csv` (obrigatórios `tipo`, `nome`, 
 
     pip install pytest
     python -m pytest pipeline/tests -q     # 33 passaram
-    node web/tests/acesso.test.js          # passou
+    node web/tests/acesso.test.js          # passou (inclui regra dos 90 dias)
     node web/tests/necessidades.test.js    # 47 cenários passaram
     node web/tests/dashboard.test.js       # passou (sete portas, quatro jornadas)
 

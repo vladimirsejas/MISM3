@@ -224,7 +224,9 @@
     if (s.horario) partes.push("<p>Horário: " + esc(s.horario) + "</p>");
     if (s.observacao) partes.push("<p>" + esc(s.observacao) + "</p>");
     var fonte = s.fonte_url ? '<a href="' + esc(s.fonte_url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.fonte) + "</a>" : esc(s.fonte);
-    partes.push('<p class="meta">Fonte: ' + fonte + " · verificado em " + esc(s.verificado_em) + "</p>");
+    var idade = Acesso.idadeVerificacao(s.verificado_em);
+    partes.push('<p class="meta">Fonte: ' + fonte + " · verificado em " + esc(s.verificado_em) + " (" + esc(idade.texto) + ")</p>");
+    if (idade.antigo) partes.push('<p class="aviso-data">Esta informação pode ter mudado. Confirme telefone, endereço e horário na fonte antes de ir.</p>');
     return '<article class="cartao"><h3>' + esc(s.nome) + "</h3>" + partes.join("") + "</article>";
   }
 

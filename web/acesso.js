@@ -84,6 +84,20 @@
     return { status: "ok", cep: cep, area: { lat: area[0], lon: area[1], raio_m: area[2], setor: area[3], n: area[4] }, grupos: grupos };
   }
 
+  // Idade da verificacao de um servico. Nao julga o dado: so informa ha quanto tempo foi conferido.
+  var LIMITE_DIAS = 90;
+  function idadeVerificacao(iso, hoje) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(iso || ""));
+    if (!m) return { dias: null, antigo: true, texto: "data de verificação não informada" };
+    var ref = hoje || new Date();
+    var d0 = Date.UTC(+m[1], +m[2] - 1, +m[3]);
+    var d1 = Date.UTC(ref.getFullYear(), ref.getMonth(), ref.getDate());
+    var dias = Math.round((d1 - d0) / 86400000);
+    if (dias < 0) return { dias: null, antigo: true, texto: "data de verificação inválida" };
+    var texto = dias === 0 ? "verificado hoje" : dias === 1 ? "verificado há 1 dia" : "verificado há " + dias + " dias";
+    return { dias: dias, antigo: dias > LIMITE_DIAS, texto: texto };
+  }
+
   return { ORDEM: ORDEM, ROTULOS: ROTULOS, rotuloSubtipo: rotuloSubtipo, normalizarCep: normalizarCep, haversine: haversine,
-    formatarDistancia: formatarDistancia, comDistancia: comDistancia, buscar: buscar };
+    formatarDistancia: formatarDistancia, idadeVerificacao: idadeVerificacao, LIMITE_DIAS: LIMITE_DIAS, comDistancia: comDistancia, buscar: buscar };
 });
