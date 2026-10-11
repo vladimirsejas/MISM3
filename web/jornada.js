@@ -23,7 +23,7 @@
     cqp: ["Centros de Qualificação Profissional e Fundo Social", FUNDO_SOCIAL, "Cursos de qualificação. Confirme turmas abertas e inscrições."],
     senai: ["SENAI Rio Claro", "https://sp.senai.br/unidade/rioclaro/sobre-a-unidade", "Cursos livres, Aprendiz SENAI e cursos técnicos gratuitos."],
     senac: ["Senac Rio Claro", "https://www.sp.senac.br/senac-rio-claro/cursos-livres", "Cursos livres. Confirme valores, bolsas e turmas."],
-    etec: ["Etec — cursos técnicos do Centro Paula Souza", "https://www.cps.sp.gov.br/etec/cursos-oferecidos-pelas-etecs/", "Catálogo do estado: confirme quais cursos a Etec de Rio Claro oferece."],
+    etec: ["Etec Prof. Armando Bayeux da Silva (Rio Claro)", "https://www.cps.sp.gov.br/etecs/etec-prof-armando-bayeux-da-silva/", "Cursos técnicos e ensino médio técnico. Confirme vagas e ingresso."],
     fatecIA: ["Fatec Rio Claro — Inteligência Artificial", "https://fatecrioclaro.cps.sp.gov.br/ia/", "Curso superior de tecnologia presencial, 4 semestres."],
     fatecESG: ["Fatec Rio Claro — Gestão ESG", "https://fatecrioclaro.cps.sp.gov.br/esg/", "Curso superior de tecnologia presencial, 4 semestres."],
     sestsenat: ["SEST SENAT — busca de unidades", "https://www.sestsenat.org.br/unidades", "Selecione São Paulo e Rio Claro e confirme se há unidade."]
@@ -135,7 +135,7 @@
           id: "formacao", titulo: "Se faltar qualificação, veja cursos",
           porque: "Alguns empregos exigem um curso. Fazer um curso curto pode abrir vagas que hoje estão fechadas.",
           fazer: ["Veja as opções de cursos abaixo e confirme requisitos, custo e turmas."],
-          links: [LINKS.senai, LINKS.cqp, LINKS.senac], alternativa: ALTERNATIVA_GERAL
+          links: [LINKS.senai, LINKS.cqp, LINKS.senac, LINKS.etec], alternativa: ALTERNATIVA_GERAL
         });
       }
     }

@@ -273,3 +273,8 @@ Nenhuma branch foi apagada nem alterada. O que **não** foi trazido para a base,
 - Correção: a seção de Trabalho passou a ser **agrupada** (como a de Saúde), em quatro grupos recolhidos com contagem: Emprego e orientação (4), Cursos gratuitos de qualificação (3), Cursos profissionalizantes e técnicos (4) e Cursos superiores de tecnologia (2). Os 13 serviços aparecem; não há botão "Mostrar todos".
 - Trava no teste: todo serviço de Trabalho precisa ter grupo, e a seção precisa ser agrupada.
 - Verificação no navegador (390 px): 13 cartões nos 4 grupos, cartão do SEST SENAT com a localização informada pelo autor, sem rolagem lateral e sem erro de JavaScript.
+
+### Etec de Rio Claro — 11/10/2026
+- A página oficial da **Etec Prof. Armando Bayeux da Silva** (https://www.cps.sp.gov.br/etecs/etec-prof-armando-bayeux-da-silva/, impressão de 10/10/2026 21:47) foi cadastrada com endereço (Avenida Cinco, 445, Centro, CEP 13500-380), telefones ((19) 3524-2330 / 3534-1688), site da unidade e a lista de cursos: técnicos presenciais (Administração, Desenvolvimento de Sistemas, Eletroeletrônica, Eletromecânica, Enfermagem, Finanças, Logística, Mecânica, Mecatrônica), Ensino Médio com duas ênfases e Ensino Médio integrado ao técnico em três formatos (período integral, M-Tec e noturno).
+- Resolve a lacuna do catálogo geral das Etecs, que não dizia o que Rio Claro oferece; o cartão geral passou a remeter ao da unidade. Os e-mails institucionais impressos não foram copiados (conferir por telefone ou site). Horário, vagas, custo e ingresso não constam: continuam como "confirme com a unidade".
+- O plano de trabalho passou a apontar para a Etec local (no passo de curso e no de formação), no lugar do catálogo geral.

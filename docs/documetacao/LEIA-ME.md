@@ -22,6 +22,7 @@ Cada arquivo é a **impressão em PDF** de uma página, feita pelo mantenedor em
 | `fatec-rio-claro-inteligencia-artificial.pdf` | Fatec Rio Claro: CST em Inteligência Artificial (4 semestres, presencial, eixo Informação e Comunicação) e Projeto Pedagógico | https://fatecrioclaro.cps.sp.gov.br/ia/ | 10/10/2026 21:41 | Trabalho (cursos) |
 | `fatec-rio-claro-esg.pdf` | Fatec Rio Claro: CST em Gestão da Sustentabilidade Ambiental, Social e Governança Corporativa (4 semestres, presencial, eixo Gestão e Negócios) | https://fatecrioclaro.cps.sp.gov.br/esg/ | 10/10/2026 21:42 | Trabalho (cursos) |
 | `etec-cursos-oferecidos.pdf` | Centro Paula Souza: catálogo de todos os cursos das Etecs do estado (20 páginas). **Não informa quais cursos a Etec de Rio Claro oferece** | https://www.cps.sp.gov.br/etec/cursos-oferecidos-pelas-etecs/ | 10/10/2026 21:43 | Trabalho (cursos) |
+| `etec-rio-claro-armando-bayeux.pdf` | Etec Prof. Armando Bayeux da Silva (Rio Claro): endereço, telefones, site e cursos oferecidos | https://www.cps.sp.gov.br/etecs/etec-prof-armando-bayeux-da-silva/ | 10/10/2026 21:47 | Trabalho (cursos) |
 
 ## Não arquivado, de propósito
 - Artigo de blog da Matrix Energia sobre tarifa de energia: é de empresa privada, trata de tarifa em geral e não da Tarifa Social; **não foi usado**.
