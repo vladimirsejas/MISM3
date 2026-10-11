@@ -54,7 +54,7 @@ const dadosVisiveis = ler("dados/catalogo_manual.json");
 [["index.html", index], ["rede-mulheres.html", rede]].forEach(([nome, html]) => {
   Array.from(html.replace(/<script>[\s\S]*?<\/script>/g, "").matchAll(/(?:href|src)="([^"#]+)(?:#[^"]*)?"/g), (m) => m[1])
     .filter((u) => !/^(https?:|tel:|mailto:)/.test(u))
-    .forEach((u) => assert(fs.existsSync(path.join(web, u)), nome + ": arquivo local inexistente: " + u));
+    .forEach((u) => assert(fs.existsSync(path.join(web, u.split("?")[0])), nome + ": arquivo local inexistente: " + u));
 });
 assert(fs.existsSync(path.join(web, "dados/catalogo_manual.json")), "o catálogo verificado deve acompanhar o site");
 const catalogo = JSON.parse(dadosVisiveis);
