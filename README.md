@@ -34,9 +34,17 @@ A área **Transporte** (`#transporte`, atalho "Horários de ônibus" na tela ini
 Cada serviço mostra a fonte, a data de verificação e há quantos dias ela foi feita. Acima de 90 dias, ou sem data válida, aparece o aviso "Esta informação pode ter mudado. Confirme telefone, endereço e horário na fonte antes de ir." O aviso não diz que o dado está errado; só informa que a conferência é antiga.
 
 ## Estado dos dados
-- Catálogo verificado à mão (`catalogo/servicos_manuais.csv`): 162 registros: 45 de saúde, 25 de assistência, 18 de emprego e cursos, 5 de mulher e 69 de educação infantil (a Secretaria da Educação e 68 escolas municipais). As unidades de saúde vêm do CNESNet (códigos CNES, 51 estabelecimentos mantidos pela Fundação Municipal de Saúde) e da página de endereços da Fundação; 43 têm endereço e 41 têm telefone.
+- Catálogo verificado à mão (`catalogo/servicos_manuais.csv`): 164 registros: 45 de saúde, 25 de assistência, 20 de emprego e cursos, 5 de mulher e 69 de educação infantil (a Secretaria da Educação e 68 escolas municipais). As unidades de saúde vêm do CNESNet (códigos CNES, 51 estabelecimentos mantidos pela Fundação Municipal de Saúde) e da página de endereços da Fundação; 43 têm endereço e 41 têm telefone.
 - Os números 977 estabelecimentos no CNES e 45 publicados foram confirmados pelo autor, que trabalha na Fundação Municipal de Saúde; a base completa do CNES não está versionada.
 - Sem `servicos.json` e `cep_indice.json` (gerados na máquina de quem roda o pipeline), o site usa só o catálogo verificado e não oferece busca por CEP. Em 09/10/2026 foram gerados localmente 1.387 CEPs a partir de 104.236 linhas do CNEFE e lidos 142 registros de escolas do INEP (69 com Educação Infantil, nenhum campo identifica creche).
+
+## Como rodar os testes e localizar os serviços
+```
+PYTHONPATH=pipeline python -m pytest pipeline/tests -q     # testes Python
+for f in web/tests/*.test.js; do node $f; done              # testes JavaScript
+python pipeline/atualizar_localizacoes.py                   # localiza serviços (CNEFE + lista de CEPs) e refaz o mapa territorial
+```
+O último comando só sugere; nada entra no catálogo sem a sua confirmação. A cada alteração no GitHub, os dois primeiros rodam sozinhos (`.github/workflows/testes.yml`).
 
 ## Privacidade (por desenho)
 - Consulta 100% no navegador; sem servidor próprio, sem cookies, sem localStorage, sem estatísticas.

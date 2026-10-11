@@ -37,3 +37,5 @@ dados/geocodificacao_*.csv
 # passa de 100 MB (o GitHub recusa mais que isso). Ficam só no computador de quem usa. Para Rio Claro, o pipeline
 # gera um arquivo pequeno e público: python pipeline/oferta_educacao_infantil.py -> web/dados/oferta_educacao_infantil.json
 docs/educacao/dados/
+# GeoPackage estadual do IBGE é enorme: nunca vai para o Git
+*.gpkg
