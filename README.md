@@ -1,8 +1,16 @@
 # Mapa do Cuidado Rio-Clarense (marco 1)
 
-> **Orientação:** este README é somente um mapa resumido do trabalho, não uma fonte de verdade nem uma base para decisões. Antes de decidir ou afirmar que algo existe, confira o código, os testes executados, os dados/fontes originais e o [registro de decisões de desenvolvimento](docs/registro_decisoes_desenvolvimento.md).
+> Este README registra **o que existe e foi verificado**; não é plano nem diretriz. Decisões e histórico: [registro de decisões](docs/registro_decisoes_desenvolvimento.md). Última verificação: 11/10/2026.
 
 A tela inicial (**Mulher em Rede**) tem só o propósito, o botão **Em perigo agora?** e sete portas: **Trabalho, Educação, Saúde, Direitos, Moradia, Assistência Social** e **De Mulher para Mulher** (página independente). O conteúdo de cada área só aparece depois de escolhê-la. Onde há dados de CEP reais, também é possível buscar serviços próximos; o CEP **nunca sai do navegador**.
+
+## Idade da informação
+Cada serviço mostra a fonte, a data de verificação e há quantos dias ela foi feita. Acima de 90 dias, ou sem data válida, aparece o aviso "Esta informação pode ter mudado. Confirme telefone, endereço e horário na fonte antes de ir." O aviso não diz que o dado está errado; só informa que a conferência é antiga.
+
+## Estado dos dados
+- Catálogo verificado à mão (`catalogo/servicos_manuais.csv`): 83 registros: 45 de saúde, 25 de assistência, 7 de emprego/curso, 5 de mulher e 1 de creche. As unidades de saúde vêm do CNESNet (códigos CNES, 51 estabelecimentos mantidos pela Fundação Municipal de Saúde) e da página de endereços da Fundação; 43 têm endereço e 41 têm telefone.
+- Os números 977 estabelecimentos no CNES e 45 publicados foram confirmados pelo autor, que trabalha na Fundação Municipal de Saúde; a base completa do CNES não está versionada.
+- Sem `servicos.json` e `cep_indice.json` (gerados na máquina de quem roda o pipeline), o site usa só o catálogo verificado e não oferece busca por CEP. Em 09/10/2026 foram gerados localmente 1.387 CEPs a partir de 104.236 linhas do CNEFE e lidos 142 registros de escolas do INEP (69 com Educação Infantil, nenhum campo identifica creche).
 
 ## Privacidade (por desenho)
 - Consulta 100% no navegador; sem servidor próprio, sem cookies, sem localStorage, sem estatísticas.
@@ -38,20 +46,18 @@ Se um download automático falhar (os sites mudam), o script diz onde baixar à 
 ## Testes
 
     pip install pytest
-    python -m pytest pipeline/tests -q
-    node web/tests/acesso.test.js
-    node web/tests/necessidades.test.js
-    node web/tests/dashboard.test.js   # estrutura: 7 portas, emergência, sem demonstração, links locais
+    python -m pytest pipeline/tests -q      # 39 passaram em 11/10/2026
+    node web/tests/acesso.test.js           # passou (inclui a regra dos 90 dias)
+    node web/tests/necessidades.test.js     # 47 cenários passaram
+    node web/tests/dashboard.test.js        # passou: 7 portas, emergência, sem demonstração, links locais
+
+No navegador (Chromium, 390 px): a área Saúde abre com 45 cartões e sem erro de JavaScript. Não verificados: mapa por CEP com dados reais, leitor de tela, contraste.
 
 ## Conferir o catálogo contra as páginas oficiais
 Com internet, rode `python pipeline/verificar_catalogo.py`. Ele abre a fonte de cada serviço e confere se os telefones cadastrados aparecem na página. "ATENCAO" não é erro certo: abra a fonte e confira.
 
 ## Acrescentar um serviço verificado
 Edite `catalogo/servicos_manuais.csv`. Obrigatórios: `tipo` (creche, saude, assistencia, mulher, emprego_curso), `nome`, `fonte_url`, `verificado_em`. Com `cep`, o serviço entra no mapa; `abrangencia=municipal` faz aparecer para todas. Depois rode `python pipeline/servicos.py`.
-
-## Próximos marcos
-2. Setores censitários + Censo 2022 (crianças de 0 a 4 anos): "desertos de cuidado" e simulador de nova creche.
-3. Relatórios automáticos explicados; vagas e cursos; transporte.
 
 Veja o [registro de decisões de desenvolvimento](docs/registro_decisoes_desenvolvimento.md), `docs/inventario_de_fontes.md`, a [análise competitiva](docs/analise_competitiva_mism3.md), o [plano de fontes externas](docs/plano_fontes_externas_e_expansao.md) e o [benchmark externo](docs/benchmark_externo_ideias_funcionais.md).
 

@@ -37,6 +37,8 @@
     }).join(" · ");
   }
 
+  var AVISO_DATA = "Esta informação pode ter mudado. Confirme telefone, endereço e horário na fonte antes de ir.";
+
   function cartaoServico(s, semFonte) {
     var partes = [];
     var tipoTxt = Acesso.rotuloSubtipo(s.subtipo);
@@ -60,7 +62,9 @@
       partes.push('<p class="aviso-nao-conferido">' + (s.aviso ? esc(s.aviso) : "<strong>Ainda não conferido na página oficial.</strong> Ligue antes de ir.") + "</p>");
       partes.push('<p class="meta">Para conferir: ' + fonte + " · informado em " + esc(s.verificado_em) + "</p>");
     } else {
-      partes.push('<p class="meta">Fonte: ' + fonte + " · verificado em " + esc(s.verificado_em) + "</p>");
+      var idade = Acesso.idadeVerificacao(s.verificado_em);
+      partes.push('<p class="meta">Fonte: ' + fonte + " · verificado em " + esc(s.verificado_em) + " (" + esc(idade.texto) + ")</p>");
+      if (idade.antigo) partes.push('<p class="aviso-data">' + AVISO_DATA + "</p>");
     }
     var dados_bairros = s.bairros ? ' data-bairros="' + esc(normBairro(s.bairros)) + '"' : "";
     return '<article class="cartao"' + dados_bairros + '><h3>' + esc(s.nome) + "</h3>" + partes.join("") + "</article>";
@@ -159,7 +163,9 @@
       });
       visiveis.forEach(function (s) { cartoes += cartaoServico(s, comum); });
       if (comum) {
-        notaFonte = '<p class="meta fonte-comum">Fonte de todos os cartões acima: <a href="' + esc(visiveis[0].fonte_url) + '" target="_blank" rel="noopener noreferrer">' + esc(visiveis[0].fonte) + "</a> · verificado em " + esc(visiveis[0].verificado_em) + ".</p>";
+        var idadeComum = Acesso.idadeVerificacao(visiveis[0].verificado_em);
+        notaFonte = '<p class="meta fonte-comum">Fonte de todos os cartões acima: <a href="' + esc(visiveis[0].fonte_url) + '" target="_blank" rel="noopener noreferrer">' + esc(visiveis[0].fonte) + "</a> · verificado em " + esc(visiveis[0].verificado_em) + " (" + esc(idadeComum.texto) + ").</p>" +
+          (idadeComum.antigo ? '<p class="aviso-data">' + AVISO_DATA + "</p>" : "");
       }
       }
       if (cartoes) corpo += '<div class="lista-cartoes">' + cartoes + "</div>" + notaFonte;

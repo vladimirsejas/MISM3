@@ -104,6 +104,7 @@ a.tel-grande{display:inline-block;font-weight:800;font-size:1.2rem;color:var(--a
 .grupo-recolhido[open]{padding-bottom:1rem}
 .contagem{font-weight:600;color:var(--mut);margin-left:.35rem;font-size:.92em}
 .fonte-comum{margin-top:.6rem}
+.aviso-data{font-size:.85rem;border-left:3px solid #b7791f;padding-left:.5rem;margin-top:.4rem}
 .lista-rede{margin:.2rem 0 0;padding-left:1.2rem}
 .lista-rede li{margin:.3rem 0;font-size:.95rem}
 .detalhes-canal{margin:.5rem 0}
