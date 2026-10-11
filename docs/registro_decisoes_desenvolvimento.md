@@ -803,3 +803,27 @@ Nenhuma branch foi apagada nem alterada. O que **não** foi trazido para a base,
 
 - **Relato do autor:** depois do `git pull`, não via o mapa ao abrir pelo `.bat`. Causa provável: o `abrir_site.bat` serve a pasta `web` **de onde ele está**; havendo duas cópias do projeto no computador (a original e a cópia atualizada), o `.bat` da cópia sem o `pull` mostra o site antigo. Além disso o `.bat` só abria a página inicial.
 - **Mudança:** `abrir_site.bat` aceita a página de destino como argumento (`abrir_site.bat mapa.html`) sem mudar o comportamento padrão; `abrir_mapa.bat` chama esse arquivo já apontando para `mapa.html`. Não executei os `.bat` (ambiente Linux); conferi só o texto e as quebras de linha do Windows.
+
+## 11/10/2026 - Revisão do Copilot (GitHub) conferida contra o código
+
+O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhece o contexto do projeto. Cada afirmação foi conferida no repositório (busca no código e execução), não aceita nem recusada pelo texto.
+
+**Procede, e foi feito:**
+- *Pergunta pulada na jornada:* com filhos e sem resposta sobre o cuidado, o passo da creche continuava com o texto "Sem alguém com quem deixar as crianças...", que afirma o que ela não disse. O passo continua (ela tem filhos), mas com texto neutro ("Você não respondeu sobre isso, então este passo é só uma possibilidade"). Quem respondeu "não" recebe o texto direto. Teste novo em `jornada.test.js`.
+- *Haversine duplicado (Python e JS):* o risco de divergência é real, a divergência hoje não existe (conferido: diferença de 1e-10 m). Novo `test_haversine_python_js.py` compara os dois e roda no CI (que tem Node).
+
+**Não procede (conferido):**
+- "Testes JS não rodam no CI": rodam (`.github/workflows/testes.yml`, laço sobre `web/tests/*.test.js`).
+- "CEP no autocomplete": os campos já têm `autocomplete="off"`; o site não usa localStorage, sessionStorage nem cookie (nenhuma ocorrência fora dos testes).
+- "Crash com índice de CEP vazio": já protegido; a caixa de busca por CEP fica oculta sem índice (`app.js`, `hidden = !(dados.indice && temServicos)`).
+- "Dois índices de CEP / território com lat/lon": `territorio.json` não tem latitude nem longitude por setor (guarda área, densidade e distância); não é uma segunda fonte do índice de CEP.
+- "`territorio.py` só roda com --aplicar", "docs/analise_territorial.md", "servicos.json de 300 KB com 'Pesquisa na internet'": nenhum desses existe como descrito.
+- "Limite silencioso de 3 sugestões / falta limiar": a IA já aplica limiar por categoria (`ia.js`) e o máximo de 3 é uma decisão de projeto (`meta.maximo_sugestoes`).
+- "`maxlength="60"` no CEP": é `maxlength="9"`.
+
+**Recusado de propósito:**
+- *Pré-calcular a distância de cada CEP a cada serviço* (cerca de 1.387 × 164 valores): aumenta o arquivo sem ganho, já que a conta é instantânea no aparelho.
+- *Preencher o CEP com zeros à esquerda ("123" vira "00000123")*: foi justamente corrigido antes, pois digitação incompleta não pode virar CEP válido.
+- *IndexedDB / `localStorage.clear()`*: contraria o princípio de não guardar nada no aparelho.
+
+**Observações válidas, não feitas agora:** unificar `territorio.html` e `painel-secretaria.html` na documentação (já descritos em `docs/estado_do_projeto.md` como protótipos fora do site público); compressão de JSON (o servidor já comprime).
