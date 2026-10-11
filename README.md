@@ -16,6 +16,9 @@ O guia dos filhos tem cartões sobre: quem cuida de cada etapa, o caminho de cad
 
 **Ainda não confirmado pela Secretaria:** o calendário e o procedimento de matrícula de 2027 na rede **municipal**, como pedir vaga em creche quando não há disponibilidade e os documentos exigidos hoje. A lista de escolas estaduais também não está no site.
 
+## Sobre este projeto
+O Mulher em Rede (MISM3) é um **estudo acadêmico de demonstração**: não é vendido, não tem fins comerciais e **não é um site oficial da Prefeitura de Rio Claro**. Ele é um mostruário do que se pode fazer para reunir, de forma clara e segura, informações públicas da cidade; a ideia é que, no futuro, possa ser adotado pela Prefeitura. O rodapé do site diz isso e mostra o **brasão de Rio Claro em versão estilizada** (`web/img/brasao-estilizado.webp`, 60 KB), apenas como ilustração. Se o projeto for adotado oficialmente, o brasão estilizado deve ser trocado pelo arquivo oficial da Prefeitura, com autorização.
+
 ## Idade da informação
 Cada serviço mostra a fonte, a data de verificação e há quantos dias ela foi feita. Acima de 90 dias, ou sem data válida, aparece o aviso "Esta informação pode ter mudado. Confirme telefone, endereço e horário na fonte antes de ir." O aviso não diz que o dado está errado; só informa que a conferência é antiga.
 
