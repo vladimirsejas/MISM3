@@ -19,6 +19,7 @@
     caps: "CAPS (saúde mental)",
     especialidades: "Atendimento especializado",
     secretaria: "Secretaria municipal",
+    escola_municipal: "Escola municipal",
     pat: "Posto de Atendimento ao Trabalhador",
     conecta: "Emprego e oportunidades",
     credito: "Crédito para empreender",
