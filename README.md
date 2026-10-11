@@ -62,7 +62,7 @@ O CNES é a base completa baixada à mão do site do CNES e descompactada em `do
     python pipeline/indice_cep.py         # gera web/dados/cep_indice.json
     python pipeline/cnes.py docs/cnes     # diagnóstico: só contagens, confere as regras do CNES
     python pipeline/servicos.py           # gera web/dados/servicos.json
-    python pipeline/geocodificar_catalogo.py   # propõe CEP/coordenada de serviços sem CEP, a partir do CNEFE (revisar a planilha; --aplicar grava só os casos exatos)
+    python pipeline/geocodificar_catalogo.py   # SUGERE CEP/coordenada (planilha dados/geocodificacao_proposta.csv); só muda o catálogo com --aplicar-aprovadas, e só linhas que uma pessoa marcou "aprovar"
     pip install pyshp
     python pipeline/setores.py caminho/SP_setores_CD2022.zip   # malha de setores de Rio Claro
 

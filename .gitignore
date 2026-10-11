@@ -29,3 +29,6 @@ __pycache__/
 *.sqlite3
 *.backup
 *.bak
+
+# Sugestões do geocodificador (planilha de trabalho local; o que vale entra no catálogo depois de revisado)
+dados/geocodificacao_*.csv
