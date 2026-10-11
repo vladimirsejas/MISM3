@@ -38,7 +38,9 @@
     ["filhos", [
       "filho", "filhos", "crianca", "criancas", "bebe", "creche",
       "maternidade", "escola infantil", "baba", "educacao infantil",
-      "vaga na creche", "matricula do filho"
+      "vaga na creche", "matricula do filho",
+      "mae solo", "mae solteira", "mae sozinha", "sozinha com meus filhos",
+      "crio meus filhos sozinha", "criar meus filhos sozinha"
     ]],
     ["emprego_curso", [
       "emprego", "trabalho", "renda", "curriculo",

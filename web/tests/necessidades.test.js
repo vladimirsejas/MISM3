@@ -47,6 +47,9 @@ const casos = [
   ["não consigo pagar as contas do cartão", ["dividas"]],
   ["quero simular minha aposentadoria no INSS", ["dividas"]],
   ["estou sem dinheiro para comer e com contas atrasadas", ["dividas", "familia"]],
+  ["sou mãe solo", ["filhos"]],
+  ["sou mãe solteira e preciso de emprego", ["filhos", "emprego_curso"]],
+  ["crio meus filhos sozinha", ["filhos"]],
   ["", []],
   ["   ", []]
 ];
