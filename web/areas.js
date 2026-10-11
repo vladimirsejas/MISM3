@@ -92,6 +92,17 @@
               ["O que perguntar", "Em que período a matrícula ou a inscrição está aberta? Onde faço (pessoalmente, na escola ou pela internet)? Quais documentos levo? Qual escola atende o meu endereço? Como acompanho o pedido? Peça tudo por escrito ou anote o nome de quem atendeu."]
             ],
             fonte: ["Constituição Federal, art. 208; LDB (Lei 9.394/1996), art. 6º; ECA (Lei 8.069/1990), art. 53", null, "regras gerais; procedimentos de Rio Claro devem ser confirmados na Secretaria da Educação"] },
+          { nome: "Férias escolares de 2027 e a Copa do Mundo Feminina", sem_tel: true, resumo: "Ver o que muda",
+            texto: "Em 2027 as férias do meio do ano podem ser mais longas. Isso afeta quem precisa deixar os filhos com alguém para trabalhar ou estudar, por isso vale se planejar com antecedência. Este cartão trata das férias, não das datas de matrícula.",
+            topicos: [
+              ["O que a lei determina", "A Lei nº 15.421, de 1º de junho de 2026 (art. 67), manda os sistemas de ensino ajustarem os calendários para que as férias escolares do primeiro semestre de 2027, nas redes pública e privada, abranjam todo o período entre a abertura e o encerramento da Copa do Mundo Feminina da FIFA 2027."],
+              ["Quais são as datas", "A lei não traz as datas. Reportagens indicam que a Copa vai de 24 de junho a 25 de julho de 2027, mas essa informação não foi conferida por nós em fonte oficial. Use sempre o calendário da escola do seu filho."],
+              ["Como Rio Claro vai aplicar", "Ainda não sabemos como a rede municipal, a rede estadual e as escolas particulares de Rio Claro vão ajustar o calendário. Pergunte à Secretaria Municipal da Educação ou à escola quando o calendário de 2027 estiver publicado."],
+              ["Se você trabalha ou estuda", "Combine com antecedência quem cuida das crianças nesse período e pergunte à escola ou à Secretaria se haverá alguma atividade ou programa durante as férias. Este site não confirmou que haja."],
+              ["Isto não é o calendário de matrícula", "O período de matrículas e rematrículas de 2027 em Rio Claro continua sem data confirmada: veja “Datas” em “Matricular meu filho pela primeira vez”."]
+            ],
+            aviso: "A regra do art. 67 foi conferida no texto original da lei. As datas da Copa e a forma como Rio Claro aplicará o calendário ainda precisam ser confirmadas.",
+            fonte: ["Lei nº 15.421, de 1º de junho de 2026, art. 67 (texto original, Câmara dos Deputados; DOU de 2/6/2026, Seção 1, p. 2)", null, "regra nacional conferida; datas e aplicação local a confirmar"] },
           { nome: "Documentos em situações específicas: o que a pesquisa indica", sem_tel: true, resumo: "Ver o passo a passo",
             texto: "Além da lista geral, alguns casos costumam pedir papéis a mais. Use como roteiro de perguntas para a Secretaria, não como lista oficial.",
             topicos: [
