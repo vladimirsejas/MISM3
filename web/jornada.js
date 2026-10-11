@@ -95,10 +95,15 @@
     if (r.filhos === "sim" && r.cuidado !== "sim") {
       add({
         id: "cuidado",
-        titulo: r.cuidado === "as_vezes" ? "Garanta o cuidado dos seus filhos nos horários de trabalho" : "Peça vaga em creche ou escola para seus filhos",
+        /* Sem resposta (ela pulou a pergunta): texto neutro, sem afirmar o que ela não disse. */
+        titulo: r.cuidado === "as_vezes" ? "Garanta o cuidado dos seus filhos nos horários de trabalho"
+          : r.cuidado === "nao" ? "Peça vaga em creche ou escola para seus filhos"
+          : "Veja como pedir vaga em creche ou escola para seus filhos",
         porque: r.cuidado === "as_vezes"
           ? "Se o cuidado só funciona às vezes, fica difícil manter um horário fixo de trabalho ou de curso."
-          : "Sem alguém com quem deixar as crianças, é difícil manter um trabalho ou um curso. Por isso este passo vem cedo.",
+          : r.cuidado === "nao"
+            ? "Sem alguém com quem deixar as crianças, é difícil manter um trabalho ou um curso. Por isso este passo vem cedo."
+            : "Se você precisar de alguém com quem deixar as crianças, a vaga em creche ou escola ajuda a manter um trabalho ou um curso. Você não respondeu sobre isso, então este passo é só uma possibilidade.",
         acao: interno("#educacao/educacao-filhos", "Ver como pedir a vaga"),
         leve: ["Documentos da criança e do responsável. A lista exata é a que a Secretaria da Educação informar."],
         pergunte: ["Como pedir a vaga pelo aplicativo CADU ou na Secretaria da Educação.", "Qual escola perto de casa atende a idade do seu filho e que horário ela funciona."],
