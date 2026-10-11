@@ -261,3 +261,15 @@ Nenhuma branch foi apagada nem alterada. O que **não** foi trazido para a base,
 ### SEST SENAT: unidade de Rio Claro não abre — 11/10/2026
 - O autor informou que a aba de Rio Claro não abre no site do SEST SENAT. O cadastro continua (decisão do autor), como **não conferido**, e o aviso passou a dizer que a cidade talvez não tenha unidade e que, nesse caso, é preciso ver a unidade mais próxima ou ligar antes.
 - **Causa de os PDFs não ajudarem:** o rodapé das impressões traz "Anotações Rápidas", a impressora virtual do OneNote, que gera imagem sem texto. Para o assistente conseguir ler uma página, usar "Salvar como PDF" do navegador (Ctrl+P, destino "Salvar como PDF") ou colar o texto copiado da página.
+
+### Fatec, Etec e unidade do SEST SENAT — 11/10/2026
+- **Fatec Rio Claro (2 cursos):** CST em Inteligência Artificial (https://fatecrioclaro.cps.sp.gov.br/ia/) e CST em Gestão da Sustentabilidade Ambiental, Social e Governança Corporativa (https://fatecrioclaro.cps.sp.gov.br/esg/): ambos presenciais, 4 semestres; eixos Informação e Comunicação e Gestão e Negócios. As demais páginas dos PDFs são o Projeto Pedagógico; turno, vagas, custo e ingresso não constam. Cadastrados com remissão à seção Vestibular do site da Fatec.
+- **Etec:** o PDF de 20 páginas é o catálogo geral de cursos das Etecs do estado (Centro Paula Souza), por curso e modalidade, sem unidade, vagas nem Rio Claro. Cadastrado como catálogo, com aviso de que não mostra os cursos da Etec local. Não se afirma gratuidade, pois a página impressa não a menciona. Os endereços de `etecbayeux.cps.sp.gov.br` e `sebrae` que aparecem nos prints do Gemini não têm fonte arquivada e não foram cadastrados.
+- **SEST SENAT:** o autor informa que há unidade em Rio Claro, em frente à Rodovia Washington Luís (a "pista Washington"). Registrado como informação do autor, sem endereço, telefone ou horário inventados. Continua "não conferido" até haver fonte oficial da unidade. Revoga a dúvida registrada antes sobre a possível inexistência da unidade.
+- **Plano de trabalho:** o passo "Escolher um curso" agora lista SENAI, Centros de Qualificação, Senac, Etec, as duas Fatec, SEST SENAT e Trampolim.
+
+### Cursos escondidos pelo limite de cartões — corrigido — 11/10/2026
+- A conferência no navegador mostrou que Senac e SEST SENAT não apareciam na área Trabalho: a lista é limitada a 12 cartões e passou a ter 13 serviços, então dois ficavam atrás de "Mostrar todos".
+- Correção: a seção de Trabalho passou a ser **agrupada** (como a de Saúde), em quatro grupos recolhidos com contagem: Emprego e orientação (4), Cursos gratuitos de qualificação (3), Cursos profissionalizantes e técnicos (4) e Cursos superiores de tecnologia (2). Os 13 serviços aparecem; não há botão "Mostrar todos".
+- Trava no teste: todo serviço de Trabalho precisa ter grupo, e a seção precisa ser agrupada.
+- Verificação no navegador (390 px): 13 cartões nos 4 grupos, cartão do SEST SENAT com a localização informada pelo autor, sem rolagem lateral e sem erro de JavaScript.

@@ -16,7 +16,7 @@
       checklist: true, jornada: true,
       secoes: [{
         titulo: "Canais oficiais",
-        tipos: ["emprego_curso"],
+        tipos: ["emprego_curso"], agrupar: true,
         links: [
           ["Portal da Empregabilidade de Rio Claro", "https://vagas.rioclaro.sp.gov.br/", "Consultar oportunidades e informações para trabalhadores."],
           ["Trampolim — Governo de São Paulo", "https://www.trampolim.sp.gov.br/", "Consultar oportunidades e cursos disponíveis na plataforma."]

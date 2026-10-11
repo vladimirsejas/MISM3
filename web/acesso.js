@@ -24,6 +24,8 @@
     credito: "Crédito para empreender",
     qualificacao: "Cursos gratuitos de qualificação",
     curso_profissionalizante: "Curso profissionalizante",
+    curso_tecnico: "Curso técnico",
+    curso_superior_tecnologia: "Curso superior de tecnologia",
     fundo_social: "Fundo Social de Solidariedade",
     sede: "Sede administrativa",
     municipal: "Rede municipal",

@@ -34,7 +34,7 @@ assert.strictEqual(ids(asVezes)[0], "cuidado", "cuidado só às vezes também me
 const curso = J.montarPlano({ objetivo: "curso", curriculo: "sim" });
 assert.deepStrictEqual(ids(curso), ["curso"]);
 const nomesCurso = curso.passos[0].links.map((l) => l[0]).join("|");
-["SENAI Rio Claro", "Senac Rio Claro", "SEST SENAT", "Centros de Qualificação Profissional"].forEach((n) =>
+["SENAI Rio Claro", "Senac Rio Claro", "SEST SENAT", "Centros de Qualificação Profissional", "Etec", "Fatec Rio Claro — Inteligência Artificial", "Fatec Rio Claro — Gestão ESG"].forEach((n) =>
   assert(nomesCurso.includes(n), "o passo de curso deve listar " + n));
 const negocio = J.montarPlano({ objetivo: "negocio", curriculo: "sim" });
 assert.deepStrictEqual(ids(negocio), ["negocio"], "quem quer renda própria não recebe o passo de procurar vagas");

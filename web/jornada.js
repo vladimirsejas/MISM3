@@ -23,6 +23,9 @@
     cqp: ["Centros de Qualificação Profissional e Fundo Social", FUNDO_SOCIAL, "Cursos de qualificação. Confirme turmas abertas e inscrições."],
     senai: ["SENAI Rio Claro", "https://sp.senai.br/unidade/rioclaro/sobre-a-unidade", "Cursos livres, Aprendiz SENAI e cursos técnicos gratuitos."],
     senac: ["Senac Rio Claro", "https://www.sp.senac.br/senac-rio-claro/cursos-livres", "Cursos livres. Confirme valores, bolsas e turmas."],
+    etec: ["Etec — cursos técnicos do Centro Paula Souza", "https://www.cps.sp.gov.br/etec/cursos-oferecidos-pelas-etecs/", "Catálogo do estado: confirme quais cursos a Etec de Rio Claro oferece."],
+    fatecIA: ["Fatec Rio Claro — Inteligência Artificial", "https://fatecrioclaro.cps.sp.gov.br/ia/", "Curso superior de tecnologia presencial, 4 semestres."],
+    fatecESG: ["Fatec Rio Claro — Gestão ESG", "https://fatecrioclaro.cps.sp.gov.br/esg/", "Curso superior de tecnologia presencial, 4 semestres."],
     sestsenat: ["SEST SENAT — busca de unidades", "https://www.sestsenat.org.br/unidades", "Selecione São Paulo e Rio Claro e confirme se há unidade."]
   };
 
@@ -112,7 +115,7 @@
         porque: "Um curso certificado amplia as vagas possíveis. Compare opções gratuitas e pagas antes de decidir.",
         fazer: ["Veja as opções abaixo e pergunte requisitos, duração, horário, custo e se há bolsa ou gratuidade.",
           "Confirme se há turma aberta e prazo de inscrição: a página de uma unidade não garante vaga."],
-        links: [LINKS.senai, LINKS.cqp, LINKS.senac, LINKS.sestsenat, LINKS.trampolim],
+        links: [LINKS.senai, LINKS.cqp, LINKS.senac, LINKS.etec, LINKS.fatecIA, LINKS.fatecESG, LINKS.sestsenat, LINKS.trampolim],
         alternativa: "Se um curso não tiver turma, tente outra instituição da lista ou os cursos do Trampolim."
       });
     }
