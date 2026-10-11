@@ -309,3 +309,8 @@ Nenhuma branch foi apagada nem alterada. O que **não** foi trazido para a base,
 - O autor informa que a opção da cidade no site do SEST SENAT **só abre para quem é sócio**. Isso explica por que a aba de Rio Claro não abria e por que as impressões mostravam só o formulário vazio.
 - O cartão e o link do plano passaram a dizer que o acesso é para sócios (segundo o autor) e a orientar a perguntar à unidade se há curso aberto ao público e como se cadastrar. O SEST SENAT permanece cadastrado por decisão do autor, como "não conferido".
 - **Efeito no produto:** o SEST SENAT não deve ser apresentado como opção aberta a todas as mulheres. Os demais cursos listados (SENAI, Senac, Etec, Fatec, SESI) não têm essa restrição nas páginas arquivadas.
+
+### SEST SENAT: a busca de unidades não lista as unidades — 11/10/2026
+- Capturas de tela do autor (https://www.sestsenat.org.br/home, 10/10/2026 22:15–22:16, "mais de 175 unidades"): ao escolher o estado SP, o seletor "Selecione uma unidade" não abre a lista. Não foi possível chegar à página de Rio Claro pela busca do site. O banner de cookies estava aberto nas capturas.
+- Caminhos ainda não testados (sugeridos pelo autor ou pelo Gemini, **não verificados**): aceitar o banner de cookies e tentar de novo, abrir em janela anônima ou outro navegador, tentar o endereço direto da unidade (`sestsenat.org.br/unidade/rioclaro`, citado pelo Gemini) e o catálogo de cursos a distância (`digital.sestsenat.org.br/cursos`, também citado pelo Gemini), e ligar para a unidade, (19) 3522-1710.
+- O cartão do SEST SENAT registra a limitação e continua "não conferido".
