@@ -26,6 +26,7 @@ a{color:var(--pri)}
 .cartao .dist{color:var(--pri);font-weight:700}
 .cartao p{margin:.2rem 0;font-size:.92rem}
 .cartao .meta{color:var(--mut);font-size:.8rem}
+.cartao .aviso-data{font-size:.85rem;border-left:3px solid #b7791f;padding-left:.5rem;margin-top:.4rem}
 .vazio{color:var(--mut);font-style:italic}
 .rodape{font-size:.85rem;color:var(--mut);padding-bottom:3rem}
 

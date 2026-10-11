@@ -91,3 +91,10 @@ Ao concluir mudanças relevantes, registrar o que foi alterado, o teste executad
 - As descrições dos links repetem só o que o título indica. Telefones e endereços de UBS **não foram copiados**: a busca mostrou números e endereços diferentes para a mesma unidade em páginas distintas (UBS 29, UBS Wenzel), o que indica dado desatualizado em alguma delas.
 - A página "Postos de Saúde" (`/postos-de-saude/`) apareceu na busca, mas parece duplicar a lista de UBS; não foi incluída.
 - Teste: `dashboard.test.js` passou a exigir link oficial na porta Saúde.
+
+### Idade da verificação nos cartões de serviço — 11/10/2026
+- Os dois links oficiais da porta Saúde foram abertos e confirmados como funcionando pelo autor do projeto; a pendência registrada em 10/10 está resolvida.
+- Cada cartão passou a exibir "verificado em AAAA-MM-DD (verificado há N dias)". Acima de 90 dias, ou com data ausente, inválida ou futura, aparece o aviso para confirmar telefone, endereço e horário na fonte. O texto não afirma que o dado esteja errado.
+- A regra está em `Acesso.idadeVerificacao` (`web/acesso.js`), separada da interface e coberta por testes nas bordas (hoje, 1 dia, 90 e 91 dias, vazio, futuro, texto inválido). O limite de 90 dias é uma escolha de partida, não um critério oficial.
+- Verificação no navegador: com datas recentes, 0 avisos; com data trocada para 2026-03-01 apenas no navegador, 3 avisos; nenhum erro de JavaScript.
+- Não resolvido: o pipeline grava `verificado_em` de escolas e CNES como a data de geração do arquivo, não a data de conferência na fonte. Esses cartões dizem "verificado hoje" logo após rodar o pipeline, o que pode superestimar a atualidade.
