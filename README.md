@@ -22,7 +22,7 @@ Cada serviço mostra a fonte, a data de verificação e há quantos dias ela foi
 - Botão "Em perigo agora?" abre os contatos oficiais (190, 192, 193, 180, 100, 188) e um botão para sair da página. Não prometemos que o uso é invisível: "sair" não apaga o histórico do navegador.
 
 ## Abrir o sistema
-Dê dois cliques em `abrir_site.bat` (Windows; ele serve a pasta `web`) ou rode:
+Dê dois cliques em `abrir_site.bat` (Windows). Ele procura o Python (`py` ou `python`), escolhe uma porta livre entre 8000 e 8010, liga o servidor da pasta `web` e abre o navegador quando o servidor está pronto; se faltar o Python ou as portas estiverem ocupadas, a janela explica o problema e fica aberta. Para parar, feche a janela ou aperte Ctrl+C. Ou rode à mão:
 
     python -m http.server 8000 --directory web
 
