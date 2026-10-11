@@ -1,21 +1,41 @@
 # Horários de ônibus de Rio Claro
 
-## Fonte utilizada no levantamento
+**Fonte:** [SOU Transportes — Rio Claro](https://soutransportes.com.br/rio-claro/linhas-e-horarios/). Os PDFs desta pasta são **páginas impressas do site da SOU em 09/10/2026**. Cada página diz "Horários válidos até: 04/02/2027".
 
-**Fonte informada para os documentos reunidos no projeto:** [SOU Transportes — Rio Claro](https://soutransportes.com.br/rio-claro/).
+## Como os horários chegaram ao site
 
-Página específica de linhas e horários: [SOU Transportes — Linhas e horários](https://soutransportes.com.br/rio-claro/linhas-e-horarios/).
+Os PDFs são **impressões de imagem**, sem texto (a extração automática só achava cabeçalhos de impressão). Por isso os horários foram **lidos das imagens** e conferidos por **três leituras independentes**: leitura visual, OCR a 220 dpi e OCR a 300 dpi. Resultado: **382 horários, todos iguais nas três leituras**.
 
-Os 12 PDFs guardados localmente em `docs/transporte/` foram obtidos/impressos a partir da fonte da SOU indicada acima, conforme informado durante o levantamento. Portanto, essa URL deve ser citada como origem dos documentos na documentação do MISM3.
+- Fonte de verdade, editável: [`catalogo/horarios_onibus.txt`](../../catalogo/horarios_onibus.txt) (um quadro por linha, com comentários explicando o formato).
+- Gerador e validador: `python pipeline/horarios_onibus.py` grava `web/dados/horarios_onibus.json`. Ele **recusa** horário inválido, fora de ordem ou repetido, e variante sem trajeto na legenda. `--verificar` confere se o JSON versionado está igual ao que o `.txt` gera.
+- Interface: área **Transporte** (`#transporte`), por atalho "Horários de ônibus" na tela inicial. Mostra as próximas saídas de hoje (pelo relógio do aparelho), os horários por tipo de dia e o trajeto de cada variante.
 
-## Resultado da extração
+## Como ler uma página da SOU
 
-O script `pipeline/extrair_texto_onibus.py` conseguiu abrir os 12 PDFs e processar 29 páginas, mas o texto extraído contém somente cabeçalhos de impressão/anotações. Os horários não ficaram disponíveis como texto legível nesses arquivos. Isso não invalida a fonte: significa apenas que os PDFs locais não permitiram extrair automaticamente as tabelas.
+Cada página é uma **linha** (número e nome) e um **sentido** ("Local de partida: Ida" ou "Volta"). Há quadros de **Dias úteis** (segunda a sexta), **Sábados** e **Domingos**; o mesmo dia pode ter **vários quadros**, um por **variante de trajeto**. O número pequeno acima de cada horário (1, 2, 3...) remete à "Legenda de viagens" (por exemplo, "1 - Bela Vista/São Miguel-Centro"). A SOU não traz feriados nessas páginas.
 
-## Estado da base
+## O que cada PDF contém (pelo conteúdo, não pelo nome do arquivo)
 
-O arquivo `web/dados/horarios_onibus.json` registra a fonte da SOU, mas ainda não contém horários estruturados. Não preencher horários por suposição.
+Os nomes dos arquivos **não correspondem** ao conteúdo em vários casos:
 
-## Próximo passo
+| Arquivo | Conteúdo real |
+|---|---|
+| `belavista2.pdf` | Linha 01 Bela Vista, **Ida** |
+| `belavista1.pdf` | Linha 01 Bela Vista, **Volta** |
+| `cervezaoida.pdf` | Linha 06 Cervezão, Ida |
+| `cervezaovolta.pdf` | Linha 06 Cervezão, Volta |
+| `circular1ida.pdf` | Linha 07 Circular I, **Volta** (cópia exata de `circular1volta.pdf`) |
+| `circular1volta.pdf` | Linha 07 Circular I, Volta |
+| `circular2ida.pdf` | Linha 08 Circular 2, Ida |
+| `circular2volta.pdf` | Linha 08 Circular 2, Volta |
+| `paimeirasida.pdf` | Linha 09 Paineiras, Ida |
+| `arcoirismaepretaida.pdf` | Linha 09 Paineiras, **Ida** (cópia exata de `paimeirasida.pdf`; **não** é a Arco-Íris/Mãe Preta) |
+| `paineirasvolta.pdf` | Linha 09 Paineiras, Volta |
 
-Obter as tabelas legíveis a partir da própria página da SOU ou de seus arquivos/documentos publicados e estruturar cada linha com número/nome, sentido, tipo de dia, horários, URL da fonte e data de consulta. Preservar a URL da SOU como referência de origem e indicar separadamente qualquer dificuldade técnica de extração.
+## O que ainda falta (não inventar)
+
+- **Circular I — Ida** (linha 07): baixar no site da SOU. O arquivo recebido como "ida" repete a volta.
+- **Arco-Íris/Mãe Preta**, ida e volta: o arquivo `arcoirismaepreta.pdf` não foi recebido, e o `arcoirismaepretaida.pdf` é a Paineiras.
+- **As demais linhas da SOU** em Rio Claro (as linhas recebidas são 01, 06, 07, 08 e 09).
+- Feriados: não constam nas páginas recebidas.
+- Os horários **vencem em 04/02/2027**: o site avisa quando a data passa. Quando a SOU publicar novos horários, baixar de novo, atualizar o `.txt` e rodar `python pipeline/horarios_onibus.py`.

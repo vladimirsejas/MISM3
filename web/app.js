@@ -7,7 +7,7 @@
   var mapa = null, camadas = null, tiles = null;
   var LIMITE_CARTOES = 12;
 
-  var ICONES = { trabalho: "i-trabalho", educacao: "i-educacao", saude: "i-saude", direitos: "i-direitos", moradia: "i-moradia", assistencia: "i-assistencia" };
+  var ICONES = { trabalho: "i-trabalho", educacao: "i-educacao", saude: "i-saude", direitos: "i-direitos", moradia: "i-moradia", assistencia: "i-assistencia", onibus: "i-onibus" };
 
   function esc(s) {
     return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
@@ -186,8 +186,64 @@
       (g.texto ? "<p>" + esc(g.texto) + "</p>" : "") + "<ul>" + itens + "</ul></nav>";
   }
 
+  /* ------------------------------------------------------------ horários de ônibus (SOU Transportes) */
+  var DIA_DA_SEMANA = ["Domingos", "Dias úteis", "Dias úteis", "Dias úteis", "Dias úteis", "Dias úteis", "Sábados"];
+  function minutos(hhmm) { return parseInt(hhmm.slice(0, 2), 10) * 60 + parseInt(hhmm.slice(3), 10); }
+  function dataBr(iso) { var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || ""); return m ? m[3] + "/" + m[2] + "/" + m[1] : ""; }
+
+  function htmlSentido(h, s, hoje) {
+    var tipoHoje = DIA_DA_SEMANA[hoje.getDay()], agora = hoje.getHours() * 60 + hoje.getMinutes();
+    var proximos = [];
+    s.quadros.forEach(function (q) {
+      if (q.dia === tipoHoje) q.horarios.forEach(function (x) { if (minutos(x) >= agora) proximos.push(x); });
+    });
+    proximos = proximos.filter(function (x, i) { return proximos.indexOf(x) === i; }).sort().slice(0, 3);
+    var html = '<div class="sentido"><h3>' + esc(s.sentido) + "</h3>";
+    html += proximos.length
+      ? '<p class="proximos">Próximas saídas hoje (' + esc(tipoHoje.toLowerCase()) + "): " + proximos.map(function (x) { return "<strong>" + esc(x) + "</strong>"; }).join(", ") + ' <span class="meta">pelo relógio do seu aparelho</span></p>'
+      : '<p class="proximos meta">Pelas páginas da SOU, não há mais saídas hoje (' + esc(tipoHoje.toLowerCase()) + ") neste sentido.</p>";
+    ["Dias úteis", "Sábados", "Domingos"].forEach(function (dia) {
+      var qs = s.quadros.filter(function (q) { return q.dia === dia; });
+      if (!qs.length) return;
+      var dias = (h.dias || {})[dia];
+      html += '<details class="dia-horarios"' + (dia === tipoHoje ? " open" : "") + "><summary>" + esc(dia) + (dias ? ' <span class="contagem">(' + esc(dias) + ")</span>" : "") + "</summary>";
+      qs.forEach(function (q) {
+        html += '<p class="trajeto">Trajeto: ' + esc(s.legenda[String(q.variante)] || "") + '</p><ul class="horas">' +
+          q.horarios.map(function (x) { return '<li class="hora' + (dia === tipoHoje && x === proximos[0] ? " proxima" : "") + '">' + esc(x) + "</li>"; }).join("") + "</ul>";
+      });
+      html += "</details>";
+    });
+    return html + "</div>";
+  }
+
+  function htmlHorarios() {
+    var h = dados.horarios;
+    if (!h || !h.linhas || !h.linhas.length) return '<p class="vazio">Os horários de ônibus não foram carregados. Abra o sistema pelo procedimento do README.</p>';
+    var hoje = new Date();
+    var vencido = h.valido_ate && hoje > new Date(h.valido_ate + "T23:59:59");
+    var html = '<div class="status" role="note"><strong>Horários da SOU Transportes.</strong> Páginas impressas em ' + esc(dataBr(h.fonte.impresso_em)) +
+      ", válidas até " + esc(dataBr(h.valido_ate)) + "." +
+      (vencido ? " <strong>Essa data já passou: confira os horários atuais no site da SOU.</strong>" : "") +
+      ' Em feriados os horários podem mudar. <a href="' + esc(h.fonte.url) + '" target="_blank" rel="noopener noreferrer">Conferir no site da SOU</a>.</div>';
+    html += '<div class="lista-linhas">';
+    h.linhas.forEach(function (l) {
+      var ids = l.sentidos.map(function (s) { return s.sentido; });
+      html += '<details class="linha-onibus"><summary><span class="num-linha">' + esc(l.numero) + "</span><span>" + esc(l.nome) +
+        ' <span class="contagem">' + esc(ids.join(" e ")) + "</span></span></summary>";
+      l.sentidos.forEach(function (s) { html += htmlSentido(h, s, hoje); });
+      if (l.sentidos.length < 2) html += '<p class="aviso-data">Só temos o sentido ' + esc(ids[0]) + " desta linha. Confira o outro sentido no site da SOU.</p>";
+      html += "</details>";
+    });
+    html += "</div>";
+    if (h.lacunas && h.lacunas.length) {
+      html += '<aside class="pendente" aria-label="Ainda não disponível"><h2>Ainda não disponível</h2><ul>' + h.lacunas.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("") + "</ul></aside>";
+    }
+    return html;
+  }
+
   function htmlArea(area) {
     var html = area.jornada && window.JornadaUI ? JornadaUI.html() : "";
+    if (area.horarios) html += htmlHorarios();
     if (area.guia) html += htmlGuia(area.guia);
     var vistos = Object.create(null);
     area.secoes.forEach(function (sec, i) {
@@ -390,7 +446,8 @@
        e só acrescenta o que não está no catálogo (CNES, Censo Escolar). Assim um servicos.json antigo nunca esconde
        cadastros novos, e uma unidade cadastrada à mão com o código CNES não aparece duas vezes. */
     function opcional(url) { return carregar(url).catch(function () { return null; }); }
-    return Promise.all([opcional("dados/catalogo_manual.json"), opcional("dados/servicos.json")]).then(function (r) {
+    return Promise.all([opcional("dados/catalogo_manual.json"), opcional("dados/servicos.json"), opcional("dados/horarios_onibus.json")]).then(function (r) {
+      dados.horarios = r[2];
       var manual = (r[0] && r[0].servicos) || [], pipeline = (r[1] && r[1].servicos) || [];
       var idsManuais = Object.create(null), codigosManuais = Object.create(null);
       manual.forEach(function (s) { idsManuais[s.id] = true; if (s.cnes) codigosManuais[String(s.cnes)] = true; });

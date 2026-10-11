@@ -362,10 +362,18 @@
     ]
   };
 
+  /* Áreas com rota própria (#transporte) que NÃO são uma das sete portas da tela inicial: chegam por atalho. */
+  var EXTRAS = [{
+    id: "transporte", nome: "Transporte", icone: "onibus",
+    intro: "Horários de ônibus de Rio Claro, conforme a SOU Transportes. Escolha a linha e o sentido.",
+    horarios: true, secoes: []
+  }];
+
   function porId(id) {
     for (var i = 0; i < AREAS.length; i++) if (AREAS[i].id === id) return AREAS[i];
+    for (var j = 0; j < EXTRAS.length; j++) if (EXTRAS[j].id === id) return EXTRAS[j];
     return null;
   }
 
-  return { AREAS: AREAS, EMERGENCIA: EMERGENCIA, REDE_OFERTAS: REDE_OFERTAS, NOTA_FONTE: NOTA_FONTE, porId: porId };
+  return { AREAS: AREAS, EXTRAS: EXTRAS, EMERGENCIA: EMERGENCIA, REDE_OFERTAS: REDE_OFERTAS, NOTA_FONTE: NOTA_FONTE, porId: porId };
 });
