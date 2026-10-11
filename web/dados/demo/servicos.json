@@ -2,7 +2,7 @@
  "meta": {
   "demo": true,
   "gerado_em": "2026-10-08",
-  "aviso": "Serviços com [DEMO] no nome são ilustrativos. Cursinho Metamorfose e PEJA são reais (fonte: páginas da Unesp Rio Claro): confirme antes de ir."
+  "aviso": "DADOS ILUSTRATIVOS. Nenhum servico abaixo e real."
  },
  "servicos": [
   {
@@ -220,50 +220,6 @@
    "fonte_url": "",
    "verificado_em": "2026-10-08",
    "observacao": "Exemplo para demonstrar a tela."
-  },
-  {
-   "id": "man-metamorfose",
-   "tipo": "emprego_curso",
-   "subtipo": "cursinho_popular",
-   "nome": "Cursinho Popular Metamorfose (pré-vestibular gratuito da Unesp)",
-   "cep": "13506900",
-   "endereco": "Instituto de Biociências da Unesp, Avenida 24 A, 1515, Bela Vista",
-   "telefone": null,
-   "instagram": "metamorfose.rc",
-   "portas": [
-    "filhos"
-   ],
-   "horario": null,
-   "lat": null,
-   "lon": null,
-   "geo": "sem_local",
-   "abrangencia": "municipal",
-   "fonte": "Pagina oficial (cadastro manual)",
-   "fonte_url": "https://ib.rc.unesp.br/#!/departamentos/educacao/sobre/",
-   "verificado_em": "2026-10-11",
-   "observacao": "Por que importa: o cursinho treina para o vestibular e para o ENEM, as provas que dão acesso à faculdade (o ENEM abre vagas em universidades por programas como SISU e ProUni). Estudar de graça, com simulados, aumenta as chances de passar. Cursinho preparatório para o vestibular, aberto a todos (mães, filhos e adultos de qualquer idade) e totalmente gratuito (sem taxa de inscrição, matrícula, mensalidade ou material). Voltado a estudantes de escolas públicas e do EJA, com prioridade para a inclusão de negras e negros, indígenas, LGBTQIA+, mulheres e pessoas vulneráveis. Tem simulados mensais do ENEM e vestibulares, atividades culturais aos sábados e aulas experimentais. A página oficial não informa horário, turmas nem período de inscrição, e o texto é de quando o projeto tinha ainda vagas: o contato é pelo Instagram, pergunte lá se há vagas. Também existe no Facebook como \"Curso Preparatório Metamorfose\"."
-  },
-  {
-   "id": "man-peja-unesp",
-   "tipo": "emprego_curso",
-   "subtipo": "educacao_jovens_adultos",
-   "nome": "PEJA – Educação de Jovens e Adultos da Unesp Rio Claro",
-   "cep": "13506900",
-   "endereco": "Instituto de Biociências da Unesp, Avenida 24 A, 1515, Bela Vista",
-   "telefone": null,
-   "instagram": "peja.gepepdh.unesp",
-   "portas": [
-    "filhos"
-   ],
-   "horario": null,
-   "lat": null,
-   "lon": null,
-   "geo": "sem_local",
-   "abrangencia": "municipal",
-   "fonte": "Pagina oficial (cadastro manual)",
-   "fonte_url": "https://ib.rc.unesp.br/#!/departamentos/educacao/peja/apresentacao/",
-   "verificado_em": "2026-10-11",
-   "observacao": "Projeto de Educação de Jovens e Adultos da Unesp, para pessoas com 15 anos ou mais que não tiveram acesso à escolarização regular. Pode servir a filhos adolescentes a partir dos 15 anos. Atenção: a página oficial diz que hoje as atividades acontecem no Centro de Ressocialização Masculino, com homens reeducandos. Não há informação de turma aberta ao público em geral: use o Instagram ou o e-mail debora.fonseca@unesp.br para perguntar se existe vaga para você."
   }
  ]
 }
