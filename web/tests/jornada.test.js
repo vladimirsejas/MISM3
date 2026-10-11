@@ -165,3 +165,12 @@ assert(passoVagas.pergunte.some((t) => /14\.542/.test(t) && /PAT/.test(t)), "a p
 assert(passoVagas.extras.some((l) => /camara\.leg\.br\/legin\/fed\/lei\/2023\/lei-14542/.test(l[1])), "link da lei na fonte oficial");
 
 console.log("jornada.test.js: perguntas, ordem e tamanho do plano, telefones do catálogo, links, promessas proibidas e currículo passaram");
+
+/* Pulou a pergunta do cuidado: o passo continua (ela tem filhos), mas sem afirmar que ela não tem com quem deixá-los. */
+const pulou = J.montarPlano({ filhos: "sim", renda_agora: "nao", curriculo: "sim", objetivo: "emprego" }, achar).passos.find((p) => p.id === "cuidado");
+assert(pulou, "com filhos e sem resposta sobre o cuidado, o passo da creche continua disponível");
+assert(!/Sem alguém|Peça vaga/.test(pulou.titulo + pulou.porque), "sem resposta, o texto não afirma que ela não tem com quem deixar as crianças");
+assert(/não respondeu|possibilidade/.test(pulou.porque), "o texto avisa que é só uma possibilidade");
+const disse = J.montarPlano({ filhos: "sim", cuidado: "nao", renda_agora: "nao", curriculo: "sim", objetivo: "emprego" }, achar).passos.find((p) => p.id === "cuidado");
+assert(/Sem alguém com quem deixar as crianças/.test(disse.porque), "quem respondeu 'não' continua recebendo o texto direto");
+console.log("jornada: cuidado pulado ok");
