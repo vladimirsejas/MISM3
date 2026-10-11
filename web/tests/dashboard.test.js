@@ -342,7 +342,7 @@ assert(fs.existsSync(brasaoArq) && fs.statSync(brasaoArq).size < 120 * 1024, "a 
 
 /* ---- Tela inicial acolhedora: hero, emergência, contatos essenciais, acesso rápido e paleta ---- */
 assert(/<h1 id="titulo-inicio"[^>]*>Você não está <em>sozinha<\/em><\/h1>/.test(index), "a tela inicial deve acolher: 'Você não está sozinha'");
-assert(/<img src="img\/heroi-mulheres\.webp" width="\d+" height="\d+" alt=""/.test(index) && fs.statSync(path.join(web, "img/heroi-mulheres.webp")).size < 120 * 1024, "a ilustração do topo deve ser decorativa (alt vazio), ter largura e altura e ser leve");
+assert(/<img src="img\/heroi-mulheres\.webp(\?v=\d+)?" width="\d+" height="\d+" alt=""/.test(index) && fs.statSync(path.join(web, "img/heroi-mulheres.webp")).size < 120 * 1024, "a ilustração do topo deve ser decorativa (alt vazio), ter largura e altura e ser leve");
 assert(/Cada informação mostra a fonte e a data/.test(index), "a tela inicial só pode prometer o que o site cumpre: fonte e data");
 assert(/id="abrir-emergencia"/.test(index) && /abrir-emergencia/.test(app) && /stopPropagation/.test(app), "a tela inicial deve ter o botão Emergência que abre o painel do topo");
 ["190", "192", "180", "100"].forEach((n) => assert(new RegExp('href="tel:' + n + '"').test(inicio), "contato essencial nacional ausente: " + n));
