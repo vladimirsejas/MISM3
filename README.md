@@ -1,4 +1,4 @@
-# Mapa do Cuidado Rio-Clarense (marco 1)
+# Mulher em Rede (MISM3) — marco 1
 
 > Este README registra **o que existe e foi verificado**; não é plano nem diretriz. Decisões e histórico: [registro de decisões](docs/registro_decisoes_desenvolvimento.md). Última verificação: 11/10/2026.
 

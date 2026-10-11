@@ -1,4 +1,4 @@
-# Minutas de pedidos de informação — Mapa do Cuidado Rio-Clarense
+# Minutas de pedidos de informação — Mulher em Rede
 
 Objetivo: obter dados públicos, agregados e atualizados para conectar oportunidades de trabalho e formação, transporte e cuidado infantil. Enviar cada pedido separadamente ao canal oficial de Acesso à Informação da Prefeitura, para facilitar o encaminhamento à secretaria responsável.
 
