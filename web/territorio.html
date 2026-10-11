@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Rio Claro em números</title>
+<meta name="description" content="Onde as pessoas moram em Rio Claro: população, domicílios e densidade por setor censitário (IBGE, Censo 2022), e a oferta de educação infantil (INEP, 2025).">
+<style>
+  :root {
+    color-scheme: light;
+    --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink2: #52514e; --hair: rgba(11,11,11,.10);
+    --grid: #e1e0d9; --none: #c3c2b7; --bar: #2a78d6; --focus: #2a78d6; --warn-bg: #fff6e0; --warn-ink: #5b3d00;
+    --c0: #86b6ef; --c1: #5598e7; --c2: #2a78d6; --c3: #1c5cab; --c4: #0d366b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink2: #c3c2b7; --hair: rgba(255,255,255,.10);
+      --grid: #2c2c2a; --none: #383835; --bar: #3987e5; --focus: #6da7ec; --warn-bg: #2b2208; --warn-ink: #f3dca0;
+      --c0: #184f95; --c1: #256abf; --c2: #3987e5; --c3: #6da7ec; --c4: #9ec5f4;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink2: #c3c2b7; --hair: rgba(255,255,255,.10);
+    --grid: #2c2c2a; --none: #383835; --bar: #3987e5; --focus: #6da7ec; --warn-bg: #2b2208; --warn-ink: #f3dca0;
+    --c0: #184f95; --c1: #256abf; --c2: #3987e5; --c3: #6da7ec; --c4: #9ec5f4;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page); color: var(--ink); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .pagina { max-width: 1120px; margin: 0 auto; padding: 16px; }
+  .voltar { display: inline-block; margin-bottom: 8px; color: var(--ink2); font-size: .95rem; }
+  h1 { margin: 0 0 4px; font-size: 1.6rem; line-height: 1.2; }
+  h2 { margin: 0 0 4px; font-size: 1.1rem; }
+  .sub { margin: 0 0 16px; color: var(--ink2); }
+  .aviso { background: var(--warn-bg); color: var(--warn-ink); border-radius: 8px; padding: 10px 14px; margin: 0 0 16px; }
+  .cartao { background: var(--surface); border: 1px solid var(--hair); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+  .heroi { font-size: 3.25rem; line-height: 1.05; font-weight: 600; margin: 0; }
+  .rotulo { color: var(--ink2); margin: 0; }
+  .indicadores { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 12px; }
+  .indicador { border-top: 1px solid var(--hair); padding-top: 8px; }
+  .indicador .valor { font-size: 1.4rem; font-weight: 600; margin: 0; }
+  .filtros-linha { display: flex; flex-wrap: wrap; gap: 0 32px; }
+  .filtros { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; margin: 0 0 16px; border: 0; padding: 0; }
+  .filtros legend { font-weight: 600; padding: 0; margin-right: 8px; float: left; line-height: 2.2; }
+  .filtros label { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; cursor: pointer; }
+  .grade { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  @media (min-width: 900px) { .grade { grid-template-columns: 1.25fr 1fr; align-items: start; } }
+  .mapa-moldura { position: relative; }
+  #mapa { display: block; width: 100%; height: auto; max-height: 78vh; }
+  #mapa path { stroke: var(--surface); stroke-width: .5; fill-rule: evenodd; }
+  #mapa path.c0 { fill: var(--c0); } #mapa path.c1 { fill: var(--c1); } #mapa path.c2 { fill: var(--c2); }
+  #mapa path.c3 { fill: var(--c3); } #mapa path.c4 { fill: var(--c4); } #mapa path.cn { fill: var(--none); }
+  #mapa.tem-selecao path { opacity: .28; }
+  #mapa.tem-selecao path.sel { opacity: 1; stroke: var(--ink); stroke-width: 1.2; }
+  #mapa path:hover { stroke: var(--ink); stroke-width: 1.2; }
+  .dica { position: absolute; z-index: 2; pointer-events: none; background: var(--surface); color: var(--ink); border: 1px solid var(--hair);
+          border-radius: 8px; padding: 8px 10px; box-shadow: 0 4px 16px rgba(0,0,0,.18); font-size: .88rem; max-width: 260px; display: none; }
+  .dica strong { font-size: 1rem; }
+  .dica .sec { color: var(--ink2); }
+  .legenda { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 12px 0 0; padding: 0; list-style: none; font-size: .88rem; color: var(--ink2); }
+  .legenda li { display: inline-flex; align-items: center; gap: 6px; }
+  .amostra { width: 14px; height: 14px; border-radius: 3px; display: inline-block; }
+  .amostra.c0 { background: var(--c0); } .amostra.c1 { background: var(--c1); } .amostra.c2 { background: var(--c2); }
+  .amostra.c3 { background: var(--c3); } .amostra.c4 { background: var(--c4); } .amostra.cn { background: var(--none); }
+  .barras { list-style: none; margin: 8px 0 0; padding: 0; }
+  .barras button { all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: minmax(96px, 34%) 1fr; gap: 8px;
+                   align-items: center; width: 100%; min-height: 28px; padding: 1px 4px; border-radius: 6px; }
+  .barras button:hover { background: var(--grid); }
+  .barras button:focus-visible { outline: 2px solid var(--focus); }
+  .barras button[aria-pressed="true"] { background: var(--grid); font-weight: 600; }
+  .barras .nome { font-size: .88rem; overflow-wrap: anywhere; }
+  .barras .trilho { display: flex; align-items: center; gap: 6px; min-width: 0; }
+  .barras .barra { height: 14px; background: var(--bar); border-radius: 0 4px 4px 0; min-width: 2px; }
+  .barras .num { font-size: .82rem; color: var(--ink2); white-space: nowrap; }
+  .nota { color: var(--ink2); font-size: .88rem; margin: 8px 0 0; }
+  .btn { font: inherit; padding: 6px 12px; min-height: 36px; border-radius: 8px; border: 1px solid var(--hair); background: var(--surface); color: var(--ink); cursor: pointer; }
+  table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+  caption { text-align: left; font-weight: 600; padding: 4px 0 8px; }
+  th, td { padding: 6px 8px; border-bottom: 1px solid var(--grid); text-align: right; }
+  th:first-child, td:first-child { text-align: left; }
+  td { font-variant-numeric: tabular-nums; }
+  .rolagem { overflow-x: auto; }
+  details > summary { cursor: pointer; font-weight: 600; min-height: 44px; display: flex; align-items: center; }
+  ul.limites { margin: 8px 0 0 18px; padding: 0; color: var(--ink2); }
+  .erro { color: #b3261e; font-weight: 600; }
+  footer { color: var(--ink2); font-size: .85rem; margin: 8px 0 24px; }
+</style>
+</head>
+<body>
+<div class="pagina">
+  <a class="voltar" href="index.html">← Voltar ao início</a>
+  <h1>Rio Claro em números</h1>
+  <p class="sub">Onde as pessoas moram, por setor censitário. Dados públicos do IBGE (Censo 2022) e do INEP (Censo Escolar 2025).</p>
+  <p class="aviso" id="aviso" role="note">Carregando…</p>
+
+  <section class="cartao" aria-labelledby="t-resumo">
+    <h2 id="t-resumo">Resumo do município</h2>
+    <p class="heroi" id="heroi">–</p>
+    <p class="rotulo">pessoas moram em Rio Claro (Censo 2022)</p>
+    <div class="indicadores" id="indicadores"></div>
+  </section>
+
+  <div class="filtros-linha">
+    <fieldset class="filtros">
+      <legend>Mostrar no mapa:</legend>
+      <label><input type="radio" name="metrica" value="densidade" checked> Pessoas por km²</label>
+      <label><input type="radio" name="metrica" value="pessoas_por_domicilio"> Pessoas por domicílio</label>
+    </fieldset>
+    <fieldset class="filtros">
+      <legend>Área:</legend>
+      <label><input type="radio" name="area" value="todo" checked> Município todo</label>
+      <label><input type="radio" name="area" value="densa"> Aproximar na área urbana</label>
+    </fieldset>
+  </div>
+
+  <div class="grade">
+    <section class="cartao" aria-labelledby="t-mapa">
+      <h2 id="t-mapa">Mapa dos 408 setores censitários</h2>
+      <p class="rotulo" id="sub-mapa"></p>
+      <div class="mapa-moldura" id="moldura">
+        <svg id="mapa" role="img" aria-labelledby="t-mapa sub-mapa" focusable="false"></svg>
+        <div class="dica" id="dica" role="status"></div>
+      </div>
+      <ul class="legenda" id="legenda"></ul>
+      <p class="nota" id="nota-area" hidden></p>
+      <p class="nota">Passe o mouse ou toque num setor para ver os números. A tabela abaixo traz os mesmos dados, por bairro.</p>
+    </section>
+
+    <section class="cartao" aria-labelledby="t-bairros">
+      <h2 id="t-bairros">Pessoas por bairro</h2>
+      <p class="rotulo">Escolha um bairro para destacá-lo no mapa.</p>
+      <ul class="barras" id="barras"></ul>
+      <p class="nota" id="nota-bairros"></p>
+      <p style="margin:8px 0 0"><button type="button" class="btn" id="limpar" hidden>Limpar destaque</button></p>
+    </section>
+  </div>
+
+  <section class="cartao" aria-labelledby="t-edu" id="bloco-edu" hidden>
+    <h2 id="t-edu">Educação infantil: matrículas em creche, por rede</h2>
+    <p class="rotulo" id="sub-edu"></p>
+    <ul class="barras" id="barras-edu"></ul>
+    <div class="rolagem"><table id="tabela-edu"></table></div>
+    <p class="nota" id="nota-edu"></p>
+  </section>
+
+  <section class="cartao" aria-labelledby="t-tabela">
+    <h2 id="t-tabela">Tabela por bairro</h2>
+    <div class="rolagem"><table id="tabela"></table></div>
+  </section>
+
+  <section class="cartao" aria-labelledby="t-ler">
+    <details>
+      <summary id="t-ler">Como ler estes números (e o que eles não dizem)</summary>
+      <ul class="limites">
+        <li><strong>Mostra onde as pessoas moram, não quem precisa de ajuda.</strong> Mais gente por km² não significa mais necessidade nem menos serviço.</li>
+        <li><strong>Correlação não prova causa.</strong> Um setor denso e sem creche por perto levanta uma pergunta; não prova que a creche seja a barreira para as mães dali.</li>
+        <li><strong>Falta a idade, a renda e o sexo.</strong> A malha usada só traz pessoas e domicílios. Crianças de 0 a 3 anos, renda e mulheres responsáveis vêm dos "Agregados por setores censitários" do Censo 2022, que ainda não estão no projeto.</li>
+        <li><strong>Pessoas por domicílio não é o tamanho médio das famílias.</strong> O campo de domicílios da malha do IBGE provavelmente inclui domicílios vazios e de uso ocasional (a confirmar no dicionário do IBGE), o que puxa o número para baixo, principalmente na zona rural. O IBGE publica a média oficial de moradores por domicílio ocupado; ela ainda não está no projeto.</li>
+        <li><strong>Pessoas por domicílio</strong> só aparece para setores com 20 domicílios ou mais. Setores pequenos dão números absurdos (há um com 106 pessoas num domicílio, provavelmente um domicílio coletivo).</li>
+        <li><strong>Matrícula não é vaga, demanda nem fila.</strong> A fila de espera por creche só a Secretaria da Educação tem.</li>
+        <li><strong>A área de cada setor</strong> é calculada a partir do desenho oficial. A soma confere com a área publicada pelo IBGE (diferença abaixo de 1%).</li>
+        <li><strong>Setor censitário não é bairro:</strong> são divisões do Censo. Os 28 "bairros" aqui são os do IBGE e não coincidem com todos os nomes usados pela Prefeitura.</li>
+      </ul>
+    </details>
+  </section>
+
+  <footer id="rodape"></footer>
+</div>
+<script src="territorio.js"></script>
+</body>
+</html>
