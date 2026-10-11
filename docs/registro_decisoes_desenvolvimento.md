@@ -314,3 +314,9 @@ Nenhuma branch foi apagada nem alterada. O que **não** foi trazido para a base,
 - Capturas de tela do autor (https://www.sestsenat.org.br/home, 10/10/2026 22:15–22:16, "mais de 175 unidades"): ao escolher o estado SP, o seletor "Selecione uma unidade" não abre a lista. Não foi possível chegar à página de Rio Claro pela busca do site. O banner de cookies estava aberto nas capturas.
 - Caminhos ainda não testados (sugeridos pelo autor ou pelo Gemini, **não verificados**): aceitar o banner de cookies e tentar de novo, abrir em janela anônima ou outro navegador, tentar o endereço direto da unidade (`sestsenat.org.br/unidade/rioclaro`, citado pelo Gemini) e o catálogo de cursos a distância (`digital.sestsenat.org.br/cursos`, também citado pelo Gemini), e ligar para a unidade, (19) 3522-1710.
 - O cartão do SEST SENAT registra a limitação e continua "não conferido".
+
+### SEST SENAT: unidade confirmada por telefone — 11/10/2026
+- O autor **ligou para a unidade de Rio Claro, (19) 3522-1710**, e confirmou que o endereço enviado antes é exatamente o da unidade: Rodovia Washington Luís (SP-310), s/n, km 176, Jardim Rio Claro, CEP 13503-750. O telefone local também foi confirmado.
+- Do rodapé do site oficial (captura de 10/10/2026 22:18, https://www.sestsenat.org.br/home): **0800 700 9393** (central nacional; sede em Brasília). Foi acrescentado ao cartão, identificado como central nacional.
+- O cartão deixou de constar como "não conferido": endereço e telefone vieram direto da unidade. O link passou a ser `https://www.sestsenat.org.br/home`, como pediu o autor.
+- **Ainda não informado:** quais cursos a unidade oferece ao público e como alguém se torna sócio (a página da cidade só abre para sócios, segundo o autor). O cartão manda perguntar ao ligar. O teste foi atualizado para exigir o telefone local, o 0800, o link e a menção aos sócios.

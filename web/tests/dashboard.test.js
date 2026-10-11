@@ -225,7 +225,9 @@ const cat = JSON.parse(ler("dados/catalogo_manual.json")); const lista = Array.i
   const s = lista.find((x) => x.id === id);
   assert(s && s.tipo === "emprego_curso" && s.fonte_url && s.verificado_em, "curso profissionalizante ausente ou sem fonte/data: " + id);
 });
-assert.strictEqual(lista.find((x) => x.id === "man-sestsenat").conferido, false, "o SEST SENAT não teve unidade confirmada: deve constar como não conferido");
+const sest = lista.find((x) => x.id === "man-sestsenat");
+assert(sest.conferido !== false && /3522-1710/.test(sest.telefone) && /0800 700 9393/.test(sest.telefone) && sest.fonte_url === "https://www.sestsenat.org.br/home", "SEST SENAT: unidade confirmada por telefone, com o 0800 e o link do site");
+assert(/sócios/.test(sest.observacao), "o cartão do SEST SENAT deve dizer que a página da cidade é para sócios");
 lista.filter((x) => x.tipo === "emprego_curso").forEach((x) => assert(x.grupo, "serviço de Trabalho sem grupo ficaria escondido atrás de \"Mostrar todos\": " + x.id));
 assert(Areas.AREAS.find((a) => a.id === "trabalho").secoes[0].agrupar === true, "a lista de Trabalho deve ser agrupada, não limitada a 12 cartões");
 assert(/@media print/.test(css) && /folha-impressao/.test(css), "deve haver estilo de impressão para o plano e o currículo");
