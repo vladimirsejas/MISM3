@@ -679,3 +679,8 @@ Nenhuma branch foi apagada nem alterada. O que **não** foi trazido para a base,
 - **Ainda não feito:** jornadas guiadas para "sair de casa com os filhos", "o dinheiro não está dando" e "pensão, guarda e separação" (só Trabalho tem jornada guiada); telefones da Patrulha Maria da Penha e da Delegacia da Mulher, que seguem "não conferidos" até alguém imprimir a página oficial; linha 02 de ônibus.
 - **Geocodificador:** a execução imprime agora um diagnóstico com os tipos e exemplos de nomes de rua do CNEFE (só nomes), para descobrir por que 89 de 150 ruas não casaram.
 
+### Geocodificador: causa dos 89 "rua não encontrada" achada — 11/10/2026
+- **Diagnóstico do CNEFE real (rodado pelo autor):** o CNEFE de Rio Claro escreve os números das ruas **por extenso**: `RUA TRES`, `AVENIDA ONZE F`, `AVENIDA CINQUENTA E SEIS PA`, `AVENIDA M ONZE`, `RUA DEZ JG`. O catálogo escreve "Rua 3", "Av. 56 PA", "Av. M-11". Por isso quase nada casava (1.189 ruas, 54.527 endereços de "rua" e 43.782 de "avenida" no arquivo).
+- **Correção:** o nome da rua do catálogo passa a ser comparado também por extenso (`56 → cinquenta e seis`, `M-9 → M nove`, `1-MP → um MP`, com as grafias catorze/quatorze e dezeseis/dezesseis); o algarismo original continua como último recurso. 125 dos 150 endereços do catálogo têm rua com número.
+- **Verificado:** 104 testes Python passam, com formatos copiados do diagnóstico real. **Não verificado:** a taxa de acerto no CNEFE real depois da correção; só o autor pode rodar. Ruas com nomes de pessoas abreviados (ex.: "Av. José F. Castellano") provavelmente ainda não casam e ficarão na planilha com nomes parecidos.
+

@@ -58,6 +58,56 @@ def canon(texto: str) -> str:
     return re.sub(r"(?<![0-9])0+(?=[0-9])", "", t)
 
 
+_UNIDADES = ["zero", "um", "dois", "tres", "quatro", "cinco", "seis", "sete", "oito", "nove", "dez", "onze", "doze",
+             "treze", "quatorze", "quinze", "dezesseis", "dezessete", "dezoito", "dezenove"]
+_DEZENAS = ["", "", "vinte", "trinta", "quarenta", "cinquenta", "sessenta", "setenta", "oitenta", "noventa"]
+_CENTENAS = ["", "cento", "duzentos", "trezentos", "quatrocentos", "quinhentos", "seiscentos", "setecentos",
+             "oitocentos", "novecentos"]
+_OUTRAS_GRAFIAS = {"quatorze": ["catorze"], "dezesseis": ["dezeseis"], "dezessete": ["dezesete"]}
+
+
+def por_extenso(n: int) -> str:
+    """0 a 999 em português, sem acento, como o IBGE escreve no CNEFE ('RUA TRES', 'AVENIDA CINQUENTA E SEIS PA')."""
+    if n < 20:
+        return _UNIDADES[n]
+    if n < 100:
+        d, u = divmod(n, 10)
+        return _DEZENAS[d] + (" e " + _UNIDADES[u] if u else "")
+    if n == 100:
+        return "cem"
+    c, resto = divmod(n, 100)
+    return _CENTENAS[c] + (" e " + por_extenso(resto) if resto else "")
+
+
+def variantes_por_extenso(nome: str) -> list[str]:
+    """Formas comparáveis do nome da rua: números trocados por extenso (como no CNEFE) e, por último, o original.
+
+    O CNEFE de Rio Claro escreve 'AVENIDA ONZE F' onde o catálogo diz 'Av. 11F'. Grafias alternativas (quatorze/catorze,
+    dezesseis/dezeseis) geram mais de uma variante.
+    """
+    partes = re.split(r"(\d+)", str(nome))
+    opcoes: list[list[str]] = []
+    for parte in partes:
+        if parte.isdigit() and int(parte) < 1000:
+            palavra = por_extenso(int(parte))
+            alternativas = [palavra]
+            for base, outras in _OUTRAS_GRAFIAS.items():
+                if base in palavra.split():
+                    alternativas += [palavra.replace(base, o) for o in outras]
+            opcoes.append(alternativas)
+        else:
+            opcoes.append([parte])
+    formas = [""]
+    for alternativas in opcoes:
+        formas = [f + " " + a for f in formas for a in alternativas][:12]
+    saida = []
+    for f in formas + [str(nome)]:
+        c = canon(f)
+        if c and c not in saida:
+            saida.append(c)
+    return saida
+
+
 def tipo_norm(texto: str) -> str | None:
     return TIPOS.get(re.sub(r"[^a-z]", "", sem_acento(texto).lower()))
 
@@ -81,7 +131,8 @@ def interpretar_endereco(endereco: str) -> dict:
             numero = int(m.group(1))
     if not tipo or not nome:
         return {"motivo": "rua_sem_tipo"}
-    return {"tipo": tipo, "nome": canon(nome), "numero": numero, "motivo": "" if numero is not None else "sem_numero"}
+    return {"tipo": tipo, "nome": canon(nome), "variantes": variantes_por_extenso(nome), "numero": numero,
+            "motivo": "" if numero is not None else "sem_numero"}
 
 
 def indexar_cnefe(df, municipio: str = MUNICIPIO_IBGE7) -> dict:
@@ -153,13 +204,13 @@ def casar(endereco: str, indice: dict) -> dict:
             "cruzamento": "Endereço dado como esquina/cruzamento: localizar à mão.",
             "rua_sem_tipo": "Não deu para separar tipo e nome da rua: localizar à mão."}[e["motivo"]])
 
-    regs = indice.get((e["tipo"], e["nome"]))
+    regs = next((indice[(e["tipo"], v)] for v in e["variantes"] if (e["tipo"], v) in indice), None)
     tipo_diferente = False
     if not regs:
         # mesmo nome de rua com outro tipo (ex.: "Rua" no catálogo, "AVENIDA" no IBGE)
-        achadas = {t: v for (t, n), v in indice.items() if n == e["nome"]}
+        achadas = {t: v for (t, n), v in indice.items() if n in e["variantes"]}
         if not achadas:
-            parecidas = _parecidas(e["nome"], indice)
+            parecidas = _parecidas(e["variantes"][0], indice)
             return _res(metodo="sem_correspondencia", alternativas=parecidas,
                         observacao="Nenhuma rua com esse nome no CNEFE: localizar à mão."
                                    + (" Nomes parecidos em 'alternativas' (só para conferir)." if parecidas else ""))
