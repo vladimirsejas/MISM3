@@ -782,3 +782,10 @@ Nenhuma branch foi apagada nem alterada. O que **não** foi trazido para a base,
 
 - **Esclarecimento do autor:** a "Rua 3" cruza a cidade por vários bairros, a numeração muda conforme as avenidas e, às vezes, existe a mesma rua de número igual em outro bairro. Ou seja, as duas observações valem: a mesma rua atravessa bairros (então o bairro do catálogo pode não coincidir), e há homônimas (então o número sozinho não basta).
 - **Decisão:** nenhuma regra automática resolve isso sem conhecer a cidade. A listagem de `--marcar-baixas-cep` passa a mostrar **sempre** o bairro do CEP na lista ao lado de cada sugestão (destacando quando difere do catálogo), e a conferência humana antes de `--aplicar-aprovadas` continua sendo a decisão.
+
+## 11/10/2026 - O CEP vem da faixa de numeração da rua
+
+- **Explicação do autor:** o CEP é determinado pela faixa de numeração: numa mesma rua (ex.: Rua 3), um CEP cobre de tal número a tal número, outro CEP cobre outra faixa, e a mesma rua em outro bairro tem outros CEPs. Era isso que o código aproximava mal ao pegar só o CEP do número mais próximo, juntando todas as "Rua 3" do município numa lista só.
+- **Mudança (`casar`):** quando o número do serviço não existe no CNEFE, o programa reconstrói, para cada CEP, a faixa de numeração dele nessa rua (**separando lado par e ímpar**) e verifica em qual faixa o número cai. Uma faixa só: `faixa_do_cep` (baixa, só CEP, diferença 0). Mais de uma (outro bairro, sobreposição): `faixa_do_cep` ambígua, listando cada CEP com a sua faixa e, na planilha, o **bairro** de cada um. Nenhuma: cai no número mais próximo, como antes. `--marcar-baixas-cep` passou a aceitar `faixa_do_cep`.
+- **Limite:** as faixas são **inferidas dos endereços do Censo no CNEFE**, não são as faixas oficiais dos Correios. Onde o Censo não tem endereços (terrenos, prédios novos) a faixa pode estar curta. Continua sendo sugestão, com conferência humana.
+- 169 testes Python passando.

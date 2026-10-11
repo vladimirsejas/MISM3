@@ -127,10 +127,49 @@ def test_tipo_diferente_unico_so_sugere_cep(idx):
 
 
 # ------------------------------------------------------------- sem número, sem correspondência, incompleto
-def test_numero_proximo_so_sugere_cep_e_nunca_coordenada_de_vizinho(idx):
-    r = g.casar("Av. 30, 120, Centro", idx)
-    assert (r["metodo"], r["confianca"], r["cep"], r["numero_cnefe"]) == ("numero_proximo", "baixa", "13502000", 100)
+def test_numero_fora_de_qualquer_faixa_usa_o_proximo_e_so_sugere_cep_nunca_coordenada_de_vizinho(idx):
+    r = g.casar("Av. 30, 400, Centro", idx)           # a faixa do CEP vai de 100 a 290: 400 está fora
+    assert (r["metodo"], r["confianca"], r["cep"], r["numero_cnefe"]) == ("numero_proximo", "baixa", "13502000", 290)
     sem_sugestao_de_local(r)
+
+
+def test_numero_dentro_da_faixa_do_cep_sugere_o_cep_da_faixa(idx):
+    r = g.casar("Av. 30, 120, Centro", idx)           # entre 100 e 290, ambos do mesmo CEP
+    assert (r["metodo"], r["confianca"], r["cep"], r["diferenca_numero"]) == ("faixa_do_cep", "baixa", "13502000", 0)
+    assert "100 a 290" in r["observacao"] and "par" in r["observacao"]
+    sem_sugestao_de_local(r)
+
+
+def rua_com(*partes):
+    """Índice mínimo de uma rua: partes = (número, cep). Mesma estrutura de indexar_cnefe."""
+    return {("rua", "tres"): [(n, -22.40, -47.56, cep, "setor", "RUA TRES") for n, cep in partes]}
+
+
+def test_faixas_de_cep_na_mesma_rua_escolhem_o_cep_pelo_numero():
+    idx = rua_com(*[(n, "13500001") for n in range(10, 401, 10)], *[(n, "13500002") for n in range(410, 801, 10)])
+    assert g.casar("Rua 3, 154", idx)["cep"] == "13500001"      # 154 não existe: cai na faixa 10-400
+    r = g.casar("Rua 3, 606", idx)
+    assert r["cep"] == "13500002" and r["metodo"] == "faixa_do_cep"
+
+
+def test_lado_par_e_impar_com_ceps_diferentes_nao_se_misturam():
+    idx = rua_com(*[(n, "13500001") for n in range(10, 401, 10)], *[(n, "13500002") for n in range(11, 400, 10)])
+    assert g.casar("Rua 3, 154", idx)["cep"] == "13500001"      # par
+    assert g.casar("Rua 3, 155", idx)["cep"] == "13500002"      # ímpar
+
+
+def test_mesma_rua_em_outro_bairro_com_faixas_que_se_sobrepoem_fica_ambigua_e_lista_as_faixas():
+    idx = rua_com(*[(n, "13500001") for n in range(10, 401, 10)], *[(n, "13509999") for n in range(100, 301, 10)])
+    r = g.casar("Rua 3, 154", idx)
+    assert (r["metodo"], r["confianca"], r["cep"], r["candidatos"]) == ("faixa_do_cep", "ambigua", "", 2)
+    assert "CEP 13500001 (10 a 400)" in r["alternativas"] and "CEP 13509999 (100 a 300)" in r["alternativas"]
+
+
+def test_propor_acrescenta_o_bairro_de_cada_cep_candidato_nas_alternativas():
+    idx = rua_com(*[(n, "13500001") for n in range(10, 401, 10)], *[(n, "13509999") for n in range(100, 301, 10)])
+    p = g.propor([{"id": "x", "nome": "X", "endereco": "Rua 3, 154, Centro", "cep": ""}], idx, None, None,
+                 {"13500001": "Centro", "13509999": "Vila Outra"})[0]
+    assert "CEP 13500001 [Centro]" in p["alternativas"] and "CEP 13509999 [Vila Outra]" in p["alternativas"]
 
 
 def test_servico_sem_numero_nao_ganha_sugestao(idx):
