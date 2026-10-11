@@ -29,9 +29,18 @@
     },
     {
       id: "educacao", nome: "Educação", icone: "educacao",
-      intro: "Matrícula, transferência e vagas para os filhos, creches e escolas, conclusão dos estudos (EJA), cursos técnicos e superiores em Rio Claro.",
+      intro: "Para os seus filhos: matrícula, transferência e vagas em creches e escolas. Para você: concluir os estudos (EJA), fazer faculdade e cursos profissionalizantes e técnicos, em Rio Claro.",
+      guia: {
+        titulo: "O que você encontra nesta página",
+        texto: "A área Educação é para os seus filhos e também para você.",
+        itens: [
+          { titulo: "Para os seus filhos", texto: "Matrícula, transferência, vaga em creche, calendário de 2027, documentos e o que fazer se não houver vaga. Há também apoio para quem cria os filhos sozinha.", ancora: "educacao-filhos", botao: "Ver o guia dos filhos" },
+          { titulo: "Para você", texto: "Terminar o ensino médio (EJA), fazer faculdade e cursos profissionalizantes e técnicos para trabalhar: SENAI, Senac, SEST SENAT, Etec e Fatec.", ancora: "educacao-voce", botao: "Ver cursos e estudos para você" },
+          { titulo: "Emprego e renda", texto: "Vagas de emprego, crédito e um plano para voltar a trabalhar ficam na área Trabalho.", href: "#trabalho", botao: "Ir para Trabalho" }
+        ]
+      },
       secoes: [{
-        titulo: "Para as mães: matrícula, transferência e vagas",
+        titulo: "Para os seus filhos: matrícula, transferência e vagas", ancora: "educacao-filhos",
         descricao: "Passo a passo para quem precisa matricular, transferir ou procurar vaga para os filhos. Vale a regra geral; datas, documentos e locais de Rio Claro precisam ser confirmados na Secretaria Municipal da Educação.",
         tipos: [], links: [],
         canais: [
@@ -172,7 +181,8 @@
           ["Secretaria Escolar Digital (SED): consulta pública de matrícula, rede estadual", "https://sed.educacao.sp.gov.br/ConsultaPublica/Index", "Para escolas estaduais. Indicado pela pesquisa; confira se a página abre e se atende o seu caso."]
         ]
       }, {
-        titulo: "Estudar, concluir os estudos e se qualificar",
+        titulo: "Para você: concluir os estudos e se qualificar", ancora: "educacao-voce",
+        descricao: "Você também pode estudar. Terminar o ensino médio, fazer faculdade e cursos profissionalizantes ou técnicos abre caminho para o trabalho. Cada cartão diz quem oferece e como confirmar vagas, datas e custos com a própria instituição.",
         tipos: ["emprego_curso"], agrupar: true,
         subtipos: ["eja", "escola_sesi", "graduacao", "curso_superior_tecnologia", "curso_tecnico", "curso_profissionalizante"],
         links: []

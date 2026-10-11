@@ -147,8 +147,21 @@
     }).join("");
   }
 
+  /* Caixa de orientação no topo da área: diz o que a página tem e leva a cada parte (botões, pois a navegação usa o hash). */
+  function htmlGuia(g) {
+    var itens = g.itens.map(function (i) {
+      var alvo = i.href
+        ? '<a class="btn-rolar" href="' + esc(i.href) + '">' + esc(i.botao) + "</a>"
+        : '<button type="button" class="btn-rolar" data-rolar="' + esc(i.ancora) + '">' + esc(i.botao) + "</button>";
+      return "<li><strong>" + esc(i.titulo) + "</strong><span>" + esc(i.texto) + "</span>" + alvo + "</li>";
+    }).join("");
+    return '<nav class="guia-area" aria-label="' + esc(g.titulo) + '"><h2>' + esc(g.titulo) + "</h2>" +
+      (g.texto ? "<p>" + esc(g.texto) + "</p>" : "") + "<ul>" + itens + "</ul></nav>";
+  }
+
   function htmlArea(area) {
     var html = area.jornada && window.JornadaUI ? JornadaUI.html() : "";
+    if (area.guia) html += htmlGuia(area.guia);
     var vistos = Object.create(null);
     area.secoes.forEach(function (sec, i) {
       var cartoes = "", notaFonte = "";
@@ -190,11 +203,12 @@
         corpo += '<p class="vazio">Nenhum serviço cadastrado neste bloco ainda.</p>';
       }
       var total = servicos.length + sec.links.length + (sec.canais || []).length;
+      var idSecao = sec.ancora ? ' id="' + esc(sec.ancora) + '"' : "";
       if (sec.recolhida) {
-        html += '<section class="secao"><details class="secao-recolhida"><summary><h2>' + esc(sec.titulo) + ' <span class="contagem">(' + total + ")</span></h2></summary>" +
+        html += '<section class="secao"' + idSecao + '><details class="secao-recolhida"><summary><h2>' + esc(sec.titulo) + ' <span class="contagem">(' + total + ")</span></h2></summary>" +
           (sec.descricao ? "<p class=\"meta\">" + esc(sec.descricao) + "</p>" : "") + corpo + "</details></section>";
       } else {
-        html += '<section class="secao"><h2>' + esc(sec.titulo) + "</h2>" + (sec.descricao ? '<p class="meta">' + esc(sec.descricao) + "</p>" : "") + corpo + "</section>";
+        html += '<section class="secao"' + idSecao + '><h2' + (sec.ancora ? ' tabindex="-1"' : "") + '>' + esc(sec.titulo) + "</h2>" + (sec.descricao ? '<p class="meta">' + esc(sec.descricao) + "</p>" : "") + corpo + "</section>";
       }
     });
     if (area.avisos && area.avisos.length) {
@@ -207,6 +221,19 @@
     }
     return html;
   }
+
+  $("conteudo-area").addEventListener("click", function (ev) {
+    var b = ev.target.closest ? ev.target.closest("[data-rolar]") : null;
+    if (!b) return;
+    var alvo = document.getElementById(b.getAttribute("data-rolar"));
+    if (!alvo) return;
+    var recolhida = alvo.querySelector("details.secao-recolhida");
+    if (recolhida) recolhida.open = true;
+    var calmo = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    alvo.scrollIntoView({ behavior: calmo ? "auto" : "smooth", block: "start" });
+    var h = alvo.querySelector("h2");
+    if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
+  });
 
   function mostrarTodos(area, indiceSecao, botao) {
     var vistos = Object.create(null);
