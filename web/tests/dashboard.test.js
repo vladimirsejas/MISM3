@@ -234,7 +234,7 @@ assert(sestCursos.fonte_url === "https://www.sestsenat.org.br/cursos" && /mudam|
 assert(!/NR ?35|Liderança|Webaula de|Transporte de Cargas/i.test(JSON.stringify(sestCursos)), "o SEST SENAT não deve enumerar cursos, que mudam a cada período");
 lista.filter((x) => x.tipo === "emprego_curso").forEach((x) => assert(x.grupo, "serviço de Trabalho sem grupo ficaria escondido atrás de \"Mostrar todos\": " + x.id));
 assert(Areas.AREAS.find((a) => a.id === "trabalho").secoes[0].agrupar === true, "a lista de Trabalho deve ser agrupada, não limitada a 12 cartões");
-const trab = Areas.AREAS.find((a) => a.id === "trabalho").secoes[0], edu = Areas.AREAS.find((a) => a.id === "educacao").secoes[1];
+const trab = Areas.AREAS.find((a) => a.id === "trabalho").secoes[0], edu = Areas.AREAS.find((a) => a.id === "educacao").secoes.find((s) => s.agrupar);
 ["curso_superior_tecnologia", "graduacao"].forEach((st) => {
   assert(!trab.subtipos.includes(st) && edu.subtipos.includes(st), "educação pura pertence só à área Educação: " + st);
 });
@@ -256,6 +256,11 @@ lista.filter((x) => x.subtipo === "curso_tecnico").forEach((x) => assert(/técni
   const g = lista.find((x) => x.id === id).grupo.split(";");
   assert(g.some((x) => /técnicos/.test(x)) && !g.some((x) => /profissionalizantes/.test(x)), "a Etec fica nos grupos de técnicos (e no conjunto), sem repetir em profissionalizantes: " + id);
 });
+const maesSec = Areas.AREAS.find((a) => a.id === "educacao").secoes[0];
+assert(/mães/.test(maesSec.titulo) && maesSec.canais.length >= 5, "Educação deve começar com o passo a passo para as mães (matrícula, transferência, vagas)");
+["matricular", "transferência", "vaga"].forEach((t) => assert(maesSec.canais.some((c) => c.nome.toLowerCase().includes(t)), "falta o cartão sobre: " + t));
+assert(!/\(\d{2}\)\s?\d{4}|\d{4}-\d{4}/.test(JSON.stringify(maesSec)), "o passo a passo das mães não deve conter telefones sem fonte");
+assert(Areas.AREAS.find((a) => a.id === "educacao").pendencias.some((p) => /Rio Claro/.test(p) && /fonte oficial/.test(p)), "Educação deve declarar que as regras locais ainda não vieram de fonte oficial");
 assert(/@media print/.test(css) && /folha-impressao/.test(css), "deve haver estilo de impressão para o plano e o currículo");
 assert(!/localStorage|sessionStorage|document\.cookie/.test(ler("jornada-ui.js") + ler("jornada.js")), "a jornada não pode guardar nada no aparelho");
 assert(!/fetch\(|XMLHttpRequest|sendBeacon/.test(ler("jornada-ui.js") + ler("jornada.js")), "a jornada não pode enviar nada pela rede");

@@ -15,7 +15,7 @@
     educacao: ["Secretaria Municipal da Educação", "https://rioclaro.sp.gov.br/secretaria/secretaria-da-educacao/", "Orientações sobre a rede municipal e a matrícula."],
     demanda: ["Consulta pública da demanda escolar", "https://www.educacaorc.com.br/?r=demandaescolar", "Informações disponibilizadas no portal da Educação."],
     cras: ["CRAS — Centros de Referência de Assistência Social", "https://rioclaro.sp.gov.br/centro-ref-assistencia-social/", "Orientação sobre benefícios e proteção social."],
-    educacaoArea: ["Área Educação deste site", "#educacao", "Cursos técnicos e superiores, EJA e Faculdade SESI, com endereço e telefone."],
+    educacaoArea: ["Área Educação deste site", "#educacao", "Matrícula, transferência e vagas para os filhos; EJA, cursos técnicos e superiores."],
     assistencia: ["Área Assistência Social deste site", "#assistencia", "CRAS por bairro, CREAS e Secretaria de Desenvolvimento Social."],
     portal: ["Portal da Empregabilidade de Rio Claro", "https://vagas.rioclaro.sp.gov.br/", "Consultar oportunidades e informações para trabalhadores."],
     trampolim: ["Trampolim — Governo de São Paulo", "https://www.trampolim.sp.gov.br/", "Consultar oportunidades e cursos disponíveis na plataforma."],
@@ -74,7 +74,7 @@
         fazer: ["Procure a Secretaria da Educação para saber como pedir vaga em creche ou escola e quais documentos levar.",
           "Pergunte a situação do pedido e os horários de funcionamento: o horário da creche precisa caber no do trabalho.",
           "Combine, se puder, uma alternativa com familiares ou vizinhos para os dias sem vaga."],
-        links: [LINKS.educacao, LINKS.demanda],
+        links: [LINKS.educacao, LINKS.demanda, LINKS.educacaoArea],
         alternativa: "Uma creche cadastrada não garante vaga. Se não houver vaga agora, peça orientação no CRAS sobre outras formas de apoio."
       });
     }

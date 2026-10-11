@@ -29,8 +29,57 @@
     },
     {
       id: "educacao", nome: "Educação", icone: "educacao",
-      intro: "Creches, escolas e matrículas, conclusão dos estudos (EJA), cursos técnicos e superiores em Rio Claro.",
+      intro: "Matrícula, transferência e vagas para os filhos, creches e escolas, conclusão dos estudos (EJA), cursos técnicos e superiores em Rio Claro.",
       secoes: [{
+        titulo: "Para as mães: matrícula, transferência e vagas",
+        descricao: "Passo a passo para quem precisa matricular, transferir ou procurar vaga para os filhos. Vale a regra geral; datas, documentos e locais de Rio Claro precisam ser confirmados na Secretaria Municipal da Educação.",
+        tipos: [], links: [],
+        canais: [
+          { nome: "Por onde começar: quem cuida da etapa do meu filho", sem_tel: true, resumo: "Ver o passo a passo",
+            texto: "Cada etapa de ensino tem uma rede responsável. Saber isso ajuda a saber onde pedir a vaga.",
+            topicos: [
+              ["Creche e pré-escola (0 a 5 anos)", "Em geral são organizadas pelo município. Procure a Secretaria Municipal da Educação."],
+              ["Ensino fundamental", "É atendido por escolas do município e do estado. Pergunte na Secretaria qual escola e qual rede atendem o seu bairro."],
+              ["Ensino médio", "Em geral é responsabilidade do estado. Também há o ensino médio da rede SESI-SP (veja o grupo “Concluir os estudos e graduação”, mais abaixo) e escolas particulares."]
+            ],
+            fonte: ["Constituição Federal, art. 211", null, "regra geral; a organização de Rio Claro deve ser confirmada na Secretaria da Educação"] },
+          { nome: "Matricular meu filho pela primeira vez", sem_tel: true, resumo: "Ver o passo a passo",
+            texto: "Antes de ir, saiba o que levar e o que perguntar. Datas e procedimentos mudam a cada ano.",
+            topicos: [
+              ["A matrícula é obrigatória?", "Dos 4 aos 17 anos, sim: a família tem o dever de matricular e o Estado de oferecer a vaga. Para crianças de 0 a 3 anos (creche) a vaga é um direito, mas a matrícula não é obrigatória e depende de vagas."],
+              ["Idade mínima", "As normas nacionais costumam usar uma data de corte (em geral 31 de março) para definir a idade de entrada em cada etapa. Confirme a data e a idade da sua criança na Secretaria."],
+              ["Documentos que costumam ser pedidos", "Certidão de nascimento ou documento da criança; documento e CPF do responsável; comprovante de residência; cartão de vacinação. Pode haver outros: confirme a lista na Secretaria ou na escola."],
+              ["O que perguntar", "Em que período a matrícula ou a inscrição está aberta? Onde faço (pessoalmente, na escola ou pela internet)? Quais documentos levo? Qual escola atende o meu endereço? Como acompanho o pedido? Peça tudo por escrito ou anote o nome de quem atendeu."]
+            ],
+            fonte: ["Constituição Federal, art. 208; LDB (Lei 9.394/1996), art. 6º; ECA (Lei 8.069/1990), art. 53", null, "regras gerais; procedimentos de Rio Claro devem ser confirmados na Secretaria da Educação"] },
+          { nome: "Pedir transferência de escola", sem_tel: true, resumo: "Ver o passo a passo",
+            texto: "Para mudar o filho de escola (mudança de bairro, de cidade ou de rede).",
+            topicos: [
+              ["Na escola de origem", "Peça a declaração de transferência e o histórico escolar (ou documento equivalente) do seu filho. Pergunte quanto tempo leva e peça por escrito."],
+              ["Na escola ou na Secretaria de destino", "Pergunte se há vaga na série do seu filho, qual é o procedimento e o prazo, e quais documentos levar. Se não houver vaga na escola desejada, pergunte quais escolas próximas têm."],
+              ["Mudança no meio do ano", "A transferência pode ser feita durante o ano. Confirme com a escola de destino como funciona e se é preciso comprovar o novo endereço."]
+            ],
+            aviso: "Os procedimentos de transferência de Rio Claro não foram arquivados de fonte oficial: confirme com a Secretaria Municipal da Educação e com a escola.",
+            fonte: ["Orientação geral; sem fonte oficial local", null, "a ser confirmada"] },
+          { nome: "Procurar vaga em creche ou em escola", sem_tel: true, resumo: "Ver o passo a passo",
+            texto: "Não existe vaga garantida só por estar cadastrada: o que vale é o pedido feito junto ao órgão responsável.",
+            topicos: [
+              ["1. Faça o pedido", "Procure a Secretaria Municipal da Educação e peça a vaga para o seu filho. Guarde o protocolo ou o nome de quem atendeu."],
+              ["2. Acompanhe", "Use a consulta pública da demanda escolar (link nesta área) para ver informações sobre a demanda por vagas, e volte à Secretaria para saber a situação do seu pedido."],
+              ["3. Pergunte sobre a fila", "Pergunte como funciona a lista de espera, em que posição está o pedido e se há outras escolas próximas com vaga. Peça a resposta por escrito."],
+              ["4. Outras possibilidades", "Veja também as escolas da rede SESI (ingresso por sorteio e processo seletivo, segundo notícia de 24/09/2026) e escolas particulares, se for possível."]
+            ],
+            fonte: ["Consulta pública da demanda escolar", "https://www.educacaorc.com.br/?r=demandaescolar", "portal da Educação de Rio Claro"] },
+          { nome: "Se a vaga for negada ou demorar", sem_tel: true, resumo: "Ver o passo a passo",
+            texto: "O acesso à escola pública e gratuita, próxima da residência, é um direito da criança e do adolescente. Se o pedido for recusado sem explicação ou demorar demais, a família pode pedir ajuda.",
+            topicos: [
+              ["Conselho Tutelar", "Recebe casos de direitos de crianças e adolescentes. Veja o contato na área Assistência Social deste site."],
+              ["Defensoria Pública", "Orienta e pode atuar, sem custo para quem não pode pagar, para garantir o direito à vaga. Link nesta área, na seção de direitos."],
+              ["Guarde as provas", "Protocolo, nomes de atendentes, datas e respostas por escrito ajudam em qualquer pedido de ajuda."]
+            ],
+            fonte: ["ECA (Lei 8.069/1990), arts. 53 e 54", null, "regra geral"] }
+        ]
+      }, {
         titulo: "Canais oficiais",
         tipos: ["creche"],
         links: [
@@ -43,7 +92,11 @@
         subtipos: ["eja", "escola_sesi", "graduacao", "curso_superior_tecnologia", "curso_tecnico", "curso_profissionalizante"],
         links: []
       }],
-      avisos: ["Uma escola ou creche cadastrada não confirma que há vaga. Confirme com a Secretaria da Educação."]
+      avisos: ["Uma escola ou creche cadastrada não confirma que há vaga. Confirme com a Secretaria da Educação."],
+      pendencias: [
+        "As regras de Rio Claro (datas de matrícula, documentos exigidos, onde se inscrever para creche e como funciona a lista de espera) ainda não foram arquivadas de fonte oficial: o passo a passo acima segue a regra geral e as dúvidas devem ser tiradas na Secretaria Municipal da Educação.",
+        "A lista de escolas públicas (municipais e estaduais) com endereço e telefone ainda não está neste site."
+      ]
     },
     {
       id: "saude", nome: "Saúde", icone: "saude",

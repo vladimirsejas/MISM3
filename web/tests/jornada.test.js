@@ -20,7 +20,7 @@ const caso = J.montarPlano({ filhos: "sim", cuidado: "nao", renda_agora: "sim", 
 assert.deepStrictEqual(ids(caso), ["cuidado", "renda", "deslocamento", "curriculo", "vagas", "formacao"],
   "o cuidado das crianças e a renda do básico vêm antes de procurar vaga");
 assert.deepStrictEqual(caso.passos.map((p) => p.numero), [1, 2, 3, 4, 5, 6]);
-assert.strictEqual(caso.passos[0].links.length, 2, "o passo de cuidado aponta para os canais da Educação");
+assert.strictEqual(caso.passos[0].links.length, 3, "o passo de cuidado aponta para os canais da Educação e para a área Educação (matrícula, transferência e vagas)");
 
 /* ---- sem obstáculos, o plano é curto ---- */
 const livre = J.montarPlano({ filhos: "nao", renda_agora: "nao", deslocamento: "nao", curriculo: "sim", objetivo: "emprego" });
