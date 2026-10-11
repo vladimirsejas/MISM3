@@ -12,16 +12,19 @@ const index = ler("index.html"), rede = ler("rede-mulheres.html"), app = ler("ap
 /* ---- 1. Tela inicial: exatamente sete portas, com os nomes pedidos ---- */
 const NOMES = ["Trabalho", "Educação", "Saúde", "Direitos", "Moradia", "Assistência Social", "De Mulher para Mulher"];
 const inicio = index.slice(index.indexOf('<section id="inicio-tela"'), index.indexOf('<section id="area"'));
-const portas = Array.from(inicio.matchAll(/<a class="porta" href="([^"]+)">.*?<\/span>([^<]+)<\/a>/g), (m) => ({ href: m[1], nome: m[2].trim() }));
+const portas = Array.from(inicio.matchAll(/<a class="porta" href="([^"]+)">.*?<strong>([^<]+)<\/strong>/g), (m) => ({ href: m[1], nome: m[2].trim() }));
 assert.deepStrictEqual(portas.map((p) => p.nome), NOMES, "a tela inicial deve ter exatamente as sete portas, na ordem definida");
 assert.strictEqual((index.match(/class="porta"/g) || []).length, 7, "não pode haver outros botões de porta");
 assert.deepStrictEqual(portas.slice(0, 6).map((p) => p.href), Areas.AREAS.map((a) => "#" + a.id), "cada porta deve apontar para a sua área");
 assert.deepStrictEqual(Areas.AREAS.map((a) => a.nome), NOMES.slice(0, 6), "os nomes das áreas devem ser os mesmos das portas");
 assert.strictEqual(portas[6].href, "rede-mulheres.html", "De Mulher para Mulher é uma página independente");
 
-/* ---- 2. A tela inicial não expõe o conteúdo das áreas ---- */
-["CRAS", "CREAS", "Conselho Tutelar", "Fundo Social", "Disque 100", "Procon", "Defensoria", "tarifa social"].forEach((t) =>
-  assert(!inicio.includes(t), "a tela inicial não deve expor conteúdo de área: " + t));
+/* ---- 2. A tela inicial acolhe e orienta, mas não traz o detalhe das áreas ----
+   Pode citar serviços em frases curtas e nos contatos essenciais (CRAS, CREAS, Conselho Tutelar). Não pode trazer o conteúdo
+   detalhado (programas, critérios, órgãos específicos) nem endereço ou horário: isso só aparece depois de escolher a área. */
+["Fundo Social", "Procon", "Defensoria", "tarifa social"].forEach((t) =>
+  assert(!inicio.includes(t), "a tela inicial não deve expor conteúdo detalhado de área: " + t));
+assert(!/\b(Rua|Avenida|Av\.)\s/.test(inicio) && !/\d{1,2}h\b|\d{1,2}:\d{2}/.test(inicio), "a tela inicial não deve trazer endereço nem horário");
 assert(!/<form/.test(inicio) && !/<input/.test(inicio), "a tela inicial não tem formulários nem campos de busca");
 
 /* ---- 3. Emergência: botão compacto com os contatos oficiais, em todas as páginas ---- */
@@ -330,4 +333,37 @@ assert(/estudo acadêmico de demonstração/.test(index) && /não é um site ofi
 assert(/versão estilizada, apenas como ilustração/.test(index), "o brasão deve ser identificado como versão estilizada");
 const brasaoArq = path.join(web, "img/brasao-estilizado.webp");
 assert(fs.existsSync(brasaoArq) && fs.statSync(brasaoArq).size < 120 * 1024, "a imagem do brasão deve existir e ser leve (< 120 KB)");
+
+/* ---- Tela inicial acolhedora: hero, emergência, contatos essenciais, acesso rápido e paleta ---- */
+assert(/<h1 id="titulo-inicio"[^>]*>Você não está <em>sozinha<\/em><\/h1>/.test(index), "a tela inicial deve acolher: 'Você não está sozinha'");
+assert(/<img src="img\/heroi-mulheres\.webp" width="\d+" height="\d+" alt=""/.test(index) && fs.statSync(path.join(web, "img/heroi-mulheres.webp")).size < 120 * 1024, "a ilustração do topo deve ser decorativa (alt vazio), ter largura e altura e ser leve");
+assert(/Cada informação mostra a fonte e a data/.test(index), "a tela inicial só pode prometer o que o site cumpre: fonte e data");
+assert(/id="abrir-emergencia"/.test(index) && /abrir-emergencia/.test(app) && /stopPropagation/.test(app), "a tela inicial deve ter o botão Emergência que abre o painel do topo");
+["190", "192", "180", "100"].forEach((n) => assert(new RegExp('href="tel:' + n + '"').test(inicio), "contato essencial nacional ausente: " + n));
+assert(!/Telefone a confirmar|a confirmar/i.test(inicio), "os contatos essenciais não podem ficar 'a confirmar'");
+const idsLocais = Array.from(app.matchAll(/\["(man-[a-z0-9-]+)", "/g), (m) => m[1]);
+assert(idsLocais.length >= 5, "contatos locais devem vir do catálogo por id");
+idsLocais.forEach((id) => { const x = lista.find((y) => y.id === id); assert(x && x.telefone, "contato local sem telefone no catálogo: " + id); });
+const links = Array.from(inicio.matchAll(/<a href="#([a-z-]+)(?:\/([a-z-]+))?">/g), (m) => ({ area: m[1], secao: m[2] }));
+assert(links.length >= 5, "acesso rápido deve ter atalhos");
+links.forEach((l) => {
+  const area = Areas.AREAS.find((a) => a.id === l.area);
+  assert(area, "atalho para área inexistente: " + l.area);
+  if (l.secao) assert(area.secoes.some((sec) => sec.ancora === l.secao), "atalho para seção inexistente: " + l.area + "/" + l.secao);
+});
+assert(/split\("\/"\)/.test(app) && /rolarPara\(secao\)/.test(app), "a rota deve entender #área/seção");
+assert(!/Transporte|Mapa de serviços|Buscar no site/.test(inicio), "a tela inicial não pode mostrar o que ainda não existe");
+
+/* Contraste da paleta (WCAG): lido do :root do CSS */
+const vars = Object.fromEntries(Array.from(css.slice(0, css.indexOf("}")).matchAll(/--([a-z-]+):(#[0-9a-f]{6})/g), (m) => [m[1], m[2]]));
+const lum = (h) => { const c = [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255).map((v) => (v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4))); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
+const razao = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
+["bg", "card", "lilas", "lav", "verde", "rosa", "pessego", "hero"].forEach((f) => {
+  assert(razao(vars.fg, vars[f]) >= 13, "texto principal com contraste menor que 13:1 sobre " + f + ": " + razao(vars.fg, vars[f]).toFixed(2));
+});
+["bg", "card", "lilas", "verde", "rosa", "pessego", "hero"].forEach((f) => {
+  assert(razao(vars.mut, vars[f]) >= 5.5, "texto suave com contraste menor que 5,5:1 sobre " + f + ": " + razao(vars.mut, vars[f]).toFixed(2));
+});
+assert(razao("#ffffff", vars["pri-esc"]) >= 6.5 && razao("#ffffff", vars.alerta) >= 6.5, "texto branco sobre botões e emergência deve ter contraste >= 6,5:1");
+["bg", "card", "rosa", "verde", "pessego"].forEach((f) => assert(razao(vars["pri-esc"], vars[f]) >= 6.5, "links com contraste menor que 6,5:1 sobre " + f));
 console.log("dashboard.test.js: sete portas, emergência, navegação, nenhum conteúdo de demonstração, links locais e conteúdo das áreas passaram");

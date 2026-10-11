@@ -250,17 +250,21 @@
     return html;
   }
 
-  $("conteudo-area").addEventListener("click", function (ev) {
-    var b = ev.target.closest ? ev.target.closest("[data-rolar]") : null;
-    if (!b) return;
-    var alvo = document.getElementById(b.getAttribute("data-rolar"));
-    if (!alvo) return;
+  /* Rola até uma seção ou bloco (abrindo-o se estiver recolhido) e leva o foco ao título. Devolve false se não existir. */
+  function rolarPara(id) {
+    var alvo = document.getElementById(id);
+    if (!alvo) return false;
     var recolhida = alvo.querySelector("details.secao-recolhida");
     if (recolhida) recolhida.open = true;
     var calmo = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     alvo.scrollIntoView({ behavior: calmo ? "auto" : "smooth", block: "start" });
-    var h = alvo.querySelector("h2");
+    var h = /^H[1-6]$/.test(alvo.tagName) ? alvo : alvo.querySelector("h2");
     if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
+    return true;
+  }
+  document.addEventListener("click", function (ev) {
+    var b = ev.target.closest ? ev.target.closest("[data-rolar]") : null;
+    if (b) rolarPara(b.getAttribute("data-rolar"));
   });
 
   function mostrarTodos(area, indiceSecao, botao) {
@@ -309,10 +313,13 @@
   }
 
   function render(foco) {
-    var id = (location.hash || "").replace(/^#/, "");
+    /* #area ou #area/seção: o que vem depois da barra leva direto a uma seção da área. */
+    var partes = (location.hash || "").replace(/^#/, "").split("/");
+    var id = partes[0], secao = partes[1];
     var area = id ? AREAS.porId(id) : null;
     if (area) mostrarArea(area); else mostrarInicio();
     window.scrollTo(0, 0);
+    if (area && secao && rolarPara(secao)) return;
     if (foco) (area ? $("titulo-area") : $("titulo-inicio")).focus({ preventScroll: true });
   }
 
@@ -365,6 +372,13 @@
     if (e.key === "Escape" && emerg.open) { emerg.open = false; emerg.querySelector("summary").focus(); }
   });
   document.addEventListener("click", function (e) { if (emerg.open && !emerg.contains(e.target)) emerg.open = false; });
+  /* Botão "Emergência" da tela inicial: abre o mesmo painel de contatos do topo. */
+  $("abrir-emergencia").addEventListener("click", function (e) {
+    e.stopPropagation();
+    emerg.open = true;
+    var primeiro = emerg.querySelector("a.tel");
+    if (primeiro) primeiro.focus();
+  });
   $("sair-rapido").addEventListener("click", function () {
     limparResultadoCep();
     window.location.replace("https://www.google.com.br/");
@@ -402,7 +416,31 @@
       var d = /^(\d{4})-(\d{2})-(\d{2})/.exec(dados.geradoEm);
       $("fontes").textContent = dados.falhou ? "O cadastro de serviços não foi carregado."
         : "Cadastro de serviços" + (d ? " atualizado em " + d[3] + "/" + d[2] + "/" + d[1] : "") + ".";
+      desenharContatos();
     });
+  }
+
+  /* Contatos essenciais de Rio Claro: vêm do catálogo verificado (uma só fonte); se o catálogo não carregar, ficam só os nacionais. */
+  var CONTATOS_LOCAIS = [
+    ["man-cram", "CRAM, atendimento à mulher"], ["man-secretaria-mulher", "Secretaria Municipal da Mulher"],
+    ["man-saude-upa-estadio", "UPA (Av. 29)"], ["man-conselho-tutelar-sul", "Conselho Tutelar, Região Sul"],
+    ["man-conselho-tutelar-norte", "Conselho Tutelar, Região Norte"], ["man-creas", "CREAS"]
+  ];
+  function desenharContatos() {
+    var lista = $("lista-contatos");
+    if (!lista || !dados.servicos) return;
+    var html = "";
+    CONTATOS_LOCAIS.forEach(function (c) {
+      var s = dados.servicos.filter(function (x) { return x.id === c[0]; })[0];
+      if (!s || !s.telefone) return;
+      var primeiro = String(s.telefone).split("/")[0].trim();
+      var digitos = primeiro.replace(/\D/g, "");
+      if (digitos.length < 8) return;
+      /* Espaços dentro do número viram espaços sem quebra: o telefone não se parte no meio ("(19) 3532-" / "4014"). */
+      var exibido = primeiro.replace(/^(\(\d{2}\)) /, "$1\u00a0").replace(/(\d) (\d)/g, "$1\u00a0$2");
+      html += '<li><span class="c-nome">' + esc(c[1]) + '</span><a class="c-tel" href="tel:' + esc(digitos) + '">' + esc(exibido) + "</a></li>";
+    });
+    lista.insertAdjacentHTML("beforeend", html);
   }
 
   /* ------------------------------------------------------------ busca por CEP e mapa */
@@ -441,12 +479,12 @@
     }
     camadas.clearLayers();
     var pts = [[r.area.lat, r.area.lon]];
-    L.circle([r.area.lat, r.area.lon], { radius: Math.max(r.area.raio_m, 150), color: "#7a4a8f", fillOpacity: 0.12 })
+    L.circle([r.area.lat, r.area.lon], { radius: Math.max(r.area.raio_m, 150), color: "#a0404c", fillOpacity: 0.12 })
       .bindTooltip("Sua região aproximada").addTo(camadas);
     r.grupos.forEach(function (g) {
       g.proximos.forEach(function (s) {
         pts.push([s.lat, s.lon]);
-        L.circleMarker([s.lat, s.lon], { radius: 7, color: "#fff", weight: 2, fillColor: "#5e3573", fillOpacity: 1 })
+        L.circleMarker([s.lat, s.lon], { radius: 7, color: "#fff", weight: 2, fillColor: "#7a2b37", fillOpacity: 1 })
           .bindPopup("<strong>" + esc(s.nome) + "</strong><br>" + esc(g.rotulo)).addTo(camadas);
       });
     });
