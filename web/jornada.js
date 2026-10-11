@@ -29,8 +29,33 @@
     { id: "curriculo", texto: "Você já tem um currículo?", opcoes: [["sim", "Sim"], ["nao", "Não"]] }
   ];
 
-  var ID_VALIDOS = {};
-  PERGUNTAS.forEach(function (p) { ID_VALIDOS[p.id] = p.opcoes.map(function (o) { return o[0]; }); });
+  /* Motor de perguntas, igual para todas as jornadas: aceita só respostas previstas, só pergunta o que faz diferença
+     e acha a próxima pergunta ainda sem resposta (e não pulada). `depois(r)` limpa respostas que deixaram de se aplicar. */
+  function motor(perguntas, aplica, depois) {
+    var validos = {};
+    perguntas.forEach(function (p) { validos[p.id] = p.opcoes.map(function (o) { return o[0]; }); });
+    function limpar(resp) {
+      var r = {};
+      perguntas.forEach(function (p) {
+        var v = resp && resp[p.id];
+        if (validos[p.id].indexOf(v) !== -1) r[p.id] = v;
+      });
+      if (depois) depois(r);
+      return r;
+    }
+    function aplicaveis(resp) {
+      var r = limpar(resp);
+      return perguntas.filter(function (p) { return aplica(p, r); });
+    }
+    function proxima(resp, puladas) {
+      var r = limpar(resp), lista = aplicaveis(r), pul = puladas || [];
+      for (var i = 0; i < lista.length; i++) {
+        if (r[lista[i].id] === undefined && pul.indexOf(lista[i].id) === -1) return { pergunta: lista[i], numero: i + 1, total: lista.length };
+      }
+      return null;
+    }
+    return { limpar: limpar, aplicaveis: aplicaveis, proxima: proxima };
+  }
 
   /* Uma pergunta só se aplica quando a resposta muda o plano. */
   function aplica(p, r) {
@@ -39,30 +64,25 @@
     return true;
   }
 
-  /* Só aceita respostas previstas; qualquer outra coisa é ignorada (nada de texto livre aqui). */
-  function limpar(resp) {
-    var r = {};
-    PERGUNTAS.forEach(function (p) {
-      var v = resp && resp[p.id];
-      if (ID_VALIDOS[p.id].indexOf(v) !== -1) r[p.id] = v;
-    });
-    if (r.filhos !== "sim") delete r.cuidado;
-    return r;
+  var motorTrabalho = motor(PERGUNTAS, aplica, function (r) { if (r.filhos !== "sim") delete r.cuidado; });
+  var limpar = motorTrabalho.limpar, aplicaveis = motorTrabalho.aplicaveis, proxima = motorTrabalho.proxima;
+
+  /* Link "Outros lugares" a partir de um serviço do catálogo verificado (nome, fonte_url, descrição curta). null se não existe. */
+  function extraDoCatalogo(achar, id, descricao) {
+    var s = achar && achar(id);
+    return s && s.fonte_url ? [s.nome, s.fonte_url, descricao] : null;
   }
 
-  function aplicaveis(resp) {
-    var r = limpar(resp);
-    return PERGUNTAS.filter(function (p) { return aplica(p, r); });
+  var JORNADAS = {};
+  /* def: { id, titulo, tituloImpressao, PERGUNTAS, aplica, depois, montarPlano, temCurriculo, primeiraDecideCaminho }. Cada área escolhe a sua pela chave `jornada`. */
+  function registrar(def) {
+    var m = motor(def.PERGUNTAS, def.aplica, def.depois);
+    JORNADAS[def.id] = {
+      id: def.id, titulo: def.titulo, tituloImpressao: def.tituloImpressao, temCurriculo: !!def.temCurriculo, primeiraDecideCaminho: !!def.primeiraDecideCaminho,
+      PERGUNTAS: def.PERGUNTAS, limpar: m.limpar, aplicaveis: m.aplicaveis, proxima: m.proxima, montarPlano: def.montarPlano
+    };
   }
-
-  /* Próxima pergunta ainda sem resposta (e que não foi pulada); null quando acabou. */
-  function proxima(resp, puladas) {
-    var r = limpar(resp), lista = aplicaveis(r), pul = puladas || [];
-    for (var i = 0; i < lista.length; i++) {
-      if (r[lista[i].id] === undefined && pul.indexOf(lista[i].id) === -1) return { pergunta: lista[i], numero: i + 1, total: lista.length };
-    }
-    return null;
-  }
+  function de(id) { return JORNADAS[id] || null; }
 
   function interno(alvo, rotulo) { return { tipo: "interno", alvo: alvo, rotulo: rotulo }; }
   function externo(link, rotulo) { return { tipo: "externo", alvo: link[1], rotulo: rotulo }; }
@@ -237,8 +257,12 @@
     return achados;
   }
 
+  registrar({ id: "trabalho", titulo: "Monte seu plano", tituloImpressao: "Meu plano — Trabalho", temCurriculo: true, PERGUNTAS: PERGUNTAS, aplica: aplica,
+    depois: function (r) { if (r.filhos !== "sim") delete r.cuidado; }, montarPlano: montarPlano });
+
   return {
     PERGUNTAS: PERGUNTAS, LINKS: LINKS, PRIMEIROS: PRIMEIROS, limpar: limpar, aplicaveis: aplicaveis, proxima: proxima,
-    montarPlano: montarPlano, montarCurriculo: montarCurriculo, dadosDesnecessarios: dadosDesnecessarios
+    montarPlano: montarPlano, montarCurriculo: montarCurriculo, dadosDesnecessarios: dadosDesnecessarios,
+    registrar: registrar, de: de, ajudantes: { interno: interno, externo: externo, contato: contato, extraDoCatalogo: extraDoCatalogo }
   };
 });

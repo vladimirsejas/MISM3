@@ -112,3 +112,16 @@ Rotas a pé com OSMnx, mapa de calor ou "índice de vulnerabilidade", novo visua
 **Dizer:** é um protótipo acadêmico; cada informação traz fonte e data; o mapa só marca onde há localização de verdade; 81 de 164 serviços aparecem só na lista e isso é mostrado; os testes automáticos passam; o teste de usabilidade foi feito com colegas e familiares.
 
 **Não dizer:** que foi validado com mulheres, que há vaga em creche ou atendimento, que uma região "tem falta" de serviço, que a distância é o caminho a pé, que os telefones de proteção estão todos conferidos.
+
+## 8. Atualização: depois dos pareceres do Copilot e do Gemini (11/10/2026, noite)
+
+Os dois pediram foco: sem público e sem equipe, o ganho está em **orientação prática** ("o que faço agora?"), não em medir a cidade. Concordo, com ajustes (ver `docs/registro_decisoes_desenvolvimento.md`). A ordem passou a ser: contatos críticos, busca por bairro, jornadas (uma por vez). Observatório, painel, questionário, IA nova e pedidos LAI saíram deste ciclo; o bloco G (LAI) e o F (acessibilidade) ficam opcionais.
+
+| Entrega | Estado |
+|---|---|
+| Busca por bairro e "Qual CRAS atende o meu bairro?" | **Feita** (PR #31). Falta confirmar os apelidos (Cervezão, CVZ), que só quem conhece os bairros pode fazer. |
+| Jornada de Educação (vaga do filho; estudar) | **Feita**. |
+| Jornada de assistência social | Próxima: depende só de dados que já estão no catálogo (CRAS com lista de bairros, CREAS, Conselho Tutelar). |
+| Jornada de violência e proteção | **Espera os contatos confirmados** (CRAM, Delegacia, Patrulha). Será mínima e só com fonte. |
+| Contatos críticos (CRAM, Delegacia, Patrulha) | **Espera você**: páginas oficiais impressas em `docs/documetacao/`. |
+| Localizar CRAS e UBS (`atualizar_localizacoes.py`) | **Espera você**: rodar e mandar o que ele imprime. |
