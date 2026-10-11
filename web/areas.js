@@ -13,7 +13,7 @@
     {
       id: "trabalho", nome: "Trabalho", icone: "trabalho",
       intro: "Vagas, cursos de qualificação, crédito e apoio para gerar renda em Rio Claro.",
-      checklist: true,
+      checklist: true, jornada: true,
       secoes: [{
         titulo: "Canais oficiais",
         tipos: ["emprego_curso"],

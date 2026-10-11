@@ -138,7 +138,7 @@
   }
 
   function htmlArea(area) {
-    var html = "";
+    var html = area.jornada && window.JornadaUI ? JornadaUI.html() : "";
     var vistos = Object.create(null);
     area.secoes.forEach(function (sec, i) {
       var cartoes = "", notaFonte = "";
@@ -221,6 +221,7 @@
 
   function mostrarInicio() {
     areaAtual = null;
+    if (window.JornadaUI) JornadaUI.limpar();
     $("inicio-tela").hidden = false; $("area").hidden = true; $("fontes").hidden = true;
     $("navegacao").hidden = true; $("secao-atual").hidden = true;
     document.title = "Mulher em Rede – Rio Claro";
@@ -235,6 +236,7 @@
     $("titulo-area").innerHTML = '<span class="icone-titulo"><svg aria-hidden="true" width="28" height="28"><use href="#' + ICONES[area.icone] + '"/></svg></span>' + esc(area.nome);
     $("intro-area").textContent = area.intro;
     $("conteudo-area").innerHTML = htmlArea(area);
+    if (area.jornada && window.JornadaUI) JornadaUI.restaurar();
     var temServicos = area.secoes.some(function (s) { return s.tipos.length; });
     $("busca-por-cep").hidden = !(dados.indice && temServicos);
     limparResultadoCep();
@@ -261,6 +263,7 @@
     if (mais && areaAtual) mostrarTodos(areaAtual, parseInt(mais.getAttribute("data-mais"), 10), mais);
   });
   window.addEventListener("popstate", function () { render(true); });
+  if (window.JornadaUI) JornadaUI.ligar();
 
   /* Voltar: se a usuária chegou aqui clicando dentro do sistema, volta no histórico; senão vai ao início.
      Nunca deixa a pessoa presa nem a leva a outra seção. */

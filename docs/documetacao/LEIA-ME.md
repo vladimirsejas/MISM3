@@ -16,6 +16,9 @@ Cada arquivo é a **impressão em PDF** de uma página, feita pelo mantenedor em
 | `elektro-espaco-atendimento.pdf` | Notícia da Elektro de 17/12/2020 sobre o espaço de atendimento em Rio Claro | (o endereço da página não aparece na impressão) | 10/10/2026 04:14 | Moradia (Elektro) |
 | `enderecos-saude.pdf` | Fundação Municipal de Saúde: endereços, telefones e horários das unidades | https://www.saude-rioclaro.org.br/enderecos.htm | 10/10/2026 04:32 | Saúde (44 unidades) |
 | `daae-tarifa-social-agua.pdf` | Informativo do DAAE: Tarifa Residencial Social de Água e Esgoto (Resolução ARES-PCJ nº 592/2024) | (o endereço e a data da publicação não constam no arquivo) | não consta | Moradia (água) |
+| `senai-rio-claro.pdf` | SENAI Rio Claro, Escola “Manoel José Ferreira”: cursos livres, Aprendiz SENAI e cursos técnicos gratuitos | https://sp.senai.br/unidade/rioclaro/sobre-a-unidade | 10/10/2026 20:53 | Trabalho (cursos profissionalizantes) |
+| `senac-rio-claro-cursos-livres.pdf` | Senac Rio Claro: endereço (Av. Dois, 720), horário de atendimento e cursos livres por área | https://www.sp.senac.br/senac-rio-claro/cursos-livres (o endereço não aparece na impressão; consta no cadastro) | 10/10/2026 20:52 | Trabalho (cursos profissionalizantes) |
+| `sestsenat-unidades.pdf` | SEST SENAT: busca de unidades. **A impressão mostra só o formulário “Selecione seu estado”, sem a unidade de Rio Claro** | https://www.sestsenat.org.br/unidades | 10/10/2026 20:55 | Trabalho (cadastrado como “não conferido”) |
 
 ## Não arquivado, de propósito
 - Artigo de blog da Matrix Energia sobre tarifa de energia: é de empresa privada, trata de tarifa em geral e não da Tarifa Social; **não foi usado**.
