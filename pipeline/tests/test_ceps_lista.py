@@ -77,26 +77,27 @@ def planilha(tmp_path, linhas):
     return plan
 
 
-def test_marcar_baixas_cep_respeita_limite_cep_divergente_e_bairro(tmp_path):
-    ok = {"confianca": "baixa", "bairro_confere": "sim"}
+def test_marcar_baixas_cep_respeita_limite_e_cep_divergente_mas_nao_trava_por_bairro(tmp_path):
     plan = planilha(tmp_path, [
-        {"id": "perto", "nome": "P", "metodo": "numero_proximo", "cep": "13500100", "diferenca_numero": "40", **ok},
-        {"id": "longe", "nome": "L", "metodo": "numero_proximo", "cep": "13500100", "diferenca_numero": "900", **ok},
-        {"id": "rua", "nome": "R", "metodo": "cep_da_rua", "cep": "13500200", **ok},
-        {"id": "dif", "nome": "D", "metodo": "cep_da_rua", "cep": "13500200", "cep_confere": "não", **ok},
-        {"id": "feita", "nome": "F", "metodo": "cep_da_rua", "cep": "13500200", "decisao": "recusar", **ok},
+        {"id": "perto", "nome": "P", "confianca": "baixa", "metodo": "numero_proximo", "cep": "13500100", "diferenca_numero": "40"},
+        {"id": "longe", "nome": "L", "confianca": "baixa", "metodo": "numero_proximo", "cep": "13500100", "diferenca_numero": "900"},
+        {"id": "rua", "nome": "R", "confianca": "baixa", "metodo": "cep_da_rua", "cep": "13500200"},
+        {"id": "dif", "nome": "D", "confianca": "baixa", "metodo": "cep_da_rua", "cep": "13500200", "cep_confere": "não"},
+        {"id": "feita", "nome": "F", "confianca": "baixa", "metodo": "cep_da_rua", "cep": "13500200", "decisao": "recusar"},
         {"id": "amb", "nome": "A", "confianca": "ambigua", "metodo": "cep_da_rua", "cep": ""},
-        {"id": "outro_bairro", "nome": "O", "metodo": "numero_proximo", "cep": "13500100", "diferenca_numero": "5",
-         "confianca": "baixa", "bairro_confere": "não", "bairro_cep": "Vila Alemã"},
-        {"id": "sem_bairro", "nome": "S", "metodo": "cep_da_rua", "cep": "13500200", "confianca": "baixa", "bairro_confere": ""},
+        {"id": "bairro_difere", "nome": "B", "confianca": "baixa", "metodo": "numero_proximo", "cep": "13500100",
+         "diferenca_numero": "5", "bairro_confere": "não", "bairro_cep": "Vila Alemã"},
     ])
     marcadas, puladas = g.marcar_baixas_cep(plan, 200)
-    assert sorted(r["id"] for r in marcadas) == ["perto", "rua"]
-    motivos = {r["id"]: r["_motivo"] for r in puladas}
-    assert sorted(motivos) == ["longe", "outro_bairro", "sem_bairro"]
-    assert "Vila Alemã" in motivos["outro_bairro"] and motivos["sem_bairro"] == "sem bairro para conferir" and "900" in motivos["longe"]
+    assert sorted(r["id"] for r in marcadas) == ["bairro_difere", "perto", "rua"]       # bairro diferente avisa, não bloqueia
+    assert [r["id"] for r in puladas] == ["longe"] and "900" in puladas[0]["_motivo"]
     lidas = {r["id"]: r for r in g._ler_planilha(plan)[0]}
-    assert all(lidas[i]["decisao"] == "" for i in ("dif", "longe", "outro_bairro", "sem_bairro")) and lidas["feita"]["decisao"] == "recusar"
+    assert lidas["dif"]["decisao"] == "" and lidas["longe"]["decisao"] == "" and lidas["feita"]["decisao"] == "recusar"
+
+
+def test_aviso_de_bairro_so_aparece_quando_difere():
+    assert "Vila Alemã" in g.aviso_de_bairro({"bairro_confere": "não", "bairro_cep": "Vila Alemã"})
+    assert g.aviso_de_bairro({"bairro_confere": "sim", "bairro_cep": "x"}) == "" and g.aviso_de_bairro({"bairro_confere": ""}) == ""
 
 
 def test_bairro_do_endereco_nos_dois_formatos_e_sem_cep():

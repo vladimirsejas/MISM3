@@ -294,6 +294,13 @@ def bairro_confere(endereco: str, bairro_lista: str) -> str:
     return "sim" if a <= b or b <= a else "não"
 
 
+def aviso_de_bairro(r: dict) -> str:
+    """Texto curto para a listagem: só avisa quando o bairro do catálogo e o do CEP na lista diferem. Não bloqueia nada."""
+    if (r.get("bairro_confere") or "") == "não":
+        return " | ATENÇÃO bairro do CEP na lista: %s" % r.get("bairro_cep")
+    return ""
+
+
 def indexar_ruas_da_lista(linhas: list[dict]) -> dict:
     """{(tipo|None, nome canônico): [linha]}; cada rua entra com o nome em algarismo e por extenso, como em interpretar_endereco."""
     indice: dict = defaultdict(list)
@@ -475,8 +482,9 @@ def marcar_altas(planilha: Path) -> tuple[list[dict], list[dict]]:
 
 def marcar_baixas_cep(planilha: Path, limite_numero: int = 200) -> tuple[list[dict], list[dict]]:
     """Escreve 'aprovar' nas sugestões só de CEP que são seguras o bastante: o CEP vindo do número mais próximo da mesma rua
-    (diferença de até `limite_numero`) ou da rua inteira quando ela tem um CEP só, **e** o bairro do catálogo coincide com o bairro do CEP
-    na lista (ruas numeradas se repetem entre bairros; só a rua não basta). Não marca onde o CEP do catálogo difere do CNEFE.
+    (diferença de até `limite_numero`) ou da rua inteira quando ela tem um CEP só. O bairro NÃO bloqueia: as ruas da grade de Rio Claro
+    atravessam vários bairros e o catálogo usa nomes informais de bairro; a lista mostra o aviso ao lado para a pessoa decidir.
+    Não marca onde o CEP do catálogo difere do CNEFE.
 
     Aplicar uma sugestão dessas grava só o CEP (nunca latitude/longitude): o serviço passa a ser localizado de forma aproximada pelo CEP.
     Devolve (marcadas, puladas); cada pulada traz o motivo em "_motivo".
@@ -488,11 +496,6 @@ def marcar_baixas_cep(planilha: Path, limite_numero: int = 200) -> tuple[list[di
             continue
         metodo = (r.get("metodo") or "").strip()
         if metodo not in ("numero_proximo", "cep_da_rua") or (r.get("cep_confere") or "").strip() == "não":
-            continue
-        if (r.get("bairro_confere") or "").strip() != "sim":
-            r["_motivo"] = ("o bairro do catálogo difere do bairro do CEP (%s)" % r.get("bairro_cep") if (r.get("bairro_confere") or "") == "não"
-                            else "sem bairro para conferir")
-            puladas.append(r)
             continue
         if metodo == "numero_proximo":
             try:
@@ -604,7 +607,8 @@ def main() -> int:
         print("%d sugestões de CEP marcadas 'aprovar' em %s. O catálogo NÃO foi alterado." % (len(marcadas), planilha))
         print("CONFIRA cada uma (serviço | endereço do catálogo | rua achada | CEP | método). Para recusar, apague 'aprovar' na planilha:")
         for r in marcadas:
-            print("  %-46s | %-40s | %s | %s | %s" % (r["nome"][:46], r["endereco_catalogo"][:40], r["rua_cnefe"], r["cep"], r["metodo"]))
+            print("  %-46s | %-40s | %s | %s | %s%s" % (r["nome"][:46], r["endereco_catalogo"][:40], r["rua_cnefe"], r["cep"], r["metodo"],
+                                                      aviso_de_bairro(r)))
         for r in puladas:
             print("  NÃO MARCADA (%s): %s | %s | CEP %s" % (r["_motivo"], r["nome"][:46], r["endereco_catalogo"][:40], r["cep"]))
         print("Depois de conferir: python pipeline/geocodificar_catalogo.py --aplicar-aprovadas")
