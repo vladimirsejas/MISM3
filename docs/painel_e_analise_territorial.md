@@ -18,3 +18,25 @@ Escrito em 11/10/2026. **Estado: protótipo com dados de teste.**
 
 ## Para o painel real
 Servidor da Prefeitura, login, perfis de acesso, os registros do questionário (contrato em `docs/questionario_observatorio.md`) e o mesmo código de agregação (`web/painel.js`), que já aplica a regra dos 10.
+
+## Do indicador à decisão (11/10/2026)
+Regra: **nenhum indicador entra no painel sem uma decisão que a Prefeitura possa tomar com ele.** Cada um mostra fonte, data de referência, denominador e limite. Só a coluna "Disponível hoje?" descreve o que existe; o resto é plano.
+
+| Pergunta de gestão | Indicador | Decisão que apoia | Fonte provável | Disponível hoje? |
+|---|---|---|---|---|
+| Onde a creche está abaixo da demanda conhecida? | Crianças aguardando vaga por etapa e território de residência, contra vagas e capacidade | Ampliar, remanejar ou reorganizar a oferta | Secretaria da Educação (agregado); Censo 2022 para crianças de 0 a 4 anos | **Não.** Só população total por setor; faixa etária e fila dependem de dados novos |
+| Onde a assistência social está mais pressionada? | Famílias em acompanhamento e atendimentos por equipe de referência | Reforçar equipes, redistribuir serviços | Secretaria de Desenvolvimento Social; RMA e Censo SUAS | **Não** |
+| Onde pode haver barreira de acesso à saúde da mulher? | Cobertura de pré-natal e de rastreamento (mulheres elegíveis no denominador) por território assistencial | Busca ativa pelas equipes de saúde | SISAB/e-Gestor APS, SISCAN, Fundação de Saúde | **Não** (fontes públicas existem; falta conferir o recorte territorial) |
+| Onde a rede de proteção perde a continuidade? | Proporção agregada de encaminhamentos concluídos e tempo até o acolhimento, em períodos amplos | Melhorar protocolos entre os serviços | Serviços da rede, em agregado | **Não**; exige análise jurídica antes (ver abaixo) |
+| Quais territórios têm deslocamento mais difícil? | Tempo estimado até serviços essenciais, baldeações, frequência nos horários relevantes | Ajustar itinerários, horários ou localização | Horários da SOU (5 linhas, 382 horários, já no projeto) + paradas e itinerários (GTFS, pedido feito) | **Parcial**: horários sim, paradas e itinerários não |
+
+**Regras de leitura (valem para todo indicador):**
+- **Correlação não prova causa.** Um setor com muitas crianças pequenas, pouca creche e baixa renda levanta uma hipótese; não prova que a falta de creche seja a barreira de emprego daquelas mães.
+- **Ausência de dado não é ausência de serviço.** Distinguir sempre: "não encontrei serviço cadastrado", "não tenho dados para localizar" e "confirmei que não existe".
+- **Denominador explícito.** "Famílias referenciadas", "em acompanhamento ativo" e "atendimentos realizados" são medidas diferentes; não trocar uma pela outra, nem deduzir carga de trabalho individual só do RMA.
+- **Sem índice composto por enquanto.** Mostrar os indicadores separados, com fonte e limite, antes de atribuir pesos e classificar territórios.
+
+**Violência e proteção:** só estatística agregada, em períodos e territórios amplos. Não cruzar registros individuais de delegacia, hospital, medida protetiva e CRAM numa base territorializada: numa cidade média, período, bairro e tipo de ocorrência já podem reidentificar uma pessoa. A vinculação de registros fica nos sistemas de origem. Qualquer compartilhamento passa antes por análise jurídica e de risco de reidentificação (inclusive dedução de números ocultos por totais e subtotais).
+
+**Arquitetura (decisão adiada de propósito):** SQLite basta para o protótipo local. PostgreSQL/PostGIS só se houver processamento geográfico pesado, vários usuários e implantação institucional, e só depois de definidos governança, fontes e usos autorizados.
+

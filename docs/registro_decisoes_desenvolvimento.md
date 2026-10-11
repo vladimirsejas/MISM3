@@ -652,3 +652,11 @@ Nenhuma branch foi apagada nem alterada. O que **não** foi trazido para a base,
 - **Pendente:** imprimir a página inteira da Prefeitura em PDF e guardar em `docs/documetacao/` (o LEIA-ME exige o PDF como prova); só então conferir Mãe Preta, Panorama e Terra Nova contra ela.
 - **Ônibus:** o mantenedor informou que Rio Claro só tem as 5 linhas cadastradas e que os horários de ida e volta dentro dos PDFs estão certos; só os nomes dos arquivos estavam trocados. Os avisos "Arco-Íris/Mãe Preta e outras linhas ainda não cadastradas" saíram do site; permanece o aviso de feriados e o de que a Circular I tem só o sentido Volta. Isto é **informação do mantenedor, não conferida por mim no site da SOU** (a rede da sessão não o alcança).
 - **Uma versão só:** a `main` ainda é a versão antiga; a versão atual é a do PR nº 7 (`claude/mulher-em-rede-cursinho`). Esta branch foi avançada até ela, sem perder nenhum commit.
+
+### Cinco eixos do Observatório: o que foi aproveitado — 11/10/2026
+- **Origem:** análise do ChatGPT (feita sobre o GeoPackage de setores e fontes do IBGE, MDS, Ministério da Saúde, INCA e CNJ). A análise do Gemini citada pelo autor não foi recebida; nada foi tirado dela.
+- **Aproveitado:** tabela "pergunta de gestão → indicador → decisão → fonte → disponível hoje?" e as regras de leitura (correlação não prova causa; sem dado ≠ sem serviço; denominador explícito; sem índice composto por ora) em `docs/painel_e_analise_territorial.md`. Quatro minutas de pedido de dados (itens 6 a 9 de `docs/pedidos_LAI.md`): fila de creche por território, RMA/capacidade dos CRAS e CREAS, indicadores de saúde da mulher e estatísticas municipais de atendimento.
+- **Não aproveitado:** banco central que cruze violência, saúde e assistência por território; mapa de violência por bairro; índice único de vulnerabilidade; escolha entre SQLite e PostGIS agora. Isso concorda com a seção 3 de `docs/observatorio_e_dados_da_secretaria.md`.
+- **Não verificado por mim:** as URLs e os indicadores das fontes citadas (SISAB, SISCAN, Cadastro Único, CNJ, GTFS) e se existem por setor censitário. As minutas pedem o caminho de acesso, justamente para não presumir.
+- **Nada foi enviado a órgão nenhum.** Os pedidos são minutas.
+
