@@ -798,3 +798,8 @@ Nenhuma branch foi apagada nem alterada. O que **não** foi trazido para a base,
 - **Números hoje:** 164 serviços = 45 pelo endereço + 38 pelo CEP + 81 sem posição. Vários serviços no mesmo CEP caem no mesmo ponto (não há deslocamento artificial); a lista mostra todos.
 - **Privacidade:** CEP e filtros não vão para cookie, localStorage nem URL (teste confere); o único acesso externo automático é nenhum; o link do Google Maps é clique da pessoa e leva só o endereço do serviço.
 - **Testes:** `mapa.test.js` novo; `dashboard.test.js` ajustado (a regra "a tela inicial não pode mostrar Mapa de serviços" valia quando o mapa não existia). Conferido no Chromium em 1280 e 390 px. Não testado com leitor de tela nem com usuárias.
+
+## 11/10/2026 - abrir_mapa.bat
+
+- **Relato do autor:** depois do `git pull`, não via o mapa ao abrir pelo `.bat`. Causa provável: o `abrir_site.bat` serve a pasta `web` **de onde ele está**; havendo duas cópias do projeto no computador (a original e a cópia atualizada), o `.bat` da cópia sem o `pull` mostra o site antigo. Além disso o `.bat` só abria a página inicial.
+- **Mudança:** `abrir_site.bat` aceita a página de destino como argumento (`abrir_site.bat mapa.html`) sem mudar o comportamento padrão; `abrir_mapa.bat` chama esse arquivo já apontando para `mapa.html`. Não executei os `.bat` (ambiente Linux); conferi só o texto e as quebras de linha do Windows.
