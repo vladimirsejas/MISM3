@@ -32,3 +32,8 @@ __pycache__/
 
 # Sugestões do geocodificador (planilha de trabalho local; o que vale entra no catálogo depois de revisado)
 dados/geocodificacao_*.csv
+
+# Microdados do Censo Escolar (INEP): centenas de MB por arquivo (o GitHub recusa mais de 100 MB) e
+# linhas individuais (matrículas, docentes, gestores). Ficam só no computador de quem usa; no Git entram apenas
+# números agregados por escola, gerados pelo pipeline.
+docs/educacao/dados/
