@@ -456,6 +456,11 @@
         return !idsManuais[id] && !(/^cnes-/.test(id) && codigosManuais[id.slice(5)]);
       });
       dados.servicos = manual.concat(acrescimos);
+      /* O plano do Trabalho busca os telefones no mesmo catálogo verificado (uma só fonte, nada digitado duas vezes). */
+      if (window.JornadaUI) JornadaUI.usarCatalogo(function (id) {
+        for (var i = 0; i < dados.servicos.length; i++) if (dados.servicos[i].id === id) return dados.servicos[i];
+        return null;
+      });
       dados.falhou = !r[0] && !r[1];
       dados.origem = r[1] ? "Catálogo verificado e base do pipeline" : "Catálogo verificado manualmente";
       var datas = [r[0], r[1]].map(function (x) { return (x && x.meta && x.meta.gerado_em) || ""; }).sort();

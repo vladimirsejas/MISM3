@@ -79,9 +79,9 @@ Os microdados nacionais do INEP (`microdados_ed_basica_AAAA.csv`) ficam no `.git
     node web/tests/acesso.test.js           # passou (inclui a regra dos 90 dias)
     node web/tests/necessidades.test.js     # 50 cenários passaram
     node web/tests/dashboard.test.js        # passou: 7 portas, emergência, sem demonstração, links locais
-    node web/tests/jornada.test.js          # passou: ordem do plano, fontes, promessas proibidas, currículo
+    node web/tests/jornada.test.js          # passou: perguntas, ordem e tamanho do plano, telefones do catálogo, links, promessas proibidas, currículo
 
-No navegador (Chromium, 390 px): a área Saúde abre com 45 cartões; a jornada de Trabalho gera o plano de 6 passos no caso de uma mulher com crianças, sem creche, sem dinheiro e sem transporte, preserva o plano ao abrir um link e voltar, escapa texto digitado no currículo e imprime só a folha; sem erro de JavaScript. Não verificados: mapa por CEP com dados reais, leitor de tela, contraste.
+No navegador (Chromium, 390 px): a área Saúde abre com 45 cartões; a jornada de Trabalho (perguntas uma de cada vez, com Voltar e "Prefiro não responder") gera um plano de até 3 passos visíveis e o resto dobrado, com telefone vindo do catálogo, preserva o plano ao abrir um link e voltar, escapa texto digitado no currículo e imprime só a folha; sem erro de JavaScript. Não verificados: mapa por CEP com dados reais, leitor de tela, contraste.
 
 ## Conferir o catálogo contra as páginas oficiais
 Com internet, rode `python pipeline/verificar_catalogo.py`. Ele abre a fonte de cada serviço e confere se os telefones cadastrados aparecem na página. "ATENCAO" não é erro certo: abra a fonte e confira.
