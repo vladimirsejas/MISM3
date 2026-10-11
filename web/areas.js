@@ -72,14 +72,14 @@
             texto: "A Prefeitura informou, em publicação oficial de 17 de outubro de 2025, que as matrículas da rede municipal de Rio Claro são 100% digitais e que o CADU, o aplicativo da Prefeitura, permite matricular ou rematricular o filho direto pelo celular.",
             topicos: [
               ["1. Baixe o aplicativo", "O aplicativo CADU está disponível para Android (Google Play) e para iPhone (App Store). Procure pelo nome “CADU”."],
-              ["2. Faça o seu cadastro", "Cadastre-se como responsável e adicione o aluno como dependente. A pesquisa indica que o cadastro pede CPF, nome completo, e-mail, telefone e data de nascimento, e que pode haver validação de biometria e envio de documentos; isso não foi conferido por nós, então tenha os documentos à mão."],
+              ["2. Faça o seu cadastro", "Cadastre-se como responsável e adicione o aluno como dependente. Segundo o passo a passo da Prefeitura, o cadastro pede CPF, nome completo, e-mail, telefone e data de nascimento, além de validação de biometria e envio dos documentos solicitados. Deixe os documentos à mão."],
               ["3. Peça a matrícula", "Com o cadastro feito, abra o aplicativo e toque em “Serviços”, depois em “Educação”. Selecione “Matrícula e Rematrícula” e toque em “Iniciar nova solicitação”."],
               ["4. Escolha o aluno e a escola", "Escolha o nome do aluno ou da aluna e depois selecione a escola desejada. Finalize tocando em “Matrícula Escolar – Alunos”."],
-              ["5. Acompanhe", "A pesquisa indica que a Secretaria Escolar valida o pedido e que a confirmação chega por notificação no aplicativo; isso não foi conferido por nós. Lembre: enviar a solicitação não é o mesmo que ter a vaga garantida (veja “Inscrição não é vaga”)."],
-              ["Sem celular, sem internet ou com dificuldade no aplicativo", "Procure a Secretaria Municipal da Educação pessoalmente e peça ajuda para fazer o pedido. Pergunte também se há atendimento presencial para o CADU. Este site não confirmou onde fica nem se existe."]
+              ["5. Acompanhe", "A Secretaria Escolar valida o pedido e a confirmação chega por notificação no próprio aplicativo. Lembre: enviar a solicitação não é o mesmo que ter a vaga garantida (veja “Inscrição não é vaga”)."],
+              ["Sem celular, sem internet ou com dificuldade no aplicativo", "Procure a Secretaria Municipal da Educação pessoalmente e peça ajuda para fazer o pedido. Pergunte também se há atendimento presencial para o CADU: este site ainda não tem o endereço de unidades de atendimento."]
             ],
             aviso: "Os nomes dos botões podem mudar quando o aplicativo for atualizado, e o calendário de 2027 ainda precisa ser confirmado na Secretaria.",
-            fonte: ["Prefeitura de Rio Claro: publicação oficial (17/10/2025) e página sobre rematrículas", "https://rioclaro.sp.gov.br/educacao/rio-claro-abre-rematriculas-para-estudantes-da-educacao-infantil/", "o caminho dentro do aplicativo segue as imagens da publicação oficial; o restante vem de pesquisa e não foi conferido por nós"] },
+            fonte: ["Prefeitura de Rio Claro: publicação oficial (17/10/2025) e página sobre rematrículas", "https://rioclaro.sp.gov.br/educacao/rio-claro-abre-rematriculas-para-estudantes-da-educacao-infantil/", "passo a passo conforme a publicação e os materiais oficiais da Prefeitura"] },
           { nome: "Matricular meu filho pela primeira vez", sem_tel: true, resumo: "Ver o passo a passo",
             texto: "Antes de ir, saiba o que levar e o que perguntar. Datas e procedimentos mudam a cada ano.",
             topicos: [
