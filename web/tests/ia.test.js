@@ -56,6 +56,38 @@ assert(IA.sugerir("quero uma receita de bolo").length === 0, "fora do escopo, n�
 assert(IA.sugerir("").length === 0 && IA.sugerir("   ").length === 0);
 assert(IA.sugerir("meu filho precisa de creche e eu preciso de emprego e de saúde e moradia e dívidas").length <= 3, "no máximo 3 sugestões");
 
+/* ---- busca no catálogo: recomenda serviços reais (verificados à mão), com tipos coerentes e sem fingir o que não existe ---- */
+const catalogo = JSON.parse(fs.readFileSync(path.join(web, "dados", "catalogo_manual.json"), "utf8")).servicos.filter((x) => /^man-/.test(x.id));
+IA.usarCatalogo(catalogo);
+const nomesDe = (texto) => { const sg = IA.sugerir(texto); const r = IA.servicosPara(texto, sg, 2); return Object.keys(r).map((k) => r[k].map((x) => x.nome)).flat().join(" | "); };
+assert(/Secretaria Municipal da Educação/.test(nomesDe("meu filho precisa de creche")), "creche leva à Secretaria da Educação");
+assert(/CRAS|Desenvolvimento Social/.test(nomesDe("estou sem comida em casa")), "falta de comida leva ao CRAS ou à Secretaria de Desenvolvimento Social");
+assert(/Delegacia de Defesa da Mulher|Secretaria Municipal da Mulher/.test(nomesDe("ele me bate e tenho medo")), "violência leva à rede de proteção");
+assert(/SESI|EJA/.test(nomesDe("quero terminar o ensino médio")), "ensino médio leva à EJA");
+assert(/Banco do Povo|Desenvolvimento Econômico/.test(nomesDe("quero abrir um negócio e conseguir crédito")), "negócio leva a crédito e à Secretaria de Desenvolvimento Econômico");
+assert(/PAT|Conecta|Secretaria|SENAI|Senac|Fundo Social/.test(nomesDe("estou desempregada e preciso de emprego")));
+assert.deepStrictEqual(IA.servicosPara("tô sem casa", IA.sugerir("tô sem casa").filter((x) => x.id === "moradia"), 2).moradia, [], "moradia não tem serviço cadastrado: não inventa");
+/* o CAPS de álcool e drogas só aparece quando o texto fala disso; nunca para ansiedade */
+assert(!/Álcool e Drogas/.test(nomesDe("preciso de psicóloga estou muito ansiosa")), "ansiedade não pode levar ao CAPS AD");
+assert(!/Álcool e Drogas/.test(nomesDe("fui na UPA e não resolveram")));
+assert(/Álcool e Drogas/.test(nomesDe("meu filho usa drogas e não sei o que fazer")), "quando o texto fala de drogas, o CAPS AD aparece");
+/* só serviços do tipo certo, e só com telefone ou fonte */
+const porId = Object.fromEntries(catalogo.map((x) => [x.id, x]));
+["meu filho precisa de creche e emprego", "dor forte e estou sem dinheiro", "quero me separar e tenho medo", "quero fazer faculdade"].forEach((t) => {
+  const sg = IA.sugerir(t), r = IA.servicosPara(t, sg, 2);
+  sg.forEach((x) => (r[x.id] || []).forEach((sv) => {
+    assert(IA.SERVICOS_DA_NECESSIDADE[x.id].some((reg) => reg.tipo === sv.tipo && (!reg.subtipos || reg.subtipos.includes(sv.subtipo))), "serviço do tipo errado para " + x.id + ": " + sv.nome);
+    assert(sv.telefone || sv.fonte_url, "serviço sem contato nem fonte: " + sv.nome);
+    assert(porId[sv.id], "serviço fora do catálogo verificado: " + sv.id);
+  }));
+  assert(Object.keys(r).every((k) => r[k].length <= 2), "no máximo 2 serviços por necessidade");
+});
+/* sem catálogo, nada é recomendado */
+const IA2 = (() => { delete require.cache[require.resolve("../ia.js")]; return require("../ia.js"); })();
+assert.deepStrictEqual(IA2.servicosPara("creche", [{ id: "filhos" }], 2), {});
+/* o app só entrega ao índice os cadastros verificados à mão, nunca os cartões crus do CNES */
+assert(/filter\(function \(s\) \{ return \/\^man-\/\.test/.test(fs.readFileSync(path.join(web, "app.js"), "utf8")), "a IA só pode indexar o catálogo verificado (ids man-)");
+
 /* ---- transparência: o modelo diz de onde vêm os dados e não promete nada ---- */
 assert(/escritas pela equipe/.test(modelo.meta.origem_das_frases) && /Não decide direitos/.test(modelo.meta.aviso));
 const tudo = JSON.stringify(IA.CAMINHOS);

@@ -85,5 +85,91 @@
     });
   }
 
-  return { CAMINHOS: CAMINHOS, atributos: atributos, usarModelo: usarModelo, pronto: pronto, probabilidades: probabilidades, sugerir: sugerir };
+
+  /* ------------------------------------------------------------ serviços do catálogo (recomendação por conteúdo) */
+  /* Quais serviços do catálogo verificado cabem em cada necessidade. Só entram tipos que EXISTEM no catálogo: moradia e dívidas
+     não têm serviços cadastrados, e o site não finge que têm (mostra só o caminho da área). */
+  var SERVICOS_DA_NECESSIDADE = {
+    violencia: [{ tipo: "mulher" }, { tipo: "assistencia", subtipos: ["creas"] }],
+    casamento: [{ tipo: "mulher" }],
+    filhos: [{ tipo: "creche", subtipos: ["secretaria"] }],
+    emprego_curso: [{ tipo: "emprego_curso", subtipos: ["pat", "conecta", "credito", "secretaria", "fundo_social", "qualificacao", "curso_profissionalizante", "curso_tecnico"] }],
+    estudo: [{ tipo: "emprego_curso", subtipos: ["eja", "escola_sesi", "graduacao", "curso_superior_tecnologia", "curso_tecnico", "curso_profissionalizante"] }],
+    saude: [{ tipo: "saude", subtipos: ["urgencia", "caps", "hospital", "especialidades", "secretaria", "cei", "centro_habilitacao"] }],
+    familia: [{ tipo: "assistencia", subtipos: ["cras", "sede", "creas"] }],
+    moradia: [],
+    dividas: []
+  };
+  /* Serviços "porta de entrada" que valem um pequeno empurrão quando o texto não aponta nenhum em especial. */
+  var PORTAS = { secretaria: 1, sede: 1, pat: 1, cras: 1, ddm: 1, cram: 1, caps: 0.6, urgencia: 0.6 };
+  /* Alguns serviços só fazem sentido quando o texto trata do assunto deles. Semelhança de letras não basta: um CAPS de álcool e
+     drogas nunca deve aparecer para quem diz estar ansiosa, e o inverso. (Comparação sem acento e em minúsculas.) */
+  var DROGAS = /droga|alcool|bebida|crack|vici|dependen|quimic|cachaca|maconha|cocaina|bebe demais/;
+  var MENTAL = /psic|ansios|ansied|depress|triste|angusti|saude mental|panico|suicid|nervos|insonia|nao consigo dormir|terapi|psiquiatr|emocional|sem vontade de nada/;
+  var CRIANCA = /crianca|filh|adolescen|menin|bebe|nene|jovem/;
+  var CONDICOES = [
+    { nome: /alcool e drogas/, vale: function (q) { return DROGAS.test(q); } },
+    { nome: /infantojuvenil/, vale: function (q) { return MENTAL.test(q) && CRIANCA.test(q); } },
+    { nome: /caps iii|18 de maio/, vale: function (q) { return MENTAL.test(q) || DROGAS.test(q); } }
+  ];
+  function liberado(s, q) {
+    var nome = Regras.normalizar(s.nome);
+    return CONDICOES.every(function (c) { return !c.nome.test(nome) || c.vale(q); });
+  }
+  /* Abaixo disto o serviço só entra se for uma "porta de entrada" (secretaria, CRAS, PAT...): evita sugestões por mera coincidência de letras. */
+  var MIN_SEMELHANCA = 0.08;
+  var catalogo = null;
+
+  function textoDoServico(s) {
+    return [s.nome, String(s.subtipo || "").replace(/_/g, " "), s.observacao, s.grupo].filter(Boolean).join(" ");
+  }
+  function vetorizar(texto, idf) {
+    var cont = Object.create(null);
+    atributos(texto).forEach(function (f) { cont[f] = (cont[f] || 0) + 1; });
+    var v = Object.create(null), soma = 0;
+    Object.keys(cont).forEach(function (f) {
+      var w = idf[f]; if (w === undefined) return;
+      var x = (1 + Math.log(cont[f])) * w; v[f] = x; soma += x * x;
+    });
+    var n = Math.sqrt(soma) || 1;
+    Object.keys(v).forEach(function (f) { v[f] /= n; });
+    return v;
+  }
+  /* Recebe a lista de serviços já carregada pelo site e monta um índice de busca (TF-IDF sobre nome, tipo e observação). */
+  function usarCatalogo(lista) {
+    var docs = (lista || []).filter(function (s) { return s && s.nome && (s.telefone || s.fonte_url); });
+    var df = Object.create(null);
+    var feats = docs.map(function (s) {
+      var set = Object.create(null);
+      atributos(textoDoServico(s)).forEach(function (f) { set[f] = 1; });
+      Object.keys(set).forEach(function (f) { df[f] = (df[f] || 0) + 1; });
+      return set;
+    });
+    var idf = Object.create(null), n = docs.length;
+    Object.keys(df).forEach(function (f) { idf[f] = Math.log((1 + n) / (1 + df[f])) + 1; });
+    catalogo = { idf: idf, itens: docs.map(function (s) { return { servico: s, vetor: vetorizar(textoDoServico(s), idf) }; }) };
+  }
+  function cosseno(a, b) {
+    var t = 0; Object.keys(a).forEach(function (f) { if (b[f] !== undefined) t += a[f] * b[f]; });
+    return t;
+  }
+  function cabe(s, regras) {
+    return regras.some(function (r) { return s.tipo === r.tipo && (!r.subtipos || r.subtipos.indexOf(s.subtipo) !== -1); });
+  }
+  /* Para cada necessidade sugerida, os serviços do catálogo que mais combinam com o texto (no máximo `max`). Sem catálogo: vazio. */
+  function servicosPara(texto, sugestoes, max) {
+    var saida = {};
+    if (!catalogo) return saida;
+    var q = vetorizar(texto, catalogo.idf), limite = max || 2, usados = Object.create(null), qn = Regras.normalizar(texto);
+    (sugestoes || []).forEach(function (sug) {
+      var regras = SERVICOS_DA_NECESSIDADE[sug.id] || [];
+      var ranque = catalogo.itens.filter(function (it) { return cabe(it.servico, regras) && !usados[it.servico.id] && liberado(it.servico, qn); }).map(function (it) {
+        return { servico: it.servico, pontos: cosseno(q, it.vetor) + 0.12 * (PORTAS[it.servico.subtipo] || 0), semelhanca: cosseno(q, it.vetor) };
+      }).sort(function (a, b) { return b.pontos - a.pontos || String(a.servico.nome).localeCompare(String(b.servico.nome), "pt-BR"); });
+      saida[sug.id] = ranque.filter(function (r) { return r.semelhanca >= MIN_SEMELHANCA || (PORTAS[r.servico.subtipo] || 0) >= 1; }).slice(0, limite).map(function (r) { usados[r.servico.id] = 1; return r.servico; });
+    });
+    return saida;
+  }
+
+  return { CAMINHOS: CAMINHOS, atributos: atributos, usarModelo: usarModelo, pronto: pronto, probabilidades: probabilidades, sugerir: sugerir, usarCatalogo: usarCatalogo, servicosPara: servicosPara, SERVICOS_DA_NECESSIDADE: SERVICOS_DA_NECESSIDADE };
 });
