@@ -307,4 +307,21 @@ assert(/@media print/.test(css) && /folha-impressao/.test(css), "deve haver esti
 assert(!/localStorage|sessionStorage|document\.cookie/.test(ler("jornada-ui.js") + ler("jornada.js")), "a jornada não pode guardar nada no aparelho");
 assert(!/fetch\(|XMLHttpRequest|sendBeacon/.test(ler("jornada-ui.js") + ler("jornada.js")), "a jornada não pode enviar nada pela rede");
 
+
+// Escolas municipais (página oficial "Unidades de ensino", 11/10/2026)
+const escolas = lista.filter((x) => x.subtipo === "escola_municipal");
+assert(escolas.length === 68, "devem estar cadastradas as 68 escolas municipais da página oficial; achei " + escolas.length);
+assert(escolas.every((x) => x.tipo === "creche" && x.fonte_url === "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino" && x.verificado_em === "2026-10-11" && x.endereco), "toda escola deve ter fonte, data e endereço");
+assert(new Set(escolas.map((x) => x.id)).size === 68, "ids das escolas devem ser únicos");
+escolas.forEach((x) => assert(/^\(19\) \d{4,5}-\d{4}( \/ \(19\) \d{4,5}-\d{4})*$/.test(x.telefone) && !/0000/.test(x.telefone), "telefone da escola em formato inválido ou marcador vazio: " + x.nome + " " + x.telefone));
+assert(!escolas.some((x) => x.cep === "16504450" || x.cep === "13500000"), "CEP errado ou genérico da fonte não deve virar localização");
+assert(/não é de Rio Claro/.test(escolas.find((x) => /Clara Freire Castellano/.test(x.nome)).observacao), "o CEP errado da fonte deve estar explicado");
+const rosa = escolas.find((x) => /Rosa Maria Castellano Pieroni/.test(x.nome));
+assert(!/3522-1950/.test(rosa.telefone) && /linha da Secretaria/.test(rosa.observacao), "a linha da Secretaria não pode ser o telefone da escola");
+assert(escolas.every((x) => /não diz quais etapas/.test(x.observacao)), "nenhuma escola pode ser apresentada como creche sem avisar que a etapa deve ser confirmada");
+assert(escolas.find((x) => /Aparecida José Carlini Bonilha/.test(x.nome)).telefone === "(19) 3533-6633", "telefone da Aparecida Carlini Bonilha conforme a página oficial");
+const secEsc = Areas.AREAS.find((a) => a.id === "educacao").secoes.find((sec) => sec.ancora === "educacao-escolas");
+assert(secEsc && secEsc.recolhida && secEsc.filtro && JSON.stringify(secEsc.subtipos) === '["escola_municipal"]', "a lista de escolas deve ficar recolhida e com busca");
+assert(Areas.AREAS.find((a) => a.id === "educacao").secoes.find((sec) => sec.titulo === "Canais oficiais").subtipos.join() === "secretaria", "os canais oficiais devem mostrar só o cartão da Secretaria");
+assert(/data-filtro/.test(ler("app.js")) && /semAcento/.test(ler("app.js")), "a busca por nome ou bairro deve ignorar acentos");
 console.log("dashboard.test.js: sete portas, emergência, navegação, nenhum conteúdo de demonstração, links locais e conteúdo das áreas passaram");

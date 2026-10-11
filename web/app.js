@@ -148,6 +148,33 @@
   }
 
   /* Caixa de orientação no topo da área: diz o que a página tem e leva a cada parte (botões, pois a navegação usa o hash). */
+  /* Campo para filtrar uma lista longa por nome ou bairro. O texto digitado fica só neste aparelho. */
+  function htmlFiltro(sec) {
+    var id = esc(sec.ancora);
+    return '<div class="busca-area"><label for="filtro-' + id + '">' + esc(sec.filtro) + '</label>' +
+      '<input id="filtro-' + id + '" type="search" maxlength="60" autocomplete="off" data-filtro="' + id + '" placeholder="' + esc(sec.filtroExemplo || "") + '">' +
+      '<p class="meta" role="status" aria-live="polite" data-filtro-msg="' + id + '"></p></div>';
+  }
+
+  function semAcento(t) { return String(t || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(); }
+
+  document.addEventListener("input", function (e) {
+    var id = e.target && e.target.getAttribute ? e.target.getAttribute("data-filtro") : null;
+    if (!id) return;
+    var lista = document.querySelector('[data-lista="' + id + '"]');
+    if (!lista) return;
+    var termos = semAcento(e.target.value).split(/\s+/).filter(Boolean);
+    var cartoes = lista.querySelectorAll(".cartao"), n = 0;
+    Array.prototype.forEach.call(cartoes, function (c) {
+      var t = semAcento(c.textContent);
+      var ok = termos.every(function (x) { return t.indexOf(x) !== -1; });
+      c.hidden = !ok;
+      if (ok) n++;
+    });
+    var msg = document.querySelector('[data-filtro-msg="' + id + '"]');
+    if (msg) msg.textContent = !termos.length ? "" : (n ? n + " de " + cartoes.length + " encontradas." : "Nenhuma encontrada. Tente só uma parte do nome ou do bairro.");
+  });
+
   function htmlGuia(g) {
     var itens = g.itens.map(function (i) {
       var alvo = i.href
@@ -177,6 +204,7 @@
       var visiveis = limitar ? servicos.slice(0, LIMITE_CARTOES) : servicos;
       var corpo = "";
       if (sec.busca === "bairro") corpo += BUSCA_BAIRRO;
+      if (sec.filtro) corpo += htmlFiltro(sec);
       if (sec.agrupar) {
         corpo += htmlGrupos(visiveis, sec);
       } else {
@@ -191,7 +219,7 @@
           (idadeComum.antigo ? '<p class="aviso-data">' + AVISO_DATA + "</p>" : "");
       }
       }
-      if (cartoes) corpo += '<div class="lista-cartoes">' + cartoes + "</div>" + notaFonte;
+      if (cartoes) corpo += '<div class="lista-cartoes"' + (sec.filtro ? ' data-lista="' + esc(sec.ancora) + '"' : "") + ">" + cartoes + "</div>" + notaFonte;
       if (servicos.length > visiveis.length) {
         corpo += '<p class="mais"><button type="button" class="btn secundario" data-mais="' + i + '">Mostrar todos (' + servicos.length + ")</button></p>";
       }

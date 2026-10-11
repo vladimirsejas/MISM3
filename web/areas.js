@@ -34,7 +34,7 @@
         titulo: "O que você encontra nesta página",
         texto: "A área Educação é para os seus filhos e também para você.",
         itens: [
-          { titulo: "Para os seus filhos", texto: "Matrícula, transferência, vaga em creche, calendário de 2027, documentos e o que fazer se não houver vaga. Há também apoio para quem cria os filhos sozinha.", ancora: "educacao-filhos", botao: "Ver o guia dos filhos" },
+          { titulo: "Para os seus filhos", texto: "Matrícula, transferência, vaga em creche, calendário de 2027, documentos e o que fazer se não houver vaga. Há também apoio para quem cria os filhos sozinha e a lista das escolas municipais, com endereço e telefone.", ancora: "educacao-filhos", botao: "Ver o guia dos filhos" },
           { titulo: "Para você", texto: "Terminar o ensino médio (EJA), fazer faculdade e cursos profissionalizantes e técnicos para trabalhar: SENAI, Senac, SEST SENAT, Etec e Fatec.", ancora: "educacao-voce", botao: "Ver cursos e estudos para você" },
           { titulo: "Emprego e renda", texto: "Vagas de emprego, crédito e um plano para voltar a trabalhar ficam na área Trabalho.", href: "#trabalho", botao: "Ir para Trabalho" }
         ]
@@ -173,13 +173,18 @@
         ]
       }, {
         titulo: "Canais oficiais",
-        tipos: ["creche"],
+        tipos: ["creche"], subtipos: ["secretaria"],
         links: [
           ["Secretaria Municipal da Educação", "https://rioclaro.sp.gov.br/secretaria/secretaria-da-educacao/", "Orientações sobre a rede municipal e a matrícula."],
           ["Consulta pública da demanda escolar", "https://www.educacaorc.com.br/?r=demandaescolar", "Informações disponibilizadas no portal da Educação."],
           ["Rematrículas na rede municipal (Prefeitura de Rio Claro)", "https://rioclaro.sp.gov.br/educacao/rio-claro-abre-rematriculas-para-estudantes-da-educacao-infantil/", "Página da Prefeitura sobre as rematrículas pelo aplicativo CADU."],
           ["Secretaria Escolar Digital (SED): consulta pública de matrícula, rede estadual", "https://sed.educacao.sp.gov.br/ConsultaPublica/Index", "Para escolas estaduais. Indicado pela pesquisa; confira se a página abre e se atende o seu caso."]
         ]
+      }, {
+        titulo: "Escolas municipais de Rio Claro", ancora: "educacao-escolas", recolhida: true,
+        descricao: "Lista oficial da Prefeitura, com endereço e telefone. Ela não diz quais etapas cada escola atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar. Para pedir a vaga, use o aplicativo CADU (veja o guia acima).",
+        filtro: "Procurar escola pelo nome ou bairro", filtroExemplo: "Ex.: Jardim Novo, Santana, Cidade Jardim",
+        tipos: ["creche"], subtipos: ["escola_municipal"], links: []
       }, {
         titulo: "Para você: concluir os estudos e se qualificar", ancora: "educacao-voce",
         descricao: "Você também pode estudar. Terminar o ensino médio, fazer faculdade e cursos profissionalizantes ou técnicos abre caminho para o trabalho. Cada cartão diz quem oferece e como confirmar vagas, datas e custos com a própria instituição.",
@@ -190,7 +195,7 @@
       avisos: ["Uma escola ou creche cadastrada não confirma que há vaga. Confirme com a Secretaria da Educação."],
       pendencias: [
         "As regras de Rio Claro ainda não foram arquivadas de fonte oficial: o passo a passo acima segue a regra geral e as informações de pesquisa, e três pontos precisam ser confirmados com a Secretaria Municipal da Educação: (1) o calendário e o procedimento de novas matrículas para 2027, inclusive se o aplicativo CADU continua sendo o canal (a Prefeitura o confirmou como canal de matrícula em publicação de 17/10/2025); (2) como solicitar e acompanhar vaga em creche, e o que fazer quando não há vaga; (3) quais documentos e canais são exigidos hoje em cada etapa (creche, pré-escola, ensino fundamental e EJA).",
-        "A lista de escolas públicas (municipais e estaduais) com endereço e telefone ainda não está neste site."
+        "A lista de escolas estaduais com endereço e telefone ainda não está neste site. As escolas municipais estão na seção “Escolas municipais de Rio Claro”."
       ]
     },
     {
