@@ -197,6 +197,37 @@ def _alt_ceps(regs) -> str:
     return "; ".join("CEP %s (%d registro%s)" % (c, n, "" if n == 1 else "s") for c, n in sorted(por_cep.items()))
 
 
+def _faixas_por_cep(regs, numero: int) -> dict:
+    """{cep: (menor, maior, quantos)} dos números da rua no CNEFE, só do mesmo lado (par/ímpar) do número procurado, se houver."""
+    mesmo_lado = [r for r in regs if r[0] % 2 == numero % 2 and r[3]]
+    usados = mesmo_lado or [r for r in regs if r[3]]
+    faixas: dict = {}
+    for r in usados:
+        a, b, n = faixas.get(r[3], (r[0], r[0], 0))
+        faixas[r[3]] = (min(a, r[0]), max(b, r[0]), n + 1)
+    return faixas
+
+
+def _pela_faixa_do_cep(com_numero, numero: int, rua: str) -> dict | None:
+    """Um CEP cobre uma faixa de numeração da rua. Se o número cai dentro da faixa de um CEP só, esse é o CEP; se cai em mais de um
+    (a mesma rua em outro bairro, ou faixas sobrepostas), fica ambíguo e lista as faixas. Se não cai em nenhuma, devolve None."""
+    faixas = _faixas_por_cep(com_numero, numero)
+    dentro = {c: f for c, f in faixas.items() if f[0] <= numero <= f[1]}
+    if not dentro:
+        return None
+    lado = "par" if numero % 2 == 0 else "ímpar"
+    if len(dentro) == 1:
+        cep, (a, b, n) = next(iter(dentro.items()))
+        return _res(metodo="faixa_do_cep", confianca="baixa", candidatos=1, cep=cep, situacao="sugestao", rua_cnefe=rua,
+                    diferenca_numero=0,
+                    observacao="O número %d cai na faixa do CEP %s nesta rua (%d a %d, lado %s, %d endereços do CNEFE). Sugerido só o CEP."
+                               % (numero, cep, a, b, lado, n))
+    return _res(metodo="faixa_do_cep", confianca="ambigua", candidatos=len(dentro), rua_cnefe=rua,
+                alternativas="; ".join("CEP %s (%d a %d)" % (c, f[0], f[1]) for c, f in sorted(dentro.items())),
+                observacao="O número %d cai na faixa de mais de um CEP (a mesma rua em outro bairro, ou faixas que se sobrepõem): escolher à mão."
+                           % numero)
+
+
 def casar(endereco: str, indice: dict) -> dict:
     """Compara um endereço do catálogo com o CNEFE e devolve a sugestão, o método, os candidatos e a confiança."""
     e = interpretar_endereco(endereco)
@@ -232,6 +263,9 @@ def casar(endereco: str, indice: dict) -> dict:
         if not com_numero:
             return _res(metodo="rua_sem_numeros", rua_cnefe=rua,
                         observacao="A rua existe no CNEFE, mas sem números: localizar à mão.")
+        pela_faixa = _pela_faixa_do_cep(com_numero, e["numero"], rua)
+        if pela_faixa:
+            return pela_faixa
         n_prox = min(com_numero, key=lambda r: abs(r[0] - e["numero"]))[0]
         prox = [r for r in com_numero if r[0] == n_prox]
         ceps = sorted({r[3] for r in prox if r[3]})
@@ -433,6 +467,9 @@ def propor(linhas: list[dict], indice: dict, indice_cep: dict | None = None, rua
                         "O CEP do catálogo (%s) é diferente do CNEFE (%s)%s: conferir qual está certo." % (
                             cep_catalogo, r["cep"], "" if distancia == "" else " e o centro dele fica a %d m do ponto" % distancia))
                     r["situacao"] = "pendente"
+        if bairro_por_cep and r["alternativas"] and r["metodo"] != "cep_da_rua":
+            r["alternativas"] = re.sub(r"CEP (\d{8})", lambda m: "CEP %s [%s]" % (m.group(1), bairro_por_cep.get(m.group(1)) or "sem bairro"),
+                                       r["alternativas"])
         bairro_cep = (bairro_por_cep or {}).get(r["cep"], "") if r["cep"] else ""
         saida.append({"id": s["id"], "nome": s["nome"], "endereco_catalogo": s["endereco"], "cep_catalogo": cep_catalogo,
                       "cep_confere": confere, "cep_distancia_m": distancia, "decisao": "",
@@ -499,7 +536,7 @@ def marcar_baixas_cep(planilha: Path, limite_numero: int = 200) -> tuple[list[di
         if (r.get("confianca") or "").strip() != "baixa" or (r.get("decisao") or "").strip() or not (r.get("cep") or "").strip():
             continue
         metodo = (r.get("metodo") or "").strip()
-        if metodo not in ("numero_proximo", "cep_da_rua") or (r.get("cep_confere") or "").strip() == "não":
+        if metodo not in ("numero_proximo", "faixa_do_cep", "cep_da_rua") or (r.get("cep_confere") or "").strip() == "não":
             continue
         if metodo == "numero_proximo":
             try:
