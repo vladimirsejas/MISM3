@@ -135,6 +135,9 @@
       });
       var candidatos = dados.servicos ? dados.servicos.filter(function (s) { return c.tipos.indexOf(s.tipo) !== -1 || (s.portas || []).indexOf(chave) !== -1; }) : [];
       var encontrados = [];
+      // serviços marcados de propósito para esta porta (coluna "portas") vêm primeiro
+      var destaque = function (s) { return (s.portas || []).indexOf(chave) !== -1 ? 0 : 1; };
+      candidatos = candidatos.slice().sort(function (x, y) { return destaque(x) - destaque(y); });
       candidatos.forEach(function (s) {
         var chaveServico = String(s.id || [s.nome, s.tipo, s.fonte_url || s.fonte].join("|")).toLowerCase();
         if (servicosExibidos[chaveServico]) return;
