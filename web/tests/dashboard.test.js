@@ -221,13 +221,16 @@ assert(Areas.AREAS.find((a) => a.id === "trabalho").jornada === true, "a área T
 const ordemScripts = Array.from(index.matchAll(/<script src="([^"]+)"/g), (m) => m[1]);
 assert(ordemScripts.indexOf("jornada.js") !== -1 && ordemScripts.indexOf("jornada.js") < ordemScripts.indexOf("jornada-ui.js") && ordemScripts.indexOf("jornada-ui.js") < ordemScripts.indexOf("app.js"), "scripts da jornada devem carregar antes do app.js");
 const cat = JSON.parse(ler("dados/catalogo_manual.json")); const lista = Array.isArray(cat) ? cat : cat.servicos;
-["man-senai-rio-claro", "man-senac-rio-claro", "man-sestsenat", "man-etec-cps", "man-etec-rio-claro", "man-sesi-rio-claro", "man-sesi-eja", "man-faculdade-sesi", "man-fatec-ia", "man-fatec-esg"].forEach((id) => {
+["man-senai-rio-claro", "man-senac-rio-claro", "man-sestsenat", "man-sestsenat-cursos", "man-etec-cps", "man-etec-rio-claro", "man-sesi-rio-claro", "man-sesi-eja", "man-faculdade-sesi", "man-fatec-ia", "man-fatec-esg"].forEach((id) => {
   const s = lista.find((x) => x.id === id);
   assert(s && s.tipo === "emprego_curso" && s.fonte_url && s.verificado_em, "curso profissionalizante ausente ou sem fonte/data: " + id);
 });
 const sest = lista.find((x) => x.id === "man-sestsenat");
 assert(sest.conferido !== false && /3522-1710/.test(sest.telefone) && /0800 700 9393/.test(sest.telefone) && sest.fonte_url === "https://www.sestsenat.org.br/home", "SEST SENAT: unidade confirmada por telefone, com o 0800 e o link do site");
 assert(/sócios/.test(sest.observacao), "o cartão do SEST SENAT deve dizer que a página da cidade é para sócios");
+const sestCursos = lista.find((x) => x.id === "man-sestsenat-cursos");
+assert(sestCursos.fonte_url === "https://www.sestsenat.org.br/cursos" && /mudam|muda/.test(sestCursos.observacao), "o cartão de cursos do SEST SENAT remete à página e diz que a lista muda");
+assert(!/NR ?35|Liderança|Webaula de|Transporte de Cargas/i.test(JSON.stringify(sestCursos)), "o SEST SENAT não deve enumerar cursos, que mudam a cada período");
 lista.filter((x) => x.tipo === "emprego_curso").forEach((x) => assert(x.grupo, "serviço de Trabalho sem grupo ficaria escondido atrás de \"Mostrar todos\": " + x.id));
 assert(Areas.AREAS.find((a) => a.id === "trabalho").secoes[0].agrupar === true, "a lista de Trabalho deve ser agrupada, não limitada a 12 cartões");
 assert(/@media print/.test(css) && /folha-impressao/.test(css), "deve haver estilo de impressão para o plano e o currículo");

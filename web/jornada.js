@@ -28,6 +28,7 @@
     fatecESG: ["Fatec Rio Claro — Gestão ESG", "https://fatecrioclaro.cps.sp.gov.br/esg/", "Curso superior de tecnologia presencial, 4 semestres."],
     sesi: ["SESI Rio Claro — EJA gratuita, ensino fundamental e médio", "https://www.sesisp.org.br/", "Endereço e telefone no cartão abaixo. Confirme turmas, vagas e ingresso."],
     faculdadeSesi: ["Faculdade SESI de Educação", "https://www.faculdadesesi.edu.br/", "Licenciaturas gratuitas, com aulas presenciais à noite em São Paulo (capital). Confirme as regras atuais no edital."],
+    sestsenatCursos: ["SEST SENAT — cursos abertos agora", "https://www.sestsenat.org.br/cursos", "A lista muda a cada período: veja modalidade, data de início e cidade, e confirme requisitos e custo."],
     sestsenat: ["SEST SENAT — unidade de Rio Claro (para sócios)", "https://www.sestsenat.org.br/home", "Endereço e telefone da unidade confirmados. Segundo o autor, a página da cidade só abre para sócios: pergunte se há curso aberto a você."]
   };
 
@@ -129,7 +130,7 @@
         porque: "Um curso certificado amplia as vagas possíveis. Compare opções gratuitas e pagas antes de decidir.",
         fazer: ["Veja as opções abaixo e pergunte requisitos, duração, horário, custo e se há bolsa ou gratuidade.",
           "Confirme se há turma aberta e prazo de inscrição: a página de uma unidade não garante vaga."],
-        links: [LINKS.senai, LINKS.cqp, LINKS.senac, LINKS.etec, LINKS.fatecIA, LINKS.fatecESG, LINKS.faculdadeSesi, LINKS.sesi, LINKS.sestsenat, LINKS.trampolim],
+        links: [LINKS.senai, LINKS.cqp, LINKS.senac, LINKS.etec, LINKS.fatecIA, LINKS.fatecESG, LINKS.faculdadeSesi, LINKS.sesi, LINKS.sestsenatCursos, LINKS.sestsenat, LINKS.trampolim],
         alternativa: "Se um curso não tiver turma, tente outra instituição da lista ou os cursos do Trampolim."
       });
     }
