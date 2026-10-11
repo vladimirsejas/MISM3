@@ -170,7 +170,7 @@ def indexar_cnefe(df, municipio: str = MUNICIPIO_IBGE7) -> dict:
 
 
 VAZIO = {"metodo": "", "confianca": "nenhuma", "candidatos": 0, "cep": "", "lat": "", "lon": "", "setor": "",
-         "registros": "", "rua_cnefe": "", "numero_cnefe": "", "diferenca_numero": "", "alternativas": "", "situacao": "pendente",
+         "registros": "", "rua_cnefe": "", "numero_cnefe": "", "diferenca_numero": "", "bairro_cep": "", "bairro_confere": "", "alternativas": "", "situacao": "pendente",
          "observacao": ""}
 # Rio Claro (malha do IBGE) com folga de ~5 km: valores fora disso na planilha revisada são recusados
 CAIXA_RIO_CLARO = (-22.60, -22.20, -47.82, -47.41)  # lat_min, lat_max, lon_min, lon_max
@@ -277,6 +277,23 @@ def _tokens_bairro(texto: str) -> set[str]:
     return {t for t in re.findall(r"[a-z0-9]+", sem_acento(texto).lower()) if t not in PALAVRAS_DE_BAIRRO}
 
 
+def bairro_do_endereco(endereco: str) -> str:
+    """Bairro escrito no endereço do catálogo ("Rua 5, 1201, Jardim Bom Retiro" ou "Rua 4-B, 70 - Cidade Nova"), sem o CEP. '' se não há."""
+    texto = re.sub(r"\bCEP\b.*$", "", str(endereco or ""), flags=re.I)
+    if " - " in texto:
+        return texto.split(" - ", 1)[1].split(",")[0].strip()
+    partes = [p.strip() for p in texto.split(",")]
+    return partes[2] if len(partes) > 2 else ""
+
+
+def bairro_confere(endereco: str, bairro_lista: str) -> str:
+    """'sim' se o bairro do endereço e o bairro do CEP na lista se contêm (ignorando Jd., Vila...), 'não' se diferem, '' se falta um dos dois."""
+    a, b = _tokens_bairro(bairro_do_endereco(endereco)), _tokens_bairro(bairro_lista or "")
+    if not a or not b:
+        return ""
+    return "sim" if a <= b or b <= a else "não"
+
+
 def indexar_ruas_da_lista(linhas: list[dict]) -> dict:
     """{(tipo|None, nome canônico): [linha]}; cada rua entra com o nome em algarismo e por extenso, como em interpretar_endereco."""
     indice: dict = defaultdict(list)
@@ -339,7 +356,7 @@ def ler_cnefe(caminho: Path):
 
 CAMPOS_PROPOSTA = ["id", "nome", "endereco_catalogo", "cep_catalogo", "situacao", "confianca", "metodo", "candidatos",
                    "cep", "cep_confere", "cep_distancia_m", "lat", "lon", "setor", "registros", "rua_cnefe", "numero_cnefe",
-                   "diferenca_numero", "alternativas", "observacao", "decisao"]
+                   "diferenca_numero", "bairro_cep", "bairro_confere", "alternativas", "observacao", "decisao"]
 # CEP do catálogo diferente do CNEFE, mas com o centro a até esta distância (mais o raio do CEP) do ponto achado: é CEP
 # vizinho da mesma região, não erro. Mais longe que isso, a pessoa precisa conferir.
 CEP_VIZINHO_M = 1500
@@ -370,7 +387,8 @@ def carregar_indice_cep(caminho: Path | None) -> dict:
 TENTAR_PELA_RUA = ("sem_correspondencia", "rua_sem_numero", "rua_ambigua", "rua_sem_numeros")
 
 
-def propor(linhas: list[dict], indice: dict, indice_cep: dict | None = None, ruas_cep: dict | None = None) -> list[dict]:
+def propor(linhas: list[dict], indice: dict, indice_cep: dict | None = None, ruas_cep: dict | None = None,
+           bairro_por_cep: dict | None = None) -> list[dict]:
     """Uma sugestão por serviço que tem endereço e ainda não tem CEP nem coordenada. Não altera as linhas."""
     saida = []
     for s in linhas:
@@ -404,8 +422,10 @@ def propor(linhas: list[dict], indice: dict, indice_cep: dict | None = None, rua
                         "O CEP do catálogo (%s) é diferente do CNEFE (%s)%s: conferir qual está certo." % (
                             cep_catalogo, r["cep"], "" if distancia == "" else " e o centro dele fica a %d m do ponto" % distancia))
                     r["situacao"] = "pendente"
+        bairro_cep = (bairro_por_cep or {}).get(r["cep"], "") if r["cep"] else ""
         saida.append({"id": s["id"], "nome": s["nome"], "endereco_catalogo": s["endereco"], "cep_catalogo": cep_catalogo,
-                      "cep_confere": confere, "cep_distancia_m": distancia, "decisao": "", **r})
+                      "cep_confere": confere, "cep_distancia_m": distancia, "decisao": "",
+                      **{**r, "bairro_cep": bairro_cep, "bairro_confere": bairro_confere(s["endereco"], bairro_cep) if bairro_cep else ""}})
     return saida
 
 
@@ -455,10 +475,11 @@ def marcar_altas(planilha: Path) -> tuple[list[dict], list[dict]]:
 
 def marcar_baixas_cep(planilha: Path, limite_numero: int = 200) -> tuple[list[dict], list[dict]]:
     """Escreve 'aprovar' nas sugestões só de CEP que são seguras o bastante: o CEP vindo do número mais próximo da mesma rua
-    (diferença de até `limite_numero`) ou da rua inteira quando ela tem um CEP só. Não marca onde o CEP do catálogo difere do CNEFE.
+    (diferença de até `limite_numero`) ou da rua inteira quando ela tem um CEP só, **e** o bairro do catálogo coincide com o bairro do CEP
+    na lista (ruas numeradas se repetem entre bairros; só a rua não basta). Não marca onde o CEP do catálogo difere do CNEFE.
 
     Aplicar uma sugestão dessas grava só o CEP (nunca latitude/longitude): o serviço passa a ser localizado de forma aproximada pelo CEP.
-    Devolve (marcadas, puladas por diferença de número grande).
+    Devolve (marcadas, puladas); cada pulada traz o motivo em "_motivo".
     """
     linhas, campos, _ = _ler_planilha(planilha)
     marcadas, puladas = [], []
@@ -468,12 +489,18 @@ def marcar_baixas_cep(planilha: Path, limite_numero: int = 200) -> tuple[list[di
         metodo = (r.get("metodo") or "").strip()
         if metodo not in ("numero_proximo", "cep_da_rua") or (r.get("cep_confere") or "").strip() == "não":
             continue
+        if (r.get("bairro_confere") or "").strip() != "sim":
+            r["_motivo"] = ("o bairro do catálogo difere do bairro do CEP (%s)" % r.get("bairro_cep") if (r.get("bairro_confere") or "") == "não"
+                            else "sem bairro para conferir")
+            puladas.append(r)
+            continue
         if metodo == "numero_proximo":
             try:
                 diferenca = int(float(r.get("diferenca_numero") or "nan"))
             except ValueError:
                 continue
             if diferenca > limite_numero:
+                r["_motivo"] = "número a %s do pedido" % diferenca
                 puladas.append(r)
                 continue
         r["decisao"] = "aprovar"
@@ -579,7 +606,7 @@ def main() -> int:
         for r in marcadas:
             print("  %-46s | %-40s | %s | %s | %s" % (r["nome"][:46], r["endereco_catalogo"][:40], r["rua_cnefe"], r["cep"], r["metodo"]))
         for r in puladas:
-            print("  NÃO MARCADA (número a %s do pedido): %s | %s | CEP %s" % (r.get("diferenca_numero"), r["nome"][:46], r["endereco_catalogo"][:40], r["cep"]))
+            print("  NÃO MARCADA (%s): %s | %s | CEP %s" % (r["_motivo"], r["nome"][:46], r["endereco_catalogo"][:40], r["cep"]))
         print("Depois de conferir: python pipeline/geocodificar_catalogo.py --aplicar-aprovadas")
         return 0
     if a.marcar_altas:
@@ -621,7 +648,10 @@ def main() -> int:
         print("Lista de CEPs: %d CEPs de Rio Claro usados para achar o CEP de ruas sem correspondência no CNEFE." % len(lista))
     else:
         print("AVISO: sem lista de CEPs em %s: só o CNEFE será usado." % a.ceps_google)
-    propostas = propor(linhas, indice, indice_cep, ruas_cep)
+    bairro_por_cep = {}
+    for r in lista:
+        bairro_por_cep.setdefault(r["cep"], r["bairro"])
+    propostas = propor(linhas, indice, indice_cep, ruas_cep, bairro_por_cep)
     a.saida.parent.mkdir(parents=True, exist_ok=True)
     _gravar_planilha(a.saida, CAMPOS_PROPOSTA, propostas)
     print("Sugestões gravadas em %s (%d serviços). O catálogo NÃO foi alterado." % (a.saida, len(propostas)))

@@ -77,19 +77,49 @@ def planilha(tmp_path, linhas):
     return plan
 
 
-def test_marcar_baixas_cep_respeita_limite_e_cep_divergente(tmp_path):
+def test_marcar_baixas_cep_respeita_limite_cep_divergente_e_bairro(tmp_path):
+    ok = {"confianca": "baixa", "bairro_confere": "sim"}
     plan = planilha(tmp_path, [
-        {"id": "perto", "nome": "P", "confianca": "baixa", "metodo": "numero_proximo", "cep": "13500100", "diferenca_numero": "40"},
-        {"id": "longe", "nome": "L", "confianca": "baixa", "metodo": "numero_proximo", "cep": "13500100", "diferenca_numero": "900"},
-        {"id": "rua", "nome": "R", "confianca": "baixa", "metodo": "cep_da_rua", "cep": "13500200"},
-        {"id": "dif", "nome": "D", "confianca": "baixa", "metodo": "cep_da_rua", "cep": "13500200", "cep_confere": "não"},
-        {"id": "feita", "nome": "F", "confianca": "baixa", "metodo": "cep_da_rua", "cep": "13500200", "decisao": "recusar"},
+        {"id": "perto", "nome": "P", "metodo": "numero_proximo", "cep": "13500100", "diferenca_numero": "40", **ok},
+        {"id": "longe", "nome": "L", "metodo": "numero_proximo", "cep": "13500100", "diferenca_numero": "900", **ok},
+        {"id": "rua", "nome": "R", "metodo": "cep_da_rua", "cep": "13500200", **ok},
+        {"id": "dif", "nome": "D", "metodo": "cep_da_rua", "cep": "13500200", "cep_confere": "não", **ok},
+        {"id": "feita", "nome": "F", "metodo": "cep_da_rua", "cep": "13500200", "decisao": "recusar", **ok},
         {"id": "amb", "nome": "A", "confianca": "ambigua", "metodo": "cep_da_rua", "cep": ""},
+        {"id": "outro_bairro", "nome": "O", "metodo": "numero_proximo", "cep": "13500100", "diferenca_numero": "5",
+         "confianca": "baixa", "bairro_confere": "não", "bairro_cep": "Vila Alemã"},
+        {"id": "sem_bairro", "nome": "S", "metodo": "cep_da_rua", "cep": "13500200", "confianca": "baixa", "bairro_confere": ""},
     ])
     marcadas, puladas = g.marcar_baixas_cep(plan, 200)
-    assert sorted(r["id"] for r in marcadas) == ["perto", "rua"] and [r["id"] for r in puladas] == ["longe"]
+    assert sorted(r["id"] for r in marcadas) == ["perto", "rua"]
+    motivos = {r["id"]: r["_motivo"] for r in puladas}
+    assert sorted(motivos) == ["longe", "outro_bairro", "sem_bairro"]
+    assert "Vila Alemã" in motivos["outro_bairro"] and motivos["sem_bairro"] == "sem bairro para conferir" and "900" in motivos["longe"]
     lidas = {r["id"]: r for r in g._ler_planilha(plan)[0]}
-    assert lidas["dif"]["decisao"] == "" and lidas["feita"]["decisao"] == "recusar" and lidas["longe"]["decisao"] == ""
+    assert all(lidas[i]["decisao"] == "" for i in ("dif", "longe", "outro_bairro", "sem_bairro")) and lidas["feita"]["decisao"] == "recusar"
+
+
+def test_bairro_do_endereco_nos_dois_formatos_e_sem_cep():
+    assert g.bairro_do_endereco("Rua 5, 1201, Jardim Bom Retiro") == "Jardim Bom Retiro"
+    assert g.bairro_do_endereco("Rua 4-B, 70 - Cidade Nova") == "Cidade Nova"
+    assert g.bairro_do_endereco("Av. Dois, 720, Centro, CEP 13500-411") == "Centro"
+    assert g.bairro_do_endereco("Estrada dos Costas, 1349") == ""
+
+
+def test_bairro_confere_ignora_jardim_e_exige_coincidencia():
+    assert g.bairro_confere("Rua 5, 1201, Bom Retiro", "Jardim Bom Retiro") == "sim"
+    assert g.bairro_confere("Rua 5, 1201, Jardim Bom Retiro", "Vila Alemã") == "não"
+    assert g.bairro_confere("Estrada dos Costas, 1349", "Centro") == "" and g.bairro_confere("Rua 5, 1, Centro", "") == ""
+
+
+def test_propor_traz_o_bairro_do_cep_e_se_confere(tmp_path):
+    ruas = g.indexar_ruas_da_lista(cl.ler_lista_ceps(escrever(tmp_path)))
+    bairros = {r["cep"]: r["bairro"] for r in cl.ler_lista_ceps(escrever(tmp_path))}
+    servicos = [{"id": "x", "nome": "CRAS X", "endereco": "Av. 30, 290, Jd. Brasília", "cep": ""},
+                {"id": "y", "nome": "Y", "endereco": "Av. 30, 290, Vila Outra", "cep": ""}]
+    p = {r["id"]: r for r in g.propor(servicos, {}, None, ruas, bairros)}
+    assert p["x"]["bairro_cep"] == "Jardim Brasília" and p["x"]["bairro_confere"] == "sim"
+    assert p["y"]["bairro_confere"] == "não"
 
 
 def test_completar_indice_nao_troca_cep_do_cnefe_e_nao_guarda_rua():
