@@ -284,7 +284,10 @@ assert(estadual && /Resolução SEDUC nº 80/.test(estadual.fonte[0]) && /confer
 assert(/não menciona a Copa/.test(JSON.stringify(estadual)) && /rede estadual/.test(estadual.texto) && /rede municipal de Rio Claro/.test(JSON.stringify(estadual)), "o calendário estadual não pode ser apresentado como o da rede municipal de Rio Claro");
 const ferias = maesSec.canais.find((c) => /Férias escolares de 2027/.test(c.nome));
 assert(ferias && /15\.421/.test(JSON.stringify(ferias)) && /art\. 67/.test(JSON.stringify(ferias)), "o cartão das férias de 2027 deve citar a Lei 15.421, art. 67");
-assert(/A lei não traz as datas/.test(JSON.stringify(ferias)) && /não foi conferida por nós/.test(JSON.stringify(ferias)), "as datas da Copa não estão na lei e não podem ser apresentadas como oficiais");
+assert(/A lei não traz as datas/.test(JSON.stringify(ferias)) && /Parecer CNE\/CEB nº 7\/2026/.test(JSON.stringify(ferias)) && /24 de junho a 25 de julho de 2027/.test(JSON.stringify(ferias)), "as datas da Copa vêm do parecer do CNE, não da lei");
+assert(/DOU de 8\/9\/2026/.test(ferias.fonte[0]) && /conferidos por nós/.test(ferias.fonte[2]), "o parecer homologado deve ser citado como fonte conferida");
+assert(/Rio Claro não está entre as oito cidades-sede/.test(JSON.stringify(ferias)) && /3\.481\/2026/.test(JSON.stringify(ferias)), "deve dizer que Rio Claro não é sede e que o projeto de lei pode mudar a regra");
+assert(/autonomia/.test(JSON.stringify(ferias)) && /diretamente impactad/.test(JSON.stringify(ferias)), "deve explicar a diferença entre cidades impactadas e demais redes");
 assert(/Isto não é o calendário de matrícula/.test(JSON.stringify(ferias)), "férias não podem ser confundidas com o calendário de matrícula");
 const solo = maesSec.canais.find((c) => /sozinha/i.test(c.nome));
 assert(solo && solo.topicos.length >= 6, "falta o cartão de apoio para mães que criam os filhos sozinhas");
