@@ -331,7 +331,11 @@ assert(!escolas.some((x) => x.cep === "16504450" || x.cep === "13500000"), "CEP 
 assert(/não é de Rio Claro/.test(escolas.find((x) => /Clara Freire Castellano/.test(x.nome)).observacao), "o CEP errado da fonte deve estar explicado");
 const rosa = escolas.find((x) => /Rosa Maria Castellano Pieroni/.test(x.nome));
 assert(!/3522-1950/.test(rosa.telefone) && /linha da Secretaria/.test(rosa.observacao), "a linha da Secretaria não pode ser o telefone da escola");
-assert(escolas.every((x) => /não diz quais etapas/.test(x.observacao)), "nenhuma escola pode ser apresentada como creche sem avisar que a etapa deve ser confirmada");
+/* ou a escola traz as etapas do Censo Escolar, ou o cartão avisa que a etapa precisa ser confirmada; nunca nenhum dos dois */
+assert(escolas.every((x) => (x.etapas && typeof x.etapas.creche === "boolean") || /não diz quais etapas/.test(x.observacao)),
+  "nenhuma escola pode ser apresentada como creche sem etapas conhecidas ou sem avisar que a etapa deve ser confirmada");
+assert(escolas.filter((x) => x.etapas).every((x) => !/não diz quais etapas/.test(x.observacao) && /não diz se há vaga/.test(x.observacao)),
+  "escola com etapas conhecidas não pode dizer que a etapa é desconhecida, mas continua avisando que a página não diz se há vaga");
 assert(escolas.find((x) => /Aparecida José Carlini Bonilha/.test(x.nome)).telefone === "(19) 3533-6633", "telefone da Aparecida Carlini Bonilha conforme a página oficial");
 const secEsc = Areas.AREAS.find((a) => a.id === "educacao").secoes.find((sec) => sec.ancora === "educacao-escolas");
 assert(secEsc && secEsc.recolhida && secEsc.filtro && JSON.stringify(secEsc.subtipos) === '["escola_municipal"]', "a lista de escolas deve ficar recolhida e com busca");
@@ -404,4 +408,14 @@ assert(circ1 && circ1.sentidos.length === 1 && circ1.sentidos[0].sentido === "Vo
 assert(onibus.lacunas.some((t) => /Circular I/.test(t) && /Volta/.test(t)) && onibus.lacunas.some((t) => /Feriados/.test(t)) && onibus.lacunas.some((t) => /linha 02/i.test(t) && /Arco-Íris/.test(t)), "as lacunas devem estar declaradas ao usuário (a linha 02 Arco-Íris/Mãe Preta existe no site da SOU e ainda não foi cadastrada)");
 assert(!/\.pdf|OCR|docs\/|desenvolvedor/i.test(JSON.stringify(onibus)), "o JSON de horários não pode expor detalhes internos");
 assert(/Só temos o sentido/.test(app) && /Essa data já passou/.test(app) && /Em feriados os horários podem mudar/.test(app), "o site deve avisar sentido faltante, validade vencida e feriados");
+/* ---- etapas das escolas (Censo Escolar 2025): só creche/pré-escola, nunca número de matrículas ---- */
+const comEtapas = catalogo.servicos.filter((s) => s.etapas);
+assert(comEtapas.length >= 40, "as escolas ligadas ao INEP devem trazer as etapas: " + comEtapas.length);
+comEtapas.forEach((s) => {
+  assert.deepStrictEqual(Object.keys(s.etapas).sort(), ["creche", "fonte", "pre_escola"], "etapas só com creche, pré-escola e fonte: " + s.nome);
+  assert(typeof s.etapas.creche === "boolean" && typeof s.etapas.pre_escola === "boolean", "etapas booleanas: " + s.nome);
+  assert(s.tipo === "creche" && s.subtipo === "escola_municipal", "etapas só nas escolas municipais ligadas: " + s.nome);
+});
+assert(app.includes("Etapas que a escola oferece") && app.includes("não se há vaga"), "o cartão deve mostrar as etapas e avisar que não indica vaga");
+
 console.log("dashboard.test.js: sete portas, emergência, navegação, nenhum conteúdo de demonstração, links locais e conteúdo das áreas passaram");
