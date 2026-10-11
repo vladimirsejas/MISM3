@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#7a2b37">
+<title>Mapa de serviços – Mulher em Rede</title>
+<meta name="description" content="Onde ficam os serviços cadastrados em Rio Claro: saúde, creches e escolas, assistência social, trabalho e apoio à mulher.">
+<link rel="stylesheet" href="vendor/leaflet.css">
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-alerta" viewBox="0 0 24 24"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></symbol>
+</svg>
+
+<header class="topo">
+  <div class="topo-in">
+    <a class="marca" href="index.html"><img class="marca-brasao" src="img/brasao-48.webp" width="36" height="35" alt="">Mulher em Rede<span class="marca-local">Rio Claro</span></a>
+    <nav class="navegacao" aria-label="Navegação">
+      <a class="btn-nav" id="voltar" href="index.html">← Voltar</a>
+      <a class="btn-nav" href="index.html">Início</a>
+    </nav>
+    <details class="emergencia" id="emergencia">
+      <summary aria-label="Emergência: abrir contatos"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-alerta"/></svg>Em perigo agora?</summary>
+      <div class="painel-emergencia" role="region" aria-labelledby="titulo-emergencia">
+        <h2 id="titulo-emergencia">Ligue agora</h2>
+        <p class="orientacao">Se puder, vá para um lugar seguro e diga seu endereço. A ligação é gratuita.</p>
+        <ul class="contatos">
+          <li><a class="tel" href="tel:190" aria-label="Ligar para 190, Polícia Militar">190</a><div><strong>Polícia Militar</strong><span>Perigo imediato, agressão em andamento ou ameaça.</span></div></li>
+          <li><a class="tel" href="tel:192" aria-label="Ligar para 192, SAMU">192</a><div><strong>SAMU</strong><span>Urgência médica ou pessoa ferida.</span></div></li>
+          <li><a class="tel" href="tel:193" aria-label="Ligar para 193, Bombeiros">193</a><div><strong>Bombeiros</strong><span>Incêndio, resgate ou acidente.</span></div></li>
+          <li><a class="tel" href="tel:180" aria-label="Ligar para 180, Central de Atendimento à Mulher">180</a><div><strong>Central de Atendimento à Mulher</strong><span>Violência contra a mulher: orientação, denúncia e encaminhamento. 24 horas, gratuito.</span></div></li>
+          <li><a class="tel" href="tel:100" aria-label="Ligar para 100, Disque Direitos Humanos">100</a><div><strong>Disque Direitos Humanos</strong><span>Violações de direitos humanos, como contra crianças, idosos e pessoas com deficiência. 24 horas, gratuito.</span></div></li>
+          <li><a class="tel" href="tel:188" aria-label="Ligar para 188, CVV">188</a><div><strong>CVV — apoio emocional</strong><span>Conversa de apoio em momentos de sofrimento. 24 horas, gratuito.</span></div></li>
+        </ul>
+        <button id="sair-rapido" class="sair" type="button">Sair desta página agora</button>
+        <p class="sair-nota">Abre outro site, mas <strong>não apaga</strong> o histórico do navegador. Em aparelho compartilhado, use uma janela anônima.</p>
+      </div>
+    </details>
+    <p class="secao-atual">Você está em: <strong>Início › Mapa de serviços</strong></p>
+  </div>
+</header>
+
+<main class="conteudo mapa-pagina" id="principal">
+  <h1 class="mapa-titulo">Mapa de serviços</h1>
+  <p class="intro">Veja onde ficam os serviços cadastrados em Rio Claro. Escolha o que procura, toque num ponto para ver telefone e horário e, se quiser, informe o CEP para ver o que está mais perto.</p>
+
+  <section class="mapa-controles" aria-label="Filtros do mapa">
+    <div class="mapa-filtros" id="filtros" role="group" aria-label="Tipos de serviço"></div>
+    <div class="mapa-linha">
+      <div class="mapa-campo">
+        <label for="busca-texto">Procurar por nome, endereço ou bairro</label>
+        <input id="busca-texto" type="search" autocomplete="off" spellcheck="false" placeholder="Ex.: creche, Jardim Brasília, CRAS">
+      </div>
+      <form class="mapa-campo" id="form-cep-mapa" autocomplete="off">
+        <label for="cep-mapa">Seu CEP (opcional)</label>
+        <div class="linha">
+          <input id="cep-mapa" inputmode="numeric" maxlength="9" placeholder="00000-000" autocomplete="off" autocapitalize="off" spellcheck="false">
+          <button type="submit" class="btn">Ver o que está perto</button>
+          <button type="button" class="btn secundario" id="limpar-cep" hidden>Limpar</button>
+        </div>
+      </form>
+    </div>
+    <p class="privacidade">O CEP serve só para marcar uma região aproximada e fica neste aparelho: nada é enviado, gravado ou guardado na barra de endereço.</p>
+    <p id="mensagem-mapa" role="status" class="mensagem" hidden></p>
+  </section>
+
+  <p id="resumo-mapa" class="mapa-resumo" aria-live="polite"></p>
+  <div id="mapa-servicos" class="mapa-caixa" aria-label="Mapa dos serviços cadastrados"></div>
+  <p class="mapa-legenda">Ponto <strong>cheio</strong>: posição pelo endereço. Ponto <strong>vazado</strong>: posição aproximada pelo CEP do serviço. Distâncias, quando aparecem, são em linha reta, não o caminho a pé.</p>
+  <label class="tiles"><input type="checkbox" id="usar-tiles-mapa"> Mostrar ruas (carrega imagens do OpenStreetMap; o servidor do mapa saberá a região que você está vendo)</label>
+
+  <h2 class="titulo-bloco" id="titulo-lista" tabindex="-1">Lista de serviços</h2>
+  <p class="meta" id="nota-lista"></p>
+  <ul class="mapa-lista" id="lista-servicos"></ul>
+  <p><button type="button" class="btn secundario" id="mais-servicos" hidden>Mostrar mais</button></p>
+  <p class="meta">Um serviço cadastrado não garante vaga nem horário: confirme sempre com o órgão. O link "Ver no Google Maps" abre outra aba e leva só o endereço do serviço, não o seu.</p>
+</main>
+
+<footer class="rodape">
+  <p><strong>Mulher em Rede (MISM3) é um estudo acadêmico de demonstração</strong> e não é um site oficial da Prefeitura de Rio Claro. Os dados vêm de páginas e bases públicas oficiais e podem estar desatualizados.</p>
+</footer>
+
+<script src="vendor/leaflet.js"></script>
+<script src="acesso.js"></script>
+<script src="mapa-servicos.js"></script>
+<script src="mapa.js"></script>
+</body>
+</html>
