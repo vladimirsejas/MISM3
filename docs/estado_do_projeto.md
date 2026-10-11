@@ -30,7 +30,8 @@ Não vendemos o sistema como diagnóstico social, nem como prova de que um servi
 |---|---|---|---|---|
 | Sete portas e busca por palavras | Sim | 54 cenários escritos pela equipe (`necessidades.test.js`) | Não | Frases da própria equipe |
 | Modelo de IA que sugere por onde começar | Sim, roda no aparelho | Validação cruzada em 325 frases: regras + modelo com precisão 71%, recall 81%, F1 75%, acerto exato 56% (`docs/ia/`) | Não | Não prova desempenho com mulheres reais; nunca decide direito nem diagnóstico |
-| Jornada guiada de Trabalho (inclui a prioridade do Sine, Lei 14.542/2023) | Sim | `jornada.test.js`: ordem, links, promessas proibidas | Não | Só Trabalho tem jornada guiada |
+| Jornada guiada de Trabalho (inclui a prioridade do Sine, Lei 14.542/2023) | Sim | `jornada.test.js`: ordem, links, promessas proibidas | Não | |
+| **Jornada guiada de Educação** (vaga para o filho; estudar) | Sim | `jornada_educacao.test.js`: 33 combinações de respostas, fonte de cada link e telefone, sem promessa de vaga; conferida no Chromium | Não | Só organiza o que a área e o catálogo já traziam; o procedimento do CADU é de 2025 e precisa de confirmação anual. Faltam as jornadas de assistência social e de violência e proteção |
 | Cartões com fonte, data e aviso "não conferido" | Sim | Fonte e data obrigatórias em todo registro (`pytest`, `dashboard.test.js`) | Não | |
 | Etapas da escola (creche, pré-escola) | Sim, 43 de 68 escolas municipais | Ligação 1 para 1 com o Censo Escolar 2025; nome parecido não liga | Não | As outras 25 continuam dizendo que a etapa deve ser confirmada |
 | Horários de ônibus | Sim, 5 linhas, 382 horários, válidos até 04/02/2027 | Três leituras independentes das imagens | Não | Falta a linha 02 Arco-Íris/Mãe Preta; Circular I só no sentido Volta |
