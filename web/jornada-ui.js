@@ -1,9 +1,12 @@
-/* Tela da jornada "Trabalho": perguntas uma de cada vez -> plano curto -> montador de currículo.
+/* Tela das jornadas (Trabalho, Educação...): perguntas uma de cada vez -> plano curto (e, no Trabalho, montador de currículo).
    Nada é enviado nem gravado no aparelho. O que a pessoa responde fica só na memória desta página, para o plano
    não sumir quando ela abre um link do plano e volta; é apagado ao voltar ao Início, em "Recomeçar" ou ao fechar a página. */
 (function (raiz) {
   "use strict";
-  var J = raiz.Jornada;
+  /* Cada jornada (trabalho, educacao...) tem o seu motor e o seu estado: assim as respostas de uma não vazam para a outra
+     quando a pessoa abre um link do plano e vai para outra área. `J` e `ultimo` apontam para a jornada que está na tela. */
+  var J = raiz.Jornada.de("trabalho");
+  var estados = {};
 
   function esc(s) {
     return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
@@ -13,17 +16,27 @@
   function $(id) { return document.getElementById(id); }
 
   /* resp: respostas; ordem: ids na ordem respondida (para o "Voltar"); puladas; feitos: passos marcados "Já fiz". */
-  var ultimo = { resp: {}, ordem: [], puladas: [], feitos: {}, plano: null, cvDados: null, curriculo: null };
+  function novoEstado() { return { resp: {}, ordem: [], puladas: [], feitos: {}, plano: null, cvDados: null, curriculo: null }; }
+  var ultimo = novoEstado();
+  function usar(id) {
+    J = raiz.Jornada.de(id) || raiz.Jornada.de("trabalho");
+    estados[J.id] = estados[J.id] || novoEstado();
+    ultimo = estados[J.id];
+  }
   var achar = null; /* função id -> serviço do catálogo, entregue pelo app.js */
 
   function usarCatalogo(fn) { achar = fn; }
 
   /* ------------------------------------------------------------ estrutura */
-  function html() {
-    return '<section class="secao jornada" aria-labelledby="titulo-jornada">' +
-      '<h2 id="titulo-jornada" tabindex="-1">Monte seu plano</h2>' +
-      '<div id="jornada-saida" aria-live="polite"></div></section>' +
-      '<section class="secao curriculo" id="montar-curriculo" aria-labelledby="titulo-curriculo">' +
+  function html(id) {
+    usar(id === true ? "trabalho" : id);
+    var topo = '<section class="secao jornada" aria-labelledby="titulo-jornada">' +
+      '<h2 id="titulo-jornada" tabindex="-1">' + esc(J.titulo) + '</h2>' +
+      '<div id="jornada-saida" aria-live="polite"></div></section>';
+    return topo + (J.temCurriculo ? htmlCurriculoSecao() : "");
+  }
+  function htmlCurriculoSecao() {
+    return '<section class="secao curriculo" id="montar-curriculo" aria-labelledby="titulo-curriculo">' +
       '<details><summary><h2 id="titulo-curriculo">Montar um currículo</h2></summary>' +
       '<p class="meta">Preencha só o que quiser. Não coloque CPF, RG, endereço completo nem data de nascimento exata. O texto não sai deste aparelho.</p>' +
       '<form id="form-curriculo" autocomplete="off">' +
@@ -51,8 +64,10 @@
     }).join("");
     var voltar = ultimo.ordem.length || ultimo.puladas.length
       ? '<button type="button" class="link-btn" data-passo="voltar">← Voltar</button>' : "";
-    var pular = p.id === "objetivo" ? "" : '<button type="button" class="link-btn" data-passo="pular">Prefiro não responder</button>';
-    return '<div class="etapa"><p class="progresso">Pergunta ' + prox.numero + " de " + prox.total + '</p>' +
+    var pular = p === J.PERGUNTAS[0] ? "" : '<button type="button" class="link-btn" data-passo="pular">Prefiro não responder</button>';
+    /* Quando a primeira resposta decide quais perguntas vêm depois, ainda não dá para dizer quantas são. */
+    var semTotal = J.primeiraDecideCaminho && prox.numero === 1;
+    return '<div class="etapa"><p class="progresso">Pergunta ' + prox.numero + (semTotal ? "" : " de " + prox.total) + '</p>' +
       '<div class="barra" aria-hidden="true"><span style="width:' + Math.round((prox.numero - 1) / prox.total * 100) + '%"></span></div>' +
       '<h3 class="pergunta-texto" id="pergunta-foco" tabindex="-1">' + esc(p.texto) + '</h3>' +
       '<div class="opcoes-grade">' + opcoes + "</div>" +
@@ -216,7 +231,8 @@
   function limparFolha() { var f = $("folha-impressao"); if (f) f.innerHTML = ""; }
 
   function limpar() {
-    ultimo = { resp: {}, ordem: [], puladas: [], feitos: {}, plano: null, cvDados: null, curriculo: null };
+    estados = {};
+    ultimo = novoEstado();
     limparFolha();
   }
 
@@ -298,7 +314,7 @@
       } else if (t.getAttribute("data-limpar") === "curriculo") {
         $("form-curriculo").reset(); $("curriculo-saida").innerHTML = ""; ultimo.cvDados = null; ultimo.curriculo = null;
       } else if (t.getAttribute("data-imprimir") === "plano" && ultimo.plano) {
-        imprimir("<h1>Meu plano — Trabalho</h1><p>Mulher em Rede · Rio Claro/SP · gerado em " + hoje() + "</p>" + htmlPlano(ultimo.plano, true) +
+        imprimir("<h1>" + esc(J.tituloImpressao) + "</h1><p>Mulher em Rede · Rio Claro/SP · gerado em " + hoje() + "</p>" + htmlPlano(ultimo.plano, true) +
           "<p>Confirme sempre telefone, endereço, horário e vagas diretamente com cada órgão antes de ir.</p>");
       } else if (t.getAttribute("data-imprimir") === "curriculo" && ultimo.curriculo) {
         imprimir(htmlCurriculo(ultimo.curriculo));

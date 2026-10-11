@@ -253,7 +253,7 @@
   }
 
   function htmlArea(area) {
-    var html = area.jornada && window.JornadaUI ? JornadaUI.html() : "";
+    var html = area.jornada && window.JornadaUI ? JornadaUI.html(area.jornada) : "";
     if (area.questionario && window.QuestionarioUI) html += QuestionarioUI.html();
     if (area.horarios) html += htmlHorarios();
     if (area.guia) html += htmlGuia(area.guia);
