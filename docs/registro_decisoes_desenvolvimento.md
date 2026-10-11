@@ -434,3 +434,10 @@ Nenhuma branch foi apagada nem alterada. O que **não** foi trazido para a base,
 - O teste que proibia mencionar a lei foi trocado por verificações positivas: o cartão deve citar a Lei 15.421 e o art. 67, dizer que a lei não traz as datas e distinguir férias de matrícula.
 - Não verificados e fora do site: o Parecer CNE/CEB nº 7/2026 e a Resolução SEDUC nº 80/2026 (citados na pesquisa); só entram quando o texto for conferido. A calendarização de 2027 da rede municipal de Rio Claro segue pendente.
 - Verificação: testes de `web/tests` passam; o cartão abre em Chromium 390 px sem erros de JavaScript.
+
+### Pista não verificada: calendário 2027 da rede estadual de SP (Resolução SEDUC nº 80/2026) — 11/10/2026
+- O autor trouxe um resumo de pesquisa com datas da rede estadual paulista para 2027 (planejamento em 4 e 5 de fevereiro; início das aulas em 11 de fevereiro; férias docentes de 4 a 18 de janeiro e de 7 a 21 de julho; replanejamento em 22 e 23 de julho; encerramento em 22 de dezembro; mínimo de 200 dias letivos), atribuídas à Resolução SEDUC nº 80, de 28 de julho de 2026.
+- **Nada disso foi para o site.** As fontes citadas são Instagram e Facebook, o texto da resolução não foi conferido e as datas não foram cruzadas com fonte oficial. A mesma pesquisa mistura outras redes (por exemplo, o calendário de outro estado). O resumo também cita o Parecer CNE/CEB nº 7/2026, igualmente não conferido.
+- Esse calendário é da **rede estadual**: vale para escolas estaduais (fundamental II e médio) e **não** substitui o calendário da **rede municipal de Rio Claro** nem o de escolas particulares, que seguem pendentes.
+- **Como confirmar:** o autor cola o texto oficial da Resolução SEDUC nº 80/2026 (Diário Oficial do Estado de São Paulo, `doe.sp.gov.br`), como foi feito com a Lei nº 15.421/2026. Com o texto conferido, as datas entram no guia com a fonte; o cartão "Férias escolares de 2027" passa a dizer o que a rede estadual definiu.
+- Calendário e procedimento de matrícula de 2027 em Rio Claro: continua pendente (Secretaria Municipal da Educação).
