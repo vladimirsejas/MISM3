@@ -13,10 +13,7 @@
 # LACUNAS CONHECIDAS (não inventar): ver as linhas "lacuna" no fim; elas aparecem no site.
 #
 # NOTAS PARA QUEM MANTÉM OS DADOS (não aparecem no site):
-#  - Os PDFs enviados tinham nomes que não correspondem ao conteúdo. Pelo conteúdo: belavista1.pdf = linha 01 Volta;
-#    belavista2.pdf = linha 01 Ida; cervezaoida/cervezaovolta = linha 06 Ida/Volta; circular2ida/circular2volta = linha 08 Ida/Volta;
-#    paineirasvolta.pdf = linha 09 Volta; paimeirasida.pdf e arcoirismaepretaida.pdf = a MESMA página (linha 09 Ida, repetida);
-#    circular1ida.pdf e circular1volta.pdf = a MESMA página (linha 07 VOLTA, repetida). O arquivo arcoirismaepreta.pdf não foi recebido.
+#  - Os PDFs foram renomeados em 11/10/2026 pelo conteúdo (ex.: linha01-bela-vista-ida.pdf); as duas cópias idênticas foram apagadas. Veja a tabela em docs/transporte/README.md.
 #  - Em 11/10/2026 o mantenedor enviou foto da lista de linhas do site da SOU: são 6 linhas (01 Bela Vista, 02 Arco-Íris/Mãe Preta, 06 Cervezão, 07 Circular I, 08 Circular 2, 09 Paineiras; a lista termina na 09). Temos horários de 5; falta a linha 02. Os horários de ida e volta dos PDFs estão certos, só os NOMES dos arquivos estavam trocados.
 meta | valido_ate | 2027-02-04
 meta | impresso_em | 2026-10-09

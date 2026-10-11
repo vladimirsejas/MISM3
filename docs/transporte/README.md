@@ -14,23 +14,23 @@ Os PDFs são **impressões de imagem**, sem texto (a extração automática só 
 
 Cada página é uma **linha** (número e nome) e um **sentido** ("Local de partida: Ida" ou "Volta"). Há quadros de **Dias úteis** (segunda a sexta), **Sábados** e **Domingos**; o mesmo dia pode ter **vários quadros**, um por **variante de trajeto**. O número pequeno acima de cada horário (1, 2, 3...) remete à "Legenda de viagens" (por exemplo, "1 - Bela Vista/São Miguel-Centro"). A SOU não traz feriados nessas páginas.
 
-## O que cada PDF contém (pelo conteúdo, não pelo nome do arquivo)
+## O que cada PDF contém
 
-Os nomes dos arquivos **não correspondem** ao conteúdo em vários casos:
+Os arquivos foram **renomeados em 11/10/2026 pelo conteúdo** (antes os nomes não correspondiam). Duas cópias idênticas foram apagadas (conferido pixel a pixel): `circular1ida.pdf`, que repetia a Circular I Volta, e `arcoirismaepretaida.pdf`, que repetia a Paineiras Ida e **não** era a Arco-Íris/Mãe Preta. Os nomes antigos continuam no histórico do Git.
 
-| Arquivo | Conteúdo real |
-|---|---|
-| `belavista2.pdf` | Linha 01 Bela Vista, **Ida** |
-| `belavista1.pdf` | Linha 01 Bela Vista, **Volta** |
-| `cervezaoida.pdf` | Linha 06 Cervezão, Ida |
-| `cervezaovolta.pdf` | Linha 06 Cervezão, Volta |
-| `circular1ida.pdf` | Linha 07 Circular I, **Volta** (cópia exata de `circular1volta.pdf`) |
-| `circular1volta.pdf` | Linha 07 Circular I, Volta |
-| `circular2ida.pdf` | Linha 08 Circular 2, Ida |
-| `circular2volta.pdf` | Linha 08 Circular 2, Volta |
-| `paimeirasida.pdf` | Linha 09 Paineiras, Ida |
-| `arcoirismaepretaida.pdf` | Linha 09 Paineiras, **Ida** (cópia exata de `paimeirasida.pdf`; **não** é a Arco-Íris/Mãe Preta) |
-| `paineirasvolta.pdf` | Linha 09 Paineiras, Volta |
+| Arquivo | Conteúdo | Era chamado de |
+|---|---|---|
+| `linha01-bela-vista-ida.pdf` | Linha 01 Bela Vista, Ida | `belavista2.pdf` |
+| `linha01-bela-vista-volta.pdf` | Linha 01 Bela Vista, Volta | `belavista1.pdf` |
+| `linha06-cervezao-ida.pdf` | Linha 06 Cervezão, Ida | `cervezaoida.pdf` |
+| `linha06-cervezao-volta.pdf` | Linha 06 Cervezão, Volta | `cervezaovolta.pdf` |
+| `linha07-circular1-volta.pdf` | Linha 07 Circular I, Volta | `circular1volta.pdf` |
+| `linha08-circular2-ida.pdf` | Linha 08 Circular 2, Ida | `circular2ida.pdf` |
+| `linha08-circular2-volta.pdf` | Linha 08 Circular 2, Volta | `circular2volta.pdf` |
+| `linha09-paineiras-ida.pdf` | Linha 09 Paineiras, Ida | `paimeirasida.pdf` |
+| `linha09-paineiras-volta.pdf` | Linha 09 Paineiras, Volta | `paineirasvolta.pdf` |
+
+Para a linha 02, salve aqui como `linha02-arco-iris-mae-preta-ida.pdf` e `linha02-arco-iris-mae-preta-volta.pdf`.
 
 ## O que ainda falta (não inventar)
 

@@ -14,6 +14,7 @@
   var LINKS = {
     portal: ["Portal da Empregabilidade de Rio Claro", "https://vagas.rioclaro.sp.gov.br/", "Consultar oportunidades e informações para trabalhadores."],
     trampolim: ["Trampolim — Governo de São Paulo", "https://www.trampolim.sp.gov.br/", "Consultar oportunidades e cursos disponíveis na plataforma."],
+    leiSine: ["Lei nº 14.542/2023 (prioridade no Sine)", "https://www2.camara.leg.br/legin/fed/lei/2023/lei-14542-3-abril-2023-793992-publicacaooriginal-167489-pl.html", "Texto da lei federal que dá prioridade a mulheres em situação de violência doméstica e familiar e reserva 10% das vagas intermediadas."],
     desenvEcon: ["Secretaria de Desenvolvimento Econômico (Banco do Povo e Sala do Empreendedor)", DESENV_ECON, "Orientação para empreender e sobre crédito, sem garantia de aprovação."]
   };
 
@@ -141,8 +142,8 @@
         id: "vagas", titulo: "Procure vagas e atendimento ao trabalhador",
         porque: "Os portais mostram vagas abertas, e o PAT atende pessoalmente, com orientação.",
         acao: externo(LINKS.portal, "Ver vagas no Portal da Empregabilidade"),
-        pergunte: ["Antes de aceitar uma vaga: horário, escala, local, salário e contrato claros, e custo de transporte.", "Desconfie de quem cobra para participar de seleção."],
-        extras: [LINKS.trampolim],
+        pergunte: ["Antes de aceitar uma vaga: horário, escala, local, salário e contrato claros, e custo de transporte.", "Desconfie de quem cobra para participar de seleção.", "Se você vive ou viveu violência doméstica: a Lei nº 14.542/2023 dá prioridade no atendimento do Sine e reserva 10% das vagas intermediadas para mulheres nessa situação. Pergunte no PAT como funciona em Rio Claro e o que precisam de você. Você decide quanto quer contar."],
+        extras: [LINKS.trampolim, LINKS.leiSine],
         contato: contato(achar, "man-pat", "PAT — Posto de Atendimento ao Trabalhador"),
         alternativa: "Este site não lista vagas abertas. Se não achar nada, veja cursos para ampliar as possibilidades."
       });

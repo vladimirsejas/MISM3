@@ -228,6 +228,18 @@ CAMPOS_PROPOSTA = ["id", "nome", "endereco_catalogo", "situacao", "confianca", "
                    "lon", "setor", "registros", "rua_cnefe", "numero_cnefe", "alternativas", "observacao", "decisao"]
 
 
+def amostra_de_ruas(indice: dict, n: int = 15) -> list[str]:
+    """Como os nomes de rua aparecem no CNEFE: tipos mais comuns e algumas ruas (só nomes; nada de número, CEP ou ponto)."""
+    tipos = Counter()
+    for (tipo, _canonico), regs in indice.items():
+        tipos[tipo] += len(regs)
+    linhas = ["Tipos de rua no CNEFE: " + ", ".join("%s=%d" % (t, c) for t, c in tipos.most_common(8))]
+    exemplos = sorted({regs[0][5] for regs in indice.values()})
+    passo = max(1, len(exemplos) // n)
+    linhas.append("Exemplos de nomes de rua (%d ruas no total): %s" % (len(indice), " | ".join(exemplos[::passo][:n])))
+    return linhas
+
+
 def propor(linhas: list[dict], indice: dict) -> list[dict]:
     """Uma sugestão por serviço que tem endereço e ainda não tem CEP nem coordenada. Não altera as linhas."""
     saida = []
@@ -342,6 +354,9 @@ def main() -> int:
     print("Sugestões gravadas em %s (%d serviços). O catálogo NÃO foi alterado." % (a.saida, len(propostas)))
     for (conf, met), n in sorted(Counter((p["confianca"], p["metodo"]) for p in propostas).items()):
         print("  %-8s %-26s %d" % (conf, met, n))
+    print("--- Diagnóstico (pode colar no chat; só nomes de rua) ---")
+    for linha in amostra_de_ruas(indice):
+        print(linha)
     print("Revise a planilha, escreva 'aprovar' na coluna decisao e rode com --aplicar-aprovadas.")
     return 0
 

@@ -669,3 +669,13 @@ Nenhuma branch foi apagada nem alterada. O que **não** foi trazido para a base,
 - **Verificado:** 22 testes do geocodificador (duplicados, grafias, sem número, sem correspondência, aprovação humana, planilha inválida) e 85 testes Python no total; 8 testes JS. Dois defeitos achados pelos testes e corrigidos: faltava importar `agora_iso`, e o utilitário de CEP completava "123" com zeros.
 - **Não verificado:** a nova versão com o CNEFE real.
 - **Backup:** o push dos 42 commits do notebook falhou (erro 408, pacote de 105 MiB); os commits continuam só no notebook.
+
+### Um caminho só, PDFs de ônibus e Lei 14.542 — 11/10/2026
+- **Pedido do autor:** "um caminho só", apagar o que não for útil e incorporar o que o ChatGPT sugeriu.
+- **Um caminho só no GitHub:** a `main` ainda era a versão velha, e a versão atual vivia em outras branches (PRs nº 5, 6 e 7), o que dava a impressão de dois projetos. A versão atual passou a ser a `main` (ver o PR de unificação). Os PRs antigos nº 3 a 7 foram fechados como substituídos; as branches antigas **não foram apagadas** (não há ferramenta aqui para isso, e o histórico continua recuperável). Conteúdo que só existe em outras branches: dados de UBS e agenda de lazer em `keen-brown`/`nice-cannon`, guia de matrícula em `modest-rubin`, linha de "só dados reais" em `chatgpt/*` e `ux/*`.
+- **PDFs de ônibus:** renomeados pelo conteúdo (`linha01-bela-vista-ida.pdf` etc.) e duas cópias idênticas apagadas (conferido pixel a pixel). Tabela com os nomes antigos em `docs/transporte/README.md`.
+- **Lei 14.542/2023 (sugestão do ChatGPT, verificada na página da Câmara):** o passo "Procure vagas" do plano de Trabalho e a área Trabalho passaram a informar a prioridade das mulheres em situação de violência no Sine e a reserva de 10% das vagas intermediadas, com o link da lei e a orientação de perguntar no PAT como funciona em Rio Claro. O texto não promete vaga nem direito. Teste novo em `web/tests/jornada.test.js`.
+- **Já existia, ao contrário do que eu supus numa análise anterior:** fonte e data em cada cartão, aviso "ainda não conferido", alerta de informação antiga, aviso de que "Sair" não apaga o histórico.
+- **Ainda não feito:** jornadas guiadas para "sair de casa com os filhos", "o dinheiro não está dando" e "pensão, guarda e separação" (só Trabalho tem jornada guiada); telefones da Patrulha Maria da Penha e da Delegacia da Mulher, que seguem "não conferidos" até alguém imprimir a página oficial; linha 02 de ônibus.
+- **Geocodificador:** a execução imprime agora um diagnóstico com os tipos e exemplos de nomes de rua do CNEFE (só nomes), para descobrir por que 89 de 150 ruas não casaram.
+

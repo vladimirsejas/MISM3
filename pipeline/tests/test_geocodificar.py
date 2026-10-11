@@ -270,3 +270,11 @@ def test_id_inexistente_gera_aviso(tmp_path):
     planilha(plan, [{"id": "zzz", "decisao": "aprovar", "cep": "13503000"}])
     mud, avisos = g.aplicar_aprovadas(cat, plan)
     assert mud == [] and any("não existe" in a for a in avisos)
+
+
+def test_amostra_de_ruas_so_traz_nomes_de_rua(idx):
+    linhas = g.amostra_de_ruas(idx)
+    texto = "\n".join(linhas)
+    assert "avenida=" in texto and "AVENIDA 30" in texto and "RUA DOUTOR ELOI CHAVES" in texto
+    # nada de número de porta, CEP, coordenada ou setor
+    assert "13502000" not in texto and "-22" not in texto and "354390705" not in texto and "290" not in texto
