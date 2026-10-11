@@ -48,6 +48,19 @@
   <h1 class="mapa-titulo">Mapa de serviços</h1>
   <p class="intro">Veja onde ficam os serviços cadastrados em Rio Claro. Escolha o que procura, toque num ponto para ver telefone e horário e, se quiser, informe o CEP para ver o que está mais perto.</p>
 
+  <section class="mapa-cras" aria-labelledby="titulo-cras">
+    <h2 id="titulo-cras">Qual CRAS atende o meu bairro?</h2>
+    <p class="meta">Pela lista oficial de bairros que a Prefeitura publica para cada CRAS. Escreva o nome do bairro.</p>
+    <form id="form-cras" autocomplete="off">
+      <label for="bairro-cras" class="sr-only">Nome do bairro</label>
+      <div class="linha">
+        <input id="bairro-cras" type="search" autocomplete="off" spellcheck="false" placeholder="Ex.: Jardim Brasília, Mãe Preta, Bom Sucesso">
+        <button type="submit" class="btn">Ver o CRAS</button>
+      </div>
+    </form>
+    <div id="resultado-cras" aria-live="polite"></div>
+  </section>
+
   <section class="mapa-controles" aria-label="Filtros do mapa">
     <div class="mapa-filtros" id="filtros" role="group" aria-label="Tipos de serviço"></div>
     <div class="mapa-linha">

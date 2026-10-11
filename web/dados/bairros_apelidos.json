@@ -1,0 +1,25 @@
+{
+  "meta": {
+    "descricao": "Nomes pelos quais a população chama os bairros, ligados ao nome como aparece nas fontes do projeto (listas de bairros dos CRAS e endereços do catálogo).",
+    "regra": "Só entradas com situacao = confirmado são usadas pela busca. As 'a_confirmar' ficam aqui como candidatas e não afetam nenhum resultado. Cada nome em aponta_para precisa existir nas fontes do projeto (o teste confere).",
+    "como_confirmar": "Quem conhece o bairro confirma o apelido; então a situacao muda para 'confirmado' e se registra quem confirmou e quando."
+  },
+  "apelidos": [
+    {
+      "apelido": "Cervezão",
+      "aponta_para": ["Jd. Chervezon"],
+      "situacao": "a_confirmar",
+      "fonte": "Catálogo do projeto: o mesmo endereço (Rua M-9, 66) aparece como Jd. Chervezon (CAPS III) e Jd. Independência (UPA do Cervezão); a lista oficial do CRAS Jd. Independência escreve Jd. Chervezon.",
+      "verificado_em": "2026-10-11",
+      "observacao": "Não se sabe se Cervezão é só o Jd. Chervezon ou uma região com vários bairros (e vários CRAS). Confirmar com quem conhece o bairro antes de usar."
+    },
+    {
+      "apelido": "CVZ",
+      "aponta_para": ["Jd. Chervezon"],
+      "situacao": "a_confirmar",
+      "fonte": "Abreviação citada pelo autor do projeto como forma de falar de uma região; o significado exato não foi confirmado.",
+      "verificado_em": "2026-10-11",
+      "observacao": "Confirmar o que CVZ significa antes de ligar a um bairro."
+    }
+  ]
+}

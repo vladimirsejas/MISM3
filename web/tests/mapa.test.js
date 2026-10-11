@@ -73,4 +73,60 @@ assert(!/localStorage|sessionStorage|document\.cookie|indexedDB|history\.(push|r
 js.split("\n").filter((l) => /\.innerHTML\s*[=+]/.test(l)).forEach((l) => assert(/svgMarcador/.test(l), "innerHTML só para o SVG do marcador: " + l.trim()));
 assert(!/fetch\(\s*["'`]https?:/.test(js), "nenhuma requisição externa automática");
 assert(/id="limpar-cep"/.test(html) && /aproximad/i.test(html), "a página diz que a região do CEP é aproximada e deixa limpar");
+/* ---- 7. Nomes de bairro: abreviações, acento e "qual CRAS atende?" só pela lista oficial ---- */
+assert.strictEqual(MS.normalizarBairro("Jd. São José de Almeida"), MS.normalizarBairro("Jardim Sao Jose Almeida"), "Jd. = Jardim, sem acento e sem 'de'");
+assert.strictEqual(MS.normalizarBairro("Vl. Operária"), MS.normalizarBairro("Vila Operaria"));
+assert.strictEqual(MS.normalizarBairro("  "), "");
+assert.strictEqual(MS.crasDoBairro("Jd Brasilia", lista).status, MS.crasDoBairro("Jardim Brasília", lista).status, "escrever de outro jeito dá o mesmo resultado");
+
+const cras = lista.filter((x) => x.subtipo === "cras");
+assert.strictEqual(cras.length, 6, "a página oficial lista seis CRAS");
+let ambiguos = 0, total = 0;
+cras.forEach((c) => {
+  c.bairros.split(",").map((b) => b.trim()).filter(Boolean).forEach((bairro) => {
+    total++;
+    const r = MS.crasDoBairro(bairro, lista);
+    assert(r.status === "ok" || r.status === "varios", "bairro da lista oficial não achado: " + bairro);
+    assert(r.cras.some((a) => a.servico.id === c.id), "o bairro " + bairro + " tem que levar ao CRAS que o lista (" + c.nome + ")");
+    if (r.status === "varios") ambiguos++;
+  });
+});
+assert(total > 100, "deve haver mais de cem bairros nas listas dos CRAS (" + total + ")");
+/* Como a moradora escreve de verdade: sem "I e II", sem "Jd.", com outra abreviação. */
+const brasilia = MS.crasDoBairro("Jd Brasilia", lista);
+assert(brasilia.status === "ok" && brasilia.metodo === "sem_numeral" && /Brasília/.test(brasilia.cras[0].servico.nome), "Jd Brasilia acha o CRAS pela lista 'Jd. Brasília I e II'");
+const bomSucesso = MS.crasDoBairro("Bom Sucesso", lista);
+assert(bomSucesso.status === "ok" && bomSucesso.metodo === "sem_tipo" && /Bom Sucesso/.test(bomSucesso.cras[0].servico.nome), "sem o 'Jd.' acha, mas marca como aproximado (a tela pede confirmação)");
+const paulista = MS.crasDoBairro("Paulista", lista);
+assert(paulista.status === "varios" && paulista.metodo === "sem_tipo" && new Set(paulista.cras.map((a) => a.servico.id)).size >= 3, "Paulista existe nas listas de vários CRAS: mostra todos");
+const jdPaulista = MS.crasDoBairro("Jd Paulista", lista);
+assert(jdPaulista.status === "varios", "'Jd. Paulista' e 'Jd. Paulista II' são de CRAS diferentes: sem o numeral, não escolhe um só");
+assert.strictEqual(MS.crasDoBairro("Jd. Paulista II", lista).status, "ok", "com o numeral escrito, o resultado é um só");
+assert(MS.crasDoBairro("Jd Brasilia", lista).cras.every((a) => /Brasília/.test(a.bairro)), "o nome mostrado é o da lista oficial");
+
+const inexistente = MS.crasDoBairro("Bairro Que Não Existe", lista);
+assert.strictEqual(inexistente.status, "nao_encontrado");
+assert.strictEqual(inexistente.cras.length, 0, "bairro desconhecido não leva a nenhum CRAS (nada de adivinhar)");
+assert.strictEqual(MS.crasDoBairro("", lista).status, "vazio");
+const sug = MS.crasDoBairro("Brasília", lista);   // parte do nome: não escolhe sozinho, só sugere
+assert(sug.status === "nao_encontrado" ? sug.sugestoes.length > 0 : sug.cras.length > 0, "nome parcial ou acha ou sugere, nunca fica mudo");
+
+/* ---- 8. Apelidos de bairro: só os confirmados valem, e todos apontam para nomes que existem nas fontes ---- */
+const ap = JSON.parse(ler("dados/bairros_apelidos.json")).apelidos;
+assert(Array.isArray(ap) && ap.length > 0);
+const fontes = MS.normalizarBairro(lista.map((x) => [x.bairros, x.endereco, x.nome].join(" ")).join(" "));
+ap.forEach((a) => {
+  assert(a.apelido && a.fonte && a.verificado_em && ["confirmado", "a_confirmar"].includes(a.situacao), "apelido sem fonte, data ou situação válida: " + a.apelido);
+  assert(a.aponta_para.length > 0, "apelido sem destino: " + a.apelido);
+  a.aponta_para.forEach((n) => assert(fontes.includes(MS.normalizarBairro(n)), "o apelido " + a.apelido + " aponta para um nome que não existe nas fontes do projeto: " + n));
+});
+const antes = MS.filtrar(lista, null, "CVZ", ap).length;
+assert.strictEqual(antes, MS.filtrar(lista, null, "CVZ", []).length, "apelido a_confirmar não muda nenhum resultado");
+const falsoOk = [{ apelido: "Apelido Teste", aponta_para: ["Jd. Chervezon"], situacao: "confirmado" }];
+assert(MS.filtrar(lista, null, "apelido teste", falsoOk).length > 0, "apelido confirmado leva ao nome das fontes");
+assert.strictEqual(MS.crasDoBairro("Apelido Teste", lista, falsoOk).status, "ok", "apelido confirmado leva ao CRAS da lista oficial");
+assert.strictEqual(MS.crasDoBairro("Apelido Teste", lista, [{ ...falsoOk[0], situacao: "a_confirmar" }]).status, "nao_encontrado", "a_confirmar não vale");
+assert(/id="form-cras"/.test(html) && /id="resultado-cras"/.test(html), "a página tem a caixa 'Qual CRAS atende o meu bairro?'");
+assert(/lista oficial/i.test(html), "a caixa diz de onde vem a informação");
+console.log("mapa.test.js (bairros): " + total + " bairros dos CRAS conferidos, " + ambiguos + " aparecem em mais de um CRAS");
 console.log("mapa.test.js: ok (" + lista.length + " serviços; " + n.endereco + " pelo endereço, " + n.cep + " pelo CEP, " + n.sem + " sem posição)");
