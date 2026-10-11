@@ -257,7 +257,15 @@ lista.filter((x) => x.subtipo === "curso_tecnico").forEach((x) => assert(/técni
   assert(g.some((x) => /técnicos/.test(x)) && !g.some((x) => /profissionalizantes/.test(x)), "a Etec fica nos grupos de técnicos (e no conjunto), sem repetir em profissionalizantes: " + id);
 });
 const maesSec = Areas.AREAS.find((a) => a.id === "educacao").secoes[0];
-assert(/mães/.test(maesSec.titulo) && maesSec.canais.length >= 6, "Educação deve começar com o passo a passo para as mães (matrícula, transferência, vagas)");
+assert(/filhos/.test(maesSec.titulo) && maesSec.canais.length >= 6, "Educação deve começar com o passo a passo para os filhos (matrícula, transferência, vagas)");
+const areaEdu = Areas.AREAS.find((a) => a.id === "educacao");
+assert(areaEdu.guia && areaEdu.guia.itens.length === 3, "a Educação deve abrir com a caixa que explica o que há para os filhos, para a mãe e no Trabalho");
+assert(areaEdu.guia.itens.some((i) => /Para você/.test(i.titulo) && /profissionalizantes/.test(i.texto) && /EJA/.test(i.texto)), "a caixa deve dizer que há cursos profissionalizantes e EJA para a própria mãe");
+areaEdu.guia.itens.filter((i) => i.ancora).forEach((i) => assert(areaEdu.secoes.some((sec) => sec.ancora === i.ancora), "o botão deve levar a uma seção existente: " + i.ancora));
+assert(areaEdu.guia.itens.some((i) => i.href === "#trabalho"), "a caixa deve apontar para a área Trabalho");
+const secVoce = areaEdu.secoes.find((sec) => sec.ancora === "educacao-voce");
+assert(secVoce && /Para você/.test(secVoce.titulo) && /Você também pode estudar/.test(secVoce.descricao), "a seção de cursos deve se dirigir à própria mãe");
+assert(/data-rolar/.test(ler("app.js")) && /secao-recolhida/.test(ler("app.js")), "o botão da caixa deve rolar e abrir seção recolhida");
 ["matricular", "transferência", "vaga"].forEach((t) => assert(maesSec.canais.some((c) => c.nome.toLowerCase().includes(t)), "falta o cartão sobre: " + t));
 assert(maesSec.canais.some((c) => /tipo de escola/i.test(c.nome)), "falta o cartão com o caminho de cada tipo de escola");
 assert(JSON.stringify(maesSec).includes("Inscrição não é vaga"), "deve explicar a diferença entre inscrição e vaga");
