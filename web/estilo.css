@@ -188,3 +188,9 @@ a.tel-grande{display:inline-block;font-weight:800;font-size:1.2rem;color:var(--a
 .btn-rolar:hover{background:var(--pri)}
 
 .cartao[hidden]{display:none}
+
+/* Rodapé: brasão estilizado e aviso de projeto acadêmico (não oficial) */
+.rodape-sobre{display:flex;gap:1rem;align-items:center;margin-bottom:1rem}
+.rodape-sobre p{margin:.3rem 0}
+.brasao{flex:none;width:128px;height:auto;border-radius:14px;border:1px solid var(--bor)}
+@media(max-width:480px){.rodape-sobre{flex-direction:column;align-items:flex-start}}

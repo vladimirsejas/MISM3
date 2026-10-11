@@ -324,4 +324,10 @@ const secEsc = Areas.AREAS.find((a) => a.id === "educacao").secoes.find((sec) =>
 assert(secEsc && secEsc.recolhida && secEsc.filtro && JSON.stringify(secEsc.subtipos) === '["escola_municipal"]', "a lista de escolas deve ficar recolhida e com busca");
 assert(Areas.AREAS.find((a) => a.id === "educacao").secoes.find((sec) => sec.titulo === "Canais oficiais").subtipos.join() === "secretaria", "os canais oficiais devem mostrar só o cartão da Secretaria");
 assert(/data-filtro/.test(ler("app.js")) && /semAcento/.test(ler("app.js")), "a busca por nome ou bairro deve ignorar acentos");
+// Brasão estilizado + aviso de projeto acadêmico (não oficial)
+assert(/<img class="brasao" src="img\/brasao-estilizado\.webp"[^>]*width="\d+" height="\d+"[^>]*alt="Brasão estilizado de Rio Claro/.test(index), "o brasão deve ter alt, largura e altura");
+assert(/estudo acadêmico de demonstração/.test(index) && /não é um site oficial da Prefeitura de Rio Claro/.test(index), "o rodapé deve dizer que o site é acadêmico e não oficial");
+assert(/versão estilizada, apenas como ilustração/.test(index), "o brasão deve ser identificado como versão estilizada");
+const brasaoArq = path.join(web, "img/brasao-estilizado.webp");
+assert(fs.existsSync(brasaoArq) && fs.statSync(brasaoArq).size < 120 * 1024, "a imagem do brasão deve existir e ser leve (< 120 KB)");
 console.log("dashboard.test.js: sete portas, emergência, navegação, nenhum conteúdo de demonstração, links locais e conteúdo das áreas passaram");
