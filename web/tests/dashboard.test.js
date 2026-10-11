@@ -265,6 +265,12 @@ assert(/2027/.test(JSON.stringify(maesSec)) && /não valem para 2027/.test(JSON.
 assert(/2027/.test(Areas.AREAS.find((a) => a.id === "educacao").pendencias.join(" ")), "a pendência deve citar o calendário de 2027");
 assert(!/\(\d{2}\)\s?\d{4}|\d{4}-\d{4}/.test(JSON.stringify(maesSec)), "o passo a passo das mães não deve conter telefones sem fonte");
 assert(Areas.AREAS.find((a) => a.id === "educacao").pendencias.some((p) => /Rio Claro/.test(p) && /fonte oficial/.test(p)), "Educação deve declarar que as regras locais ainda não vieram de fonte oficial");
+const caduCard = maesSec.canais.find((c) => /CADU/.test(c.nome));
+assert(caduCard && caduCard.topicos.length >= 5, "falta o passo a passo da matrícula pelo aplicativo CADU");
+["Serviços", "Educação", "Matrícula e Rematrícula", "Iniciar nova solicitação", "Matrícula Escolar"].forEach((t) =>
+  assert(JSON.stringify(caduCard).includes(t), "o passo a passo do CADU deve citar: " + t));
+assert(/17 de outubro de 2025/.test(JSON.stringify(caduCard)) && /2027/.test(JSON.stringify(caduCard)), "o CADU deve citar a fonte oficial e lembrar que 2027 precisa de confirmação");
+assert(/não foi conferido por nós/.test(JSON.stringify(caduCard)), "o que veio só de pesquisa deve estar marcado como não conferido");
 const solo = maesSec.canais.find((c) => /sozinha/i.test(c.nome));
 assert(solo && solo.topicos.length >= 6, "falta o cartão de apoio para mães que criam os filhos sozinhas");
 ["Documentos", "Prioridade na vaga", "Horário", "Quem busca a criança", "violência", "Pensão e guarda", "assistência social"].forEach((t) =>
