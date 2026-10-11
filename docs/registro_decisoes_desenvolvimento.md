@@ -854,3 +854,11 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - **Mulher em violência:** esta jornada **não substitui** a de violência e proteção, que espera a confirmação de CRAM, Delegacia e Patrulha. Ela aponta o Ligue 180 e a área Direitos e mantém o aviso do botão "Em perigo agora?" em todo plano.
 - **Tela:** o "100" passou a virar link de ligar (antes só números de 10 dígitos viravam). Conferido no Chromium: os quatro caminhos, o botão do passo do CRAS abre a página do mapa na caixa do bairro, 0 requisições externas, 0 erros.
 - **Erro meu corrigido antes de enviar:** no primeiro rascunho usei a observação do Fundo Social (um telefone) como "se não der certo"; troquei por uma alternativa de verdade.
+
+## 11/10/2026 — Fonte oficial do cadastro do CRAM
+
+- O CRAM não possui página institucional exclusiva conhecida no projeto. A fonte oficial para sua identificação e informações locais é a Prefeitura de Rio Claro; não se deve exigir um site próprio do serviço para reconhecer a autoridade da fonte.
+- Corrigido o vínculo incorreto entre o endereço cadastrado e a URL anterior: a página municipal usada anteriormente (“Casa Aberta”, 21/03/2014) descreve o endereço antigo da Avenida 9, nº 405, e não sustenta o endereço da Rua 17 que estava no registro.
+- O cadastro passa a apontar para a notícia oficial da Prefeitura “Oficina de geléia no Cram resgata potencial criativo das mulheres”, de 20/05/2016, que informa Rua 21, nº 53, entre as avenidas 21 e 23, Bairro do Estádio; atendimento de segunda a sexta, das 8h às 17h; telefone (19) 3532-4014: https://rioclaro.sp.gov.br/desenvolvimento-social/oficina-de-geleia-no-cram-resgata-potencial-criativo-das-mulheres/
+- O telefone (19) 3532-4014 também aparece em outra notícia oficial municipal de 17/03/2020 sobre atendimento telefônico durante a pandemia: https://rioclaro.sp.gov.br/administracao/para-evitar-coronavirus-rio-claro-fara-atendimento-publico-por-telefone/
+- Decisão de confiabilidade: manter `conferido=nao`, porque as fontes são oficiais, mas o endereço detalhado é de 2016 e não foi reconfirmado com o serviço em 2026. O sistema mostra fonte oficial e idade da informação; não confunde autoridade da fonte com confirmação recente. O telefone histórico (19) 3525-1366 foi retirado do campo atual porque não foi corroborado nas fontes municipais mais recentes localizadas.
