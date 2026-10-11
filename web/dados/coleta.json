@@ -1,0 +1,5 @@
+{
+ "ativa": false,
+ "endpoint": null,
+ "leia": "A coleta de respostas para a Secretaria da Mulher está DESLIGADA. Só ligar (ativa=true e endpoint https) depois de: termo de cooperação com a Prefeitura, controlador e encarregado de dados definidos, texto de consentimento aprovado pelo jurídico e servidor da Prefeitura. Ver docs/questionario_observatorio.md."
+}

@@ -243,6 +243,7 @@
 
   function htmlArea(area) {
     var html = area.jornada && window.JornadaUI ? JornadaUI.html() : "";
+    if (area.questionario && window.QuestionarioUI) html += QuestionarioUI.html();
     if (area.horarios) html += htmlHorarios();
     if (area.guia) html += htmlGuia(area.guia);
     var vistos = Object.create(null);
@@ -400,6 +401,7 @@
   function mostrarInicio() {
     areaAtual = null;
     if (window.JornadaUI) JornadaUI.limpar();
+    if (window.QuestionarioUI) QuestionarioUI.limpar();
     limparIA();
     $("inicio-tela").hidden = false; $("area").hidden = true; $("fontes").hidden = true;
     $("navegacao").hidden = true; $("secao-atual").hidden = true;
@@ -417,6 +419,7 @@
     $("intro-area").textContent = area.intro;
     $("conteudo-area").innerHTML = htmlArea(area);
     if (area.jornada && window.JornadaUI) JornadaUI.restaurar();
+    if (window.QuestionarioUI) { if (area.questionario) QuestionarioUI.restaurar(); else QuestionarioUI.limpar(); }
     var temServicos = area.secoes.some(function (s) { return s.tipos.length; });
     $("busca-por-cep").hidden = !(dados.indice && temServicos);
     limparResultadoCep();
@@ -447,6 +450,7 @@
   });
   window.addEventListener("popstate", function () { render(true); });
   if (window.JornadaUI) JornadaUI.ligar();
+  if (window.QuestionarioUI) QuestionarioUI.ligar();
 
   /* Voltar: se a usuária chegou aqui clicando dentro do sistema, volta no histórico; senão vai ao início.
      Nunca deixa a pessoa presa nem a leva a outra seção. */
@@ -493,6 +497,7 @@
   $("sair-rapido").addEventListener("click", function () {
     limparResultadoCep();
     limparIA();
+    if (window.QuestionarioUI) QuestionarioUI.limpar();
     window.location.replace("https://www.google.com.br/");
   });
 
@@ -502,8 +507,9 @@
        e só acrescenta o que não está no catálogo (CNES, Censo Escolar). Assim um servicos.json antigo nunca esconde
        cadastros novos, e uma unidade cadastrada à mão com o código CNES não aparece duas vezes. */
     function opcional(url) { return carregar(url).catch(function () { return null; }); }
-    return Promise.all([opcional("dados/catalogo_manual.json"), opcional("dados/servicos.json"), opcional("dados/horarios_onibus.json")]).then(function (r) {
+    return Promise.all([opcional("dados/catalogo_manual.json"), opcional("dados/servicos.json"), opcional("dados/horarios_onibus.json"), opcional("dados/coleta.json")]).then(function (r) {
       dados.horarios = r[2];
+      if (window.QuestionarioUI) QuestionarioUI.usarConfig(r[3]);
       var manual = (r[0] && r[0].servicos) || [], pipeline = (r[1] && r[1].servicos) || [];
       var idsManuais = Object.create(null), codigosManuais = Object.create(null);
       manual.forEach(function (s) { idsManuais[s.id] = true; if (s.cnes) codigosManuais[String(s.cnes)] = true; });

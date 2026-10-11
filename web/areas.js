@@ -407,6 +407,10 @@
     id: "transporte", nome: "Transporte", icone: "onibus",
     intro: "Horários de ônibus de Rio Claro, conforme a SOU Transportes. Escolha a linha e o sentido.",
     horarios: true, secoes: []
+  }, {
+    id: "questionario", nome: "Questionário", icone: "assistencia",
+    intro: "Responda marcando alternativas. Você recebe caminhos e serviços para a sua vida, e as respostas de quem autorizar poderão ajudar a Secretaria da Mulher a conhecer as mulheres de Rio Claro.",
+    questionario: true, secoes: []
   }];
 
   function porId(id) {
