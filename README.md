@@ -51,6 +51,9 @@ O último comando só sugere; nada entra no catálogo sem a sua confirmação. A
 
 ### No Windows, sem digitar comandos
 - **`abrir_site.bat`** (duplo clique; já existia): acha o Python, escolhe uma porta livre (8000 a 8010) e abre o site no navegador. Deixe a janela aberta enquanto usa.
+- **`abrir_mapa.bat`** (duplo clique): o mesmo, mas já abre direto no mapa de serviços.
+
+O `.bat` serve a pasta `web` **da pasta onde ele está**: se existirem duas cópias do projeto, abra o `.bat` da cópia que recebeu o `git pull`.
 - **`atualizar_localizacoes.bat`** (duplo clique): roda `atualizar_localizacoes.py`. Mostra a lista de localizações sugeridas e só altera o catálogo depois que você digita `s`.
 
 Os dois precisam do Python no PATH.

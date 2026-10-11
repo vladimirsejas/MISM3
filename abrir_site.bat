@@ -9,6 +9,9 @@ rem  3) liga o servidor   4) abre o navegador quando o servidor esta pronto
 rem  Para parar: feche esta janela ou aperte Ctrl+C.
 rem ======================================================================
 
+rem  Opcional: abrir_site.bat mapa.html abre direto no mapa (veja abrir_mapa.bat).
+set "PAGINA=%~1"
+
 cd /d "%~dp0web" || goto erro_pasta
 
 set "PY="
@@ -28,12 +31,12 @@ if not defined PORTA goto sem_porta
 echo.
 echo  MISM3 - Mulher em Rede
 echo  ----------------------
-echo  Endereco do site: http://localhost:%PORTA%/
+echo  Endereco do site: http://localhost:%PORTA%/%PAGINA%
 echo  O navegador vai abrir sozinho em instantes.
 echo  Para parar: feche esta janela ou aperte Ctrl+C.
 echo.
 
-start "" /min cmd /c "ping -n 3 127.0.0.1 >nul & start http://localhost:%PORTA%/"
+start "" /min cmd /c "ping -n 3 127.0.0.1 >nul & start http://localhost:%PORTA%/%PAGINA%"
 
 %PY% -m http.server %PORTA% --bind 127.0.0.1
 echo.
