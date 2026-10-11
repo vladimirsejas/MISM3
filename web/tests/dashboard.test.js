@@ -254,7 +254,7 @@ lista.filter((x) => x.subtipo === "curso_profissionalizante").forEach((x) => ass
 lista.filter((x) => x.subtipo === "curso_tecnico").forEach((x) => assert(/técnicos/.test(x.grupo), "curso técnico deve estar no grupo de técnicos: " + x.id));
 ["man-etec-cps", "man-etec-rio-claro"].forEach((id) => {
   const g = lista.find((x) => x.id === id).grupo.split(";");
-  assert(g.some((x) => /profissionalizantes/.test(x)) && g.some((x) => /técnicos/.test(x)), "a Etec se encaixa nos dois grupos (profissionalizantes e técnicos): " + id);
+  assert(g.some((x) => /técnicos/.test(x)) && !g.some((x) => /profissionalizantes/.test(x)), "a Etec fica nos grupos de técnicos (e no conjunto), sem repetir em profissionalizantes: " + id);
 });
 assert(/@media print/.test(css) && /folha-impressao/.test(css), "deve haver estilo de impressão para o plano e o currículo");
 assert(!/localStorage|sessionStorage|document\.cookie/.test(ler("jornada-ui.js") + ler("jornada.js")), "a jornada não pode guardar nada no aparelho");
