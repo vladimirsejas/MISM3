@@ -80,7 +80,7 @@
     ]]
   ];
 
-  function identificarCategorias(texto) {
+  function identificarCategorias(texto, maximo) {
     var t = normalizar(texto);
     if (!t) return [];
     var achadas = [];
@@ -89,7 +89,7 @@
         achadas.push(regra[0]);
       }
     });
-    return achadas.slice(0, 3);
+    return achadas.slice(0, maximo || 3);
   }
 
   return {

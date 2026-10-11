@@ -54,6 +54,15 @@ assert.strictEqual(P.combinacoes(duplos.slice(0, 5)).suprimido, true);
 assert(P.paresDeTemas(duplos).some((x) => /Trabalho e renda \+ Estudo e cursos/.test(x.par)));
 assert.deepStrictEqual(P.paresDeTemas(muitos(5, { trabalho: "procurando", obstaculos_trabalho: ["vagas", "creche", "transporte"], estudar: "concluir", obstaculos_estudo: ["dinheiro", "sem_cuidado", "chegar"] })), [], "par com menos de 10 não aparece");
 
+/* ---- assuntos do "Fale de você": só assuntos, grupos pequenos ocultos ---- */
+const comTemas = (n, t) => Array.from({ length: n }, () => Q.registro({ idade: "25_34", autoriza: "sim", fale_de_voce: "x" }, "2026-10", { temas: t }));
+const tm = P.temas(comTemas(20, ["saude"]).concat(comTemas(4, ["moradia"])));
+assert.strictEqual(tm.suprimido, false);
+assert.strictEqual(tm.itens.find((i) => i.tema === "saude").n, 20);
+assert.strictEqual(tm.itens.find((i) => i.tema === "moradia").n, null, "assunto com 4 mulheres fica oculto");
+assert.strictEqual(P.temas(comTemas(9, ["saude"])).suprimido, true, "menos de 10 mulheres escreveram: nada aparece");
+assert(!P.temas(comTemas(20, ["saude"])).itens.some((i) => i.tema === "violencia"));
+
 /* ---- série por mês e cobertura ---- */
 assert.deepStrictEqual(P.serie(muitos(12, {})).map((x) => x.n), [12]);
 assert.strictEqual(P.serie(muitos(3, {}))[0].n, null);
@@ -65,7 +74,9 @@ assert.strictEqual(teste.meta.dados_de_teste, true, "o arquivo precisa se declar
 assert(/DADOS DE TESTE/.test(teste.meta.aviso) && /não representam nenhuma mulher real/i.test(teste.meta.aviso));
 assert.strictEqual(teste.registros.length, teste.meta.registros);
 teste.registros.forEach((r) => {
-  assert.deepStrictEqual(Object.keys(r).sort(), ["indices", "instrumento", "periodo", "respostas", "versao"]);
+  assert.deepStrictEqual(Object.keys(r).sort(), ["indices", "instrumento", "periodo", "respostas", "temas_do_texto", "versao"]);
+  assert(!JSON.stringify(r).includes("texto de teste") && !("fale_de_voce" in r.respostas), "o texto nunca entra nos registros");
+  assert(!r.temas_do_texto.includes("violencia"), "violência nunca é registrada a partir de texto");
   assert(r.respostas.idade !== "m18" && !("autoriza" in r.respostas), "menores e autorização não entram");
 });
 const gerador = fs.readFileSync(path.join(web, "..", "pipeline", "gerar_dados_teste_painel.js"), "utf8");

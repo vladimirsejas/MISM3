@@ -214,7 +214,7 @@ ofertas.ofertas.forEach((o) => {
 });
 assert(!/fictíci|protótipo|\[DEMO\]|Ana Exemplo|Maria Exemplo/i.test(rede + JSON.stringify(ofertas)), "a página não pode ter conteúdo fictício");
 assert(!/identidade verificada|selo de confiança/i.test(rede.replace(/nenhum selo[^<]*/i, "")), "não prometer verificação que não existe");
-assert(rede.includes('src="areas.js"') && rede.includes('id="categorias"') && rede.includes("ofertas_mulheres.json") && !/<style/.test(rede), "a página usa só os componentes já existentes: nenhum estilo novo");
+assert(rede.includes('src="areas.js"') && rede.includes('id="categorias"') && ler("entre-mulheres-ui.js").includes("ofertas_mulheres.json") && !/<style/.test(rede), "a página lê as ofertas do arquivo de dados e não tem estilo embutido");
 assert(!rede.includes("REDE_MULHERES") && !/Em que ponto você está/.test(rede), "os caminhos de acolhimento não fazem parte desta página");
 
 /* ---- 7. Comportamento esperado no código ---- */

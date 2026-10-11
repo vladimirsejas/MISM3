@@ -49,26 +49,20 @@
     <p class="intro">Serviços que mulheres oferecem a outras mulheres: motorista, psicóloga, academia só para mulheres, beleza, aulas e mais. Escolha o que você procura.</p>
 
     <div class="status" role="note">
-      <strong>Ainda não há mulheres cadastradas.</strong> Este espaço está pronto para receber ofertas, mas só publica quem pedir e autorizar. Nenhum nome, perfil ou serviço é inventado para preencher a página.
+      <strong>Ainda não há mulheres cadastradas.</strong> Cada categoria tem o seu espaço: veja quem oferece e, se você é mulher e quer oferecer um serviço, faça o seu cadastro dentro da própria categoria. Só publica quem pedir e autorizar. Nenhum nome, perfil ou serviço é inventado para preencher a página.
     </div>
 
     <section class="secao" aria-labelledby="titulo-procura">
-      <h2 id="titulo-procura">O que você procura?</h2>
-      <p class="meta">Cada oferta mostra o contato que a própria mulher autorizou e a data do consentimento. Este sistema não intermedeia pagamento nem conversa: o contato é direto com ela.</p>
+      <h2 id="titulo-procura">O que você procura ou quer oferecer?</h2>
+      <p class="meta">Escolha uma categoria. Cada oferta mostra o contato que a própria mulher autorizou e a data do consentimento. Este sistema não intermedeia pagamento nem conversa: o contato é direto com ela.</p>
       <div id="categorias"></div>
       <p id="aviso-catalogo" class="meta"></p>
-    </section>
-
-    <section class="secao" aria-labelledby="titulo-oferecer">
-      <h2 id="titulo-oferecer">Sou mulher e quero oferecer meu serviço</h2>
-      <p>Para aparecer aqui, a oferta precisa de: nome (ou nome do negócio), categoria, descrição curta, bairro ou região atendida, um contato que você escolhe divulgar e o seu consentimento por escrito. Você pode pedir a retirada a qualquer momento.</p>
-      <p class="meta">O cadastro ainda não existe e nada é recebido por este site. A previsão é que ele seja feito pela Secretaria Municipal da Mulher, com entrada pelo gov.br, para que só mulheres de fato consigam se cadastrar. Isso ainda depende da Secretaria e não está confirmado.</p>
     </section>
 
     <aside class="pendente" aria-labelledby="titulo-planejado">
       <h2 id="titulo-planejado">Planejado, ainda não disponível</h2>
       <ul>
-        <li>Cadastro feito pela própria mulher, em parceria com a Secretaria Municipal da Mulher e com entrada pelo gov.br (a definir com a Secretaria).</li>
+        <li>Recebimento automático dos cadastros, em parceria com a Secretaria Municipal da Mulher e com entrada pelo gov.br para confirmar que só mulheres se cadastram (a definir com a Secretaria). Hoje o cadastro é preparado aqui e entregue pelo canal que a equipe definir.</li>
         <li>Antes de qualquer lançamento: regras de segurança, verificação real de identidade, revisão humana de denúncias e proteção contra denúncias abusivas.</li>
         <li>Enquanto isso não existir, nenhum selo de confiança ou “identidade verificada” será apresentado.</li>
       </ul>
@@ -81,6 +75,8 @@
 </footer>
 
 <script src="areas.js"></script>
+<script src="entre-mulheres.js"></script>
+<script src="entre-mulheres-ui.js"></script>
 <script>
 (function () {
   "use strict";
@@ -99,26 +95,7 @@
     if (mesmaOrigem && history.length > 1) { e.preventDefault(); history.back(); }
   });
 
-  /* As categorias vêm de areas.js e as ofertas de dados/ofertas_mulheres.json; cada informação tem uma casa só. */
-  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
-  function data(d) { var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(d || ""); return m ? m[3] + "/" + m[2] + "/" + m[1] : esc(d); }
-  function cartao(o) {
-    var p = ["<h3>" + esc(o.nome) + "</h3>", "<p>" + esc(o.descricao) + "</p>"];
-    if (o.atende) p.push('<p class="dist">Atende: ' + esc(o.atende) + "</p>");
-    if (o.contato) p.push("<p>Contato: " + esc(o.contato) + "</p>");
-    p.push('<p class="meta">Publicado com o consentimento dela em ' + data(o.consentimento_em) + ". Confirme preço e disponibilidade direto com ela.</p>");
-    return '<article class="cartao">' + p.join("") + "</article>";
-  }
-  fetch("dados/ofertas_mulheres.json", { cache: "no-store" }).then(function (r) { if (!r.ok) throw new Error("ofertas"); return r.json(); }).then(function (d) {
-    document.getElementById("categorias").innerHTML = MISM3Areas.REDE_OFERTAS.categorias.map(function (c) {
-      var of = d.ofertas.filter(function (o) { return o.categoria === c.id; });
-      var corpo = of.length ? '<div class="lista-cartoes">' + of.map(cartao).join("") + "</div>"
-        : '<p class="meta">Ainda não há mulheres cadastradas nesta categoria.</p>';
-      return '<details class="grupo-recolhido" id="' + esc(c.id) + '"><summary>' + esc(c.titulo) + (of.length ? " (" + of.length + ")" : "") + "</summary><p>" + esc(c.exemplo) + "</p>" + corpo + "</details>";
-    }).join("");
-  }).catch(function () {
-    document.getElementById("aviso-catalogo").textContent = "As ofertas não foram carregadas. Abra o sistema pelo procedimento do README.";
-  });
+  EntreMulheresUI.iniciar(MISM3Areas.REDE_OFERTAS.categorias);
 })();
 </script>
 </body>

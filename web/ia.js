@@ -60,8 +60,8 @@
   }
 
   /* Sugestões finais: união das regras com o modelo, no máximo 3; violência sempre vem primeiro quando aparece. */
-  function sugerir(texto) {
-    var regras = Regras.identificarCategorias(texto);
+  function sugerir(texto, maximo) {
+    var regras = Regras.identificarCategorias(texto, maximo);
     var probs = probabilidades(texto) || {};
     var meta = modelo ? modelo.meta : { limiar_padrao: 1, limiares: {}, maximo_sugestoes: 3 };
     var ach = {};
@@ -79,7 +79,7 @@
       if (b.id === "violencia") return 1;
       return (b.origem === "ambos") - (a.origem === "ambos") || b.prob - a.prob;
     });
-    return lista.slice(0, meta.maximo_sugestoes || 3).map(function (s) {
+    return lista.slice(0, maximo || meta.maximo_sugestoes || 3).map(function (s) {
       var c = CAMINHOS[s.id];
       return { id: s.id, origem: s.origem, prob: s.prob, titulo: c.titulo, texto: c.texto, href: c.href, urgente: !!c.urgente };
     });

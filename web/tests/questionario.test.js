@@ -10,14 +10,19 @@ const ler = (f) => fs.readFileSync(path.join(web, f), "utf8");
 /* ---- estrutura: só alternativas, nada de texto livre nem dado pessoal ---- */
 const ids = Q.PERGUNTAS.map((p) => p.id);
 assert.strictEqual(new Set(ids).size, ids.length, "ids de pergunta repetidos");
+/* Só alternativas, com UMA exceção deliberada e controlada: o espaço opcional "Fale de você", cujo texto nunca é enviado. */
+const textos = Q.PERGUNTAS.filter((p) => p.tipo === "texto");
+assert.deepStrictEqual(textos.map((p) => p.id), ["fale_de_voce"], "só pode existir uma pergunta de texto livre");
+assert(textos[0].max_chars <= 500, "texto curto");
 Q.PERGUNTAS.forEach((p) => {
-  assert(["unica", "multi"].includes(p.tipo), "só se aceitam alternativas (nada de texto livre): " + p.id);
+  assert(["unica", "multi", "texto"].includes(p.tipo), "tipo de pergunta desconhecido: " + p.id);
+  if (p.tipo === "texto") return;
   assert.strictEqual(new Set(p.opcoes.map((o) => o.c)).size, p.opcoes.length, "códigos repetidos em " + p.id);
   p.opcoes.forEach((o) => assert(o.c && o.r, "opção incompleta em " + p.id));
   if (p.tipo === "multi") assert(p.max >= 1, "pergunta múltipla sem limite: " + p.id);
   assert(!/(qual|informe|digite|escreva|diga|preencha)[^?]*\b(nome|cpf|rg|telefone|e-mail|endereço|rua)\b/i.test(p.texto), "pergunta pede dado pessoal: " + p.texto);
 });
-assert(Q.PERGUNTAS.length <= 19, "o questionário é curto o bastante para ser respondido no celular");
+assert(Q.PERGUNTAS.length <= 20, "o questionário é curto o bastante para ser respondido no celular");
 const regiao = Q.PERGUNTAS.find((p) => p.id === "regiao");
 ["cvz", "mae_preta", "bom_sucesso"].forEach((c) => assert(regiao.opcoes.some((o) => o.c === c), "a região usa pontos de referência que a moradora reconhece: " + c));
 assert(!regiao.opcoes.some((o) => /zona (norte|sul|leste|oeste)/i.test(o.r)), "ninguém sabe em que zona mora: usar pontos de referência");
@@ -36,7 +41,8 @@ assert.strictEqual(Q.proxima({}).pergunta.id, "idade");
 assert.strictEqual(Q.proxima({}, ["idade"]).pergunta.id, "regiao", "pular não faz a pergunta voltar");
 assert.strictEqual(Q.aplicaveis({ estudar: "nao", cuidado: "nenhum" }).length, Q.PERGUNTAS.length - 3, "sem estudo e sem cuidado, três perguntas saem do caminho");
 const completo = { idade: "25_34", regiao: "cvz", grupos: ["sustento"], trabalho: "procurando", obstaculos_trabalho: ["creche"], apoio_renda: "emprego", estudar: "nao", cuidado: "ate3", cuidado_rotina: "pouco", apoio_cuidado: "creche_info", deslocamento: "onibus", transporte_freq: "nunca", informacao: "facil", areas_info: ["trabalho"], sabe_procurar: "sei", prioridade_area: "emprego", resultado_6m: "trabalho_renda", autoriza: "sim" };
-assert.strictEqual(Q.proxima(completo), null, "quando tudo foi respondido, acabou");
+assert.strictEqual(Q.proxima(completo, ["fale_de_voce"]), null, "quando tudo foi respondido (o texto é opcional), acabou");
+assert.strictEqual(Q.proxima(completo).pergunta.id, "fale_de_voce", "o espaço \"Fale de você\" vem antes da autorização");
 
 /* ---- pontuação: 0 a 100 por tema; pergunta em branco NÃO é 'sem necessidade' ---- */
 const mae = { idade: "25_34", trabalho: "procurando", obstaculos_trabalho: ["creche", "transporte", "vagas"], estudar: "concluir", obstaculos_estudo: ["sem_cuidado", "dinheiro"], cuidado: "mais_de_um", cuidado_rotina: "impede_trabalho_estudo", deslocamento: "carona", transporte_freq: "frequentemente", informacao: "onde_procurar", sabe_procurar: "ja_procurei" };
@@ -75,7 +81,7 @@ assert.strictEqual(Q.registro(Object.assign({}, completo, { autoriza: "nao" }), 
 assert.strictEqual(Q.registro(Object.assign({}, completo, { idade: "m18" }), "2026-10"), null, "menor de 18 anos: nunca");
 assert.strictEqual(Q.registro(Object.assign({}, completo, { idade: undefined }), "2026-10"), null, "sem idade informada não envia (não dá para saber se é menor)");
 const reg = Q.registro(completo, "2026-10");
-assert.deepStrictEqual(Object.keys(reg).sort(), ["indices", "instrumento", "periodo", "respostas", "versao"]);
+assert.deepStrictEqual(Object.keys(reg).sort(), ["indices", "instrumento", "periodo", "respostas", "temas_do_texto", "versao"]);
 assert.strictEqual(reg.periodo, "2026-10", "só o mês, nunca data e hora exatas");
 assert(!("autoriza" in reg.respostas), "a autorização não vai no registro");
 Object.keys(reg.respostas).forEach((q) => {
@@ -85,6 +91,23 @@ Object.keys(reg.respostas).forEach((q) => {
 Object.keys(reg.respostas).forEach((k) => assert(ids.includes(k), "campo fora das perguntas do questionário: " + k));
 assert(!["nome", "cpf", "rg", "telefone", "email", "endereco", "ip", "id", "timestamp", "dispositivo"].some((k) => k in reg || k in reg.respostas), "nenhum campo de identificação");
 assert.strictEqual(Q.registro(completo, "2026-10-11T10:00").periodo, null, "data com hora é descartada");
+
+/* ---- "Fale de você": o TEXTO nunca é enviado; só assuntos permitidos, e nunca violência ---- */
+assert.strictEqual(Q.limpar({ fale_de_voce: "  Olá   mundo  " }).fale_de_voce, "Olá mundo", "espaços sobrando saem");
+assert.strictEqual(Q.limpar({ fale_de_voce: "   " }).fale_de_voce, undefined, "texto vazio não conta");
+assert.strictEqual(Q.limpar({ fale_de_voce: "a".repeat(900) }).fale_de_voce.length, 500, "limite de 500 letras");
+assert.strictEqual(Q.limpar({ fale_de_voce: 123 }).fale_de_voce, undefined, "só texto");
+const comTexto = Object.assign({}, completo, { fale_de_voce: "Perdi o emprego e meu filho está doente, moro perto do CVZ" });
+const r2 = Q.registro(comTexto, "2026-10", { temas: ["emprego_curso", "saude", "violencia", "invasor", "saude"] });
+assert(!JSON.stringify(r2).includes("Perdi o emprego") && !("fale_de_voce" in r2.respostas), "o texto NUNCA vai no registro");
+assert.deepStrictEqual(r2.temas_do_texto, ["emprego_curso", "saude"], "só assuntos permitidos, sem repetição, e NUNCA violência");
+assert(!Q.TEMAS_PERMITIDOS.includes("violencia"), "violência nunca é inferida nem registrada a partir de um texto");
+assert.deepStrictEqual(Q.registro(completo, "2026-10", { temas: ["saude"] }).temas_do_texto, [], "sem texto, não há assuntos");
+assert.strictEqual(Q.registro(Object.assign({}, comTexto, { autoriza: "nao" }), "2026-10", { temas: ["saude"] }), null, "sem autorização, nada");
+assert.strictEqual(Q.registro(Object.assign({}, comTexto, { idade: "m18" }), "2026-10", { temas: ["saude"] }), null, "menor de 18 anos: nunca");
+assert.deepStrictEqual(Q.dadosPessoais("meu cpf 123.456.789-09, tel (19) 99999-0000, ana@x.com, cep 13500-190"), ["um CPF", "um telefone", "um e-mail", "um CEP"]);
+assert.deepStrictEqual(Q.dadosPessoais("perdi o emprego em março"), []);
+assert(!Q.caminhos(Object.assign({}, mae, { fale_de_voce: "ele me bate" })).some((c) => c.id === "protecao"), "o texto não altera a pontuação nem os caminhos pontuados");
 
 /* ---- a coleta está DESLIGADA e o código só envia quando ligada ---- */
 const coleta = JSON.parse(ler("dados/coleta.json"));
@@ -97,7 +120,7 @@ assert(!/localStorage|sessionStorage|indexedDB|document\.cookie|sendBeacon|geolo
 assert(!/fetch\(|XMLHttpRequest|WebSocket/.test(logica), "a lógica do questionário não usa rede");
 
 /* ---- transparência na tela e no site ---- */
-["não informa nome, CPF nem telefone", "voluntário", "não substitui atendimento", "não foi ativada", "Menores de 18 anos"].forEach((t) => assert(ui.includes(t), "a introdução deve dizer: " + t));
+["não informa nome, CPF nem telefone", "voluntário", "não substitui atendimento", "não foi ativada", "Menores de 18 anos", "Fale de você", "não é enviado para ninguém", "Seu texto não é enviado para ninguém", "nunca o seu texto", "Prefiro não escrever"].forEach((t) => assert(ui.includes(t), "a introdução deve dizer: " + t));
 assert(/Não é uma escala validada, não é diagnóstico/.test(ui), "o retorno deve avisar o que a pontuação não é");
 assert(/Pergunta em branco não conta/.test(ui));
 const index = ler("index.html");
