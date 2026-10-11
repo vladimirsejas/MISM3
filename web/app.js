@@ -56,6 +56,14 @@
       partes.push('<p>Contato pelo Instagram: <a href="https://www.instagram.com/' + esc(s.instagram) + '/" target="_blank" rel="noopener noreferrer">@' + esc(s.instagram) + "</a></p>");
     }
     if (s.horario) partes.push("<p>Horário: " + esc(s.horario) + "</p>");
+    if (s.etapas) {
+      var oferece = [];
+      if (s.etapas.creche) oferece.push("creche (0 a 3 anos)");
+      if (s.etapas.pre_escola) oferece.push("pré-escola (4 e 5 anos)");
+      partes.push('<p class="etapas"><strong>Etapas que a escola oferece:</strong> ' +
+        (oferece.length ? esc(oferece.join(" e ")) : "não aparece com creche nem pré-escola") +
+        '. <span class="meta">Fonte: ' + esc(s.etapas.fonte) + ". Mostra a etapa, não se há vaga.</span></p>");
+    }
     if (s.observacao) partes.push('<p class="meta">' + esc(s.observacao) + "</p>");
     if (s.bairros) partes.push('<details class="bairros"><summary>Bairros atendidos</summary><p>' + esc(s.bairros) + ".</p></details>");
     var fonte = s.fonte_url ? '<a href="' + esc(s.fonte_url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.fonte) + "</a>" : esc(s.fonte);

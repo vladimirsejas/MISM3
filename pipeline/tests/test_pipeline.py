@@ -1,3 +1,4 @@
+import json
 import sys
 from pathlib import Path
 
@@ -196,3 +197,38 @@ def test_unidade_manual_com_codigo_cnes_vence_o_registro_do_cnes():
     nomes = sorted(s["nome"] for s in saida["servicos"])
     assert nomes == ["UBS Y (CNES)", "USF X"], nomes
     assert [s for s in saida["servicos"] if s["nome"] == "USF X"][0]["cnes"] == "1234567"
+
+
+# ---------------------------------------------------------------- etapas das escolas (Censo Escolar) no catálogo
+def test_servicos_manuais_anexa_etapas_so_a_quem_esta_ligado():
+    df = pd.DataFrame([
+        {"id": "a", "tipo": "creche", "subtipo": "escola_municipal", "nome": "E.M. A", "fonte_url": "https://x", "verificado_em": "2026-10-10"},
+        {"id": "b", "tipo": "creche", "subtipo": "escola_municipal", "nome": "E.M. B", "fonte_url": "https://x", "verificado_em": "2026-10-10"},
+    ])
+    etapas = {"a": {"creche": True, "pre_escola": False, "fonte": "Censo Escolar 2025 (INEP)"}}
+    saida = servicos.servicos_manuais(df, {}, etapas)
+    assert saida[0]["etapas"] == etapas["a"] and "etapas" not in saida[1]
+    assert "etapas" not in servicos.servicos_manuais(df, {})[0]  # sem ligação, o cartão fica como estava
+
+
+def test_carregar_etapas_junta_ligacao_e_oferta_e_nao_leva_matriculas(tmp_path, capsys):
+    ligacao, oferta = tmp_path / "l.csv", tmp_path / "o.json"
+    ligacao.write_text("id,inep,nome_catalogo,nome_censo,metodo\n"
+                       "a,111,A,A CENSO,mesmas palavras\nb,222,B,B CENSO,mesmas palavras\n", encoding="utf-8")
+    oferta.write_text(json.dumps({"escolas": [
+        {"inep": "111", "oferece_creche": True, "oferece_pre_escola": False, "matriculas_creche": 80}]}), encoding="utf-8")
+    r = servicos.carregar_etapas(ligacao, oferta)
+    assert r == {"a": {"creche": True, "pre_escola": False, "fonte": "Censo Escolar 2025 (INEP)"}}  # sem número de matrículas
+    assert "b ligado ao INEP 222" in capsys.readouterr().out                                       # ligação órfã avisa
+    assert servicos.carregar_etapas(tmp_path / "nao_existe.csv", oferta) == {}
+
+
+def test_observacao_deixa_de_dizer_que_nao_se_sabe_a_etapa_so_nas_escolas_ligadas():
+    obs = ('Escola municipal de Rio Claro. A página oficial "Unidades de ensino" lista a escola, ' + servicos.FRASE_SEM_ETAPAS +
+           " A lista de espera pode ser consultada.")
+    df = pd.DataFrame([{"id": i, "tipo": "creche", "subtipo": "escola_municipal", "nome": i, "fonte_url": "https://x",
+                        "verificado_em": "2026-10-10", "observacao": obs} for i in ("a", "b")])
+    a, b = servicos.servicos_manuais(df, {}, {"a": {"creche": True, "pre_escola": True, "fonte": "f"}})
+    assert "nem se há vaga" not in a["observacao"] and "não diz se há vaga" in a["observacao"]
+    assert "A lista de espera pode ser consultada." in a["observacao"]   # o resto da frase continua
+    assert b["observacao"] == obs                                           # escola sem ligação: texto de antes
