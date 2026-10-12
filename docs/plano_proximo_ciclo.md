@@ -45,7 +45,7 @@ O último achado mostra a lacuna real de orientação territorial: a moradora us
 Tempo é estimativa de uma noite de trabalho. **[Você]** é o que só você pode fazer no mundo real; **[Claude]** é o que vai para o código.
 
 ### Bloco A. Versão de referência (15 minutos)
-- [Você] `git pull` na pasta do projeto e abrir o `abrir_mapa.bat` **dessa mesma pasta**.
+- [Você] `git pull` na pasta do projeto e abrir o `abrir_site.bat` **dessa mesma pasta**.
 - Os testes não precisam ser rodados à mão: rodam sozinhos a cada alteração no GitHub (aba Actions, marca verde).
 - **Pronto quando:** você sabe o código do commit que está testando (`git log -1 --oneline`).
 
@@ -88,7 +88,7 @@ Tempo é estimativa de uma noite de trabalho. **[Você]** é o que só você pod
 - **Nada neste ciclo depende da resposta.**
 
 ### Bloco H. Demonstração, sem hospedagem
-- Rodar localmente (`abrir_mapa.bat`) e gravar a tela como plano B (no Windows, Win + G).
+- Rodar localmente (`abrir_site.bat`) e gravar a tela como plano B (no Windows, Win + G).
 - [Claude] Roteiro de 5 minutos: tela inicial, mapa, filtro, CEP, jornada de Trabalho, botão de emergência, e um slide de **limitações** (o que não foi validado).
 - **Sobre colocar online:** existe hospedagem gratuita para site estático (por exemplo, o próprio GitHub Pages), então dinheiro não é o obstáculo. O obstáculo é que um site público de proteção à mulher exige dados conferidos e alguém para manter. **Recomendação: não publicar neste ciclo.** Se decidir publicar mais tarde, o Claude prepara isso num PR separado.
 

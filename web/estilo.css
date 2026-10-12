@@ -1,4 +1,4 @@
-/* Mulher em Rede (MISM3) — estilo compartilhado por index.html e rede-mulheres.html.
+/* Mulher em Rede (MISM3) — estilo do dashboard (index.html).
    Paleta acolhedora (rosa, pêssego e verde-sálvia). Contrastes conferidos por cálculo e por teste:
    texto principal >= 13:1 em todos os fundos, texto suave >= 5,5:1, botões e links >= 6,5:1. */
 :root{
@@ -341,7 +341,7 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:#8a1c1c!im
 .cartao .etapas { margin: .35rem 0; }
 
 
-/* ---------- mapa de serviços (mapa.html) ---------- */
+/* ---------- mapa de serviços (dentro da tela inicial) ---------- */
 .mapa-pagina{padding-bottom:2rem}
 .mapa-titulo{font-family:var(--serif);font-weight:500;font-size:clamp(1.8rem,6vw,2.4rem);color:var(--pri-esc);margin:1.3rem 0 .3rem}
 .mapa-controles{margin:1rem 0;padding:1rem;border:1px solid var(--bor);border-radius:var(--raio);background:var(--lilas)}
@@ -402,3 +402,95 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:#8a1c1c!im
 .plano-passo::before{content:counter(passo);position:absolute;left:.8rem;top:.8rem;width:1.7rem;height:1.7rem;border-radius:50%;background:var(--pri-esc);color:#fff;font-weight:700;display:grid;place-items:center}
 .plano-passo.urgente{border-left:5px solid var(--alerta)}
 .plano-porque,.plano-senao{margin:.45rem 0 0;font-size:.93rem;color:var(--mut)}
+.vista{margin:0 0 2rem}
+/* ---------- Rio Claro em números (vista do dashboard; estilo isolado em .vista-numeros) ---------- */
+.vista-numeros{--grid:#e1e0d9;--none:#c3c2b7;--bar:#2a78d6;--focus:#2a78d6;--warn-bg:#fff6e0;--warn-ink:#5b3d00;
+  --c0:#86b6ef;--c1:#5598e7;--c2:#2a78d6;--c3:#1c5cab;--c4:#0d366b;--ponto:#eb6834;
+  --surface:var(--card);--ink:var(--fg);--ink2:var(--mut);--hair:var(--bor)}
+.vista-numeros *{box-sizing:border-box}
+.vista-numeros :focus-visible {outline: 2px solid var(--focus); outline-offset: 2px;}
+.vista-numeros .pagina {max-width: 1120px; margin: 0 auto; padding: 16px;}
+.vista-numeros h1 {margin: 0 0 4px; font-size: 1.6rem; line-height: 1.2;}
+.vista-numeros h2 {margin: 0 0 4px; font-size: 1.1rem;}
+.vista-numeros .n-sub {margin: 0 0 16px; color: var(--ink2);}
+.vista-numeros .aviso {background: var(--warn-bg); color: var(--warn-ink); border-radius: 8px; padding: 10px 14px; margin: 0 0 16px;}
+.vista-numeros .n-cartao {background: var(--surface); border: 1px solid var(--hair); border-radius: 12px; padding: 16px; margin-bottom: 16px;}
+.vista-numeros .n-heroi {font-size: 3.25rem; line-height: 1.05; font-weight: 600; margin: 0;}
+.vista-numeros .rotulo {color: var(--ink2); margin: 0;}
+.vista-numeros .indicadores {display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 12px;}
+.vista-numeros .indicador {border-top: 1px solid var(--hair); padding-top: 8px;}
+.vista-numeros .indicador .valor {font-size: 1.4rem; font-weight: 600; margin: 0;}
+.vista-numeros .filtros-linha {display: flex; flex-wrap: wrap; gap: 0 32px;}
+.vista-numeros .filtros {display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; margin: 0 0 16px; border: 0; padding: 0;}
+.vista-numeros .filtros legend {font-weight: 600; padding: 0; margin-right: 8px; float: left; line-height: 2.2;}
+.vista-numeros .filtros label {display: inline-flex; align-items: center; gap: 6px; min-height: 44px; cursor: pointer;}
+.vista-numeros .grade {display: grid; grid-template-columns: 1fr; gap: 16px;}
+.vista-numeros .mapa-moldura {position: relative;}
+.vista-numeros #mapa-territorio {display: block; width: 100%; height: auto; max-height: 78vh;}
+.vista-numeros #mapa-territorio path {stroke: var(--surface); stroke-width: .5; fill-rule: evenodd;}
+.vista-numeros #mapa-territorio path.c0 {fill: var(--c0);}
+.vista-numeros #mapa-territorio path.c1 {fill: var(--c1);}
+.vista-numeros #mapa-territorio path.c2 {fill: var(--c2);}
+.vista-numeros #mapa-territorio path.c3 {fill: var(--c3);}
+.vista-numeros #mapa-territorio path.c4 {fill: var(--c4);}
+.vista-numeros #mapa-territorio path.cn {fill: var(--none);}
+.vista-numeros #mapa-territorio.tem-selecao path {opacity: .28;}
+.vista-numeros #mapa-territorio.tem-selecao path.sel {opacity: 1; stroke: var(--ink); stroke-width: 1.2;}
+.vista-numeros #mapa-territorio path:hover {stroke: var(--ink); stroke-width: 1.2;}
+.vista-numeros .dica {position: absolute; z-index: 2; pointer-events: none; background: var(--surface); color: var(--ink); border: 1px solid var(--hair);
+          border-radius: 8px; padding: 8px 10px; box-shadow: 0 4px 16px rgba(0,0,0,.18); font-size: .88rem; max-width: 260px; display: none;}
+.vista-numeros .dica strong {font-size: 1rem;}
+.vista-numeros .dica .sec {color: var(--ink2);}
+.vista-numeros .legenda {display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 12px 0 0; padding: 0; list-style: none; font-size: .88rem; color: var(--ink2);}
+.vista-numeros .legenda li {display: inline-flex; align-items: center; gap: 6px;}
+.vista-numeros .amostra {width: 14px; height: 14px; border-radius: 3px; display: inline-block;}
+.vista-numeros .amostra.c0 {background: var(--c0);}
+.vista-numeros .amostra.c1 {background: var(--c1);}
+.vista-numeros .amostra.c2 {background: var(--c2);}
+.vista-numeros .amostra.c3 {background: var(--c3);}
+.vista-numeros .amostra.c4 {background: var(--c4);}
+.vista-numeros .amostra.cn {background: var(--none);}
+.vista-numeros .barras {list-style: none; margin: 8px 0 0; padding: 0;}
+.vista-numeros .barras button {all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: minmax(96px, 34%) 1fr; gap: 8px;
+                   align-items: center; width: 100%; min-height: 28px; padding: 1px 4px; border-radius: 6px;}
+.vista-numeros .barras button:hover {background: var(--grid);}
+.vista-numeros .barras button:focus-visible {outline: 2px solid var(--focus);}
+.vista-numeros .barras button[aria-pressed="true"] {background: var(--grid); font-weight: 600;}
+.vista-numeros .barras .nome {font-size: .88rem; overflow-wrap: anywhere;}
+.vista-numeros .barras .trilho {display: flex; align-items: center; gap: 6px; min-width: 0;}
+.vista-numeros .barras .n-barra {height: 14px; background: var(--bar); border-radius: 0 4px 4px 0; min-width: 2px;}
+.vista-numeros .barras .num {font-size: .82rem; color: var(--ink2); white-space: nowrap;}
+.vista-numeros .nota {color: var(--ink2); font-size: .88rem; margin: 8px 0 0;}
+.vista-numeros .n-ponto {fill: var(--ponto); stroke: var(--surface); stroke-width: 2;}
+.vista-numeros .n-ponto.aprox {fill: transparent; pointer-events: all; stroke: var(--ponto); stroke-width: 3;}
+.vista-numeros .resumo-dist {margin: 12px 0 0;}
+.vista-numeros .resumo-dist p {margin: 4px 0;}
+.vista-numeros table {width: 100%; border-collapse: collapse; font-size: .9rem;}
+.vista-numeros caption {text-align: left; font-weight: 600; padding: 4px 0 8px;}
+.vista-numeros th, .vista-numeros td {padding: 6px 8px; border-bottom: 1px solid var(--grid); text-align: right;}
+.vista-numeros th:first-child, .vista-numeros td:first-child {text-align: left;}
+.vista-numeros td {font-variant-numeric: tabular-nums;}
+.vista-numeros .rolagem {overflow-x: auto;}
+.vista-numeros details > summary {cursor: pointer; font-weight: 600; min-height: 44px; display: flex; align-items: center;}
+.vista-numeros ul.limites {margin: 8px 0 0 18px; padding: 0; color: var(--ink2);}
+.vista-numeros .erro {color: #b3261e; font-weight: 600;}
+.vista-numeros footer {color: var(--ink2); font-size: .85rem; margin: 8px 0 24px;}
+@media (min-width:900px){.vista-numeros .grade{grid-template-columns:1.25fr 1fr;align-items:start}}
+/* ---------- Painel da Secretaria (vista do dashboard; protótipo com dados de teste) ---------- */
+.vista-painel .faixa-teste{background:#fff3cd;color:#3d2f00;border:2px solid #b58900;border-radius:12px;padding:.8rem 1rem;margin:1rem 0;font-weight:700}
+.vista-painel .painel-sec{margin:1.6rem 0}
+.vista-painel .painel-sec h2{margin-bottom:.2rem}
+.vista-painel .barras{list-style:none;padding:0;margin:.5rem 0;display:grid;gap:.55rem}
+.vista-painel .barras li{display:grid;grid-template-columns:minmax(0,1fr);gap:.15rem}
+.vista-painel .barras .topo{display:flex;justify-content:space-between;gap:.8rem}
+.vista-painel .barras .trilho{height:10px;background:var(--lav);border-radius:0 6px 6px 0;overflow:hidden}
+.vista-painel .barras .trilho span{display:block;height:100%;background:var(--pri-esc);border-radius:0 4px 4px 0}
+.vista-painel .barras .oculto{color:var(--mut);font-style:italic}
+.vista-painel .tabela-rolavel{overflow-x:auto}
+.vista-painel table.dados{border-collapse:collapse;min-width:100%;font-size:.95rem}
+.vista-painel table.dados th,.vista-painel table.dados td{border-bottom:1px solid var(--bor);padding:.4rem .5rem;text-align:left}
+.vista-painel table.dados td.num,.vista-painel table.dados th.num{text-align:right;font-variant-numeric:tabular-nums}
+.vista-painel .cartao-num{display:inline-block;margin:.2rem .6rem .2rem 0;padding:.5rem .9rem;border:1px solid var(--bor);border-radius:12px;background:var(--card)}
+.vista-painel .cartao-num strong{display:block;font-size:1.5rem}
+.para-gestao{margin:0 0 2rem;padding:1rem 1.15rem;border:1px dashed var(--bor);border-radius:var(--raio)}
+.para-gestao h2{font-family:var(--serif);font-weight:500;font-size:1.1rem;margin:0 0 .2rem;color:var(--mut)}

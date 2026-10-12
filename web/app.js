@@ -518,6 +518,7 @@
     if (window.JornadaUI) JornadaUI.limpar();
     if (window.QuestionarioUI) QuestionarioUI.limpar();
     limparIA();
+    esconderVistas();
     $("inicio-tela").hidden = false; $("area").hidden = true; $("fontes").hidden = true;
     $("navegacao").hidden = true; $("secao-atual").hidden = true;
     document.title = "Mulher em Rede – Rio Claro";
@@ -527,6 +528,7 @@
   function mostrarArea(area) {
     areaAtual = area;
     limparIA();
+    esconderVistas();
     $("inicio-tela").hidden = true; $("area").hidden = false; $("fontes").hidden = false;
     $("navegacao").hidden = false; $("secao-atual").hidden = false;
     $("nome-secao").textContent = "Início › " + area.nome;
@@ -542,10 +544,63 @@
     document.title = area.nome + " – Mulher em Rede";
   }
 
+  /* ---------------------------------------------------------------- vistas do dashboard
+     O que antes eram páginas separadas (Entre Mulheres, Rio Claro em números, Painel) agora mora aqui dentro, como as áreas.
+     Os scripts de cada vista só são baixados quando ela é aberta: a tela inicial não paga por eles. */
+  var VISTAS = {
+    "entre-mulheres": { el: "vista-entre-mulheres", titulo: "titulo-vista-entre-mulheres", nome: "Entre Mulheres", scripts: ["entre-mulheres.js", "entre-mulheres-ui.js"],
+      iniciar: function () { if (window.EntreMulheresUI) EntreMulheresUI.iniciar(AREAS.REDE_OFERTAS.categorias); } },
+    "rio-claro-em-numeros": { el: "vista-numeros", titulo: "titulo-vista-numeros", nome: "Rio Claro em números", scripts: ["territorio.js"] },
+    "painel": { el: "vista-painel", titulo: "titulo-vista-painel", nome: "Painel da Secretaria (dados de teste)", scripts: ["painel.js", "painel-ui.js"] }
+  };
+  var vistasProntas = {};
+  function carregarScripts(lista, fim) {
+    var i = 0;
+    (function proximo() {
+      if (i >= lista.length) { fim(); return; }
+      var sc = document.createElement("script");
+      sc.src = lista[i++]; sc.onload = proximo; sc.onerror = proximo;
+      document.body.appendChild(sc);
+    })();
+  }
+  function esconderVistas() {
+    Object.keys(VISTAS).forEach(function (k) { var e = $(VISTAS[k].el); if (e) e.hidden = true; });
+  }
+  function mostrarVista(chave) {
+    var v = VISTAS[chave];
+    areaAtual = null;
+    if (window.JornadaUI) JornadaUI.limpar();
+    if (window.QuestionarioUI) QuestionarioUI.limpar();
+    limparIA();
+    $("inicio-tela").hidden = true; $("area").hidden = true; $("fontes").hidden = true;
+    esconderVistas(); $(v.el).hidden = false;
+    $("navegacao").hidden = false; $("secao-atual").hidden = false;
+    $("nome-secao").textContent = "Início › " + v.nome;
+    document.title = v.nome + " – Mulher em Rede";
+    limparResultadoCep();
+    if (!vistasProntas[chave]) {
+      vistasProntas[chave] = true;
+      carregarScripts(v.scripts, function () { if (v.iniciar) v.iniciar(); });
+    }
+  }
+
   function render(foco) {
     /* #area ou #area/seção: o que vem depois da barra leva direto a uma seção da área. */
     var partes = (location.hash || "").replace(/^#/, "").split("/");
     var id = partes[0], secao = partes[1];
+    if (VISTAS[id]) {
+      mostrarVista(id);
+      window.scrollTo(0, 0);
+      if (foco) $(VISTAS[id].titulo).focus({ preventScroll: true });
+      return;
+    }
+    /* #mapa e #mapa/cras: o mapa fica na tela inicial; o endereço só leva até ele. */
+    if (id === "mapa") {
+      mostrarInicio();
+      window.scrollTo(0, 0);
+      rolarPara(secao === "cras" ? "titulo-cras" : "mapa-inicio");
+      return;
+    }
     var area = id ? AREAS.porId(id) : null;
     if (area) mostrarArea(area); else mostrarInicio();
     window.scrollTo(0, 0);

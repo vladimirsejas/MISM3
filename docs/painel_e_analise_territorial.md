@@ -2,7 +2,7 @@
 
 Escrito em 11/10/2026. **Estado: protótipo com dados de teste.**
 
-## Painel (`web/painel-secretaria.html`)
+## Painel (vista `#painel` do dashboard, aberta pelo bloco "Para a gestão")
 - **O que é:** a tela que a Secretaria da Mulher usaria para ver o que as mulheres responderam no questionário, **só em números agregados**. Seções: quem respondeu, o que procuram, o que impede a autonomia, onde falta informação, pontuação por tema (e por região), necessidades combinadas, evolução, análise territorial e "como ler".
 - **Os dados são de TESTE.** `web/dados/painel_teste.json` tem 420 registros sorteados por computador (`node pipeline/gerar_dados_teste_painel.js`, semente fixa). **Não representam nenhuma mulher real.** O arquivo e a página dizem isso em destaque.
 - **Não está no site público:** nenhum link leva a ele e a página tem `noindex`. Isso **não** é proteção: quem souber o endereço abre a página (que só tem dados de teste). O painel real **exige login da Prefeitura num servidor protegido**; esconder um botão ou uma página não protege dados de ninguém.

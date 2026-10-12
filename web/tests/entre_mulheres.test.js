@@ -40,7 +40,8 @@ assert(/^https:\/\/wa\.me\/5519999999999\?text=/.test(EM.linkWhatsapp("551999999
 assert(/^mailto:a@b\.gov\.br\?subject=/.test(EM.linkEmail("a@b.gov.br", "x")));
 
 /* ---- a página: uma aba por categoria, cada uma com o seu espaço; nada enviado nem gravado ---- */
-const ui = ler("entre-mulheres-ui.js"), logica = ler("entre-mulheres.js").replace(/\/\*[\s\S]*?\*\//g, ""), pagina = ler("rede-mulheres.html");
+const ui = ler("entre-mulheres-ui.js"), logica = ler("entre-mulheres.js").replace(/\/\*[\s\S]*?\*\//g, ""), pagina = (function () { const vistaDe = (html, id) => { const m = new RegExp('<section id="' + id + '"[\\s\\S]*?(?=\\n  <section id="vista-|\\n  <p id="fontes")').exec(html); assert(m, "vista não encontrada em index.html: " + id); return m[0]; };
+ return vistaDe(ler("index.html"), "vista-entre-mulheres"); })(), appjs = ler("app.js");
 assert(/role="tablist"/.test(ui) && /role="tab"/.test(ui) && /role="tabpanel"/.test(ui) && /aria-selected/.test(ui) && /ArrowRight/.test(ui), "abas acessíveis, com teclado");
 assert(/CATS\.map\(painel\)/.test(ui) && /formulario\(c\)/.test(ui), "cada categoria tem o seu painel com o seu formulário");
 assert(!/localStorage|sessionStorage|indexedDB|document\.cookie|sendBeacon/.test(ui + logica), "não grava nada");
@@ -48,7 +49,8 @@ assert(!/method\s*:\s*["']POST/i.test(ui) && (ui.match(/fetch\(/g) || []).length
 assert(!/fetch\(|XMLHttpRequest/.test(logica));
 assert(/rel="noopener noreferrer"/.test(ui), "link externo seguro");
 assert(!/<form[^>]*action=/.test(ui + pagina), "nenhum formulário envia a lugar nenhum");
-assert(pagina.includes('src="entre-mulheres.js"') && pagina.indexOf("entre-mulheres.js") < pagina.indexOf("entre-mulheres-ui.js") && pagina.includes("EntreMulheresUI.iniciar"));
+assert(appjs.includes('scripts: ["entre-mulheres.js", "entre-mulheres-ui.js"]') && appjs.includes("EntreMulheresUI.iniciar"), "a vista carrega a lógica antes da tela e inicia a tela, só quando é aberta");
+assert(/replaceState\(null, "", "#entre-mulheres\/"/.test(ui) && !/replaceState\(null, "", "#" \+ id\)/.test(ui), "as categorias não podem usar #transporte etc.: colidiriam com as áreas do dashboard");
 assert(/Nada é enviado por esta página/.test(ui) && /O canal que recebe cadastros ainda não foi definido/.test(ui), "a página diz a verdade sobre o que acontece com o cadastro");
 assert(!/identidade verificada|selo de confiança/i.test(ui), "sem selo nem verificação que não existe");
 Areas.REDE_OFERTAS.categorias.forEach((c) => assert(c.exemplo && c.titulo, "categoria completa: " + c.id));
