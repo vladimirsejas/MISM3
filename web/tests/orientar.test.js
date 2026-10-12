@@ -19,6 +19,9 @@ assert(areas(R("quero terminar o ensino medio")).slice(0, 3).includes("educacao"
 assert(areas(R("preciso de um emprego urgente")).slice(0, 3).includes("trabalho"));
 assert(areas(R("presiso de advogdo de graça")).slice(0, 3).includes("direitos"), "tolera erro de digitação");
 assert(areas(R("upa mais proxima")).slice(0, 3).includes("saude"));
+assert(areas(R("quero me inscrever pra casa própria")).slice(0, 3).includes("moradia"), "casa própria leva à área de moradia");
+assert(areas(R("moro na rua e preciso de ajuda")).slice(0, 3).some((a) => ["moradia", "assistencia"].includes(a)), "situação de rua leva a um caminho de moradia ou assistência");
+assert(areas(R("a vacina do meu filho está atrasada")).slice(0, 3).includes("saude"), "vacinação infantil leva à saúde");
 
 /* ---- segurança: perigo vem junto da resposta, com os serviços de proteção fixados no topo ---- */
 const v = R("meu marido me bate e eu tenho medo");
