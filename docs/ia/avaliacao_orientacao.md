@@ -1,0 +1,76 @@
+# Avaliação do orientador (busca + segurança) do Mulher em Rede
+
+Este documento mostra **como o orientador foi medido**, o que deu certo e **o que não deu**. Os números vêm de `avaliacao/` e podem ser repetidos por qualquer pessoa:
+
+```
+python avaliacao/avaliar.py v2 --conjunto teste          # v1 = assistente anterior; v2 = orientador atual
+python avaliacao/avaliar.py v2 --conjunto desenvolvimento --erros
+```
+
+## O que é o orientador (e por que é um projeto de IA)
+
+A mulher escreve do seu jeito e o sistema devolve **o serviço, a seção ou a ferramenta certa**, com telefone, endereço e a data da última conferência, explicando por que apareceu. Tudo roda no aparelho (nenhum texto é enviado), sem modelo de linguagem. São quatro sinais de aprendizado de máquina combinados, mais uma camada de segurança:
+
+| Sinal | O que faz | Por que está aí |
+|---|---|---|
+| Palavras (TF-IDF com raízes) | Compara as palavras da pergunta com o texto de cada destino, dando mais peso às raras | Base da busca |
+| Letras (n-gramas de caracteres) | Compara pedaços de 3 letras | Tolera erros de digitação (“presiso de advogdo”) |
+| Significado (LSA, SVD com 64 dimensões, calculada **no Python** e só multiplicada no navegador) | Aprende que “remédio” anda junto de “farmácia” e “marido me bateu” de “violência” a partir dos textos | Pega o que não tem palavra em comum |
+| Intenção (regressão logística treinada pela equipe, `web/ia.js`) | Estima a necessidade (emprego, saúde, violência…) | Sinal de escopo e desempate |
+| **Segurança** (`web/perigo.js`) | Regras revisáveis que detectam risco (violência, suicídio, criança em perigo, emergência de saúde) e **fixam** o telefone e os serviços de proteção no topo | Em perigo, a resposta não pode depender de nota de similaridade |
+
+Quando não acha nada, o sistema **diz que não achou** e mostra as áreas e os telefones de emergência: nunca fica mudo.
+
+## Como foi medido
+
+- **210 perguntas escritas à parte**, no jeito de falar de quem usa (com erros, gírias, frases longas), cada uma com *gabarito* (área, seção ou serviço correto, se há perigo, se está fora do escopo).
+- **Dois conjuntos**: *desenvolvimento* (usado para ajustar) e *teste* (guardado, não olhado enquanto se ajustava). 33 perguntas parecidas com frases de treino do classificador foram marcadas e **excluídas** da medição.
+- **Métricas**: *Área@3* e *Específica@3* (o destino certo está entre os 3 primeiros?), *MRR* (quão no topo), *Resposta* (respondeu quando devia), *Perigo* (detectou), *Falsos alarmes*, *Abstenção* (calou-se corretamente no que está fora do escopo).
+- **Linha de base (v1)**: o assistente que existia antes (classificador + regras), medido igual.
+
+## Resultado no conjunto de teste (98 perguntas)
+
+| Sistema | Área@3 | Específica@3 | MRR | Resposta | Perigo | Falsos alarmes | Abstenção |
+|---|---|---|---|---|---|---|---|
+| v1 (assistente anterior) | 66% (55/83) | 40% (34/85) | 0.24 | 82% (70/85) | 100% (12/12) | 1% (1/73) | 85% (11/13) |
+| v2 completo | 90% (75/83) | 91% (77/85) | 0.82 | 95% (81/85) | 100% (12/12) | 0% (0/73) | 69% (9/13) |
+| sem palavras | 84% (70/83) | 86% (73/85) | 0.77 | 88% (75/85) | 100% (12/12) | 0% (0/73) | 77% (10/13) |
+| sem letras (digitação) | 83% (69/83) | 85% (72/85) | 0.76 | 87% (74/85) | 100% (12/12) | 0% (0/73) | 85% (11/13) |
+| sem significado (LSA) | 75% (62/83) | 75% (64/85) | 0.69 | 78% (66/85) | 100% (12/12) | 0% (0/73) | 100% (13/13) |
+| sem classificador | 90% (75/83) | 89% (76/85) | 0.80 | 95% (81/85) | 100% (12/12) | 0% (0/73) | 69% (9/13) |
+| sem contexto de área | 90% (75/83) | 91% (77/85) | 0.82 | 95% (81/85) | 100% (12/12) | 0% (0/73) | 69% (9/13) |
+
+> **Atenção: este conjunto de teste deixou de ser independente.** A primeira rodada (antes de qualquer ajuste) deu **87%** de resposta específica e **83%** (10/12) na segurança. Depois dela, as regras de segurança foram corrigidas e o vocabulário de alguns serviços foi ampliado (creche, CMEI, vacina, situação de rua e outros) olhando também para falhas observadas nessas perguntas; é isso que leva o número a 91%. O 91% mostra o efeito desses ajustes e **não é uma estimativa de acerto com perguntas novas**: a estimativa independente é a da primeira rodada.
+
+**Leitura honesta:**
+
+- O orientador acerta o destino específico em **91%** das perguntas do teste depois dos ajustes (87% na primeira rodada, antes deles; o assistente anterior: 40%) e coloca o certo perto do topo (MRR 0,82 contra 0,24).
+- A **ablação** mostra que cada sinal pesa: sem o *significado* (LSA) cai de 91% para 75%; sem as *letras*, para 85%; sem as *palavras*, para 86%.
+- **O classificador de intenção ajuda pouco** (sem ele, 91% cai para 89%) e **o contexto de área não aparece na métrica**, porque a avaliação não o usa (ele só vale na caixa de dúvida dentro de uma área). Não afirmamos mais do que a medição mostra.
+- **Abstenção é o ponto fraco**: a v1 se cala melhor no que está fora do escopo (85% contra 69%). O orientador acerta mais, mas por isso também arrisca mais responder o que não devia. Como errar por responder custa uma lista a mais, e errar por calar deixa a mulher sem caminho, aceitamos essa troca; o texto da tela deixa claro que a sugestão pode estar errada.
+- **Segurança**: 12/12 no teste e **0 falsos alarmes** em todas as 210 perguntas. **Mas atenção ao que aconteceu**: na primeira vez que rodamos o conjunto de teste, a camada de segurança acertou **10 de 12 (83%)**; ela não reconhecia violência contra uma vizinha (“meu vizinho bate na mulher dele”) nem “meu marido … bate nas crianças”. Corrigimos as regras de forma geral e adicionamos testes. Por isso, **o 12/12 não é mais uma estimativa independente**; a estimativa independente é 83%. Para uma ferramenta que atende mulheres em risco, a conclusão é que as regras de segurança precisam de revisão contínua com profissionais da rede (CRAM, DDM, CAPS).
+
+## Resultado no conjunto de desenvolvimento (79 perguntas)
+
+| Sistema | Área@3 | Específica@3 | MRR | Resposta | Perigo | Falsos alarmes | Abstenção |
+|---|---|---|---|---|---|---|---|
+| v1 (assistente anterior) | 75% (52/69) | 39% (27/69) | 0.28 | 86% (60/70) | 43% (6/14) | 0% (0/56) | 89% (8/9) |
+| v2 completo | 97% (67/69) | 90% (62/69) | 0.82 | 100% (70/70) | 100% (14/14) | 0% (0/56) | 78% (7/9) |
+
+## Limites
+
+- As perguntas foram escritas pela equipe, não por usuárias reais. A medição prova que o sistema funciona nos casos que imaginamos, **não** que cobre tudo o que será digitado. O teste com usuárias reais (roteiro em `docs/roteiro_validacao_navegacao.md`) continua sendo necessário.
+- Na avaliação original, falharam perguntas sobre casa própria, situação de rua e vacinação infantil. Em 12/10/2026, foram acrescentadas pontes lexicais locais para esses três padrões e testes de regressão em `web/tests/orientar.test.js`; a suíte passou no GitHub Actions. As métricas da tabela acima são da avaliação anterior e **não foram recalculadas** após essa mudança. O orientador continua limitado ao catálogo: não encontra um serviço que não esteja cadastrado e verificado (por exemplo, dentista gratuito ou fonoaudiólogo, que ainda não constam como serviços verificados).
+- O sinal de escopo (decidir que algo está fora do assunto) é simples (nota da busca + confiança do classificador) e erra em frases curtas fora do escopo que usam palavras do site (“como fazer um site”).
+- Não há previsão de risco nem pontuação de pessoas: o sistema só **orienta para serviços** a partir do que a pessoa escreve, sem guardar nada.
+- Não há elegibilidade automática: nunca dizemos que alguém tem direito a vaga ou benefício.
+
+## Próximos passos
+
+1. Teste do orientador com usuárias reais e profissionais da rede; ampliar o conjunto de perguntas com o que elas escreverem (só com consentimento).
+2. Ampliar o vocabulário dos serviços que ainda não casam (dentista, fonoaudiologia, vacina).
+3. Fase com **API de LLM** (Claude): usar só em *tarefas de bastidor* (ex.: gerar variações de perguntas para avaliar, revisar resumos dos serviços), com a chave fora do navegador. O guia está em `docs/arquitetura_ia.md`; o script `pipeline/testar_api.py` verifica se a chave funciona.
+
+## Nota de 13/10/2026: CRAM retirado
+
+O CRAM foi retirado do catálogo por falta de fonte confiável (ver o registro de decisões). Perguntas do gabarito que pedem o CRAM (por exemplo, "onde fica o cram") deixaram de ter resposta específica possível, e a resposta específica no desenvolvimento passou de 93% para 90%. O gabarito foi mantido como estava, de propósito.

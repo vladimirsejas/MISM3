@@ -925,3 +925,29 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - **Conferência contra o site:** os cartões `man-peja-unesp` e `man-metamorfose` já estavam de acordo com as fontes. Em especial, o do PEJA já avisa que, segundo a página oficial, hoje as atividades são no Centro de Ressocialização Masculino, com homens reeducandos, e que não há informação de turma aberta ao público em geral. Nenhum texto do site mudou.
 - Fica resolvida a pendência anotada antes ("o PEJA e o cursinho têm PDFs de prova que só existem no computador do autor").
 
+
+## 13/10/2026 — Orientador de IA, segurança e avaliação
+
+- **Motivo:** os professores exigem que o projeto seja inequivocamente de IA, e a regra do projeto é que a mulher sempre receba uma resposta. Os pareceres de IA comparados (DeepSeek, Copilot, Gemini, ChatGPT) foram usados como ideias, só o que pareceu seguro: sem modelo pesado no navegador, sem previsão de violência ou "índice de risco", sem registros individuais, sem dados inventados, privacidade por projeto, sem promessa de vaga ou benefício.
+- **Implementado:** índice de 162 destinos gerado em Python (`pipeline/indice_orientacao.py`; TF-IDF de palavras e letras e LSA de 64 dimensões) e lido no navegador (`web/orientar.js`); camada de segurança determinística (`web/perigo.js`); tela única para a home e para as áreas (`web/orientacao-ui.js`). Removidos `web/duvida.js` e seu teste, que o orientador substitui. "Meu plano" continua, agora dentro de um bloco recolhível.
+- **Avaliação:** `avaliacao/` (210 perguntas com gabarito, conjunto de teste guardado, ablação). Destino específico certo: 87% no teste contra 39% do assistente anterior. 33 perguntas parecidas com frases de treino foram excluídas da medição.
+- **Achados que não escondemos:** (1) na primeira rodada do teste a segurança acertou 10/12; faltavam violência contra terceiros e agressor que bate em criança; as regras foram corrigidas e o teste deixou de ser independente para essa camada; (2) o classificador de intenção e o contexto de área não melhoram a métrica; (3) a abstenção (69%) é pior que a do assistente anterior (85%). Detalhes em `docs/ia/avaliacao_orientacao.md`.
+- **Corrigido pelos testes:** "tomou veneno" não acionava o alerta de saúde; fixados de urgência passaram a ser as UPAs (antes podia aparecer o pronto atendimento de ginecologia para ideação suicida).
+- **API de LLM:** ainda não usada no site; `pipeline/testar_api.py` verifica a chave (lida da variável de ambiente, nunca gravada).
+
+
+### Ajustes incrementais de reconhecimento e proteção — 12/10/2026
+- A busca por necessidades passou a reconhecer mais variações de matrícula infantil (CMEI, EMEI, EMEF, pré-escola, berçário e lista de espera), pedidos de auxílio-aluguel/casa própria/situação de rua e expressões ligadas a vacinação infantil atrasada.
+- O classificador deixou de tratar a expressão isolada “escola de samba” como educação formal. A exceção remove somente essa expressão antes de aplicar as regras; outras necessidades presentes na frase continuam podendo ser reconhecidas.
+- A camada local de segurança passou a reconhecer alguns sinais explícitos de controle coercitivo sobre dinheiro, conta bancária, celular, mensagens, roupas, documentos e com quem a pessoa fala. Isso é uma regra de orientação, não uma avaliação de risco individual.
+- O orientador ganhou pontes lexicais locais para expressões sobre casa própria, situação de rua, vacinação e cuidado infantil/creche, ampliando a consulta com termos que já existem no índice verificado. A explicação de correspondência continua baseada nas palavras originais da usuária; nenhum serviço novo é criado. Há teste para garantir que termos artificiais da expansão não apareçam como se tivessem sido escritos pela usuária.
+- Foram adicionados testes sintéticos positivos e negativos em `web/tests/necessidades.test.js`, `web/tests/perigo.test.js` e `web/tests/orientar.test.js`.
+- **Validação executada no GitHub Actions:** 175 testes Python passaram e a suíte completa de testes JavaScript passou no commit `906fefecb558c4943577413244d910a5dcba12a8`. A interface ainda não foi validada visualmente nesta rodada.
+
+## 13/10/2026 — CRAM retirado do site por falta de fonte confiável
+
+- **Decisão do mantenedor:** o endereço e o telefone do CRAM não foram confirmados de forma confiável em nenhum lugar (o endereço de 2016 é Rua 21, nº 53; o cadastro anterior dizia Rua 17, nº 30; os telefones também divergem). Num serviço de proteção à mulher, um dado errado pode custar caro, então **o CRAM saiu do catálogo e das telas por enquanto**.
+- **Mudanças:** removido `man-cram` de `catalogo/servicos_manuais.csv` e do catálogo e índice gerados; retirado dos contatos essenciais da tela inicial e dos serviços fixados pela camada de segurança (violência agora fixa DDM, Patrulha Maria da Penha, Ligue 180 e 190). Quem pergunta pelo CRAM recebe o aviso discreto de proteção e as áreas, sem endereço inventado.
+- **Efeito na avaliação:** a resposta específica no desenvolvimento caiu de 93% para 90% (as perguntas cujo gabarito é o CRAM, como "onde fica o cram"). O gabarito não foi alterado para esconder isso.
+- **Para voltar:** só com confirmação direta do serviço (telefone (19) 3532-4014 consta nas duas versões); a decisão sobre a branch `fix/fonte-oficial-cram-rio-claro` fica suspensa. Ver `docs/roteiro_conferir_protecao.md`.
+- **Atualização (mesmo dia):** por orientação do mantenedor, o CRAM volta apenas como **dica**: o cadastro da Secretaria Municipal da Mulher agora diz que o CRAM é ligado a ela e que o contato deve ser feito por lá, avisando que o endereço e o telefone do CRAM ainda não foram confirmados. A Secretaria passou a ser um dos serviços fixados na resposta a situações de violência. Nenhum endereço ou telefone do CRAM é exibido. Esta ligação de subordinação foi informada pelo mantenedor e ainda não foi conferida em fonte pública.
