@@ -863,3 +863,10 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - **Cuidado com atualidade:** o endereço não foi republicado na fonte municipal de 2025. Por isso, embora esteja documentado numa fonte oficial e coincida com a informação trazida na pesquisa complementar, o cadastro mantém um aviso explícito para confirmar se continua vigente antes de ir. Horário, CEP e coordenadas ficam vazios; não foram inferidos.
 - **Escopo:** nenhuma alteração ao registro do CRAM nesta proposta. O CRAM continua sujeito à decisão do mantenedor de não preencher dados sem referência segura para uso atual.
 - **Validação técnica:** o catálogo manual permanece com 164 serviços; o registro da DDM agora contribui com endereço e telefone. Os testes automatizados do PR devem ser considerados pendentes até a conclusão da execução do GitHub Actions.
+
+## 12/10/2026 - Arquivo dos PDFs do CRAM (2016) e da república da ADRA; novo cadastro
+
+- **O que entrou:** `docs/documetacao/cram-noticia-2016.pdf` (notícia da Prefeitura de 20/05/2016: descreve o CRAM e dá o endereço **de 2016**, Rua 21, nº 53, Bairro do Estádio; **não prova o endereço de hoje**) e `republica-feminina-adra.pdf`; um registro novo no catálogo, `man-republica-feminina-adra` (jovens de 18 a 21 anos que saem de acolhimento institucional; **não é abrigo para violência**; sem endereço nem horário, porque a página não traz).
+- **O registro do CRAM não foi alterado** (a decisão sobre endereço e telefone é do mantenedor, ver PR #35). Os resumos gerados por IA (como o do Google, que dá a Avenida 9, nº 405) **não são fonte**.
+- **Ordem dos PRs:** o #36 (Delegacia, do ChatGPT) entrou primeiro; este foi atualizado por cima dele e o catálogo manual regenerado (165 serviços).
+- **Não conferido aqui:** o PEJA e o cursinho têm PDFs de prova (`PEJA.pdf`, `COMTATOPEJA.pdf`, `UNECópia Impressa.pdf`) que só existem no computador do autor e ainda não foram arquivados no repositório.
