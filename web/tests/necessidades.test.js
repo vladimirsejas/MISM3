@@ -50,7 +50,7 @@ const casos = [
   ["preciso sair de casa", ["violencia", "moradia"]],
   ["quero fazer cadastro habitacional", ["moradia"]],
   ["quero me inscrever para ter minha casa própria", ["moradia"]],
-  ["estou morando na rua e preciso de ajuda", ["moradia", "familia"]],
+  ["estou morando na rua e sem dinheiro para comer", ["moradia", "familia"]],
   ["preciso de auxílio aluguel", ["moradia"]],
   ["a vacina do meu filho está atrasada", ["filhos", "saude"]],
   ["quero renegociar minhas dívidas", ["dividas"]],
