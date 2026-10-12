@@ -35,6 +35,21 @@
   function semParadas(texto) {
     return Regras.normalizar(texto).split(" ").filter(function (w) { return w && !PARADAS[w]; }).join(" ");
   }
+
+  /* Pontes lexicais locais: traduz o jeito popular de pedir para termos já presentes no índice verificado. */
+  function expandirConsulta(texto) {
+    var t = Regras.normalizar(texto), extra = [];
+    if (/\\b(?:casa propria|casa popular|minha casa|financiamento habitacional|cadastro habitacional)\\b/.test(t)) {
+      extra.push("moradia habitacao casa propria cadastro habitacional aluguel social secretaria habitacao");
+    }
+    if (/\\b(?:moro na rua|morando na rua|vivo na rua|vivendo na rua|situacao de rua|sem teto|sem casa)\\b/.test(t)) {
+      extra.push("situacao de rua morador de rua sem casa sem teto assistencia social cras creas moradia acolhimento");
+    }
+    if (/\\bvacina(?:s|cao|r)?\\b/.test(t)) {
+      extra.push("saude posto de saude ubs usf vacinacao imunizacao carteira de vacinacao");
+    }
+    return extra.length ? t + " " + extra.join(" ") : t;
+  }
   /* Trechos de 3 a 5 letras de cada palavra (com espaço nas pontas), como na comparação por letras do Python. */
   function trechos(texto) {
     var saida = [];
@@ -107,12 +122,13 @@
     }
 
     function pontuar(texto, ctx) {
-      var qf = fichas(texto), contW = {};
+      var consulta = expandirConsulta(texto);
+      var qf = fichas(consulta), contW = {};
       qf.forEach(function (f) { contW[f] = (contW[f] || 0) + 1; });
       var qW = {};
       Object.keys(contW).forEach(function (f) { var i = posTermo[f]; if (i !== undefined) qW[f] = (1 + Math.log(contW[f])) * lsa.idf[i]; });
       var qWn = norma(Object.assign({}, qW));
-      var contC = {}; trechos(texto).forEach(function (g) { contC[g] = (contC[g] || 0) + 1; });
+      var contC = {}; trechos(consulta).forEach(function (g) { contC[g] = (contC[g] || 0) + 1; });
       var qC = {}; Object.keys(contC).forEach(function (g) { if (idfC[g] !== undefined) qC[g] = (1 + Math.log(contC[g])) * idfC[g]; });
       norma(qC);
       var qL = Object.keys(qW).length ? projetar(qWn) : null;
