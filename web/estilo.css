@@ -291,11 +291,6 @@ a.tel-grande{display:inline-block;font-weight:800;font-size:1.2rem;color:var(--a
 .ia-card span{display:block;font-size:.95rem;color:var(--mut)}
 .ia-card.urgente{border-color:var(--pri-esc)}
 .ia-urgente{background:var(--lav);border:1px solid var(--pri);border-radius:10px;padding:.6rem .8rem}
-.ia-opcao{display:flex;gap:.6rem;align-items:flex-start;margin:.7rem 0 0;padding:.7rem .8rem;border:1px dashed var(--bor);border-radius:10px;font-size:.92rem;cursor:pointer}
-.ia-opcao[hidden]{display:none}
-.ia-opcao input{margin-top:.25rem;width:1.2rem;height:1.2rem;flex:none}
-.ia-llm{margin-top:1rem;padding:.8rem 1rem;border-left:5px solid var(--pri);background:var(--lilas);border-radius:8px}
-.ia-llm p{margin:.3rem 0}
 .ia-como{margin-top:.6rem}
 .ia-como summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;align-items:center}
 .ia-servicos{list-style:none;margin:.3rem 0 0;padding:.5rem .8rem;border-left:3px solid var(--lav);background:var(--bg)}

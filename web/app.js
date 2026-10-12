@@ -411,24 +411,7 @@
   }
   function limparIA() {
     var t = $("ia-texto"); if (!t) return;
-    pedidoLLM++; /* cancela uma explicação ainda a caminho */
     t.value = ""; $("ia-saida").innerHTML = ""; $("ia-limpar").hidden = true;
-  }
-  /* Explicação por IA (opcional; ia-llm.js). O texto só sai do aparelho se a pessoa marcar a opção e o servidor local tiver chave. */
-  var pedidoLLM = 0;
-  function pedirExplicacao(texto, r, saida) {
-    var marcada = $("ia-llm") && $("ia-llm").checked;
-    if (!window.MISM3LLM || !MISM3LLM.deveChamar(r, marcada)) return "";
-    var meu = ++pedidoLLM;
-    MISM3LLM.pedir(function (u, o) { return fetch(u, o); }, texto, r.itens).then(function (txt) {
-      var alvo = $("ia-llm-saida");
-      if (meu !== pedidoLLM || !alvo || !saida.contains(alvo)) return;
-      alvo.innerHTML = txt ? MISM3LLM.html(txt) : MISM3LLM.htmlFalha();
-    });
-    return '<div id="ia-llm-saida" class="ia-llm" aria-live="polite">' + MISM3LLM.htmlEspera() + "</div>";
-  }
-  if ($("ia-llm-opcao") && window.MISM3LLM) {
-    MISM3LLM.disponivel(function (u, o) { return fetch(u, o); }).then(function (sim) { $("ia-llm-opcao").hidden = !sim; });
   }
   function telDoServico(tel) {
     var m = /\(?(\d{2})\)?\s*(9?\s?\d{4})[-\s]?(\d{4})/.exec(String(tel || ""));
@@ -480,9 +463,7 @@
         var sug = MISM3IA.sugerir(texto);
         if (sug.length > 1) h += '<details class="plano-detalhe"><summary>Ver como um plano, em ordem de urgência</summary>' + htmlSugestoes(sug, MISM3IA.servicosPara(texto, sug, 2)) + "</details>";
       }
-      pedidoLLM++; /* uma busca nova cancela a explicação da anterior */
       saida.innerHTML = h;
-      saida.insertAdjacentHTML("beforeend", pedirExplicacao(texto, r, saida));
       $("ia-limpar").hidden = false;
     }).catch(function () {
       saida.innerHTML = alertaAgora(texto) + '<p class="ia-vazio">Não consegui carregar a busca agora. Escolha uma das áreas abaixo ou, se for urgente, ligue 190, 192 ou 180.</p>';
