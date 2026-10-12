@@ -17,9 +17,10 @@ Depois de comparar três pareceres de IA (DeepSeek, Gemini e outro), ficou decid
 |---|---|---|
 | Entender o texto | Modelo + regras; **álcool e drogas** agora têm caminho próprio (Saúde, direto na seção do CAPS AD e dos grupos) e o modelo foi retreinado com 24 frases novas | `web/ia.js`, `web/necessidades.js`, `catalogo/frases_necessidades.txt` |
 | Meu Plano | Ordena as necessidades por urgência (regra fixa e explicável), com motivo e "se não der certo"; nada promete vaga | `web/plano.js` |
-| Dúvida dentro da área | Recuperação lexical sobre o conteúdo da própria página (TF-IDF, pontes de vocabulário revisadas, cobertura ponderada); sem acerto confiável, diz que não achou; perigo primeiro | `web/duvida.js`, `web/app.js` |
+| Orientador (tela inicial e caixa de dúvida das áreas) | Busca híbrida por 162 destinos (serviços, seções, canais, ferramentas): palavras + letras + significado (LSA) + intenção, com explicação do porquê; se não acha, diz e mostra as áreas | `web/orientar.js`, `web/orientacao-ui.js`, `pipeline/indice_orientacao.py`, `web/dados/indice_orientacao.json` |
+| Segurança | Regras revisáveis detectam violência, suicídio, criança em perigo e emergência de saúde e **fixam** telefones e serviços de proteção no topo; não dependem de nota | `web/perigo.js` |
 | Lugar | CEP -> bairro provável (setor do IBGE) e bairro -> CEPs; serviço mais perto de cada tipo | `web/mapa-servicos.js`, `web/dados/setor_bairro.json` |
-**Limites honestos:** (1) o bairro do IBGE é agrupado (cerca de 27 nomes para 408 setores; 83% dos CEPs recebem um) e pode diferir do nome da Prefeitura; (2) a caixa de dúvida é lexical, não semântica: acerta quando as palavras da página aparecem na pergunta ou numa ponte revisada; (3) o modelo continua treinado só com frases escritas pela equipe; (4) **não há elegibilidade automática**: dizer que alguém tem direito a um benefício exige critério oficial confirmado e atualizado, que ainda não temos. Próximo passo técnico, só com evidência de teste com usuárias: embeddings leves quantizados (ONNX), medindo tamanho, memória e precisão em celulares simples.
+**Limites honestos:** (1) o bairro do IBGE é agrupado (cerca de 27 nomes para 408 setores; 83% dos CEPs recebem um) e pode diferir do nome da Prefeitura; (2) o orientador é uma busca com aprendizado de máquina leve (não um modelo de linguagem): acerta o destino específico em 87% das perguntas do teste, mas as perguntas foram escritas pela equipe (ver `docs/ia/avaliacao_orientacao.md`); (3) o modelo continua treinado só com frases escritas pela equipe; (4) **não há elegibilidade automática**: dizer que alguém tem direito a um benefício exige critério oficial confirmado e atualizado, que ainda não temos. Próximo passo técnico, só com evidência de teste com usuárias: embeddings leves quantizados (ONNX), medindo tamanho, memória e precisão em celulares simples.
 
 ## Como o modelo foi avaliado (resumo; detalhes em `docs/ia/avaliacao_modelo_necessidades.md`)
 Validação cruzada em 5 partes sobre as frases escritas pela equipe, e teste independente com as 53 frases dos testes antigos.
@@ -42,3 +43,11 @@ O site promete não enviar nem guardar nada. Muitas usuárias podem estar em sit
 3. **Observatório (lado da Secretaria):** índice de acesso por bairro e agrupamento (clustering) com dados públicos. Só depois, com servidor e termo de cooperação, a coleta anônima agregada.
 4. **Pesquisa em fontes oficiais:** feita pela equipe, **fora do site** (em um processo de atualização do catálogo, com fonte e data), nunca com o texto da usuária.
 5. Melhorar o modelo com frases reais, coletadas só com consentimento, quando houver coleta.
+
+## Orientador e avaliação (13/10/2026)
+
+O orientador substituiu a caixa de dúvida por busca lexical. Medição completa, com conjunto de teste guardado, ablação e limites, em `docs/ia/avaliacao_orientacao.md`. Resumo: destino específico certo em 87% (assistente anterior: 39%), 0 falsos alarmes de perigo em 210 perguntas, segurança 83% na primeira rodada do teste (corrigida depois; ver o documento), abstenção 69% (ponto fraco).
+
+### Fase com API de LLM (planejada, ainda não usada no site)
+
+A chave da API **nunca** vai para o navegador nem para o repositório. Usos previstos, todos nos bastidores: (1) gerar variações de perguntas para ampliar a avaliação, revisadas por pessoas; (2) apoiar a revisão de resumos de serviços; (3) só depois de teste com usuárias, um modo opcional de redação de resposta *a partir dos serviços já encontrados* (nunca inventando serviço, telefone ou direito), com o texto passando por um servidor da própria equipe. Para saber se a chave funciona: `python pipeline/testar_api.py` (lê `ANTHROPIC_API_KEY` do seu computador e faz uma chamada mínima).

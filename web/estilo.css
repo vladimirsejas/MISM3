@@ -494,3 +494,7 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:#8a1c1c!im
 .vista-painel .cartao-num strong{display:block;font-size:1.5rem}
 .para-gestao{margin:0 0 2rem;padding:1rem 1.15rem;border:1px dashed var(--bor);border-radius:var(--raio)}
 .para-gestao h2{font-family:var(--serif);font-weight:500;font-size:1.1rem;margin:0 0 .2rem;color:var(--mut)}
+.orientacao-tels{font-size:1.3rem;margin:.3rem 0 0}
+.orientacao-contato{margin:.2rem 0;font-size:.95rem}
+.orientacao-lista .meta{display:block}
+.plano-detalhe{margin:1rem 0}.plano-detalhe summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:600}

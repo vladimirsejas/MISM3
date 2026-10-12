@@ -1,0 +1,3240 @@
+{
+ "meta": {
+  "descricao": "Perguntas escritas pela equipe do projeto imitando como mulheres escreveriam (informais, sem acento, com erros). NÃO são relatos reais. Cada pergunta tem o gabarito do que seria uma boa resposta (área e destinos específicos aceitáveis).",
+  "uso": "'desenvolvimento' serve para ajustar o sistema; 'teste' fica reservado para a medição final (não se olha para ajustar).",
+  "divisao": "por categoria, 2 de cada 5 perguntas em desenvolvimento e 3 em teste",
+  "tokens": "area:<id> | sec:<area>/<ancora> | svc:<tipo>/<subtipo>",
+  "gerado_em": "2026-10-12",
+  "nota_de_integridade": "Durante a análise de erros de perigo, 4 perguntas do conjunto de teste foram listadas por engano ('nao aguento mais, quero sumir', 'ligue 180 o que é', 'fui estuprada', 'minha casa ta com risco de cair'). Elas foram MOVIDAS para o conjunto de desenvolvimento para que o conjunto de teste continue sem ter sido visto durante os ajustes.",
+  "nota_de_rotulos": "Um rótulo do conjunto de DESENVOLVIMENTO foi corrigido durante os ajustes: 'quero denunciar maus tratos com crianca' passou a ser perigo=true (situação de risco para uma criança). Nenhum rótulo do conjunto de teste foi alterado.",
+  "nota_sobreposicao": "33 das 210 perguntas são idênticas ou quase idênticas (similaridade de letras >= 0,8) a frases de treino do classificador (catalogo/frases_necessidades.txt). Elas ficam marcadas com visto_no_treino=true e são EXCLUÍDAS da medição oficial (avaliar.py as ignora, a menos que se peça --incluir-vistos), porque inflariam o resultado."
+ },
+ "perguntas": [
+  {
+   "id": "q001",
+   "conjunto": "desenvolvimento",
+   "texto": "preciso de um emprego urgente",
+   "categoria": "trabalho",
+   "areas": [
+    "area:trabalho"
+   ],
+   "especificos": [
+    "svc:emprego_curso/pat",
+    "svc:emprego_curso/conecta"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q002",
+   "conjunto": "teste",
+   "texto": "to desempregada ha 8 meses e nao sei por onde comecar",
+   "categoria": "trabalho",
+   "areas": [
+    "area:trabalho"
+   ],
+   "especificos": [
+    "svc:emprego_curso/pat",
+    "svc:emprego_curso/conecta"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q003",
+   "conjunto": "teste",
+   "texto": "onde fica o pat de rio claro",
+   "categoria": "trabalho",
+   "areas": [
+    "area:trabalho"
+   ],
+   "especificos": [
+    "svc:emprego_curso/pat"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q004",
+   "conjunto": "desenvolvimento",
+   "texto": "como faço um curriculo bom",
+   "categoria": "trabalho",
+   "areas": [
+    "area:trabalho"
+   ],
+   "especificos": [
+    "sec:trabalho/montar-curriculo"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q005",
+   "conjunto": "teste",
+   "texto": "quero montar meu curriculo mas nao sei o que escrever",
+   "categoria": "trabalho",
+   "areas": [
+    "area:trabalho"
+   ],
+   "especificos": [
+    "sec:trabalho/montar-curriculo"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q006",
+   "conjunto": "desenvolvimento",
+   "texto": "tem vaga de emprego pra mulher acima de 40 anos",
+   "categoria": "trabalho",
+   "areas": [
+    "area:trabalho"
+   ],
+   "especificos": [
+    "svc:emprego_curso/pat",
+    "svc:emprego_curso/conecta"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q007",
+   "conjunto": "teste",
+   "texto": "quero abrir um negocio mas nao tenho dinheiro, tem credito?",
+   "categoria": "trabalho",
+   "areas": [
+    "area:trabalho"
+   ],
+   "especificos": [
+    "svc:emprego_curso/credito"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q008",
+   "conjunto": "teste",
+   "texto": "banco do povo empresta pra quem",
+   "categoria": "trabalho",
+   "areas": [
+    "area:trabalho"
+   ],
+   "especificos": [
+    "svc:emprego_curso/credito"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q009",
+   "conjunto": "desenvolvimento",
+   "texto": "fiz curso de costura e quero vender",
+   "categoria": "trabalho",
+   "areas": [
+    "area:trabalho"
+   ],
+   "especificos": [
+    "svc:emprego_curso/credito",
+    "svc:emprego_curso/secretaria"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q010",
+   "conjunto": "teste",
+   "texto": "tem curso gratuito de cabeleireira",
+   "categoria": "trabalho",
+   "areas": [
+    "area:trabalho"
+   ],
+   "especificos": [
+    "svc:emprego_curso/qualificacao",
+    "svc:emprego_curso/fundo_social"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q011",
+   "conjunto": "desenvolvimento",
+   "texto": "quero aprender informatica de graca",
+   "categoria": "trabalho",
+   "areas": [
+    "area:trabalho"
+   ],
+   "especificos": [
+    "svc:emprego_curso/qualificacao",
+    "svc:emprego_curso/curso_profissionalizante"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q012",
+   "conjunto": "teste",
+   "texto": "senai tem curso pra mulher?",
+   "categoria": "trabalho",
+   "areas": [
+    "area:trabalho"
+   ],
+   "especificos": [
+    "svc:emprego_curso/curso_profissionalizante"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q013",
+   "conjunto": "teste",
+   "texto": "fundo social tem curso",
+   "categoria": "trabalho",
+   "areas": [
+    "area:trabalho"
+   ],
+   "especificos": [
+    "svc:emprego_curso/fundo_social",
+    "svc:emprego_curso/qualificacao"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q014",
+   "conjunto": "desenvolvimento",
+   "texto": "sou diarista e quero algo melhor",
+   "categoria": "trabalho",
+   "areas": [
+    "area:trabalho"
+   ],
+   "especificos": [
+    "svc:emprego_curso/pat",
+    "svc:emprego_curso/qualificacao"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q015",
+   "conjunto": "teste",
+   "texto": "fui mandada embora hoje",
+   "categoria": "trabalho",
+   "areas": [
+    "area:trabalho"
+   ],
+   "especificos": [
+    "svc:emprego_curso/pat"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q016",
+   "conjunto": "desenvolvimento",
+   "texto": "preciso de uma renda extra urgente",
+   "categoria": "trabalho",
+   "areas": [
+    "area:trabalho"
+   ],
+   "especificos": [
+    "svc:emprego_curso/pat",
+    "svc:emprego_curso/credito"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q017",
+   "conjunto": "teste",
+   "texto": "quero ser microempreendedora como faço o mei",
+   "categoria": "trabalho",
+   "areas": [
+    "area:trabalho"
+   ],
+   "especificos": [
+    "svc:emprego_curso/secretaria",
+    "svc:emprego_curso/credito"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q018",
+   "conjunto": "teste",
+   "texto": "como me preparar pra uma entrevista de emprego",
+   "categoria": "trabalho",
+   "areas": [
+    "area:trabalho"
+   ],
+   "especificos": [
+    "sec:trabalho/titulo-jornada",
+    "svc:emprego_curso/pat"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q019",
+   "conjunto": "desenvolvimento",
+   "texto": "nunca trabalhei de carteira assinada, por onde comeco",
+   "categoria": "trabalho",
+   "areas": [
+    "area:trabalho"
+   ],
+   "especificos": [
+    "sec:trabalho/titulo-jornada",
+    "svc:emprego_curso/pat"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q020",
+   "conjunto": "teste",
+   "texto": "conecta rio claro oque é",
+   "categoria": "trabalho",
+   "areas": [
+    "area:trabalho"
+   ],
+   "especificos": [
+    "svc:emprego_curso/conecta"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q021",
+   "conjunto": "desenvolvimento",
+   "texto": "preciso de vaga na creche pro meu filho de 2 anos",
+   "categoria": "educacao",
+   "areas": [
+    "area:educacao"
+   ],
+   "especificos": [
+    "sec:educacao/educacao-filhos",
+    "svc:creche/secretaria"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q022",
+   "conjunto": "teste",
+   "texto": "como matricular meu filho na escola",
+   "categoria": "educacao",
+   "areas": [
+    "area:educacao"
+   ],
+   "especificos": [
+    "sec:educacao/educacao-filhos",
+    "svc:creche/secretaria"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q023",
+   "conjunto": "teste",
+   "texto": "meu filho tem 4 anos onde eu matriculo",
+   "categoria": "educacao",
+   "areas": [
+    "area:educacao"
+   ],
+   "especificos": [
+    "sec:educacao/educacao-filhos",
+    "svc:creche/secretaria"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q024",
+   "conjunto": "desenvolvimento",
+   "texto": "nao tenho com quem deixar meu filho pra trabalhar",
+   "categoria": "educacao",
+   "areas": [
+    "area:educacao",
+    "area:assistencia"
+   ],
+   "especificos": [
+    "sec:educacao/educacao-filhos",
+    "svc:creche/secretaria"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q025",
+   "conjunto": "teste",
+   "texto": "cmei perto de casa",
+   "categoria": "educacao",
+   "areas": [
+    "area:educacao"
+   ],
+   "especificos": [
+    "sec:educacao/educacao-escolas",
+    "svc:creche/escola_municipal"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q026",
+   "conjunto": "desenvolvimento",
+   "texto": "lista das escolas municipais com telefone",
+   "categoria": "educacao",
+   "areas": [
+    "area:educacao"
+   ],
+   "especificos": [
+    "sec:educacao/educacao-escolas",
+    "svc:creche/escola_municipal"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q027",
+   "conjunto": "teste",
+   "texto": "quero transferir meu filho de escola",
+   "categoria": "educacao",
+   "areas": [
+    "area:educacao"
+   ],
+   "especificos": [
+    "sec:educacao/educacao-filhos"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q028",
+   "conjunto": "teste",
+   "texto": "nao consegui vaga na creche, e agora",
+   "categoria": "educacao",
+   "areas": [
+    "area:educacao"
+   ],
+   "especificos": [
+    "sec:educacao/educacao-filhos",
+    "svc:creche/secretaria"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q029",
+   "conjunto": "desenvolvimento",
+   "texto": "quando abre a matricula 2027",
+   "categoria": "educacao",
+   "areas": [
+    "area:educacao"
+   ],
+   "especificos": [
+    "sec:educacao/educacao-filhos",
+    "svc:creche/secretaria"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q030",
+   "conjunto": "teste",
+   "texto": "qual o calendario escolar de 2027",
+   "categoria": "educacao",
+   "areas": [
+    "area:educacao"
+   ],
+   "especificos": [
+    "sec:educacao/educacao-filhos"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q031",
+   "conjunto": "desenvolvimento",
+   "texto": "vaga em escola pra minha filha de 7 anos",
+   "categoria": "educacao",
+   "areas": [
+    "area:educacao"
+   ],
+   "especificos": [
+    "sec:educacao/educacao-filhos",
+    "svc:creche/secretaria"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q032",
+   "conjunto": "teste",
+   "texto": "a creche mais perto do cervezao",
+   "categoria": "educacao",
+   "areas": [
+    "area:educacao"
+   ],
+   "especificos": [
+    "sec:educacao/educacao-escolas",
+    "svc:creche/escola_municipal"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q033",
+   "conjunto": "teste",
+   "texto": "crio meu filho sozinha preciso de apoio com a escola",
+   "categoria": "educacao",
+   "areas": [
+    "area:educacao",
+    "area:assistencia"
+   ],
+   "especificos": [
+    "sec:educacao/educacao-filhos"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q034",
+   "conjunto": "desenvolvimento",
+   "texto": "meu filho nao quer ir pra escola",
+   "categoria": "educacao",
+   "areas": [
+    "area:educacao",
+    "area:assistencia"
+   ],
+   "especificos": [
+    "sec:educacao/educacao-filhos",
+    "svc:assistencia/cras"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q035",
+   "conjunto": "teste",
+   "texto": "onde pedir historico escolar do meu filho",
+   "categoria": "educacao",
+   "areas": [
+    "area:educacao"
+   ],
+   "especificos": [
+    "svc:creche/secretaria",
+    "sec:educacao/educacao-filhos"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q036",
+   "conjunto": "desenvolvimento",
+   "texto": "minha filha de 16 anos quer voltar a estudar",
+   "categoria": "educacao",
+   "areas": [
+    "area:educacao"
+   ],
+   "especificos": [
+    "sec:educacao/educacao-voce",
+    "svc:emprego_curso/eja",
+    "svc:emprego_curso/eja_unesp"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q037",
+   "conjunto": "desenvolvimento",
+   "texto": "quero terminar o ensino medio",
+   "categoria": "estudo",
+   "areas": [
+    "area:educacao"
+   ],
+   "especificos": [
+    "sec:educacao/educacao-voce",
+    "svc:emprego_curso/eja",
+    "svc:emprego_curso/escola_sesi"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q038",
+   "conjunto": "teste",
+   "texto": "onde faço eja",
+   "categoria": "estudo",
+   "areas": [
+    "area:educacao"
+   ],
+   "especificos": [
+    "svc:emprego_curso/eja",
+    "svc:emprego_curso/escola_sesi",
+    "sec:educacao/educacao-voce"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q039",
+   "conjunto": "teste",
+   "texto": "quero fazer faculdade mas nao tenho dinheiro",
+   "categoria": "estudo",
+   "areas": [
+    "area:educacao"
+   ],
+   "especificos": [
+    "sec:educacao/educacao-voce",
+    "svc:emprego_curso/graduacao",
+    "svc:emprego_curso/cursinho_popular"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q040",
+   "conjunto": "desenvolvimento",
+   "texto": "cursinho pra vestibular de graça",
+   "categoria": "estudo",
+   "areas": [
+    "area:educacao"
+   ],
+   "especificos": [
+    "svc:emprego_curso/cursinho_popular"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q041",
+   "conjunto": "teste",
+   "texto": "como me preparar pro enem",
+   "categoria": "estudo",
+   "areas": [
+    "area:educacao"
+   ],
+   "especificos": [
+    "svc:emprego_curso/cursinho_popular"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q042",
+   "conjunto": "desenvolvimento",
+   "texto": "fatec rio claro tem quais cursos",
+   "categoria": "estudo",
+   "areas": [
+    "area:educacao"
+   ],
+   "especificos": [
+    "svc:emprego_curso/curso_superior_tecnologia"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q043",
+   "conjunto": "teste",
+   "texto": "curso tecnico gratuito",
+   "categoria": "estudo",
+   "areas": [
+    "area:educacao"
+   ],
+   "especificos": [
+    "svc:emprego_curso/curso_tecnico"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q044",
+   "conjunto": "teste",
+   "texto": "etec tem vaga",
+   "categoria": "estudo",
+   "areas": [
+    "area:educacao"
+   ],
+   "especificos": [
+    "svc:emprego_curso/curso_tecnico"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q045",
+   "conjunto": "desenvolvimento",
+   "texto": "parei de estudar na sexta serie, posso voltar?",
+   "categoria": "estudo",
+   "areas": [
+    "area:educacao"
+   ],
+   "especificos": [
+    "svc:emprego_curso/eja",
+    "sec:educacao/educacao-voce",
+    "svc:emprego_curso/escola_sesi"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q046",
+   "conjunto": "teste",
+   "texto": "quero estudar a noite porque trabalho de dia",
+   "categoria": "estudo",
+   "areas": [
+    "area:educacao"
+   ],
+   "especificos": [
+    "svc:emprego_curso/eja",
+    "svc:emprego_curso/escola_sesi",
+    "sec:educacao/educacao-voce"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q047",
+   "conjunto": "desenvolvimento",
+   "texto": "unesp tem curso popular",
+   "categoria": "estudo",
+   "areas": [
+    "area:educacao"
+   ],
+   "especificos": [
+    "svc:emprego_curso/cursinho_popular",
+    "svc:emprego_curso/eja_unesp"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q048",
+   "conjunto": "teste",
+   "texto": "quero fazer um curso de enfermagem",
+   "categoria": "estudo",
+   "areas": [
+    "area:educacao"
+   ],
+   "especificos": [
+    "svc:emprego_curso/curso_tecnico",
+    "svc:emprego_curso/curso_profissionalizante",
+    "sec:educacao/educacao-voce"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q049",
+   "conjunto": "desenvolvimento",
+   "texto": "preciso marcar consulta com ginecologista",
+   "categoria": "saude",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "svc:saude/ubs",
+    "svc:saude/secretaria"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q050",
+   "conjunto": "teste",
+   "texto": "onde fica o posto de saude do meu bairro",
+   "categoria": "saude",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "svc:saude/ubs",
+    "sec:saude/saude-unidades"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q051",
+   "conjunto": "teste",
+   "texto": "minha filha ta com febre alta de madrugada",
+   "categoria": "saude",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "svc:saude/urgencia",
+    "svc:saude/hospital"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q052",
+   "conjunto": "desenvolvimento",
+   "texto": "upa mais proxima",
+   "categoria": "saude",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "svc:saude/urgencia"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q053",
+   "conjunto": "teste",
+   "texto": "estou gravida e nao sei onde fazer o pre natal",
+   "categoria": "saude",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "svc:saude/ubs"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q054",
+   "conjunto": "desenvolvimento",
+   "texto": "preciso de remedio e nao tenho dinheiro",
+   "categoria": "saude",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "svc:saude/farmacia",
+    "svc:saude/ubs"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q055",
+   "conjunto": "teste",
+   "texto": "onde pego remedio de graca",
+   "categoria": "saude",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "svc:saude/farmacia"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q056",
+   "conjunto": "teste",
+   "texto": "vacina do meu filho esta atrasada",
+   "categoria": "saude",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "svc:saude/ubs"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q057",
+   "conjunto": "desenvolvimento",
+   "texto": "preciso de exame de sangue",
+   "categoria": "saude",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "svc:saude/laboratorio",
+    "svc:saude/ubs"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q058",
+   "conjunto": "teste",
+   "texto": "como agendar consulta pelo cadu",
+   "categoria": "saude",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "svc:saude/secretaria"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q059",
+   "conjunto": "desenvolvimento",
+   "texto": "dor forte no peito",
+   "categoria": "saude",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "svc:saude/urgencia",
+    "svc:saude/hospital"
+   ],
+   "perigo": true,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q060",
+   "conjunto": "teste",
+   "texto": "preciso de dentista e nao posso pagar",
+   "categoria": "saude",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "svc:saude/ubs",
+    "svc:saude/especialidades"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q061",
+   "conjunto": "teste",
+   "texto": "meu filho precisa de fonoaudiologo",
+   "categoria": "saude",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "svc:saude/cei",
+    "svc:saude/especialidades",
+    "svc:saude/ubs"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q062",
+   "conjunto": "desenvolvimento",
+   "texto": "preciso de transporte pra ir no hospital em outra cidade",
+   "categoria": "saude",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "svc:saude/transporte"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q063",
+   "conjunto": "teste",
+   "texto": "fui atendida mal no posto, pra quem reclamo",
+   "categoria": "saude",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "svc:saude/secretaria"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q064",
+   "conjunto": "desenvolvimento",
+   "texto": "quero fazer preventivo",
+   "categoria": "saude",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "svc:saude/ubs"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q065",
+   "conjunto": "teste",
+   "texto": "menopausa tem atendimento",
+   "categoria": "saude",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "svc:saude/ubs",
+    "svc:saude/especialidades"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q066",
+   "conjunto": "teste",
+   "texto": "meu pai idoso caiu e ta com muita dor",
+   "categoria": "saude",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "svc:saude/urgencia",
+    "svc:saude/hospital"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q067",
+   "conjunto": "desenvolvimento",
+   "texto": "onde fazer mamografia",
+   "categoria": "saude",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "svc:saude/ubs",
+    "svc:saude/especialidades"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q068",
+   "conjunto": "teste",
+   "texto": "ubs perto do mae preta",
+   "categoria": "saude",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "svc:saude/ubs",
+    "sec:saude/saude-unidades"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q069",
+   "conjunto": "desenvolvimento",
+   "texto": "meu filho usa drogas e eu nao sei o que fazer",
+   "categoria": "drogas",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "sec:saude/saude-familia-drogas",
+    "svc:saude/caps"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q070",
+   "conjunto": "teste",
+   "texto": "meu marido bebe todo dia e nao aguento mais",
+   "categoria": "drogas",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "sec:saude/saude-familia-drogas",
+    "svc:saude/caps"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q071",
+   "conjunto": "teste",
+   "texto": "meu irmao é alcoolatra e nao aceita tratamento",
+   "categoria": "drogas",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "sec:saude/saude-familia-drogas",
+    "svc:saude/caps"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q072",
+   "conjunto": "desenvolvimento",
+   "texto": "quero parar de beber e nao consigo sozinha",
+   "categoria": "drogas",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "sec:saude/saude-familia-drogas",
+    "svc:saude/caps"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q073",
+   "conjunto": "teste",
+   "texto": "tem grupo de apoio pra familia de dependente quimico",
+   "categoria": "drogas",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "sec:saude/saude-familia-drogas"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q074",
+   "conjunto": "desenvolvimento",
+   "texto": "onde fica o caps ad",
+   "categoria": "drogas",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "svc:saude/caps",
+    "sec:saude/saude-familia-drogas"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q075",
+   "conjunto": "teste",
+   "texto": "meu filho adolescente fuma maconha todo dia",
+   "categoria": "drogas",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "sec:saude/saude-familia-drogas",
+    "svc:saude/caps"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q076",
+   "conjunto": "teste",
+   "texto": "minha filha ta viciada em crack",
+   "categoria": "drogas",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "sec:saude/saude-familia-drogas",
+    "svc:saude/caps"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q077",
+   "conjunto": "desenvolvimento",
+   "texto": "quero ajuda pra largar o vicio",
+   "categoria": "drogas",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "sec:saude/saude-familia-drogas",
+    "svc:saude/caps"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q078",
+   "conjunto": "teste",
+   "texto": "narcoticos anonimos tem aqui",
+   "categoria": "drogas",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "sec:saude/saude-familia-drogas"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q079",
+   "conjunto": "desenvolvimento",
+   "texto": "estou com depressao nao tenho vontade de nada",
+   "categoria": "mental",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "svc:saude/caps",
+    "svc:saude/ubs"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q080",
+   "conjunto": "teste",
+   "texto": "preciso de psicologo e nao tenho plano",
+   "categoria": "mental",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "svc:saude/caps",
+    "svc:saude/ubs"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q081",
+   "conjunto": "teste",
+   "texto": "tenho crises de panico",
+   "categoria": "mental",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "svc:saude/caps",
+    "svc:saude/ubs"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q082",
+   "conjunto": "desenvolvimento",
+   "texto": "meu filho esta muito agressivo e triste",
+   "categoria": "mental",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "svc:saude/caps",
+    "svc:saude/cei",
+    "svc:assistencia/cras"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q083",
+   "conjunto": "desenvolvimento",
+   "texto": "nao aguento mais, quero sumir",
+   "categoria": "mental",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "svc:saude/caps",
+    "svc:saude/urgencia"
+   ],
+   "perigo": true,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q084",
+   "conjunto": "desenvolvimento",
+   "texto": "penso em me matar",
+   "categoria": "mental",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "svc:saude/caps",
+    "svc:saude/urgencia"
+   ],
+   "perigo": true,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q085",
+   "conjunto": "desenvolvimento",
+   "texto": "meu marido me bateu ontem e eu nao sei o que fazer",
+   "categoria": "violencia",
+   "areas": [
+    "area:direitos"
+   ],
+   "especificos": [
+    "svc:mulher/ddm",
+    "svc:mulher/cram",
+    "sec:direitos/secao-2"
+   ],
+   "perigo": true,
+   "fora_de_escopo": false,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q086",
+   "conjunto": "teste",
+   "texto": "ele me ameaçou de morte",
+   "categoria": "violencia",
+   "areas": [
+    "area:direitos"
+   ],
+   "especificos": [
+    "svc:mulher/ddm",
+    "svc:mulher/patrulha",
+    "sec:direitos/secao-2"
+   ],
+   "perigo": true,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q087",
+   "conjunto": "teste",
+   "texto": "estou apanhando do meu marido",
+   "categoria": "violencia",
+   "areas": [
+    "area:direitos"
+   ],
+   "especificos": [
+    "svc:mulher/ddm",
+    "svc:mulher/cram",
+    "sec:direitos/secao-2"
+   ],
+   "perigo": true,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q088",
+   "conjunto": "desenvolvimento",
+   "texto": "tenho medo de voltar pra casa",
+   "categoria": "violencia",
+   "areas": [
+    "area:direitos"
+   ],
+   "especificos": [
+    "svc:mulher/cram",
+    "sec:direitos/secao-2",
+    "svc:mulher/ddm"
+   ],
+   "perigo": true,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q089",
+   "conjunto": "teste",
+   "texto": "como pedir medida protetiva",
+   "categoria": "violencia",
+   "areas": [
+    "area:direitos"
+   ],
+   "especificos": [
+    "svc:mulher/ddm",
+    "svc:mulher/defensoria",
+    "svc:mulher/patrulha"
+   ],
+   "perigo": true,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q090",
+   "conjunto": "desenvolvimento",
+   "texto": "onde fica a delegacia da mulher",
+   "categoria": "violencia",
+   "areas": [
+    "area:direitos"
+   ],
+   "especificos": [
+    "svc:mulher/ddm"
+   ],
+   "perigo": true,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q091",
+   "conjunto": "teste",
+   "texto": "meu ex me persegue e manda mensagem ameaçando",
+   "categoria": "violencia",
+   "areas": [
+    "area:direitos"
+   ],
+   "especificos": [
+    "svc:mulher/ddm",
+    "svc:mulher/patrulha"
+   ],
+   "perigo": true,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q092",
+   "conjunto": "teste",
+   "texto": "ele quebrou tudo em casa e me empurrou",
+   "categoria": "violencia",
+   "areas": [
+    "area:direitos"
+   ],
+   "especificos": [
+    "svc:mulher/ddm",
+    "svc:mulher/cram",
+    "sec:direitos/secao-2"
+   ],
+   "perigo": true,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q093",
+   "conjunto": "desenvolvimento",
+   "texto": "preciso sair de casa com meus filhos com seguranca",
+   "categoria": "violencia",
+   "areas": [
+    "area:direitos",
+    "area:assistencia"
+   ],
+   "especificos": [
+    "svc:mulher/cram",
+    "svc:assistencia/creas",
+    "sec:direitos/secao-2"
+   ],
+   "perigo": true,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q094",
+   "conjunto": "teste",
+   "texto": "meu companheiro nao deixa eu trabalhar nem sair",
+   "categoria": "violencia",
+   "areas": [
+    "area:direitos"
+   ],
+   "especificos": [
+    "svc:mulher/cram",
+    "sec:direitos/secao-2"
+   ],
+   "perigo": true,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q095",
+   "conjunto": "desenvolvimento",
+   "texto": "sofro violencia psicologica ele me humilha",
+   "categoria": "violencia",
+   "areas": [
+    "area:direitos"
+   ],
+   "especificos": [
+    "svc:mulher/cram",
+    "svc:mulher/secretaria",
+    "sec:direitos/secao-2"
+   ],
+   "perigo": true,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q096",
+   "conjunto": "desenvolvimento",
+   "texto": "ligue 180 o que é",
+   "categoria": "violencia",
+   "areas": [
+    "area:direitos"
+   ],
+   "especificos": [
+    "sec:direitos/secao-2"
+   ],
+   "perigo": true,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q097",
+   "conjunto": "desenvolvimento",
+   "texto": "fui estuprada",
+   "categoria": "violencia",
+   "areas": [
+    "area:direitos",
+    "area:saude"
+   ],
+   "especificos": [
+    "svc:mulher/ddm",
+    "svc:saude/urgencia",
+    "svc:saude/hospital"
+   ],
+   "perigo": true,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q098",
+   "conjunto": "desenvolvimento",
+   "texto": "meu pai abusa da minha filha de 9 anos",
+   "categoria": "violencia",
+   "areas": [
+    "area:assistencia",
+    "area:direitos"
+   ],
+   "especificos": [
+    "svc:assistencia/conselho_tutelar",
+    "svc:assistencia/creas",
+    "svc:mulher/ddm"
+   ],
+   "perigo": true,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q099",
+   "conjunto": "teste",
+   "texto": "meu vizinho bate na mulher dele toda noite",
+   "categoria": "violencia",
+   "areas": [
+    "area:direitos"
+   ],
+   "especificos": [
+    "svc:mulher/ddm",
+    "svc:mulher/patrulha",
+    "sec:direitos/secao-2"
+   ],
+   "perigo": true,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q100",
+   "conjunto": "desenvolvimento",
+   "texto": "a patrulha maria da penha atende como",
+   "categoria": "violencia",
+   "areas": [
+    "area:direitos"
+   ],
+   "especificos": [
+    "svc:mulher/patrulha"
+   ],
+   "perigo": true,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q101",
+   "conjunto": "teste",
+   "texto": "estou em perigo agora",
+   "categoria": "violencia",
+   "areas": [
+    "area:direitos"
+   ],
+   "especificos": [
+    "sec:direitos/secao-2",
+    "svc:mulher/ddm"
+   ],
+   "perigo": true,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q102",
+   "conjunto": "teste",
+   "texto": "ele disse que vai me matar quando sair",
+   "categoria": "violencia",
+   "areas": [
+    "area:direitos"
+   ],
+   "especificos": [
+    "svc:mulher/ddm",
+    "svc:mulher/patrulha",
+    "sec:direitos/secao-2"
+   ],
+   "perigo": true,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q103",
+   "conjunto": "desenvolvimento",
+   "texto": "onde fica o cram",
+   "categoria": "violencia",
+   "areas": [
+    "area:direitos"
+   ],
+   "especificos": [
+    "svc:mulher/cram"
+   ],
+   "perigo": true,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q104",
+   "conjunto": "teste",
+   "texto": "secretaria da mulher de rio claro telefone",
+   "categoria": "violencia",
+   "areas": [
+    "area:direitos"
+   ],
+   "especificos": [
+    "svc:mulher/secretaria"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q105",
+   "conjunto": "desenvolvimento",
+   "texto": "nao recebo pensao do pai dos meus filhos",
+   "categoria": "direitos",
+   "areas": [
+    "area:direitos"
+   ],
+   "especificos": [
+    "sec:direitos/secao-1",
+    "svc:mulher/defensoria"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q106",
+   "conjunto": "teste",
+   "texto": "quero me separar e nao sei como",
+   "categoria": "direitos",
+   "areas": [
+    "area:direitos"
+   ],
+   "especificos": [
+    "sec:direitos/secao-1",
+    "svc:mulher/defensoria"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q107",
+   "conjunto": "teste",
+   "texto": "meu ex nao deixa eu ver meu filho",
+   "categoria": "direitos",
+   "areas": [
+    "area:direitos"
+   ],
+   "especificos": [
+    "sec:direitos/secao-1",
+    "svc:mulher/defensoria"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q108",
+   "conjunto": "desenvolvimento",
+   "texto": "preciso de advogado de graça",
+   "categoria": "direitos",
+   "areas": [
+    "area:direitos"
+   ],
+   "especificos": [
+    "svc:mulher/defensoria",
+    "sec:direitos/secao-1"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q109",
+   "conjunto": "teste",
+   "texto": "guarda dos filhos como funciona",
+   "categoria": "direitos",
+   "areas": [
+    "area:direitos"
+   ],
+   "especificos": [
+    "sec:direitos/secao-1"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q110",
+   "conjunto": "desenvolvimento",
+   "texto": "divorcio gratuito",
+   "categoria": "direitos",
+   "areas": [
+    "area:direitos"
+   ],
+   "especificos": [
+    "sec:direitos/secao-1",
+    "svc:mulher/defensoria"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q111",
+   "conjunto": "teste",
+   "texto": "defensoria publica rio claro endereço",
+   "categoria": "direitos",
+   "areas": [
+    "area:direitos"
+   ],
+   "especificos": [
+    "svc:mulher/defensoria"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q112",
+   "conjunto": "teste",
+   "texto": "como simular minha aposentadoria",
+   "categoria": "direitos",
+   "areas": [
+    "area:direitos"
+   ],
+   "especificos": [
+    "sec:direitos/secao-3"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q113",
+   "conjunto": "desenvolvimento",
+   "texto": "estou com o nome sujo e dividas",
+   "categoria": "direitos",
+   "areas": [
+    "area:direitos"
+   ],
+   "especificos": [
+    "sec:direitos/secao-3"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q114",
+   "conjunto": "teste",
+   "texto": "quero renegociar minhas dividas",
+   "categoria": "direitos",
+   "areas": [
+    "area:direitos"
+   ],
+   "especificos": [
+    "sec:direitos/secao-3"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q115",
+   "conjunto": "desenvolvimento",
+   "texto": "inss meu beneficio foi negado",
+   "categoria": "direitos",
+   "areas": [
+    "area:direitos"
+   ],
+   "especificos": [
+    "sec:direitos/secao-3"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q116",
+   "conjunto": "teste",
+   "texto": "fui demitida gravida tenho direito",
+   "categoria": "direitos",
+   "areas": [
+    "area:direitos",
+    "area:trabalho"
+   ],
+   "especificos": [
+    "svc:mulher/defensoria",
+    "sec:direitos/secao-1"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q117",
+   "conjunto": "teste",
+   "texto": "meu patrao nao assinou minha carteira",
+   "categoria": "direitos",
+   "areas": [
+    "area:direitos",
+    "area:trabalho"
+   ],
+   "especificos": [
+    "svc:mulher/defensoria",
+    "svc:emprego_curso/pat"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q118",
+   "conjunto": "desenvolvimento",
+   "texto": "preciso tirar documentos mas nao tenho certidao",
+   "categoria": "direitos",
+   "areas": [
+    "area:direitos",
+    "area:assistencia"
+   ],
+   "especificos": [
+    "svc:assistencia/cras",
+    "svc:mulher/defensoria"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q119",
+   "conjunto": "desenvolvimento",
+   "texto": "minha conta de luz ta muito alta",
+   "categoria": "moradia",
+   "areas": [
+    "area:moradia"
+   ],
+   "especificos": [
+    "sec:moradia/secao-2"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q120",
+   "conjunto": "teste",
+   "texto": "tarifa social de energia como pedir",
+   "categoria": "moradia",
+   "areas": [
+    "area:moradia"
+   ],
+   "especificos": [
+    "sec:moradia/secao-2"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q121",
+   "conjunto": "teste",
+   "texto": "conta de agua muito cara tem desconto",
+   "categoria": "moradia",
+   "areas": [
+    "area:moradia"
+   ],
+   "especificos": [
+    "sec:moradia/secao-1"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q122",
+   "conjunto": "desenvolvimento",
+   "texto": "daae tarifa social",
+   "categoria": "moradia",
+   "areas": [
+    "area:moradia"
+   ],
+   "especificos": [
+    "sec:moradia/secao-1"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q123",
+   "conjunto": "teste",
+   "texto": "nao consigo pagar o aluguel",
+   "categoria": "moradia",
+   "areas": [
+    "area:moradia",
+    "area:assistencia"
+   ],
+   "especificos": [
+    "sec:moradia/secao-3",
+    "svc:assistencia/cras"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q124",
+   "conjunto": "desenvolvimento",
+   "texto": "quero me inscrever pra casa propria",
+   "categoria": "moradia",
+   "areas": [
+    "area:moradia"
+   ],
+   "especificos": [
+    "sec:moradia/secao-3"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q125",
+   "conjunto": "teste",
+   "texto": "fui despejada e nao tenho onde morar",
+   "categoria": "moradia",
+   "areas": [
+    "area:moradia",
+    "area:assistencia"
+   ],
+   "especificos": [
+    "svc:assistencia/cras",
+    "svc:assistencia/creas",
+    "sec:moradia/secao-3"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q126",
+   "conjunto": "teste",
+   "texto": "cortaram minha luz",
+   "categoria": "moradia",
+   "areas": [
+    "area:moradia"
+   ],
+   "especificos": [
+    "sec:moradia/secao-2"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q127",
+   "conjunto": "desenvolvimento",
+   "texto": "cadastro habitacional como faco",
+   "categoria": "moradia",
+   "areas": [
+    "area:moradia"
+   ],
+   "especificos": [
+    "sec:moradia/secao-3"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q128",
+   "conjunto": "desenvolvimento",
+   "texto": "minha casa ta com risco de cair",
+   "categoria": "moradia",
+   "areas": [
+    "area:moradia"
+   ],
+   "especificos": [
+    "sec:moradia/secao-3",
+    "svc:assistencia/cras"
+   ],
+   "perigo": true,
+   "fora_de_escopo": false,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q129",
+   "conjunto": "desenvolvimento",
+   "texto": "moro de favor e preciso de um lugar",
+   "categoria": "moradia",
+   "areas": [
+    "area:moradia",
+    "area:assistencia"
+   ],
+   "especificos": [
+    "sec:moradia/secao-3",
+    "svc:assistencia/cras"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q130",
+   "conjunto": "teste",
+   "texto": "elektro espaço de atendimento",
+   "categoria": "moradia",
+   "areas": [
+    "area:moradia"
+   ],
+   "especificos": [
+    "sec:moradia/secao-2"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q131",
+   "conjunto": "desenvolvimento",
+   "texto": "estou sem comida em casa",
+   "categoria": "assistencia",
+   "areas": [
+    "area:assistencia"
+   ],
+   "especificos": [
+    "svc:assistencia/cras",
+    "sec:assistencia/secao-1"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q132",
+   "conjunto": "teste",
+   "texto": "onde consigo cesta basica",
+   "categoria": "assistencia",
+   "areas": [
+    "area:assistencia"
+   ],
+   "especificos": [
+    "svc:assistencia/cras",
+    "sec:assistencia/secao-1"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q133",
+   "conjunto": "teste",
+   "texto": "como receber bolsa familia",
+   "categoria": "assistencia",
+   "areas": [
+    "area:assistencia"
+   ],
+   "especificos": [
+    "svc:assistencia/cras",
+    "sec:assistencia/secao-1"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q134",
+   "conjunto": "desenvolvimento",
+   "texto": "qual cras atende o jardim brasilia",
+   "categoria": "assistencia",
+   "areas": [
+    "area:assistencia"
+   ],
+   "especificos": [
+    "svc:assistencia/cras",
+    "sec:assistencia/busca-bairro"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q135",
+   "conjunto": "teste",
+   "texto": "cras do mae preta endereço",
+   "categoria": "assistencia",
+   "areas": [
+    "area:assistencia"
+   ],
+   "especificos": [
+    "svc:assistencia/cras"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q136",
+   "conjunto": "desenvolvimento",
+   "texto": "preciso de ajuda financeira nao tenho renda nenhuma",
+   "categoria": "assistencia",
+   "areas": [
+    "area:assistencia"
+   ],
+   "especificos": [
+    "svc:assistencia/cras",
+    "sec:assistencia/secao-1"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q137",
+   "conjunto": "teste",
+   "texto": "meu filho precisa de atividades no contraturno",
+   "categoria": "assistencia",
+   "areas": [
+    "area:assistencia",
+    "area:educacao"
+   ],
+   "especificos": [
+    "svc:assistencia/scfv",
+    "sec:assistencia/secao-3"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q138",
+   "conjunto": "teste",
+   "texto": "tem lugar pra idoso ficar durante o dia",
+   "categoria": "assistencia",
+   "areas": [
+    "area:assistencia"
+   ],
+   "especificos": [
+    "svc:assistencia/scfv",
+    "sec:assistencia/secao-3",
+    "svc:assistencia/cras"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q139",
+   "conjunto": "desenvolvimento",
+   "texto": "meu filho tem deficiencia onde procuro apoio",
+   "categoria": "assistencia",
+   "areas": [
+    "area:assistencia",
+    "area:saude"
+   ],
+   "especificos": [
+    "svc:assistencia/apae",
+    "svc:assistencia/cras",
+    "svc:saude/cei"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q140",
+   "conjunto": "teste",
+   "texto": "conselho tutelar telefone",
+   "categoria": "assistencia",
+   "areas": [
+    "area:assistencia"
+   ],
+   "especificos": [
+    "svc:assistencia/conselho_tutelar"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q141",
+   "conjunto": "desenvolvimento",
+   "texto": "quero denunciar maus tratos com crianca",
+   "categoria": "assistencia",
+   "areas": [
+    "area:assistencia"
+   ],
+   "especificos": [
+    "svc:assistencia/conselho_tutelar",
+    "svc:assistencia/creas",
+    "sec:assistencia/secao-2"
+   ],
+   "perigo": true,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q142",
+   "conjunto": "teste",
+   "texto": "crianca trabalhando na rua pedindo dinheiro",
+   "categoria": "assistencia",
+   "areas": [
+    "area:assistencia"
+   ],
+   "especificos": [
+    "svc:assistencia/conselho_tutelar",
+    "svc:assistencia/creas"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q143",
+   "conjunto": "teste",
+   "texto": "creas o que faz",
+   "categoria": "assistencia",
+   "areas": [
+    "area:assistencia"
+   ],
+   "especificos": [
+    "svc:assistencia/creas"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q144",
+   "conjunto": "desenvolvimento",
+   "texto": "beneficio pra pessoa com deficiencia como pedir",
+   "categoria": "assistencia",
+   "areas": [
+    "area:assistencia"
+   ],
+   "especificos": [
+    "svc:assistencia/cras",
+    "sec:assistencia/secao-1"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q145",
+   "conjunto": "teste",
+   "texto": "estou passando fome com meus filhos",
+   "categoria": "assistencia",
+   "areas": [
+    "area:assistencia"
+   ],
+   "especificos": [
+    "svc:assistencia/cras",
+    "sec:assistencia/secao-1"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q146",
+   "conjunto": "desenvolvimento",
+   "texto": "abrigo pra mim e meus filhos",
+   "categoria": "assistencia",
+   "areas": [
+    "area:assistencia",
+    "area:direitos"
+   ],
+   "especificos": [
+    "svc:assistencia/creas",
+    "svc:mulher/cram",
+    "svc:assistencia/acolhimento"
+   ],
+   "perigo": true,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q147",
+   "conjunto": "teste",
+   "texto": "moro na rua e preciso de ajuda",
+   "categoria": "assistencia",
+   "areas": [
+    "area:assistencia"
+   ],
+   "especificos": [
+    "svc:assistencia/creas",
+    "svc:assistencia/cras"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q148",
+   "conjunto": "teste",
+   "texto": "secretaria de desenvolvimento social telefone",
+   "categoria": "assistencia",
+   "areas": [
+    "area:assistencia"
+   ],
+   "especificos": [
+    "svc:assistencia/sede"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q149",
+   "conjunto": "desenvolvimento",
+   "texto": "jovem de 19 anos saindo do acolhimento tem apoio",
+   "categoria": "assistencia",
+   "areas": [
+    "area:assistencia"
+   ],
+   "especificos": [
+    "svc:assistencia/acolhimento"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q150",
+   "conjunto": "teste",
+   "texto": "cadunico como fazer",
+   "categoria": "assistencia",
+   "areas": [
+    "area:assistencia"
+   ],
+   "especificos": [
+    "svc:assistencia/cras",
+    "sec:assistencia/secao-1"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q151",
+   "conjunto": "desenvolvimento",
+   "texto": "horario do onibus bela vista",
+   "categoria": "transporte",
+   "areas": [
+    "area:transporte"
+   ],
+   "especificos": [
+    "sec:transporte/transporte"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q152",
+   "conjunto": "teste",
+   "texto": "que horas passa o circular",
+   "categoria": "transporte",
+   "areas": [
+    "area:transporte"
+   ],
+   "especificos": [
+    "sec:transporte/transporte"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q153",
+   "conjunto": "teste",
+   "texto": "onibus do cervezao pro centro",
+   "categoria": "transporte",
+   "areas": [
+    "area:transporte"
+   ],
+   "especificos": [
+    "sec:transporte/transporte"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q154",
+   "conjunto": "desenvolvimento",
+   "texto": "linha paineiras horario domingo",
+   "categoria": "transporte",
+   "areas": [
+    "area:transporte"
+   ],
+   "especificos": [
+    "sec:transporte/transporte"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q155",
+   "conjunto": "teste",
+   "texto": "tem onibus pra ir no pat",
+   "categoria": "transporte",
+   "areas": [
+    "area:transporte"
+   ],
+   "especificos": [
+    "sec:transporte/transporte"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q156",
+   "conjunto": "desenvolvimento",
+   "texto": "sou transporte pelo aplicativo",
+   "categoria": "transporte",
+   "areas": [
+    "area:transporte"
+   ],
+   "especificos": [
+    "sec:transporte/transporte"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q157",
+   "conjunto": "teste",
+   "texto": "onibus mae preta arco iris horario",
+   "categoria": "transporte",
+   "areas": [
+    "area:transporte"
+   ],
+   "especificos": [
+    "sec:transporte/transporte"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q158",
+   "conjunto": "desenvolvimento",
+   "texto": "quero oferecer meus servicos de manicure",
+   "categoria": "entre",
+   "areas": [
+    "area:entre-mulheres"
+   ],
+   "especificos": [
+    "sec:entre-mulheres/entre-mulheres"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q159",
+   "conjunto": "teste",
+   "texto": "procuro motorista mulher pra levar meu filho",
+   "categoria": "entre",
+   "areas": [
+    "area:entre-mulheres"
+   ],
+   "especificos": [
+    "sec:entre-mulheres/entre-mulheres"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q160",
+   "conjunto": "teste",
+   "texto": "tem psicologa mulher que atenda por aqui",
+   "categoria": "entre",
+   "areas": [
+    "area:entre-mulheres",
+    "area:saude"
+   ],
+   "especificos": [
+    "sec:entre-mulheres/entre-mulheres",
+    "svc:saude/caps"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q161",
+   "conjunto": "desenvolvimento",
+   "texto": "academia so pra mulheres",
+   "categoria": "entre",
+   "areas": [
+    "area:entre-mulheres"
+   ],
+   "especificos": [
+    "sec:entre-mulheres/entre-mulheres"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q162",
+   "conjunto": "desenvolvimento",
+   "texto": "estou desempregada com dois filhos e nao consigo pagar o aluguel",
+   "categoria": "multi",
+   "areas": [
+    "area:trabalho",
+    "area:educacao",
+    "area:moradia",
+    "area:assistencia"
+   ],
+   "especificos": [
+    "svc:emprego_curso/pat",
+    "svc:assistencia/cras",
+    "sec:moradia/secao-3",
+    "sec:educacao/educacao-filhos"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q163",
+   "conjunto": "teste",
+   "texto": "meu marido me bate e eu quero sair de casa com meus filhos",
+   "categoria": "multi",
+   "areas": [
+    "area:direitos",
+    "area:assistencia",
+    "area:educacao"
+   ],
+   "especificos": [
+    "svc:mulher/ddm",
+    "svc:mulher/cram",
+    "svc:assistencia/creas"
+   ],
+   "perigo": true,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q164",
+   "conjunto": "teste",
+   "texto": "preciso trabalhar mas nao tenho com quem deixar o bebe",
+   "categoria": "multi",
+   "areas": [
+    "area:trabalho",
+    "area:educacao"
+   ],
+   "especificos": [
+    "sec:educacao/educacao-filhos",
+    "svc:creche/secretaria",
+    "svc:emprego_curso/pat"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q165",
+   "conjunto": "desenvolvimento",
+   "texto": "perdi o emprego, estou sem comida e devendo a conta de luz",
+   "categoria": "multi",
+   "areas": [
+    "area:trabalho",
+    "area:assistencia",
+    "area:moradia"
+   ],
+   "especificos": [
+    "svc:assistencia/cras",
+    "svc:emprego_curso/pat",
+    "sec:moradia/secao-2"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q166",
+   "conjunto": "teste",
+   "texto": "meu filho usa drogas e eu perdi o emprego por causa disso",
+   "categoria": "multi",
+   "areas": [
+    "area:saude",
+    "area:trabalho"
+   ],
+   "especificos": [
+    "sec:saude/saude-familia-drogas",
+    "svc:emprego_curso/pat"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q167",
+   "conjunto": "desenvolvimento",
+   "texto": "estou gravida, sem emprego e sem casa",
+   "categoria": "multi",
+   "areas": [
+    "area:saude",
+    "area:trabalho",
+    "area:moradia",
+    "area:assistencia"
+   ],
+   "especificos": [
+    "svc:saude/ubs",
+    "svc:assistencia/cras",
+    "svc:emprego_curso/pat"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q168",
+   "conjunto": "teste",
+   "texto": "quero voltar a estudar mas tenho filhos pequenos",
+   "categoria": "multi",
+   "areas": [
+    "area:educacao"
+   ],
+   "especificos": [
+    "sec:educacao/educacao-voce",
+    "svc:emprego_curso/eja",
+    "sec:educacao/educacao-filhos"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q169",
+   "conjunto": "teste",
+   "texto": "sofro violencia e dependo do dinheiro dele",
+   "categoria": "multi",
+   "areas": [
+    "area:direitos",
+    "area:trabalho",
+    "area:assistencia"
+   ],
+   "especificos": [
+    "svc:mulher/cram",
+    "svc:mulher/ddm",
+    "svc:assistencia/cras"
+   ],
+   "perigo": true,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q170",
+   "conjunto": "desenvolvimento",
+   "texto": "sou mae solo e preciso de tudo, creche, emprego e ajuda",
+   "categoria": "multi",
+   "areas": [
+    "area:educacao",
+    "area:trabalho",
+    "area:assistencia"
+   ],
+   "especificos": [
+    "sec:educacao/educacao-filhos",
+    "svc:emprego_curso/pat",
+    "svc:assistencia/cras"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q171",
+   "conjunto": "teste",
+   "texto": "meu marido bebe, bate nas criancas e nao tenho pra onde ir",
+   "categoria": "multi",
+   "areas": [
+    "area:saude",
+    "area:direitos",
+    "area:assistencia"
+   ],
+   "especificos": [
+    "svc:mulher/ddm",
+    "svc:assistencia/conselho_tutelar",
+    "sec:saude/saude-familia-drogas",
+    "svc:assistencia/creas"
+   ],
+   "perigo": true,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q172",
+   "conjunto": "desenvolvimento",
+   "texto": "minha mae idosa precisa de cuidados e eu nao posso trabalhar",
+   "categoria": "multi",
+   "areas": [
+    "area:assistencia",
+    "area:saude",
+    "area:trabalho"
+   ],
+   "especificos": [
+    "svc:assistencia/cras",
+    "svc:assistencia/scfv"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q173",
+   "conjunto": "teste",
+   "texto": "desempregada, deprimida e sem dinheiro pra remedio",
+   "categoria": "multi",
+   "areas": [
+    "area:saude",
+    "area:trabalho",
+    "area:assistencia"
+   ],
+   "especificos": [
+    "svc:saude/caps",
+    "svc:saude/farmacia",
+    "svc:assistencia/cras"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q174",
+   "conjunto": "desenvolvimento",
+   "texto": "ubs no jardim brasilia",
+   "categoria": "local",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "svc:saude/ubs",
+    "sec:saude/saude-unidades"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q175",
+   "conjunto": "teste",
+   "texto": "posto de saude perto do cvz",
+   "categoria": "local",
+   "areas": [
+    "area:saude"
+   ],
+   "especificos": [
+    "svc:saude/ubs",
+    "sec:saude/saude-unidades"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q176",
+   "conjunto": "teste",
+   "texto": "cras do bom sucesso",
+   "categoria": "local",
+   "areas": [
+    "area:assistencia"
+   ],
+   "especificos": [
+    "svc:assistencia/cras"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q177",
+   "conjunto": "desenvolvimento",
+   "texto": "creche no jardim paulista",
+   "categoria": "local",
+   "areas": [
+    "area:educacao"
+   ],
+   "especificos": [
+    "sec:educacao/educacao-escolas",
+    "svc:creche/escola_municipal",
+    "sec:educacao/educacao-filhos"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q178",
+   "conjunto": "teste",
+   "texto": "moro no cervezao qual cras eu vou",
+   "categoria": "local",
+   "areas": [
+    "area:assistencia"
+   ],
+   "especificos": [
+    "svc:assistencia/cras",
+    "sec:assistencia/busca-bairro"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q179",
+   "conjunto": "desenvolvimento",
+   "texto": "escola perto de mim meu cep é 13500030",
+   "categoria": "local",
+   "areas": [
+    "area:educacao"
+   ],
+   "especificos": [
+    "sec:educacao/educacao-escolas",
+    "svc:creche/escola_municipal",
+    "sec:educacao/busca-por-cep"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q180",
+   "conjunto": "teste",
+   "texto": "o que tem perto da minha casa",
+   "categoria": "local",
+   "areas": [],
+   "especificos": [
+    "area:mapa"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q181",
+   "conjunto": "teste",
+   "texto": "qual meu bairro pelo cep 13506095",
+   "categoria": "local",
+   "areas": [],
+   "especificos": [
+    "area:mapa"
+   ],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q182",
+   "conjunto": "desenvolvimento",
+   "texto": "qual a previsao do tempo amanha",
+   "categoria": "fora",
+   "areas": [],
+   "especificos": [],
+   "perigo": false,
+   "fora_de_escopo": true,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q183",
+   "conjunto": "teste",
+   "texto": "quem ganhou o jogo ontem",
+   "categoria": "fora",
+   "areas": [],
+   "especificos": [],
+   "perigo": false,
+   "fora_de_escopo": true,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q184",
+   "conjunto": "teste",
+   "texto": "me da uma receita de bolo",
+   "categoria": "fora",
+   "areas": [],
+   "especificos": [],
+   "perigo": false,
+   "fora_de_escopo": true,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q185",
+   "conjunto": "desenvolvimento",
+   "texto": "como investir em bitcoin",
+   "categoria": "fora",
+   "areas": [],
+   "especificos": [],
+   "perigo": false,
+   "fora_de_escopo": true,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q186",
+   "conjunto": "teste",
+   "texto": "quero comprar um carro usado",
+   "categoria": "fora",
+   "areas": [],
+   "especificos": [],
+   "perigo": false,
+   "fora_de_escopo": true,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q187",
+   "conjunto": "desenvolvimento",
+   "texto": "qual o melhor celular",
+   "categoria": "fora",
+   "areas": [],
+   "especificos": [],
+   "perigo": false,
+   "fora_de_escopo": true,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q188",
+   "conjunto": "teste",
+   "texto": "me conta uma piada",
+   "categoria": "fora",
+   "areas": [],
+   "especificos": [],
+   "perigo": false,
+   "fora_de_escopo": true,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q189",
+   "conjunto": "teste",
+   "texto": "quem é o presidente",
+   "categoria": "fora",
+   "areas": [],
+   "especificos": [],
+   "perigo": false,
+   "fora_de_escopo": true,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q190",
+   "conjunto": "desenvolvimento",
+   "texto": "como fazer um site",
+   "categoria": "fora",
+   "areas": [],
+   "especificos": [],
+   "perigo": false,
+   "fora_de_escopo": true,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q191",
+   "conjunto": "teste",
+   "texto": "tradutor de ingles pra portugues",
+   "categoria": "fora",
+   "areas": [],
+   "especificos": [],
+   "perigo": false,
+   "fora_de_escopo": true,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q192",
+   "conjunto": "desenvolvimento",
+   "texto": "preciso da senha do wifi",
+   "categoria": "fora",
+   "areas": [],
+   "especificos": [],
+   "perigo": false,
+   "fora_de_escopo": true,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q193",
+   "conjunto": "teste",
+   "texto": "qual a capital da frança",
+   "categoria": "fora",
+   "areas": [],
+   "especificos": [],
+   "perigo": false,
+   "fora_de_escopo": true,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q194",
+   "conjunto": "teste",
+   "texto": "horoscopo de hoje",
+   "categoria": "fora",
+   "areas": [],
+   "especificos": [],
+   "perigo": false,
+   "fora_de_escopo": true,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q195",
+   "conjunto": "desenvolvimento",
+   "texto": "onde assistir filme online",
+   "categoria": "fora",
+   "areas": [],
+   "especificos": [],
+   "perigo": false,
+   "fora_de_escopo": true,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q196",
+   "conjunto": "teste",
+   "texto": "como emagrecer rapido",
+   "categoria": "fora",
+   "areas": [],
+   "especificos": [],
+   "perigo": false,
+   "fora_de_escopo": true,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q197",
+   "conjunto": "desenvolvimento",
+   "texto": "pizzaria que entrega em rio claro",
+   "categoria": "fora",
+   "areas": [],
+   "especificos": [],
+   "perigo": false,
+   "fora_de_escopo": true,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q198",
+   "conjunto": "teste",
+   "texto": "quanto custa uma passagem pra sao paulo",
+   "categoria": "fora",
+   "areas": [],
+   "especificos": [],
+   "perigo": false,
+   "fora_de_escopo": true,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q199",
+   "conjunto": "teste",
+   "texto": "resultado da mega sena",
+   "categoria": "fora",
+   "areas": [],
+   "especificos": [],
+   "perigo": false,
+   "fora_de_escopo": true,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q200",
+   "conjunto": "desenvolvimento",
+   "texto": "me ajuda com meu trabalho de matematica",
+   "categoria": "fora",
+   "areas": [],
+   "especificos": [],
+   "perigo": false,
+   "fora_de_escopo": true,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q201",
+   "conjunto": "teste",
+   "texto": "asdfgh qwerty",
+   "categoria": "fora",
+   "areas": [],
+   "especificos": [],
+   "perigo": false,
+   "fora_de_escopo": true,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q202",
+   "conjunto": "desenvolvimento",
+   "texto": "kkkkkkk",
+   "categoria": "fora",
+   "areas": [],
+   "especificos": [],
+   "perigo": false,
+   "fora_de_escopo": true,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q203",
+   "conjunto": "teste",
+   "texto": "?????",
+   "categoria": "fora",
+   "areas": [],
+   "especificos": [],
+   "perigo": false,
+   "fora_de_escopo": true,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q204",
+   "conjunto": "teste",
+   "texto": "blablabla",
+   "categoria": "fora",
+   "areas": [],
+   "especificos": [],
+   "perigo": false,
+   "fora_de_escopo": true,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q205",
+   "conjunto": "desenvolvimento",
+   "texto": "vendo moto barata",
+   "categoria": "fora",
+   "areas": [],
+   "especificos": [],
+   "perigo": false,
+   "fora_de_escopo": true,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q206",
+   "conjunto": "teste",
+   "texto": "musica pra dormir",
+   "categoria": "fora",
+   "areas": [],
+   "especificos": [],
+   "perigo": false,
+   "fora_de_escopo": true,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q207",
+   "conjunto": "desenvolvimento",
+   "texto": "oi",
+   "categoria": "saudacao",
+   "areas": [],
+   "especificos": [],
+   "perigo": false,
+   "fora_de_escopo": true,
+   "visto_no_treino": false
+  },
+  {
+   "id": "q208",
+   "conjunto": "teste",
+   "texto": "bom dia",
+   "categoria": "saudacao",
+   "areas": [],
+   "especificos": [],
+   "perigo": false,
+   "fora_de_escopo": true,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q209",
+   "conjunto": "teste",
+   "texto": "obrigada",
+   "categoria": "saudacao",
+   "areas": [],
+   "especificos": [],
+   "perigo": false,
+   "fora_de_escopo": true,
+   "visto_no_treino": true
+  },
+  {
+   "id": "q210",
+   "conjunto": "desenvolvimento",
+   "texto": "ola, preciso de ajuda",
+   "categoria": "saudacao_ajuda",
+   "areas": [],
+   "especificos": [],
+   "perigo": false,
+   "fora_de_escopo": false,
+   "visto_no_treino": false
+  }
+ ]
+}
