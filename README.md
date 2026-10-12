@@ -77,6 +77,8 @@ O site é **estático** (HTML, CSS e JavaScript puros, sem framework, sem servid
 | **Dados (não são programa)** | — | `web/dados/*.json` e `.geojson` (gerados), `catalogo/*.csv` e `*.txt` (digitados à mão) | O catálogo verificado, os horários, o modelo e os mapas. Para mudar um serviço, edite `catalogo/servicos_manuais.csv` e rode `python pipeline/servicos.py --somente-manual`. |
 | **Markdown** | 22 | `README.md` e `docs/` | Documentação, decisões e fontes. |
 
+**Regra do projeto (decisão do mantenedor, 12/10/2026): Python por padrão; JavaScript só onde for realmente necessário.** JavaScript fica apenas no navegador, onde a pessoa interage e o que ela escreve não pode sair do aparelho (assistente, dúvida, CEP, mapa, questionário, jornadas). Tratamento de dados, contas que podem ser feitas antes, validações e geração de arquivos ficam em Python (`pipeline/`). Conteúdo é dado, não código. Plano de redução em `docs/registro_decisoes_desenvolvimento.md`.
+
 Observações: o `web/vendor/` (Leaflet) é uma biblioteca de terceiros, usada localmente, sem pedir nada à internet.
 
 ## Estado dos dados
