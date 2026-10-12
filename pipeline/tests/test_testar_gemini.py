@@ -62,3 +62,14 @@ def test_modelo_inexistente_lista_os_disponiveis(monkeypatch, capsys):
     assert tg.main([]) == 1
     saida = capsys.readouterr().out
     assert "HTTP 404" in saida and "gemini-a" in saida and "embed" not in saida
+
+
+def test_erro_503_explica_que_a_chave_esta_certa(monkeypatch, capsys):
+    monkeypatch.setenv("GEMINI_API_KEY", "x")
+    erro = urllib.error.HTTPError("u", 503, "x", {}, io.BytesIO(b"{}"))
+
+    def falso(url, chave, corpo=None):
+        raise erro
+    monkeypatch.setattr(tg, "_pedir", falso)
+    assert tg.main([]) == 1
+    assert "chave está certa" in capsys.readouterr().out
