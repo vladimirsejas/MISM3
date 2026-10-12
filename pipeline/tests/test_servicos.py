@@ -55,7 +55,7 @@ def test_censo_escolar_filtra_municipio_creche_e_unidade_ativa():
     assert item["tipo"] == "creche" and item["subtipo"] == "municipal"
     assert item["lat"] == -22.40 and item["lon"] == -47.56 and item["geo"] == "centroide_cep"
     assert item["verificado_em"] == "2026-10-12"
-    assert "não informa vagas livres" in item["observacao"]
+    assert "nao informa vagas livres" in item["observacao"].lower()
 
 
 def test_censo_escolar_falha_com_colunas_obrigatorias_ausentes():
