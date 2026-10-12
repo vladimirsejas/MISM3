@@ -934,3 +934,11 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - **Achados que não escondemos:** (1) na primeira rodada do teste a segurança acertou 10/12; faltavam violência contra terceiros e agressor que bate em criança; as regras foram corrigidas e o teste deixou de ser independente para essa camada; (2) o classificador de intenção e o contexto de área não melhoram a métrica; (3) a abstenção (69%) é pior que a do assistente anterior (85%). Detalhes em `docs/ia/avaliacao_orientacao.md`.
 - **Corrigido pelos testes:** "tomou veneno" não acionava o alerta de saúde; fixados de urgência passaram a ser as UPAs (antes podia aparecer o pronto atendimento de ginecologia para ideação suicida).
 - **API de LLM:** ainda não usada no site; `pipeline/testar_api.py` verifica a chave (lida da variável de ambiente, nunca gravada).
+
+
+### Ajustes incrementais de reconhecimento e proteção — 12/10/2026
+- A busca por necessidades passou a reconhecer mais variações de matrícula infantil (CMEI, EMEI, EMEF, pré-escola, berçário e lista de espera), pedidos de auxílio-aluguel/casa própria/situação de rua e expressões ligadas a vacinação infantil atrasada.
+- O classificador deixou de tratar a expressão isolada “escola de samba” como educação formal. A exceção remove somente essa expressão antes de aplicar as regras; outras necessidades presentes na frase continuam podendo ser reconhecidas.
+- A camada local de segurança passou a reconhecer alguns sinais explícitos de controle coercitivo sobre dinheiro, conta bancária, celular, mensagens, roupas, documentos e com quem a pessoa fala. Isso é uma regra de orientação, não uma avaliação de risco individual.
+- Foram adicionados testes sintéticos positivos e negativos em `web/tests/necessidades.test.js` e `web/tests/perigo.test.js`.
+- **Validação pendente:** o GitHub Actions precisa concluir a suíte completa após os últimos commits. Nenhum teste é declarado aprovado neste registro; a interface também não foi validada visualmente nesta rodada.
