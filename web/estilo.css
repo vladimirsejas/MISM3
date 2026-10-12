@@ -30,7 +30,7 @@ h1[tabindex="-1"]:focus{outline:none}
 .topo{background:#fffaf7;border-bottom:1px solid var(--bor);position:sticky;top:0;z-index:20}
 .topo-in{display:flex;align-items:center;gap:.6rem;min-height:60px;flex-wrap:wrap;padding-top:.45rem;padding-bottom:.45rem}
 .marca{display:inline-flex;align-items:center;gap:.55rem;font-family:var(--serif);font-weight:700;font-size:1.2rem;color:var(--pri-esc);text-decoration:none;margin-right:auto}
-.marca-brasao{width:48px;height:auto;border-radius:8px;flex:none}
+.marca-brasao{width:48px;height:auto;flex:none}
 .marca-local{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:.74rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);align-self:flex-end;padding-bottom:.18rem}
 .navegacao{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;min-width:0}
 .btn-nav{display:inline-flex;align-items:center;gap:.35rem;min-height:44px;padding:.45rem .95rem;border-radius:999px;
@@ -254,7 +254,7 @@ a.tel-grande{display:inline-block;font-weight:800;font-size:1.2rem;color:var(--a
 /* Rodapé: brasão estilizado e aviso de projeto acadêmico (não oficial) */
 .rodape-sobre{display:flex;gap:1rem;align-items:center;margin-bottom:1rem}
 .rodape-sobre p{margin:.3rem 0}
-.brasao{flex:none;width:128px;height:auto;border-radius:14px;border:1px solid var(--bor)}
+.brasao{flex:none;width:128px;height:auto}
 @media(max-width:480px){.rodape-sobre{flex-direction:column;align-items:flex-start}}
 
 /* ---------- horários de ônibus ---------- */
