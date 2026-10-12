@@ -39,6 +39,7 @@
       forte: [
         "(?:me|nos) (?:bateu|bate|batem|bateram|batendo|agrediu|agride|agrediram|espancou|espanca|empurrou|empurra|chutou|chuta|enforcou|sufocou|esfaqueou|ameacou|ameaca|ameacando|persegue|perseguiu|perseguindo|humilha|humilhou|xingou|xinga|trancou|tranca|proibe|vigia|controla|mordeu|queimou|jogou)",
         PESSOA + " me (?:bate|bateu|ameaca|ameacou|agride|agrediu|persegue|humilha|humilhou|abusa|abusou|empurrou|chutou|enforcou)",
+        PESSOA + " (?:controla|controlou|controlando|vigia|vigiando) (?:todo o |toda a |meu |minha |meus |minhas )?(?:dinheiro|conta bancaria|celular|telefone|mensagens|com quem eu falo|roupas|documentos)",
         PESSOA + " (?:bate|bateu|agride|agrediu|empurrou|chutou|enforcou|ameaca|ameacou|abusa|abusou) (?:em|n[ao]s?|d[ao]s?) (?:mim|nos|gente|minha|meu|meus|minhas|nossos|nossas|filha|filho|criancas)",
         PESSOA + " (?:vai|quer|disse que vai) (?:me )?(?:matar|bater)",
         "(?:estou|to|ta|tou|esta|vivo|vivendo|continuo) (?:apanhando|sendo agredida|sendo ameacada|sofrendo violencia|sendo perseguida)", "apanh(?:o|ando|ei|ou)\\b",
