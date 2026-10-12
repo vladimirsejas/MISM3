@@ -8,13 +8,13 @@ As perguntas são sintéticas, escritas pela equipe. Não são relatos de usuár
 
 ## Resultado da execução no GitHub Actions
 
-Na primeira execução do conjunto de 22 consultas, antes de corrigir um rótulo de referência inadequado para atendimento psicológico:
+Na execução após corrigir o gabarito de atendimento psicológico para aceitar a âncora real `saude-unidades`, o GitHub Actions registrou:
 
-- Acerto@3: **14/18 (77,8%)**.
+- Acerto@3: **15/18 (83,3%)**.
 - Abstenção correta em consultas sem alvo: **4/4 (100%)**.
 - Respostas fora de escopo: **0**.
 
-O gabarito de “preciso de atendimento psicológico” foi então corrigido para aceitar a âncora real `saude-unidades`, que aparece entre os resultados do módulo. A execução seguinte deve ser consultada no GitHub Actions para registrar o número final.
+O resultado corresponde a 22 consultas sintéticas (18 com alvo e 4 sem alvo), não a uma amostra de uso real.
 
 ## Erros observados na primeira execução
 
