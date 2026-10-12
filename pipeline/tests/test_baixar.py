@@ -81,5 +81,5 @@ def test_extrai_so_o_csv_de_escolas(tmp_path):
         zf.writestr("dados/microdados_ed_basica_2025.csv", "CO_MUNICIPIO;NO_ENTIDADE\n1;X\n")
         zf.writestr("dicionario.xlsx", "lixo")
     out = modulo_baixar.extrair_escolas(z, tmp_path / "saida")
-    assert out.name == "microdados_ed_basica_2025.csv" and out.read_text().startswith("CO_MUNICIPIO")
+    assert out.name == "microdados_ed_basica_2025.csv" and out.read_text(encoding="utf-8").startswith("CO_MUNICIPIO")
     assert not (tmp_path / "saida" / "dicionario.xlsx").exists()
