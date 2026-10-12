@@ -143,6 +143,7 @@ Não existe: modelo de linguagem, embeddings neurais, previsão de risco, elegib
 | `inspecionar_arquivo.py` | Arquivos baixados | Estrutura (nunca os registros) | openpyxl |
 | `preparar_versionamento.py` | Arquivos novos | `git add` seguro (tamanho, CPF, dado bruto) | stdlib |
 | `testar_api.py` | `ANTHROPIC_API_KEY` | Resultado de uma chamada mínima | stdlib |
+| `testar_gemini.py` | `GEMINI_API_KEY` (ambiente ou `.env`) | Resultado de uma chamada mínima; `--modelos` lista os modelos da chave | stdlib |
 
 ## Como executar
 
