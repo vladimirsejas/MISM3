@@ -49,14 +49,14 @@
     if (!v.ok) return null;
     var x = v.dados;
     return [
-      "CADASTRO — ENTRE MULHERES (Mulher em Rede, Rio Claro)",
+      "CADASTRO — ENTRE MULHERES (Mulher Resolve, Rio Claro)",
       "Categoria: " + categoria.titulo,
       "Nome ou nome do negócio: " + x.nome,
       "O que ofereço: " + x.descricao,
       "Bairro ou região que atendo: " + x.atende,
       "Contato que autorizo divulgar: " + x.contato,
       "",
-      "Declaro que sou mulher e AUTORIZO a publicação dos dados acima, e somente deles, no site Mulher em Rede (estudo acadêmico, sem fins lucrativos). " +
+      "Declaro que sou mulher e AUTORIZO a publicação dos dados acima, e somente deles, no site Mulher Resolve (estudo acadêmico, sem fins lucrativos). " +
         "Sei que o site não intermedeia pagamento nem conversa, que o contato é direto comigo e que posso pedir a retirada a qualquer momento.",
       "Data do consentimento: " + dataBr(dataISO)
     ].join("\n");

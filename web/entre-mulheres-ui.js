@@ -37,7 +37,7 @@
       campo(p + "contato", "Um contato que você escolhe divulgar", "texto", "Telefone, WhatsApp ou rede social", EM.LIMITES.contato[1]) +
       '<p class="meta">Não coloque CPF, RG nem endereço completo. Use um contato que você aceita tornar público.</p>' +
       '<label class="marca-check"><input type="checkbox" name="mulher"> <span>Eu sou mulher.</span></label><p class="erro-campo" id="e-' + p + 'mulher" role="alert"></p>' +
-      '<label class="marca-check"><input type="checkbox" name="consentimento"> <span>Eu autorizo a publicação desses dados, e só deles, no site Mulher em Rede. Sei que posso pedir a retirada a qualquer momento.</span></label><p class="erro-campo" id="e-' + p + 'consentimento" role="alert"></p>' +
+      '<label class="marca-check"><input type="checkbox" name="consentimento"> <span>Eu autorizo a publicação desses dados, e só deles, no site Mulher Resolve. Sei que posso pedir a retirada a qualquer momento.</span></label><p class="erro-campo" id="e-' + p + 'consentimento" role="alert"></p>' +
       '<div class="acoes"><button type="submit" class="btn">Preparar meu cadastro</button></div></form>' +
       '<div class="resultado-cadastro" aria-live="polite"></div></div>';
   }

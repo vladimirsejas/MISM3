@@ -94,7 +94,7 @@
     html += secao("O que as mulheres contaram sobre si", "Assuntos identificados no espaço opcional “Fale de você”.", temasDoTexto(regs));
     html += secao("Evolução", "", evolucao(regs));
     html += secao("Análise territorial", "Cruza a população de cada bairro (IBGE) com a localização dos serviços.", territorial(terr));
-    html += secao("Como ler este painel", "", '<ul><li><strong>Origem:</strong> respostas voluntárias ao questionário do Mulher em Rede, sem nome. Neste protótipo, <strong>dados de teste</strong> gerados por computador.</li>' +
+    html += secao("Como ler este painel", "", '<ul><li><strong>Origem:</strong> respostas voluntárias ao questionário do Mulher Resolve, sem nome. Neste protótipo, <strong>dados de teste</strong> gerados por computador.</li>' +
       "<li><strong>Período:</strong> " + esc(regs.map(function (r) { return r.periodo; }).filter(Boolean).sort()[0] || "") + " a " + esc(regs.map(function (r) { return r.periodo; }).filter(Boolean).sort().slice(-1)[0] || "") + ".</li>" +
       "<li><strong>Privacidade:</strong> nenhum número de grupo com menos de " + P.K + " respostas é mostrado.</li>" +
       "<li><strong>Limites:</strong> quem responde não é uma amostra aleatória da cidade e não inclui quem não usa o site. Os números <strong>não são estatística representativa</strong> de todas as mulheres de Rio Claro, a pontuação é provisória, e <strong>nada aqui é diagnóstico nem avaliação de risco individual</strong>.</li>" +

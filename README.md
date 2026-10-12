@@ -1,4 +1,6 @@
-# Mulher em Rede (MISM3)
+# Mulher Resolve (MISM3)
+
+MISM3 é o código do projeto: Monitoramento Inteligente da Saúde da Mulher (terceira versão). "Mulher Resolve" é o nome público do site.
 
 Site estático de orientação para mulheres de Rio Claro (SP): reúne serviços públicos verificados (assistência social, saúde, educação, trabalho, direitos, moradia, transporte) e recomenda para onde ir a partir do que a pessoa escreve. Projeto acadêmico de demonstração (Fatec Rio Claro, Inteligência Artificial). Não é um site oficial da Prefeitura, não é vendido e não tem fins comerciais.
 
