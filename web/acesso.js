@@ -1,4 +1,4 @@
-/* Logica pura do Mulher em Rede (sem DOM): testavel no Node e usada no navegador. */
+/* Logica pura do Mulher Resolve (sem DOM): testavel no Node e usada no navegador. */
 (function (raiz, fabrica) {
   if (typeof module === "object" && module.exports) module.exports = fabrica();
   else raiz.Acesso = fabrica();

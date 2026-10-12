@@ -1,4 +1,6 @@
-# Mulher em Rede (MISM3)
+# Mulher Resolve (MISM3)
+
+MISM3 é o código do projeto: Monitoramento Inteligente da Saúde da Mulher (terceira versão). "Mulher Resolve" é o nome público do site.
 
 Site estático de orientação para mulheres de Rio Claro (SP): reúne serviços públicos verificados (assistência social, saúde, educação, trabalho, direitos, moradia, transporte) e recomenda para onde ir a partir do que a pessoa escreve. Projeto acadêmico de demonstração (Fatec Rio Claro, Inteligência Artificial). Não é um site oficial da Prefeitura, não é vendido e não tem fins comerciais.
 
@@ -141,6 +143,7 @@ Não existe: modelo de linguagem, embeddings neurais, previsão de risco, elegib
 | `inspecionar_arquivo.py` | Arquivos baixados | Estrutura (nunca os registros) | openpyxl |
 | `preparar_versionamento.py` | Arquivos novos | `git add` seguro (tamanho, CPF, dado bruto) | stdlib |
 | `testar_api.py` | `ANTHROPIC_API_KEY` | Resultado de uma chamada mínima | stdlib |
+| `testar_gemini.py` | `GEMINI_API_KEY` (ambiente ou `.env`) | Resultado de uma chamada mínima; `--modelos` lista os modelos da chave | stdlib |
 
 ## Como executar
 

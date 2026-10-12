@@ -315,7 +315,7 @@
       } else if (t.getAttribute("data-limpar") === "curriculo") {
         $("form-curriculo").reset(); $("curriculo-saida").innerHTML = ""; ultimo.cvDados = null; ultimo.curriculo = null;
       } else if (t.getAttribute("data-imprimir") === "plano" && ultimo.plano) {
-        imprimir("<h1>" + esc(J.tituloImpressao) + "</h1><p>Mulher em Rede · Rio Claro/SP · gerado em " + hoje() + "</p>" + htmlPlano(ultimo.plano, true) +
+        imprimir("<h1>" + esc(J.tituloImpressao) + "</h1><p>Mulher Resolve · Rio Claro/SP · gerado em " + hoje() + "</p>" + htmlPlano(ultimo.plano, true) +
           "<p>Confirme sempre telefone, endereço, horário e vagas diretamente com cada órgão antes de ir.</p>");
       } else if (t.getAttribute("data-imprimir") === "curriculo" && ultimo.curriculo) {
         imprimir(htmlCurriculo(ultimo.curriculo));

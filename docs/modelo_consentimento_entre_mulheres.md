@@ -2,7 +2,7 @@
 
 Para uma oferta aparecer em `web/dados/ofertas_mulheres.json`, a própria mulher precisa autorizar por escrito. Este é um modelo simples; se o projeto for adotado pela Prefeitura, a Secretaria da Mulher deve definir o texto oficial.
 
-**Eu, ______________________ (nome), autorizo a publicação, no site Mulher em Rede (estudo acadêmico, sem fins lucrativos), do serviço descrito abaixo.**
+**Eu, ______________________ (nome), autorizo a publicação, no site Mulher Resolve (estudo acadêmico, sem fins lucrativos), do serviço descrito abaixo.**
 
 - Nome ou nome do negócio que pode aparecer: ______________________
 - Categoria (transporte, psicologia, saúde e corpo, atividade física, beleza, aulas, casa e família, negócios, outros): ______________________
