@@ -38,7 +38,7 @@ echo.
 
 start "" /min cmd /c "ping -n 3 127.0.0.1 >nul & start http://localhost:%PORTA%/%PAGINA%"
 
-%PY% "%~dp0pipeline\servidor_ia.py" %PORTA%
+%PY% -m http.server %PORTA% --bind 127.0.0.1
 echo.
 echo  O servidor foi encerrado.
 pause

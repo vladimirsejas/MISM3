@@ -34,8 +34,8 @@ Validação cruzada em 5 partes sobre as frases escritas pela equipe, e teste in
 - No máximo 2 serviços por necessidade; só com telefone ou fonte; mostra a data de conferência; abaixo de uma semelhança mínima só aparecem "portas de entrada" (secretarias, CRAS, PAT).
 - Achado durante os testes: sem condições, "preciso de psicóloga, estou ansiosa" recomendava o CAPS de **álcool e drogas** (semelhança de letras em "psic"). Foi corrigido com condições por serviço e há testes para isso.
 
-## Decisão sobre privacidade (por que o texto, por padrão, nunca sai do aparelho)
-O site promete não enviar nem guardar nada. Muitas usuárias podem estar em situação de violência. Por isso o modelo roda no navegador. **O orientador (busca, segurança e escopo) não usa serviço externo de IA para ler o que a mulher escreve.** Única exceção, decidida pelo autor em 13/10/2026: a explicação opcional por Gemini, descrita em "Explicação por IA (Gemini)" abaixo, desligada por padrão. A infraestrutura que existia na linhagem ChatGPT (`servidor.py`, `provedor_gemini.py`) já havia sido recusada pelo mesmo motivo (registro de decisões).
+## Decisão sobre privacidade (por que o texto nunca sai do aparelho)
+O site promete não enviar nem guardar nada. Muitas usuárias podem estar em situação de violência. Por isso o modelo roda no navegador. **Não usamos serviço externo de IA (Gemini, ChatGPT ou similares) para ler o que a mulher escreve.** A infraestrutura que existia na linhagem ChatGPT (`servidor.py`, `provedor_gemini.py`) já havia sido recusada pelo mesmo motivo (registro de decisões).
 
 ## Próximas etapas (propostas)
 1. ~~Busca interna sobre o catálogo~~ (feita, v1). **Limite:** é similaridade de letras e palavras, **não semântica de verdade**: não entende sinônimos que não compartilham letras. Um modelo de *embeddings* de frases rodando no navegador seria o passo seguinte, mas precisa baixar um modelo grande (dezenas de MB) e foi adiado.
@@ -48,20 +48,7 @@ O site promete não enviar nem guardar nada. Muitas usuárias podem estar em sit
 
 O orientador substituiu a caixa de dúvida por busca lexical. Medição completa, com conjunto de teste guardado, ablação e limites, em `docs/ia/avaliacao_orientacao.md`. Resumo: destino específico certo em 91% no teste depois de ajustes (87% na primeira rodada, a estimativa independente; assistente anterior: 40%), 0 falsos alarmes de perigo em 210 perguntas, segurança 83% na primeira rodada do teste (corrigida depois; ver o documento), abstenção 69% (ponto fraco).
 
-### Explicação por IA (Gemini), opcional (13/10/2026)
-
-Implementada em `pipeline/servidor_ia.py` (servidor local, biblioteca padrão) e `web/ia-llm.js`. Como funciona e quais limites tem:
-
-- **Desligada por padrão.** A opção só aparece quando o site é aberto pelo `abrir_site.bat` com `GEMINI_API_KEY` no `.env`; em hospedagem estática ela some. A pessoa precisa marcar, com o aviso de que o texto vai ao Google.
-- **O orientador continua mandando.** O Gemini recebe o texto e os serviços que o orientador já escolheu (nome, resumo, telefone, endereço, horário) e escreve uma explicação curta. Não escolhe serviço.
-- **Nunca com sinal de perigo.** Se `perigo.js` detecta qualquer nível, a IA não é chamada e aparecem só os telefones.
-- **Conferência da resposta.** O servidor descarta a resposta se ela trouxer telefone que não veio dos serviços, link ou e-mail; remove formatação.
-- **Falha silenciosa.** Com 503, tempo esgotado, limite ou sem crédito, a tela mostra só o resultado do orientador. Dois modelos, duas tentativas cada, no máximo 25 s.
-- **Limites.** 300 caracteres, 4 serviços, 6 chamadas por minuto por endereço e 200 por dia; pedidos de outra origem são recusados.
-- **Sem registro.** O servidor não grava nem imprime o texto (só método, caminho e código), e a chave nunca vai ao navegador.
-- **Riscos que continuam:** o Google recebe o texto da usuária; a IA pode escrever algo impreciso mesmo sem inventar telefone. Por isso o rótulo "pode errar" e a recomendação de confirmar por telefone. Antes de uso real com usuárias, é preciso avaliar as respostas com perguntas reais e rever a política de privacidade do Google para a API.
-
-### Fase com API de LLM (planejada nas versões anteriores; usos nos bastidores continuam previstos)
+### Fase com API de LLM (planejada, ainda não usada no site)
 
 A chave da API **nunca** vai para o navegador nem para o repositório. Usos previstos, todos nos bastidores: (1) gerar variações de perguntas para ampliar a avaliação, revisadas por pessoas; (2) apoiar a revisão de resumos de serviços; (3) só depois de teste com usuárias, um modo opcional de redação de resposta *a partir dos serviços já encontrados* (nunca inventando serviço, telefone ou direito), com o texto passando por um servidor da própria equipe. Para saber se a chave funciona: `python pipeline/testar_api.py` (lê `ANTHROPIC_API_KEY` do seu computador e faz uma chamada mínima).
 
