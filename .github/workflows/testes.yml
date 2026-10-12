@@ -18,3 +18,4 @@ jobs:
       - run: PYTHONPATH=pipeline python -m pytest pipeline/tests -q
       - run: for f in web/tests/*.test.js; do node "$f" || exit 1; done
       - run: node avaliacao/avaliar_duvida.js
+      - run: node avaliacao/avaliar_plano.js
