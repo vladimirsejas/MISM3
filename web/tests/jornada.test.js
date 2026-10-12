@@ -94,6 +94,7 @@ Object.keys(J.LINKS).forEach((k) => {
   assert(permitidos.has(url), "link do plano sem fonte cadastrada no projeto: " + k + " " + url);
 });
 const rotas = new Set(Areas.AREAS.concat(Areas.EXTRAS || []).map((a) => a.id));
+rotas.add("mapa"); /* #mapa e #mapa/cras: o mapa mora na tela inicial */
 const secoesDe = {};
 Areas.AREAS.concat(Areas.EXTRAS || []).forEach((a) => {
   secoesDe[a.id] = new Set(((a.guia && a.guia.ancoras) || []).map((x) => x.ancora).concat((a.secoes || []).map((s) => s.id).filter(Boolean)));

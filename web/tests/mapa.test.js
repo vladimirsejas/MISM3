@@ -65,7 +65,8 @@ assert(MS.svgMarcador("saude", false).includes('fill="' + MS.ESTILO.saude.cor + 
 assert(MS.svgMarcador("saude", true).includes('fill="#ffffff"') && MS.svgMarcador("saude", true).includes('stroke="' + MS.ESTILO.saude.cor + '"'));
 
 /* ---- 6. Página e privacidade ---- */
-const html = ler("mapa.html"), js = ler("mapa.js");
+const html = ler("index.html"), js = ler("mapa.js");
+assert(!fs.existsSync(path.join(web, "mapa.html")), "o mapa mora na tela inicial: não existe página separada");
 assert(/<script src="vendor\/leaflet\.js">/.test(html) && !/src="https?:/.test(html) && !/<link[^>]+href="https?:/.test(html), "só dependências locais (sem CDN)");
 assert(/id="sair-rapido"/.test(html) && /<details class="emergencia"/.test(html), "a página mantém o botão de emergência e o de sair");
 assert(/noopener noreferrer/.test(js), "links externos abrem com noopener noreferrer");

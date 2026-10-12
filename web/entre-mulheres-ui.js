@@ -66,7 +66,7 @@
       a.setAttribute("aria-selected", sel); a.tabIndex = sel ? 0 : -1; p.hidden = !sel;
     });
     if (foco) document.getElementById("aba-" + id).focus();
-    try { history.replaceState(null, "", "#" + id); } catch (x) { /* sem histórico: segue sem atualizar o endereço */ }
+    try { history.replaceState(null, "", "#entre-mulheres/" + id); } catch (x) { /* sem histórico: segue sem atualizar o endereço */ }
   }
 
   function imprimir(texto) {
@@ -136,7 +136,7 @@
 
   function iniciar(categorias) {
     CATS = categorias;
-    var inicial = (location.hash || "").replace("#", "");
+    var inicial = (location.hash || "").replace("#", "").split("/")[1] || "";
     ativa = CATS.some(function (c) { return c.id === inicial; }) ? inicial : CATS[0].id;
     Promise.all([carregar("dados/ofertas_mulheres.json"), carregar("dados/entre_mulheres_canal.json").catch(function () { return {}; })]).then(function (r) {
       ofertas = r[0].ofertas || []; canal = r[1] || {};
@@ -145,7 +145,10 @@
       document.getElementById("aviso-catalogo").textContent = "As ofertas não foram carregadas. Abra o sistema pelo procedimento do README.";
     });
     document.addEventListener("click", aoClicar); document.addEventListener("submit", aoEnviar); document.addEventListener("keydown", aoTeclar);
-    window.addEventListener("hashchange", function () { var h = (location.hash || "").replace("#", ""); if (document.getElementById("aba-" + h)) selecionar(h, false); });
+    window.addEventListener("hashchange", function () {
+      var p = (location.hash || "").replace("#", "").split("/");
+      if (p[0] === "entre-mulheres" && p[1] && document.getElementById("aba-" + p[1])) selecionar(p[1], false);
+    });
   }
 
   raiz.EntreMulheresUI = { iniciar: iniciar };
