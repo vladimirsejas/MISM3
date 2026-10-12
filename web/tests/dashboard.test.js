@@ -27,7 +27,14 @@ assert.strictEqual(portas[6].href, "rede-mulheres.html", "Entre Mulheres é uma 
 ["Fundo Social", "Procon", "Defensoria", "tarifa social"].forEach((t) =>
   assert(!inicio.includes(t), "a tela inicial não deve expor conteúdo detalhado de área: " + t));
 assert(!/\b(Rua|Avenida|Av\.)\s/.test(inicio) && !/\d{1,2}h\b|\d{1,2}:\d{2}/.test(inicio), "a tela inicial não deve trazer endereço nem horário");
-assert(!/<form/.test(inicio) && !/<input/.test(inicio), "a tela inicial não tem formulários nem campos de busca");
+/* O mapa mora na tela inicial (decisão do mantenedor em 12/10/2026): só ele pode trazer formulários e campos (bairro e CEP).
+   Nenhum outro formulário ou campo é permitido aqui. */
+const formularios = Array.from(inicio.matchAll(/<form[^>]*id="([^"]+)"/g), (m) => m[1]).sort();
+assert.deepStrictEqual(formularios, ["form-cep-mapa", "form-cras"], "só o mapa tem formulário na tela inicial");
+assert.strictEqual((inicio.match(/<form/g) || []).length, 2, "nenhum formulário sem id do mapa na tela inicial");
+const campos = Array.from(inicio.matchAll(/<input[^>]*id="([^"]+)"/g), (m) => m[1]).sort();
+assert.deepStrictEqual(campos, ["bairro-cras", "cep-mapa", "usar-tiles-mapa"], "só os campos do mapa na tela inicial");
+assert.strictEqual((inicio.match(/<input/g) || []).length, 3, "nenhum campo sem id do mapa na tela inicial");
 assert.strictEqual((inicio.match(/<textarea/g) || []).length, 1, "o único campo da tela inicial é a caixa da IA (Conte com suas palavras)");
 
 /* ---- 3. Emergência: botão compacto com os contatos oficiais, em todas as páginas ---- */
