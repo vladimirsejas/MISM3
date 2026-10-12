@@ -889,3 +889,12 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - **Movidos, não apagados** (são fonte do que o site afirma): `docs/educacao/calendario.pdf` -> `docs/documetacao/seduc-resolucao-80-calendario-escolar-2027.pdf` e `docs/educacao/emei.pdf` -> `docs/documetacao/prefeitura-unidades-de-ensino.pdf`, ambos listados no `LEIA-ME.md`.
 - **Mantidos de propósito:** `pipeline/common.py` (importado por 11 scripts), `web/vendor/LEAFLET-LICENSE.txt` (licença obrigatória) e `oferta_educacao_infantil.json` (o pipeline o lê).
 - **Nota:** as entradas antigas deste registro que citam os arquivos apagados continuam como histórico.
+
+## 12/10/2026 - O mapa passa a morar na tela inicial
+
+- **Decisão do mantenedor:** "o mapa tem que estar no dashboard" (a tela inicial), e não só numa página separada.
+- **Como ficou:** seção "Mapa de serviços" na tela inicial (`web/index.html`), logo abaixo das portas e dos destaques: busca de CRAS por bairro, CEP, o mapa com os pontos e, abaixo do mapa, o bloco "O que fica mais perto de você". O botão "Ver o mapa de serviços" do topo e o item do "Acesso rápido" rolam até ela. A página `mapa.html` continua, como versão completa (filtros por tipo, busca por nome e lista de todos os serviços), e `abrir_mapa.bat` abre direto nela.
+- **Código:** o mesmo `web/mapa.js` serve às duas páginas (na tela inicial faltam filtros e lista; um elemento solto absorve o que seria escrito neles). O mapa reajusta o tamanho quando a tela inicial reaparece depois de abrir uma área (`ResizeObserver`). O botão "Sair desta página agora" da tela inicial segue sendo tratado só pelo `app.js`.
+- **Teste alterado, não enfraquecido:** `dashboard.test.js` exigia "a tela inicial não tem formulários nem campos de busca". Agora exige que os **únicos** formulários (`form-cras`, `form-cep-mapa`) e campos (`bairro-cras`, `cep-mapa`, `usar-tiles-mapa`) sejam os do mapa, e que não haja nenhum outro.
+- **Sem mudança de privacidade:** o CEP e o bairro continuam só no aparelho; as ruas do OpenStreetMap continuam desligadas por padrão.
+

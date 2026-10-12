@@ -64,7 +64,7 @@
         <div class="heroi-acoes">
           <button type="button" class="btn-heroi" data-rolar="areas-inicio">Escolha uma área <span aria-hidden="true">↓</span></button>
           <button type="button" class="btn-heroi-2" data-rolar="ia-caixa">Prefiro escrever o que preciso</button>
-          <a class="btn-heroi-2" href="mapa.html">Ver o mapa de serviços</a>
+          <button type="button" class="btn-heroi-2" data-rolar="mapa-inicio">Ver o mapa de serviços</button>
         </div>
         <p class="heroi-nota">Cada informação mostra a fonte e a data em que foi conferida.</p>
       </div>
@@ -110,6 +110,46 @@
       <li class="t-verde"><a class="porta destaque" href="#direitos" id="destaque-secretaria"><span class="icone"><svg aria-hidden="true"><use href="#i-mulheres"/></svg></span><strong>Secretaria da Mulher</strong><span class="sub" id="sub-secretaria">Atendimento às mulheres de Rio Claro, contatos e canais de proteção.</span></a></li>
     </ul>
 
+    <section class="mapa-inicio" id="mapa-inicio" aria-labelledby="titulo-mapa-inicio">
+      <h2 id="titulo-mapa-inicio" class="titulo-bloco" tabindex="-1">Mapa de serviços</h2>
+      <p class="meta">Veja onde ficam os serviços de Rio Claro. Informe seu bairro ou seu CEP para ver o que fica mais perto.</p>
+
+      <section class="mapa-cras" aria-labelledby="titulo-cras">
+        <h3 id="titulo-cras">Qual CRAS atende o meu bairro?</h3>
+        <form id="form-cras" autocomplete="off">
+          <label for="bairro-cras" class="sr-only">Nome do bairro</label>
+          <div class="linha">
+            <input id="bairro-cras" type="search" autocomplete="off" spellcheck="false" placeholder="Ex.: Jardim Brasília, Mãe Preta, Bom Sucesso">
+            <button type="submit" class="btn">Ver o CRAS</button>
+          </div>
+        </form>
+        <div id="resultado-cras" aria-live="polite"></div>
+      </section>
+
+      <form class="mapa-campo" id="form-cep-mapa" autocomplete="off">
+        <label for="cep-mapa">Seu CEP: mostra o serviço mais perto de cada tipo</label>
+        <div class="linha">
+          <input id="cep-mapa" inputmode="numeric" maxlength="9" placeholder="00000-000" autocomplete="off" autocapitalize="off" spellcheck="false">
+          <button type="submit" class="btn">Ver o que está perto</button>
+          <button type="button" class="btn secundario" id="limpar-cep" hidden>Limpar</button>
+        </div>
+      </form>
+      <p class="privacidade">O CEP serve só para marcar uma região aproximada e fica neste aparelho: nada é enviado, gravado ou guardado na barra de endereço.</p>
+      <p id="mensagem-mapa" role="status" class="mensagem" hidden></p>
+
+      <p id="resumo-mapa" class="mapa-resumo" aria-live="polite"></p>
+      <div id="mapa-servicos" class="mapa-caixa" aria-label="Mapa dos serviços cadastrados"></div>
+      <p class="mapa-legenda">Ponto <strong>cheio</strong>: posição pelo endereço. Ponto <strong>vazado</strong>: posição aproximada pelo CEP do serviço. Distâncias são em linha reta, não o caminho a pé.</p>
+      <label class="tiles"><input type="checkbox" id="usar-tiles-mapa"> Mostrar ruas (carrega imagens do OpenStreetMap; o servidor do mapa saberá a região que você está vendo)</label>
+      <section id="mais-perto" class="mapa-mais-perto" aria-labelledby="titulo-mais-perto" hidden>
+        <h3 id="titulo-mais-perto">O que fica mais perto de você</h3>
+        <p class="meta" id="nota-mais-perto"></p>
+        <ul class="mapa-lista" id="lista-mais-perto"></ul>
+      </section>
+
+      <p><a class="btn secundario" href="mapa.html">Abrir o mapa completo, com filtros e lista</a></p>
+    </section>
+
     <div class="blocos-inicio">
       <section class="bloco" aria-labelledby="titulo-contatos">
         <h2 id="titulo-contatos">Contatos essenciais</h2>
@@ -124,7 +164,7 @@
       <section class="bloco" aria-labelledby="titulo-acesso">
         <h2 id="titulo-acesso">Acesso rápido</h2>
         <ul class="lista-acesso">
-          <li><a href="mapa.html">Mapa de serviços</a></li>
+          <li><button type="button" class="btn-rolar" data-rolar="mapa-inicio">Mapa de serviços</button></li>
           <li><a href="#educacao/educacao-escolas">Escolas municipais, com endereço e telefone</a></li>
           <li><a href="#educacao/educacao-filhos">Matrícula e vaga para o meu filho</a></li>
           <li><a href="#educacao/educacao-voce">Cursos e estudos para mim</a></li>
@@ -187,5 +227,7 @@
 <script src="questionario.js"></script>
 <script src="questionario-ui.js"></script>
 <script src="app.js"></script>
+<script src="mapa-servicos.js"></script>
+<script src="mapa.js"></script>
 </body>
 </html>
