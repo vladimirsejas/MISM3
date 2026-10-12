@@ -41,26 +41,39 @@
     return saida;
   }
 
-  function usarModelo(m) {
-    modelo = m; indice = Object.create(null);
-    m.vocabulario.forEach(function (f, i) { indice[f] = i; });
-  }
-  function pronto() { return !!modelo; }
-
-  /* Probabilidade de cada necessidade segundo o modelo. Mesma conta do treino: TF sublinear x IDF, norma L2, regressão logística. */
-  function probabilidades(texto) {
-    if (!modelo) return null;
+  /* Conta do modelo: TF sublinear x IDF, norma L2, regressão logística. Serve a qualquer modelo no mesmo formato. */
+  function calcular(m, ind, texto) {
     var cont = Object.create(null), nomes = atributos(texto);
-    nomes.forEach(function (f) { var i = indice[f]; if (i !== undefined) cont[i] = (cont[i] || 0) + 1; });
+    nomes.forEach(function (f) { var i = ind[f]; if (i !== undefined) cont[i] = (cont[i] || 0) + 1; });
     var ids = Object.keys(cont), x = [], soma = 0;
-    ids.forEach(function (i) { var v = (1 + Math.log(cont[i])) * modelo.idf[i]; x.push(v); soma += v * v; });
+    ids.forEach(function (i) { var v = (1 + Math.log(cont[i])) * m.idf[i]; x.push(v); soma += v * v; });
     var norma = Math.sqrt(soma) || 1, saida = {};
-    modelo.classes.forEach(function (c, k) {
-      var z = modelo.intercepto[k], pesos = modelo.coef[k];
+    m.classes.forEach(function (c, k) {
+      var z = m.intercepto[k], pesos = m.coef[k];
       for (var j = 0; j < ids.length; j++) z += pesos[ids[j]] * (x[j] / norma);
       saida[c] = 1 / (1 + Math.exp(-z));
     });
     return saida;
+  }
+  function indexar(m) {
+    var ind = Object.create(null);
+    m.vocabulario.forEach(function (f, i) { ind[f] = i; });
+    return ind;
+  }
+  /* Outro modelo no mesmo formato (ex.: o detector de perigo de perigo.js), sem mexer no modelo de necessidades. */
+  function criarClassificador(m) {
+    var ind = indexar(m);
+    return { limiares: (m.meta && m.meta.limiares) || {}, probabilidades: function (texto) { return calcular(m, ind, texto); } };
+  }
+
+  function usarModelo(m) {
+    modelo = m; indice = indexar(m);
+  }
+  function pronto() { return !!modelo; }
+
+  /* Probabilidade de cada necessidade segundo o modelo de necessidades. */
+  function probabilidades(texto) {
+    return modelo ? calcular(modelo, indice, texto) : null;
   }
 
   /* Sugestões finais: união das regras com o modelo, no máximo 3; violência sempre vem primeiro quando aparece. */
@@ -175,5 +188,5 @@
     return saida;
   }
 
-  return { CAMINHOS: CAMINHOS, atributos: atributos, usarModelo: usarModelo, pronto: pronto, probabilidades: probabilidades, sugerir: sugerir, usarCatalogo: usarCatalogo, servicosPara: servicosPara, SERVICOS_DA_NECESSIDADE: SERVICOS_DA_NECESSIDADE };
+  return { CAMINHOS: CAMINHOS, atributos: atributos, usarModelo: usarModelo, pronto: pronto, probabilidades: probabilidades, criarClassificador: criarClassificador, sugerir: sugerir, usarCatalogo: usarCatalogo, servicosPara: servicosPara, SERVICOS_DA_NECESSIDADE: SERVICOS_DA_NECESSIDADE };
 });

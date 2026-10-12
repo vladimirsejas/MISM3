@@ -170,10 +170,11 @@
       ctx = ctx || {};
       var t = Regras.normalizar(texto);
       var perigo = Perigo.avaliar(texto);
+      var urgente = !!(perigo && perigo.nivel === 2); /* só o alerta completo ignora o filtro de escopo; o aviso discreto (nível 1) não */
       var base = { perigo: perigo, saudacao: false, geral: false, abstem: false, itens: [], melhor: 0 };
       if (!t) return Object.assign(base, { abstem: true });
-      if (!perigo && SAUDACOES.test(t)) return Object.assign(base, { saudacao: true, abstem: true });
-      if (!perigo && AJUDA_GERAL.test(t)) {
+      if (!urgente && SAUDACOES.test(t)) return Object.assign(base, { saudacao: true, abstem: true });
+      if (!urgente && AJUDA_GERAL.test(t)) {
         /* pedido genérico ("preciso de ajuda"): não é fora de escopo, só não diz o quê; mostramos as portas de cada área */
         var portas = U.filter(function (u) { return u.tipo === "area"; }).slice(0, 6).map(function (u, i) {
           return { rank: i + 1, id: u.id, tipo: u.tipo, area: u.area, sec: u.sec, svc: u.svc, titulo: u.titulo, resumo: u.resumo, href: u.href,
@@ -190,7 +191,7 @@
       var dicaT = opcoes.dica ? opcoes.dica(texto) : null, confianca = 0;
       if (dicaT) Object.keys(dicaT).forEach(function (k) { if (dicaT[k] > confianca) confianca = dicaT[k]; });
       var minimo = opcoes.minimo !== undefined ? opcoes.minimo : 0.3;
-      var foraDeEscopo = !perigo && (melhor < minimo || (dicaT && melhor < minimo + 0.1 && confianca < 0.3));
+      var foraDeEscopo = !urgente && (melhor < minimo || (dicaT && melhor < minimo + 0.1 && confianca < 0.3));
       var fix = perigo ? fixados(perigo.pins, pont) : [];
       var vistos = {}, porSvc = {}, escolhidos = [];
       function aceitar(x, fixado) {
@@ -203,14 +204,14 @@
       fix.forEach(function (x) { aceitar(x, true); });
       var limiar = opcoes.limiar !== undefined ? opcoes.limiar : 0.2;
       var corte = opcoes.corte !== undefined ? opcoes.corte : 0.5; /* só entra o que tem pelo menos metade da nota do primeiro */
-      if (perigo || (!foraDeEscopo && melhor >= limiar)) pont.forEach(function (x) { if (escolhidos.length < 6 && (perigo || (x.s >= limiar * 0.55 && x.s >= melhor * corte))) aceitar(x, false); });
+      if (urgente || (!foraDeEscopo && melhor >= limiar)) pont.forEach(function (x) { if (escolhidos.length < 6 && (urgente || (x.s >= limiar * 0.55 && x.s >= melhor * corte))) aceitar(x, false); });
       var itens = escolhidos.slice(0, 6).map(function (e, i) {
         var u = e.x.u;
         return { rank: i + 1, id: u.id, tipo: u.tipo, area: u.area, sec: u.sec, svc: u.svc, titulo: u.titulo, resumo: u.resumo, href: u.href,
                  contato: u.contato || null, fonte: u.fonte || null, n: u.n || null, pontos: Math.round(e.x.s * 1000) / 1000,
                  fixado: e.fixado, palavras: motivo(texto, u) };
       });
-      return Object.assign(base, { itens: itens, abstem: !perigo && !itens.length, melhor: Math.round(melhor * 1000) / 1000 });
+      return Object.assign(base, { itens: itens, abstem: !urgente && !itens.length, melhor: Math.round(melhor * 1000) / 1000 });
     }
 
     return { responder: responder, pontuar: pontuar, pesos: pesos, tamanho: N };

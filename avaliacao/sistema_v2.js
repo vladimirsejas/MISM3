@@ -4,6 +4,7 @@ module.exports = function (web) {
   const Orientar = require(path.join(web, "orientar.js")), IA = require(path.join(web, "ia.js")), Regras = require(path.join(web, "necessidades.js"));
   IA.usarModelo(JSON.parse(fs.readFileSync(path.join(web, "dados", "modelo_necessidades.json"), "utf8")));
   const indice = JSON.parse(fs.readFileSync(path.join(web, "dados", "indice_orientacao.json"), "utf8"));
+  require(path.join(web, "perigo.js")).usarModelo(JSON.parse(fs.readFileSync(path.join(web, "dados", "modelo_perigo.json"), "utf8")));
   const cfg = process.env.ORIENTAR_CFG ? JSON.parse(process.env.ORIENTAR_CFG) : {};
   const dica = require(path.join(web, "orientacao-ui.js")).criarDica(IA, Regras);
   const motor = Orientar.criar(indice, { dica: dica, pesos: cfg.pesos, limiar: cfg.limiar });

@@ -6,9 +6,9 @@ const nivel = (t) => { const r = Perigo.avaliar(t); return r ? r.nivel : 0; };
 /* ---- situações que SEMPRE devem acender o alerta (errar para menos é o erro grave) ---- */
 const deve = {
   violencia: ["meu marido me bate", "ele me ameaçou de morte", "estou apanhando em casa", "fui estuprada", "tenho medo dele", "meu ex me persegue", "ele disse que vai me matar", "sofro violência doméstica", "preciso sair de casa com segurança", "meu vizinho bate na mulher dele toda noite", "minha irmã apanha do marido", "meu marido controla meu dinheiro", "ele vigia meu celular", "meu companheiro controla com quem eu falo"],
-  suicidio: ["quero me matar", "não aguento mais viver", "penso em acabar com tudo", "tenho vontade de morrer", "quero sumir"],
-  crianca: ["meu padrasto abusa da minha filha", "minha filha está sendo abusada", "meu marido bate nas crianças", "ele machuca os filhos"],
-  saude: ["estou com dor no peito", "meu filho desmaiou", "não consigo respirar", "ela teve convulsão", "tomou veneno"],
+  suicidio: ["pensei em tomar todos os remédios", "queria dormir e não acordar mais", "minha vida não tem mais sentido, não quero estar aqui", "estou pensando em me jogar da ponte", "vou me enforcar", "quero me matar", "não aguento mais viver", "penso em acabar com tudo", "tenho vontade de morrer", "quero sumir"],
+  crianca: ["meu padrasto abusa da minha filha", "minha filha está sendo abusada", "meu marido bate nas crianças", "ele machuca os filhos", "meu padrasto mexe com a minha filha de 9 anos", "a criança lá de casa apanha de cinto toda noite", "minha neta de 7 anos contou que o tio passa a mão nela"],
+  saude: ["minha mãe caiu e não responde", "meu filho engasgou e está roxo", "estou com dor no peito", "meu filho desmaiou", "não consigo respirar", "ela teve convulsão", "tomou veneno"],
   risco: ["a casa está pegando fogo", "cheiro de gás"]
 };
 Object.keys(deve).forEach((tp) => deve[tp].forEach((t) => {

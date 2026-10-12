@@ -2,7 +2,7 @@
 
 Roda o sistema REAL (os mesmos módulos JavaScript do navegador, via Node), compara com o gabarito e calcula as métricas.
 
-Uso:  python avaliacao/avaliar.py [v1|v2] [--conjunto desenvolvimento|teste|todos] [--md saida.md]
+Uso:  python avaliacao/avaliar.py [v1|v2] [--conjunto desenvolvimento|teste|independente|reserva|todos] [--md saida.md]
 
 Métricas (por conjunto e por categoria):
   - Resposta@3 (área):      alguma das 3 primeiras respostas está na área certa
@@ -93,7 +93,7 @@ CAB = ("| Grupo | Resposta@3 área | Resposta@3 específica | MRR | Taxa de resp
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("sistema", nargs="?", default="v1")
-    ap.add_argument("--conjunto", default="todos", choices=["desenvolvimento", "teste", "todos"])
+    ap.add_argument("--conjunto", default="todos", choices=["desenvolvimento", "teste", "independente", "reserva", "todos"])
     ap.add_argument("--md", type=Path, default=None)
     ap.add_argument("--erros", action="store_true", help="lista as perguntas em que a resposta específica falhou")
     ap.add_argument("--incluir-vistos", action="store_true", help="inclui as perguntas iguais a frases do treino (inflam o resultado; só para comparar)")
@@ -103,7 +103,7 @@ def main() -> None:
         todas = [q for q in todas if not q.get("visto_no_treino")]
     respostas = rodar(a.sistema)
     saida = [f"## Sistema `{a.sistema}`", ""]
-    conjuntos = ["desenvolvimento", "teste"] if a.conjunto == "todos" else [a.conjunto]
+    conjuntos = ["desenvolvimento", "teste", "independente", "reserva"] if a.conjunto == "todos" else [a.conjunto]
     for conj in conjuntos:
         qs = [q for q in todas if q["conjunto"] == conj]
         saida += [f"### Conjunto de {conj} ({len(qs)} perguntas)", "", CAB, linha("**Geral**", metricas(qs, respostas))]

@@ -1,0 +1,388 @@
+# Frases para treinar o DETECTOR DE PERIGO (aprendizado de máquina que roda no aparelho, junto com as regras de web/perigo.js).
+# ATENÇÃO: escritas pela equipe/Claude em 13/10/2026, imitando como as pessoas falam; NÃO são relatos reais. Nenhuma vem das perguntas de avaliação
+# (avaliacao/perguntas.json). Formato: rotulo|frase, com rotulo em violencia, suicidio, crianca, saude ou nenhuma (negativos difíceis incluídos).
+
+violencia|meu marido me deu um soco no rosto ontem a noite
+violencia|ele me puxou pelos cabelos e me arrastou pela casa
+violencia|levei um tapa na cara e ele ainda me chamou de inutil
+violencia|meu companheiro me ameaca de morte toda vez que bebe
+violencia|tenho medo de dormir em casa porque ele fica agressivo
+violencia|ele me proibe de ver minha familia e controla meu celular
+violencia|meu namorado me enforcou durante a discussao
+violencia|ele disse que se eu largar dele vai atras de mim ate me achar
+violencia|estou apanhando ha anos e nao sei mais o que fazer
+violencia|meu marido tomou meus documentos e meu cartao
+violencia|ele me xinga e me humilha na frente dos meus filhos
+violencia|o pai dos meus filhos invadiu minha casa e me ameacou
+violencia|ele ficou me esperando na saida da escola e me agrediu
+violencia|meu ex nao aceita o fim e me manda mensagens de ameaca
+violencia|foi a terceira vez essa semana que ele me bate
+violencia|levei uma surra e estou com o olho roxo
+violencia|ele me empurrou contra a parede e tentou me sufocar
+violencia|tenho marcas pelo corpo e ele diz que foi culpa minha
+violencia|ele fica me vigiando o tempo todo e nao posso sair sozinha
+violencia|meu marido jogou agua fervendo em mim
+violencia|ele me trancou no banheiro e apagou a luz
+violencia|estou escondida porque ele prometeu me matar
+violencia|o homem com quem moro me obriga a fazer sexo
+violencia|fui violentada pelo meu patrao
+violencia|um desconhecido me agarrou na rua e me ameacou com faca
+violencia|meu padrasto entra no meu quarto de noite e me toca
+violencia|meu ex ta rondando minha casa e quebrou o vidro do carro
+violencia|ele cortou o freio do meu carro e disse que foi acidente
+violencia|meu marido destruiu minhas roupas e meus documentos
+violencia|ele nao me deixa trabalhar e me bate quando insisto
+violencia|a policia ja veio aqui varias vezes mas ele volta a me bater
+violencia|tenho medida protetiva mas ele descumpriu e apareceu aqui
+violencia|quero sair de casa hoje mesmo porque ele me bate
+violencia|preciso de um lugar seguro pra ficar com meus filhos, ele me agride
+violencia|minha cunhada esta apanhando do irmao dele e eu ouvi tudo
+violencia|minha melhor amiga foi espancada pelo namorado e esta escondida em casa
+violencia|escuto meu vizinho gritar e bater na esposa toda noite
+violencia|minha mae apanha do meu padrasto desde que eu era pequena
+violencia|ele ameaca contar coisas minhas se eu terminar com ele
+violencia|meu marido ameaca me tirar as criancas e diz que vai me matar
+violencia|ele me bateu na frente de todo mundo e ninguem fez nada
+violencia|ele me bate quando bebe e depois pede desculpas
+violencia|meu companheiro me deu um chute na barriga estando eu gravida
+violencia|fui agredida por ele e fiquei com hematomas nos bracos
+violencia|ele me mordeu e me arranhou durante a briga
+violencia|ele rasgou minha roupa e me ameaçou
+violencia|o ciumento do meu marido me persegue ate no trabalho
+violencia|ele grava tudo que eu falo e me ameaca se eu contar
+violencia|ele esta armado e disse que hoje acaba comigo
+violencia|me escondi no quintal da vizinha com medo dele
+violencia|meu esposo me ameaçou com um facao
+violencia|ele colocou a faca no meu pescoço
+violencia|o pai da minha filha me persegue e ja me agrediu duas vezes
+violencia|meu cunhado tentou me forcar e eu consegui fugir
+violencia|um colega de trabalho me apertou contra a parede
+violencia|meu chefe passa a mao em mim e me ameaça de demissão
+violencia|sofro agressoes do meu filho adulto que usa drogas
+violencia|meu filho de 25 anos me bate quando nao dou dinheiro
+violencia|meu genro bate na minha filha e eu tenho medo de que a mate
+violencia|ele me mantem em carcere privado
+violencia|nao posso sair de casa sem ele deixar e ele me bate se eu desobedeco
+violencia|meu marido me obriga a entregar todo o salario e me espanca se nao entrego
+violencia|estou sendo ameacada pelo meu ex e ele sabe onde moro
+violencia|ele me chamou pra conversar e me agrediu no carro
+violencia|apanhei do meu namorado de novo
+violencia|sofri violencia do meu esposo e nao tenho pra onde ir
+violencia|ele me estrangulou e eu quase desmaiei
+violencia|ele me joga objetos e quebra as coisas quando fica nervoso
+violencia|minha vizinha pediu socorro agora pela janela e o marido esta batendo nela
+violencia|estou com muito medo do que ele vai fazer quando chegar em casa
+violencia|ele me ameaçou de morte por mensagem e eu guardei os prints
+violencia|fui mantida presa em casa por tres dias
+violencia|meu companheiro usa as criancas pra me ameaçar e me agride
+violencia|ele mandou eu sumir senao me mata
+suicidio|nao quero mais viver
+suicidio|penso em me matar todos os dias
+suicidio|ja tentei me matar uma vez e quero tentar de novo
+suicidio|quero acabar com a minha vida hoje
+suicidio|estou pensando em tirar minha propria vida
+suicidio|nao aguento mais, queria que tudo acabasse
+suicidio|seria melhor se eu nao existisse
+suicidio|minha familia estaria melhor sem mim
+suicidio|nao vejo razao nenhuma pra continuar vivendo
+suicidio|tomei comprimidos demais porque queria morrer
+suicidio|guardei remedios pra tomar todos de uma vez
+suicidio|estou olhando a corda e pensando em me enforcar
+suicidio|vou me jogar na frente do carro
+suicidio|vou pular da janela do apartamento
+suicidio|pensei em me cortar fundo ate nao sentir mais nada
+suicidio|preparei uma carta de despedida
+suicidio|quero dormir pra sempre e nunca mais acordar
+suicidio|ja nao tenho nenhum motivo pra viver
+suicidio|estou cansada de existir
+suicidio|desejo sumir do mundo e nunca mais voltar
+suicidio|acho que todo mundo ficaria aliviado se eu morresse
+suicidio|estou pensando em me matar com o veneno que tenho em casa
+suicidio|comprei uma arma pra acabar com tudo
+suicidio|ninguem vai sentir minha falta quando eu me for
+suicidio|nao suporto mais a dor, quero morrer
+suicidio|estou sem forças pra continuar, vou dar fim a tudo
+suicidio|deixei bilhetes explicando porque vou embora pra sempre
+suicidio|vou me matar hoje a noite
+suicidio|queria nunca ter nascido e acabar com isso
+suicidio|nao quero ver o dia de amanha
+suicidio|tentei me envenenar com produto de limpeza
+suicidio|fiz cortes nos braços porque queria morrer
+suicidio|minha vida e um peso, vou tirar esse peso de todos
+suicidio|nao existe mais saida pra mim, so a morte
+suicidio|queria me afogar no rio
+suicidio|ja decidi: vou acabar com a minha vida
+suicidio|pensamentos de morte nao saem da minha cabeça
+suicidio|estou com vontade de me machucar de novo
+suicidio|todo dia penso que seria melhor morrer
+suicidio|quero desaparecer pra sempre
+suicidio|nao aguento mais a depressao e quero terminar com tudo
+suicidio|estou com ideias de suicidio
+suicidio|vou tomar tudo que tem na caixa de remedios
+suicidio|perdi tudo e nao vejo porque continuar vivendo
+suicidio|queria nao acordar amanha
+suicidio|cansei de lutar, quero partir
+suicidio|estou pensando em me enforcar no quintal
+suicidio|quero me atirar do viaduto
+suicidio|acho que vou fazer uma besteira comigo
+suicidio|meu filho morreu e eu quero ir junto, nao quero viver
+suicidio|minha vida acabou e eu quero acabar com tudo agora
+suicidio|nao tenho mais forcas, prefiro morrer
+suicidio|todo mundo me odeia, melhor eu morrer
+suicidio|estou com a faca na mao pensando em me ferir
+suicidio|vou tomar o veneno de rato
+suicidio|ontem quase me matei e hoje sinto o mesmo
+suicidio|preciso de ajuda porque quero morrer
+suicidio|tem hora que eu so quero me matar
+suicidio|nao vale mais a pena viver
+suicidio|nao quero mais acordar de manha nunca mais
+suicidio|a unica saida que enxergo e morrer
+suicidio|estou me automutilando e nao consigo parar
+suicidio|sinto que nao pertenco a este mundo e quero sair dele
+suicidio|quero parar de respirar pra sempre
+suicidio|penso em me jogar do alto do predio
+suicidio|tenho um plano pra acabar com a minha vida
+suicidio|meu ex disse que eu devia morrer e eu concordo
+suicidio|queria sumir da face da terra
+crianca|meu padrasto toca na minha filha de 8 anos
+crianca|o namorado da minha ex passa a mao na minha sobrinha
+crianca|meu irmao abusa da nossa irma pequena
+crianca|o tio da minha vizinha mexe com ela quando a mae sai
+crianca|minha filha de 10 anos disse que o professor encosta nela
+crianca|acho que o pai esta abusando da menina
+crianca|o avo toca nas netas quando fica sozinho com elas
+crianca|uma crianca do predio apanha todo dia e chora muito
+crianca|o padrasto bate no meu filho com cinto
+crianca|minha sobrinha tem marcas roxas e diz que o pai bate
+crianca|meu vizinho espanca o filho pequeno e eu escuto
+crianca|vi um homem machucando uma crianca na rua
+crianca|o menino da casa ao lado vive trancado e passando fome
+crianca|meu neto de 5 anos ta apanhando da madrasta
+crianca|a mae da minha amiguinha de escola bate nela de vara
+crianca|meu filho chegou com a perna queimada e disse que a madrasta fez de proposito
+crianca|o namorado da minha mae me bate e bate no meu irmao pequeno
+crianca|uma menina de 12 anos esta gravida do padrasto
+crianca|o vizinho oferece dinheiro pra crianca ir na casa dele
+crianca|meu enteado contou que o tio mostra o corpo pra ele
+crianca|meu marido bate nos nossos filhos quando bebe
+crianca|o pai faz minha filha dormir na cama dele e nao deixa a mae entrar
+crianca|minha afilhada de 7 anos contou segredos que o tio mandou nao contar
+crianca|tem um bebe chorando sozinho ha horas num apartamento trancado
+crianca|o menino tem queimaduras de cigarro nos bracos
+crianca|meu cunhado fica beijando minha filha na boca e eu acho errado
+crianca|a crianca nao come direito porque a mae bate nela
+crianca|a diretora disse que o aluno tem marcas de agressão em casa
+crianca|meu filho de 6 anos diz que tem medo do namorado da mãe porque ele bate
+crianca|a babá bate no meu bebe e eu vi pela camera
+crianca|meu primo mais velho toca em mim e eu tenho 11 anos
+crianca|um adulto me manda fotos nuas e pede as minhas, tenho 13 anos
+crianca|meu pai bate em mim com fio quando tira nota baixa
+crianca|a menina do predio foi levada pelo tio e ouvi gritos
+crianca|o pastor fica sozinho com as criancas e passa a mao nelas
+crianca|alguem esta vendendo drogas pra crianca da escola e usando ela
+crianca|o padrasto manda ela ficar quieta e fecha a porta do quarto
+crianca|minha filha de 14 anos recebe presentes de um homem de 40 e esconde
+crianca|meu menino de 4 anos nao fala e tem hematomas nas costas
+crianca|vi minha vizinha deixando as criancas sozinhas e trancadas ha dias sem comida
+crianca|o tio chegou bebado e bateu nas criancas ate sangrar
+crianca|minha enteada diz que o pai a toca de noite
+crianca|os avos batem no menino com chinelo todo dia
+crianca|crianca de rua sendo explorada por adultos na praça
+crianca|meu neto foi agredido pelo professor e esta com o braço machucado
+crianca|um homem fica rondando a escola e chamando as meninas
+crianca|a crianca me contou que o vizinho mostra coisas de adulto no celular
+crianca|minha irma bate muito no filho dela e ele esta com medo
+crianca|o bebe esta com o rosto machucado e a mae diz que caiu mas nao acredito
+crianca|meu sobrinho teve o braço quebrado e o pai deu desculpa estranha
+crianca|a menina foi tocada pelo motorista da van escolar
+crianca|o adolescente da casa ao lado esta sendo espancado pelo pai
+crianca|a mae deixou a filha de 3 anos sozinha e ela quase caiu da janela
+crianca|a madrasta da minha filha nao deixa ela comer e a tranca
+crianca|o menino sofre abuso do padrasto e a mae sabe
+crianca|meu filho me contou que o treinador toca nele no vestiario
+saude|minha mae passou mal de repente e esta fria e sem reagir
+saude|meu filho caiu e bateu a cabeca, ta vomitando e muito sonolento
+saude|minha avo ta com o rosto repuxado e nao fala direito
+saude|meu marido esta com dor forte no peito e suando muito
+saude|o bebe nao esta respirando direito e esta ficando roxinho
+saude|ela tomou muitos remedios e esta desmaiando
+saude|estou com sangramento muito intenso e tontura
+saude|minha filha esta com febre altissima e tendo convulsao
+saude|ele engoliu uma pilha e esta com dificuldade pra respirar
+saude|meu pai caiu da escada e nao se mexe
+saude|estou gravida de 8 meses com dor forte e perdendo liquido
+saude|minha vizinha idosa caiu em casa e nao consegue levantar nem responder
+saude|crianca foi atropelada e esta caida na rua
+saude|meu irmao tomou veneno sem querer
+saude|meu bebe esta mole e nao acorda
+saude|o neném engasgou com leite e esta ficando azul
+saude|estou com falta de ar muito forte e labios roxos
+saude|tive um acidente de moto e estou sangrando muito
+saude|cortei a mao fundo e nao para de sair sangue
+saude|ele esta com o corpo duro e olhos revirados
+saude|minha mae esta com a boca torta e o braço mole
+saude|senti uma dor esmagando o peito e o braço esquerdo formigando
+saude|tomei uma dose grande de remedio de pressao sem querer
+saude|meu filho bebeu produto de limpeza
+saude|ela esta tendo uma crise forte e nao recobra os sentidos
+saude|o cachorro mordeu meu filho no rosto e o machucado e grande
+saude|meu marido caiu e esta sem pulso
+saude|minha tia esta infartando, ta suando frio
+saude|a crianca pulou na piscina e ficou parada na agua
+saude|choque eletrico na minha filha, ela esta desacordada
+saude|a vovo se engasgou e nao consegue falar nem respirar
+saude|minha filha teve uma queda feia e esta sem enxergar direito
+saude|ele esta com muita dor de barriga, duro, e vomitando sangue
+saude|pisou em prego e esta com tremores e rigidez no corpo
+saude|estou com vontade de vomitar sangue e tontura forte
+saude|meu filho teve convulsao e ainda nao voltou ao normal
+saude|estou tendo contracoes fortes e ainda faltam semanas
+saude|mulher gravida caiu e esta sangrando
+saude|queimei o braço todo com oleo quente
+saude|inalei fumaca e estou com a garganta fechando
+saude|minha amiga bebeu muito e nao acorda
+saude|fui picada por cobra e o pé esta inchando muito
+saude|meu vizinho esta engasgado, ajuda
+saude|a crianca esta com a garganta inchando depois de comer amendoim
+saude|estou com um corte profundo no abdomen
+saude|minha mae tem diabetes e esta confusa e suando, nao responde direito
+saude|meu bebe de 2 meses esta com febre e muito molinho
+saude|o homem desmaiou no onibus e ninguem sabe o que fazer
+saude|meu filho tomou remedio da minha bolsa e esta muito sonolento
+saude|ela caiu da cama e esta com o pescoço torto
+saude|estou com tontura forte e vejo tudo escurecendo
+saude|ele ficou com a boca roxa depois de comer
+saude|afogamento na piscina, a menina saiu da agua desacordada
+saude|meu pai bateu a cabeca e saiu sangue do ouvido
+saude|estou com dor muito forte no lado direito da barriga e febre
+nenhuma|meu marido bateu o carro no portao e nao sei como pagar o conserto
+nenhuma|meu filho bateu no colega na escola e a diretora chamou
+nenhuma|o time do meu filho apanhou feio no campeonato
+nenhuma|vou morrer de rir com essa piada
+nenhuma|estou morrendo de saudades da minha mae
+nenhuma|bati a porta sem querer e me assustei
+nenhuma|quase morri de vergonha na reuniao
+nenhuma|a prova foi um terror, quase matei meu cerebro de tanto estudar
+nenhuma|o cachorro me assustou e eu quase tive um infarto de susto
+nenhuma|caiu o galho da arvore no quintal e preciso de ajuda pra remover
+nenhuma|meu filho nao responde minhas mensagens
+nenhuma|meu marido nao me responde ha dias e nao sei por que
+nenhuma|ela me seguiu no instagram e eu aceitei
+nenhuma|tenho muito medo de falar em publico
+nenhuma|tenho medo de perder meu emprego
+nenhuma|estou com medo de ficar sem dinheiro este mes
+nenhuma|a crianca ta com dor de garganta e preciso de consulta
+nenhuma|meu bebe esta com febre baixa e tosse, onde levo no posto
+nenhuma|meu filho caiu da bicicleta e ralou o joelho
+nenhuma|levei meu filho no dentista e ele chorou muito
+nenhuma|preciso marcar consulta de rotina pra minha mae
+nenhuma|estou com dor de cabeca ha dois dias
+nenhuma|meu pai esta com gripe forte e tosse
+nenhuma|quero saber como pedir a segunda via do documento
+nenhuma|a escola bateu o sino, hora do recreio
+nenhuma|quero me matricular na escola pro meu filho
+nenhuma|estou desesperada atras de emprego
+nenhuma|minha mae idosa esta muito triste desde que meu pai morreu
+nenhuma|meu filho esta muito agitado e nao quer estudar
+nenhuma|estou muito estressada com as contas
+nenhuma|meu marido bebe muito e eu quero ajuda pra ele se tratar
+nenhuma|meu filho usa drogas e eu nao sei o que fazer
+nenhuma|minha filha de 15 anos esta namorando e eu quero conversar com ela
+nenhuma|tem delegacia da mulher em rio claro, onde fica
+nenhuma|quero informacoes sobre a medida protetiva, como funciona
+nenhuma|onde fica o abrigo pra mulheres
+nenhuma|meu vizinho faz muito barulho de noite
+nenhuma|tem um buraco na rua em frente de casa
+nenhuma|o cachorro do vizinho late a noite toda
+nenhuma|meu filho esta com piolho, o que faço
+nenhuma|minha mae esta fazendo hemodialise e preciso de transporte
+nenhuma|quero denunciar um comercio que vende produto vencido
+nenhuma|preciso de ajuda pra pagar a conta de luz
+nenhuma|meu filho tem asma e preciso do remedio
+nenhuma|a crianca esta triste porque a escola mudou
+nenhuma|estou grávida de 3 meses e quero começar o pre natal
+nenhuma|fui demitida e estou sem renda
+nenhuma|tem curso gratuito de costura
+nenhuma|minha irma esta com depressao e quero levar num psicologo
+nenhuma|meu avo caiu semana passada e esta fazendo fisioterapia
+nenhuma|quero saber onde tomar a vacina da gripe
+nenhuma|estou com dor nas costas faz tempo
+nenhuma|meu filho teve febre ontem mas melhorou
+nenhuma|tem atendimento pra gestante no posto
+nenhuma|a casa esta com infiltracao e preciso de ajuda
+nenhuma|meu marido esta desempregado e nos estamos sem comida
+nenhuma|bom dia, preciso de informacao
+nenhuma|obrigada pela ajuda
+# --- mais negativos difíceis (exageros, jogos, dor comum, 'socorro' sem perigo), adicionados após a 1ª avaliação em 13/10/2026
+nenhuma|morri de rir com o video que minha amiga mandou
+nenhuma|estou morta de cansaco depois do plantao
+nenhuma|vou morrer de calor nesse onibus lotado
+nenhuma|morro de medo de barata
+nenhuma|quase morri de susto com o barulho
+nenhuma|me mata de vergonha falar em publico
+nenhuma|estou morrendo de sono hoje
+nenhuma|esse trabalho esta me matando de tanto servico
+nenhuma|vou me matar de trabalhar pra pagar as contas
+nenhuma|vou morrer de fome se a cesta nao chegar logo
+nenhuma|estamos sem comida em casa e eu quero ajuda
+nenhuma|estou passando fome e preciso de cesta basica
+nenhuma|nao tenho dinheiro pro gas essa semana
+nenhuma|matei aula hoje e a diretora ligou
+nenhuma|matei a saudade da minha mae no fim de semana
+nenhuma|so quero matar o tempo na fila do posto
+nenhuma|precisei matar a sede com agua da torneira
+nenhuma|bateu a porta com forca e acordou o bebe
+nenhuma|o juiz bateu o martelo e encerrou o processo
+nenhuma|bati o ponto no trabalho atrasada
+nenhuma|meu coracao bate forte de ansiedade antes da prova
+nenhuma|o sinal bateu e as criancas sairam da escola
+nenhuma|meu marido bateu o carro e quer que eu pague o conserto
+nenhuma|ele me bateu no xadrez e riu muito
+nenhuma|perdi pro meu filho no videogame de novo
+nenhuma|a minha filha me venceu no jogo de cartas
+nenhuma|o time dele apanhou na final do campeonato
+nenhuma|apanhei no jogo de futebol com as amigas
+nenhuma|apanhei muito pra aprender a mexer no computador
+nenhuma|apanhei pra achar o endereco do posto
+nenhuma|estou com dor de dente forte e preciso de dentista
+nenhuma|dor de ouvido ha dois dias
+nenhuma|dor de barriga depois do almoco
+nenhuma|tosse seca ha uma semana
+nenhuma|meu filho esta com febre baixa desde ontem
+nenhuma|cai e ralei o cotovelo
+nenhuma|torci o pe jogando bola
+nenhuma|estou com enxaqueca e preciso de remedio
+nenhuma|unha encravada doendo muito
+nenhuma|dor muscular depois da academia
+nenhuma|to com muita dor de cabeca hoje
+nenhuma|meu pai idoso esta com dor no joelho e quer fisioterapia
+nenhuma|minha mae caiu semana passada mas esta bem, so queria um check-up
+nenhuma|vaga em escola pra minha filha de 7 anos
+nenhuma|onde fica a posto de saude mais proximo da minha casa
+nenhuma|meu filho de 5 anos precisa de matricula na escola
+nenhuma|minha menina de 9 anos quer fazer natacao
+nenhuma|preciso de creche pro meu bebe
+nenhuma|meu filho levou advertencia na escola
+nenhuma|o menino da escola nova esta com dificuldade de aprender
+nenhuma|a crianca ta com tosse e quero marcar pediatra
+nenhuma|socorro, nao acho o telefone da UBS
+nenhuma|socorro, como faço o curriculo
+nenhuma|me ajuda a achar o posto de saude mais perto
+nenhuma|socorro, perdi o horario do onibus
+nenhuma|quero me matricular no curso mas fico ansiosa
+nenhuma|vou morrer de ansiedade se nao passar na entrevista
+nenhuma|meu chefe pegou no meu pe por causa do atraso
+nenhuma|meu marido me ajuda em casa mas fica nervoso quando falta dinheiro
+nenhuma|o vizinho me ameacou de processo por causa do muro
+nenhuma|a escola ameacou chamar o conselho por causa das faltas do meu filho
+nenhuma|minha amiga me persegue no whatsapp pedindo dinheiro emprestado
+nenhuma|ele me segue no instagram e curte tudo
+nenhuma|meu filho me segue pela casa o tempo todo
+nenhuma|o professor passou a mao na cabeca dele e elogiou o desenho
+nenhuma|meu filho caiu no recreio e esta com um galo na testa, mas esta bem
+nenhuma|a crianca ta sem apetite e quero levar no pediatra
+nenhuma|meu neto de 6 anos ficou em casa sozinho meia hora e ficou assustado
+nenhuma|estou muito triste e cansada e queria conversar com alguem
+nenhuma|estou com depressao e quero tratamento no CAPS
+nenhuma|tomei meu remedio da pressao no horario errado, o que faco
+nenhuma|minha mãe toma muitos remedios e preciso organizar
