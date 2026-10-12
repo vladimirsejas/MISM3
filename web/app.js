@@ -334,6 +334,7 @@
   function rolarPara(id) {
     var alvo = document.getElementById(id);
     if (!alvo) return false;
+    if (alvo.tagName === "DETAILS") alvo.open = true;
     var recolhida = alvo.querySelector("details.secao-recolhida");
     if (recolhida) recolhida.open = true;
     var calmo = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -356,6 +357,7 @@
     var extras = [];
     if (area.jornada && window.JornadaUI) extras.push({ ancora: "titulo-jornada", rotulo: "Monte seu plano", corpo: "plano passo a passo primeiro passo o que fazer por onde começar" });
     if (area.jornada === true) extras.push({ ancora: "montar-curriculo", rotulo: "Montar um currículo", corpo: "currículo curriculo emprego vaga trabalho" });
+    if (dados.indice && area.secoes.some(function (x) { return x.tipos.length; })) extras.push({ ancora: "busca-por-cep", rotulo: "Ver o que fica perto de mim (pelo CEP)", corpo: "cep perto proximo mais proximo perto de mim endereco bairro unidade escola creche" });
     if (area.secoes.some(function (x) { return x.busca === "bairro"; })) extras.push({ ancora: "busca-bairro", rotulo: "Qual CRAS atende o meu bairro?", corpo: "cras bairro atende regiao endereco moro" });
     indiceDuvida = Duvida.indexar(area, nomes, extras);
   }
@@ -468,6 +470,19 @@
     }
     var urgente = lista[0].urgente
       ? '<p class="ia-urgente" role="alert"><strong>Se você corre perigo agora, ligue 190 (Polícia Militar) ou 180 (Central de Atendimento à Mulher), ou toque em “Em perigo agora?”.</strong></p>' : "";
+    /* Meu plano: as mesmas sugestões, mas em ordem de urgência, com o motivo e o que fazer se não der certo (plano.js). */
+    var plano = window.Plano ? Plano.montar(lista) : null;
+    if (plano && plano.passos.length) {
+      return urgente + '<h3 class="plano-titulo">Meu plano: por onde começar, nesta ordem</h3>' +
+        '<p class="meta">Sugestões da ferramenta. Ela pode errar: confira em cada área e confirme horário e vaga por telefone.</p><ol class="plano">' +
+        plano.passos.map(function (p) {
+          var sv = (servicos && servicos[p.id]) || [];
+          return '<li class="plano-passo' + (p.urgente ? " urgente" : "") + '"><a class="ia-card' + (p.urgente ? " urgente" : "") + '" href="' + esc(p.href) + '"><strong>' + esc(p.titulo) + "</strong><span>" + esc(p.texto) + "</span></a>" +
+            '<p class="plano-porque"><strong>Por que nesta posição:</strong> ' + esc(p.porque) + "</p>" +
+            (sv.length ? '<ul class="ia-servicos"><li class="ia-rotulo">Serviços que podem ajudar:</li>' + sv.map(htmlServicoIA).join("") + "</ul>" : "") +
+            '<p class="plano-senao"><strong>Se não der certo:</strong> ' + esc(p.senao) + "</p></li>";
+        }).join("") + '</ol><p class="meta">' + esc(plano.aviso) + "</p>";
+    }
     return urgente + '<p class="meta">Sugestões da ferramenta. Ela pode errar: confira em cada área e confirme horário e vaga por telefone.</p><ul class="ia-lista">' + lista.map(function (sg) {
       var sv = (servicos && servicos[sg.id]) || [];
       return '<li><a class="ia-card' + (sg.urgente ? " urgente" : "") + '" href="' + esc(sg.href) + '"><strong>' + esc(sg.titulo) + "</strong><span>" + esc(sg.texto) + "</span></a>" +

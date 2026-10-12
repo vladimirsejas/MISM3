@@ -279,9 +279,10 @@ lista.filter((x) => x.subtipo === "curso_tecnico").forEach((x) => assert(/técni
 const maesSec = Areas.AREAS.find((a) => a.id === "educacao").secoes[0];
 assert(/filhos/.test(maesSec.titulo) && maesSec.canais.length >= 6, "Educação deve começar com o passo a passo para os filhos (matrícula, transferência, vagas)");
 const areaEdu = Areas.AREAS.find((a) => a.id === "educacao");
-assert(areaEdu.guia && areaEdu.guia.itens.length === 3, "a Educação deve abrir com a caixa que explica o que há para os filhos, para a mãe e no Trabalho");
+assert(areaEdu.guia && areaEdu.guia.itens.length === 4, "a Educação deve abrir com a caixa que explica o que há para os filhos, para a mãe, no Trabalho e a busca de creches e escolas perto do CEP");
+assert(areaEdu.guia.itens.some((i) => i.ancora === "busca-por-cep" && /CEP/.test(i.texto)), "a caixa deve levar à busca por CEP (creches e escolas perto de mim)");
 assert(areaEdu.guia.itens.some((i) => /Para você/.test(i.titulo) && /profissionalizantes/.test(i.texto) && /EJA/.test(i.texto)), "a caixa deve dizer que há cursos profissionalizantes e EJA para a própria mãe");
-areaEdu.guia.itens.filter((i) => i.ancora).forEach((i) => assert(areaEdu.secoes.some((sec) => sec.ancora === i.ancora), "o botão deve levar a uma seção existente: " + i.ancora));
+areaEdu.guia.itens.filter((i) => i.ancora && i.ancora !== "busca-por-cep").forEach((i) => assert(areaEdu.secoes.some((sec) => sec.ancora === i.ancora), "o botão deve levar a uma seção existente: " + i.ancora));
 assert(areaEdu.guia.itens.some((i) => i.href === "#trabalho"), "a caixa deve apontar para a área Trabalho");
 const secVoce = areaEdu.secoes.find((sec) => sec.ancora === "educacao-voce");
 assert(secVoce && /Para você/.test(secVoce.titulo) && /Você também pode estudar/.test(secVoce.descricao), "a seção de cursos deve se dirigir à própria mãe");

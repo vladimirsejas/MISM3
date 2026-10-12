@@ -13,6 +13,7 @@ function indice(id) {
   const extras = [];
   if (area.jornada) extras.push({ ancora: "titulo-jornada", rotulo: "Monte seu plano", corpo: "plano passo a passo primeiro passo o que fazer por onde começar" });
   if (area.jornada === true) extras.push({ ancora: "montar-curriculo", rotulo: "Montar um currículo", corpo: "currículo curriculo emprego vaga trabalho" });
+  if (area.secoes.some((x) => x.tipos.length)) extras.push({ ancora: "busca-por-cep", rotulo: "Ver o que fica perto de mim (pelo CEP)", corpo: "cep perto proximo mais proximo perto de mim endereco bairro unidade escola creche" });
   if (area.secoes.some((x) => x.busca === "bairro")) extras.push({ ancora: "busca-bairro", rotulo: "Qual CRAS atende o meu bairro?", corpo: "cras bairro atende regiao endereco moro" });
   return Duvida.indexar(area, nomes, extras);
 }
@@ -31,6 +32,11 @@ assert(acha("trabalho", "como fazer currículo").includes("montar-curriculo"), "
 assert(acha("moradia", "conta de luz muito alta tarifa social").length > 0, "luz (ponte para energia) -> tarifa social");
 assert(acha("direitos", "preciso de advogado de graça para pensão").length > 0, "advogado/pensão -> Defensoria e pensão");
 
+assert(acha("educacao", "tem creche perto de mim").includes("busca-por-cep"), "'perto de mim' -> a busca por CEP");
+assert(acha("educacao", "onde fica a escola mais próxima da minha casa").includes("busca-por-cep"), "escola mais próxima -> a busca por CEP");
+const eduGuia = Areas.porId("educacao").guia.itens.find((g) => g.ancora === "busca-por-cep");
+assert(eduGuia && /CEP/.test(eduGuia.texto) && /não garante vaga/.test(eduGuia.texto), "a entrada da Educação leva à busca por CEP e avisa que escola cadastrada não garante vaga");
+
 /* ---- o que a página não tem não é inventado: lista vazia (a tela mostra "não encontramos") ---- */
 ["educacao", "saude", "assistencia", "trabalho", "direitos", "moradia"].forEach((id) => {
   assert.deepStrictEqual(acha(id, "qual a previsão do tempo amanhã"), [], "sem relação com a área: não inventa resposta (" + id + ")");
@@ -41,7 +47,7 @@ assert(acha("direitos", "preciso de advogado de graça para pensão").length > 0
 /* ---- toda resposta aponta para um lugar que EXISTE na página ---- */
 ["trabalho", "educacao", "saude", "direitos", "moradia", "assistencia"].forEach((id) => {
   const area = Areas.porId(id);
-  const ancoras = new Set(area.secoes.map((sec, i) => sec.ancora || ("secao-" + (i + 1))).concat((area.guia && area.guia.itens || []).map((g) => g.ancora), ["titulo-jornada", "montar-curriculo", "busca-bairro"]));
+  const ancoras = new Set(area.secoes.map((sec, i) => sec.ancora || ("secao-" + (i + 1))).concat((area.guia && area.guia.itens || []).map((g) => g.ancora), ["titulo-jornada", "montar-curriculo", "busca-bairro", "busca-por-cep"]));
   indice(id).docs.forEach((d) => assert(ancoras.has(d.ancora), "âncora que não existe na página: " + id + " -> " + d.ancora));
   assert.strictEqual(typeof area.exemploDuvida, "string", "cada área tem um exemplo de pergunta: " + id);
 });

@@ -36,6 +36,7 @@
         texto: "A área Educação é para os seus filhos e também para você.",
         itens: [
           { titulo: "Para os seus filhos", texto: "Matrícula, transferência, vaga em creche, calendário de 2027, documentos e o que fazer se não houver vaga. Há também apoio para quem cria os filhos sozinha e a lista das escolas municipais, com endereço e telefone. O cursinho gratuito para o vestibular e o ENEM, que serve aos filhos, está em “Para você”.", ancora: "educacao-filhos", botao: "Ver o guia dos filhos" },
+          { titulo: "Creches e escolas perto de mim", texto: "Informe o seu CEP e veja as unidades que ficam mais perto, com endereço e telefone, e o bairro provável do seu CEP. Uma escola cadastrada não garante vaga: confirme na Secretaria da Educação.", ancora: "busca-por-cep", botao: "Informar meu CEP" },
           { titulo: "Para você", texto: "Terminar o ensino médio (EJA), fazer faculdade e cursos profissionalizantes e técnicos para trabalhar: SENAI, Senac, SEST SENAT, Etec e Fatec, além do cursinho gratuito para o vestibular e o ENEM e do EJA da Unesp.", ancora: "educacao-voce", botao: "Ver cursos e estudos para você" },
           { titulo: "Emprego e renda", texto: "Vagas de emprego, crédito e um plano para voltar a trabalhar ficam na área Trabalho.", href: "#trabalho", botao: "Ir para Trabalho" }
         ]
