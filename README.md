@@ -1,171 +1,225 @@
-# Mulher em Rede (MISM3) — marco 1
+# Mulher em Rede (MISM3)
 
-> Este README registra **o que existe e foi verificado**; não é plano nem diretriz. Decisões e histórico: [registro de decisões](docs/registro_decisoes_desenvolvimento.md). Última verificação: 11/10/2026.
+Site estático de orientação para mulheres de Rio Claro (SP): reúne serviços públicos verificados (assistência social, saúde, educação, trabalho, direitos, moradia, transporte) e recomenda para onde ir a partir do que a pessoa escreve. Projeto acadêmico de demonstração (Fatec Rio Claro, Inteligência Artificial). Não é um site oficial da Prefeitura, não é vendido e não tem fins comerciais.
 
-> **Princípio:** o Mulher em Rede oferece orientação baseada nas evidências disponíveis. Não substitui a avaliação de profissionais, não determina automaticamente as necessidades de uma pessoa e explicita a origem, a data e os limites de cada informação. **O que existe, o que foi testado e o que ainda é proposta:** [estado do projeto](docs/estado_do_projeto.md). Validação com usuárias: [roteiro](docs/roteiro_validacao_navegacao.md) (ainda não realizada).
+Estado em 13/10/2026. O que existe, o que foi testado e o que ainda é proposta: [docs/estado_do_projeto.md](docs/estado_do_projeto.md). Decisões e histórico: [docs/registro_decisoes_desenvolvimento.md](docs/registro_decisoes_desenvolvimento.md).
 
-A tela inicial (**Mulher em Rede**) acolhe com **"Você não está sozinha"** e uma ilustração, e traz as **sete portas** (Trabalho, Educação, Saúde, Direitos, Moradia, Assistência Social e Entre Mulheres) em cartões coloridos com uma frase curta, um botão **Emergência** que abre o painel de contatos, os **contatos essenciais** (190, 192, 180 e 100, mais CRAM, Secretaria da Mulher, UPA, Conselho Tutelar e CREAS, lidos do catálogo verificado) e um **acesso rápido** com atalhos diretos para seções (por exemplo, `#educacao/educacao-escolas`). O detalhe de cada área (serviços, endereços, horários, critérios) só aparece depois de escolhê-la. Onde há dados de CEP reais, também é possível buscar serviços próximos; o CEP **nunca sai do navegador**. A paleta (rosa, pêssego e verde-sálvia) tem contraste conferido por teste: texto principal ≥ 13:1, texto suave ≥ 5,5:1 e botões e links ≥ 6,5:1.
+Restrições de projeto: não usa modelo de linguagem; o texto digitado nunca sai do navegador; não prevê risco individual; não decide elegibilidade a benefício; não promete vaga. Cada dado mostra fonte e data de conferência.
 
-## Trabalho: plano e currículo
-A tela inicial tem a caixa **"Conte com suas palavras"**: um modelo de aprendizado de máquina, treinado pela equipe e executado no aparelho (`web/ia.js`), sugere por onde começar. O texto digitado e o CEP não são enviados pelo orientador (não há API de IA nem servidor); hoje a única requisição externa possível é a camada de ruas do mapa (OpenStreetMap), que só carrega se a usuária marcar a opção e avisa disso antes (o envio de respostas do questionário existe no código, mas está desligado em `web/dados/coleta.json`). Arquitetura e métricas: `docs/arquitetura_ia.md` e `docs/ia/avaliacao_modelo_necessidades.md`. Para retreinar: `python pipeline/treinar_necessidades.py` (precisa de scikit-learn).
+## Arquitetura
 
-O **Questionário** (`#questionario`) tem 19 perguntas de alternativas, calcula índices de 0 a 100 em 5 temas e devolve até 3 caminhos com serviços reais. Foi pensado para também gerar dados sem identificação para a Secretaria da Mulher, mas **a coleta está desligada** (nada é enviado). Detalhes em `docs/questionario_observatorio.md`.
+```
+fontes oficiais (IBGE, INEP, CNES, páginas municipais)      catálogos escritos à mão (catalogo/)
+                         \                                    /
+                          v                                  v
+                   pipeline/*.py  (Python: baixa, trata, treina, valida)
+                                   |
+                                   v
+                   web/dados/*.json, *.geojson  (arquivos gerados)
+                                   |
+                                   v
+              web/index.html + web/*.js  (navegador: sem servidor, sem build)
+```
 
-O plano do próximo ciclo está em `docs/plano_proximo_ciclo.md` e o roteiro para conferir os contatos de proteção (Patrulha; o CRAM foi retirado por falta de fonte confiável) em `docs/roteiro_conferir_protecao.md`.
+- O site roda inteiro no navegador. Python só gera os arquivos que o site lê; não há servidor próprio nem API em tempo de execução.
+- O dashboard é uma única página (`web/index.html`). Entre Mulheres, Rio Claro em números e o Painel são vistas carregadas sob demanda (`app.js`).
+- Os modelos de aprendizado de máquina são treinados em Python e exportados como JSON (pesos); o navegador só faz multiplicação de matrizes (`web/ia.js`, `web/orientar.js`).
 
-Para a Secretaria da Mulher há um **painel com dados de teste**, dentro do dashboard (`#painel`, aberto pelo bloco "Para a gestão" no fim da tela inicial; o painel real exigirá login) e um script de **análise territorial** (`pipeline/analise_territorial.py`, ainda sem dados suficientes). Ver `docs/painel_e_analise_territorial.md` e `docs/roteiro_validacao_questionario.md`.
+## Linguagens
 
-A área Trabalho abre com perguntas curtas (crianças e cuidado, dinheiro para o básico, deslocamento, ensino médio, currículo, objetivo) e monta um plano de passos ordenado: primeiro o cuidado das crianças e o apoio da assistência social quando necessários, depois deslocamento, currículo, cursos ou vagas. Cada passo diz o que fazer, por que está naquela posição e o que tentar se não der certo. O plano não diz se a pessoa tem direito a algo nem garante vaga ou crédito. Há também um montador de currículo, e ambos podem ser impressos ou salvos em PDF. Nada é enviado nem gravado no aparelho: o conteúdo fica na memória da página e some ao voltar ao Início. Os serviços de ensino (SENAI Rio Claro, Senac Rio Claro, Etec Prof. Armando Bayeux da Silva e o catálogo geral das Etecs, dois cursos superiores de tecnologia da Fatec Rio Claro, SESI Rio Claro com a EJA gratuita, a Faculdade SESI de Educação e o SEST SENAT) ficam na área **Educação**, em cinco grupos: conclusão dos estudos e graduação (SESI), estudar e se qualificar ao mesmo tempo (Ensino Médio integrado ao técnico da Etec e as ofertas do SESI com o SENAI), cursos profissionalizantes (qualificação profissional: SENAI, Senac, SEST SENAT), cursos técnicos (Etec, que também está no grupo conjunto) e cursos superiores de tecnologia (Fatec). A área Trabalho reúne emprego, renda, os cursos de qualificação do Fundo Social e também os cursos profissionalizantes e técnicos (SENAI, Senac, SEST SENAT e Etec), que servem tanto a quem está saindo da escola quanto a quem já se formou e quer fazer esses cursos; ela aponta para a Educação para a conclusão dos estudos (EJA), a Faculdade SESI e os cursos superiores da Fatec, que ficam só na Educação. Os dados vêm de páginas oficiais arquivadas em `docs/documetacao`. A gratuidade do SESI em geral foi informada pelo autor; as páginas impressas a confirmam para a EJA e a graduação. A Faculdade SESI de Educação fica em São Paulo (capital), com aulas presenciais à noite segundo uma notícia de 2021; as regras de 2027 precisam ser conferidas no edital. No SEST SENAT, o endereço (Rodovia Washington Luís, km 176, Jardim Rio Claro, CEP 13503-750) e o telefone (19) 3522-1710 da unidade foram confirmados por telefone pelo autor, e há o 0800 700 9393 da central nacional; os cursos mudam a cada período e por isso não são listados: o site aponta para a página de cursos abertos. Segundo o autor, a página da cidade só abre para sócios. O catálogo geral das Etecs é do estado, e a Etec local tem cartão próprio.
-
-## Educação: filhos e você
-A área Educação abre com uma caixa que explica o que há na página: **para os seus filhos** (matrícula, transferência, vagas, calendário de 2027 e apoio a quem cria os filhos sozinha), **para você** (EJA, faculdade e cursos profissionalizantes e técnicos) e **emprego e renda** (leva à área Trabalho). Os botões da caixa rolam até cada parte.
-
-O guia dos filhos tem cartões sobre: quem cuida de cada etapa, o caminho de cada tipo de escola (municipal, estadual, particular, SESI, EJA), a matrícula pelo aplicativo CADU (caminho conferido na publicação oficial da Prefeitura de 17/10/2025), a primeira matrícula, os documentos por situação, a transferência, como procurar vaga, o que fazer se a vaga for negada, o **calendário de 2027 das escolas estaduais** (Resolução SEDUC nº 80/2026, texto oficial conferido) e as **férias de 2027 e a Copa do Mundo Feminina** (Lei nº 15.421/2026, art. 67, e Parecer CNE/CEB nº 7/2026, homologado). O que veio só de pesquisa está marcado como não conferido.
-
-**Escolas municipais:** a seção "Escolas municipais de Rio Claro" (recolhida, com busca por nome ou bairro) traz as **68 escolas** da página oficial "Unidades de ensino" da Prefeitura (11/10/2026), com endereço e telefone. A página não diz quais etapas cada escola atende nem se há vaga, e o site avisa isso em cada cartão. As 5 unidades do "Programa Integra" da mesma página não foram cadastradas (a natureza delas não foi confirmada).
-
-**Ainda não confirmado pela Secretaria:** o calendário e o procedimento de matrícula de 2027 na rede **municipal**, como pedir vaga em creche quando não há disponibilidade e os documentos exigidos hoje. A lista de escolas estaduais também não está no site.
-
-## Sobre este projeto
-O Mulher em Rede (MISM3) é um **estudo acadêmico de demonstração**: não é vendido, não tem fins comerciais e **não é um site oficial da Prefeitura de Rio Claro**. Ele é um mostruário do que se pode fazer para reunir, de forma clara e segura, informações públicas da cidade; a ideia é que, no futuro, possa ser adotado pela Prefeitura. O rodapé do site diz isso e mostra o **brasão de Rio Claro em versão estilizada** (`web/img/brasao-estilizado.webp`, 60 KB), apenas como ilustração. Se o projeto for adotado oficialmente, o brasão estilizado deve ser trocado pelo arquivo oficial da Prefeitura, com autorização.
-
-## Transporte: horários de ônibus
-A área **Transporte** (`#transporte`, atalho "Horários de ônibus" na tela inicial) traz os horários da **SOU Transportes** de **5 linhas** (01 Bela Vista, 06 Cervezão, 07 Circular I, 08 Circular 2 e 09 Paineiras), com **382 horários**. Para cada linha e sentido, mostra as **próximas saídas de hoje** (pelo relógio do aparelho), os horários de dias úteis, sábados e domingos, e o **trajeto de cada variante** como a SOU escreve. Avisa que as páginas são de 09/10/2026 e valem **até 04/02/2027** (e avisa quando essa data passa), que feriados não constam e **o que falta**: a Circular I só tem a Volta, e a linha Arco-Íris/Mãe Preta e as demais ainda não foram cadastradas. Os PDFs da SOU eram impressões de imagem; os horários foram lidos e conferidos por três leituras independentes (veja `docs/transporte/README.md`). Para atualizar: edite `catalogo/horarios_onibus.txt` e rode `python pipeline/horarios_onibus.py` (ele recusa horário inválido, fora de ordem ou repetido).
-
-## Tela inicial: questionário e Secretaria da Mulher
-Abaixo das sete portas há dois cartões de destaque e, em seguida, o **mapa de serviços** (busca de CRAS por bairro, CEP, mapa e "mais perto"). Os cartões de destaque são: o **Questionário** (ajuda a Secretaria da Mulher a conhecer as mulheres de Rio Claro) e a **Secretaria da Mulher**, cujo endereço, telefone e horário vêm do catálogo verificado (`man-secretaria-mulher`), sem digitar o mesmo dado duas vezes. O painel da Secretaria (`painel-secretaria.html`) segue fora do site público, com dados de teste.
-
-## Saúde: dependência química e grupos de ajuda mútua
-Na área Saúde, seção "Meu filho ou familiar usa álcool ou drogas", há um cartão que explica para que serve cada tipo de grupo (AA, NA, Al-Anon, Alateen, Amor Exigente, e a diferença para o CAPS AD) e os grupos de Rio Claro informados por contato direto: **NA Grupo Gratidão**, **NA Grupo Viver Limpo** e **Amor Exigente**. São grupos anônimos, sem cadastro público: cada cartão diz que a fonte não é oficial e pede para confirmar dia e horário. Não publicamos telefones pessoais de integrantes. Os cartões ficam em `web/areas.js`.
-
-## Mapa de serviços
-O mapa está **dentro da tela inicial** (seção "Mapa de serviços", logo abaixo das portas; o botão "Ver o mapa de serviços" do topo rola até ela), com filtros por tipo, busca por nome, endereço ou bairro e a lista de todos os serviços. Não há página nem comando separado: tudo abre no mesmo endereço. Ele mostra num mapa todos os serviços do catálogo que têm localização, com filtro por tipo (cor **e** forma diferentes), busca por nome, endereço ou bairro e telefone, horário, fonte e data em cada ponto. **Ponto cheio:** posição pelo endereço. **Ponto vazado:** posição aproximada pelo CEP (só quando o CEP é preciso, raio de até 800 m). Serviço sem localização aparece só na lista, com o link "Ver no Google Maps" (abre outra aba e leva só o endereço do serviço); nenhum ponto é inventado. O CEP digitado serve só para marcar uma região aproximada e ordenar por distância **em linha reta**; não é guardado nem vai para a barra de endereço. Usa o Leaflet local e os dados que já existem (`catalogo_manual.json`, `cep_indice.json`, `setores.geojson` só como contorno). Mais pontos aparecem à medida que `python pipeline/atualizar_localizacoes.py` localiza mais serviços. Ao informar o CEP, o topo da página mostra **o serviço mais perto de cada tipo** (só entre os que têm posição conhecida; a distância é em linha reta). Os CRAS achados pela busca de bairro têm o botão "Mostrar no mapa" quando a posição do CRAS é conhecida.
-
-Na mesma página, a caixa **"Qual CRAS atende o meu bairro?"** usa só a lista oficial de bairros que a Prefeitura publica para cada CRAS (campo `bairros` do catálogo; nada de adivinhar por distância). Ela entende "Jd." e "Jardim", acento e sufixos como "I e II"; quando o nome só bate sem o "Jd./Vila" (podem ser bairros diferentes) ou existe em mais de um CRAS, mostra todos os nomes oficiais encontrados e pede confirmação por telefone. Apelidos de bairro (como Cervezão) ficam em `web/dados/bairros_apelidos.json`: **só os marcados "confirmado" são usados**; os "a_confirmar" não mudam nenhum resultado, e um teste confere que cada nome para onde apontam existe nas fontes do projeto.
-
-## Jornadas de orientação
-Três áreas têm um plano guiado: **Trabalho**, **Educação** e **Assistência Social**. A pessoa responde poucas perguntas, uma de cada vez (pode pular), e recebe um plano curto: em cada passo, **por que começar por ali**, uma ação, o telefone do catálogo, **o que levar e o que perguntar** e **o que fazer se não der certo**. Nada é enviado nem guardado no aparelho.
-
-- **Trabalho** (`web/jornada.js`): emprego, curso ou renda por conta própria, com montador de currículo.
-- **Educação** (`web/jornada-educacao.js`): duas ramificações. *Para o meu filho:* pedir a vaga (pelo CADU, ou pessoalmente na Secretaria se a mãe não consegue usar o aplicativo), acompanhar a fila e pedir ajuda se a vaga for negada ou demorar (Conselho Tutelar, Defensoria, Promotoria). *Para mim:* terminar o ensino médio (EJA), curso técnico ou gratuito, cursinho e faculdade.
-- **Assistência Social** (`web/jornada-assistencia.js`): três caminhos. *Falta dinheiro ou apoio no básico:* CRAS do bairro (com link para "Qual CRAS atende o meu bairro?") e outros canais. *Direitos violados:* CREAS, Conselho Tutelar (Sul e Norte) e Disque 100, com o Ligue 180 e a área Direitos para a mulher em violência. *Convivência* para filhos ou pessoas idosas. Não fala de benefício específico (por exemplo CadÚnico): o projeto não tem fonte, então manda perguntar ao CRAS.
-- Todo texto vem do que a área e o catálogo verificado já trazem, com os mesmos avisos ("confirme na Secretaria", "não garante vaga"). Os planos nunca anunciam vaga ou inscrição aberta, e o PEJA da Unesp (que hoje atende outro público) não é recomendado.
-- Para criar outra jornada: `Jornada.registrar({...})` com as perguntas, as regras de quando cada uma se aplica e a função que monta os passos; o motor, a tela e o estado por jornada já são compartilhados. Testes: `web/tests/jornada.test.js`, `jornada_educacao.test.js` e `jornada_assistencia.test.js` (conferem todas as combinações de respostas, as fontes dos links e telefones e a ausência de promessas).
-
-## Idade da informação
-Cada serviço mostra a fonte, a data de verificação e há quantos dias ela foi feita. Acima de 90 dias, ou sem data válida, aparece o aviso "Esta informação pode ter mudado. Confirme telefone, endereço e horário na fonte antes de ir." O aviso não diz que o dado está errado; só informa que a conferência é antiga.
-
-## Inteligência do sistema: como o MISM3 orienta
-Uma ideia só atravessa o projeto: **os dados verificados são a inteligência; a IA é a interface**. Nada aqui usa modelo de linguagem, nada sai do aparelho e nada promete vaga ou benefício. Em camadas:
-1. **Entender o que a mulher escreve** (`web/ia.js`, `web/necessidades.js`): modelo de aprendizado de máquina (TF-IDF + regressão logística, treinado em `pipeline/treinar_necessidades.py`) somado a regras de palavras-chave. Álcool e drogas são tratados como **questão de saúde** (dependência é doença) e levam direto à seção da Saúde com o CAPS AD e os grupos de ajuda mútua.
-2. **Meu Plano** (`web/plano.js`): quando o texto revela mais de uma necessidade, o resultado vira um plano em **ordem de urgência** (segurança, apoio básico, saúde, moradia, filhos, direitos, dívidas, trabalho, estudo), com "por que nesta posição" e "se não der certo". A ordem é uma regra fixa e explicável, não uma nota do modelo.
-3. **Orientador: tela inicial e caixa de dúvida de cada área** (`web/orientar.js`, `web/perigo.js`, `web/orientacao-ui.js`; índice gerado por `pipeline/indice_orientacao.py`): a mulher escreve do seu jeito e recebe o serviço, a seção ou a ferramenta certa, com telefone, endereço, data da última conferência e **por que apareceu**. Busca híbrida (palavras, letras, significado por LSA e intenção do classificador) sobre 161 destinos; tolera erros de digitação; se não acha, diz que não achou e mostra as áreas. Uma camada de segurança (regras mais um detector aprendido, `pipeline/treinar_perigo.py`) detecta violência, suicídio, criança em perigo e emergência de saúde e fixa telefones e serviços de proteção no topo. Tudo roda no aparelho. Avaliação com 210 perguntas e conjunto de teste guardado: `docs/ia/avaliacao_orientacao.md` (`python avaliacao/avaliar.py v2 --conjunto teste`).
-4. **CEP, bairro e o que fica perto** (`web/mapa-servicos.js`, `web/dados/setor_bairro.json`): o CEP vira o **bairro provável** (pelo setor do IBGE, que é agrupado e pode diferir do nome usado pela Prefeitura) e leva à busca do CRAS; o contrário (CEPs de um bairro) também. O mapa fica na tela inicial e mostra o serviço mais perto de cada tipo.
-O que ainda **não** existe: elegibilidade automática de benefícios (precisa de critérios oficiais confirmados), busca semântica por embeddings (o modelo atual é de letras e palavras) e qualquer modelo de linguagem. Ver `docs/arquitetura_ia.md`.
-
-## Linguagens e onde cada uma é usada
-O site é **estático** (HTML, CSS e JavaScript puros, sem framework, sem servidor e sem etapa de compilação). O Python só gera os dados que o site lê. Contagem de arquivos versionados:
-
-| Linguagem | Arquivos | Onde está | Para que serve |
+| Linguagem | Onde | Para que serve | Versão |
 |---|---|---|---|
-| **JavaScript** | o site e seus testes | `web/*.js`, `web/tests/`, `web/vendor/leaflet.js` (de terceiros), `pipeline/gerar_dados_teste_painel.js`, `avaliacao/*.js` | O site inteiro roda no navegador: telas e áreas (`app.js`, `areas.js`), jornadas (`jornada*.js`), mapa (`mapa.js`, `mapa-servicos.js`), questionário, painel e o orientador "Conte com suas palavras" (`ia.js`, `necessidades.js`, `orientar.js`, `perigo.js`). Os testes do site ficam em `web/tests/` e rodam com Node. |
-| **Python** | o pipeline e seus testes | `pipeline/*.py`, `pipeline/tests/`, `avaliacao/avaliar.py` | Baixa e trata dados (CNEFE, CNES, INEP), monta o catálogo (`servicos.py`), localiza serviços por CEP (`geocodificar_catalogo.py`, `indice_cep.py`, `atualizar_localizacoes.py`), gera os horários de ônibus e treina o modelo de necessidades (`treinar_necessidades.py`) e gera o índice do orientador (`indice_orientacao.py`). |
-| **HTML** | 1 | `web/index.html` | O dashboard inteiro. Entre Mulheres, Rio Claro em números e o Painel são "vistas" dentro dele (carregam seus scripts só quando abertas); não existem páginas separadas. |
-| **CSS** | 2 | `web/estilo.css` (o visual do site) e `web/vendor/leaflet.css` (de terceiros) | Aparência, cores, layout e impressão. |
-| **Batch (.bat, Windows)** | 2 | raiz: `abrir_site.bat` (abre o dashboard) e `atualizar_localizacoes.bat` (manutenção dos dados, só para quem mantém o catálogo) | Conveniência para quem desenvolve; as usuárias nunca rodam nada, só abrem o endereço do site. |
-| **YAML** | 1 | `.github/workflows/testes.yml` | Roda os testes de Python e de JavaScript a cada envio ao GitHub. |
-| **Dados (não são programa)** | — | `web/dados/*.json` e `.geojson` (gerados), `catalogo/*.csv` e `*.txt` (digitados à mão) | O catálogo verificado, os horários, o modelo e os mapas. Para mudar um serviço, edite `catalogo/servicos_manuais.csv` e rode `python pipeline/servicos.py --somente-manual`. |
-| **Markdown** | 22 | `README.md` e `docs/` | Documentação, decisões e fontes. |
+| JavaScript (ES5, módulos IIFE, sem bundler, sem npm) | `web/*.js`, `web/tests/`, `avaliacao/*.js`, `pipeline/gerar_dados_teste_painel.js` | Todo o site e seus testes; scripts de avaliação | Navegador moderno; Node 18+ para testes (CI: 20; testado: 22) |
+| Python | `pipeline/*.py`, `pipeline/tests/`, `avaliacao/avaliar.py` | Pipeline de dados, treino e exportação dos modelos, avaliação, testes | 3.10+ (CI: 3.12; testado: 3.13 e 3.14) |
+| HTML | `web/index.html` | Dashboard (página única) | HTML5 |
+| CSS | `web/estilo.css`, `web/vendor/leaflet.css` | Visual, contraste, impressão, responsividade | CSS3, sem pré-processador |
+| Batch (Windows) | `abrir_site.bat`, `atualizar_localizacoes.bat` | Abrir o site local; refazer localizações do catálogo | cmd.exe |
+| YAML | `.github/workflows/testes.yml` | Integração contínua (GitHub Actions) | |
+| JSON, GeoJSON, CSV, TXT | `web/dados/`, `catalogo/`, `avaliacao/perguntas.json` | Dados, modelos exportados, catálogos e frases de treino | UTF-8 |
+| Markdown | `README.md`, `docs/` | Documentação | |
 
-Observações: o `web/vendor/` (Leaflet) é uma biblioteca de terceiros, usada localmente, sem pedir nada à internet.
+## Bibliotecas e dependências
 
-## Estado dos dados
-- Catálogo verificado à mão (`catalogo/servicos_manuais.csv`): 164 registros: 45 de saúde, 26 de assistência, 20 de emprego e cursos, 4 de mulher e 69 de educação infantil (a Secretaria da Educação e 68 escolas municipais). As unidades de saúde vêm do CNESNet (códigos CNES, 51 estabelecimentos mantidos pela Fundação Municipal de Saúde) e da página de endereços da Fundação; 43 têm endereço e 41 têm telefone.
-- Os números 977 estabelecimentos no CNES e 45 publicados foram confirmados pelo autor, que trabalha na Fundação Municipal de Saúde; a base completa do CNES não está versionada.
-- Sem `servicos.json` e `cep_indice.json` (gerados na máquina de quem roda o pipeline), o site usa só o catálogo verificado e não oferece busca por CEP. Em 09/10/2026 foram gerados localmente 1.387 CEPs a partir de 104.236 linhas do CNEFE e lidos 142 registros de escolas do INEP (69 com Educação Infantil, nenhum campo identifica creche).
+Python (instalar: `python -m pip install -r requirements.txt`; fonte única das versões mínimas):
 
-## Como rodar os testes e localizar os serviços
+| Biblioteca | Onde é usada | Para que serve |
+|---|---|---|
+| pandas | `pipeline/cnes.py`, `common.py`, `indice_cep.py`, `oferta_educacao_infantil.py`, `servicos.py` e testes | Leitura e tratamento de CSV grandes (CNES, CNEFE, Censo Escolar) |
+| numpy | `analise_territorial.py`, `common.py`, `indice_cep.py`, `indice_orientacao.py`, `treinar_necessidades.py`, `treinar_perigo.py`, `treinar_escopo.py` | Arrays, cálculo numérico, distâncias |
+| scikit-learn | `treinar_necessidades.py`, `treinar_perigo.py`, `treinar_escopo.py` (TfidfVectorizer, LogisticRegression, OneVsRestClassifier, StratifiedKFold); `indice_orientacao.py` (TfidfVectorizer, TruncatedSVD); `analise_territorial.py` (KMeans) | Treino dos modelos, TF-IDF, redução de dimensão (LSA) e agrupamento. Traz o scipy como dependência |
+| pyshp (módulo `shapefile`) | `pipeline/setores.py` | Ler o shapefile de setores censitários do IBGE |
+| openpyxl | `pipeline/inspecionar_arquivo.py` | Inspecionar a estrutura de planilhas .xlsx |
+| pytest | `pipeline/tests/` | Testes do pipeline |
+
+Biblioteca padrão do Python mais usada: `argparse`, `csv`, `json`, `pathlib`, `re`, `unicodedata`, `urllib` (downloads em `baixar.py` e `common.py`; verificação da chave em `testar_api.py`), `zipfile`, `subprocess` (chama o Node em `indice_orientacao.py` e `avaliar.py`).
+
+JavaScript:
+
+| Biblioteca | Onde | Para que serve |
+|---|---|---|
+| Leaflet 1.9.4 (BSD-2), copiada em `web/vendor/` (`leaflet.js`, `leaflet.css`, `images/`, `LEAFLET-LICENSE.txt`) | `web/mapa.js` (mapa de serviços), `web/territorio.js` (mapa por setor) | Mapas interativos; servida localmente |
+| Módulos do Node: `fs`, `path`, `assert`, `vm` | `web/tests/*.test.js`, `avaliacao/*.js`, `pipeline/gerar_dados_teste_painel.js` | Testes e scripts de linha de comando |
+
+Não há pacotes npm, `package.json`, framework, bundler nem CDN. Todo o JavaScript do site é código do projeto, exceto o Leaflet.
+
+Serviços externos: o site só consulta `tile.openstreetmap.org` (ruas do mapa), e apenas se a usuária marcar a opção (`web/mapa.js`). Links para páginas oficiais, WhatsApp e Google Maps abrem por clique. Em tempo de desenvolvimento, `pipeline/baixar.py` baixa dados do IBGE, INEP e DATASUS, e `pipeline/testar_api.py` faz uma chamada mínima à API da Anthropic só para verificar a chave (variável `ANTHROPIC_API_KEY`; o site não usa essa API).
+
+Integração contínua: GitHub Actions (`actions/checkout@v4`, `actions/setup-python@v5`, `actions/setup-node@v4`), Python 3.12, Node 20.
+
+## Modelos de aprendizado de máquina
+
+Todos rodam no navegador. Pesos em JSON, treinados em Python, avaliados em `avaliacao/` (resultados e limites em [docs/ia/avaliacao_orientacao.md](docs/ia/avaliacao_orientacao.md)).
+
+| Modelo | Algoritmo | Treino (script, dados) | Saída | Uso no site |
+|---|---|---|---|---|
+| Necessidades | Regressão logística um-contra-todos sobre n-gramas de caracteres (3 a 5) e palavras, TF-IDF | `pipeline/treinar_necessidades.py`, `catalogo/frases_necessidades.txt` | `web/dados/modelo_necessidades.json` | `web/ia.js` (sugestão de necessidades); dica de intenção no orientador |
+| Perigo | Regressão logística por tipo (violência, suicídio, criança, saúde); limiares de aviso e de alerta por validação cruzada | `pipeline/treinar_perigo.py`, `catalogo/frases_perigo.txt` | `web/dados/modelo_perigo.json` | `web/perigo.js`, junto com regras |
+| Escopo | Regressão logística binária (assunto do site ou não) | `pipeline/treinar_escopo.py`, `catalogo/frases_fora_do_escopo.txt` | `web/dados/modelo_escopo.json` | `web/orientar.js` (abstenção) |
+| Busca | TF-IDF de palavras e de letras, mais LSA (TruncatedSVD, 64 dimensões) | `pipeline/indice_orientacao.py` (usa `web/areas.js` e `web/dados/catalogo_manual.json`) | `web/dados/indice_orientacao.json` | `web/orientar.js` (ranking de destinos) |
+
+Segurança: `web/perigo.js` aplica regras determinísticas e o modelo de perigo. Regra ou modelo com alta confiança gera alerta completo (telefones e serviços de proteção fixados); modelo com confiança moderada gera só um aviso. O alerta das regras aparece antes de qualquer arquivo ser baixado.
+
+Não existe: modelo de linguagem, embeddings neurais, previsão de risco, elegibilidade automática de benefício.
+
+## Estrutura do repositório
+
+| Caminho | Conteúdo |
+|---|---|
+| `web/` | Site estático (publicável como está) |
+| `web/dados/` | JSON e GeoJSON lidos pelo site (gerados ou mantidos à mão; ver `docs/mapa_de_dados.md`) |
+| `web/tests/` | Testes em Node (`*.test.js`) |
+| `web/vendor/` | Leaflet |
+| `web/img/` | Imagens do site (brasões, faixa de mulheres) |
+| `catalogo/` | Fontes escritas à mão: serviços, horários de ônibus, ligação com o INEP, frases de treino |
+| `pipeline/` | Scripts Python e `pipeline/tests/` |
+| `avaliacao/` | Conjuntos de perguntas com gabarito e avaliadores |
+| `docs/` | Documentação, decisões e PDFs de fonte (`docs/documetacao/`) |
+| `dados/bruto/` | Downloads grandes; fora do Git |
+| `requirements.txt` | Dependências Python |
+
+## Código do site (`web/*.js`)
+
+| Arquivo | Função |
+|---|---|
+| `app.js` | Roteador por hash, renderização das áreas e vistas, contatos, orientador na tela |
+| `areas.js` | Conteúdo das áreas (cartões, seções, canais, fontes) |
+| `acesso.js` | Lógica pura: distância, idade da informação, regras de exibição |
+| `ia.js` | Classificador de necessidades; `criarClassificador` carrega qualquer modelo no mesmo formato |
+| `necessidades.js` | Regras de palavras-chave de necessidades e normalização de texto |
+| `perigo.js` | Camada de segurança: regras, detector aprendido, âncoras, letras esticadas |
+| `orientar.js` | Motor de busca de destinos (palavras, letras, LSA, intenção, escopo) e abstenção |
+| `orientacao-ui.js` | Tela do orientador (alerta, lista de resultados, saída "não encontrei") |
+| `plano.js` | Meu Plano: ordem de urgência por regra fixa |
+| `jornada.js`, `jornada-educacao.js`, `jornada-assistencia.js`, `jornada-ui.js` | Jornadas guiadas (Trabalho, Educação, Assistência) e currículo |
+| `questionario.js`, `questionario-ui.js` | Questionário do Observatório (20 perguntas); envio desligado em `web/dados/coleta.json` |
+| `mapa.js`, `mapa-servicos.js` | Mapa de serviços (Leaflet) e lógica de CEP, bairro e serviço mais próximo |
+| `territorio.js` | Vista "Rio Claro em números" (setores censitários) |
+| `entre-mulheres.js`, `entre-mulheres-ui.js` | Entre Mulheres: preparo do cadastro e tela |
+| `painel.js`, `painel-ui.js` | Painel da Secretaria (agregação sem identificação; dados de teste) |
+
+## Pipeline (`pipeline/*.py`)
+
+| Script | Entrada | Saída | Bibliotecas |
+|---|---|---|---|
+| `baixar.py` | URLs do IBGE, INEP, CNES | `dados/bruto/` | stdlib (`urllib`, `zipfile`) |
+| `common.py` | Utilidades compartilhadas (download com retomada, distância) | | pandas, numpy |
+| `cnes.py` | Base completa do CNES | Diagnóstico e estabelecimentos de saúde | pandas |
+| `indice_cep.py` | CNEFE 2022 | `web/dados/cep_indice.json` | pandas, numpy |
+| `ceps_lista.py` | Lista de CEPs com coordenada | Dados para o índice | stdlib |
+| `servicos.py` | `catalogo/servicos_manuais.csv`, CNES, INEP | `web/dados/catalogo_manual.json` e `servicos.json` | pandas |
+| `geocodificar_catalogo.py` | Catálogo | Planilha de sugestões de CEP e coordenada | stdlib |
+| `atualizar_localizacoes.py` | Catálogo, CNEFE, lista de CEPs | Localizações e mapa territorial | stdlib |
+| `setores.py` | Shapefile de setores do IBGE | `web/dados/setores.geojson`, `setor_bairro.json` | pyshp |
+| `territorio.py` | Censo 2022 por setor | `web/dados/territorio.json` | stdlib |
+| `analise_territorial.py` | Setores e serviços | Distâncias e agrupamento | numpy, scikit-learn (KMeans) |
+| `oferta_educacao_infantil.py` | Censo Escolar 2025 | `web/dados/oferta_educacao_infantil.json` | pandas |
+| `ligar_catalogo_inep.py` | Catálogo e Censo | `catalogo/inep_escolas.csv` (sobrescreve; revisar antes) | stdlib |
+| `horarios_onibus.py` | `catalogo/horarios_onibus.txt` | `web/dados/horarios_onibus.json` | stdlib |
+| `treinar_necessidades.py`, `treinar_perigo.py`, `treinar_escopo.py` | Frases em `catalogo/` | Modelos em `web/dados/` | numpy, scikit-learn |
+| `indice_orientacao.py` | Áreas, catálogo, horários | `web/dados/indice_orientacao.json` | numpy, scikit-learn |
+| `verificar_catalogo.py` | Catálogo | Relatório de conferência com as páginas oficiais | stdlib |
+| `inspecionar_arquivo.py` | Arquivos baixados | Estrutura (nunca os registros) | openpyxl |
+| `preparar_versionamento.py` | Arquivos novos | `git add` seguro (tamanho, CPF, dado bruto) | stdlib |
+| `testar_api.py` | `ANTHROPIC_API_KEY` | Resultado de uma chamada mínima | stdlib |
+
+## Como executar
+
+Site (Windows): duplo clique em `abrir_site.bat` (procura Python, escolhe porta livre de 8000 a 8010, serve `web/` e abre o navegador). Em qualquer sistema:
+
 ```
-PYTHONPATH=pipeline python -m pytest pipeline/tests -q     # testes Python
-for f in web/tests/*.test.js; do node $f; done              # testes JavaScript
-python pipeline/atualizar_localizacoes.py                   # localiza serviços (CNEFE + lista de CEPs) e refaz o mapa territorial
+python -m http.server 8000 --directory web
 ```
-O último comando só sugere; nada entra no catálogo sem a sua confirmação. A cada alteração no GitHub, os dois primeiros rodam sozinhos (`.github/workflows/testes.yml`).
+Abrir `http://localhost:8000`. O site funciona só com os arquivos versionados.
 
-### No Windows, sem digitar comandos
-- **`abrir_site.bat`** (duplo clique; já existia): acha o Python, escolhe uma porta livre (8000 a 8010) e abre o site no navegador. Deixe a janela aberta enquanto usa.
+Instalar dependências do pipeline e dos testes:
 
-O `.bat` serve a pasta `web` **da pasta onde ele está**: se existirem duas cópias do projeto, abra o `.bat` da cópia que recebeu o `git pull`.
-- **`atualizar_localizacoes.bat`** (duplo clique): roda `atualizar_localizacoes.py`. Mostra a lista de localizações sugeridas e só altera o catálogo depois que você digita `s`.
+```
+python -m pip install -r requirements.txt
+```
 
-Os dois precisam do Python no PATH.
+Testes:
 
-## Privacidade (por desenho)
-- Consulta 100% no navegador; sem servidor próprio, sem cookies, sem localStorage, sem estatísticas.
-- O índice de CEP guarda só `CEP → centro aproximado + raio`; nenhum endereço ou nome.
-- O mapa começa **sem** imagens externas. As ruas (OpenStreetMap) só carregam se a usuária marcar a caixa.
-- Botão "Em perigo agora?" abre os contatos oficiais (190, 192, 193, 180, 100, 188) e um botão para sair da página. Não prometemos que o uso é invisível: "sair" não apaga o histórico do navegador.
+```
+PYTHONPATH=pipeline python -m pytest pipeline/tests -q          # Linux, macOS
+$env:PYTHONPATH = "pipeline"; python -m pytest pipeline/tests    # PowerShell
+for f in web/tests/*.test.js; do node $f || break; done          # Linux, macOS
+foreach ($f in Get-ChildItem web\tests\*.test.js) { node $f.FullName }   # PowerShell
+```
 
-## Como as usuárias chegam ao site (decisão pendente)
-O MISM3 é um site **estático** (a pasta `web`, sem servidor). Hoje ele só abre no computador de quem roda o `abrir_site.bat`, o que serve ao desenvolvimento e à demonstração, mas **uma mulher não vai rodar comando nenhum**. Para ela chegar, o dashboard precisa de **um endereço (link) público**. O caminho que combina com a arquitetura é hospedar a pasta `web` em um serviço de páginas estáticas gratuito (por exemplo GitHub Pages): não exige servidor, não coleta nada e mantém o texto da usuária no aparelho dela. Isso só deve ser feito depois de os contatos de proteção (Patrulha; o CRAM foi retirado por falta de fonte confiável) estarem confirmados e o site revisado; enquanto isso o site é `noindex` e não deve ser divulgado.
+Avaliação do orientador:
 
-## Abrir o sistema
-Dê dois cliques em `abrir_site.bat` (Windows). Ele procura o Python (`py` ou `python`), escolhe uma porta livre entre 8000 e 8010, liga o servidor da pasta `web` e abre o navegador quando o servidor está pronto; se faltar o Python ou as portas estiverem ocupadas, a janela explica o problema e fica aberta. Para parar, feche a janela ou aperte Ctrl+C. Ou rode à mão:
+```
+python avaliacao/avaliar.py v2 --conjunto final        # também: desenvolvimento, teste, independente, reserva, todos
+node avaliacao/avaliar_plano.js
+```
 
-    python -m http.server 8000 --directory web
+Regerar dados e modelos (requer scikit-learn funcional):
 
-e abra http://localhost:8000. Sem o pipeline completo, o site usa `web/dados/catalogo_manual.json` (serviços verificados à mão, com fonte e data) e avisa o que falta. Para regenerar esse catálogo depois de editar o CSV: `python pipeline/servicos.py --somente-manual`.
+```
+python pipeline/servicos.py --somente-manual   # catálogo manual -> web/dados/catalogo_manual.json
+python pipeline/indice_orientacao.py           # índice do orientador
+python pipeline/treinar_necessidades.py
+python pipeline/treinar_perigo.py
+python pipeline/treinar_escopo.py
+python pipeline/horarios_onibus.py
+```
 
+Pipeline com dados reais (internet, `dados/bruto/`): `baixar.py cnefe`, `baixar.py escolas`, `indice_cep.py`, `cnes.py docs/cnes`, `oferta_educacao_infantil.py`, `territorio.py`, `setores.py <zip>`, `geocodificar_catalogo.py`. Cada script documenta argumentos em `--help` e no cabeçalho.
 
-## Usar dados reais (na sua máquina, com internet)
-Requer Python 3.10+ e `pip install pandas numpy`.
-O CNES é a base completa baixada à mão do site do CNES e descompactada em `docs/cnes` (ou `dados/bruto/cnes`).
+Notas de ambiente:
+- Windows: o padrão de texto do Python é cp1252. Chamadas a `subprocess` e leituras de arquivo usam `encoding="utf-8"` explícito.
+- Políticas de controle de aplicativo do Windows podem bloquear DLLs do scikit-learn (`DLL load failed`). O teste `test_indice_orientacao.py` é ignorado nesse caso; o CI do GitHub o executa. Não reinstalar numpy ou scipy como tentativa de correção.
+- `ligar_catalogo_inep.py --gravar` sobrescreve `catalogo/inep_escolas.csv`, que é revisado à mão.
 
-    python pipeline/baixar.py cnefe       # IBGE CNEFE de Rio Claro
-    python pipeline/baixar.py escolas     # Censo Escolar do INEP (grande; retoma se cair)
-    # se o INEP nao baixar: baixe o zip pelo navegador e rode
-    python pipeline/baixar.py escolas --zip "C:\\caminho\\microdados_censo_escolar_2025.zip"
-    python pipeline/inspecionar_arquivo.py dados/bruto   # mostra só a ESTRUTURA dos arquivos
-    python pipeline/indice_cep.py         # gera web/dados/cep_indice.json
-    python pipeline/cnes.py docs/cnes     # diagnóstico: só contagens, confere as regras do CNES
-    python pipeline/servicos.py           # gera web/dados/servicos.json
-    python pipeline/geocodificar_catalogo.py   # SUGERE CEP/coordenada (planilha dados/geocodificacao_proposta.csv); só muda o catálogo com --aplicar-aprovadas, e só linhas que uma pessoa marcou "aprovar"
-    python pipeline/oferta_educacao_infantil.py   # oferta real de creche e pré-escola de Rio Claro (Censo Escolar 2025 do INEP, em docs/educacao/dados/) -> web/dados/oferta_educacao_infantil.json
-    python pipeline/ligar_catalogo_inep.py --gravar --incluir-quase-iguais   # liga as escolas municipais do catálogo ao código INEP (catalogo/inep_escolas.csv); o cartão passa a mostrar se a escola tem creche e pré-escola
-    python pipeline/territorio.py   # indicadores por setor censitário (densidade, pessoas por domicílio) -> web/dados/territorio.json, que alimenta a vista "Rio Claro em números" do dashboard
-    pip install pyshp
-    python pipeline/setores.py caminho/SP_setores_CD2022.zip   # malha de setores de Rio Claro
+## Testes e CI
 
-Se um download automático falhar (os sites mudam), o script diz onde baixar à mão e em qual pasta colocar. O catálogo verificado (`catalogo_manual.json`) vale sempre. Com `servicos.json` gerado, o site **acrescenta** as unidades do CNES e do Censo Escolar que não estão no catálogo (sem duplicar as já cadastradas à mão com o código CNES). Com `cep_indice.json`, o site oferece a busca por CEP. Depois de editar `catalogo/servicos_manuais.csv`, rode `python pipeline/servicos.py --somente-manual` para atualizar o catálogo.
+- `pipeline/tests/`: pytest. Cobre pipeline, contrato dos dados (coordenada só com fonte, registro não conferido com aviso, ligações INEP), paridade Python e JavaScript dos modelos e da tokenização, integridade dos conjuntos de avaliação, dependências e README.
+- `web/tests/`: Node. Cobre lógica das jornadas, necessidades, perigo, orientador, plano, mapa, questionário, painel, território, dashboard (portas, emergência, links locais, imagens), sintaxe de todos os scripts e comportamento de segurança da tela.
+- `.github/workflows/testes.yml`: instala `requirements.txt`, roda pytest, os testes em Node, `avaliar.py v2 --conjunto todos` e `avaliar_plano.js` a cada push e pull request.
+- Contagens de testes não são mantidas neste arquivo; a fonte é a saída do pytest e do CI.
 
-## Levar os dados gerados na sua máquina para o GitHub
-Os arquivos gerados pelo pipeline (`web/dados/cep_indice.json`, `web/dados/servicos.json`) e a documentação nova ficam só no seu computador até serem versionados. O script `pipeline/preparar_versionamento.py` faz isso com segurança, **sem enviar nada para a internet**: confere o tamanho (o GitHub recusa 100 MB ou mais), procura possíveis CPFs, avisa sobre dado bruto e só adiciona ao Git os arquivos classificados `PODE`.
+## Privacidade e segurança
 
-    python pipeline/preparar_versionamento.py            # só mostra o relatório; não altera nada
-    python pipeline/preparar_versionamento.py --filtrar-inep docs\educacao\microdados_ed_basica_2025.csv   # recorte de Rio Claro (arquivo pequeno)
-    python pipeline/preparar_versionamento.py --aplicar  # git add somente dos arquivos PODE
-    git commit -m "Adiciona dados gerados e documentação"
-    git push
+- O texto digitado e o CEP não são enviados nem gravados. Não há cookie, `localStorage`, `sessionStorage`, analytics nem chamada a API de IA.
+- Únicas requisições: arquivos locais (GET) em `web/dados/`; tiles do OpenStreetMap, só com opt-in. O envio de respostas do questionário existe em `web/questionario-ui.js` e está desligado (`web/dados/coleta.json`: `ativa: false`).
+- O site é `noindex`. O botão "Em perigo agora?" abre contatos oficiais (190, 192, 193, 180, 100, 188) e um botão de saída; sair não apaga o histórico do navegador.
+- Em falha de rede, o alerta de perigo das regras continua funcionando (`alertaAgora` em `web/app.js`).
 
-Os microdados nacionais do INEP (`microdados_ed_basica_AAAA.csv`) ficam no `.gitignore`; versione só o recorte de Rio Claro (`microdados_ed_basica_rio_claro.csv`). O pipeline lê qualquer arquivo `microdados_ed_basica*.csv` em `docs/`, então o recorte funciona no lugar do arquivo completo.
+## Dados e catálogo
 
-## Testes
+- `catalogo/servicos_manuais.csv` é a fonte de verdade dos serviços (campos obrigatórios: `tipo`, `nome`, `fonte_url`, `verificado_em`; `conferido` e `aviso` para itens sem confirmação). Depois de editar, rodar `python pipeline/servicos.py --somente-manual`.
+- Coordenada só existe com fonte (`geo = coordenada_fonte`); localização por CEP é aproximada e nunca vira coordenada de fonte.
+- Mapa completo de arquivos de dados, geradores e consumidores: [docs/mapa_de_dados.md](docs/mapa_de_dados.md).
+- Verificar o catálogo contra as páginas oficiais (com internet): `python pipeline/verificar_catalogo.py`.
 
-    pip install pytest
-    python -m pytest pipeline/tests -q      # 49 passaram e 1 foi ignorado em 11/10/2026
-    node web/tests/acesso.test.js           # passou (inclui a regra dos 90 dias)
-    node web/tests/necessidades.test.js     # 50 cenários passaram
-    node web/tests/dashboard.test.js        # passou: 7 portas, emergência, sem demonstração, links locais
-    node web/tests/jornada.test.js          # passou: perguntas, ordem e tamanho do plano, telefones do catálogo, links, promessas proibidas, currículo
+## Documentação
 
-No navegador (Chromium, 390 px): a área Saúde abre com 45 cartões; a jornada de Trabalho (perguntas uma de cada vez, com Voltar e "Prefiro não responder") gera um plano de até 3 passos visíveis e o resto dobrado, com telefone vindo do catálogo, preserva o plano ao abrir um link e voltar, escapa texto digitado no currículo e imprime só a folha; sem erro de JavaScript. Não verificados: mapa por CEP com dados reais, leitor de tela, contraste.
+- [docs/funcionalidades.md](docs/funcionalidades.md): descrição funcional por área (trabalho, educação, saúde, mapa, jornadas, transporte).
+- [docs/arquitetura_ia.md](docs/arquitetura_ia.md) e [docs/ia/avaliacao_orientacao.md](docs/ia/avaliacao_orientacao.md): arquitetura de IA, métricas e limites.
+- [docs/mapa_de_dados.md](docs/mapa_de_dados.md), [docs/inventario_de_fontes.md](docs/inventario_de_fontes.md), [docs/documetacao/LEIA-ME.md](docs/documetacao/LEIA-ME.md): dados e fontes arquivadas.
+- [docs/roteiro_teste_orientador.md](docs/roteiro_teste_orientador.md): roteiro de teste manual do orientador.
+- [docs/plano_proximo_ciclo.md](docs/plano_proximo_ciclo.md), [docs/plano_fontes_externas_e_expansao.md](docs/plano_fontes_externas_e_expansao.md), [docs/analise_competitiva_mism3.md](docs/analise_competitiva_mism3.md), [docs/benchmark_externo_ideias_funcionais.md](docs/benchmark_externo_ideias_funcionais.md): planejamento e pesquisa.
 
-## Conferir o catálogo contra as páginas oficiais
-Com internet, rode `python pipeline/verificar_catalogo.py`. Ele abre a fonte de cada serviço e confere se os telefones cadastrados aparecem na página. "ATENCAO" não é erro certo: abra a fonte e confira.
+## Manutenção deste README
 
-## Acrescentar um serviço verificado
-Edite `catalogo/servicos_manuais.csv`. Obrigatórios: `tipo` (creche, saude, assistencia, mulher, emprego_curso), `nome`, `fonte_url`, `verificado_em`. Com `cep`, o serviço entra no mapa; `abrangencia=municipal` faz aparecer para todas. Depois rode `python pipeline/servicos.py`.
-
-Veja o [registro de decisões de desenvolvimento](docs/registro_decisoes_desenvolvimento.md), `docs/inventario_de_fontes.md`, a [análise competitiva](docs/analise_competitiva_mism3.md), o [plano de fontes externas](docs/plano_fontes_externas_e_expansao.md) e o [benchmark externo](docs/benchmark_externo_ideias_funcionais.md).
-
-As páginas oficiais usadas nos cadastros estão arquivadas em PDF em [docs/documetacao](docs/documetacao/LEIA-ME.md), com a origem e a data de cada uma.
+Ao adicionar uma biblioteca, uma linguagem ou um arquivo de código em `web/` ou `pipeline/`, atualizar as tabelas acima. `pipeline/tests/test_dependencias.py` falha se uma dependência Python não estiver em `requirements.txt` e neste README, se a versão do Leaflet divergir, ou se um arquivo de `web/*.js` ou `pipeline/*.py` não for citado aqui. Sem emojis; linguagem direta e técnica.
