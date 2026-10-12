@@ -11,6 +11,16 @@ Escrito em 11/10/2026. Define o papel de cada tecnologia, o que está implementa
 | **Plano do Trabalho** | Árvore de decisão escrita à mão (**regras, não aprendizado**). | Regras |
 | **Inteligência pública (Observatório)** | Indicadores agregados, lacunas e análise territorial para a Secretaria. | **Não implementado** (ver `docs/observatorio_e_dados_da_secretaria.md`) |
 
+## Atualização de 12/10/2026: do classificador para um sistema de orientação
+Depois de comparar três pareceres de IA (DeepSeek, Gemini e outro), ficou decidido: **não** colocar modelo de linguagem nem modelo pesado no navegador (os celulares do público não aguentam, e relatos sensíveis não podem sair do aparelho), **manter os dados verificados como a inteligência** e usar a IA como interface. Implementado nesta rodada:
+| Camada | O que faz | Onde |
+|---|---|---|
+| Entender o texto | Modelo + regras; **álcool e drogas** agora têm caminho próprio (Saúde, direto na seção do CAPS AD e dos grupos) e o modelo foi retreinado com 24 frases novas | `web/ia.js`, `web/necessidades.js`, `catalogo/frases_necessidades.txt` |
+| Meu Plano | Ordena as necessidades por urgência (regra fixa e explicável), com motivo e "se não der certo"; nada promete vaga | `web/plano.js` |
+| Dúvida dentro da área | Recuperação lexical sobre o conteúdo da própria página (TF-IDF, pontes de vocabulário revisadas, cobertura ponderada); sem acerto confiável, diz que não achou; perigo primeiro | `web/duvida.js`, `web/app.js` |
+| Lugar | CEP -> bairro provável (setor do IBGE) e bairro -> CEPs; serviço mais perto de cada tipo | `web/mapa-servicos.js`, `web/dados/setor_bairro.json` |
+**Limites honestos:** (1) o bairro do IBGE é agrupado (cerca de 27 nomes para 408 setores; 83% dos CEPs recebem um) e pode diferir do nome da Prefeitura; (2) a caixa de dúvida é lexical, não semântica: acerta quando as palavras da página aparecem na pergunta ou numa ponte revisada; (3) o modelo continua treinado só com frases escritas pela equipe; (4) **não há elegibilidade automática**: dizer que alguém tem direito a um benefício exige critério oficial confirmado e atualizado, que ainda não temos. Próximo passo técnico, só com evidência de teste com usuárias: embeddings leves quantizados (ONNX), medindo tamanho, memória e precisão em celulares simples.
+
 ## Como o modelo foi avaliado (resumo; detalhes em `docs/ia/avaliacao_modelo_necessidades.md`)
 Validação cruzada em 5 partes sobre as frases escritas pela equipe, e teste independente com as 53 frases dos testes antigos.
 - Só regras: F1 65%. Só o modelo: F1 68%. **Regras + modelo (o que o site usa): F1 75%.**
