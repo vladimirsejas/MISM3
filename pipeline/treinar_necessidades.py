@@ -146,7 +146,7 @@ def regras_js(frases: list[str]) -> list[frozenset]:
     codigo = ("const N=require(process.argv[1]);const f=JSON.parse(require('fs').readFileSync(0,'utf8'));"
               "process.stdout.write(JSON.stringify(f.map(t=>N.identificarCategorias(t))))")
     r = subprocess.run(["node", "-e", codigo, str(RAIZ / "web" / "necessidades.js")], input=json.dumps(frases),
-                       capture_output=True, text=True, check=True)
+                       capture_output=True, text=True, encoding="utf-8", check=True)
     return [frozenset(x) for x in json.loads(r.stdout)]
 
 
