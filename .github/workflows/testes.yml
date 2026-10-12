@@ -17,3 +17,4 @@ jobs:
       - run: pip install pandas numpy pytest openpyxl pypdf pyshp scikit-learn
       - run: PYTHONPATH=pipeline python -m pytest pipeline/tests -q
       - run: for f in web/tests/*.test.js; do node "$f" || exit 1; done
+      - run: node avaliacao/avaliar_duvida.js
