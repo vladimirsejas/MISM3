@@ -144,9 +144,25 @@
       ul.appendChild(li);
     });
     $("mais-servicos").hidden = visiveis.length <= estado.limite;
+    desenharMaisPerto(visiveis);
     $("nota-lista").textContent = estado.origem
       ? "Ordenados pela distância em linha reta até o centro do CEP informado; os sem posição ficam no fim."
       : "Ordenados por tipo de serviço e nome. Informe o CEP para ordenar pela distância.";
+  }
+
+  /* Com o CEP informado: o serviço mais perto de cada tipo (respeita os filtros), no topo da página. */
+  function desenharMaisPerto(visiveis) {
+    var caixa = $("mais-perto"), ul = $("lista-mais-perto");
+    ul.textContent = "";
+    var achados = estado.origem ? MS.maisPertoPorTipo(visiveis) : [];
+    caixa.hidden = !achados.length;
+    if (!achados.length) return;
+    $("nota-mais-perto").textContent = "Só entram serviços com posição conhecida no mapa. Distância em linha reta até o centro do CEP informado; não é o caminho a pé nem de ônibus. Confirme o endereço e o horário por telefone antes de ir.";
+    achados.forEach(function (s) {
+      var li = el("li", "mapa-item");
+      li.appendChild(cartao(s, true));
+      ul.appendChild(li);
+    });
   }
 
   function montarFiltros() {
@@ -230,7 +246,7 @@
     else if (r.status === "ok") frase = "Pela lista oficial da Prefeitura, o bairro “" + r.cras[0].bairro + "” é atendido por:";
     else frase = "Este nome aparece na lista de mais de um CRAS (" + nomes.join("; ") + "). Confirme por telefone qual atende o seu endereço:";
     saida.appendChild(el("p", "mapa-cras-frase", frase));
-    unicos.forEach(function (a) { saida.appendChild(cartao(a.servico, false)); });
+    unicos.forEach(function (a) { saida.appendChild(cartao(a.servico, true)); });
     saida.appendChild(el("p", "meta", "A lista é da página oficial indicada em “Fonte”. Antes de ir, ligue para confirmar o atendimento e a área do seu endereço."));
   }
 

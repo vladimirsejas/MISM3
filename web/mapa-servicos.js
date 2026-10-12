@@ -174,6 +174,17 @@
     });
   }
 
+  /* Lista JÁ ordenada por distância (saída de ordenar com origem): o serviço mais perto de cada tipo, só entre os que têm
+     posição, na ordem de categorias do site. Sem origem ou sem posição, não devolve nada (nada é inventado). */
+  function maisPertoPorTipo(ordenada) {
+    var primeiro = {};
+    ordenada.forEach(function (s) {
+      if (s.distancia_m == null || primeiro[s.tipo]) return;
+      primeiro[s.tipo] = s;
+    });
+    return Acesso.ORDEM.filter(function (t) { return primeiro[t]; }).map(function (t) { return primeiro[t]; });
+  }
+
   /* Pesquisa o endereço no Google Maps (abre em outra aba, por clique da pessoa). Só leva o endereço do SERVIÇO. */
   function linkGoogleMaps(s) {
     var end = String(s.endereco || "").replace(/,?\s*CEP\s*[\d.-]+/i, "").trim();
@@ -203,7 +214,7 @@
   }
 
   return { CAIXA: CAIXA, RAIO_MAX_CEP_M: RAIO_MAX_CEP_M, ESTILO: ESTILO, dentroDeRioClaro: dentroDeRioClaro, posicao: posicao,
-    preparar: preparar, contagem: contagem, filtrar: filtrar, ordenar: ordenar, linkGoogleMaps: linkGoogleMaps,
+    preparar: preparar, contagem: contagem, filtrar: filtrar, ordenar: ordenar, maisPertoPorTipo: maisPertoPorTipo, linkGoogleMaps: linkGoogleMaps,
     rotuloPrecisao: rotuloPrecisao, primeiroTelefone: primeiroTelefone, normalizarBairro: normalizarBairro,
     apelidosConfirmados: apelidosConfirmados, termosDeBusca: termosDeBusca, crasDoBairro: crasDoBairro, svgMarcador: svgMarcador, semAcento: semAcento };
 });

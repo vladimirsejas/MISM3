@@ -130,3 +130,21 @@ assert(/id="form-cras"/.test(html) && /id="resultado-cras"/.test(html), "a pági
 assert(/lista oficial/i.test(html), "a caixa diz de onde vem a informação");
 console.log("mapa.test.js (bairros): " + total + " bairros dos CRAS conferidos, " + ambiguos + " aparecem em mais de um CRAS");
 console.log("mapa.test.js: ok (" + lista.length + " serviços; " + n.endereco + " pelo endereço, " + n.cep + " pelo CEP, " + n.sem + " sem posição)");
+
+// Mais perto por tipo: um por tipo, só com posição, na ordem do site; sem origem não devolve nada.
+{
+  const ordenada = MS.ordenar(lista, [-22.41, -47.56]);
+  const perto = MS.maisPertoPorTipo(ordenada);
+  const tipos = perto.map((s) => s.tipo);
+  assert.strictEqual(new Set(tipos).size, tipos.length, "um serviço por tipo");
+  assert.ok(perto.length >= 2, "há mais de um tipo com posição");
+  assert.ok(perto.every((s) => s.distancia_m != null && s.pos), "só serviços com posição");
+  const ordemSite = tipos.map((t) => Acesso.ORDEM.indexOf(t));
+  assert.deepStrictEqual(ordemSite, ordemSite.slice().sort((a, b) => a - b), "na ordem de categorias do site");
+  tipos.forEach((t, i) => {
+    const maisPerto = Math.min(...ordenada.filter((s) => s.tipo === t && s.distancia_m != null).map((s) => s.distancia_m));
+    assert.strictEqual(perto[i].distancia_m, maisPerto, "é o mais perto do tipo " + t);
+  });
+  assert.deepStrictEqual(MS.maisPertoPorTipo(MS.ordenar(lista, null)), [], "sem origem, nada");
+  console.log("ok: mais perto por tipo");
+}
