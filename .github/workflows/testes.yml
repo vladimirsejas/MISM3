@@ -18,3 +18,4 @@ jobs:
       - run: PYTHONPATH=pipeline python -m pytest pipeline/tests -q
       - run: for f in web/tests/*.test.js; do node "$f" || exit 1; done
       - run: python avaliacao/avaliar.py v2 --conjunto todos
+      - run: node avaliacao/avaliar_plano.js

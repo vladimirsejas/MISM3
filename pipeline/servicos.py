@@ -192,14 +192,16 @@ def montar(indice: dict, cnes=None, escolas=None, manuais=None, hoje: str | None
     hoje = hoje or agora_iso()
     itens: list[dict] = []
     contagem = {}
+    codigos_manuais = set()
     if cnes is not None:  # lista de servicos ja montada por cnes.carregar()
         itens += cnes; contagem["cnes"] = len(cnes)
     if escolas is not None:
         a = servicos_creches(escolas, indice, hoje); itens += a; contagem["creches_inep"] = len(a)
     if manuais is not None:
         a = servicos_manuais(manuais, indice, etapas); itens += a; contagem["manuais"] = len(a)
-    # Unidade cadastrada à mão com o código CNES vence o registro do CNES (traz telefone e horário da fonte oficial).
-    codigos_manuais = {str(s["cnes"]) for s in itens if s.get("cnes")}
+        codigos_manuais = {str(s["cnes"]) for s in a if s.get("cnes")}
+    # Somente o catálogo manual pode substituir um registro CNES com o mesmo código.
+    # Incluir os códigos da lista CNES aqui apagaria também registros CNES sem substituto manual.
     itens = [s for s in itens if not (str(s["id"]).startswith("cnes-") and str(s["id"])[5:] in codigos_manuais)]
     vistos, unicos = set(), []
     for s in itens:
