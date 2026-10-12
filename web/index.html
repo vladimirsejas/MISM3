@@ -80,14 +80,16 @@
 
     <section class="ia-caixa" id="ia-caixa" aria-labelledby="titulo-ia">
       <h2 id="titulo-ia">Conte com suas palavras</h2>
-      <p>Escreva o que você precisa, do seu jeito. Uma ferramenta de inteligência artificial sugere por onde começar. O que você escreve fica só neste aparelho e some quando você sai da página.</p>
+      <p>Escreva o que você precisa, do seu jeito. Uma ferramenta de inteligência artificial sugere por onde começar. O que você escreve fica só neste aparelho e some quando você sai da página, a menos que você marque a opção de explicação por IA, que aparece abaixo só quando ela está disponível.</p>
       <label for="ia-texto" class="so-leitor">Escreva o que você precisa</label>
       <textarea id="ia-texto" rows="3" maxlength="300" autocomplete="off" spellcheck="false" placeholder="Ex.: preciso de uma vaga na creche e de um emprego"></textarea>
+      <label class="ia-opcao" id="ia-llm-opcao" for="ia-llm" hidden><input type="checkbox" id="ia-llm"> <span><strong>Explicar com IA (Gemini, do Google).</strong> Se você marcar, o que escreveu e os serviços encontrados são enviados ao Google para escrever uma explicação simples. Sem marcar, nada sai do seu aparelho. Se houver sinal de perigo, a IA não é usada: aparecem só os telefones.</span></label>
       <div class="acoes"><button type="button" class="btn" id="ia-enviar">Ver por onde começar</button><button type="button" class="btn secundario" id="ia-limpar" hidden>Limpar</button></div>
       <div id="ia-saida" aria-live="polite"></div>
       <details class="ia-como"><summary>Como isso funciona?</summary>
         <p>É um modelo de aprendizado de máquina, treinado pela equipe do projeto (Fatec Rio Claro) com frases escritas por nós. Ele roda no seu aparelho: o texto não é enviado, guardado nem registrado em lugar nenhum.</p>
-        <p>Ele pode errar e não decide direitos nem faz diagnóstico. Sempre confira a informação na área indicada e com o órgão responsável.</p>
+        <p>Opcionalmente, quando o site é aberto com o servidor local e uma chave de API, você pode pedir que o Gemini (Google) escreva uma explicação em linguagem simples sobre os serviços que o modelo acima já encontrou. A IA não escolhe serviço nem inventa telefone, e só é usada se você marcar a opção.</p>
+                <p>Ele pode errar e não decide direitos nem faz diagnóstico. Sempre confira a informação na área indicada e com o órgão responsável.</p>
       </details>
     </section>
 
@@ -365,6 +367,7 @@
 <script src="perigo.js"></script>
 <script src="orientar.js"></script>
 <script src="orientacao-ui.js"></script>
+<script src="ia-llm.js"></script>
 <script src="questionario.js"></script>
 <script src="questionario-ui.js"></script>
 <script src="app.js"></script>
