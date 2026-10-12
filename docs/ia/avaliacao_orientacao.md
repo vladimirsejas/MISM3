@@ -58,7 +58,7 @@ Quando não acha nada, o sistema **diz que não achou** e mostra as áreas e os 
 ## Limites
 
 - As perguntas foram escritas pela equipe, não por usuárias reais. A medição prova que o sistema funciona nos casos que imaginamos, **não** que cobre tudo o que será digitado. O teste com usuárias reais (roteiro em `docs/roteiro_validacao_navegacao.md`) continua sendo necessário.
-- Algumas perguntas ainda falham (“quero me inscrever pra casa própria”, “moro na rua e preciso de ajuda”, “vacina do meu filho está atrasada”), e o orientador não sabe nada que não esteja no catálogo (por exemplo, dentista gratuito ou fonoaudiólogo, que não constam como serviços verificados).
+- Na avaliação original, falharam perguntas sobre casa própria, situação de rua e vacinação infantil. Em 12/10/2026, foram acrescentadas pontes lexicais locais para esses três padrões e testes de regressão em `web/tests/orientar.test.js`; a suíte passou no GitHub Actions. As métricas da tabela acima são da avaliação anterior e **não foram recalculadas** após essa mudança. O orientador continua limitado ao catálogo: não encontra um serviço que não esteja cadastrado e verificado (por exemplo, dentista gratuito ou fonoaudiólogo, que ainda não constam como serviços verificados).
 - O sinal de escopo (decidir que algo está fora do assunto) é simples (nota da busca + confiança do classificador) e erra em frases curtas fora do escopo que usam palavras do site (“como fazer um site”).
 - Não há previsão de risco nem pontuação de pessoas: o sistema só **orienta para serviços** a partir do que a pessoa escreve, sem guardar nada.
 - Não há elegibilidade automática: nunca dizemos que alguém tem direito a vaga ou benefício.
