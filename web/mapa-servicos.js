@@ -174,6 +174,31 @@
     });
   }
 
+  /* ---- CEP <-> bairro ----
+     O índice de CEP guarda o setor censitário de cada CEP, e a malha do IBGE dá um nome de bairro a cada setor (setor_bairro.json).
+     Isso diz o bairro PROVÁVEL de um CEP, não o certo: o nome do IBGE é agrupado (cerca de 27 nomes) e um CEP grande pode cobrir
+     mais de um bairro. Sem setor ou sem bairro no setor, não devolve nada (nada é inventado). */
+  function setorDoCep(cep, indiceCep) {
+    var v = indiceCep && indiceCep[cep];
+    return v && v[3] ? String(v[3]).replace(/\D/g, "").slice(0, 15) : null;
+  }
+  function bairroDoCep(cep, indiceCep, setorBairro) {
+    var set = setorDoCep(cep, indiceCep), nome = set && setorBairro && setorBairro[set];
+    if (!nome) return null;
+    return { bairro: nome, area_grande: Number(indiceCep[cep][2]) > RAIO_MAX_CEP_M };
+  }
+  function chaveBairro(n) { return semSufixo(normalizarBairro(n)); }
+  /* Vice-versa: os CEPs cujo setor tem este bairro (compara sem acento, sem "Jd./Jardim" e sem numeral romano). */
+  function cepsDoBairro(bairro, indiceCep, setorBairro) {
+    var alvo = chaveBairro(bairro), lista = [];
+    if (!alvo || !indiceCep || !setorBairro) return lista;
+    Object.keys(indiceCep).forEach(function (cep) {
+      var b = bairroDoCep(cep, indiceCep, setorBairro);
+      if (b && chaveBairro(b.bairro) === alvo) lista.push(cep);
+    });
+    return lista.sort();
+  }
+
   /* Lista JÁ ordenada por distância (saída de ordenar com origem): o serviço mais perto de cada tipo, só entre os que têm
      posição, na ordem de categorias do site. Sem origem ou sem posição, não devolve nada (nada é inventado). */
   function maisPertoPorTipo(ordenada) {
@@ -214,7 +239,7 @@
   }
 
   return { CAIXA: CAIXA, RAIO_MAX_CEP_M: RAIO_MAX_CEP_M, ESTILO: ESTILO, dentroDeRioClaro: dentroDeRioClaro, posicao: posicao,
-    preparar: preparar, contagem: contagem, filtrar: filtrar, ordenar: ordenar, maisPertoPorTipo: maisPertoPorTipo, linkGoogleMaps: linkGoogleMaps,
+    preparar: preparar, contagem: contagem, filtrar: filtrar, ordenar: ordenar, maisPertoPorTipo: maisPertoPorTipo, bairroDoCep: bairroDoCep, cepsDoBairro: cepsDoBairro, linkGoogleMaps: linkGoogleMaps,
     rotuloPrecisao: rotuloPrecisao, primeiroTelefone: primeiroTelefone, normalizarBairro: normalizarBairro,
     apelidosConfirmados: apelidosConfirmados, termosDeBusca: termosDeBusca, crasDoBairro: crasDoBairro, svgMarcador: svgMarcador, semAcento: semAcento };
 });

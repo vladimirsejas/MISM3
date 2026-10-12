@@ -252,8 +252,20 @@
     return html;
   }
 
+  /* Caixa de dúvida: procura a resposta na própria página (duvida.js). Sem modelo de linguagem; o texto não sai do aparelho. */
+  function htmlDuvida(area) {
+    if (!window.Duvida || !area.secoes || !area.secoes.length) return "";
+    return '<section class="ia-caixa duvida" id="duvida" aria-labelledby="titulo-duvida"><h2 id="titulo-duvida">Tem uma dúvida? Escreva aqui</h2>' +
+      '<p class="meta">Escreva do seu jeito: procuramos a resposta nesta página (' + esc(area.nome) + '). O que você escreve fica só neste aparelho.</p>' +
+      '<form id="form-duvida" autocomplete="off"><label for="duvida-texto" class="so-leitor">Sua dúvida sobre ' + esc(area.nome) + '</label>' +
+      '<textarea id="duvida-texto" rows="2" maxlength="200" autocomplete="off" spellcheck="false" placeholder="Ex.: ' + esc(area.exemploDuvida || "como faço para pedir ajuda?") + '"></textarea>' +
+      '<div class="acoes"><button type="submit" class="btn">Procurar nesta página</button><button type="button" class="btn secundario" id="duvida-limpar" hidden>Limpar</button></div></form>' +
+      '<div id="duvida-saida" aria-live="polite"></div></section>';
+  }
+
   function htmlArea(area) {
-    var html = area.jornada && window.JornadaUI ? JornadaUI.html(area.jornada) : "";
+    var html = htmlDuvida(area);
+    html += area.jornada && window.JornadaUI ? JornadaUI.html(area.jornada) : "";
     if (area.questionario && window.QuestionarioUI) html += QuestionarioUI.html();
     if (area.horarios) html += htmlHorarios();
     if (area.guia) html += htmlGuia(area.guia);
@@ -299,7 +311,7 @@
         corpo += '<p class="vazio">Nenhum serviço cadastrado neste bloco ainda.</p>';
       }
       var total = servicos.length + sec.links.length + (sec.canais || []).length;
-      var idSecao = sec.ancora ? ' id="' + esc(sec.ancora) + '"' : "";
+      var idSecao = ' id="' + esc(sec.ancora || ("secao-" + (i + 1))) + '"';
       if (sec.recolhida) {
         html += '<section class="secao"' + idSecao + '><details class="secao-recolhida"><summary><h2>' + esc(sec.titulo) + ' <span class="contagem">(' + total + ")</span></h2></summary>" +
           (sec.descricao ? "<p class=\"meta\">" + esc(sec.descricao) + "</p>" : "") + corpo + "</details></section>";
@@ -322,6 +334,7 @@
   function rolarPara(id) {
     var alvo = document.getElementById(id);
     if (!alvo) return false;
+    if (alvo.tagName === "DETAILS") alvo.open = true;
     var recolhida = alvo.querySelector("details.secao-recolhida");
     if (recolhida) recolhida.open = true;
     var calmo = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -333,6 +346,84 @@
   document.addEventListener("click", function (ev) {
     var b = ev.target.closest ? ev.target.closest("[data-rolar]") : null;
     if (b) rolarPara(b.getAttribute("data-rolar"));
+  });
+
+  /* ---------------------------------------------------------------- caixa de dúvida */
+  var indiceDuvida = null;
+  function montarIndiceDuvida(area) {
+    if (!window.Duvida) { indiceDuvida = null; return; }
+    var vistos = Object.create(null);
+    var nomes = area.secoes.map(function (sec) { return servicosDaSecao(sec, vistos).map(function (x) { return x.nome; }); });
+    var extras = [];
+    if (area.jornada && window.JornadaUI) extras.push({ ancora: "titulo-jornada", rotulo: "Monte seu plano", corpo: "plano passo a passo primeiro passo o que fazer por onde começar" });
+    if (area.jornada === true) extras.push({ ancora: "montar-curriculo", rotulo: "Montar um currículo", corpo: "currículo curriculo emprego vaga trabalho" });
+    if (dados.indice && area.secoes.some(function (x) { return x.tipos.length; })) extras.push({ ancora: "busca-por-cep", rotulo: "Ver o que fica perto de mim (pelo CEP)", corpo: "cep perto proximo mais proximo perto de mim endereco bairro unidade escola creche" });
+    if (area.secoes.some(function (x) { return x.busca === "bairro"; })) extras.push({ ancora: "busca-bairro", rotulo: "Qual CRAS atende o meu bairro?", corpo: "cras bairro atende regiao endereco moro" });
+    indiceDuvida = Duvida.indexar(area, nomes, extras);
+  }
+  function limparDuvida() {
+    var t = $("duvida-texto"); if (!t) return;
+    t.value = ""; $("duvida-saida").innerHTML = ""; $("duvida-limpar").hidden = true;
+  }
+  function responderDuvida() {
+    var t = $("duvida-texto"), saida = $("duvida-saida");
+    if (!t || !areaAtual) return;
+    var texto = t.value.trim();
+    $("duvida-limpar").hidden = !texto;
+    if (!texto) { saida.innerHTML = '<p class="status" role="status">Escreva a sua dúvida e toque em “Procurar nesta página”.</p>'; return; }
+    var html = "";
+    /* Segurança primeiro: se o texto fala de violência ou perigo, o aviso vem antes de qualquer resposta. */
+    if (window.MISM3Necessidades && MISM3Necessidades.identificarCategorias(texto, 9).indexOf("violencia") !== -1) {
+      html += '<div class="status urgente" role="alert"><strong>Se você está em perigo agora</strong>, use o botão “Em perigo agora?” no alto da página ou ligue <a href="tel:190">190</a> (Polícia) ou <a href="tel:180">180</a> (violência contra a mulher, 24 horas, gratuito).</div>';
+    }
+    var hits = indiceDuvida ? Duvida.buscar(indiceDuvida, texto, 3) : [];
+    /* O assistente geral completa: o caminho DESTA área vem primeiro (se a página tem a seção, ela aparece mesmo que os trechos
+       soltos sejam outros), e os caminhos de OUTRAS áreas aparecem depois. */
+    var sug = window.MISM3IA ? MISM3IA.sugerir(texto, 3) : [];
+    var outras = [], desta = [];
+    sug.forEach(function (x) { (String(x.href).slice(1).split("/")[0] === areaAtual.id ? desta : outras).push(x); });
+    var jaMostradas = {};
+    var caminhos = desta.filter(function (x) {
+      var parte = String(x.href).slice(1).split("/")[1];
+      return parte ? true : !hits.length;
+    });
+    if (caminhos.length) {
+      html += '<p class="meta">Por onde começar:</p><ul class="duvida-lista">';
+      caminhos.forEach(function (x) {
+        var parte = String(x.href).slice(1).split("/")[1];
+        if (parte) jaMostradas[parte] = 1;
+        html += "<li><strong>" + esc(x.titulo) + "</strong><p>" + esc(x.texto) + "</p>" +
+          (parte ? '<button type="button" class="btn-rolar" data-rolar="' + esc(parte) + '">Ver na página</button>' : "") + "</li>";
+      });
+      html += "</ul>";
+    }
+    /* Com o caminho da área já indicado, outros trechos só entram se forem quase tão relevantes quanto o melhor. */
+    var restantes = hits.filter(function (h) { return caminhos.length === 0 || (!jaMostradas[h.ancora] && h.pontos >= hits[0].pontos * 0.8); });
+    if (restantes.length) {
+      html += '<p class="meta">' + (caminhos.length ? "Outros trechos" : "Encontramos isto") + ' <strong>nesta página</strong>:</p><ul class="duvida-lista">';
+      restantes.forEach(function (h) {
+        html += "<li><strong>" + esc(h.rotulo) + "</strong>" + (h.pai && h.pai !== h.rotulo ? ' <span class="meta">em “' + esc(h.pai) + '”</span>' : "") +
+          (h.trecho ? "<p>" + esc(h.trecho) + "</p>" : "") +
+          '<button type="button" class="btn-rolar" data-rolar="' + esc(h.ancora) + '">Ver na página</button></li>';
+      });
+      html += "</ul>";
+    }
+    if (outras.length) {
+      html += '<p class="meta">Isto também pode estar em outra área:</p><ul class="duvida-lista">';
+      outras.forEach(function (x) { html += '<li><a href="' + esc(x.href) + '"><strong>' + esc(x.titulo) + "</strong></a><p>" + esc(x.texto) + "</p></li>"; });
+      html += "</ul>";
+    }
+    if (!hits.length && !caminhos.length && !outras.length) {
+      html += '<p class="status" role="note">Não encontramos isso nesta página. Tente escrever de outro jeito, ou veja os contatos dos cartões abaixo e ligue para confirmar. Se a dúvida é sobre um direito ou benefício, o CRAS (área Assistência Social) orienta e encaminha.</p>';
+    }
+    html += '<p class="meta">A busca só olha o que está escrito nesta página e pode errar. Confirme sempre por telefone com o serviço.</p>';
+    saida.innerHTML = html;
+  }
+  document.addEventListener("submit", function (ev) {
+    if (ev.target && ev.target.id === "form-duvida") { ev.preventDefault(); responderDuvida(); }
+  });
+  document.addEventListener("click", function (ev) {
+    if (ev.target && ev.target.id === "duvida-limpar") limparDuvida();
   });
 
   function mostrarTodos(area, indiceSecao, botao) {
@@ -379,6 +470,19 @@
     }
     var urgente = lista[0].urgente
       ? '<p class="ia-urgente" role="alert"><strong>Se você corre perigo agora, ligue 190 (Polícia Militar) ou 180 (Central de Atendimento à Mulher), ou toque em “Em perigo agora?”.</strong></p>' : "";
+    /* Meu plano: as mesmas sugestões, mas em ordem de urgência, com o motivo e o que fazer se não der certo (plano.js). */
+    var plano = window.Plano ? Plano.montar(lista) : null;
+    if (plano && plano.passos.length) {
+      return urgente + '<h3 class="plano-titulo">Meu plano: por onde começar, nesta ordem</h3>' +
+        '<p class="meta">Sugestões da ferramenta. Ela pode errar: confira em cada área e confirme horário e vaga por telefone.</p><ol class="plano">' +
+        plano.passos.map(function (p) {
+          var sv = (servicos && servicos[p.id]) || [];
+          return '<li class="plano-passo' + (p.urgente ? " urgente" : "") + '"><a class="ia-card' + (p.urgente ? " urgente" : "") + '" href="' + esc(p.href) + '"><strong>' + esc(p.titulo) + "</strong><span>" + esc(p.texto) + "</span></a>" +
+            '<p class="plano-porque"><strong>Por que nesta posição:</strong> ' + esc(p.porque) + "</p>" +
+            (sv.length ? '<ul class="ia-servicos"><li class="ia-rotulo">Serviços que podem ajudar:</li>' + sv.map(htmlServicoIA).join("") + "</ul>" : "") +
+            '<p class="plano-senao"><strong>Se não der certo:</strong> ' + esc(p.senao) + "</p></li>";
+        }).join("") + '</ol><p class="meta">' + esc(plano.aviso) + "</p>";
+    }
     return urgente + '<p class="meta">Sugestões da ferramenta. Ela pode errar: confira em cada área e confirme horário e vaga por telefone.</p><ul class="ia-lista">' + lista.map(function (sg) {
       var sv = (servicos && servicos[sg.id]) || [];
       return '<li><a class="ia-card' + (sg.urgente ? " urgente" : "") + '" href="' + esc(sg.href) + '"><strong>' + esc(sg.titulo) + "</strong><span>" + esc(sg.texto) + "</span></a>" +
@@ -428,6 +532,7 @@
     $("nome-secao").textContent = "Início › " + area.nome;
     $("titulo-area").innerHTML = '<span class="icone-titulo"><svg aria-hidden="true" width="28" height="28"><use href="#' + ICONES[area.icone] + '"/></svg></span>' + esc(area.nome);
     $("intro-area").textContent = area.intro;
+    montarIndiceDuvida(area);
     $("conteudo-area").innerHTML = htmlArea(area);
     if (area.jornada && window.JornadaUI) JornadaUI.restaurar();
     if (window.QuestionarioUI) { if (area.questionario) QuestionarioUI.restaurar(); else QuestionarioUI.limpar(); }
@@ -518,7 +623,8 @@
        e só acrescenta o que não está no catálogo (CNES, Censo Escolar). Assim um servicos.json antigo nunca esconde
        cadastros novos, e uma unidade cadastrada à mão com o código CNES não aparece duas vezes. */
     function opcional(url) { return carregar(url).catch(function () { return null; }); }
-    return Promise.all([opcional("dados/catalogo_manual.json"), opcional("dados/servicos.json"), opcional("dados/horarios_onibus.json"), opcional("dados/coleta.json")]).then(function (r) {
+    return Promise.all([opcional("dados/catalogo_manual.json"), opcional("dados/servicos.json"), opcional("dados/horarios_onibus.json"), opcional("dados/coleta.json"), opcional("dados/setor_bairro.json")]).then(function (r) {
+      dados.setorBairro = r[4] && r[4].bairros ? r[4].bairros : null;
       dados.horarios = r[2];
       if (window.QuestionarioUI) QuestionarioUI.usarConfig(r[3]);
       var manual = (r[0] && r[0].servicos) || [], pipeline = (r[1] && r[1].servicos) || [];
@@ -616,7 +722,11 @@
     $("grupos").innerHTML = html;
     $("resumo-area").textContent = "Resultados a partir do centro do CEP " + r.cep.slice(0, 5) + "-" + r.cep.slice(5) +
       " (área aproximada de " + r.area.raio_m + " m de raio" +
-      (r.area.n > 0 ? ", " + r.area.n + " endereços no IBGE)." : ", ponto único da lista de CEPs).");
+      (r.area.n > 0 ? ", " + r.area.n + " endereços no IBGE)." : ", ponto único da lista de CEPs).") +
+      (function () {
+        var b = window.MapaServicos && MapaServicos.bairroDoCep(r.cep, dados.indice, dados.setorBairro);
+        return b ? " Bairro provável (pelo IBGE, pode diferir do nome usado pela Prefeitura): " + b.bairro + "." : "";
+      })();
     desenharMapa(r);
   }
 

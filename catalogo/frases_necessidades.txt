@@ -118,6 +118,32 @@ saude | quero fazer o teste de gravidez
 saude | atendimento odontológico gratuito
 saude | como tiro a carteirinha do SUS
 
+# Álcool e drogas (própria ou de alguém da família): dependência é doença, o caminho é a Saúde (CAPS AD e grupos de ajuda mútua)
+saude | meu marido bebe todo dia e eu não aguento mais
+saude | meu pai vive bêbado e a família inteira sofre
+saude | meu irmão é alcoólatra e não aceita tratamento
+saude | meu filho usa crack e some de casa por dias
+saude | minha filha está usando drogas e eu não sei como ajudar
+saude | quero parar de beber e não consigo sozinha
+saude | estou usando drogas e quero ajuda para parar
+saude | onde tem grupo de apoio para quem quer largar o vício
+saude | meu filho é dependente químico e preciso de orientação
+saude | meu companheiro bebe demais e não quer se tratar
+saude | tem grupo para famílias de dependentes químicos
+saude | onde fica o caps de álcool e drogas
+saude | meu filho adolescente está fumando maconha todo dia
+saude | como ajudar meu filho que usa cocaína
+saude | tenho um parente viciado e a família está desesperada
+saude | quero saber sobre narcóticos anônimos
+saude | onde tem reunião de alcoólicos anônimos em Rio Claro
+saude | existe grupo amor exigente na cidade
+saude | meu marido chega bêbado em casa todos os dias
+saude | preciso de tratamento para dependência de álcool
+saude | meu filho vive na rua usando drogas
+saude | meu neto está viciado em drogas e eu cuido dele
+saude | sou dependente química e quero me tratar
+saude | minha irmã bebe todos os dias e não consegue parar
+
 # ---------------------------------------------------------------- estudo
 estudo | quero voltar a estudar
 estudo | parei na oitava série e quero terminar os estudos

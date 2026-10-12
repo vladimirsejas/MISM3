@@ -9,7 +9,7 @@
   var $ = function (id) { return document.getElementById(id) || document.createElement("div"); };
   var POR_PAGINA = 24;
 
-  var estado = { todos: [], indice: null, apelidos: [], ativas: {}, texto: "", origem: null, origemRaio: 0, limite: POR_PAGINA };
+  var estado = { todos: [], indice: null, setorBairro: null, apelidos: [], ativas: {}, texto: "", origem: null, origemRaio: 0, limite: POR_PAGINA };
   var mapa = null, camadaPontos = null, camadaOrigem = null, tiles = null, marcadores = {}, primeiraVez = true;
 
   function el(tag, classe, texto) {
@@ -212,8 +212,20 @@
     $("limpar-cep").hidden = false;
     mensagem("Região aproximada pelo CEP " + cep.slice(0, 5) + "-" + cep.slice(5) + " (raio de cerca de " + area[2] + " m). Não é o seu endereço." +
       (area[2] > MS.RAIO_MAX_CEP_M ? " Este CEP cobre uma área grande: a ordem por distância é só uma ideia." : ""));
+    mostrarBairroDoCep(cep, area[2]);
     estado.limite = POR_PAGINA;
     atualizar();
+  }
+
+  /* Bairro PROVÁVEL do CEP (setor do IBGE): nunca afirmado, sempre com ressalva. Botão leva à busca do CRAS por bairro. */
+  function mostrarBairroDoCep(cep, raio) {
+    var caixa = $("bairro-do-cep"), b = MS.bairroDoCep(cep, estado.indice, estado.setorBairro);
+    caixa.hidden = !b;
+    if (!b) return;
+    $("bairro-do-cep-texto").textContent = "Pelo IBGE, este CEP fica provavelmente no bairro “" + b.bairro + "”." +
+      (b.area_grande ? " Como o CEP cobre uma área grande, pode incluir outros bairros." : "") +
+      " O nome do IBGE é agrupado e pode diferir do nome usado pela Prefeitura: confirme.";
+    caixa.setAttribute("data-bairro", b.bairro);
   }
 
   function limparCep() {
@@ -221,6 +233,7 @@
     if (camadaOrigem) camadaOrigem.clearLayers();
     $("cep-mapa").value = "";
     $("limpar-cep").hidden = true;
+    $("bairro-do-cep").hidden = true;
     mensagem("");
     atualizar();
   }
@@ -253,11 +266,23 @@
     else frase = "Este nome aparece na lista de mais de um CRAS (" + nomes.join("; ") + "). Confirme por telefone qual atende o seu endereço:";
     saida.appendChild(el("p", "mapa-cras-frase", frase));
     unicos.forEach(function (a) { saida.appendChild(cartao(a.servico, true)); });
+    var ceps = MS.cepsDoBairro(texto, estado.indice, estado.setorBairro);
+    if (ceps.length) {
+      var mostra = ceps.slice(0, 8).map(function (c) { return c.slice(0, 5) + "-" + c.slice(5); }).join(", ");
+      saida.appendChild(el("p", "meta", "CEPs que ficam em setores deste bairro (pelo IBGE, aproximado): " + mostra + (ceps.length > 8 ? " e mais " + (ceps.length - 8) : "") + "."));
+    }
     saida.appendChild(el("p", "meta", "A lista é da página oficial indicada em “Fonte”. Antes de ir, ligue para confirmar o atendimento e a área do seu endereço."));
   }
 
   /* ---------------------------------------------------------------- ligações da página */
   $("form-cras").addEventListener("submit", mostrarCras);
+  $("bairro-do-cep-cras").addEventListener("click", function () {
+    var b = $("bairro-do-cep").getAttribute("data-bairro");
+    if (!b) return;
+    $("bairro-cras").value = b;
+    mostrarCras({ preventDefault: function () {} });
+    $("resultado-cras").scrollIntoView({ block: "center" });
+  });
   $("form-cep-mapa").addEventListener("submit", aplicarCep);
   $("limpar-cep").addEventListener("click", limparCep);
   $("cep-mapa").addEventListener("input", function (e) {
@@ -282,10 +307,11 @@
   }
 
   Promise.all([carregar("dados/catalogo_manual.json", true), carregar("dados/cep_indice.json", false), carregar("dados/setores.geojson", false),
-    carregar("dados/bairros_apelidos.json", false)])
+    carregar("dados/bairros_apelidos.json", false), carregar("dados/setor_bairro.json", false)])
     .then(function (r) {
       estado.indice = r[1] && r[1].ceps ? r[1].ceps : null;
       estado.apelidos = r[3] && r[3].apelidos ? r[3].apelidos : [];
+      estado.setorBairro = r[4] && r[4].bairros ? r[4].bairros : null;
       estado.todos = MS.preparar(r[0].servicos || [], estado.indice);
       montarFiltros();
       iniciarMapa(r[2]);
