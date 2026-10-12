@@ -352,12 +352,15 @@ const secEsc = Areas.AREAS.find((a) => a.id === "educacao").secoes.find((sec) =>
 assert(secEsc && secEsc.recolhida && secEsc.filtro && JSON.stringify(secEsc.subtipos) === '["escola_municipal"]', "a lista de escolas deve ficar recolhida e com busca");
 assert(Areas.AREAS.find((a) => a.id === "educacao").secoes.find((sec) => sec.titulo === "Canais oficiais").subtipos.join() === "secretaria", "os canais oficiais devem mostrar só o cartão da Secretaria");
 assert(/data-filtro/.test(ler("app.js")) && /semAcento/.test(ler("app.js")), "a busca por nome ou bairro deve ignorar acentos");
-// Brasão estilizado + aviso de projeto acadêmico (não oficial)
-assert(/<img class="brasao" src="img\/brasao-estilizado\.webp"[^>]*width="\d+" height="\d+"[^>]*alt="Brasão estilizado de Rio Claro/.test(index), "o brasão deve ter alt, largura e altura");
+// Brasão do município (cabeçalho e rodapé) + aviso de projeto acadêmico (não oficial)
+assert(/<img class="marca-brasao" src="img\/brasao-rio-claro-96\.webp"[^>]*width="\d+" height="\d+"/.test(index), "o cabeçalho usa o brasão original de Rio Claro, com largura e altura");
+assert(/<img class="brasao" src="img\/brasao-rio-claro-256\.webp"[^>]*width="\d+" height="\d+"[^>]*alt="Brasão do município de Rio Claro/.test(index), "o rodapé usa o brasão original de Rio Claro, com alt, largura e altura");
 assert(/estudo acadêmico de demonstração/.test(index) && /não é um site oficial da Prefeitura de Rio Claro/.test(index), "o rodapé deve dizer que o site é acadêmico e não oficial");
-assert(/versão estilizada, apenas como ilustração/.test(index), "o brasão deve ser identificado como versão estilizada");
-const brasaoArq = path.join(web, "img/brasao-estilizado.webp");
-assert(fs.existsSync(brasaoArq) && fs.statSync(brasaoArq).size < 120 * 1024, "a imagem do brasão deve existir e ser leve (< 120 KB)");
+assert(/não fala em nome da Prefeitura/.test(index), "o rodapé deve deixar claro que o site não fala em nome da Prefeitura");
+["brasao-rio-claro-96.webp", "brasao-rio-claro-256.webp", "brasao-estilizado.webp"].forEach((nome) => {
+  const arq = path.join(web, "img", nome);
+  assert(fs.existsSync(arq) && fs.statSync(arq).size < 120 * 1024, `${nome} deve existir e ser leve (< 120 KB)`);
+});
 
 /* ---- Tela inicial acolhedora: hero, emergência, contatos essenciais, acesso rápido e paleta ---- */
 assert(/<h1 id="titulo-inicio"[^>]*>Você não está <em>sozinha<\/em><\/h1>/.test(index), "a tela inicial deve acolher: 'Você não está sozinha'");
