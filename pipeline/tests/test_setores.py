@@ -1,3 +1,4 @@
+import json
 import sys
 import zipfile
 from pathlib import Path
@@ -61,3 +62,15 @@ def test_simplificar_mantem_extremos_e_reduz():
     assert s[0] == reta[0] and s[-1] == reta[-1] and len(s) < len(reta)
     quina = [(0, 0), (1, 0), (1, 1), (2, 1), (2, 2)]
     assert setores.simplificar(quina, tol=0.0001) == quina  # curvas reais ficam
+
+
+def test_grava_setor_bairro_so_com_bairro(tmp_path, monkeypatch):
+    """O site usa setor_bairro.json para dizer o bairro provavel de um CEP: so entram setores com bairro (nada inventado)."""
+    z = cria_zip(tmp_path)
+    monkeypatch.setattr(setores, "WEB_DADOS", tmp_path / "web_dados")
+    monkeypatch.setattr(setores, "BRUTO", tmp_path / "bruto")
+    monkeypatch.setattr(sys, "argv", ["setores.py", str(z)])
+    setores.main()
+    saida = json.loads((tmp_path / "web_dados" / "setor_bairro.json").read_text(encoding="utf-8"))
+    assert saida["bairros"] == {"354390700000001": "Centro"}  # o setor sem bairro nao aparece
+    assert "IBGE" in saida["meta"]["fonte"] and "agrupado" in saida["meta"]["nota"]

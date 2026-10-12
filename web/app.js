@@ -608,7 +608,8 @@
        e só acrescenta o que não está no catálogo (CNES, Censo Escolar). Assim um servicos.json antigo nunca esconde
        cadastros novos, e uma unidade cadastrada à mão com o código CNES não aparece duas vezes. */
     function opcional(url) { return carregar(url).catch(function () { return null; }); }
-    return Promise.all([opcional("dados/catalogo_manual.json"), opcional("dados/servicos.json"), opcional("dados/horarios_onibus.json"), opcional("dados/coleta.json")]).then(function (r) {
+    return Promise.all([opcional("dados/catalogo_manual.json"), opcional("dados/servicos.json"), opcional("dados/horarios_onibus.json"), opcional("dados/coleta.json"), opcional("dados/setor_bairro.json")]).then(function (r) {
+      dados.setorBairro = r[4] && r[4].bairros ? r[4].bairros : null;
       dados.horarios = r[2];
       if (window.QuestionarioUI) QuestionarioUI.usarConfig(r[3]);
       var manual = (r[0] && r[0].servicos) || [], pipeline = (r[1] && r[1].servicos) || [];
@@ -706,7 +707,11 @@
     $("grupos").innerHTML = html;
     $("resumo-area").textContent = "Resultados a partir do centro do CEP " + r.cep.slice(0, 5) + "-" + r.cep.slice(5) +
       " (área aproximada de " + r.area.raio_m + " m de raio" +
-      (r.area.n > 0 ? ", " + r.area.n + " endereços no IBGE)." : ", ponto único da lista de CEPs).");
+      (r.area.n > 0 ? ", " + r.area.n + " endereços no IBGE)." : ", ponto único da lista de CEPs).") +
+      (function () {
+        var b = window.MapaServicos && MapaServicos.bairroDoCep(r.cep, dados.indice, dados.setorBairro);
+        return b ? " Bairro provável (pelo IBGE, pode diferir do nome usado pela Prefeitura): " + b.bairro + "." : "";
+      })();
     desenharMapa(r);
   }
 
