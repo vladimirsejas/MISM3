@@ -2,6 +2,12 @@
 
 Atualizado em 12/10/2026. Este documento descreve o que os testes e a arquitetura sustentam hoje; não é uma certificação de funcionamento em campo.
 
+## Métricas já existentes do classificador
+
+O projeto já possui avaliação em `docs/ia/avaliacao_modelo_necessidades.md`, gerada por `pipeline/treinar_necessidades.py`; criar outro avaliador paralelo para repetir o mesmo cálculo seria duplicação.
+
+No relatório versionado desta branch, a validação cruzada em 349 frases da equipe mostra **F1 de 76%** para regras + modelo, com precisão de 71%, recall de 82% e acerto exato de 58%. No conjunto antigo de 53 frases, regras + modelo chegaram a 100%, mas essas frases foram escritas para as regras e favorecem esse sistema; esse resultado não deve ser tratado como estimativa de desempenho em campo. As métricas são comparativas, não promessas.
+
 ## Interpretação de texto
 
 - O classificador de necessidades combina modelo local (TF-IDF/regressão logística) e regras. As frases de treino e os conjuntos sintéticos são escritos pela equipe, não por usuárias reais; o desempenho real pode ser inferior.
