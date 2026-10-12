@@ -60,7 +60,7 @@
       "bebe demais", "bebe muito", "bebe todo dia", "bebe todos os dias", "bebado", "bebada", "vive bebado", "embriagado",
       "alcool", "alcoolico", "vicio", "maconha", "cocaina", "usa crack", "usando drogas", "parar de beber",
       "narcoticos anonimos", "alcoolicos anonimos", "al anon", "amor exigente", "familia de dependente", "familias de dependentes",
-      "caps", "caps ad", "overdose", "crack"
+      "caps", "caps ad", "overdose", "crack", "vacina atrasada", "carteira de vacinacao", "vacinar meu filho"
     ]],
     ["estudo", [
       "estudo", "estudar", "faculdade", "universidade", "escola", "ensino",
@@ -68,9 +68,9 @@
       "cursinho", "vestibular", "pre vestibular", "enem"
     ]],
     ["moradia", [
-      "moradia", "habitacao", "aluguel", "aluguel social", "casa para morar",
-      "sem casa", "despejo", "regularizacao fundiaria", "cadastro habitacional",
-      "casa popular", "moradia popular", "preciso sair de casa"
+      "moradia", "habitacao", "aluguel", "aluguel social", "auxilio aluguel", "auxilio moradia", "casa para morar",
+      "sem casa", "moro na rua", "morando na rua", "situacao de rua", "despejo", "regularizacao fundiaria", "cadastro habitacional",
+      "casa propria", "financiamento habitacional", "casa popular", "moradia popular", "preciso sair de casa"
     ]],
     ["dividas", [
       "divida", "dividas", "superendividamento", "nome sujo", "renegociar divida",
