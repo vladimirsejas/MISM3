@@ -48,7 +48,7 @@ const emergencia = (Areas.EMERGENCIA || []).map((c) => c.tel);
 ["apoio", "direitos", "convivencia"].forEach((r) => plano(r).passos.forEach((p) => {
   [p.acao].concat(p.extras.map((l) => ({ tipo: "externo", alvo: l[1] }))).forEach((a) => {
     if (a.tipo === "externo") { assert(/^https:\/\//.test(a.alvo) && permitidos.has(a.alvo), "link externo sem fonte: " + a.alvo); }
-    else if (/^#/.test(a.alvo)) assert(Areas.AREAS.some((x) => x.id === /^#([a-z-]+)/.exec(a.alvo)[1]), "área inexistente: " + a.alvo);
+    else if (/^#/.test(a.alvo)) assert(Areas.AREAS.some((x) => x.id === /^#([a-z-]+)/.exec(a.alvo)[1]) || /^#mapa(\/cras)?$/.test(a.alvo), "área inexistente: " + a.alvo);
     else assert(fs.existsSync(path.join(web, a.alvo.split("#")[0])), "página inexistente: " + a.alvo);
   });
   if (p.contato) {
@@ -59,7 +59,7 @@ const emergencia = (Areas.EMERGENCIA || []).map((c) => c.tel);
 assert(emergencia.includes("100"), "o 100 é um dos contatos de emergência do site");
 const cras = plano("apoio").passos[0];
 assert(/3522-1930/.test(cras.contato.telefone), "o telefone da Secretaria de Desenvolvimento Social vem do catálogo");
-assert(cras.acao.alvo === "mapa.html#titulo-cras" && /id="titulo-cras"/.test(fs.readFileSync(path.join(web, "mapa.html"), "utf8")), "o passo leva à caixa 'Qual CRAS atende o meu bairro?'");
+assert(cras.acao.alvo === "#mapa/cras" && /id="titulo-cras"/.test(fs.readFileSync(path.join(web, "index.html"), "utf8")), "o passo leva à caixa 'Qual CRAS atende o meu bairro?'");
 const creas = plano("direitos").passos[0];
 assert(/3523-6420/.test(creas.contato.telefone) && /violência física, psicológica ou sexual/.test(creas.porque), "CREAS: telefone do catálogo e o que ele atende, como na fonte");
 const conselho = plano("direitos").passos[1];

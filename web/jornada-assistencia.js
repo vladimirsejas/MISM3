@@ -27,7 +27,7 @@
     return {
       id: "cras", titulo: "Procure o CRAS do seu bairro",
       porque: "O CRAS é a porta de entrada da assistência social, perto de onde você mora. Orienta sobre benefícios e programas de apoio quando falta dinheiro para o básico. Quem avalia o seu caso é o próprio CRAS, não este site.",
-      acao: interno("mapa.html#titulo-cras", "Ver qual CRAS atende o meu bairro"),
+      acao: interno("#mapa/cras", "Ver qual CRAS atende o meu bairro"),
       leve: ["Documento com foto e comprovante de residência, se tiver. Confirme a lista com o CRAS."],
       pergunte: ["Quais benefícios e programas existem e o que é preciso para pedir cada um.", "Horário de atendimento: o site nem sempre traz o horário de cada unidade."],
       extras: [LISTA_CRAS],

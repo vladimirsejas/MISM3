@@ -9,7 +9,7 @@ rem  3) liga o servidor   4) abre o navegador quando o servidor esta pronto
 rem  Para parar: feche esta janela ou aperte Ctrl+C.
 rem ======================================================================
 
-rem  Opcional: abrir_site.bat mapa.html abre direto no mapa (veja abrir_mapa.bat).
+rem  Tudo (mapa, areas, Entre Mulheres, Rio Claro em numeros) abre dentro do mesmo dashboard.
 set "PAGINA=%~1"
 
 cd /d "%~dp0web" || goto erro_pasta

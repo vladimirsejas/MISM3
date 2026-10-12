@@ -89,7 +89,7 @@
 
   /* ---------- mapa ---------- */
   function desenharMapa() {
-    var svg = document.getElementById("mapa");
+    var svg = document.getElementById("mapa-territorio");
     var feicoes = estado.geo.features;
     var minLon = 180, maxLon = -180, minLat = 90, maxLat = -90;
     function varrer(c) {
@@ -158,7 +158,7 @@
   function desenharPontos() {
     var camada = document.getElementById("pontos"), lista = document.getElementById("lista-pontos");
     limpar(camada); limpar(lista);
-    var resumo = document.getElementById("resumo-dist"), detalhes = document.getElementById("lista-servicos");
+    var resumo = document.getElementById("resumo-dist"), detalhes = document.getElementById("lista-servicos-territorio");
     limpar(resumo);
     resumo.hidden = detalhes.hidden = !ehDistancia();
     if (!ehDistancia()) return;
@@ -166,7 +166,7 @@
     b.pontos.forEach(function (p) {
       var xy = estado.projetar(p.lat, p.lon), c = document.createElementNS(NS, "circle");
       c.setAttribute("cx", xy[0].toFixed(1)); c.setAttribute("cy", xy[1].toFixed(1)); c.setAttribute("r", r.toFixed(1));
-      c.setAttribute("class", "ponto" + (p.precisao === "cep" ? " aprox" : ""));
+      c.setAttribute("class", "n-ponto" + (p.precisao === "cep" ? " aprox" : ""));
       c.setAttribute("data-nome", p.nome); c.setAttribute("data-precisao", p.precisao); c.setAttribute("data-raio", p.raio_m);
       camada.appendChild(c);
       lista.appendChild(el("li", null, p.nome + (p.precisao === "cep" ? " (localização aproximada pelo CEP, raio de cerca de " + inteiro(p.raio_m) + " m)" : " (localização pelo endereço)")));
@@ -182,7 +182,7 @@
 
   function aplicarArea() {
     var v = estado.vista[estado.area];
-    document.getElementById("mapa").setAttribute("viewBox", v.map(function (n) { return Math.round(n); }).join(" "));
+    document.getElementById("mapa-territorio").setAttribute("viewBox", v.map(function (n) { return Math.round(n); }).join(" "));
     desenharPontos();
     var nota = document.getElementById("nota-area");
     nota.hidden = estado.area !== "densa";
@@ -195,7 +195,7 @@
 
   /* ---------- dica (tooltip) ---------- */
   function ligarDica() {
-    var svg = document.getElementById("mapa"), moldura = document.getElementById("moldura"), dica = document.getElementById("dica");
+    var svg = document.getElementById("mapa-territorio"), moldura = document.getElementById("moldura"), dica = document.getElementById("dica");
     var propriedades = {};
     estado.geo.features.forEach(function (f) { propriedades[f.properties.setor] = f.properties; });
 
@@ -244,7 +244,7 @@
   /* ---------- bairros ---------- */
   function escolherBairro(nome) {
     estado.bairro = estado.bairro === nome ? null : nome;
-    document.getElementById("mapa").classList.toggle("tem-selecao", !!estado.bairro);
+    document.getElementById("mapa-territorio").classList.toggle("tem-selecao", !!estado.bairro);
     colorir();
     Array.prototype.forEach.call(document.querySelectorAll("#barras button"), function (b) {
       b.setAttribute("aria-pressed", String(b.getAttribute("data-bairro") === estado.bairro));
@@ -268,7 +268,7 @@
         b.disabled = true;
       }
       b.appendChild(el("span", "nome", i.nome));
-      var trilho = el("span", "trilho"), barra = el("span", "barra");
+      var trilho = el("span", "trilho"), barra = el("span", "n-barra");
       barra.style.width = "calc(" + (100 * i.valor / max).toFixed(1) + "% - 64px)";
       barra.style.minWidth = "2px";
       trilho.appendChild(barra);
@@ -333,7 +333,7 @@
 
   function rodape() {
     var m = estado.dados.meta, c = m.conferencia;
-    document.getElementById("rodape").textContent =
+    document.getElementById("rodape-numeros").textContent =
       "Fonte: " + m.fonte + ". Gerado em " + m.gerado_em + ". Conferência com o IBGE: soma das pessoas " + inteiro(c.pessoas_somadas) +
       " (publicado: " + inteiro(c.pessoas_publicadas_ibge) + "); área " + decimal(c.area_somada_km2, 1) + " km² (publicado: " +
       decimal(c.area_publicada_ibge_km2, 1) + " km²).";

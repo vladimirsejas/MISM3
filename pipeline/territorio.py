@@ -2,7 +2,7 @@
 
 Entrada : web/dados/setores.geojson (408 setores com bairro, situação, pessoas e domicílios; gerado por setores.py
           a partir da malha oficial do IBGE) e, se existir, web/dados/oferta_educacao_infantil.json (INEP).
-Saída   : web/dados/territorio.json, que alimenta web/territorio.html.
+Saída   : web/dados/territorio.json, que alimenta a vista "Rio Claro em numeros" do dashboard (web/index.html).
 
 Indicadores (todos de dado público e agregado; nada de pessoa):
   - densidade = pessoas / área do setor (hab/km²). A área vem do próprio polígono, num plano local centrado em

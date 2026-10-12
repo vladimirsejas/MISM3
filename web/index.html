@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#7a2b37">
 <title>Mulher em Rede – Rio Claro</title>
 <link rel="stylesheet" href="vendor/leaflet.css">
@@ -101,7 +102,7 @@
       <li class="t-verde"><a class="porta" href="#direitos"><span class="icone"><svg aria-hidden="true"><use href="#i-direitos"/></svg></span><strong>Direitos</strong><span class="sub">Orientação jurídica, pensão, dívidas e proteção contra a violência.</span></a></li>
       <li class="t-pessego"><a class="porta" href="#moradia"><span class="icone"><svg aria-hidden="true"><use href="#i-moradia"/></svg></span><strong>Moradia</strong><span class="sub">Água, energia e habitação: tarifas sociais e programas.</span></a></li>
       <li class="t-rosa"><a class="porta" href="#assistencia"><span class="icone"><svg aria-hidden="true"><use href="#i-assistencia"/></svg></span><strong>Assistência Social</strong><span class="sub">CRAS, CREAS, Conselho Tutelar e serviços de convivência.</span></a></li>
-      <li class="t-verde"><a class="porta" href="rede-mulheres.html"><span class="icone"><svg aria-hidden="true"><use href="#i-mulheres"/></svg></span><strong>Entre Mulheres</strong><span class="sub">Rede de apoio entre mulheres. Em construção.</span></a></li>
+      <li class="t-verde"><a class="porta" href="#entre-mulheres"><span class="icone"><svg aria-hidden="true"><use href="#i-mulheres"/></svg></span><strong>Entre Mulheres</strong><span class="sub">Rede de apoio entre mulheres. Em construção.</span></a></li>
       <li class="li-emergencia"><button type="button" class="tile-emergencia" id="abrir-emergencia"><span class="icone"><svg aria-hidden="true"><use href="#i-alerta"/></svg></span><strong>Emergência</strong><span class="sub">Precisa de ajuda agora? Toque aqui.</span></button></li>
     </ul>
 
@@ -116,6 +117,7 @@
 
       <section class="mapa-cras" aria-labelledby="titulo-cras">
         <h3 id="titulo-cras">Qual CRAS atende o meu bairro?</h3>
+        <p class="meta">Pela lista oficial de bairros que a Prefeitura publica para cada CRAS. Escreva o nome do bairro.</p>
         <form id="form-cras" autocomplete="off">
           <label for="bairro-cras" class="sr-only">Nome do bairro</label>
           <div class="linha">
@@ -138,6 +140,14 @@
       <p id="mensagem-mapa" role="status" class="mensagem" hidden></p>
       <div id="bairro-do-cep" class="status" role="status" hidden><span id="bairro-do-cep-texto"></span> <button type="button" class="btn secundario" id="bairro-do-cep-cras">Ver o CRAS deste bairro</button></div>
 
+      <section class="mapa-controles" aria-label="Filtros do mapa">
+        <div class="mapa-filtros" id="filtros" role="group" aria-label="Tipos de serviço"></div>
+        <div class="mapa-campo">
+          <label for="busca-texto">Procurar por nome, endereço ou bairro</label>
+          <input id="busca-texto" type="search" autocomplete="off" spellcheck="false" placeholder="Ex.: creche, Jardim Brasília, CRAS">
+        </div>
+      </section>
+
       <p id="resumo-mapa" class="mapa-resumo" aria-live="polite"></p>
       <div id="mapa-servicos" class="mapa-caixa" aria-label="Mapa dos serviços cadastrados"></div>
       <p class="mapa-legenda">Ponto <strong>cheio</strong>: posição pelo endereço. Ponto <strong>vazado</strong>: posição aproximada pelo CEP do serviço. Distâncias são em linha reta, não o caminho a pé.</p>
@@ -148,7 +158,13 @@
         <ul class="mapa-lista" id="lista-mais-perto"></ul>
       </section>
 
-      <p><a class="btn secundario" href="mapa.html">Abrir o mapa completo, com filtros e lista</a></p>
+      <details class="mapa-lista-detalhes" id="lista-detalhes">
+        <summary>Ver a lista de todos os serviços</summary>
+        <p class="meta" id="nota-lista"></p>
+        <ul class="mapa-lista" id="lista-servicos"></ul>
+        <p><button type="button" class="btn secundario" id="mais-servicos" hidden>Mostrar mais</button></p>
+        <p class="meta">Um serviço cadastrado não garante vaga nem horário: confirme sempre com o órgão. O link "Ver no Google Maps" abre outra aba e leva só o endereço do serviço, não o seu.</p>
+      </details>
     </section>
 
     <div class="blocos-inicio">
@@ -176,6 +192,15 @@
         </ul>
       </section>
     </div>
+
+    <section class="para-gestao" aria-labelledby="titulo-gestao">
+      <h2 id="titulo-gestao">Para a gestão</h2>
+      <p class="meta">Dados para quem planeja serviços públicos, não para quem procura ajuda.</p>
+      <ul class="lista-acesso">
+        <li><a href="#rio-claro-em-numeros">Rio Claro em números (população e serviços por setor)</a></li>
+        <li><a href="#painel">Painel da Secretaria (com dados de teste, não são mulheres reais)</a></li>
+      </ul>
+    </section>
   </section>
 
   <!-- ÁREAS: preenchidas por app.js a partir de areas.js quando a usuária escolhe uma porta. -->
@@ -201,6 +226,120 @@
       <label class="tiles"><input type="checkbox" id="usar-tiles"> Mostrar ruas (carrega imagens do OpenStreetMap; o servidor do mapa saberá a região aproximada)</label>
       <div id="grupos"></div>
     </section>
+  </section>
+  <section id="vista-entre-mulheres" class="area vista" hidden aria-live="polite">
+    <h1 id="titulo-vista-entre-mulheres" tabindex="-1"><span class="icone-titulo"><svg aria-hidden="true" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-mulheres"/></svg></span>Entre Mulheres</h1>
+    <p class="intro">Serviços que mulheres oferecem a outras mulheres: motorista, psicóloga, academia só para mulheres, beleza, aulas e mais. Escolha o que você procura.</p>
+
+    <div class="status" role="note">
+      <strong>Ainda não há mulheres cadastradas.</strong> Cada categoria tem o seu espaço: veja quem oferece e, se você é mulher e quer oferecer um serviço, faça o seu cadastro dentro da própria categoria. Só publica quem pedir e autorizar. Nenhum nome, perfil ou serviço é inventado para preencher a página.
+    </div>
+
+    <section class="secao" aria-labelledby="titulo-procura">
+      <h2 id="titulo-procura">O que você procura ou quer oferecer?</h2>
+      <p class="meta">Escolha uma categoria. Cada oferta mostra o contato que a própria mulher autorizou e a data do consentimento. Este sistema não intermedeia pagamento nem conversa: o contato é direto com ela.</p>
+      <div id="categorias"></div>
+      <p id="aviso-catalogo" class="meta"></p>
+    </section>
+
+    <aside class="pendente" aria-labelledby="titulo-planejado">
+      <h2 id="titulo-planejado">Planejado, ainda não disponível</h2>
+      <ul>
+        <li>Recebimento automático dos cadastros, em parceria com a Secretaria Municipal da Mulher e com entrada pelo gov.br para confirmar que só mulheres se cadastram (a definir com a Secretaria). Hoje o cadastro é preparado aqui e entregue pelo canal que a equipe definir.</li>
+        <li>Antes de qualquer lançamento: regras de segurança, verificação real de identidade, revisão humana de denúncias e proteção contra denúncias abusivas.</li>
+        <li>Enquanto isso não existir, nenhum selo de confiança ou “identidade verificada” será apresentado.</li>
+      </ul>
+    </aside>
+  </section>
+
+  <section id="vista-numeros" class="area vista vista-numeros" hidden aria-live="polite">
+  <h1 id="titulo-vista-numeros" tabindex="-1">Rio Claro em números</h1>
+  <p class="n-sub">Onde as pessoas moram, por setor censitário. Dados públicos do IBGE (Censo 2022) e do INEP (Censo Escolar 2025).</p>
+  <p class="aviso" id="aviso" role="note">Carregando…</p>
+
+  <section class="n-cartao" aria-labelledby="t-resumo">
+    <h2 id="t-resumo">Resumo do município</h2>
+    <p class="n-heroi" id="heroi">–</p>
+    <p class="rotulo">pessoas moram em Rio Claro (Censo 2022)</p>
+    <div class="indicadores" id="indicadores"></div>
+  </section>
+
+  <div class="filtros-linha">
+    <fieldset class="filtros">
+      <legend>Mostrar no mapa:</legend>
+      <label><input type="radio" name="metrica" value="densidade" checked> Pessoas por km²</label>
+      <label><input type="radio" name="metrica" value="pessoas_por_domicilio"> Pessoas por domicílio</label>
+    </fieldset>
+    <fieldset class="filtros">
+      <legend>Área:</legend>
+      <label><input type="radio" name="area" value="todo" checked> Município todo</label>
+      <label><input type="radio" name="area" value="densa"> Aproximar na área urbana</label>
+    </fieldset>
+  </div>
+
+  <p class="nota" id="nota-dist-pendente" hidden></p>
+
+  <div class="grade">
+    <section class="n-cartao" aria-labelledby="t-mapa">
+      <h2 id="t-mapa">Mapa dos 408 setores censitários</h2>
+      <p class="rotulo" id="sub-mapa"></p>
+      <div class="mapa-moldura" id="moldura">
+        <svg id="mapa-territorio" role="img" aria-labelledby="t-mapa sub-mapa" focusable="false"></svg>
+        <div class="dica" id="dica" role="status"></div>
+      </div>
+      <ul class="legenda" id="legenda"></ul>
+      <p class="nota" id="nota-area" hidden></p>
+      <div class="resumo-dist" id="resumo-dist" hidden></div>
+      <details id="lista-servicos-territorio" hidden><summary>Serviços marcados no mapa</summary><ul id="lista-pontos"></ul></details>
+      <p class="nota">Passe o mouse ou toque num setor para ver os números. A tabela abaixo traz os mesmos dados, por bairro.</p>
+    </section>
+
+    <section class="n-cartao" aria-labelledby="t-bairros">
+      <h2 id="t-bairros">Pessoas por bairro</h2>
+      <p class="rotulo">Escolha um bairro para destacá-lo no mapa.</p>
+      <ul class="barras" id="barras"></ul>
+      <p class="nota" id="nota-bairros"></p>
+      <p style="margin:8px 0 0"><button type="button" class="btn" id="limpar" hidden>Limpar destaque</button></p>
+    </section>
+  </div>
+
+  <section class="n-cartao" aria-labelledby="t-edu" id="bloco-edu" hidden>
+    <h2 id="t-edu">Educação infantil: matrículas em creche, por rede</h2>
+    <p class="rotulo" id="sub-edu"></p>
+    <ul class="barras" id="barras-edu"></ul>
+    <div class="rolagem"><table id="tabela-edu"></table></div>
+    <p class="nota" id="nota-edu"></p>
+  </section>
+
+  <section class="n-cartao" aria-labelledby="t-tabela">
+    <h2 id="t-tabela">Tabela por bairro</h2>
+    <div class="rolagem"><table id="tabela"></table></div>
+  </section>
+
+  <section class="n-cartao" aria-labelledby="t-ler">
+    <details>
+      <summary id="t-ler">Como ler estes números (e o que eles não dizem)</summary>
+      <ul class="limites">
+        <li><strong>Mostra onde as pessoas moram, não quem precisa de ajuda.</strong> Mais gente por km² não significa mais necessidade nem menos serviço.</li>
+        <li><strong>Correlação não prova causa.</strong> Um setor denso e sem creche por perto levanta uma pergunta; não prova que a creche seja a barreira para as mães dali.</li>
+        <li><strong>Falta a idade, a renda e o sexo.</strong> A malha usada só traz pessoas e domicílios. Crianças de 0 a 3 anos, renda e mulheres responsáveis vêm dos "Agregados por setores censitários" do Censo 2022, que ainda não estão no projeto.</li>
+        <li><strong>Pessoas por domicílio não é o tamanho médio das famílias.</strong> O campo de domicílios da malha do IBGE provavelmente inclui domicílios vazios e de uso ocasional (a confirmar no dicionário do IBGE), o que puxa o número para baixo, principalmente na zona rural. O IBGE publica a média oficial de moradores por domicílio ocupado; ela ainda não está no projeto.</li>
+        <li><strong>Pessoas por domicílio</strong> só aparece para setores com 20 domicílios ou mais. Setores pequenos dão números absurdos (há um com 106 pessoas num domicílio, provavelmente um domicílio coletivo).</li>
+        <li><strong>Matrícula não é vaga, demanda nem fila.</strong> A fila de espera por creche só a Secretaria da Educação tem.</li>
+        <li><strong>A área de cada setor</strong> é calculada a partir do desenho oficial. A soma confere com a área publicada pelo IBGE (diferença abaixo de 1%).</li>
+        <li><strong>Setor censitário não é bairro:</strong> são divisões do Censo. Os 28 "bairros" aqui são os do IBGE e não coincidem com todos os nomes usados pela Prefeitura.</li>
+      </ul>
+    </details>
+  </section>
+
+  <p id="rodape-numeros" class="n-nota"></p>
+  </section>
+
+  <section id="vista-painel" class="area vista vista-painel" hidden aria-live="polite">
+    <div class="faixa-teste" role="note" id="faixa-teste">PROTÓTIPO COM DADOS DE TESTE. Os números abaixo foram sorteados por computador e <u>não representam nenhuma mulher real</u>. Este painel mostra como as informações poderão ser apresentadas à Secretaria da Mulher.</div>
+    <h1 id="titulo-vista-painel" tabindex="-1">Painel do Observatório da Mulher Rio-Clarense</h1>
+    <p class="meta">O painel real exigirá <strong>login da Prefeitura</strong> e um servidor protegido: uma página aberta no navegador, como esta, não protege dados de ninguém. Aqui só há dados de teste, por isso não há o que proteger.</p>
+    <div id="painel-saida" aria-live="polite"><p>Carregando…</p></div>
   </section>
 </main>
 

@@ -3,7 +3,9 @@ const fs = require("fs");
 const path = require("path");
 
 const web = path.resolve(__dirname, "..");
-const html = fs.readFileSync(path.join(web, "territorio.html"), "utf8");
+const index = fs.readFileSync(path.join(web, "index.html"), "utf8"), css = fs.readFileSync(path.join(web, "estilo.css"), "utf8");
+const vistaDe = (html, id) => { const m = new RegExp('<section id="' + id + '"[\\s\\S]*?(?=\\n  <section id="vista-|\\n  <p id="fontes")').exec(html); assert(m, "vista não encontrada em index.html: " + id); return m[0]; };
+const html = vistaDe(index, "vista-numeros");
 const js = fs.readFileSync(path.join(web, "territorio.js"), "utf8");
 const dados = JSON.parse(fs.readFileSync(path.join(web, "dados", "territorio.json"), "utf8"));
 const geo = JSON.parse(fs.readFileSync(path.join(web, "dados", "setores.geojson"), "utf8"));
@@ -11,8 +13,8 @@ const geo = JSON.parse(fs.readFileSync(path.join(web, "dados", "setores.geojson"
 /* ---- a página só fala com arquivos locais e não indexa ---- */
 const externos = (html + js).match(/https?:\/\/[^\s"'<>)]+/g) || [];
 assert.deepStrictEqual(externos.filter((u) => !/^http:\/\/www\.w3\.org\/2000\/svg$/.test(u)), [], "nenhuma URL externa na página");
-assert(/<meta name="robots" content="noindex">/.test(html), "a página não deve ser indexada enquanto não for revisada");
-assert(!/<script[^>]+src="https?:/.test(html) && !/<link[^>]+href="https?:/.test(html), "sem script ou estilo externo");
+assert(/<meta name="robots" content="noindex, nofollow">/.test(index), "o site não deve ser indexado enquanto não for revisado");
+assert(!/<script[^>]+src="https?:/.test(index) && !/<link[^>]+href="https?:/.test(index), "sem script ou estilo externo");
 
 /* ---- texto dos dados nunca entra como HTML ---- */
 assert(!/innerHTML|insertAdjacentHTML|document\.write|outerHTML/.test(js), "texto vindo dos dados só entra com textContent");
@@ -25,15 +27,14 @@ assert(/20 domicílios/.test(html) && /106 pessoas/.test(html), "deve explicar p
 assert(/não é o tamanho médio das famílias/.test(html) && /vazios/.test(html), "deve avisar que pessoas por domicílio não é o tamanho médio das famílias (o campo provavelmente inclui domicílios vazios)");
 assert(/<table id="tabela">/.test(html) && /<fieldset class="filtros">/.test(html) && /role="img"/.test(html), "tabela, filtro e mapa acessível");
 
-/* ---- modo escuro: nos dois escopos, com as mesmas variáveis ---- */
-assert(/prefers-color-scheme: dark\)[\s\S]*?:root:where\(:not\(\[data-theme="light"\]\)\)/.test(html), "escuro pelo sistema, sem sobrescrever o tema claro escolhido");
-assert(/:root\[data-theme="dark"\]/.test(html), "escuro pelo seletor de tema");
-const claro = html.match(/--c0: (#[0-9a-f]{6}); --c1: (#[0-9a-f]{6}); --c2: (#[0-9a-f]{6}); --c3: (#[0-9a-f]{6}); --c4: (#[0-9a-f]{6});/);
+/* ---- tema: dentro do dashboard a interface é sempre clara (sem modo escuro), então a vista usa só a rampa clara ---- */
+assert(!/prefers-color-scheme:\s*dark/.test(css) && !/data-theme="dark"/.test(css), "a interface mantém o fundo claro: a vista não define modo escuro");
+const claro = css.match(/--c0:(#[0-9a-f]{6});--c1:(#[0-9a-f]{6});--c2:(#[0-9a-f]{6});--c3:(#[0-9a-f]{6});--c4:(#[0-9a-f]{6});/);
 assert.deepStrictEqual(claro.slice(1), ["#86b6ef", "#5598e7", "#2a78d6", "#1c5cab", "#0d366b"], "rampa clara validada (passos 250 a 700)");
 
 /* ---- distância até o serviço: sempre mostra quantos serviços estão localizados e que a localização pelo CEP é aproximada ---- */
 assert(/desenharPontos/.test(js) && /localizados/.test(js) && /localizados_pelo_endereco/.test(js), "o resumo deve dizer quantos serviços cadastrados estão localizados");
-assert(/aproximada pelo CEP/.test(js) && /\.ponto\.aprox/.test(html), "ponto aproximado pelo CEP deve ser visualmente diferente (círculo vazado) e dito na legenda");
+assert(/aproximada pelo CEP/.test(js) && /\.n-ponto\.aprox/.test(css), "ponto aproximado pelo CEP deve ser visualmente diferente (círculo vazado) e dito na legenda");
 assert(/Object\.keys\(estado\.dados\.distancia_ate_servico \|\| \{\}\)/.test(js), "as opções de distância só aparecem quando há serviços localizados");
 assert(!/o\(a\)|\(a\)/.test(js), "texto sem 'o(a)': usar redação neutra");
 if (dados.distancia_ate_servico) {

@@ -7,11 +7,13 @@ const Areas = require("../areas.js");
 
 const web = path.resolve(__dirname, "..");
 const ler = (f) => fs.readFileSync(path.join(web, f), "utf8");
-const index = ler("index.html"), rede = ler("rede-mulheres.html"), app = ler("app.js"), css = ler("estilo.css");
+const index = ler("index.html"), app = ler("app.js"), css = ler("estilo.css");
+const vistaDe = (html, id) => { const m = new RegExp('<section id="' + id + '"[\\s\\S]*?(?=\\n  <section id="vista-|\\n  <p id="fontes")').exec(html); assert(m, "vista não encontrada em index.html: " + id); return m[0]; };
+const rede = vistaDe(index, "vista-entre-mulheres");
 
 /* ---- 1. Tela inicial: exatamente sete portas, com os nomes pedidos ---- */
 /* O nome antigo ("De Mulher para Mulher") é slogan conhecido de uma rede de lojas: não pode voltar a aparecer no site. */
-["index.html", "rede-mulheres.html", "areas.js", "app.js"].forEach((f) => assert(!/de mulher (para|pra) mulher/i.test(fs.readFileSync(path.join(__dirname, "..", f), "utf8")), "nome antigo em " + f));
+["index.html", "areas.js", "app.js"].forEach((f) => assert(!/de mulher (para|pra) mulher/i.test(fs.readFileSync(path.join(__dirname, "..", f), "utf8")), "nome antigo em " + f));
 const NOMES = ["Trabalho", "Educação", "Saúde", "Direitos", "Moradia", "Assistência Social", "Entre Mulheres"];
 const inicio = index.slice(index.indexOf('<section id="inicio-tela"'), index.indexOf('<section id="area"'));
 const portas = Array.from(inicio.matchAll(/<a class="porta" href="([^"]+)">.*?<strong>([^<]+)<\/strong>/g), (m) => ({ href: m[1], nome: m[2].trim() }));
@@ -19,7 +21,8 @@ assert.deepStrictEqual(portas.map((p) => p.nome), NOMES, "a tela inicial deve te
 assert.strictEqual((index.match(/class="porta"/g) || []).length, 7, "não pode haver outros botões de porta");
 assert.deepStrictEqual(portas.slice(0, 6).map((p) => p.href), Areas.AREAS.map((a) => "#" + a.id), "cada porta deve apontar para a sua área");
 assert.deepStrictEqual(Areas.AREAS.map((a) => a.nome), NOMES.slice(0, 6), "os nomes das áreas devem ser os mesmos das portas");
-assert.strictEqual(portas[6].href, "rede-mulheres.html", "Entre Mulheres é uma página independente");
+assert.strictEqual(portas[6].href, "#entre-mulheres", "Entre Mulheres é uma vista do dashboard, não uma página separada");
+assert(!fs.existsSync(path.join(web, "rede-mulheres.html")) && !fs.existsSync(path.join(web, "territorio.html")) && !fs.existsSync(path.join(web, "painel-secretaria.html")) && !fs.existsSync(path.join(web, "mapa.html")), "tudo mora no dashboard: não existem páginas separadas");
 
 /* ---- 2. A tela inicial acolhe e orienta, mas não traz o detalhe das áreas ----
    Pode citar serviços em frases curtas e nos contatos essenciais (CRAS, CREAS, Conselho Tutelar). Não pode trazer o conteúdo
@@ -33,23 +36,23 @@ const formularios = Array.from(inicio.matchAll(/<form[^>]*id="([^"]+)"/g), (m) =
 assert.deepStrictEqual(formularios, ["form-cep-mapa", "form-cras"], "só o mapa tem formulário na tela inicial");
 assert.strictEqual((inicio.match(/<form/g) || []).length, 2, "nenhum formulário sem id do mapa na tela inicial");
 const campos = Array.from(inicio.matchAll(/<input[^>]*id="([^"]+)"/g), (m) => m[1]).sort();
-assert.deepStrictEqual(campos, ["bairro-cras", "cep-mapa", "usar-tiles-mapa"], "só os campos do mapa na tela inicial");
-assert.strictEqual((inicio.match(/<input/g) || []).length, 3, "nenhum campo sem id do mapa na tela inicial");
+assert.deepStrictEqual(campos, ["bairro-cras", "busca-texto", "cep-mapa", "usar-tiles-mapa"], "só os campos do mapa na tela inicial");
+assert.strictEqual((inicio.match(/<input/g) || []).length, 4, "nenhum campo sem id do mapa na tela inicial");
 assert.strictEqual((inicio.match(/<textarea/g) || []).length, 1, "o único campo da tela inicial é a caixa da IA (Conte com suas palavras)");
 
 /* ---- 3. Emergência: botão compacto com os contatos oficiais, em todas as páginas ---- */
-[["index.html", index], ["rede-mulheres.html", rede]].forEach(([nome, html]) => {
+[["index.html", index]].forEach(([nome, html]) => {
   assert(html.includes('<details class="emergencia"'), nome + ": falta o botão de emergência");
   const tels = Array.from(html.matchAll(/class="tel" href="tel:(\d+)"/g), (m) => m[1]);
   assert.deepStrictEqual(tels, Areas.EMERGENCIA.map((c) => c.tel), nome + ": contatos de emergência diferentes dos definidos em areas.js");
   assert(html.includes('id="voltar"'), nome + ": falta o botão Voltar");
 });
-assert(!/barra-emergencia/.test(index + rede + css), "não deve existir faixa de emergência de largura total");
+assert(!/barra-emergencia/.test(index + css), "não deve existir faixa de emergência de largura total");
 assert(!/location\.replace\(["']https?:\/\/(?!www\.google)/.test(app), "o botão de sair não deve ir a destinos inesperados");
 assert(/não apaga/i.test(index), "o texto do botão de sair deve admitir que não apaga o histórico");
 
 /* ---- 4. Nada de demonstração, jargão ou texto técnico na interface ---- */
-[["index.html", index], ["rede-mulheres.html", rede], ["app.js", app], ["areas.js", ler("areas.js")]].forEach(([nome, txt]) => {
+[["index.html", index], ["app.js", app], ["areas.js", ler("areas.js")]].forEach(([nome, txt]) => {
   ["[DEMO]", "DADOS ILUSTRATIVOS", "faixa-demo", "dados/demo", "protótipo", "Protótipo", "fictíci", "cadastro manual"].forEach((t) =>
     assert(!txt.includes(t), nome + " contém texto proibido: " + t));
 });
@@ -58,7 +61,7 @@ const dadosVisiveis = ler("dados/catalogo_manual.json");
   assert(!dadosVisiveis.includes(t), "catalogo_manual.json contém texto de desenvolvedor: " + t));
 
 /* ---- 5. Links e arquivos locais existem ---- */
-[["index.html", index], ["rede-mulheres.html", rede]].forEach(([nome, html]) => {
+[["index.html", index]].forEach(([nome, html]) => {
   Array.from(html.replace(/<script>[\s\S]*?<\/script>/g, "").matchAll(/(?:href|src)="([^"#]+)(?:#[^"]*)?"/g), (m) => m[1])
     .filter((u) => !/^(https?:|tel:|mailto:)/.test(u))
     .forEach((u) => assert(fs.existsSync(path.join(web, u.split("?")[0])), nome + ": arquivo local inexistente: " + u));
@@ -225,7 +228,7 @@ ofertas.ofertas.forEach((o) => {
 });
 assert(!/fictíci|protótipo|\[DEMO\]|Ana Exemplo|Maria Exemplo/i.test(rede + JSON.stringify(ofertas)), "a página não pode ter conteúdo fictício");
 assert(!/identidade verificada|selo de confiança/i.test(rede.replace(/nenhum selo[^<]*/i, "")), "não prometer verificação que não existe");
-assert(rede.includes('src="areas.js"') && rede.includes('id="categorias"') && ler("entre-mulheres-ui.js").includes("ofertas_mulheres.json") && !/<style/.test(rede), "a página lê as ofertas do arquivo de dados e não tem estilo embutido");
+assert(rede.includes('id="categorias"') && ler("entre-mulheres-ui.js").includes("ofertas_mulheres.json") && !/<style/.test(rede), "a vista lê as ofertas do arquivo de dados e não tem estilo embutido");
 assert(!rede.includes("REDE_MULHERES") && !/Em que ponto você está/.test(rede), "os caminhos de acolhimento não fazem parte desta página");
 
 /* ---- 7. Comportamento esperado no código ---- */
@@ -368,14 +371,21 @@ assert(idsLocais.length >= 5, "contatos locais devem vir do catálogo por id");
 idsLocais.forEach((id) => { const x = lista.find((y) => y.id === id); assert(x && x.telefone, "contato local sem telefone no catálogo: " + id); });
 const links = Array.from(inicio.matchAll(/<a href="#([a-z-]+)(?:\/([a-z-]+))?">/g), (m) => ({ area: m[1], secao: m[2] }));
 assert(links.length >= 5, "acesso rápido deve ter atalhos");
-links.forEach((l) => {
+/* As vistas moram dentro do <main>, junto com as áreas (e não no rodapé): senão o texto institucional do rodapé aparece acima delas. */
+const vistas0 = ["vista-entre-mulheres", "vista-numeros", "vista-painel"];
+vistas0.forEach((v) => { const k = index.indexOf('id="' + v + '"'); assert(k > index.indexOf("<main") && k < index.indexOf("</main>"), "a vista deve estar dentro do <main>: " + v); });
+/* Além das áreas, o dashboard tem "vistas" (o que antes eram páginas separadas): Entre Mulheres, Rio Claro em números e Painel. */
+const vistas = Array.from(app.matchAll(/^    "([a-z-]+)": \{ el: "vista-/gm), (m) => m[1]);
+assert.deepStrictEqual(vistas.sort(), ["entre-mulheres", "painel", "rio-claro-em-numeros"], "o app conhece as três vistas do dashboard");
+vistas.forEach((v) => assert(new RegExp('<section id="vista-[a-z-]+"').test(index) && /scripts: \[/.test(app), "cada vista tem a sua seção no index.html e os seus scripts: " + v));
+links.filter((l) => vistas.indexOf(l.area) === -1).forEach((l) => {
   const area = Areas.AREAS.concat(Areas.EXTRAS).find((a) => a.id === l.area);
   assert(area, "atalho para área inexistente: " + l.area);
   if (l.secao) assert(area.secoes.some((sec) => sec.ancora === l.secao), "atalho para seção inexistente: " + l.area + "/" + l.secao);
 });
 assert(/split\("\/"\)/.test(app) && /rolarPara\(secao\)/.test(app), "a rota deve entender #área/seção");
 assert(!/Buscar no site|Legislação/.test(inicio), "a tela inicial não pode mostrar o que ainda não existe");
-assert(/href="mapa\.html"/.test(inicio) && fs.existsSync(path.join(web, "mapa.html")), "o mapa de serviços existe e deve ser acessível pela tela inicial");
+assert(/id="mapa-inicio"/.test(inicio) && /id="mapa-servicos"/.test(inicio) && /data-rolar="mapa-inicio"/.test(inicio), "o mapa de serviços mora na tela inicial e o botão do topo leva até ele");
 
 /* Contraste da paleta (WCAG): lido do :root do CSS */
 const vars = Object.fromEntries(Array.from(css.slice(0, css.indexOf("}")).matchAll(/--([a-z-]+):(#[0-9a-f]{6})/g), (m) => [m[1], m[2]]));
@@ -390,7 +400,7 @@ const razao = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) +
 assert(razao("#ffffff", vars["pri-esc"]) >= 6.5 && razao("#ffffff", vars.alerta) >= 6.5, "texto branco sobre botões e emergência deve ter contraste >= 6,5:1");
 ["bg", "card", "rosa", "verde", "pessego"].forEach((f) => assert(razao(vars["pri-esc"], vars[f]) >= 6.5, "links com contraste menor que 6,5:1 sobre " + f));
 // Nome do projeto: o mesmo em todos os lugares, com a cidade ao lado
-assert(/class="marca"[^>]*>.*Mulher em Rede<span class="marca-local">Rio Claro<\/span>/.test(index) && /class="marca"[^>]*>.*Mulher em Rede<span class="marca-local">Rio Claro<\/span>/.test(rede), "o nome deve ser 'Mulher em Rede', com 'Rio Claro' ao lado, nas duas páginas");
+assert(/class="marca"[^>]*>.*Mulher em Rede<span class="marca-local">Rio Claro<\/span>/.test(index), "o nome deve ser 'Mulher em Rede', com 'Rio Claro' ao lado, nas duas páginas");
 assert(/<title>Mulher em Rede – Rio Claro<\/title>/.test(index) && /Mulher em Rede \(MISM3\)/.test(index), "título e rodapé devem usar o mesmo nome");
 assert(!/Mulheres de Rio Claro/.test(index + rede + app), "o nome 'Mulheres de Rio Claro' sugere um site da cidade e não deve ser usado enquanto o projeto não for oficial");
 

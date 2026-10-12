@@ -14,7 +14,7 @@ scripts.forEach((f) => {
 });
 
 /* Todo <script src> das páginas aponta para um arquivo que existe. */
-["index.html", "mapa.html", "territorio.html", "painel-secretaria.html", "rede-mulheres.html"].forEach((pagina) => {
+["index.html"].forEach((pagina) => {
   const html = fs.readFileSync(path.join(web, pagina), "utf8");
   Array.from(html.matchAll(/<script src="([^"]+)"/g), (m) => m[1]).forEach((src) => {
     assert(fs.existsSync(path.join(web, src)), pagina + " carrega um script que não existe: " + src);
