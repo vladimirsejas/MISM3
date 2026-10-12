@@ -37,10 +37,10 @@
     ]],
     ["filhos", [
       "filho", "filhos", "crianca", "criancas", "meu bebe", "minha bebe", "nosso bebe", "um bebe", "o bebe", "recem nascido", "creche",
-      "maternidade", "escola infantil", "baba", "educacao infantil",
+      "maternidade", "escola infantil", "baba", "educacao infantil", "emei", "emef",
       "cmei", "pre escola", "pre-escola", "preescola", "bercario",
       "maternal", "jardim de infancia",
-      "vaga na creche", "fila da creche", "matricula do filho",
+      "vaga na creche", "vaga no cmei", "matricular na creche", "fila da creche", "lista de espera da creche", "fila de espera da creche", "matricula do filho",
       "nao tenho com quem deixar", "nao tenho com quem deixar meu filho",
       "mae solo", "mae solteira", "mae sozinha", "sozinha com meus filhos",
       "crio meus filhos sozinha", "criar meus filhos sozinha"
