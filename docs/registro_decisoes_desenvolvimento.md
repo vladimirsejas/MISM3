@@ -934,3 +934,12 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - **Achados que não escondemos:** (1) na primeira rodada do teste a segurança acertou 10/12; faltavam violência contra terceiros e agressor que bate em criança; as regras foram corrigidas e o teste deixou de ser independente para essa camada; (2) o classificador de intenção e o contexto de área não melhoram a métrica; (3) a abstenção (69%) é pior que a do assistente anterior (85%). Detalhes em `docs/ia/avaliacao_orientacao.md`.
 - **Corrigido pelos testes:** "tomou veneno" não acionava o alerta de saúde; fixados de urgência passaram a ser as UPAs (antes podia aparecer o pronto atendimento de ginecologia para ideação suicida).
 - **API de LLM:** ainda não usada no site; `pipeline/testar_api.py` verifica a chave (lida da variável de ambiente, nunca gravada).
+
+
+### Ajustes incrementais de reconhecimento e proteção — 12/10/2026
+- A busca por necessidades passou a reconhecer mais variações de matrícula infantil (CMEI, EMEI, EMEF, pré-escola, berçário e lista de espera), pedidos de auxílio-aluguel/casa própria/situação de rua e expressões ligadas a vacinação infantil atrasada.
+- O classificador deixou de tratar a expressão isolada “escola de samba” como educação formal. A exceção remove somente essa expressão antes de aplicar as regras; outras necessidades presentes na frase continuam podendo ser reconhecidas.
+- A camada local de segurança passou a reconhecer alguns sinais explícitos de controle coercitivo sobre dinheiro, conta bancária, celular, mensagens, roupas, documentos e com quem a pessoa fala. Isso é uma regra de orientação, não uma avaliação de risco individual.
+- O orientador ganhou pontes lexicais locais para expressões sobre casa própria, situação de rua, vacinação e cuidado infantil/creche, ampliando a consulta com termos que já existem no índice verificado. A explicação de correspondência continua baseada nas palavras originais da usuária; nenhum serviço novo é criado. Há teste para garantir que termos artificiais da expansão não apareçam como se tivessem sido escritos pela usuária.
+- Foram adicionados testes sintéticos positivos e negativos em `web/tests/necessidades.test.js`, `web/tests/perigo.test.js` e `web/tests/orientar.test.js`.
+- **Validação executada no GitHub Actions:** 175 testes Python passaram e a suíte completa de testes JavaScript passou no commit `906fefecb558c4943577413244d910a5dcba12a8`. A interface ainda não foi validada visualmente nesta rodada.
