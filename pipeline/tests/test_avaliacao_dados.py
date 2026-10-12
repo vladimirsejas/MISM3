@@ -8,7 +8,7 @@ P = D["perguntas"]
 INDICE = json.loads((RAIZ / "web" / "dados" / "indice_orientacao.json").read_text(encoding="utf-8"))["unidades"]
 # Serviços retirados do catálogo de propósito; o gabarito foi mantido para não esconder o efeito na métrica (ver docs/ia/avaliacao_orientacao.md).
 RETIRADOS = {"svc:mulher/cram"}
-CONJUNTOS = {"desenvolvimento", "teste", "independente", "reserva"}
+CONJUNTOS = {"desenvolvimento", "teste", "independente", "reserva", "final"}
 
 
 def test_ids_unicos_e_conjuntos_validos():

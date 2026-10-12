@@ -22,7 +22,7 @@
         "(?:pensei|penso|pensando|quero|vou|vontade|ideia|tentei|tentar) (?:em |de )?(?:me )?(?:enforcar|enforco|afogar|envenenar|atirar|jogar (?:d[aoe]|na|no) \\w+|jogar na frente|pular (?:d[aoe]|na|no) \\w+|cortar os pulsos|me jogar)",
         "(?:vou|quero) me (?:enforcar|jogar|atirar|envenenar|afogar)",
         "(?:queria|quero|gostaria de|preferia|desejo) (?:dormir|adormecer) e nao (?:acordar|acordar mais|ver mais nada)", "nao quero (?:mais )?(?:acordar|estar aqui|existir|estar viva|ficar aqui|continuar)", "queria (?:nao ter nascido|desaparecer|nao existir|estar morta|ter morrido)",
-        "(?:minha )?vida nao tem (?:mais )?(?:sentido|valor|jeito|saida)", "nao vejo (?:mais )?(?:saida|solucao|sentido|futuro)", "nao tem mais jeito pra mim", "(?:seria|era|e) melhor (?:se eu )?(?:morresse|nao existisse|nao estivesse aqui|desaparecesse)", "ninguem sentiria minha falta", "nao tenho mais motivo pra viver", "nao tenho motivo pra (?:viver|continuar)", "quero sumir(?! (?:com|de|da|do|a|o|as|os)\\b)", "acabar com a minha vida"
+        "(?:minha )?vida nao tem (?:mais )?(?:sentido|valor|jeito|saida)", "nao vejo (?:mais )?(?:saida|solucao|sentido|futuro)", "nao tem mais jeito pra mim", "(?:seria|era|e) melhor (?:se eu )?(?:morresse|nao existisse|nao estivesse aqui|desaparecesse)", "ninguem sentiria minha falta", "nao tenho mais motivo pra viver", "(?:escrevi|deixei|fiz|preparei|escrever) (?:uma )?(?:carta|bilhete|mensagem) de despedida", "ja escrevi minha despedida", "(?:filhos|familia|todos|todo mundo|mundo) (?:ficariam|estariam|ficaria|estaria) melhor sem (?:a mae|mim|eu)", "nao tenho motivo pra (?:viver|continuar)", "quero sumir(?! (?:com|de|da|do|a|o|as|os)\\b)", "acabar com a minha vida"
       ],
       aviso: "Se você pensa em se machucar, ligue para o 188 (CVV, conversa de apoio, 24 horas, gratuito) ou para o 192 (SAMU).",
       mensagem: "Sinto muito que você esteja se sentindo assim. Você não está sozinha. Se pensa em se machucar, ligue agora para o 188 (CVV, conversa de apoio, 24 horas, gratuito) ou para o 192 (SAMU).",
@@ -36,7 +36,7 @@
         "abus(?:a|ou|ando|o) (?:d[ao]|de) (?:minha|meu|uma|um) (?:filha|filho|crianca|menina|menino|neta|neto)",
         "(?:padrasto|pai|tio|avo|vizinho|professor|primo|irmao|marido|namorado|ele|tio dela|tio dele|colega) (?:mexe|mexeu|mexendo|passa|passou|passando|toca|tocou|encosta|encostou|bolina|bolinou|obriga|forca|forcou|beija|beijou|se esfrega|mostra)(?: a mao| as maos)? (?:com |em |n[ao]s? |nela|nele|a |o )?(?:(?:minha|meu|a|o|uma|um) ){0,2}(?:filha|filho|crianca|menina|menino|neta|neto|sobrinha|sobrinho|enteada|enteado|nela|nele)",
         "passa(?:ndo|ou)? a mao (?:nela|nele|na (?:menina|crianca|filha|neta|sobrinha)|no (?:menino|filho|neto|sobrinho))", "(?:neta|filha|filho|crianca|menina|menino|sobrinha|sobrinho)(?: de \\d+ anos)? (?:me )?(?:contou|disse|falou|confessou) que (?:o |a |meu |minha )?(?:\\w+ ){0,3}(?:mexe|mexeu|passa|passou|tocou|abusa|abusou|bolina|obriga|machuca|bate)",
-        "(?:crianca|menina|menino|filh[oa]|neto|neta|bebe|sobrinh[oa])s?(?: [a-z]+){0,5} (?:apanh(?:a|am|ando|ou)(?= (?:de|do|da|dos|das|toda|todo|todas|todos|muito|demais|bastante|dele|dela|em casa|sempre|a noite)|$)|e espancad[oa]|e agredid[oa]|vive machucad[oa]|tem marcas)", "apanha(?:ndo|m)? de (?:cinto|chinelo|fio|pau|corda|vara|mangueira)", "(?:escuto|ouco|ouvi) (?:os )?gritos d[eao]s? (?:crianca|menina|menino|filh[oa]|vizinh[oa])", "(?:crianca|menina|menino|filh[oa]) (?:trancad[oa]|amarrad[oa]|sem comer|passando fome) (?:em casa|sozinh[oa])",
+        "(?:crianca|menina|menino|filh[oa]|neto|neta|bebe|sobrinh[oa])s?(?: [a-z]+){0,5} (?:apanh(?:a|am|ando|ou)(?! (?:do|da|dos|das) (?:adversari\\w*|time|equipe|oponent\\w*|rival|jogo|campeonato|volei|futebol|basquete|handebol))(?= (?:de|do|da|dos|das|toda|todo|todas|todos|muito|demais|bastante|dele|dela|em casa|sempre|a noite)|$)|e espancad[oa]|e agredid[oa]|vive machucad[oa]|tem marcas)", "apanha(?:ndo|m)? de (?:cinto|chinelo|fio|pau|corda|vara|mangueira)", "(?:escuto|ouco|ouvi) (?:os )?gritos d[eao]s? (?:crianca|menina|menino|filh[oa]|vizinh[oa])", "(?:crianca|menina|menino|filh[oa]) (?:trancad[oa]|amarrad[oa]|sem comer|passando fome) (?:em casa|sozinh[oa])",
         "(?:crianca|menina|menino|filha|filho) (?:esta sendo |sendo |foi )?(?:abusada|abusado|maltratada|maltratado|espancada|espancado|violentada)",
         "maus tratos (?:a|com|em|contra) (?:crianca|criancas|menor|filho|filha|bebe)", "abuso sexual (?:de|da|do|contra) (?:crianca|menor|filha|filho)"
       ],
@@ -52,18 +52,18 @@
         PESSOA + " (?:controla|controlou|controlando|vigia|vigiando) (?:todo o |toda a |meu |minha |meus |minhas )?(?:dinheiro|conta bancaria|celular|telefone|mensagens|com quem eu falo|roupas|documentos)",
         PESSOA + " (?:bate|bateu|agride|agrediu|empurrou|chutou|enforcou|ameaca|ameacou|abusa|abusou) (?:em|n[ao]s?|d[ao]s?) (?:mim|nos|gente|minha|meu|meus|minhas|nossos|nossas|filha|filho|criancas)",
         PESSOA + " (?:vai|quer|disse que vai) (?:me )?(?:matar|bater)",
-        "(?:estou|to|ta|tou|esta|vivo|vivendo|continuo) (?:apanhando|sendo agredida|sendo ameacada|sofrendo violencia|sendo perseguida)", "apanh(?:o|ando|ei|ou|a|am)\\b(?! (?:chuva|sol|gripe|resfriado|frio|bola|onibus|um taxi|ar|vento|sereno|a bola|o onibus|feio|de goleada|no jogo|em campo|na final|no campeonato|pra (?:aprender|achar|mexer)|muito pra))",
+        "(?:estou|to|ta|tou|esta|vivo|vivendo|continuo) (?:apanhando|sendo agredida|sendo ameacada|sofrendo violencia|sendo perseguida)", "apanh(?:o|ando|ei|ou|a|am)\\b(?! (?:chuva|sol|gripe|resfriado|frio|bola|onibus|um taxi|ar|vento|sereno|a bola|o onibus|feio|de goleada|no jogo|em campo|na final|no campeonato|pra (?:aprender|achar|mexer)|muito pra|(?:do|da|dos|das) (?:adversari\\w*|time|equipe|oponent\\w*|rival|jogo|campeonato|volei|futebol|basquete|handebol)))",
         "(?:bate|bateu|batendo|agride|agrediu|espanca|espancou|maltrata|ameaca|ameacou) (?:n[ao]|em|a) (?:a |sua |minha )?(?:mulher|esposa|namorada|companheira|vizinha|irma|amiga|mae)",
         "(?:vizinha|amiga|irma|mae|filha|prima|colega) (?:apanha|apanhando|sofre violencia|e agredida|esta sendo agredida|e ameacada)",
         "apanha (?:do|da|de) (?:marido|namorado|companheiro|pai|ex)",
         "violencia (?:domestica|psicologica|fisica|sexual|patrimonial)", "sofro violencia", "sofrendo violencia",
-        "vai me matar", "quer me matar", "\\bme (?:mata|matar|machuca|machucar|esfaqueia|esfaquear)\\b(?! de )", "(?:ele|ela) (?:disse|falou|jurou|prometeu) que (?:me )?(?:mata|vai me|vai acabar comigo)", "acabar comigo",
+        "vai me matar", "quer me matar", "tentou me (?:matar|estrangular|sufocar|esfaquear|enforcar|afogar|queimar|atropelar)", "(?:ele|ela|meu \\\\w+) tentou me (?:matar|estrangular|sufocar|esfaquear|enforcar)", "\\bme (?:mata|matar|machuca|machucar|esfaqueia|esfaquear)\\b(?! de )", "(?:ele|ela) (?:disse|falou|jurou|prometeu) que (?:me )?(?:mata|vai me|vai acabar comigo)", "acabar comigo",
         "(?:meu ex|meu ex marido|meu ex namorado|ex|ele|ela|marido|companheiro|namorado|um homem|alguem|um desconhecido|meu patrao|meu chefe)(?: \\w+){0,2} (?:me )?(?:segue|seguiu|seguindo|persegue|perseguindo|perseguiu|vigiando|vigia|monitora|monitorando|espiona|espiando)(?! (?:no|na|nas|nos|em) (?:instagram|insta|face|facebook|redes|whatsapp|zap|tiktok|twitter|x|canal|youtube))", "(?:ta|esta|vive|fica|anda) me (?:seguindo|perseguindo|vigiando|monitorando|espiando)", "aparece (?:na|no|em) (?:porta|trabalho|minha casa|escola|faculdade)", "fica me (?:ligando|mandando mensagem|ameacando|esperando|vigiando)", "(?:nao para|nao para de) (?:me )?(?:ligar|mandar mensagem|perseguir)",
         "(?:denunciar|denuncia contra|registrar (?:ocorrencia|boletim) contra|prestar queixa d[eo]) (?:o |a |meu |minha )?(?:marido|companheiro|companheira|namorado|ex|pai|padrasto|agressor|patrao)",
         "(?:estou com|to com|fiquei com|sinto|sentindo|morro de) medo (?:dele|dela|do meu (?:marido|ex|companheiro|namorado|pai|padrasto)|da minha familia)",
         "(?:ele|ela) (?:ta|esta) (?:me )?(?:esperando|na porta|na frente da minha casa)", "vou morrer(?! de )", "ameaca de morte", "ameacou de morte", "ameacou me matar",
         "medida protetiva", "estupr\\w*", "abusad[ao]", "abuso sexual", "fui forcada", "me forcou", "assedi\\w*", "fui violentada",
-        "tenho medo (?:dele|dela|do meu marido|do meu ex|do meu companheiro|do meu namorado|de voltar pra casa|de voltar para casa|de ir pra casa|de chegar em casa)",
+        "tenho medo (?:dele|dela|do meu marido|do meu ex|do meu companheiro|do meu namorado|de voltar pra casa|de voltar para casa|de ir pra casa|de chegar em casa|de entrar em casa|de ficar em casa|de dormir em casa)",
         "(?:nao me deixa|nao deixa eu|me proibe de|me tranca|me prende) (?:sair|em casa|de sair|trabalhar)", "nao posso sair de casa",
         "quebrou tudo", "quebra tudo", "sair de casa com (?:[a-z]+ ){0,4}seguranca", "fugir de casa", "fugir dele",
         "estou em perigo", "to em perigo", "me ajuda ele esta aqui", "ele esta aqui", "ele esta vindo", "socorro(?: me (?:ajuda|ajudem)| por favor)?$", "socorro me ajuda"
@@ -106,6 +106,15 @@
 
   function achou(lista, texto) { return lista.some(function (r) { return r.test(texto); }); }
 
+  /* Âncoras: um alerta que vem SÓ do detector aprendido precisa de ao menos uma palavra do campo do assunto. Modelos pequenos confundem
+     "vou tirar férias" com "vou tirar a minha vida"; a âncora barra esse tipo de erro sem atrapalhar as regras. */
+  var ANCORAS = {
+    suicidio: /(?:^| )(?:morr\w*|mort\w*|mat(?:ar|o|ei|ou|ando)|vida|viver|vivo|acab\w*|sum(?:ir|o|ido)|desapare\w*|suicid\w*|despedid\w*|despedi|enforc\w*|corda|veneno|remedios?|comprimidos?|machuc\w*|cort(?:ar|ei|es)|pulsos?|ponte|saida|sentido|existir|existo|nascer|nasci|acord\w*|dormir|dorm\w+|ferir|jogar|pular|afog\w*|sem mim|falta|peso|cansad\w+|desist\w*|ninguem|sozinh\w+)(?: |$)/,
+    violencia: /(?:^| )(?:bat\w*|agred\w*|ameac\w*|mat(?:ar|a|ou)|soco|socos|tapa|surra|pancada|empurr\w*|estrangul\w*|sufoc\w*|enforc\w*|forc\w*|abus\w*|violen\w*|medo|pavor|persegu\w*|segu\w+|vigi\w*|tranc\w*|preso|presa|machuc\w*|quebr\w*|arma|faca|socorro|marido|namorad\w*|companheir\w*|ex|ele|ela|padrasto|pai|chefe|patrao|apanh\w*|xing\w*|humilh\w*|control\w*|proib\w*|fugi\w*|fugir|escond\w*|sair de casa|perigo|esfaque\w*|cinto|estupr\w*|assedi\w*)(?: |$)/,
+    crianca: /(?:^| )(?:crianca\w*|filh[oa]s?|menin[oa]s?|neto|neta|bebe|bebes|sobrinh[oa]|entead[oa]|adolescente|aluno|aluna|baba|pequen[oa]|infantil|menor)(?: |$)/,
+    saude: /(?:^| )(?:desmai\w*|respir\w*|sangu\w*|sangr\w*|convuls\w*|infart\w*|derrame|engasg\w*|roxo|roxa|azul|queda|caiu|caido|caida|inconsciente|veneno|queimad\w*|queimou|overdose|dor|febre|parto|acidente|choque|afog\w*|passando mal|passou mal|responde|acorda|tontura|desacord\w*|pulso|vomit\w*|ferido|ferida|machuc\w*|corte|corpo|cinza|palid\w*|suando|frio|remedios?|engoliu|tomou|ingeriu|mole|duro|torto|torta|boca|falar|enxerg\w*)(?: |$)/
+  };
+
   /* Detector aprendido (pipeline/treinar_perigo.py): pega o que as listas de palavras não pegam. Trabalha JUNTO com as regras: o alerta
      aparece se qualquer um dos dois disparar. Sem o modelo carregado, só valem as regras. */
   var detector = null;
@@ -121,6 +130,7 @@
     ORDEM.forEach(function (tp) {
       var regra = achou(COMPILADO[tp].forte, t), p = probs ? probs[tp] : undefined, lim = detector ? detector.limiares[tp] : undefined;
       var alto = detector && detector.altos[tp] !== undefined ? detector.altos[tp] : lim;
+      if (!regra && ANCORAS[tp] && !ANCORAS[tp].test(t)) p = undefined; /* o detector sozinho não vale sem uma palavra do assunto */
       if (p !== undefined && lim !== undefined && p >= lim) doModelo[tp] = Math.round(p * 1000) / 1000;
       if (regra || (p !== undefined && alto !== undefined && p >= alto)) { tipos.push(tp); nivel = 2; }
       else if (p !== undefined && lim !== undefined && p >= lim) fracos.push(tp); /* detector com confiança moderada: só aviso discreto */
@@ -137,6 +147,8 @@
       TIPOS[tp].telefones.forEach(function (n) { if (!vistos[n]) { vistos[n] = 1; tels.push(n); } });
       TIPOS[tp].pins.forEach(function (p) { pins.push(p); });
     });
+    /* gestante em urgência: o pronto atendimento de ginecologia e obstetrícia é o primeiro destino */
+    if (tipos.indexOf("saude") !== -1 && /gravid|gestan|gestac|parto|contrac|pre natal|prenatal|aborto|maternidade/.test(t)) pins.unshift({ id: "man-saude-pa-ginecologia" });
     return { nivel: nivel, tipos: tipos, doModelo: doModelo, mensagens: tipos.map(function (tp) { return TIPOS[tp].mensagem; }), telefones: tels, pins: pins };
   }
 

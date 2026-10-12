@@ -51,3 +51,7 @@ O orientador substituiu a caixa de dúvida por busca lexical. Medição completa
 ### Fase com API de LLM (planejada, ainda não usada no site)
 
 A chave da API **nunca** vai para o navegador nem para o repositório. Usos previstos, todos nos bastidores: (1) gerar variações de perguntas para ampliar a avaliação, revisadas por pessoas; (2) apoiar a revisão de resumos de serviços; (3) só depois de teste com usuárias, um modo opcional de redação de resposta *a partir dos serviços já encontrados* (nunca inventando serviço, telefone ou direito), com o texto passando por um servidor da própria equipe. Para saber se a chave funciona: `python pipeline/testar_api.py` (lê `ANTHROPIC_API_KEY` do seu computador e faz uma chamada mínima).
+
+### Detector de perigo aprendido (13/10/2026)
+
+A segurança deixou de depender só de listas de palavras: `web/perigo.js` combina as regras com um detector de aprendizado de máquina (`web/dados/modelo_perigo.json`, treinado por `pipeline/treinar_perigo.py`). Regras e detector se complementam: o alerta completo (telefones e serviços de proteção fixados) aparece se uma regra dispara ou o detector está muito confiante; com confiança moderada aparece só um aviso discreto. Uma âncora semântica impede que o detector sozinho dispare sem palavras do assunto. Números e limites em `docs/ia/avaliacao_orientacao.md`.

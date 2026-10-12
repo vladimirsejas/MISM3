@@ -67,6 +67,11 @@
   var SAUDACOES = /^(?:oi+|ola|oie|bom dia|boa tarde|boa noite|obrigad[ao]|valeu|tchau|ate logo|ok|certo|sim|nao)(?: [a-z]+){0,2}$/;
   var AJUDA_GERAL = /^(?:(?:oi+|ola|bom dia|boa tarde|boa noite) )?(?:(?:eu )?preciso de ajuda|me ajuda|ajuda|socorro|nao sei (?:o que fazer|por onde comecar)|por onde comeco|estou perdida)(?: [a-z]+){0,2}$/;
 
+  /* Serviços especializados: só entram na lista quando o texto fala do assunto (ex.: o pronto atendimento de ginecologia não serve a dor de dente). */
+  var CONDICOES = {
+    "man-saude-pa-ginecologia": /gravid|gestan|gestac|parto|ginecolog|obstetr|menstru|sangramento|pre natal|prenatal|contrac|aborto|corrimento|maternidade|bebe|recem nascid|puerper|mulher/
+  };
+
   var PESOS = { palavras: 0.4, letras: 0.6, significado: 0.3, intencao: 0.1, area: 0.12 };
 
   function norma(v) {
@@ -125,7 +130,7 @@
     }
 
     function pontuar(texto, ctx) {
-      var consulta = expandirConsulta(texto);
+      var consulta = expandirConsulta(texto), tn = Regras.normalizar(texto);
       var qf = fichas(consulta), contW = {};
       qf.forEach(function (f) { contW[f] = (contW[f] || 0) + 1; });
       var qW = {};
@@ -142,6 +147,7 @@
         var s = pesos.palavras * sw + pesos.letras * sc + pesos.significado * sl;
         if (dica && u.needs && u.needs.length) s += pesos.intencao * Math.max.apply(null, u.needs.map(function (n) { return dica[n] || 0; }));
         if (ctx && ctx.area && u.area === ctx.area) s += pesos.area;
+        if (CONDICOES[u.id] && !CONDICOES[u.id].test(tn)) s -= 1; /* serviço especializado só aparece quando o assunto é dele */
         if (u.tipo === "area") s -= 0.04; /* destinos genéricos (a área inteira) só aparecem depois dos específicos */
         return { u: u, s: s, palavras: sw, letras: sc, significado: sl };
       });

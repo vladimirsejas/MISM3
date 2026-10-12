@@ -36,4 +36,24 @@ assert(tipos("MEU MARIDO ME BATE!!!").includes("violencia"));
 assert(tipos("nao aguento mais viver").includes("suicidio"));
 /* mais de um tipo ao mesmo tempo: risco de vida vem primeiro */
 assert.deepStrictEqual(tipos("quero me matar e meu marido me bate"), ["suicidio", "violencia"]);
+
+/* ---- detector aprendido (junto com as regras): generaliza para frases que as listas de palavras não conhecem ---- */
+const fs = require("fs"), path = require("path");
+const modelo = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "dados", "modelo_perigo.json"), "utf8"));
+Perigo.usarModelo(modelo);
+const alto = ["meu companheiro me empurrou da escada e eu tenho medo de voltar", "comprei corda pra me matar", "meu irmao esta com o corpo duro e olhos revirados"];
+alto.forEach((t) => assert(Perigo.avaliar(t) && Perigo.avaliar(t).nivel >= 1, `o detector deveria reagir a "${t}"`));
+/* aviso discreto (nível 1) não fixa serviços: não deve sequestrar a lista de resultados */
+const r1 = Perigo.avaliar("meu filho caiu e ralou o joelho, onde faço curativo");
+assert(!r1 || r1.nivel < 2, "joelho ralado não é emergência");
+/* sem o modelo, só valem as regras (nada quebra) */
+/* âncora: o detector sozinho não dispara sem uma palavra do assunto ("tirar férias" não é "tirar a vida") */
+["vou tirar ferias em dezembro", "quero tirar uma duvida sobre pensao", "quero tirar carteira de motorista", "vou tirar o lixo"].forEach((t) => {
+  const r = Perigo.avaliar(t);
+  assert(!r || r.nivel < 2, `"${t}" não deve gerar alerta completo`);
+});
+["tentou me estrangular ontem", "dormi no carro porque tenho medo de entrar em casa", "ja escrevi minha despedida", "meus filhos ficariam melhor sem a mae"].forEach((t) => assert(Perigo.avaliar(t) && Perigo.avaliar(t).nivel === 2, `deve alertar: ${t}`));
+Perigo.usarModelo(null);
+assert(Perigo.avaliar("meu marido me bate").nivel === 2 && Perigo.avaliar("preciso de creche") === null);
+Perigo.usarModelo(modelo);
 console.log("perigo.test.js ok");

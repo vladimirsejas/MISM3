@@ -7,6 +7,8 @@ python avaliacao/avaliar.py v2 --conjunto teste          # v1 = assistente anter
 python avaliacao/avaliar.py v2 --conjunto desenvolvimento --erros
 ```
 
+> **Atualização de 13/10/2026 (madrugada):** a seção "Segunda rodada de avaliação" no fim deste documento traz três conjuntos novos de perguntas, o achado de que as regras de segurança sozinhas generalizavam mal (34% em frases novas), o detector de perigo aprendido que foi criado a partir disso e as medições mais recentes. As seções anteriores continuam valendo como histórico.
+
 ## O que é o orientador (e por que é um projeto de IA)
 
 A mulher escreve do seu jeito e o sistema devolve **o serviço, a seção ou a ferramenta certa**, com telefone, endereço e a data da última conferência, explicando por que apareceu. Tudo roda no aparelho (nenhum texto é enviado), sem modelo de linguagem. São quatro sinais de aprendizado de máquina combinados, mais uma camada de segurança:
@@ -74,3 +76,70 @@ Quando não acha nada, o sistema **diz que não achou** e mostra as áreas e os 
 ## Nota de 13/10/2026: CRAM retirado
 
 O CRAM foi retirado do catálogo por falta de fonte confiável (ver o registro de decisões). Perguntas do gabarito que pedem o CRAM (por exemplo, "onde fica o cram") deixaram de ter resposta específica possível, e a resposta específica no desenvolvimento passou de 93% para 90%. O gabarito foi mantido como estava, de propósito.
+
+
+## Segunda rodada de avaliação (13/10/2026)
+
+### O que foi feito e por quê
+
+Os resultados anteriores tinham uma fraqueza que apareceu quando escrevi perguntas **novas**: o conjunto de teste já tinha sido usado para corrigir regras, então ele não media mais nada de forma independente. Foram escritos três conjuntos novos, em ordem, cada um **antes** de olhar como o sistema respondia:
+
+| Conjunto | Perguntas | Para que serve |
+|---|---|---|
+| `independente` | 104 | primeira medição com frases novas; depois dela, as falhas foram usadas para corrigir (virou conjunto de ajuste) |
+| `reserva` | 37 | medir se as correções generalizam |
+| `final` | 76 | medição depois de todos os ajustes; também usado para corrigir 4 falhas de segurança (ver abaixo) |
+
+Os ids são únicos entre conjuntos (um erro de numeração meu, que misturava respostas de dois conjuntos, foi achado e corrigido; hoje um teste automático impede isso). O gabarito vem do catálogo e do bom senso, nunca das respostas do sistema.
+
+### O achado mais importante: lista de palavras não generaliza
+
+- **Primeira rodada no conjunto `independente`:** segurança **52% (14/27)**; o assistente antigo (v1) acertou 56%. Ou seja, ficamos atrás dele na segurança.
+- Depois de corrigir as regras com essas frases, o conjunto `independente` passou a 27/27, **mas isso só mostrava que as frases conhecidas foram consertadas.**
+- **Conjunto `reserva` (frases novas depois das correções):** as regras sozinhas acertaram **10 de 29 (34%)** e tiveram 4 falsos alarmes em 8 frases difíceis.
+- Conclusão: as regras (`web/perigo.js`) são úteis (alta precisão, revisáveis), mas dependem de a frase ter sido prevista por quem escreveu a lista.
+
+### O que foi criado: o detector de perigo aprendido
+
+- `catalogo/frases_perigo.txt` (frases de perigo e de negativos difíceis, escritas pela equipe; **nenhuma é pergunta de avaliação**, e um teste confere isso) e `pipeline/treinar_perigo.py` treinam um modelo de regressão logística sobre letras e palavras, um por tipo (violência, suicídio, criança, saúde). Os limiares são escolhidos por validação cruzada: um limiar de **aviso** (até ~2% de falsos alarmes) e um de **alerta** (alta confiança).
+- `web/perigo.js` usa **regras e detector juntos**: se uma regra dispara, ou o detector está muito confiante, o alerta é completo (nível 2: telefones e serviços de proteção fixados). Se só o detector está moderadamente confiante, mostra um **aviso discreto** (nível 1: os telefones certos do tipo, sem alterar a lista de resultados).
+- **Âncora de segurança contra falsos alarmes:** um alerta que vem só do detector precisa de pelo menos uma palavra do campo do assunto. Sem isso, o modelo pequeno dava 0,97 de "suicídio" para "vou tirar férias" (confundia com "tirar a vida"). Com a âncora e mais negativos, isso deixou de acontecer, e há testes para esses casos.
+
+### Resultados atuais (versão após todos os ajustes)
+
+| desenvolvimento | v1 | 75% (52/69) | 39% (27/69) | 0.28 | 86% (60/70) | 43% (6/14) | 0% (0/56) | 89% (8/9) |
+| desenvolvimento | v2 | 96% (66/69) | 87% (60/69) | 0.80 | 99% (69/70) | 100% (14/14) | 0% (0/56) | 78% (7/9) |
+| teste | v1 | 66% (55/83) | 40% (34/85) | 0.24 | 82% (70/85) | 100% (12/12) | 1% (1/73) | 85% (11/13) |
+| teste | v2 | 92% (76/83) | 92% (78/85) | 0.81 | 95% (81/85) | 100% (12/12) | 1% (1/73) | 69% (9/13) |
+| independente | v1 | 64% (56/87) | 39% (31/79) | 0.22 | 82% (71/87) | 56% (15/27) | 2% (1/60) | 60% (9/15) |
+| independente | v2 | 98% (85/87) | 95% (75/79) | 0.89 | 98% (85/87) | 100% (27/27) | 3% (2/60) | 47% (7/15) |
+| reserva | v1 | 54% (19/35) | 49% (17/35) | 0.23 | 71% (25/35) | 52% (15/29) | 0% (0/6) | 0% (0/2) |
+| reserva | v2 | 80% (28/35) | 74% (26/35) | 0.76 | 94% (33/35) | 93% (27/29) | 0% (0/6) | 0% (0/2) |
+| final | v1 | 54% (34/63) | 31% (19/61) | 0.18 | 71% (45/63) | 33% (10/30) | 0% (0/33) | 85% (11/13) |
+| final | v2 | 89% (56/63) | 84% (51/61) | 0.77 | 94% (59/63) | 97% (29/30) | 0% (0/33) | 38% (5/13) |
+
+Leitura honesta, na ordem do que pesa:
+
+1. **Perigo detectado:** no conjunto `final`, **primeira execução, antes de qualquer correção: 86% (25/29)**, contra **31%** do assistente antigo nas mesmas frases. Escaparam: "dormi no carro porque tenho medo de entrar em casa", "tentou me estrangular ontem", "já escrevi minha despedida" e "acho que meus filhos ficariam melhor sem a mãe". Elas foram corrigidas depois (regras e exemplos de treino de padrões gerais, não só dessas frases), o que levou o número a 29/30; **por isso o 97% do `final` já não é independente.** A estimativa independente é 86%.
+2. **O conjunto `reserva` ficou em 93% (27/29)**, com 0 falsos alarmes, mas é preciso lembrar que as frases dele foram vistas antes de o detector ser treinado (os exemplos de treino não as copiam, e um teste automático confere isso).
+3. **Critério para valer:** ainda há situações que escapam. Segurança em tempo real precisa de revisão contínua com profissionais da rede (CRAM, DDM, CAPS) e de frases reais, com consentimento. Os números acima são de frases escritas pela equipe, não de mulheres reais.
+4. **Falsos alarmes:** o aviso discreto aparece em algumas frases ambíguas (como dor de dente forte). Isso foi uma escolha: errar para mais custa uma frase na tela. Em 313 frases sem perigo (todos os conjuntos), o alerta completo disparou em 1 ("meu pai idoso caiu e tá com muita dor", que provavelmente merece mesmo atenção) e o aviso discreto em 3. Um segundo alerta ("o time da minha filha apanhou do adversário no vôlei") era erro e foi corrigido.
+5. **Resposta específica:** de 84% (`final`, 1ª rodada nesse conjunto) a 95% (`independente`, depois dos ajustes). O número independente de verdade é o do `final` na primeira execução (80%) e o do `teste` na primeira rodada (87%), contra 31% a 40% do assistente antigo.
+6. **Abstenção continua fraca:** 38% no `final` (o v1 acerta mais aí: 85%). O sistema responde coisas fora do escopo ("qual o preço do dólar") em vez de dizer que não achou. É o ponto a melhorar com mais exemplos de fora do escopo.
+7. **Vocabulário:** foram acrescentadas sinônimos a 7 serviços (posto, dentista pelo SUS, sem grana pra comer etc.). Uma ablação mostrou efeito de ±1 pergunta por adição (ruído), então **não vale tirar conclusões** sobre cada uma; mais ajustes de vocabulário seriam ajuste ao teste.
+8. A mudança do CRAM (retirado do catálogo) continua afetando um pequeno número de perguntas cujo gabarito é o CRAM; o gabarito foi mantido de propósito.
+
+### Como reproduzir
+
+```
+python pipeline/treinar_perigo.py                      # treina o detector (mostra limiares e revocação por validação cruzada)
+python avaliacao/avaliar.py v2 --conjunto final        # e: desenvolvimento, teste, independente, reserva
+python pipeline/indice_orientacao.py                   # regera o índice do orientador
+```
+
+### O que ainda falta
+
+- Frases reais de mulheres, com consentimento, para treinar e medir o detector (as de hoje são da equipe).
+- Mais negativos e frases fora do escopo para melhorar a abstenção.
+- Revisão das regras e do detector com CRAM, DDM e CAPS; decidir os textos dos avisos.
+- Tamanho: o detector (cerca de 500 KB) e o índice (cerca de 520 KB) só são baixados quando a usuária começa a escrever; em conexões lentas isso demora alguns segundos na primeira vez.

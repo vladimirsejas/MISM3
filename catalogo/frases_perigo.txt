@@ -365,7 +365,6 @@ nenhuma|preciso de creche pro meu bebe
 nenhuma|meu filho levou advertencia na escola
 nenhuma|o menino da escola nova esta com dificuldade de aprender
 nenhuma|a crianca ta com tosse e quero marcar pediatra
-nenhuma|socorro, nao acho o telefone da UBS
 nenhuma|socorro, como faço o curriculo
 nenhuma|me ajuda a achar o posto de saude mais perto
 nenhuma|socorro, perdi o horario do onibus
@@ -386,3 +385,52 @@ nenhuma|estou muito triste e cansada e queria conversar com alguem
 nenhuma|estou com depressao e quero tratamento no CAPS
 nenhuma|tomei meu remedio da pressao no horario errado, o que faco
 nenhuma|minha mãe toma muitos remedios e preciso organizar
+# --- padrões que faltavam (após a 1ª avaliação no conjunto 'final', 13/10/2026)
+violencia|tentou me sufocar com o travesseiro
+violencia|ele tentou me matar ontem
+violencia|tentou me esfaquear e eu consegui correr
+violencia|tenho pavor de entrar em casa quando ele ta la
+violencia|dormi na rua porque nao quis voltar pra casa por causa dele
+violencia|fiquei na casa da minha mae escondida, ele me ameaca se eu voltar
+violencia|sai de casa de madrugada so com a roupa do corpo fugindo dele
+violencia|levei uma pancada forte na cabeca dele e estou com medo
+violencia|ele ja me bateu e disse que vai fazer pior da proxima vez
+suicidio|escrevi uma carta de despedida pros meus filhos
+suicidio|deixei um bilhete de despedida na gaveta
+suicidio|meus filhos estariam melhor sem a mae
+suicidio|meus filhos ficariam melhor sem mim
+suicidio|todo mundo ficaria melhor sem mim aqui
+suicidio|ja me despedi de todo mundo, hoje eu me vou
+nenhuma|quero tirar uma duvida sobre meu beneficio
+nenhuma|quero tirar a segunda via da certidao
+nenhuma|quero tirar o titulo de eleitor
+nenhuma|quero tirar um dia de folga
+nenhuma|vou tirar ferias em dezembro
+nenhuma|vou tirar minha carteira de motorista
+nenhuma|vou tirar uma foto 3x4 pro documento
+nenhuma|quero tirar xerox dos documentos
+nenhuma|vou tirar o lixo pra rua
+nenhuma|quero tirar um curso de costura
+nenhuma|vou tirar nota boa na prova
+nenhuma|quero acabar o curso este ano
+nenhuma|vou acabar o ensino medio no EJA
+nenhuma|preciso acabar de pagar a divida
+nenhuma|vou sumir uns dias do trabalho pra cuidar do meu pai doente
+nenhuma|queria dormir mais um pouco, to exausta do plantao
+nenhuma|nao quero acordar cedo amanha por causa da escola do meu filho
+nenhuma|vou me despedir da turma antes de mudar de bairro
+nenhuma|quero me despedir da minha vizinha que vai se mudar
+nenhuma|vou desaparecer da fila do posto pq nao tenho tempo
+nenhuma|ja escrevi o curriculo e quero imprimir
+nenhuma|escrevi uma carta pro prefeito pedindo creche
+nenhuma|meus filhos estao melhor na escola nova
+nenhuma|minha filha ficou melhor depois do tratamento
+nenhuma|ele tentou me ligar mas nao atendi
+nenhuma|tentou me convencer a voltar a estudar
+nenhuma|tentou me vender um seguro
+nenhuma|tenho medo de entrar na entrevista de emprego
+nenhuma|tenho medo de reprovar no concurso
+nenhuma|dormi na casa da minha mae no fim de semana
+nenhuma|dormi mal e estou cansada
+nenhuma|sai de casa cedo pra procurar emprego
+nenhuma|levei meu filho na pediatra e ele chorou

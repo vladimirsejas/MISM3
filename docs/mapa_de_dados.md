@@ -11,6 +11,7 @@ Fluxo: **fontes oficiais e catálogos escritos à mão → pipeline Python → a
 | `catalogo/servicos_manuais.csv` | 164 serviços verificados, cada um com fonte e data; `conferido` = não quando falta confirmação (e então tem aviso) | `pipeline/servicos.py` |
 | `catalogo/inep_escolas.csv` | ligação manual (revisada) entre escolas do catálogo e o código INEP: 43 escolas | `pipeline/servicos.py`, `pipeline/ligar_catalogo_inep.py` |
 | `catalogo/frases_necessidades.txt` | frases de treino do classificador de necessidades | `pipeline/treinar_necessidades.py` |
+| `catalogo/frases_perigo.txt` | frases de perigo (violência, suicídio, criança, saúde) e negativos difíceis, para o detector de perigo | `pipeline/treinar_perigo.py` |
 | `catalogo/horarios_onibus.txt` | horários das linhas de ônibus (conferidos nos PDFs de `docs/transporte/`) | `pipeline/horarios_onibus.py` |
 
 **Cuidado:** `python pipeline/ligar_catalogo_inep.py --gravar` sobrescreve `catalogo/inep_escolas.csv`. Não rode sem revisar; o arquivo é curado à mão.
@@ -21,6 +22,7 @@ Fluxo: **fontes oficiais e catálogos escritos à mão → pipeline Python → a
 |---|---|---|
 | `web/dados/catalogo_manual.json` | `python pipeline/servicos.py --somente-manual` | `web/app.js`, `web/ia.js`, mapa, índice do orientador |
 | `web/dados/modelo_necessidades.json` | `pipeline/treinar_necessidades.py` | `web/ia.js` (classificador) |
+| `web/dados/modelo_perigo.json` | `pipeline/treinar_perigo.py` | `web/perigo.js` (detector aprendido, junto com as regras) |
 | `web/dados/indice_orientacao.json` | `pipeline/indice_orientacao.py` (161 destinos) | `web/orientar.js`, `web/orientacao-ui.js` |
 | `web/dados/oferta_educacao_infantil.json` | `pipeline/oferta_educacao_infantil.py` (Censo Escolar 2025) | `pipeline/servicos.py`; informa a etapa (creche/pré-escola), **não** vaga |
 | `web/dados/horarios_onibus.json` | `pipeline/horarios_onibus.py` | tela de horários, índice do orientador |
@@ -40,9 +42,9 @@ Fluxo: **fontes oficiais e catálogos escritos à mão → pipeline Python → a
 | Regras de palavras-chave | `web/necessidades.js` | reconhece necessidades e categorias com certeza |
 | Ordem do plano | `web/plano.js` | regra fixa de urgência, explicável |
 | Orientador (busca) | `web/orientar.js`, `web/orientacao-ui.js` | palavras + letras + significado (LSA) + dica do classificador; explica por que cada resultado apareceu; se não acha, diz e mostra as áreas |
-| Segurança | `web/perigo.js` | regras revisáveis; em perigo, fixa telefones e serviços de proteção no topo |
+| Segurança | `web/perigo.js` + `web/dados/modelo_perigo.json` | regras revisáveis **e** detector aprendido; em perigo, alerta com telefones e serviços de proteção no topo; com confiança moderada, só um aviso discreto |
 
-Avaliação do orientador: `avaliacao/avaliar.py`, `avaliacao/perguntas.json` (210 perguntas com gabarito) e `docs/ia/avaliacao_orientacao.md`. Limites: `docs/ia/limitacoes_conhecidas.md`.
+Avaliação do orientador: `avaliacao/avaliar.py`, `avaliacao/perguntas.json` (5 conjuntos de perguntas com gabarito) e `docs/ia/avaliacao_orientacao.md`. Limites: `docs/ia/limitacoes_conhecidas.md`.
 
 ## 4. Jornadas e questionário
 

@@ -45,6 +45,10 @@ assert(R("oi").saudacao);
 });
 assert(R("").abstem);
 
+/* ---- serviço especializado só quando o assunto é dele ---- */
+assert(!R("estou com dor de dente forte").itens.some((i) => /Ginecologia/.test(i.titulo)), "dor de dente não leva ao pronto atendimento de ginecologia");
+assert(R("estou gravida e com sangramento forte").itens.some((i) => /Ginecologia/.test(i.titulo)), "gestante com sangramento leva ao pronto atendimento de ginecologia");
+
 /* ---- contexto de área: itens da área aberta ganham prioridade ---- */
 const c = R("quero fazer um curso", { area: "trabalho" });
 assert.strictEqual(c.itens[0].area, "trabalho");
