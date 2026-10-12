@@ -878,5 +878,5 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - **Tela inicial:** dois cartões de destaque abaixo das sete portas (classe `porta destaque`, que não conta como porta: o teste exige exatamente sete). Secretaria da Mulher como cartão de contato (opção A), preenchido pelo catálogo. O painel não vira botão público porque ainda usa dados de teste.
 - **Mapa:** bloco "O que fica mais perto de você" com o serviço mais perto de cada tipo depois do CEP (`MapaServicos.maisPertoPorTipo`, testado); os CRAS achados por bairro ganham "Mostrar no mapa". 4 dos 6 CRAS ainda não têm posição conhecida, então o botão só aparece onde há posição.
 - **README:** seção "Linguagens e onde cada uma é usada".
-- **Pendente:** confirmar com os grupos dia, horário e local exato; Al-Anon e AA de Rio Claro ainda sem fonte; `docs/img/compor_ilustracao.py` é um script antigo que não faz parte do projeto (remoção aguarda o aval do mantenedor).
+- **Pendente:** confirmar com os grupos dia, horário e local exato; Al-Anon e AA de Rio Claro ainda sem fonte; o script antigo `docs/img/compor_ilustracao.py` foi **removido** por decisão do mantenedor ("se não serve para nada, apaga"): montava a ilustração antiga das mulheres da tela inicial, já substituída pelo SVG, e dependia de imagens em uma pasta temporária que nunca esteve no repositório. Nada o chamava.
 
