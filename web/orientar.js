@@ -48,6 +48,9 @@
     if (/\bvacina(?:s|cao|r)?\b/.test(t)) {
       extra.push("saude posto de saude ubs usf vacinacao imunizacao carteira de vacinacao");
     }
+    if (/\b(?:creche|cmei|emei|emef|bercario|pre escola|preescola|educacao infantil|lista de espera da creche|nao tenho com quem deixar)\b/.test(t)) {
+      extra.push("educacao infantil creche cmei emei escola municipal matricula secretaria da educacao vaga");
+    }
     return extra.length ? t + " " + extra.join(" ") : t;
   }
   /* Trechos de 3 a 5 letras de cada palavra (com espaço nas pontas), como na comparação por letras do Python. */
