@@ -34,6 +34,6 @@ Cada arquivo é a **impressão em PDF** de uma página, feita pelo mantenedor em
 
 ## Não arquivado, de propósito
 - Artigo de blog da Matrix Energia sobre tarifa de energia: é de empresa privada, trata de tarifa em geral e não da Tarifa Social; **não foi usado**.
-- Itens trazidos do **MISM2** (pesquisa na web de 24/09/2026), sem PDF aqui e marcados "não conferidos" no site: CRAM, Delegacia de Defesa da Mulher de Rio Claro, Patrulha Maria da Penha e o Cadu. (A Defensoria passou a ter PDF em 11/10/2026: `defensoria-rio-claro.pdf`.) Para torná-los verificados, imprima a página oficial de cada um, guarde o PDF nesta pasta e tire o aviso do cadastro.
+- Itens de uma pesquisa na web de 24/09/2026, sem PDF aqui e marcados "não conferidos" no site: CRAM, Delegacia de Defesa da Mulher de Rio Claro, Patrulha Maria da Penha e o Cadu. (A Defensoria passou a ter PDF em 11/10/2026: `defensoria-rio-claro.pdf`.) Para torná-los verificados, imprima a página oficial de cada um, guarde o PDF nesta pasta e tire o aviso do cadastro.
 - Links informados sem leitura do conteúdo (ANEEL, Neoenergia, site do DAAE, aviso do 0800 do DAAE): constam no site como links, sem resumo de regras, e não têm PDF aqui.
 - Um segundo PDF do SENAI Rio Claro enviado em 11/10/2026 é idêntico ao `senai-rio-claro.pdf` e não foi duplicado.

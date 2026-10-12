@@ -880,3 +880,5 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - **README:** seção "Linguagens e onde cada uma é usada".
 - **Pendente:** confirmar com os grupos dia, horário e local exato; Al-Anon e AA de Rio Claro ainda sem fonte; o script antigo `docs/img/compor_ilustracao.py` foi **removido** por decisão do mantenedor ("se não serve para nada, apaga"): montava a ilustração antiga das mulheres da tela inicial, já substituída pelo SVG, e dependia de imagens em uma pasta temporária que nunca esteve no repositório. Nada o chamava.
 
+
+- **MISM2 fora do projeto (decisão do mantenedor):** o MISM2 é outro projeto e não tem relação com este cadastro. Foi retirada a menção a ele da origem e do aviso dos registros do CRAM, da Patrulha Maria da Penha e do Cadu (agora dizem só "informação não conferida aqui", com a data da pesquisa na web) e do `docs/documetacao/LEIA-ME.md`. Endereço, telefone e estado "não conferido" desses registros **não mudaram**. As entradas antigas deste registro ficam como estão, porque são o histórico do que foi feito.
