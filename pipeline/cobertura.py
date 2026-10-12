@@ -147,19 +147,31 @@ def ler_setores_gpkg(caminho):
     caminho = Path(caminho)
     if not caminho.exists():
         raise ValueError("GeoPackage nao encontrado: %s" % caminho)
-    gdf = gpd.read_file(caminho, rows=None)
-    if gdf.empty:
+    # Leia uma feicao para descobrir o esquema sem carregar o estado inteiro para a memoria.
+    amostra = gpd.read_file(caminho, rows=1)
+    if amostra.empty:
         raise ValueError("GeoPackage sem feicoes.")
-    cols = list(gdf.columns)
-    geom_col = gdf.geometry.name
-    setor_c = achar_coluna([c for c in cols if c != geom_col],
-                           ["CD_SETOR", "setor", "CD_GEOCODI", "codigo_setor"], obrigatoria=True, papel="codigo do setor")
-    pop_c = achar_coluna([c for c in cols if c != geom_col],
-                         ["pessoas", "populacao", "pop_total", "V0001", "POP", "V001", "total_pessoas"],
+    cols = list(amostra.columns)
+    geom_col = amostra.geometry.name
+    atributos = [c for c in cols if c != geom_col]
+    setor_c = achar_coluna(atributos, ["CD_SETOR", "setor", "CD_GEOCODI", "codigo_setor"],
+                           obrigatoria=True, papel="codigo do setor")
+    pop_c = achar_coluna(atributos, ["pessoas", "populacao", "pop_total", "V0001", "POP", "V001", "total_pessoas"],
                          obrigatoria=True, papel="populacao")
-    bairro_c = achar_coluna([c for c in cols if c != geom_col], ["NM_BAIRRO", "bairro", "nome_bairro"])
-    mun_c = achar_coluna([c for c in cols if c != geom_col],
-                         ["CD_MUN", "CD_MUNICIPIO", "codigo_municipio", "municipio_ibge"])
+    bairro_c = achar_coluna(atributos, ["NM_BAIRRO", "bairro", "nome_bairro"])
+    mun_c = achar_coluna(atributos, ["CD_MUN", "CD_MUNICIPIO", "codigo_municipio", "municipio_ibge"])
+    # Filtra no proprio driver, antes de materializar a camada. O GPKG pode conter todos os setores de SP.
+    campo = mun_c or setor_c
+    campo_sql = '"' + str(campo).replace('"', '""') + '"'
+    prefixos = ("354390",) if mun_c else (COD_MUNICIPIO,)
+    condicoes = ["CAST(%s AS TEXT) LIKE '%s%%'" % (campo_sql, p) for p in prefixos]
+    where = " OR ".join(condicoes)
+    try:
+        gdf = gpd.read_file(caminho, where=where)
+    except Exception as e:
+        raise ValueError("Nao consegui filtrar Rio Claro no GeoPackage usando a coluna %s. Verifique se a camada aceita filtro OGR. Detalhe: %s" % (campo, e)) from e
+    if gdf.empty:
+        raise ValueError("Nenhum setor de Rio Claro encontrado no GeoPackage com filtro %s. Colunas: %s" % (where, atributos))
     setores = []
     for _, row in gdf.iterrows():
         codigo = re.sub(r"\D", "", str(row.get(setor_c, "")))
