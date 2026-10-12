@@ -36,7 +36,7 @@
       "marido", "companheiro", "ex marido", "ex companheiro"
     ]],
     ["filhos", [
-      "filho", "filhos", "crianca", "criancas", "bebe", "creche",
+      "filho", "filhos", "crianca", "criancas", "meu bebe", "minha bebe", "nosso bebe", "um bebe", "o bebe", "recem nascido", "creche",
       "maternidade", "escola infantil", "baba", "educacao infantil",
       "vaga na creche", "matricula do filho",
       "mae solo", "mae solteira", "mae sozinha", "sozinha com meus filhos",
