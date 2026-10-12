@@ -47,6 +47,22 @@ Três áreas têm um plano guiado: **Trabalho**, **Educação** e **Assistência
 ## Idade da informação
 Cada serviço mostra a fonte, a data de verificação e há quantos dias ela foi feita. Acima de 90 dias, ou sem data válida, aparece o aviso "Esta informação pode ter mudado. Confirme telefone, endereço e horário na fonte antes de ir." O aviso não diz que o dado está errado; só informa que a conferência é antiga.
 
+## Linguagens e onde cada uma é usada
+O site é **estático** (HTML, CSS e JavaScript puros, sem framework, sem servidor e sem etapa de compilação). O Python só gera os dados que o site lê. Contagem de arquivos versionados:
+
+| Linguagem | Arquivos | Onde está | Para que serve |
+|---|---|---|---|
+| **JavaScript** | 32 | `web/*.js` (18 arquivos), `web/tests/` (12), `web/vendor/leaflet.js` (1, de terceiros), `pipeline/gerar_dados_teste_painel.js` (1) | O site inteiro roda no navegador: telas e áreas (`app.js`, `areas.js`), jornadas (`jornada*.js`), mapa (`mapa.js`, `mapa-servicos.js`), questionário, painel e a caixa "Conte com suas palavras" (`ia.js`, `necessidades.js`). Os testes do site ficam em `web/tests/` e rodam com Node. |
+| **Python** | 35 | `pipeline/` (19 scripts), `pipeline/tests/` (15 testes), `docs/img/compor_ilustracao.py` (1) | Baixa e trata dados (CNEFE, CNES, INEP), monta o catálogo (`servicos.py`), localiza serviços por CEP (`geocodificar_catalogo.py`, `indice_cep.py`, `atualizar_localizacoes.py`), gera os horários de ônibus e treina o modelo de necessidades (`treinar_necessidades.py`). |
+| **HTML** | 5 | `web/`: `index.html`, `mapa.html`, `rede-mulheres.html`, `territorio.html`, `painel-secretaria.html` | As páginas do site. O painel da Secretaria é um protótipo, fora do site público. |
+| **CSS** | 2 | `web/estilo.css` (o visual do site) e `web/vendor/leaflet.css` (de terceiros) | Aparência, cores, layout e impressão. |
+| **Batch (.bat, Windows)** | 3 | raiz: `abrir_site.bat`, `abrir_mapa.bat`, `atualizar_localizacoes.bat` | Abrem o site, o mapa ou refazem as localizações com dois cliques, sem digitar comandos. |
+| **YAML** | 1 | `.github/workflows/testes.yml` | Roda os testes de Python e de JavaScript a cada envio ao GitHub. |
+| **Dados (não são programa)** | — | `web/dados/*.json` e `.geojson` (gerados), `catalogo/*.csv` e `*.txt` (digitados à mão) | O catálogo verificado, os horários, o modelo e os mapas. Para mudar um serviço, edite `catalogo/servicos_manuais.csv` e rode `python pipeline/servicos.py --somente-manual`. |
+| **Markdown** | 22 | `README.md` e `docs/` | Documentação, decisões e fontes. |
+
+Observações: o `web/vendor/` (Leaflet) é uma biblioteca de terceiros, usada localmente, sem pedir nada à internet. O `docs/img/compor_ilustracao.py` é um script antigo de composição de imagem e não faz parte do site nem do pipeline.
+
 ## Estado dos dados
 - Catálogo verificado à mão (`catalogo/servicos_manuais.csv`): 165 registros: 45 de saúde, 26 de assistência, 20 de emprego e cursos, 5 de mulher e 69 de educação infantil (a Secretaria da Educação e 68 escolas municipais). As unidades de saúde vêm do CNESNet (códigos CNES, 51 estabelecimentos mantidos pela Fundação Municipal de Saúde) e da página de endereços da Fundação; 43 têm endereço e 41 têm telefone.
 - Os números 977 estabelecimentos no CNES e 45 publicados foram confirmados pelo autor, que trabalha na Fundação Municipal de Saúde; a base completa do CNES não está versionada.
