@@ -925,3 +925,12 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - **Conferência contra o site:** os cartões `man-peja-unesp` e `man-metamorfose` já estavam de acordo com as fontes. Em especial, o do PEJA já avisa que, segundo a página oficial, hoje as atividades são no Centro de Ressocialização Masculino, com homens reeducandos, e que não há informação de turma aberta ao público em geral. Nenhum texto do site mudou.
 - Fica resolvida a pendência anotada antes ("o PEJA e o cursinho têm PDFs de prova que só existem no computador do autor").
 
+
+## 13/10/2026 — Orientador de IA, segurança e avaliação
+
+- **Motivo:** os professores exigem que o projeto seja inequivocamente de IA, e a regra do projeto é que a mulher sempre receba uma resposta. Os pareceres de IA comparados (DeepSeek, Copilot, Gemini, ChatGPT) foram usados como ideias, só o que pareceu seguro: sem modelo pesado no navegador, sem previsão de violência ou "índice de risco", sem registros individuais, sem dados inventados, privacidade por projeto, sem promessa de vaga ou benefício.
+- **Implementado:** índice de 162 destinos gerado em Python (`pipeline/indice_orientacao.py`; TF-IDF de palavras e letras e LSA de 64 dimensões) e lido no navegador (`web/orientar.js`); camada de segurança determinística (`web/perigo.js`); tela única para a home e para as áreas (`web/orientacao-ui.js`). Removidos `web/duvida.js` e seu teste, que o orientador substitui. "Meu plano" continua, agora dentro de um bloco recolhível.
+- **Avaliação:** `avaliacao/` (210 perguntas com gabarito, conjunto de teste guardado, ablação). Destino específico certo: 87% no teste contra 39% do assistente anterior. 33 perguntas parecidas com frases de treino foram excluídas da medição.
+- **Achados que não escondemos:** (1) na primeira rodada do teste a segurança acertou 10/12; faltavam violência contra terceiros e agressor que bate em criança; as regras foram corrigidas e o teste deixou de ser independente para essa camada; (2) o classificador de intenção e o contexto de área não melhoram a métrica; (3) a abstenção (69%) é pior que a do assistente anterior (85%). Detalhes em `docs/ia/avaliacao_orientacao.md`.
+- **Corrigido pelos testes:** "tomou veneno" não acionava o alerta de saúde; fixados de urgência passaram a ser as UPAs (antes podia aparecer o pronto atendimento de ginecologia para ideação suicida).
+- **API de LLM:** ainda não usada no site; `pipeline/testar_api.py` verifica a chave (lida da variável de ambiente, nunca gravada).
