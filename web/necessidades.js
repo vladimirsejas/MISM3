@@ -90,6 +90,9 @@
   function identificarCategorias(texto, maximo) {
     var t = normalizar(texto);
     if (!t) return [];
+    /* "Escola de samba" é uma expressão cultural, não um pedido de educação formal. */
+    t = t.replace(/\bescola de samba\b/g, " ").replace(/\s+/g, " ").trim();
+    if (!t) return [];
     var achadas = [];
     REGRAS.forEach(function (regra) {
       if (regra[1].some(function (termo) { return contemExpressao(t, termo); })) {
