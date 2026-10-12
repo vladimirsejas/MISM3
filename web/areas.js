@@ -11,7 +11,7 @@
   /* Ordem = ordem dos botões na tela inicial. A sétima porta (Entre Mulheres) é uma página própria. */
   var AREAS = [
     {
-      id: "trabalho", nome: "Trabalho", icone: "trabalho",
+      exemploDuvida: "como faço um currículo?", id: "trabalho", nome: "Trabalho", icone: "trabalho",
       intro: "Vagas, cursos de qualificação, crédito e apoio para gerar renda em Rio Claro.",
       checklist: true, jornada: true,
       secoes: [{
@@ -29,7 +29,7 @@
       pendencias: ["Este sistema não lista vagas abertas. Para ver vagas atuais, use os portais acima."]
     },
     {
-      id: "educacao", nome: "Educação", icone: "educacao", jornada: "educacao",
+      exemploDuvida: "como peço vaga na creche?", id: "educacao", nome: "Educação", icone: "educacao", jornada: "educacao",
       intro: "Para os seus filhos: matrícula, transferência e vagas em creches e escolas. Para você: concluir os estudos (EJA), fazer faculdade e cursos profissionalizantes e técnicos, em Rio Claro.",
       guia: {
         titulo: "O que você encontra nesta página",
@@ -200,7 +200,7 @@
       ]
     },
     {
-      id: "saude", nome: "Saúde", icone: "saude",
+      exemploDuvida: "meu filho usa drogas, onde pedir ajuda?", id: "saude", nome: "Saúde", icone: "saude",
       intro: "Unidades de saúde e serviços de atendimento. Em urgência médica, ligue 192.",
       guia: {
         titulo: "O que você encontra nesta página",
@@ -269,7 +269,7 @@
       ]
     },
     {
-      id: "direitos", nome: "Direitos", icone: "direitos",
+      exemploDuvida: "preciso de advogado de graça", id: "direitos", nome: "Direitos", icone: "direitos",
       intro: "Orientação jurídica, separação, pensão, aposentadoria, dívidas e proteção contra a violência.",
       secoes: [
         {
@@ -301,7 +301,7 @@
       avisos: ["Nunca compartilhe senhas ou códigos de acesso com intermediários. Simulações de aposentadoria são projeções e não garantem benefício."]
     },
     {
-      id: "moradia", nome: "Moradia", icone: "moradia",
+      exemploDuvida: "como pagar menos na conta de luz?", id: "moradia", nome: "Moradia", icone: "moradia",
       intro: "Água, energia e habitação: tarifas sociais, programas e benefícios.",
       secoes: [
         {
@@ -356,7 +356,7 @@
       ]
     },
     {
-      id: "assistencia", nome: "Assistência Social", icone: "assistencia", jornada: "assistencia",
+      exemploDuvida: "estou sem comida em casa", id: "assistencia", nome: "Assistência Social", icone: "assistencia", jornada: "assistencia",
       intro: "CRAS, CREAS, Conselho Tutelar e serviços de convivência de Rio Claro.",
       secoes: [
         {
