@@ -223,7 +223,7 @@
                 ["Se tem menos de 18 anos", "O CAPS Infantojuvenil atende crianças e adolescentes. O Conselho Tutelar (área Assistência Social) também orienta sobre a proteção de crianças e adolescentes."],
                 ["Se é uma crise (agitação, risco de vida, overdose)", "Ligue 192 (SAMU). O CAPS III funciona 24 horas, segundo a fonte abaixo: confirme por telefone."],
                 ["Se há violência em casa", "Se você tem medo, ou se alguém a agride ou ameaça, use o botão “Em perigo agora?”. Sua segurança vem primeiro."],
-                ["Para você", "O CRAS e o CREAS (área Assistência Social) orientam famílias. Pergunte também se há grupo ou acolhimento para quem cuida. Procure cuidar da sua própria saúde e do seu descanso."]
+                ["Para você", "O CRAS e o CREAS (área Assistência Social) orientam famílias. Pergunte também se há grupo ou acolhimento para quem cuida: os grupos de ajuda mútua de Rio Claro estão logo abaixo. Procure cuidar da sua própria saúde e do seu descanso."]
               ],
               fonte: ["Fundação Municipal de Saúde — endereços das unidades", "https://www.saude-rioclaro.org.br/enderecos.htm", "conferido em 10/10/2026; horários e formas de acesso devem ser confirmados por telefone"] },
             { nome: "Comunidade Terapêutica Peniel de Rio Claro (informação não confirmada por ligação)", sem_tel: true, resumo: "Ver o que perguntar antes de ir",
@@ -236,9 +236,29 @@
               ],
               aviso: "Não conferimos o que o lugar oferece, nem se há vaga, nem se atende mulheres, nem se está regular. Não substitui o CAPS AD: ligue também para a rede de saúde.",
               fonte: ["CNES/DATASUS (cadastro nacional) e relato do autor do site", null, "endereço e telefone vistos no cadastro em 10/10/2026; razão social informada pelo autor; atendimento não confirmado"] },
-            { nome: "Apoio fora da rede pública", sem_tel: true, resumo: "Ver o que perguntar",
-              texto: "Existem também grupos de ajuda mútua para familiares, e o CAPS AD ou o CRAS podem indicar os que funcionam em Rio Claro. Este site ainda não tem essa lista conferida.",
-              fonte: ["Pesquisa em andamento", null, "sem endereço nem telefone conferidos: não publicamos o que não foi verificado"] }
+            { nome: "Grupos de ajuda mútua: para que serve cada um", sem_tel: true, resumo: "Ver a diferença entre eles",
+              texto: "Além do CAPS AD, existem grupos em que as pessoas se ajudam entre si. Os grupos de ajuda mútua são anônimos e não cobram para participar; por isso quase nunca há cadastro público. Abaixo estão os de Rio Claro que conseguimos confirmar.",
+              topicos: [
+                ["AA – Alcoólicos Anônimos", "Para quem quer parar de beber. O único requisito é o desejo de parar de beber."],
+                ["NA – Narcóticos Anônimos", "Para quem quer parar de usar drogas. O único requisito é o desejo de parar de usar."],
+                ["Al-Anon", "Para familiares e amigos de quem tem problema com álcool."],
+                ["Alateen", "Para jovens de 13 a 19 anos afetados pelo alcoolismo de um familiar ou amigo."],
+                ["Amor Exigente", "Grupo de apoio a familiares e dependentes químicos."],
+                ["Diferença para o CAPS AD", "O CAPS AD é um serviço de saúde pública, com equipe profissional. Os grupos são de ajuda entre pessoas, sem equipe de saúde, e um não substitui o outro."]
+              ],
+              fonte: ["Ministério do Desenvolvimento e Assistência Social: Tratamento e Reinserção Social", "https://www.gov.br/mds/pt-br/privados/obid/tratamento-e-reinsercao-social", "página consultada em 11/10/2026; o Amor Exigente é descrito pelo próprio grupo"] },
+            { nome: "NA – Grupo Gratidão (Rio Claro)", sem_tel: true,
+              texto: "Narcóticos Anônimos, para quem tem problema com drogas. Reuniões às terças, quintas e domingos, às 20h. Local: Capela São Benedito, Avenida 5, sem número, Consolação, CEP 13503-254. Linha de ajuda do NA: 132. Site: na.org.br.",
+              aviso: "Informação de contato direto e da placa do grupo, não de fonte oficial. Confirme os dias e os horários antes de ir.",
+              fonte: ["Placa do grupo e contato direto", null, "informada pelo autor do site e conferida em 12/10/2026"] },
+            { nome: "NA – Grupo Viver Limpo (Rio Claro)", sem_tel: true,
+              texto: "Narcóticos Anônimos, para quem tem problema com drogas. Local: Avenida Trinta, CEP 13500-550. Os dias e os horários das reuniões ainda não foram informados. Linha de ajuda do NA: 132.",
+              aviso: "Informação de contato direto, não de fonte oficial. Ligue para o 132 ou procure o grupo para confirmar dia, horário e o local exato.",
+              fonte: ["Contato direto", null, "informada pelo autor do site em 12/10/2026; sem dia nem horário"] },
+            { nome: "Amor Exigente (Rio Claro)", sem_tel: true,
+              texto: "Grupo de apoio a familiares e dependentes químicos. Reuniões toda segunda-feira, às 20h. Local: Rua P4 com Avenida P25, Vila Paulista, no espaço da igreja Santo Antônio. E-mail do Amor Exigente: faleconosco@amorexigente.org.br.",
+              aviso: "Informação do cartaz do grupo e de contato direto, não de fonte oficial. Confirme o horário e o local antes de ir.",
+              fonte: ["Cartaz do grupo e contato direto", null, "informada pelo autor do site e conferida em 12/10/2026"] }
           ]
         },
         { titulo: "Unidades de saúde", ancora: "saude-unidades", tipos: ["saude"], agrupar: true, links: [] }

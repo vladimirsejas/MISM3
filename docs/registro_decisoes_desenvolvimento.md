@@ -870,3 +870,13 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - **O registro do CRAM não foi alterado** (a decisão sobre endereço e telefone é do mantenedor, ver PR #35). Os resumos gerados por IA (como o do Google, que dá a Avenida 9, nº 405) **não são fonte**.
 - **Ordem dos PRs:** o #36 (Delegacia, do ChatGPT) entrou primeiro; este foi atualizado por cima dele e o catálogo manual regenerado (165 serviços).
 - **Não conferido aqui:** o PEJA e o cursinho têm PDFs de prova (`PEJA.pdf`, `COMTATOPEJA.pdf`, `UNECópia Impressa.pdf`) que só existem no computador do autor e ainda não foram arquivados no repositório.
+
+## 12/10/2026 - Grupos de ajuda mútua em Saúde, destaques na tela inicial e "mais perto" no mapa
+
+- **Decisão do mantenedor:** fazer o bloco de dependência química com "apenas os dados que a gente tem"; destacar o questionário e a Secretaria da Mulher; ligar o mapa à busca por bairro ou CEP; manter o #36 (já mesclado) como está, sem duplicar nem bagunçar.
+- **Saúde:** o cartão "Apoio fora da rede pública" (que dizia que a lista não existia) foi **substituído**, sem duplicar, por um cartão explicando cada tipo de grupo (texto do MDS, consultado em 11/10/2026) e três cartões de grupos de Rio Claro: NA Grupo Gratidão (terça, quinta e domingo, 20h; Capela São Benedito, Av. 5, s/n, CEP 13503-254; dados da placa e de contato direto), NA Grupo Viver Limpo (Avenida Trinta, CEP 13500-550; sem dia nem horário informados) e Amor Exigente (segunda, 20h; Rua P4 com Av. P25, Vila Paulista; e-mail do Amor Exigente). Fonte registrada como contato direto, **não oficial**, conferida em 12/10/2026. **Sem telefones pessoais** (os quatro WhatsApps do cartaz do Amor Exigente não foram publicados: anonimato de quem atende). Ficam em `web/areas.js`, não no CSV do catálogo (não há fonte_url nem endereço com número para geocodificar).
+- **Tela inicial:** dois cartões de destaque abaixo das sete portas (classe `porta destaque`, que não conta como porta: o teste exige exatamente sete). Secretaria da Mulher como cartão de contato (opção A), preenchido pelo catálogo. O painel não vira botão público porque ainda usa dados de teste.
+- **Mapa:** bloco "O que fica mais perto de você" com o serviço mais perto de cada tipo depois do CEP (`MapaServicos.maisPertoPorTipo`, testado); os CRAS achados por bairro ganham "Mostrar no mapa". 4 dos 6 CRAS ainda não têm posição conhecida, então o botão só aparece onde há posição.
+- **README:** seção "Linguagens e onde cada uma é usada".
+- **Pendente:** confirmar com os grupos dia, horário e local exato; Al-Anon e AA de Rio Claro ainda sem fonte; `docs/img/compor_ilustracao.py` é um script antigo que não faz parte do projeto (remoção aguarda o aval do mantenedor).
+
