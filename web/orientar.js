@@ -39,7 +39,7 @@
   /* Pontes lexicais locais: traduz o jeito popular de pedir para termos já presentes no índice verificado. */
   function expandirConsulta(texto) {
     var t = Regras.normalizar(texto), extra = [];
-    if (/\b(?:casa propria|casa popular|minha casa|financiamento habitacional|cadastro habitacional)\b/.test(t)) {
+    if (/\b(?:casa propria|casa popular|minha casa minha vida|financiamento habitacional|cadastro habitacional|inscricao habitacional)\b/.test(t)) {
       extra.push("moradia habitacao casa propria cadastro habitacional aluguel social secretaria habitacao");
     }
     if (/\b(?:moro na rua|morando na rua|vivo na rua|vivendo na rua|situacao de rua|sem teto|sem casa)\b/.test(t)) {
