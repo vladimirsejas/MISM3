@@ -275,7 +275,7 @@ def calcular(setores, catalogo, indice_cep, hoje=None):
     return {
         "meta": {"fonte_populacao": "IBGE, Censo Demografico 2022, setores censitarios",
                  "fonte_servicos": "Catalogo manual do MISM3 e indice local de CEP",
-                 "gerado_em": (hoje or date.today()).isoformat(), "metodo": "distancia em linha reta; escala por categoria = percentil 95 municipal",
+                 "gerado_em": (hoje if isinstance(hoje, str) else (hoje or date.today()).isoformat()), "metodo": "distancia em linha reta; escala por categoria = percentil 95 municipal",
                  "escala_p95_km": escalas,
                  "servicos": {c: {"com_coordenada": len(por_cat[c]), "cadastrados": totais[c]} for c in CATEGORIAS},
                  "pessoas_total": sum(s["pessoas"] for s in setores), "setores_total": len(setores), "aviso": AVISO},
