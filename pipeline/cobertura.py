@@ -138,6 +138,36 @@ def ler_setores_geojson(caminho=None):
     return saida
 
 
+def inspecionar_gpkg(caminho):
+    """Mostra somente nomes de campos e candidatos detectados, sem imprimir registros."""
+    try:
+        import geopandas as gpd
+    except ImportError as e:
+        raise ValueError("Para inspecionar .gpkg, instale geopandas no mesmo Python: python -m pip install geopandas") from e
+    caminho = Path(caminho)
+    if not caminho.exists():
+        raise ValueError("GeoPackage nao encontrado: %s" % caminho)
+    amostra = gpd.read_file(caminho, rows=1)
+    if amostra.empty:
+        raise ValueError("GeoPackage sem feicoes.")
+    geom_col = amostra.geometry.name
+    campos = [c for c in amostra.columns if c != geom_col]
+    setor = achar_coluna(campos, ["CD_SETOR", "setor", "CD_GEOCODI", "codigo_setor"])
+    populacao = achar_coluna(campos, ["pessoas", "populacao", "pop_total", "V0001", "POP", "V001", "total_pessoas"])
+    bairro = achar_coluna(campos, ["NM_BAIRRO", "bairro", "nome_bairro"])
+    municipio = achar_coluna(campos, ["CD_MUN", "CD_MUNICIPIO", "codigo_municipio", "municipio_ibge"])
+    print("GeoPackage: %s" % caminho)
+    print("CRS: %s" % amostra.crs)
+    print("Geometria: %s" % geom_col)
+    print("Campos encontrados (%d):" % len(campos))
+    for campo in campos:
+        print(" - %s" % campo)
+    print("Candidatos identificados: setor=%s; populacao=%s; bairro=%s; municipio=%s" % (setor, populacao, bairro, municipio))
+    if not setor or not populacao:
+        print("AVISO: falta identificar setor e/ou populacao; nenhum arquivo foi gerado.")
+    return {"setor": setor, "populacao": populacao, "bairro": bairro, "municipio": municipio}
+
+
 def ler_setores_gpkg(caminho):
     """Importacao opcional do GeoPackage local; nomes de coluna descobertos por sinonimos."""
     try:
@@ -287,6 +317,7 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description="Gera um ICS exploratorio para acesso territorial a servicos.")
     ap.add_argument("--gpkg", help="GeoPackage local do IBGE; se omitido, usa web/dados/setores.geojson")
     ap.add_argument("--setores", help="GeoJSON agregado alternativo")
+    ap.add_argument("--inspecionar", action="store_true", help="com --gpkg, imprime apenas esquema/campos e termina")
     ap.add_argument("--saida", type=Path, default=DADOS / "cobertura_territorial.json")
     a = ap.parse_args(argv)
     try:
@@ -295,6 +326,11 @@ def main(argv=None):
         pass
     try:
         print("Lendo malha territorial...")
+        if a.gpkg and a.inspecionar:
+            inspecionar_gpkg(a.gpkg)
+            return 0
+        if a.inspecionar and not a.gpkg:
+            raise ValueError("--inspecionar exige --gpkg. Informe o caminho do GeoPackage.")
         if a.gpkg:
             setores = ler_setores_gpkg(a.gpkg)
         else:
