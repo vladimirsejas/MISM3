@@ -882,3 +882,10 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 
 
 - **MISM2 fora do projeto (decisão do mantenedor):** o MISM2 é outro projeto e não tem relação com este cadastro. Foi retirada a menção a ele da origem e do aviso dos registros do CRAM, da Patrulha Maria da Penha e do Cadu (agora dizem só "informação não conferida aqui", com a data da pesquisa na web) e do `docs/documetacao/LEIA-ME.md`. Endereço, telefone e estado "não conferido" desses registros **não mudaram**. As entradas antigas deste registro ficam como estão, porque são o histórico do que foi feito.
+
+## 12/10/2026 - Limpeza do que sobrava (decisão do mantenedor: "se não serve para nada, apaga")
+
+- **Apagados** (nada os usava): `pipeline/extrair_texto_onibus.py` (teste único; os PDFs do ônibus são imagem e a extração não funcionou), `docs/img/heroi-original-4-mulheres.webp` e `docs/img/mulher-idosa-fonte.svg` (fontes da ilustração antiga, já substituída pelo SVG), `docs/img/compor_ilustracao.py` e `web/dados/setores_resumo.json` (gerado pelo `setores.py`, mas nenhuma tela nem script o lia; o `setores.py` deixou de gravá-lo). Tudo continua recuperável pelo histórico do Git.
+- **Movidos, não apagados** (são fonte do que o site afirma): `docs/educacao/calendario.pdf` -> `docs/documetacao/seduc-resolucao-80-calendario-escolar-2027.pdf` e `docs/educacao/emei.pdf` -> `docs/documetacao/prefeitura-unidades-de-ensino.pdf`, ambos listados no `LEIA-ME.md`.
+- **Mantidos de propósito:** `pipeline/common.py` (importado por 11 scripts), `web/vendor/LEAFLET-LICENSE.txt` (licença obrigatória) e `oferta_educacao_infantil.json` (o pipeline o lê).
+- **Nota:** as entradas antigas deste registro que citam os arquivos apagados continuam como histórico.
