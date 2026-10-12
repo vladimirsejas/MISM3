@@ -40,7 +40,7 @@ def casa(item: dict, token: str) -> bool:
 
 
 def rodar(sistema: str) -> dict:
-    r = subprocess.run(["node", str(AQUI / "rodar_sistema.js"), sistema], capture_output=True, text=True, check=True)
+    r = subprocess.run(["node", str(AQUI / "rodar_sistema.js"), sistema], capture_output=True, text=True, encoding="utf-8", check=True)  # utf-8 explícito: no Windows o padrão é cp1252
     return {x["id"]: x for x in json.loads(r.stdout)}
 
 

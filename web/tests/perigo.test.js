@@ -56,4 +56,8 @@ assert(!r1 || r1.nivel < 2, "joelho ralado não é emergência");
 Perigo.usarModelo(null);
 assert(Perigo.avaliar("meu marido me bate").nivel === 2 && Perigo.avaliar("preciso de creche") === null);
 Perigo.usarModelo(modelo);
+/* ---- letras esticadas e variações de escrita ---- */
+["meu marido me baaaate", "quero morreeeeer", "meu padrasto abusa da minha filhaaaa", "meu filho desmaiouuuu", "MEU MARIDO ME BATE!!!", "meu\u00a0marido\u2003me\u200bbate", "socorrooo"]
+  .forEach((tt) => assert(Perigo.avaliar(tt) && Perigo.avaliar(tt).nivel === 2, `deve alertar mesmo com a escrita variada: ${tt}`));
+["preciso de creeeche", "oiiiii tudo bem", "quero um cursooo de costura"].forEach((tt) => assert(!Perigo.avaliar(tt) || Perigo.avaliar(tt).nivel < 2, `não deve alarmar: ${tt}`));
 console.log("perigo.test.js ok");

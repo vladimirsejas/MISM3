@@ -43,6 +43,10 @@ def test_indice_publicado_e_consistente():
 
 
 def test_indice_publicado_e_o_que_o_gerador_produz_hoje():
+    try:  # o gerador usa o scikit-learn (LSA); em alguns Windows uma política de segurança bloqueia as DLLs dele
+        from sklearn.feature_extraction.text import TfidfVectorizer  # noqa: F401
+    except ImportError as erro:
+        pytest.skip(f"scikit-learn não pôde ser carregado neste computador ({erro}); o CI do GitHub roda este teste")
     atual = io.gerar()
     publicado = json.loads(INDICE.read_text(encoding="utf-8"))
     assert [u["id"] for u in atual["unidades"]] == [u["id"] for u in publicado["unidades"]], "rode: python pipeline/indice_orientacao.py"

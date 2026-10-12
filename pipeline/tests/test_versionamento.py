@@ -81,7 +81,7 @@ def test_relatorio_em_repositorio_falso_nao_altera_nada_e_so_aplica_pode(tmp_pat
     escrever(raiz / "docs/doc.pdf", b"%PDF-1.4 pequeno")
     escrever(raiz / "docs/pessoas.csv", "nome;cpf\nfulana;111.222.333-44\n")
     escrever(raiz / "docs/enorme.bin", b"x", tamanho=101 * MB)
-    (raiz / ".gitignore").write_text("ignorado.txt\n")
+    (raiz / ".gitignore").write_text("ignorado.txt\n", encoding="utf-8")
     escrever(raiz / "ignorado.txt", "nao deve aparecer")
     itens = {c.name: (s, m) for s, c, m in pv.relatorio(raiz)}
     assert itens["cep_indice.json"][0] == "PODE" and itens["doc.pdf"][0] == "PODE"

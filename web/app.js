@@ -361,18 +361,23 @@
     var t = $("duvida-texto"); if (!t) return;
     t.value = ""; $("duvida-saida").innerHTML = ""; $("duvida-limpar").hidden = true;
   }
+  /* Segurança primeiro e sem esperar download: as regras de perigo.js já estão na página. O alerta aparece na hora, mesmo que os
+     arquivos da busca (cerca de 2 MB sem compressão) demorem ou não carreguem. */
+  function alertaAgora(texto) {
+    try { return window.Perigo && window.OrientacaoUI ? OrientacaoUI.htmlPerigo(Perigo.avaliar(texto)) : ""; } catch (e) { return ""; }
+  }
   function responderDuvida() {
     var t = $("duvida-texto"), saida = $("duvida-saida");
     if (!t || !areaAtual) return;
     var texto = t.value.trim();
     $("duvida-limpar").hidden = !texto;
     if (!texto) { saida.innerHTML = '<p class="status" role="status">Escreva a sua dúvida e toque em “Procurar”.</p>'; return; }
-    saida.innerHTML = '<p class="meta">Procurando…</p>';
+    saida.innerHTML = alertaAgora(texto) + '<p class="meta">Procurando…</p>';
     var ctx = { area: areaAtual.id };
     prepararOrientador().then(function (motor) {
       saida.innerHTML = OrientacaoUI.html(motor.responder(texto, ctx), ctx, areasParaPortas());
     }).catch(function () {
-      saida.innerHTML = '<p class="status" role="note">Não consegui carregar a busca agora. Veja os cartões desta página ou ligue 190 (Polícia), 192 (SAMU) ou 180 (violência contra a mulher).</p>';
+      saida.innerHTML = alertaAgora(texto) + '<p class="status" role="note">Não consegui carregar a busca agora. Veja os cartões desta página ou ligue 190 (Polícia), 192 (SAMU) ou 180 (violência contra a mulher).</p>';
     });
   }
   document.addEventListener("submit", function (ev) {
@@ -448,8 +453,8 @@
   function usarIA() {
     var t = $("ia-texto"), saida = $("ia-saida");
     if (!t.value.replace(/\s/g, "")) { saida.innerHTML = '<p class="ia-vazio">Escreva uma frase para eu poder ajudar.</p>'; return; }
-    saida.innerHTML = '<p class="meta">Lendo…</p>';
     var texto = t.value;
+    saida.innerHTML = alertaAgora(texto) + '<p class="meta">Lendo…</p>';
     prepararOrientador().then(function (motor) {
       var r = motor.responder(texto, {});
       var h = OrientacaoUI.html(r, {}, areasParaPortas());
@@ -461,7 +466,7 @@
       saida.innerHTML = h;
       $("ia-limpar").hidden = false;
     }).catch(function () {
-      saida.innerHTML = '<p class="ia-vazio">Não consegui carregar a busca agora. Escolha uma das áreas abaixo ou, se for urgente, ligue 190, 192 ou 180.</p>';
+      saida.innerHTML = alertaAgora(texto) + '<p class="ia-vazio">Não consegui carregar a busca agora. Escolha uma das áreas abaixo ou, se for urgente, ligue 190, 192 ou 180.</p>';
     });
   }
   if ($("ia-enviar")) {
