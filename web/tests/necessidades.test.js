@@ -64,6 +64,9 @@ const casos = [
   ["quero matricular meu filho na pré-escola", ["filhos"]],
   ["não tenho com quem deixar meu bebê para trabalhar", ["filhos", "emprego_curso"]],
   ["a fila do berçário não anda", ["filhos"]],
+  ["quero saber da lista de espera da creche", ["filhos"]],
+  ["como matricular na EMEI?", ["filhos"]],
+  ["tem vaga no CMEI?", ["filhos"]],
   ["", []],
   ["   ", []]
 ];
