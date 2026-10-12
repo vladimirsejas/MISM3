@@ -54,6 +54,10 @@ const casos = [
   ["sou mãe solo", ["filhos"]],
   ["sou mãe solteira e preciso de emprego", ["filhos", "emprego_curso"]],
   ["crio meus filhos sozinha", ["filhos"]],
+  ["minha filha precisa de vaga no CMEI", ["filhos"]],
+  ["quero matricular meu filho na pré-escola", ["filhos"]],
+  ["não tenho com quem deixar meu bebê para trabalhar", ["filhos", "emprego_curso"]],
+  ["a fila do berçário não anda", ["filhos"]],
   ["", []],
   ["   ", []]
 ];
