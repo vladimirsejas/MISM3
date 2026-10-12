@@ -36,8 +36,8 @@ const formularios = Array.from(inicio.matchAll(/<form[^>]*id="([^"]+)"/g), (m) =
 assert.deepStrictEqual(formularios, ["form-cep-mapa", "form-cras"], "só o mapa tem formulário na tela inicial");
 assert.strictEqual((inicio.match(/<form/g) || []).length, 2, "nenhum formulário sem id do mapa na tela inicial");
 const campos = Array.from(inicio.matchAll(/<input[^>]*id="([^"]+)"/g), (m) => m[1]).sort();
-assert.deepStrictEqual(campos, ["bairro-cras", "busca-texto", "cep-mapa", "usar-tiles-mapa"], "só os campos do mapa na tela inicial");
-assert.strictEqual((inicio.match(/<input/g) || []).length, 4, "nenhum campo sem id do mapa na tela inicial");
+assert.deepStrictEqual(campos, ["bairro-cras", "busca-texto", "cep-mapa", "ia-llm", "usar-tiles-mapa"], "só os campos do mapa e a opção (desligada) da IA na tela inicial");
+assert.strictEqual((inicio.match(/<input/g) || []).length, 5, "nenhum campo sem id do mapa na tela inicial");
 assert.strictEqual((inicio.match(/<textarea/g) || []).length, 1, "o único campo da tela inicial é a caixa da IA (Conte com suas palavras)");
 
 /* ---- 3. Emergência: botão compacto com os contatos oficiais, em todas as páginas ---- */

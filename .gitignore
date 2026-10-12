@@ -13,6 +13,11 @@ docs/ibge/
 *.shx
 *.parquet
 
+# Dados nacionais brutos do IBGE (centenas de MB; downloads incompletos .crdownload): ficam so no computador
+docs/mapa*nacional/
+*.crdownload
+*.gpkg
+
 # Python / testes
 __pycache__/
 .pytest_cache/

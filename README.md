@@ -6,7 +6,7 @@ Site estático de orientação para mulheres de Rio Claro (SP): reúne serviços
 
 Estado em 13/10/2026. O que existe, o que foi testado e o que ainda é proposta: [docs/estado_do_projeto.md](docs/estado_do_projeto.md). Decisões e histórico: [docs/registro_decisoes_desenvolvimento.md](docs/registro_decisoes_desenvolvimento.md).
 
-Restrições de projeto: não usa modelo de linguagem; o texto digitado nunca sai do navegador; não prevê risco individual; não decide elegibilidade a benefício; não promete vaga. Cada dado mostra fonte e data de conferência.
+Restrições de projeto: o orientador não usa modelo de linguagem e o texto digitado fica no navegador; a explicação por IA (Gemini) é opcional, vem desligada, só existe com o servidor local e uma chave no `.env`, e nunca é usada quando há sinal de perigo; não prevê risco individual; não decide elegibilidade a benefício; não promete vaga. Cada dado mostra fonte e data de conferência.
 
 ## Arquitetura
 
@@ -23,7 +23,7 @@ fontes oficiais (IBGE, INEP, CNES, páginas municipais)      catálogos escritos
               web/index.html + web/*.js  (navegador: sem servidor, sem build)
 ```
 
-- O site roda inteiro no navegador. Python só gera os arquivos que o site lê; não há servidor próprio nem API em tempo de execução.
+- O site roda inteiro no navegador. Python gera os arquivos que o site lê. Para publicar o site (hospedagem estática) não há servidor nem API. Para a explicação opcional por IA, o `abrir_site.bat` liga `pipeline/servidor_ia.py`, que serve `web/` e guarda a chave do Gemini; sem chave, o site funciona igual.
 - O dashboard é uma única página (`web/index.html`). Entre Mulheres, Rio Claro em números e o Painel são vistas carregadas sob demanda (`app.js`).
 - Os modelos de aprendizado de máquina são treinados em Python e exportados como JSON (pesos); o navegador só faz multiplicação de matrizes (`web/ia.js`, `web/orientar.js`).
 
@@ -64,7 +64,7 @@ JavaScript:
 
 Não há pacotes npm, `package.json`, framework, bundler nem CDN. Todo o JavaScript do site é código do projeto, exceto o Leaflet.
 
-Serviços externos: o site só consulta `tile.openstreetmap.org` (ruas do mapa), e apenas se a usuária marcar a opção (`web/mapa.js`). Links para páginas oficiais, WhatsApp e Google Maps abrem por clique. Em tempo de desenvolvimento, `pipeline/baixar.py` baixa dados do IBGE, INEP e DATASUS, e `pipeline/testar_api.py` faz uma chamada mínima à API da Anthropic só para verificar a chave (variável `ANTHROPIC_API_KEY`; o site não usa essa API).
+Serviços externos: o site só consulta `tile.openstreetmap.org` (ruas do mapa), e apenas se a usuária marcar a opção (`web/mapa.js`). Links para páginas oficiais, WhatsApp e Google Maps abrem por clique. A única exceção é a explicação opcional por IA: só se a usuária marcar a opção (`web/ia-llm.js`) e só quando o site é aberto por `pipeline/servidor_ia.py` com `GEMINI_API_KEY`, o texto dela e os serviços encontrados vão ao servidor local, que os repassa à API REST do Gemini (`generativelanguage.googleapis.com`, sem biblioteca do Google). A chave nunca vai ao navegador. Em tempo de desenvolvimento, `pipeline/baixar.py` baixa dados do IBGE, INEP e DATASUS, e `pipeline/testar_api.py` (`ANTHROPIC_API_KEY`) e `pipeline/testar_gemini.py` (`GEMINI_API_KEY`) fazem uma chamada mínima só para verificar a chave.
 
 Integração contínua: GitHub Actions (`actions/checkout@v4`, `actions/setup-python@v5`, `actions/setup-node@v4`), Python 3.12, Node 20.
 
@@ -111,6 +111,7 @@ Não existe: modelo de linguagem, embeddings neurais, previsão de risco, elegib
 | `perigo.js` | Camada de segurança: regras, detector aprendido, âncoras, letras esticadas |
 | `orientar.js` | Motor de busca de destinos (palavras, letras, LSA, intenção, escopo) e abstenção |
 | `orientacao-ui.js` | Tela do orientador (alerta, lista de resultados, saída "não encontrei") |
+| `ia-llm.js` | Explicação opcional por IA (Gemini): decide quando pode chamar (nunca com sinal de perigo), reduz os serviços ao mínimo enviado e escapa a resposta |
 | `plano.js` | Meu Plano: ordem de urgência por regra fixa |
 | `jornada.js`, `jornada-educacao.js`, `jornada-assistencia.js`, `jornada-ui.js` | Jornadas guiadas (Trabalho, Educação, Assistência) e currículo |
 | `questionario.js`, `questionario-ui.js` | Questionário do Observatório (20 perguntas); envio desligado em `web/dados/coleta.json` |
@@ -143,6 +144,7 @@ Não existe: modelo de linguagem, embeddings neurais, previsão de risco, elegib
 | `inspecionar_arquivo.py` | Arquivos baixados | Estrutura (nunca os registros) | openpyxl |
 | `preparar_versionamento.py` | Arquivos novos | `git add` seguro (tamanho, CPF, dado bruto) | stdlib |
 | `testar_api.py` | `ANTHROPIC_API_KEY` | Resultado de uma chamada mínima | stdlib |
+| `servidor_ia.py` | `web/`, `GEMINI_API_KEY` (ambiente ou `.env`) | Serve o site e o endereço `/api/ia` (explicação por Gemini, com limites e conferência da resposta) | stdlib (`http.server`, `urllib`) |
 | `testar_gemini.py` | `GEMINI_API_KEY` (ambiente ou `.env`) | Resultado de uma chamada mínima; `--modelos` lista os modelos da chave | stdlib |
 
 ## Como executar
@@ -150,7 +152,7 @@ Não existe: modelo de linguagem, embeddings neurais, previsão de risco, elegib
 Site (Windows): duplo clique em `abrir_site.bat` (procura Python, escolhe porta livre de 8000 a 8010, serve `web/` e abre o navegador). Em qualquer sistema:
 
 ```
-python -m http.server 8000 --directory web
+python pipeline/servidor_ia.py 8000
 ```
 Abrir `http://localhost:8000`. O site funciona só com os arquivos versionados.
 
