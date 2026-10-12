@@ -14,6 +14,14 @@ Se quiser ler diretamente o GeoPackage do IBGE que está no computador:
 
 ```powershell
 python pipeline/cobertura.py --gpkg "docs/ibge/SP_setores_CD2022.gpkg"
+
+Para listar as colunas sem tentar gerar o índice (útil para conferir o esquema do arquivo):
+
+```powershell
+python pipeline/cobertura.py --gpkg "docs/ibge/SP_setores_CD2022.gpkg" --inspecionar
+```
+
+O modo de inspeção lê apenas uma feição, imprime os nomes dos campos e quais candidatos foram reconhecidos; não imprime os valores dos registros e não gera arquivo de saída.
 ```
 
 A leitura do GeoPackage exige GeoPandas no mesmo Python usado para executar o script. O programa lê uma feição para descobrir o esquema, procura nomes de coluna por sinônimos e filtra Rio Claro antes de carregar os setores. Se não identificar o código do setor ou a população, para e mostra as colunas encontradas — não adivinha.
