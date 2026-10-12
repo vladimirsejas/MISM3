@@ -148,3 +148,22 @@ console.log("mapa.test.js: ok (" + lista.length + " serviços; " + n.endereco + 
   assert.deepStrictEqual(MS.maisPertoPorTipo(MS.ordenar(lista, null)), [], "sem origem, nada");
   console.log("ok: mais perto por tipo");
 }
+
+// CEP <-> bairro (pelo setor do IBGE): provável, nunca inventado.
+{
+  const setorBairro = JSON.parse(ler("dados/setor_bairro.json")).bairros;
+  const comBairro = Object.keys(indice).filter((c) => MS.bairroDoCep(c, indice, setorBairro));
+  assert(comBairro.length > 1000, "a maioria dos CEPs recebe um bairro provável (" + comBairro.length + " de " + Object.keys(indice).length + ")");
+  const b = MS.bairroDoCep(comBairro[0], indice, setorBairro);
+  assert(typeof b.bairro === "string" && typeof b.area_grande === "boolean");
+  assert.strictEqual(MS.bairroDoCep("00000000", indice, setorBairro), null, "CEP que não está no índice: nada");
+  assert.strictEqual(MS.bairroDoCep(comBairro[0], indice, {}), null, "sem tabela de bairros: nada");
+  // vice-versa: todo CEP devolvido para um bairro tem mesmo esse bairro
+  const nome = b.bairro, doBairro = MS.cepsDoBairro(nome, indice, setorBairro);
+  assert(doBairro.includes(comBairro[0]) && doBairro.every((c) => MS.normalizarBairro(MS.bairroDoCep(c, indice, setorBairro).bairro).length > 0), "o CEP de origem está na lista do seu bairro");
+  assert.deepStrictEqual(MS.cepsDoBairro("Bairro Que Não Existe", indice, setorBairro), []);
+  assert.deepStrictEqual(MS.cepsDoBairro("", indice, setorBairro), []);
+  // "Jd. Brasília" digitado casa com o bairro "Jardim Brasília" do IBGE (sem Jd./Jardim e sem acento)
+  assert.deepStrictEqual(MS.cepsDoBairro("Jardim Brasília", indice, setorBairro), MS.cepsDoBairro("Jd. Brasilia", indice, setorBairro));
+  console.log("ok: CEP <-> bairro (" + comBairro.length + " CEPs com bairro provável)");
+}
