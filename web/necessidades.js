@@ -37,8 +37,11 @@
     ]],
     ["filhos", [
       "filho", "filhos", "crianca", "criancas", "meu bebe", "minha bebe", "nosso bebe", "um bebe", "o bebe", "recem nascido", "creche",
-      "maternidade", "escola infantil", "baba", "educacao infantil",
-      "vaga na creche", "matricula do filho",
+      "maternidade", "escola infantil", "baba", "educacao infantil", "emei", "emef",
+      "cmei", "pre escola", "pre-escola", "preescola", "bercario",
+      "maternal", "jardim de infancia",
+      "vaga na creche", "vaga no cmei", "matricular na creche", "fila da creche", "lista de espera da creche", "fila de espera da creche", "matricula do filho",
+      "nao tenho com quem deixar", "nao tenho com quem deixar meu filho",
       "mae solo", "mae solteira", "mae sozinha", "sozinha com meus filhos",
       "crio meus filhos sozinha", "criar meus filhos sozinha"
     ]],
@@ -57,7 +60,7 @@
       "bebe demais", "bebe muito", "bebe todo dia", "bebe todos os dias", "bebado", "bebada", "vive bebado", "embriagado",
       "alcool", "alcoolico", "vicio", "maconha", "cocaina", "usa crack", "usando drogas", "parar de beber",
       "narcoticos anonimos", "alcoolicos anonimos", "al anon", "amor exigente", "familia de dependente", "familias de dependentes",
-      "caps", "caps ad", "overdose", "crack"
+      "caps", "caps ad", "overdose", "crack", "vacina", "vacinas", "vacinacao", "vacina atrasada", "carteira de vacinacao", "vacinar meu filho"
     ]],
     ["estudo", [
       "estudo", "estudar", "faculdade", "universidade", "escola", "ensino",
@@ -65,9 +68,9 @@
       "cursinho", "vestibular", "pre vestibular", "enem"
     ]],
     ["moradia", [
-      "moradia", "habitacao", "aluguel", "aluguel social", "casa para morar",
-      "sem casa", "despejo", "regularizacao fundiaria", "cadastro habitacional",
-      "casa popular", "moradia popular", "preciso sair de casa"
+      "moradia", "habitacao", "aluguel", "aluguel social", "auxilio aluguel", "auxilio moradia", "casa para morar",
+      "sem casa", "moro na rua", "morando na rua", "situacao de rua", "despejo", "regularizacao fundiaria", "cadastro habitacional",
+      "casa propria", "financiamento habitacional", "casa popular", "moradia popular", "preciso sair de casa"
     ]],
     ["dividas", [
       "divida", "dividas", "superendividamento", "nome sujo", "renegociar divida",
@@ -86,6 +89,9 @@
 
   function identificarCategorias(texto, maximo) {
     var t = normalizar(texto);
+    if (!t) return [];
+    /* "Escola de samba" é uma expressão cultural, não um pedido de educação formal. */
+    t = t.replace(/\bescola de samba\b/g, " ").replace(/\s+/g, " ").trim();
     if (!t) return [];
     var achadas = [];
     REGRAS.forEach(function (regra) {

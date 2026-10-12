@@ -252,14 +252,15 @@
     return html;
   }
 
-  /* Caixa de dúvida: procura a resposta na própria página (duvida.js). Sem modelo de linguagem; o texto não sai do aparelho. */
+  /* Caixa de dúvida: o mesmo orientador da tela inicial (orientar.js + perigo.js), com a área aberta como contexto.
+     Sem modelo de linguagem; o texto não sai do aparelho. */
   function htmlDuvida(area) {
-    if (!window.Duvida || !area.secoes || !area.secoes.length) return "";
+    if (!window.OrientacaoUI || !window.Orientar || !area.secoes || !area.secoes.length) return "";
     return '<section class="ia-caixa duvida" id="duvida" aria-labelledby="titulo-duvida"><h2 id="titulo-duvida">Tem uma dúvida? Escreva aqui</h2>' +
-      '<p class="meta">Escreva do seu jeito: procuramos a resposta nesta página (' + esc(area.nome) + '). O que você escreve fica só neste aparelho.</p>' +
+      '<p class="meta">Escreva do seu jeito: procuramos o serviço certo, começando por esta área (' + esc(area.nome) + '). O que você escreve fica só neste aparelho.</p>' +
       '<form id="form-duvida" autocomplete="off"><label for="duvida-texto" class="so-leitor">Sua dúvida sobre ' + esc(area.nome) + '</label>' +
       '<textarea id="duvida-texto" rows="2" maxlength="200" autocomplete="off" spellcheck="false" placeholder="Ex.: ' + esc(area.exemploDuvida || "como faço para pedir ajuda?") + '"></textarea>' +
-      '<div class="acoes"><button type="submit" class="btn">Procurar nesta página</button><button type="button" class="btn secundario" id="duvida-limpar" hidden>Limpar</button></div></form>' +
+      '<div class="acoes"><button type="submit" class="btn">Procurar</button><button type="button" class="btn secundario" id="duvida-limpar" hidden>Limpar</button></div></form>' +
       '<div id="duvida-saida" aria-live="polite"></div></section>';
   }
 
@@ -349,17 +350,12 @@
   });
 
   /* ---------------------------------------------------------------- caixa de dúvida */
-  var indiceDuvida = null;
-  function montarIndiceDuvida(area) {
-    if (!window.Duvida) { indiceDuvida = null; return; }
-    var vistos = Object.create(null);
-    var nomes = area.secoes.map(function (sec) { return servicosDaSecao(sec, vistos).map(function (x) { return x.nome; }); });
-    var extras = [];
-    if (area.jornada && window.JornadaUI) extras.push({ ancora: "titulo-jornada", rotulo: "Monte seu plano", corpo: "plano passo a passo primeiro passo o que fazer por onde começar" });
-    if (area.jornada === true) extras.push({ ancora: "montar-curriculo", rotulo: "Montar um currículo", corpo: "currículo curriculo emprego vaga trabalho" });
-    if (dados.indice && area.secoes.some(function (x) { return x.tipos.length; })) extras.push({ ancora: "busca-por-cep", rotulo: "Ver o que fica perto de mim (pelo CEP)", corpo: "cep perto proximo mais proximo perto de mim endereco bairro unidade escola creche" });
-    if (area.secoes.some(function (x) { return x.busca === "bairro"; })) extras.push({ ancora: "busca-bairro", rotulo: "Qual CRAS atende o meu bairro?", corpo: "cras bairro atende regiao endereco moro" });
-    indiceDuvida = Duvida.indexar(area, nomes, extras);
+  /* ---------------------------------------------------------------- orientador (busca + segurança) */
+  function primeiraFrase(t) { var m = /^[^.]*\./.exec(String(t || "")); return m ? m[0] : String(t || ""); }
+  function areasParaPortas() { return AREAS.AREAS.map(function (a) { return { id: a.id, nome: a.nome, resumo: primeiraFrase(a.descricao || a.intro) }; }); }
+  function prepararOrientador() {
+    OrientacaoUI.lembrarAreas(AREAS.AREAS);
+    return carregarModeloIA().then(function () { return OrientacaoUI.preparar(carregar, window.MISM3IA, window.MISM3Necessidades); });
   }
   function limparDuvida() {
     var t = $("duvida-texto"); if (!t) return;
@@ -370,54 +366,14 @@
     if (!t || !areaAtual) return;
     var texto = t.value.trim();
     $("duvida-limpar").hidden = !texto;
-    if (!texto) { saida.innerHTML = '<p class="status" role="status">Escreva a sua dúvida e toque em “Procurar nesta página”.</p>'; return; }
-    var html = "";
-    /* Segurança primeiro: se o texto fala de violência ou perigo, o aviso vem antes de qualquer resposta. */
-    if (window.MISM3Necessidades && MISM3Necessidades.identificarCategorias(texto, 9).indexOf("violencia") !== -1) {
-      html += '<div class="status urgente" role="alert"><strong>Se você está em perigo agora</strong>, use o botão “Em perigo agora?” no alto da página ou ligue <a href="tel:190">190</a> (Polícia) ou <a href="tel:180">180</a> (violência contra a mulher, 24 horas, gratuito).</div>';
-    }
-    var hits = indiceDuvida ? Duvida.buscar(indiceDuvida, texto, 3) : [];
-    /* O assistente geral completa: o caminho DESTA área vem primeiro (se a página tem a seção, ela aparece mesmo que os trechos
-       soltos sejam outros), e os caminhos de OUTRAS áreas aparecem depois. */
-    var sug = window.MISM3IA ? MISM3IA.sugerir(texto, 3) : [];
-    var outras = [], desta = [];
-    sug.forEach(function (x) { (String(x.href).slice(1).split("/")[0] === areaAtual.id ? desta : outras).push(x); });
-    var jaMostradas = {};
-    var caminhos = desta.filter(function (x) {
-      var parte = String(x.href).slice(1).split("/")[1];
-      return parte ? true : !hits.length;
+    if (!texto) { saida.innerHTML = '<p class="status" role="status">Escreva a sua dúvida e toque em “Procurar”.</p>'; return; }
+    saida.innerHTML = '<p class="meta">Procurando…</p>';
+    var ctx = { area: areaAtual.id };
+    prepararOrientador().then(function (motor) {
+      saida.innerHTML = OrientacaoUI.html(motor.responder(texto, ctx), ctx, areasParaPortas());
+    }).catch(function () {
+      saida.innerHTML = '<p class="status" role="note">Não consegui carregar a busca agora. Veja os cartões desta página ou ligue 190 (Polícia), 192 (SAMU) ou 180 (violência contra a mulher).</p>';
     });
-    if (caminhos.length) {
-      html += '<p class="meta">Por onde começar:</p><ul class="duvida-lista">';
-      caminhos.forEach(function (x) {
-        var parte = String(x.href).slice(1).split("/")[1];
-        if (parte) jaMostradas[parte] = 1;
-        html += "<li><strong>" + esc(x.titulo) + "</strong><p>" + esc(x.texto) + "</p>" +
-          (parte ? '<button type="button" class="btn-rolar" data-rolar="' + esc(parte) + '">Ver na página</button>' : "") + "</li>";
-      });
-      html += "</ul>";
-    }
-    /* Com o caminho da área já indicado, outros trechos só entram se forem quase tão relevantes quanto o melhor. */
-    var restantes = hits.filter(function (h) { return caminhos.length === 0 || (!jaMostradas[h.ancora] && h.pontos >= hits[0].pontos * 0.8); });
-    if (restantes.length) {
-      html += '<p class="meta">' + (caminhos.length ? "Outros trechos" : "Encontramos isto") + ' <strong>nesta página</strong>:</p><ul class="duvida-lista">';
-      restantes.forEach(function (h) {
-        html += "<li><strong>" + esc(h.rotulo) + "</strong>" + (h.pai && h.pai !== h.rotulo ? ' <span class="meta">em “' + esc(h.pai) + '”</span>' : "") +
-          (h.trecho ? "<p>" + esc(h.trecho) + "</p>" : "") +
-          '<button type="button" class="btn-rolar" data-rolar="' + esc(h.ancora) + '">Ver na página</button></li>';
-      });
-      html += "</ul>";
-    }
-    if (outras.length) {
-      html += '<p class="meta">Isto também pode estar em outra área:</p><ul class="duvida-lista">';
-      outras.forEach(function (x) { html += '<li><a href="' + esc(x.href) + '"><strong>' + esc(x.titulo) + "</strong></a><p>" + esc(x.texto) + "</p></li>"; });
-      html += "</ul>";
-    }
-    if (!hits.length && !caminhos.length && !outras.length) {
-      html += '<p class="status" role="note">Não encontramos isso nesta página. Tente escrever de outro jeito, ou veja os contatos dos cartões abaixo e ligue para confirmar. Se a dúvida é sobre um direito ou benefício, o CRAS (área Assistência Social) orienta e encaminha.</p>';
-    }
-    html += '<p class="meta">A busca só olha o que está escrito nesta página e pode errar. Confirme sempre por telefone com o serviço.</p>';
-    saida.innerHTML = html;
   }
   document.addEventListener("submit", function (ev) {
     if (ev.target && ev.target.id === "form-duvida") { ev.preventDefault(); responderDuvida(); }
@@ -493,16 +449,25 @@
     var t = $("ia-texto"), saida = $("ia-saida");
     if (!t.value.replace(/\s/g, "")) { saida.innerHTML = '<p class="ia-vazio">Escreva uma frase para eu poder ajudar.</p>'; return; }
     saida.innerHTML = '<p class="meta">Lendo…</p>';
-    carregarModeloIA().then(function () {
-      var sug = MISM3IA.sugerir(t.value);
-      saida.innerHTML = htmlSugestoes(sug, MISM3IA.servicosPara(t.value, sug, 2));
+    var texto = t.value;
+    prepararOrientador().then(function (motor) {
+      var r = motor.responder(texto, {});
+      var h = OrientacaoUI.html(r, {}, areasParaPortas());
+      /* Meu plano: as mesmas necessidades, em ordem de urgência, com o motivo e o que fazer se não der certo (plano.js). */
+      if (r.itens.length && !r.geral && !r.saudacao) {
+        var sug = MISM3IA.sugerir(texto);
+        if (sug.length > 1) h += '<details class="plano-detalhe"><summary>Ver como um plano, em ordem de urgência</summary>' + htmlSugestoes(sug, MISM3IA.servicosPara(texto, sug, 2)) + "</details>";
+      }
+      saida.innerHTML = h;
       $("ia-limpar").hidden = false;
+    }).catch(function () {
+      saida.innerHTML = '<p class="ia-vazio">Não consegui carregar a busca agora. Escolha uma das áreas abaixo ou, se for urgente, ligue 190, 192 ou 180.</p>';
     });
   }
   if ($("ia-enviar")) {
     $("ia-enviar").addEventListener("click", usarIA);
     $("ia-limpar").addEventListener("click", function () { limparIA(); $("ia-texto").focus(); });
-    $("ia-texto").addEventListener("focus", carregarModeloIA, { once: true });
+    $("ia-texto").addEventListener("focus", function () { prepararOrientador().catch(function () {}); }, { once: true });
     $("ia-texto").addEventListener("keydown", function (e) { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) usarIA(); });
   }
 
@@ -534,7 +499,6 @@
     $("nome-secao").textContent = "Início › " + area.nome;
     $("titulo-area").innerHTML = '<span class="icone-titulo"><svg aria-hidden="true" width="28" height="28"><use href="#' + ICONES[area.icone] + '"/></svg></span>' + esc(area.nome);
     $("intro-area").textContent = area.intro;
-    montarIndiceDuvida(area);
     $("conteudo-area").innerHTML = htmlArea(area);
     if (area.jornada && window.JornadaUI) JornadaUI.restaurar();
     if (window.QuestionarioUI) { if (area.questionario) QuestionarioUI.restaurar(); else QuestionarioUI.limpar(); }
@@ -721,7 +685,7 @@
 
   /* Contatos essenciais de Rio Claro: vêm do catálogo verificado (uma só fonte); se o catálogo não carregar, ficam só os nacionais. */
   var CONTATOS_LOCAIS = [
-    ["man-cram", "CRAM, atendimento à mulher"], ["man-secretaria-mulher", "Secretaria Municipal da Mulher"],
+    ["man-secretaria-mulher", "Secretaria Municipal da Mulher"],
     ["man-saude-upa-estadio", "UPA (Av. 29)"], ["man-conselho-tutelar-sul", "Conselho Tutelar, Região Sul"],
     ["man-conselho-tutelar-norte", "Conselho Tutelar, Região Norte"], ["man-creas", "CREAS"]
   ];
