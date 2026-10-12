@@ -46,7 +46,7 @@ const casos = [
   ["moradia", "quero pagar menos na conta de água", ["secao-1"]],
   ["assistencia", "estou sem comida em casa", ["secao-1"]],
   ["educacao", "qual o horário de matrícula da creche", ["educacao-filhos"]],
-  ["saude", "preciso de atendimento psicológico", ["secao-1", "secao-2"]],
+  ["saude", "preciso de atendimento psicológico", ["saude-unidades"]],
   ["direitos", "como denunciar violência contra a mulher", ["secao-2"]],
   ["educacao", "qual a previsão do tempo amanhã", []],
   ["saude", "qual a previsão do tempo amanhã", []],
