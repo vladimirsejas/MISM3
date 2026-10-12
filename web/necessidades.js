@@ -54,7 +54,10 @@
       "gravidez", "gravida", "ginecologista", "dor", "remedio",
       "drogas", "droga", "usa drogas", "dependente quimico", "dependencia quimica", "dependente quimica",
       "meu filho usa drogas", "meu filho e viciado", "filho viciado", "viciado", "alcoolismo", "alcoolatra",
-      "bebe demais", "caps", "caps ad", "overdose", "crack"
+      "bebe demais", "bebe muito", "bebe todo dia", "bebe todos os dias", "bebado", "bebada", "vive bebado", "embriagado",
+      "alcool", "alcoolico", "vicio", "maconha", "cocaina", "usa crack", "usando drogas", "parar de beber",
+      "narcoticos anonimos", "alcoolicos anonimos", "al anon", "amor exigente", "familia de dependente", "familias de dependentes",
+      "caps", "caps ad", "overdose", "crack"
     ]],
     ["estudo", [
       "estudo", "estudar", "faculdade", "universidade", "escola", "ensino",

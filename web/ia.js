@@ -21,6 +21,10 @@
     familia: { titulo: "Apoio social (CRAS)", texto: "Benefícios, cesta básica e acompanhamento da família.", href: "#assistencia" }
   };
 
+  /* Álcool e drogas (própria ou de alguém da família) é questão de saúde (dependência é doença): em vez do topo da Saúde, o
+     botão leva direto à seção que reúne o CAPS AD e os grupos de ajuda mútua de Rio Claro. */
+  var CAMINHO_DROGAS = { titulo: "Álcool ou drogas: apoio para você e para a família", texto: "Dependência é uma doença e tem tratamento. CAPS AD (saúde pública) e grupos de ajuda mútua de Rio Claro, como NA e Amor Exigente.", href: "#saude/saude-familia-drogas" };
+
   var N_MIN = 3, N_MAX = 5;
   var modelo = null, indice = null;
 
@@ -80,7 +84,7 @@
       return (b.origem === "ambos") - (a.origem === "ambos") || b.prob - a.prob;
     });
     return lista.slice(0, maximo || meta.maximo_sugestoes || 3).map(function (s) {
-      var c = CAMINHOS[s.id];
+      var c = s.id === "saude" && DROGAS.test(Regras.normalizar(texto)) ? CAMINHO_DROGAS : CAMINHOS[s.id];
       return { id: s.id, origem: s.origem, prob: s.prob, titulo: c.titulo, texto: c.texto, href: c.href, urgente: !!c.urgente };
     });
   }
@@ -104,7 +108,7 @@
   var PORTAS = { secretaria: 1, sede: 1, pat: 1, cras: 1, ddm: 1, cram: 1, caps: 0.6, urgencia: 0.6 };
   /* Alguns serviços só fazem sentido quando o texto trata do assunto deles. Semelhança de letras não basta: um CAPS de álcool e
      drogas nunca deve aparecer para quem diz estar ansiosa, e o inverso. (Comparação sem acento e em minúsculas.) */
-  var DROGAS = /droga|alcool|bebida|crack|vici|dependen|quimic|cachaca|maconha|cocaina|bebe demais/;
+  var DROGAS = /droga|alcool|bebida|crack|vici|dependen|quimic|cachaca|maconha|cocaina|bebe demais|bebe muito|bebe todo|bebad|embriag|parar de beber|narcotic|amor exigente|al anon/;
   var MENTAL = /psic|ansios|ansied|depress|triste|angusti|saude mental|panico|suicid|nervos|insonia|nao consigo dormir|terapi|psiquiatr|emocional|sem vontade de nada/;
   var CRIANCA = /crianca|filh|adolescen|menin|bebe|nene|jovem/;
   var CONDICOES = [
