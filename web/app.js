@@ -554,6 +554,7 @@
       $("fontes").textContent = dados.falhou ? "O cadastro de serviços não foi carregado."
         : "Cadastro de serviços" + (d ? " atualizado em " + d[3] + "/" + d[2] + "/" + d[1] : "") + ".";
       desenharContatos();
+      desenharSecretariaDaMulher();
     });
   }
 
@@ -578,6 +579,16 @@
       html += '<li><span class="c-nome">' + esc(c[1]) + '</span><a class="c-tel" href="tel:' + esc(digitos) + '">' + esc(exibido) + "</a></li>";
     });
     lista.insertAdjacentHTML("beforeend", html);
+  }
+
+  /* Cartão de destaque da Secretaria da Mulher: endereço, telefone e horário vêm do catálogo verificado (nada digitado duas vezes). */
+  function desenharSecretariaDaMulher() {
+    var alvo = $("sub-secretaria");
+    if (!alvo || !dados.servicos) return;
+    var s = dados.servicos.filter(function (x) { return x.id === "man-secretaria-mulher"; })[0];
+    if (!s) return;
+    var partes = [s.endereco, s.telefone, s.horario].filter(Boolean);
+    if (partes.length) alvo.textContent = partes.join(" · ") + ". Confirme antes de ir.";
   }
 
   /* ------------------------------------------------------------ busca por CEP e mapa */

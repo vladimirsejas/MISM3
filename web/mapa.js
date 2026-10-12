@@ -4,7 +4,9 @@
 (function () {
   "use strict";
   var MS = window.MapaServicos, Acesso = window.Acesso;
-  var $ = function (id) { return document.getElementById(id); };
+  /* Roda na página do mapa (completa) e dentro da tela inicial (só mapa, CEP, CRAS e "mais perto"). Na tela inicial faltam
+     filtros e lista: um elemento solto, fora da página, absorve o que seria escrito neles. */
+  var $ = function (id) { return document.getElementById(id) || document.createElement("div"); };
   var POR_PAGINA = 24;
 
   var estado = { todos: [], indice: null, apelidos: [], ativas: {}, texto: "", origem: null, origemRaio: 0, limite: POR_PAGINA };
@@ -97,6 +99,8 @@
     }
     camadaPontos = L.layerGroup().addTo(mapa);
     camadaOrigem = L.layerGroup().addTo(mapa);
+    /* Na tela inicial o mapa fica escondido quando a pessoa abre uma área e volta: reajusta o tamanho quando reaparece. */
+    if (window.ResizeObserver) new ResizeObserver(function () { mapa.invalidateSize(); }).observe($("mapa-servicos"));
   }
 
   function desenharPontos(lista) {
@@ -136,17 +140,35 @@
         n.cep + " com posição aproximada pelo CEP e " + n.sem + " sem posição no mapa (aparecem só na lista)."
       : "Nenhum serviço encontrado com esses filtros.";
     desenharPontos(visiveis);
-    var ul = $("lista-servicos");
+    var ul = document.getElementById("lista-servicos");
+    if (ul) {
+      ul.textContent = "";
+      visiveis.slice(0, estado.limite).forEach(function (s) {
+        var li = el("li", "mapa-item");
+        li.appendChild(cartao(s, true));
+        ul.appendChild(li);
+      });
+    }
+    $("mais-servicos").hidden = visiveis.length <= estado.limite;
+    desenharMaisPerto(visiveis);
+    $("nota-lista").textContent = estado.origem
+      ? "Ordenados pela distância em linha reta até o centro do CEP informado; os sem posição ficam no fim."
+      : "Ordenados por tipo de serviço e nome. Informe o CEP para ordenar pela distância.";
+  }
+
+  /* Com o CEP informado: o serviço mais perto de cada tipo (respeita os filtros), no topo da página. */
+  function desenharMaisPerto(visiveis) {
+    var caixa = $("mais-perto"), ul = $("lista-mais-perto");
     ul.textContent = "";
-    visiveis.slice(0, estado.limite).forEach(function (s) {
+    var achados = estado.origem ? MS.maisPertoPorTipo(visiveis) : [];
+    caixa.hidden = !achados.length;
+    if (!achados.length) return;
+    $("nota-mais-perto").textContent = "Só entram serviços com posição conhecida no mapa. Distância em linha reta até o centro do CEP informado; não é o caminho a pé nem de ônibus. Confirme o endereço e o horário por telefone antes de ir.";
+    achados.forEach(function (s) {
       var li = el("li", "mapa-item");
       li.appendChild(cartao(s, true));
       ul.appendChild(li);
     });
-    $("mais-servicos").hidden = visiveis.length <= estado.limite;
-    $("nota-lista").textContent = estado.origem
-      ? "Ordenados pela distância em linha reta até o centro do CEP informado; os sem posição ficam no fim."
-      : "Ordenados por tipo de serviço e nome. Informe o CEP para ordenar pela distância.";
   }
 
   function montarFiltros() {
@@ -230,7 +252,7 @@
     else if (r.status === "ok") frase = "Pela lista oficial da Prefeitura, o bairro “" + r.cras[0].bairro + "” é atendido por:";
     else frase = "Este nome aparece na lista de mais de um CRAS (" + nomes.join("; ") + "). Confirme por telefone qual atende o seu endereço:";
     saida.appendChild(el("p", "mapa-cras-frase", frase));
-    unicos.forEach(function (a) { saida.appendChild(cartao(a.servico, false)); });
+    unicos.forEach(function (a) { saida.appendChild(cartao(a.servico, true)); });
     saida.appendChild(el("p", "meta", "A lista é da página oficial indicada em “Fonte”. Antes de ir, ligue para confirmar o atendimento e a área do seu endereço."));
   }
 
@@ -250,11 +272,14 @@
       tiles = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: "© OpenStreetMap contributors" }).addTo(mapa);
     } else if (tiles) { mapa.removeLayer(tiles); tiles = null; }
   });
-  $("sair-rapido").addEventListener("click", function () {
-    $("cep-mapa").value = "";
-    $("busca-texto").value = "";
-    window.location.replace("https://www.google.com.br/");
-  });
+  /* Na tela inicial o botão "Sair desta página agora" já é tratado pelo app.js (e limpa tudo dela). */
+  if (!document.getElementById("inicio-tela")) {
+    $("sair-rapido").addEventListener("click", function () {
+      $("cep-mapa").value = "";
+      $("busca-texto").value = "";
+      window.location.replace("https://www.google.com.br/");
+    });
+  }
 
   Promise.all([carregar("dados/catalogo_manual.json", true), carregar("dados/cep_indice.json", false), carregar("dados/setores.geojson", false),
     carregar("dados/bairros_apelidos.json", false)])

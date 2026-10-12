@@ -3,7 +3,6 @@
 Entrada : o zip "SP_setores_CD2022.zip" (shapefile do estado inteiro) em dados/bruto/setores/
           (ou passe o caminho: python pipeline/setores.py caminho/do.zip)
 Saida   : web/dados/setores.geojson  (so Rio Claro, poligonos simplificados)
-          web/dados/setores_resumo.json (setor -> bairro, situacao, pessoas, domicilios)
 
 Usa so a biblioteca pura-Python "pyshp" (pip install pyshp): funciona no Windows sem GDAL.
 
@@ -157,7 +156,6 @@ def main() -> None:
         "domicilios": "campo v0002 da malha (a confirmar no dicionario do IBGE)",
     }
     salvar_json(colecao, WEB_DADOS / "setores.geojson")
-    salvar_json({"meta": colecao["meta"], "setores": resumo}, WEB_DADOS / "setores_resumo.json")
     tot = sum(s["pessoas"] or 0 for s in resumo.values())
     print("  %d setores | %d pessoas somadas (confira com o total oficial do municipio)" % (len(resumo), tot))
 

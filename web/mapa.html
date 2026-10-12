@@ -69,7 +69,7 @@
         <input id="busca-texto" type="search" autocomplete="off" spellcheck="false" placeholder="Ex.: creche, Jardim Brasília, CRAS">
       </div>
       <form class="mapa-campo" id="form-cep-mapa" autocomplete="off">
-        <label for="cep-mapa">Seu CEP (opcional)</label>
+        <label for="cep-mapa">Seu CEP: mostra o serviço mais perto de cada tipo</label>
         <div class="linha">
           <input id="cep-mapa" inputmode="numeric" maxlength="9" placeholder="00000-000" autocomplete="off" autocapitalize="off" spellcheck="false">
           <button type="submit" class="btn">Ver o que está perto</button>
@@ -79,6 +79,12 @@
     </div>
     <p class="privacidade">O CEP serve só para marcar uma região aproximada e fica neste aparelho: nada é enviado, gravado ou guardado na barra de endereço.</p>
     <p id="mensagem-mapa" role="status" class="mensagem" hidden></p>
+  </section>
+
+  <section id="mais-perto" class="mapa-mais-perto" aria-labelledby="titulo-mais-perto" hidden>
+    <h2 id="titulo-mais-perto">O que fica mais perto de você</h2>
+    <p class="meta" id="nota-mais-perto"></p>
+    <ul class="mapa-lista" id="lista-mais-perto"></ul>
   </section>
 
   <p id="resumo-mapa" class="mapa-resumo" aria-live="polite"></p>

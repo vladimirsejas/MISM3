@@ -870,3 +870,31 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - **O registro do CRAM não foi alterado** (a decisão sobre endereço e telefone é do mantenedor, ver PR #35). Os resumos gerados por IA (como o do Google, que dá a Avenida 9, nº 405) **não são fonte**.
 - **Ordem dos PRs:** o #36 (Delegacia, do ChatGPT) entrou primeiro; este foi atualizado por cima dele e o catálogo manual regenerado (165 serviços).
 - **Não conferido aqui:** o PEJA e o cursinho têm PDFs de prova (`PEJA.pdf`, `COMTATOPEJA.pdf`, `UNECópia Impressa.pdf`) que só existem no computador do autor e ainda não foram arquivados no repositório.
+
+## 12/10/2026 - Grupos de ajuda mútua em Saúde, destaques na tela inicial e "mais perto" no mapa
+
+- **Decisão do mantenedor:** fazer o bloco de dependência química com "apenas os dados que a gente tem"; destacar o questionário e a Secretaria da Mulher; ligar o mapa à busca por bairro ou CEP; manter o #36 (já mesclado) como está, sem duplicar nem bagunçar.
+- **Saúde:** o cartão "Apoio fora da rede pública" (que dizia que a lista não existia) foi **substituído**, sem duplicar, por um cartão explicando cada tipo de grupo (texto do MDS, consultado em 11/10/2026) e três cartões de grupos de Rio Claro: NA Grupo Gratidão (terça, quinta e domingo, 20h; Capela São Benedito, Av. 5, s/n, CEP 13503-254; dados da placa e de contato direto), NA Grupo Viver Limpo (Avenida Trinta, CEP 13500-550; sem dia nem horário informados) e Amor Exigente (segunda, 20h; Rua P4 com Av. P25, Vila Paulista; e-mail do Amor Exigente). Fonte registrada como contato direto, **não oficial**, conferida em 12/10/2026. **Sem telefones pessoais** (os quatro WhatsApps do cartaz do Amor Exigente não foram publicados: anonimato de quem atende). Ficam em `web/areas.js`, não no CSV do catálogo (não há fonte_url nem endereço com número para geocodificar).
+- **Tela inicial:** dois cartões de destaque abaixo das sete portas (classe `porta destaque`, que não conta como porta: o teste exige exatamente sete). Secretaria da Mulher como cartão de contato (opção A), preenchido pelo catálogo. O painel não vira botão público porque ainda usa dados de teste.
+- **Mapa:** bloco "O que fica mais perto de você" com o serviço mais perto de cada tipo depois do CEP (`MapaServicos.maisPertoPorTipo`, testado); os CRAS achados por bairro ganham "Mostrar no mapa". 4 dos 6 CRAS ainda não têm posição conhecida, então o botão só aparece onde há posição.
+- **README:** seção "Linguagens e onde cada uma é usada".
+- **Pendente:** confirmar com os grupos dia, horário e local exato; Al-Anon e AA de Rio Claro ainda sem fonte; o script antigo `docs/img/compor_ilustracao.py` foi **removido** por decisão do mantenedor ("se não serve para nada, apaga"): montava a ilustração antiga das mulheres da tela inicial, já substituída pelo SVG, e dependia de imagens em uma pasta temporária que nunca esteve no repositório. Nada o chamava.
+
+
+- **MISM2 fora do projeto (decisão do mantenedor):** o MISM2 é outro projeto e não tem relação com este cadastro. Foi retirada a menção a ele da origem e do aviso dos registros do CRAM, da Patrulha Maria da Penha e do Cadu (agora dizem só "informação não conferida aqui", com a data da pesquisa na web) e do `docs/documetacao/LEIA-ME.md`. Endereço, telefone e estado "não conferido" desses registros **não mudaram**. As entradas antigas deste registro ficam como estão, porque são o histórico do que foi feito.
+
+## 12/10/2026 - Limpeza do que sobrava (decisão do mantenedor: "se não serve para nada, apaga")
+
+- **Apagados** (nada os usava): `pipeline/extrair_texto_onibus.py` (teste único; os PDFs do ônibus são imagem e a extração não funcionou), `docs/img/heroi-original-4-mulheres.webp` e `docs/img/mulher-idosa-fonte.svg` (fontes da ilustração antiga, já substituída pelo SVG), `docs/img/compor_ilustracao.py` e `web/dados/setores_resumo.json` (gerado pelo `setores.py`, mas nenhuma tela nem script o lia; o `setores.py` deixou de gravá-lo). Tudo continua recuperável pelo histórico do Git.
+- **Movidos, não apagados** (são fonte do que o site afirma): `docs/educacao/calendario.pdf` -> `docs/documetacao/seduc-resolucao-80-calendario-escolar-2027.pdf` e `docs/educacao/emei.pdf` -> `docs/documetacao/prefeitura-unidades-de-ensino.pdf`, ambos listados no `LEIA-ME.md`.
+- **Mantidos de propósito:** `pipeline/common.py` (importado por 11 scripts), `web/vendor/LEAFLET-LICENSE.txt` (licença obrigatória) e `oferta_educacao_infantil.json` (o pipeline o lê).
+- **Nota:** as entradas antigas deste registro que citam os arquivos apagados continuam como histórico.
+
+## 12/10/2026 - O mapa passa a morar na tela inicial
+
+- **Decisão do mantenedor:** "o mapa tem que estar no dashboard" (a tela inicial), e não só numa página separada.
+- **Como ficou:** seção "Mapa de serviços" na tela inicial (`web/index.html`), logo abaixo das portas e dos destaques: busca de CRAS por bairro, CEP, o mapa com os pontos e, abaixo do mapa, o bloco "O que fica mais perto de você". O botão "Ver o mapa de serviços" do topo e o item do "Acesso rápido" rolam até ela. A página `mapa.html` continua, como versão completa (filtros por tipo, busca por nome e lista de todos os serviços), e `abrir_mapa.bat` abre direto nela.
+- **Código:** o mesmo `web/mapa.js` serve às duas páginas (na tela inicial faltam filtros e lista; um elemento solto absorve o que seria escrito neles). O mapa reajusta o tamanho quando a tela inicial reaparece depois de abrir uma área (`ResizeObserver`). O botão "Sair desta página agora" da tela inicial segue sendo tratado só pelo `app.js`.
+- **Teste alterado, não enfraquecido:** `dashboard.test.js` exigia "a tela inicial não tem formulários nem campos de busca". Agora exige que os **únicos** formulários (`form-cras`, `form-cep-mapa`) e campos (`bairro-cras`, `cep-mapa`, `usar-tiles-mapa`) sejam os do mapa, e que não haja nenhum outro.
+- **Sem mudança de privacidade:** o CEP e o bairro continuam só no aparelho; as ruas do OpenStreetMap continuam desligadas por padrão.
+
