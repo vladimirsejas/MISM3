@@ -11,7 +11,7 @@ A tela inicial tem a caixa **"Conte com suas palavras"**: um modelo de aprendiza
 
 O **Questionário** (`#questionario`) tem 19 perguntas de alternativas, calcula índices de 0 a 100 em 5 temas e devolve até 3 caminhos com serviços reais. Foi pensado para também gerar dados sem identificação para a Secretaria da Mulher, mas **a coleta está desligada** (nada é enviado). Detalhes em `docs/questionario_observatorio.md`.
 
-O plano do próximo ciclo está em `docs/plano_proximo_ciclo.md` e o roteiro para conferir os contatos de proteção (CRAM, Patrulha) em `docs/roteiro_conferir_protecao.md`.
+O plano do próximo ciclo está em `docs/plano_proximo_ciclo.md` e o roteiro para conferir os contatos de proteção (Patrulha; o CRAM foi retirado por falta de fonte confiável) em `docs/roteiro_conferir_protecao.md`.
 
 Para a Secretaria da Mulher há um **painel com dados de teste**, dentro do dashboard (`#painel`, aberto pelo bloco "Para a gestão" no fim da tela inicial; o painel real exigirá login) e um script de **análise territorial** (`pipeline/analise_territorial.py`, ainda sem dados suficientes). Ver `docs/painel_e_analise_territorial.md` e `docs/roteiro_validacao_questionario.md`.
 
@@ -107,7 +107,7 @@ Os dois precisam do Python no PATH.
 - Botão "Em perigo agora?" abre os contatos oficiais (190, 192, 193, 180, 100, 188) e um botão para sair da página. Não prometemos que o uso é invisível: "sair" não apaga o histórico do navegador.
 
 ## Como as usuárias chegam ao site (decisão pendente)
-O MISM3 é um site **estático** (a pasta `web`, sem servidor). Hoje ele só abre no computador de quem roda o `abrir_site.bat`, o que serve ao desenvolvimento e à demonstração, mas **uma mulher não vai rodar comando nenhum**. Para ela chegar, o dashboard precisa de **um endereço (link) público**. O caminho que combina com a arquitetura é hospedar a pasta `web` em um serviço de páginas estáticas gratuito (por exemplo GitHub Pages): não exige servidor, não coleta nada e mantém o texto da usuária no aparelho dela. Isso só deve ser feito depois de os contatos de proteção (CRAM, Patrulha) estarem confirmados e o site revisado; enquanto isso o site é `noindex` e não deve ser divulgado.
+O MISM3 é um site **estático** (a pasta `web`, sem servidor). Hoje ele só abre no computador de quem roda o `abrir_site.bat`, o que serve ao desenvolvimento e à demonstração, mas **uma mulher não vai rodar comando nenhum**. Para ela chegar, o dashboard precisa de **um endereço (link) público**. O caminho que combina com a arquitetura é hospedar a pasta `web` em um serviço de páginas estáticas gratuito (por exemplo GitHub Pages): não exige servidor, não coleta nada e mantém o texto da usuária no aparelho dela. Isso só deve ser feito depois de os contatos de proteção (Patrulha; o CRAM foi retirado por falta de fonte confiável) estarem confirmados e o site revisado; enquanto isso o site é `noindex` e não deve ser divulgado.
 
 ## Abrir o sistema
 Dê dois cliques em `abrir_site.bat` (Windows). Ele procura o Python (`py` ou `python`), escolhe uma porta livre entre 8000 e 8010, liga o servidor da pasta `web` e abre o navegador quando o servidor está pronto; se faltar o Python ou as portas estiverem ocupadas, a janela explica o problema e fica aberta. Para parar, feche a janela ou aperte Ctrl+C. Ou rode à mão:

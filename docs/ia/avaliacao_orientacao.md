@@ -68,3 +68,7 @@ Quando não acha nada, o sistema **diz que não achou** e mostra as áreas e os 
 1. Teste do orientador com usuárias reais e profissionais da rede; ampliar o conjunto de perguntas com o que elas escreverem (só com consentimento).
 2. Ampliar o vocabulário dos serviços que ainda não casam (dentista, fonoaudiologia, vacina).
 3. Fase com **API de LLM** (Claude): usar só em *tarefas de bastidor* (ex.: gerar variações de perguntas para avaliar, revisar resumos dos serviços), com a chave fora do navegador. O guia está em `docs/arquitetura_ia.md`; o script `pipeline/testar_api.py` verifica se a chave funciona.
+
+## Nota de 13/10/2026: CRAM retirado
+
+O CRAM foi retirado do catálogo por falta de fonte confiável (ver o registro de decisões). Perguntas do gabarito que pedem o CRAM (por exemplo, "onde fica o cram") deixaram de ter resposta específica possível, e a resposta específica no desenvolvimento passou de 93% para 90%. O gabarito foi mantido como estava, de propósito.

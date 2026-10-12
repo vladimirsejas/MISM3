@@ -943,3 +943,10 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - O orientador ganhou pontes lexicais locais para expressões sobre casa própria, situação de rua, vacinação e cuidado infantil/creche, ampliando a consulta com termos que já existem no índice verificado. A explicação de correspondência continua baseada nas palavras originais da usuária; nenhum serviço novo é criado. Há teste para garantir que termos artificiais da expansão não apareçam como se tivessem sido escritos pela usuária.
 - Foram adicionados testes sintéticos positivos e negativos em `web/tests/necessidades.test.js`, `web/tests/perigo.test.js` e `web/tests/orientar.test.js`.
 - **Validação executada no GitHub Actions:** 175 testes Python passaram e a suíte completa de testes JavaScript passou no commit `906fefecb558c4943577413244d910a5dcba12a8`. A interface ainda não foi validada visualmente nesta rodada.
+
+## 13/10/2026 — CRAM retirado do site por falta de fonte confiável
+
+- **Decisão do mantenedor:** o endereço e o telefone do CRAM não foram confirmados de forma confiável em nenhum lugar (o endereço de 2016 é Rua 21, nº 53; o cadastro anterior dizia Rua 17, nº 30; os telefones também divergem). Num serviço de proteção à mulher, um dado errado pode custar caro, então **o CRAM saiu do catálogo e das telas por enquanto**.
+- **Mudanças:** removido `man-cram` de `catalogo/servicos_manuais.csv` e do catálogo e índice gerados; retirado dos contatos essenciais da tela inicial e dos serviços fixados pela camada de segurança (violência agora fixa DDM, Patrulha Maria da Penha, Ligue 180 e 190). Quem pergunta pelo CRAM recebe o aviso discreto de proteção e as áreas, sem endereço inventado.
+- **Efeito na avaliação:** a resposta específica no desenvolvimento caiu de 93% para 90% (as perguntas cujo gabarito é o CRAM, como "onde fica o cram"). O gabarito não foi alterado para esconder isso.
+- **Para voltar:** só com confirmação direta do serviço (telefone (19) 3532-4014 consta nas duas versões); a decisão sobre a branch `fix/fonte-oficial-cram-rio-claro` fica suspensa. Ver `docs/roteiro_conferir_protecao.md`.

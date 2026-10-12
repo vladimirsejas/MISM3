@@ -685,7 +685,7 @@
 
   /* Contatos essenciais de Rio Claro: vêm do catálogo verificado (uma só fonte); se o catálogo não carregar, ficam só os nacionais. */
   var CONTATOS_LOCAIS = [
-    ["man-cram", "CRAM, atendimento à mulher"], ["man-secretaria-mulher", "Secretaria Municipal da Mulher"],
+    ["man-secretaria-mulher", "Secretaria Municipal da Mulher"],
     ["man-saude-upa-estadio", "UPA (Av. 29)"], ["man-conselho-tutelar-sul", "Conselho Tutelar, Região Sul"],
     ["man-conselho-tutelar-norte", "Conselho Tutelar, Região Norte"], ["man-creas", "CREAS"]
   ];
