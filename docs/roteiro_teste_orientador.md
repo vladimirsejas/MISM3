@@ -9,7 +9,7 @@ $env:PYTHONPATH = "pipeline"; python -m pytest pipeline/tests
 foreach ($f in Get-ChildItem web\tests\*.test.js) { node $f.FullName; if ($LASTEXITCODE -ne 0) { Write-Host "FALHOU: $($f.Name)" -ForegroundColor Red } }
 cd web; python -m http.server 8000
 ```
-Abra `http://localhost:8000` e use **Ctrl+F5**. Ao clicar na caixa "Conte com suas palavras", o navegador baixa três arquivos (~1,3 MB); a primeira resposta pode levar alguns segundos.
+Abra `http://localhost:8000` e use **Ctrl+F5**. Ao clicar na caixa "Conte com suas palavras", o navegador baixa quatro arquivos (cerca de 2 MB sem compressão; num servidor real costuma ficar abaixo de 1 MB); a primeira resposta pode levar alguns segundos.
 
 ## 2. O que digitar na caixa "Conte com suas palavras"
 

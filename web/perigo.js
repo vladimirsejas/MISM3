@@ -125,12 +125,17 @@
   function avaliar(texto) {
     var t = Regras.normalizar(texto);
     if (!t) return null;
+    /* Letras esticadas ("me baaaate", "quero morreeer", "socorrooo"): além do texto como veio, olha uma versão com 3 ou mais letras
+       iguais seguidas reduzidas a uma (o português não tem palavra com três letras iguais seguidas, então nada legítimo é alterado). */
+    var t2 = t.replace(/([a-z0-9])\1{2,}/g, "$1"), versoes = t2 !== t ? [t, t2] : [t];
+    function emAlguma(re) { return versoes.some(function (v) { return re.test(v); }); }
     var tipos = [], nivel = 0;
     var probs = detector ? detector.probabilidades(texto) : null, doModelo = {}, fracos = [];
+    if (probs && t2 !== t) { var probs2 = detector.probabilidades(t2); Object.keys(probs2).forEach(function (k) { if (probs2[k] > probs[k]) probs[k] = probs2[k]; }); }
     ORDEM.forEach(function (tp) {
-      var regra = achou(COMPILADO[tp].forte, t), p = probs ? probs[tp] : undefined, lim = detector ? detector.limiares[tp] : undefined;
+      var regra = versoes.some(function (v) { return achou(COMPILADO[tp].forte, v); }), p = probs ? probs[tp] : undefined, lim = detector ? detector.limiares[tp] : undefined;
       var alto = detector && detector.altos[tp] !== undefined ? detector.altos[tp] : lim;
-      if (!regra && ANCORAS[tp] && !ANCORAS[tp].test(t)) p = undefined; /* o detector sozinho não vale sem uma palavra do assunto */
+      if (!regra && ANCORAS[tp] && !emAlguma(ANCORAS[tp])) p = undefined; /* o detector sozinho não vale sem uma palavra do assunto */
       if (p !== undefined && lim !== undefined && p >= lim) doModelo[tp] = Math.round(p * 1000) / 1000;
       if (regra || (p !== undefined && alto !== undefined && p >= alto)) { tipos.push(tp); nivel = 2; }
       else if (p !== undefined && lim !== undefined && p >= lim) fracos.push(tp); /* detector com confiança moderada: só aviso discreto */
@@ -140,7 +145,7 @@
       fracos.forEach(function (tp) { TIPOS[tp].telefones.forEach(function (n) { if (!vistos1[n]) { vistos1[n] = 1; tels1.push(n); } }); });
       return { nivel: 1, tipos: fracos, doModelo: doModelo, mensagens: fracos.map(function (tp) { return TIPOS[tp].aviso || TIPOS[tp].mensagem; }), telefones: tels1, pins: [] };
     }
-    if (!tipos.length && achou(COMPILADO.violencia.contexto, t)) { tipos.push("violencia"); nivel = 1; }
+    if (!tipos.length && versoes.some(function (v) { return achou(COMPILADO.violencia.contexto, v); })) { tipos.push("violencia"); nivel = 1; }
     if (!tipos.length) return null;
     var tels = [], vistos = {}, pins = [];
     tipos.forEach(function (tp) {

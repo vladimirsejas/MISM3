@@ -1,6 +1,6 @@
 /* Tela do orientador: junta a camada de segurança (perigo.js) e o motor de busca (orientar.js) e desenha a resposta.
    Serve a tela inicial ("Conte com suas palavras") e a caixa de dúvida de cada área: uma só lógica, duas entradas.
-   O índice (~500 KB) só é baixado quando a pessoa começa a escrever. O texto nunca sai do aparelho. */
+   Os arquivos da busca (índice e modelos, cerca de 2 MB sem compressão) só são baixados quando a pessoa começa a escrever. O texto nunca sai do aparelho. */
 (function (raiz, fabrica) {
   if (typeof module === "object" && module.exports) module.exports = fabrica();
   else raiz.OrientacaoUI = fabrica();
