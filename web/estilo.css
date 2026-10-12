@@ -30,7 +30,7 @@ h1[tabindex="-1"]:focus{outline:none}
 .topo{background:#fffaf7;border-bottom:1px solid var(--bor);position:sticky;top:0;z-index:20}
 .topo-in{display:flex;align-items:center;gap:.6rem;min-height:60px;flex-wrap:wrap;padding-top:.45rem;padding-bottom:.45rem}
 .marca{display:inline-flex;align-items:center;gap:.55rem;font-family:var(--serif);font-weight:700;font-size:1.2rem;color:var(--pri-esc);text-decoration:none;margin-right:auto}
-.marca-brasao{width:34px;height:auto;border-radius:8px;flex:none}
+.marca-brasao{width:48px;height:auto;border-radius:8px;flex:none}
 .marca-local{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:.74rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);align-self:flex-end;padding-bottom:.18rem}
 .navegacao{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;min-width:0}
 .btn-nav{display:inline-flex;align-items:center;gap:.35rem;min-height:44px;padding:.45rem .95rem;border-radius:999px;
@@ -75,13 +75,9 @@ h1[tabindex="-1"]:focus{outline:none}
 .btn-heroi:hover{background:var(--pri)}
 .btn-heroi-2{border:1.5px solid var(--pri-esc);background:rgba(255,255,255,.75);color:var(--pri-esc)}
 .btn-heroi-2:hover{background:#fff}
-.heroi-arte{display:none;line-height:0}
-.heroi-arte svg{display:block;width:100%;height:auto;max-width:440px;margin:0 auto}
-.heroi-arte .fio path{fill:none;stroke:var(--pri);stroke-opacity:.28;stroke-width:2;stroke-dasharray:2 7;stroke-linecap:round}
-.heroi-arte .no{stroke:#fff;stroke-width:4}
-.heroi-arte .n-rosa{fill:var(--lav)}.heroi-arte .n-pessego{fill:#f6cdb0}.heroi-arte .n-verde{fill:#cfdcba}
-.heroi-arte .no-miolo{fill:var(--pri)}
-.heroi-arte .ponto{fill:var(--pri-esc);fill-opacity:.8}
+.heroi-arte{order:-1;line-height:0}
+.heroi-arte .heroi-brasao{max-width:210px}
+.heroi-brasao{display:block;width:100%;height:auto;max-width:400px;margin:0 auto;border-radius:24px;border:1px solid var(--bor);box-shadow:0 10px 30px rgba(120,40,60,.15)}
 .titulo-bloco{font-family:var(--serif);font-weight:500;font-size:1.55rem;margin:1.5rem 0 .8rem;color:var(--fg)}
 .titulo-bloco:focus{outline:none}
 .portas{display:grid;grid-template-columns:minmax(0,1fr);gap:.7rem;list-style:none;margin:0 0 1.8rem;padding:0}
@@ -120,7 +116,8 @@ h1[tabindex="-1"]:focus{outline:none}
 .lista-acesso a:hover{color:var(--pri-esc)}
 @media(min-width:760px){
   .heroi{grid-template-columns:1.1fr .9fr;padding:2.4rem 2.4rem}
-  .heroi-arte{display:block}
+  .heroi-arte{order:0}
+  .heroi-arte .heroi-brasao{max-width:400px}
   .portas{grid-template-columns:repeat(2,minmax(0,1fr));gap:.9rem}
   .blocos-inicio{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)}
 }

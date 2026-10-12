@@ -361,7 +361,7 @@ assert(fs.existsSync(brasaoArq) && fs.statSync(brasaoArq).size < 120 * 1024, "a 
 
 /* ---- Tela inicial acolhedora: hero, emergência, contatos essenciais, acesso rápido e paleta ---- */
 assert(/<h1 id="titulo-inicio"[^>]*>Você não está <em>sozinha<\/em><\/h1>/.test(index), "a tela inicial deve acolher: 'Você não está sozinha'");
-assert(/<div class="heroi-arte" aria-hidden="true">\s*<svg viewBox="0 0 \d+ \d+" focusable="false">/.test(index) && !/heroi-mulheres/.test(index + css), "a arte do topo deve ser um SVG decorativo (aria-hidden), sem arquivo de imagem");
+assert(/<div class="heroi-arte">\s*<img class="heroi-brasao" src="img\/brasao-estilizado\.webp"[^>]*alt="Brasão estilizado/.test(index) && !/heroi-mulheres/.test(index + css), "a arte do topo é o brasão estilizado (a mesma imagem leve do rodapé), com texto alternativo");
 assert(/Cada informação mostra a fonte e a data/.test(index), "a tela inicial só pode prometer o que o site cumpre: fonte e data");
 assert(/id="abrir-emergencia"/.test(index) && /abrir-emergencia/.test(app) && /stopPropagation/.test(app), "a tela inicial deve ter o botão Emergência que abre o painel do topo");
 ["190", "192", "180", "100"].forEach((n) => assert(new RegExp('href="tel:' + n + '"').test(inicio), "contato essencial nacional ausente: " + n));
