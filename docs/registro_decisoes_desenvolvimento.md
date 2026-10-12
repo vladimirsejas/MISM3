@@ -919,3 +919,9 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - **Erros meus no caminho:** (a) inseri as vistas dentro do `<footer>` em vez do `<main>` (o texto institucional aparecia acima delas): corrigido e há teste; (b) o teste que impõe "sem modo escuro" pegou o estilo herdado do território.
 - **Pendente (decisão do mantenedor):** o endereço público. Hoje o site só abre no computador de quem roda o `.bat`; para as mulheres chegarem é preciso hospedar a pasta `web` (por exemplo GitHub Pages, gratuito, estático). Só depois de confirmar CRAM e Patrulha e de revisar o site. Ver README.
 
+## 12/10/2026 - PDFs do PEJA e do cursinho Metamorfose arquivados
+
+- Os três PDFs que só existiam no computador do mantenedor foram enviados por uma branch temporária e arquivados em `docs/documetacao/` com nomes que dizem o conteúdo (`unesp-peja-apresentacao.pdf`, `unesp-peja-contatos.pdf`, `unesp-cursinho-metamorfose.pdf`), todos listados no `LEIA-ME.md`.
+- **Conferência contra o site:** os cartões `man-peja-unesp` e `man-metamorfose` já estavam de acordo com as fontes. Em especial, o do PEJA já avisa que, segundo a página oficial, hoje as atividades são no Centro de Ressocialização Masculino, com homens reeducandos, e que não há informação de turma aberta ao público em geral. Nenhum texto do site mudou.
+- Fica resolvida a pendência anotada antes ("o PEJA e o cursinho têm PDFs de prova que só existem no computador do autor").
+
