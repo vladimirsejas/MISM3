@@ -32,7 +32,7 @@ Object.keys(IA.CAMINHOS).forEach((c) => {
 const regrasSo = require("../necessidades.js");
 const frasesNovas = [
   ["ele me trancou no quarto e eu tenho pavor dele", "violencia"],
-  ["não consigo vaga para cuidar do meu neném", "filhos"],
+  ["não tenho onde deixar meu neném para trabalhar", "filhos"],
   ["tô sem um real e as crianças sem comer", "familia"],
   ["quero concluir a escola que abandonei", "estudo"]
 ];
