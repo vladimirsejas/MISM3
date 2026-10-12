@@ -55,12 +55,20 @@ Três áreas têm um plano guiado: **Trabalho**, **Educação** e **Assistência
 ## Idade da informação
 Cada serviço mostra a fonte, a data de verificação e há quantos dias ela foi feita. Acima de 90 dias, ou sem data válida, aparece o aviso "Esta informação pode ter mudado. Confirme telefone, endereço e horário na fonte antes de ir." O aviso não diz que o dado está errado; só informa que a conferência é antiga.
 
+## Inteligência do sistema: como o MISM3 orienta
+Uma ideia só atravessa o projeto: **os dados verificados são a inteligência; a IA é a interface**. Nada aqui usa modelo de linguagem, nada sai do aparelho e nada promete vaga ou benefício. Em camadas:
+1. **Entender o que a mulher escreve** (`web/ia.js`, `web/necessidades.js`): modelo de aprendizado de máquina (TF-IDF + regressão logística, treinado em `pipeline/treinar_necessidades.py`) somado a regras de palavras-chave. Álcool e drogas são tratados como **questão de saúde** (dependência é doença) e levam direto à seção da Saúde com o CAPS AD e os grupos de ajuda mútua.
+2. **Meu Plano** (`web/plano.js`): quando o texto revela mais de uma necessidade, o resultado vira um plano em **ordem de urgência** (segurança, apoio básico, saúde, moradia, filhos, direitos, dívidas, trabalho, estudo), com "por que nesta posição" e "se não der certo". A ordem é uma regra fixa e explicável, não uma nota do modelo.
+3. **Caixa de dúvida em cada área** (`web/duvida.js`): a mulher escreve a dúvida do seu jeito e o sistema mostra, **na própria página**, o trecho que responde (com botão "Ver na página"), mais o caminho de outras áreas. Se não achar, diz que não achou; se o texto fala de violência, o aviso de perigo vem primeiro. Pontes de vocabulário curtas e revisadas ligam palavras leigas ao que as páginas escrevem ("comida" a "cesta básica").
+4. **CEP, bairro e o que fica perto** (`web/mapa-servicos.js`, `web/dados/setor_bairro.json`): o CEP vira o **bairro provável** (pelo setor do IBGE, que é agrupado e pode diferir do nome usado pela Prefeitura) e leva à busca do CRAS; o contrário (CEPs de um bairro) também. O mapa fica na tela inicial e mostra o serviço mais perto de cada tipo.
+O que ainda **não** existe: elegibilidade automática de benefícios (precisa de critérios oficiais confirmados), busca semântica por embeddings (o modelo atual é de letras e palavras) e qualquer modelo de linguagem. Ver `docs/arquitetura_ia.md`.
+
 ## Linguagens e onde cada uma é usada
 O site é **estático** (HTML, CSS e JavaScript puros, sem framework, sem servidor e sem etapa de compilação). O Python só gera os dados que o site lê. Contagem de arquivos versionados:
 
 | Linguagem | Arquivos | Onde está | Para que serve |
 |---|---|---|---|
-| **JavaScript** | 32 | `web/*.js` (18 arquivos), `web/tests/` (12), `web/vendor/leaflet.js` (1, de terceiros), `pipeline/gerar_dados_teste_painel.js` (1) | O site inteiro roda no navegador: telas e áreas (`app.js`, `areas.js`), jornadas (`jornada*.js`), mapa (`mapa.js`, `mapa-servicos.js`), questionário, painel e a caixa "Conte com suas palavras" (`ia.js`, `necessidades.js`). Os testes do site ficam em `web/tests/` e rodam com Node. |
+| **JavaScript** | 35 | `web/*.js` (19 arquivos), `web/tests/` (14), `web/vendor/leaflet.js` (1, de terceiros), `pipeline/gerar_dados_teste_painel.js` (1) | O site inteiro roda no navegador: telas e áreas (`app.js`, `areas.js`), jornadas (`jornada*.js`), mapa (`mapa.js`, `mapa-servicos.js`), questionário, painel e a caixa "Conte com suas palavras" (`ia.js`, `necessidades.js`). Os testes do site ficam em `web/tests/` e rodam com Node. |
 | **Python** | 33 | `pipeline/` (18 scripts), `pipeline/tests/` (15 testes) | Baixa e trata dados (CNEFE, CNES, INEP), monta o catálogo (`servicos.py`), localiza serviços por CEP (`geocodificar_catalogo.py`, `indice_cep.py`, `atualizar_localizacoes.py`), gera os horários de ônibus e treina o modelo de necessidades (`treinar_necessidades.py`). |
 | **HTML** | 5 | `web/`: `index.html`, `mapa.html`, `rede-mulheres.html`, `territorio.html`, `painel-secretaria.html` | As páginas do site. O painel da Secretaria é um protótipo, fora do site público. |
 | **CSS** | 2 | `web/estilo.css` (o visual do site) e `web/vendor/leaflet.css` (de terceiros) | Aparência, cores, layout e impressão. |

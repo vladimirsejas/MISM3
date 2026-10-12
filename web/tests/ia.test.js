@@ -98,3 +98,25 @@ const codigo = fs.readFileSync(path.join(web, "ia.js"), "utf8").replace(/\/\*[\s
 assert(!/fetch\(|XMLHttpRequest|sendBeacon|localStorage|sessionStorage|indexedDB|document\.cookie|WebSocket/.test(codigo), "ia.js não pode usar rede nem armazenamento");
 
 console.log("ia.test.js: mesma conta do treino, caminhos válidos, ganho sobre as regras, prioridade da violência e privacidade passaram");
+
+/* Álcool e drogas: dependência é doença, então o caminho é a Saúde, direto na seção do CAPS AD e dos grupos de ajuda mútua.
+   Nenhuma dessas frases pode virar "Proteção contra a violência". */
+[
+  "meu filho usa drogas e eu não sei o que fazer",
+  "meu filho é viciado em crack",
+  "minha filha está usando drogas",
+  "meu marido bebe muito e eu estou desesperada",
+  "meu pai vive bêbado",
+  "meu irmão é alcoólatra",
+  "estou usando drogas e quero parar",
+  "preciso de grupo de apoio para família de dependente químico"
+].forEach((frase) => {
+  const sug = IA.sugerir(frase, 5);
+  const saudeDrogas = sug.find((x) => x.id === "saude");
+  assert(saudeDrogas, "álcool e drogas deve sugerir Saúde: " + frase);
+  assert.strictEqual(saudeDrogas.href, "#saude/saude-familia-drogas", "deve levar direto à seção dos grupos e do CAPS AD: " + frase);
+  assert(!sug.some((x) => x.id === "violencia"), "álcool e drogas não pode virar violência: " + frase);
+});
+assert.strictEqual(IA.sugerir("preciso marcar consulta com ginecologista", 3).find((x) => x.id === "saude").href, "#saude", "saúde comum continua no topo da Saúde");
+console.log("ok: álcool e drogas leva à seção de apoio da Saúde, sem alarme falso de violência");
+

@@ -36,7 +36,7 @@
       "marido", "companheiro", "ex marido", "ex companheiro"
     ]],
     ["filhos", [
-      "filho", "filhos", "crianca", "criancas", "bebe", "creche",
+      "filho", "filhos", "crianca", "criancas", "meu bebe", "minha bebe", "nosso bebe", "um bebe", "o bebe", "recem nascido", "creche",
       "maternidade", "escola infantil", "baba", "educacao infantil",
       "vaga na creche", "matricula do filho",
       "mae solo", "mae solteira", "mae sozinha", "sozinha com meus filhos",
@@ -54,7 +54,10 @@
       "gravidez", "gravida", "ginecologista", "dor", "remedio",
       "drogas", "droga", "usa drogas", "dependente quimico", "dependencia quimica", "dependente quimica",
       "meu filho usa drogas", "meu filho e viciado", "filho viciado", "viciado", "alcoolismo", "alcoolatra",
-      "bebe demais", "caps", "caps ad", "overdose", "crack"
+      "bebe demais", "bebe muito", "bebe todo dia", "bebe todos os dias", "bebado", "bebada", "vive bebado", "embriagado",
+      "alcool", "alcoolico", "vicio", "maconha", "cocaina", "usa crack", "usando drogas", "parar de beber",
+      "narcoticos anonimos", "alcoolicos anonimos", "al anon", "amor exigente", "familia de dependente", "familias de dependentes",
+      "caps", "caps ad", "overdose", "crack"
     ]],
     ["estudo", [
       "estudo", "estudar", "faculdade", "universidade", "escola", "ensino",
