@@ -8,7 +8,8 @@ const IA = require("../ia.js");
 const Regras = require("../necessidades.js");
 IA.usarModelo(JSON.parse(fs.readFileSync(path.join(web, "dados", "modelo_necessidades.json"), "utf8")));
 const indice = JSON.parse(fs.readFileSync(path.join(web, "dados", "indice_orientacao.json"), "utf8"));
-const motor = Orientar.criar(indice, { dica: UI.criarDica(IA, Regras) });
+const escopo = IA.criarClassificador(JSON.parse(fs.readFileSync(path.join(web, "dados", "modelo_escopo.json"), "utf8")));
+const motor = Orientar.criar(indice, { dica: UI.criarDica(IA, Regras), escopo: (t) => escopo.probabilidades(t).no_escopo, limiarEscopo: escopo.limiares.no_escopo });
 const R = (t, ctx) => motor.responder(t, ctx);
 const areas = (r) => r.itens.map((i) => i.area);
 const svcs = (r) => r.itens.map((i) => i.svc);
@@ -44,6 +45,9 @@ assert(R("oi").saudacao);
   assert(/Não consegui ligar/.test(UI.html(r, {}, [{ id: "saude", nome: "Saúde" }])), "e a tela oferece o caminho das áreas");
 });
 assert(R("").abstem);
+/* detector de escopo: frases fora do assunto se abstêm; frases do assunto, mesmo curtas, continuam respondidas */
+["qual o preco do dolar hoje", "onde conserto geladeira", "como fazer bolo de chocolate"].forEach((t) => assert(R(t).abstem, `"${t}" é fora do assunto`));
+["quero fazer preventivo", "ubs no jardim brasilia", "preciso de advogado de graça", "bolsa familia como faz"].forEach((t) => assert(!R(t).abstem && R(t).itens.length, `"${t}" é do assunto e precisa de resposta`));
 
 /* ---- serviço especializado só quando o assunto é dele ---- */
 assert(!R("estou com dor de dente forte").itens.some((i) => /Ginecologia/.test(i.titulo)), "dor de dente não leva ao pronto atendimento de ginecologia");

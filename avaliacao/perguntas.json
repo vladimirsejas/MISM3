@@ -1102,7 +1102,7 @@
    ],
    "perigo": false,
    "fora_de_escopo": false,
-   "visto_no_treino": false
+   "visto_no_treino": true
   },
   {
    "id": "q070",
@@ -6129,7 +6129,7 @@
    "especificos": [],
    "perigo": false,
    "fora_de_escopo": true,
-   "visto_no_treino": false
+   "visto_no_treino": true
   },
   {
    "id": "f047",

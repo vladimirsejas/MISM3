@@ -11,6 +11,7 @@ Fluxo: **fontes oficiais e catálogos escritos à mão → pipeline Python → a
 | `catalogo/servicos_manuais.csv` | 164 serviços verificados, cada um com fonte e data; `conferido` = não quando falta confirmação (e então tem aviso) | `pipeline/servicos.py` |
 | `catalogo/inep_escolas.csv` | ligação manual (revisada) entre escolas do catálogo e o código INEP: 43 escolas | `pipeline/servicos.py`, `pipeline/ligar_catalogo_inep.py` |
 | `catalogo/frases_necessidades.txt` | frases de treino do classificador de necessidades | `pipeline/treinar_necessidades.py` |
+| `catalogo/frases_fora_do_escopo.txt` | frases fora do assunto do site, para o detector de escopo | `pipeline/treinar_escopo.py` |
 | `catalogo/frases_perigo.txt` | frases de perigo (violência, suicídio, criança, saúde) e negativos difíceis, para o detector de perigo | `pipeline/treinar_perigo.py` |
 | `catalogo/horarios_onibus.txt` | horários das linhas de ônibus (conferidos nos PDFs de `docs/transporte/`) | `pipeline/horarios_onibus.py` |
 
@@ -22,6 +23,7 @@ Fluxo: **fontes oficiais e catálogos escritos à mão → pipeline Python → a
 |---|---|---|
 | `web/dados/catalogo_manual.json` | `python pipeline/servicos.py --somente-manual` | `web/app.js`, `web/ia.js`, mapa, índice do orientador |
 | `web/dados/modelo_necessidades.json` | `pipeline/treinar_necessidades.py` | `web/ia.js` (classificador) |
+| `web/dados/modelo_escopo.json` | `pipeline/treinar_escopo.py` | `web/orientar.js` (abstenção: o texto é do assunto do site?) |
 | `web/dados/modelo_perigo.json` | `pipeline/treinar_perigo.py` | `web/perigo.js` (detector aprendido, junto com as regras) |
 | `web/dados/indice_orientacao.json` | `pipeline/indice_orientacao.py` (161 destinos) | `web/orientar.js`, `web/orientacao-ui.js` |
 | `web/dados/oferta_educacao_infantil.json` | `pipeline/oferta_educacao_infantil.py` (Censo Escolar 2025) | `pipeline/servicos.py`; informa a etapa (creche/pré-escola), **não** vaga |

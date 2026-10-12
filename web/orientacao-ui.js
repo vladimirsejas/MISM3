@@ -32,8 +32,13 @@
     if (promessa) return promessa;
     /* O detector de perigo é opcional: se não carregar, valem só as regras de perigo.js. */
     var detector = buscar("dados/modelo_perigo.json").then(function (m) { Perigo.usarModelo(m); }, function () { /* só regras */ });
-    promessa = Promise.all([buscar("dados/indice_orientacao.json"), detector]).then(function (r) {
-      motor = Orientar.criar(r[0], { dica: criarDica(IA, Regras) });
+    /* O detector de escopo também é opcional: sem ele vale só a nota da busca. */
+    var escopo = buscar("dados/modelo_escopo.json").then(function (m) { return IA.criarClassificador(m); }, function () { return null; });
+    promessa = Promise.all([buscar("dados/indice_orientacao.json"), detector, escopo]).then(function (r) {
+      var esc = r[2];
+      motor = Orientar.criar(r[0], { dica: criarDica(IA, Regras),
+        escopo: esc ? function (t) { return esc.probabilidades(t).no_escopo; } : null,
+        limiarEscopo: esc ? esc.limiares.no_escopo : undefined });
       return motor;
     });
     promessa.catch(function () { promessa = null; });

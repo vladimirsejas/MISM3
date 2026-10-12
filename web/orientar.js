@@ -197,7 +197,10 @@
       var dicaT = opcoes.dica ? opcoes.dica(texto) : null, confianca = 0;
       if (dicaT) Object.keys(dicaT).forEach(function (k) { if (dicaT[k] > confianca) confianca = dicaT[k]; });
       var minimo = opcoes.minimo !== undefined ? opcoes.minimo : 0.3;
-      var foraDeEscopo = !urgente && (melhor < minimo || (dicaT && melhor < minimo + 0.1 && confianca < 0.3));
+      /* Detector de escopo (aprendido): se achar que o assunto é de fora E a busca não achou correspondência forte, é fora do assunto. */
+      var pEsc = opcoes.escopo ? opcoes.escopo(texto) : null, limEsc = opcoes.limiarEscopo !== undefined ? opcoes.limiarEscopo : 0.5;
+      var foraDeEscopo = !urgente && (melhor < minimo || (dicaT && melhor < minimo + 0.1 && confianca < 0.3) ||
+        (pEsc !== null && pEsc < limEsc && melhor < (opcoes.fortaCorrespondencia !== undefined ? opcoes.fortaCorrespondencia : 0.5)));
       var fix = perigo ? fixados(perigo.pins, pont) : [];
       var vistos = {}, porSvc = {}, escolhidos = [];
       function aceitar(x, fixado) {
