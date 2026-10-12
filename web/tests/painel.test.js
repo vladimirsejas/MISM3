@@ -83,11 +83,16 @@ const gerador = fs.readFileSync(path.join(web, "..", "pipeline", "gerar_dados_te
 assert(/NÃO representam[\s*]+nenhuma mulher real/.test(gerador) && /semente é fixa/.test(gerador));
 
 /* ---- a página: sinaliza teste, não é indexada, não aparece no site público e não envia nada ---- */
-const html = ler("painel-secretaria.html"), ui = ler("painel-ui.js"), logica = ler("painel.js").replace(/\/\*[\s\S]*?\*\//g, "");
-assert(/name="robots" content="noindex, nofollow"/.test(html), "a página não deve ser indexada");
+const vistaDe = (html, id) => { const m = new RegExp('<section id="' + id + '"[\\s\\S]*?(?=\\n  <section id="vista-|\\n  <p id="fontes")').exec(html); assert(m, "vista não encontrada em index.html: " + id); return m[0]; };
+const html = vistaDe(ler("index.html"), "vista-painel"), ui = ler("painel-ui.js"), logica = ler("painel.js").replace(/\/\*[\s\S]*?\*\//g, "");
+assert(/name="robots" content="noindex, nofollow"/.test(ler("index.html")), "o site não deve ser indexado");
 assert(/PROTÓTIPO COM DADOS DE TESTE/.test(html) && /login da Prefeitura/.test(html), "a faixa de teste e o aviso de login devem estar na página");
 const index = ler("index.html"), app = ler("app.js"), areas = ler("areas.js");
-assert(!/painel-secretaria|painel\.js/.test(index + app + areas), "o painel não pode aparecer no site público");
+const gestao = (/<section class="para-gestao"[\s\S]*?<\/section>/.exec(index) || [""])[0];
+assert(/href="#painel"/.test(gestao) && /dados de teste/.test(gestao), "o painel é aberto pelo bloco 'Para a gestão', dito como dados de teste");
+assert(!/href="#painel"/.test(index.replace(gestao, "")), "o painel só é aberto pelo bloco 'Para a gestão': nunca pelas portas, pelo acesso rápido ou pelo assistente");
+assert(!/painel/i.test(areas), "o painel não entra nas áreas das mulheres");
+assert(/Painel da Secretaria \(dados de teste\)/.test(app) && !/protótipo/i.test(app), "no menu o painel se chama 'dados de teste' e a palavra 'protótipo' não aparece na interface");
 assert(!/localStorage|sessionStorage|indexedDB|document\.cookie|sendBeacon/.test(ui + logica), "o painel não grava nada");
 assert(!/fetch\(|XMLHttpRequest|WebSocket/.test(logica), "a agregação não usa rede");
 assert(!/method\s*:\s*["']POST/i.test(ui), "o painel só lê dados, não envia");
