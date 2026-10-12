@@ -18,7 +18,7 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
 BASE = "https://generativelanguage.googleapis.com/v1beta"
-MODELO_PADRAO = "gemini-2.5-flash"
+MODELO_PADRAO = "gemini-3.8-flash"
 
 
 def ler_env(arquivo: Path) -> dict:
