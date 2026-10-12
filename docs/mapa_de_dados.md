@@ -1,4 +1,4 @@
-# Mapa de dados do MISM3 (Mulher em Rede)
+# Mapa de dados do MISM3 (Mulher Resolve)
 
 Onde está cada fonte de dados, de onde vem e quem a usa. **Todos os caminhos abaixo existem no repositório** (o teste `pipeline/tests/test_mapa_de_dados.py` falha se algum deixar de existir). Linhas marcadas com *(gerado, não versionado)* só existem depois de rodar o pipeline no computador de quem o roda.
 

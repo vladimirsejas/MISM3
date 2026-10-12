@@ -1,4 +1,4 @@
-# Observatório da Mulher Rio-Clarense e o Mulher em Rede: como o projeto pode gerar dados sem expor as mulheres
+# Observatório da Mulher Rio-Clarense e o Mulher Resolve: como o projeto pode gerar dados sem expor as mulheres
 
 Documento de **proposta**, escrito em 11/10/2026. Nada aqui está implementado. As decisões que dependem da Secretaria Municipal da Mulher estão na seção 6.
 
@@ -11,7 +11,7 @@ Documento de **proposta**, escrito em 11/10/2026. Nada aqui está implementado. 
 
 O primeiro pilar é **governança de dados**. É o que orienta o desenho abaixo.
 
-## 2. O que o Mulher em Rede já é
+## 2. O que o Mulher Resolve já é
 Um site público, estático, que **não grava nada** sobre quem o usa: sem cadastro, sem cookies, sem localStorage, sem servidor. O CEP é consultado só no aparelho. A página diz isso à usuária. Foi uma decisão deliberada, porque muitas mulheres que usam o site podem estar em situação de violência, e quem as agride pode ter acesso ao celular delas.
 
 ## 3. O que NÃO recomendo construir
