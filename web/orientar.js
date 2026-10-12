@@ -67,6 +67,11 @@
   var SAUDACOES = /^(?:oi+|ola|oie|bom dia|boa tarde|boa noite|obrigad[ao]|valeu|tchau|ate logo|ok|certo|sim|nao)(?: [a-z]+){0,2}$/;
   var AJUDA_GERAL = /^(?:(?:oi+|ola|bom dia|boa tarde|boa noite) )?(?:(?:eu )?preciso de ajuda|me ajuda|ajuda|socorro|nao sei (?:o que fazer|por onde comecar)|por onde comeco|estou perdida)(?: [a-z]+){0,2}$/;
 
+  /* Serviços especializados: só entram na lista quando o texto fala do assunto (ex.: o pronto atendimento de ginecologia não serve a dor de dente). */
+  var CONDICOES = {
+    "man-saude-pa-ginecologia": /gravid|gestan|gestac|parto|ginecolog|obstetr|menstru|sangramento|pre natal|prenatal|contrac|aborto|corrimento|maternidade|bebe|recem nascid|puerper|mulher/
+  };
+
   var PESOS = { palavras: 0.4, letras: 0.6, significado: 0.3, intencao: 0.1, area: 0.12 };
 
   function norma(v) {
@@ -125,7 +130,7 @@
     }
 
     function pontuar(texto, ctx) {
-      var consulta = expandirConsulta(texto);
+      var consulta = expandirConsulta(texto), tn = Regras.normalizar(texto);
       var qf = fichas(consulta), contW = {};
       qf.forEach(function (f) { contW[f] = (contW[f] || 0) + 1; });
       var qW = {};
@@ -142,6 +147,7 @@
         var s = pesos.palavras * sw + pesos.letras * sc + pesos.significado * sl;
         if (dica && u.needs && u.needs.length) s += pesos.intencao * Math.max.apply(null, u.needs.map(function (n) { return dica[n] || 0; }));
         if (ctx && ctx.area && u.area === ctx.area) s += pesos.area;
+        if (CONDICOES[u.id] && !CONDICOES[u.id].test(tn)) s -= 1; /* serviço especializado só aparece quando o assunto é dele */
         if (u.tipo === "area") s -= 0.04; /* destinos genéricos (a área inteira) só aparecem depois dos específicos */
         return { u: u, s: s, palavras: sw, letras: sc, significado: sl };
       });
@@ -170,10 +176,11 @@
       ctx = ctx || {};
       var t = Regras.normalizar(texto);
       var perigo = Perigo.avaliar(texto);
+      var urgente = !!(perigo && perigo.nivel === 2); /* só o alerta completo ignora o filtro de escopo; o aviso discreto (nível 1) não */
       var base = { perigo: perigo, saudacao: false, geral: false, abstem: false, itens: [], melhor: 0 };
       if (!t) return Object.assign(base, { abstem: true });
-      if (!perigo && SAUDACOES.test(t)) return Object.assign(base, { saudacao: true, abstem: true });
-      if (!perigo && AJUDA_GERAL.test(t)) {
+      if (!urgente && SAUDACOES.test(t)) return Object.assign(base, { saudacao: true, abstem: true });
+      if (!urgente && AJUDA_GERAL.test(t)) {
         /* pedido genérico ("preciso de ajuda"): não é fora de escopo, só não diz o quê; mostramos as portas de cada área */
         var portas = U.filter(function (u) { return u.tipo === "area"; }).slice(0, 6).map(function (u, i) {
           return { rank: i + 1, id: u.id, tipo: u.tipo, area: u.area, sec: u.sec, svc: u.svc, titulo: u.titulo, resumo: u.resumo, href: u.href,
@@ -190,7 +197,10 @@
       var dicaT = opcoes.dica ? opcoes.dica(texto) : null, confianca = 0;
       if (dicaT) Object.keys(dicaT).forEach(function (k) { if (dicaT[k] > confianca) confianca = dicaT[k]; });
       var minimo = opcoes.minimo !== undefined ? opcoes.minimo : 0.3;
-      var foraDeEscopo = !perigo && (melhor < minimo || (dicaT && melhor < minimo + 0.1 && confianca < 0.3));
+      /* Detector de escopo (aprendido): se achar que o assunto é de fora E a busca não achou correspondência forte, é fora do assunto. */
+      var pEsc = opcoes.escopo ? opcoes.escopo(texto) : null, limEsc = opcoes.limiarEscopo !== undefined ? opcoes.limiarEscopo : 0.5;
+      var foraDeEscopo = !urgente && (melhor < minimo || (dicaT && melhor < minimo + 0.1 && confianca < 0.3) ||
+        (pEsc !== null && pEsc < limEsc && melhor < (opcoes.fortaCorrespondencia !== undefined ? opcoes.fortaCorrespondencia : 0.5)));
       var fix = perigo ? fixados(perigo.pins, pont) : [];
       var vistos = {}, porSvc = {}, escolhidos = [];
       function aceitar(x, fixado) {
@@ -203,14 +213,14 @@
       fix.forEach(function (x) { aceitar(x, true); });
       var limiar = opcoes.limiar !== undefined ? opcoes.limiar : 0.2;
       var corte = opcoes.corte !== undefined ? opcoes.corte : 0.5; /* só entra o que tem pelo menos metade da nota do primeiro */
-      if (perigo || (!foraDeEscopo && melhor >= limiar)) pont.forEach(function (x) { if (escolhidos.length < 6 && (perigo || (x.s >= limiar * 0.55 && x.s >= melhor * corte))) aceitar(x, false); });
+      if (urgente || (!foraDeEscopo && melhor >= limiar)) pont.forEach(function (x) { if (escolhidos.length < 6 && (urgente || (x.s >= limiar * 0.55 && x.s >= melhor * corte))) aceitar(x, false); });
       var itens = escolhidos.slice(0, 6).map(function (e, i) {
         var u = e.x.u;
         return { rank: i + 1, id: u.id, tipo: u.tipo, area: u.area, sec: u.sec, svc: u.svc, titulo: u.titulo, resumo: u.resumo, href: u.href,
                  contato: u.contato || null, fonte: u.fonte || null, n: u.n || null, pontos: Math.round(e.x.s * 1000) / 1000,
                  fixado: e.fixado, palavras: motivo(texto, u) };
       });
-      return Object.assign(base, { itens: itens, abstem: !perigo && !itens.length, melhor: Math.round(melhor * 1000) / 1000 });
+      return Object.assign(base, { itens: itens, abstem: !urgente && !itens.length, melhor: Math.round(melhor * 1000) / 1000 });
     }
 
     return { responder: responder, pontuar: pontuar, pesos: pesos, tamanho: N };

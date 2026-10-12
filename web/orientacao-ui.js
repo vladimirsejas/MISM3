@@ -30,8 +30,15 @@
   function preparar(buscar, IA, Regras) {
     if (motor) return Promise.resolve(motor);
     if (promessa) return promessa;
-    promessa = buscar("dados/indice_orientacao.json").then(function (indice) {
-      motor = Orientar.criar(indice, { dica: criarDica(IA, Regras) });
+    /* O detector de perigo é opcional: se não carregar, valem só as regras de perigo.js. */
+    var detector = buscar("dados/modelo_perigo.json").then(function (m) { Perigo.usarModelo(m); }, function () { /* só regras */ });
+    /* O detector de escopo também é opcional: sem ele vale só a nota da busca. */
+    var escopo = buscar("dados/modelo_escopo.json").then(function (m) { return IA.criarClassificador(m); }, function () { return null; });
+    promessa = Promise.all([buscar("dados/indice_orientacao.json"), detector, escopo]).then(function (r) {
+      var esc = r[2];
+      motor = Orientar.criar(r[0], { dica: criarDica(IA, Regras),
+        escopo: esc ? function (t) { return esc.probabilidades(t).no_escopo; } : null,
+        limiarEscopo: esc ? esc.limiares.no_escopo : undefined });
       return motor;
     });
     promessa.catch(function () { promessa = null; });
@@ -51,7 +58,8 @@
     if (!p) return "";
     var tels = p.telefones.map(function (n) { return '<a class="tel-grande" href="tel:' + esc(n) + '">' + esc(n) + "</a>"; }).join(" · ");
     if (p.nivel === 1) {
-      return '<p class="status" role="note">Se algum dia você estiver em perigo, ligue <a href="tel:190">190</a> (Polícia) ou <a href="tel:180">180</a> (24 horas, gratuito). Você pode usar também o botão “Em perigo agora?” no alto da página.</p>';
+      var t1 = p.telefones.map(function (n) { return '<a href="tel:' + esc(n) + '">' + esc(n) + "</a>"; }).join(" · ");
+      return '<p class="status" role="note">' + p.mensagens.map(esc).join(" ") + " " + t1 + ". Você pode usar também o botão “Em perigo agora?” no alto da página.</p>";
     }
     return '<div class="status urgente" role="alert">' + p.mensagens.map(function (m) { return "<p><strong>" + esc(m) + "</strong></p>"; }).join("") +
       '<p class="orientacao-tels">' + tels + "</p></div>";
