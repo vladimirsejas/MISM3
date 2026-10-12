@@ -908,3 +908,11 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - **Reparo de uma decisão minha de hoje:** apaguei `web/dados/setores_resumo.json` na limpeza ("ninguém lê"), mas ele era o caminho para CEP -> bairro. Voltou numa versão enxuta (`setor_bairro.json`, só setor -> bairro) e o `setores.py` a grava de novo.
 - **Limites:** ver `docs/arquitetura_ia.md` (bairro do IBGE agrupado; busca lexical, não semântica; sem elegibilidade automática; modelo treinado só com frases da equipe).
 
+## 12/10/2026 - Regra de linguagens: Python por padrão, JavaScript só onde for necessário
+
+- **Pedido do mantenedor:** não gosta de JavaScript; quer que ele seja usado só onde for realmente necessário e prefere Python.
+- **Medição (após o #39):** JavaScript do site 4.759 linhas (sem testes e sem Leaflet), testes JavaScript 1.712, Python do pipeline 3.635.
+- **O que precisa ser JavaScript (o navegador só executa JS e o projeto não tem servidor, para o texto da usuária nunca sair do aparelho):** assistente e modelo (`ia.js`, `necessidades.js`), dúvida (`duvida.js`), leitura do CEP digitado e mapa (`mapa.js`, Leaflet), questionário e jornadas. **Descartado:** Pyodide (cerca de 10 MB, lento em celular simples) e servidor Python (quebra a privacidade e não há hospedagem).
+- **O que pode sair do JavaScript, em ordem de risco:** (1) `areas.js` (445 linhas) é quase só conteúdo: virar dado validado por Python, com o JS apenas desenhando; (2) contas pré-calculáveis: bairro de cada CEP e o serviço mais perto de cada tipo gerados em Python, o que elimina o `haversine` duplicado e o teste de paridade Python x JS; (3) gerar as páginas das áreas em Python, para que telefones e endereços essenciais funcionem mesmo sem JavaScript e o `app.js` (784 linhas) encolha.
+- **Daqui em diante:** código novo nasce em Python sempre que não precisar rodar no navegador. Os itens 1 a 3 acima só começam depois que o mantenedor aprovar o plano, porque mudam o formato dos dados e dos testes.
+
