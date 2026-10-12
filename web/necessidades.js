@@ -60,7 +60,7 @@
       "bebe demais", "bebe muito", "bebe todo dia", "bebe todos os dias", "bebado", "bebada", "vive bebado", "embriagado",
       "alcool", "alcoolico", "vicio", "maconha", "cocaina", "usa crack", "usando drogas", "parar de beber",
       "narcoticos anonimos", "alcoolicos anonimos", "al anon", "amor exigente", "familia de dependente", "familias de dependentes",
-      "caps", "caps ad", "overdose", "crack", "vacina atrasada", "carteira de vacinacao", "vacinar meu filho"
+      "caps", "caps ad", "overdose", "crack", "vacina", "vacinas", "vacinacao", "vacina atrasada", "carteira de vacinacao", "vacinar meu filho"
     ]],
     ["estudo", [
       "estudo", "estudar", "faculdade", "universidade", "escola", "ensino",
