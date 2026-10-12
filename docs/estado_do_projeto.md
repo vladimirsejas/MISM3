@@ -45,7 +45,7 @@ Não vendemos o sistema como diagnóstico social, nem como prova de que um servi
 
 | Capacidade | Estado | Evidência | Limite ou pendência |
 |---|---|---|---|
-| Catálogo de serviços | 164 registros; 146 com telefone, 151 com endereço, 48 com horário | `catalogo/servicos_manuais.csv`, cada um com fonte e data | 5 registros "não conferidos" |
+| Catálogo de serviços | 165 registros; 147 com telefone, 152 com endereço, 48 com horário | `catalogo/servicos_manuais.csv`, cada um com fonte e data | 4 registros "não conferidos" |
 | **Proteção à mulher** | **2 de 5 registros "não conferidos"** (CRAM e Patrulha); **2 sem telefone** (Patrulha e Defensoria). A DDM agora tem telefone publicado pela Prefeitura em 27/08/2025; o endereço publicado em 12/04/2017 fica com aviso para confirmação antes de ir. A Defensoria foi conferida em 11/10/2026; a página não traz telefone. | `catalogo/servicos_manuais.csv`; publicações municipais da DDM, de 12/04/2017 e 27/08/2025; `docs/documetacao/defensoria-rio-claro.pdf` | CRAM e Patrulha continuam pendentes de fontes e contatos suficientemente seguros para uso atual. A DDM não tem horário informado no cadastro. |
 | Localização dos serviços | 45 com latitude e longitude exatas (rua e número no CNEFE, revisadas por pessoa); 102 com CEP | `pipeline/geocodificar_catalogo.py` só sugere; nada entra sem aprovação | 105 pendentes; CEP dá só localização aproximada |
 | Oferta de educação infantil | 69 escolas em atividade em Rio Claro (Censo Escolar 2025) | `web/dados/oferta_educacao_infantil.json` | Matrícula não é vaga, demanda nem fila |
