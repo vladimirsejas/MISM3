@@ -32,19 +32,21 @@ Quando não acha nada, o sistema **diz que não achou** e mostra as áreas e os 
 
 | Sistema | Área@3 | Específica@3 | MRR | Resposta | Perigo | Falsos alarmes | Abstenção |
 |---|---|---|---|---|---|---|---|
-| v1 (assistente anterior) | 64% (53/83) | 39% (33/85) | 0.24 | 81% (69/85) | 100% (12/12) | 1% (1/73) | 85% (11/13) |
-| v2 completo | 89% (74/83) | 87% (74/85) | 0.78 | 95% (81/85) | 100% (12/12) | 0% (0/73) | 69% (9/13) |
-| sem palavras | 83% (69/83) | 82% (70/85) | 0.74 | 88% (75/85) | 100% (12/12) | 0% (0/73) | 77% (10/13) |
-| sem letras (digitação) | 81% (67/83) | 80% (68/85) | 0.71 | 87% (74/85) | 100% (12/12) | 0% (0/73) | 85% (11/13) |
-| sem significado (LSA) | 72% (60/83) | 71% (60/85) | 0.66 | 75% (64/85) | 100% (12/12) | 0% (0/73) | 100% (13/13) |
-| sem classificador | 89% (74/83) | 87% (74/85) | 0.78 | 95% (81/85) | 100% (12/12) | 0% (0/73) | 69% (9/13) |
-| sem contexto de área | 89% (74/83) | 87% (74/85) | 0.78 | 95% (81/85) | 100% (12/12) | 0% (0/73) | 69% (9/13) |
+| v1 (assistente anterior) | 66% (55/83) | 40% (34/85) | 0.24 | 82% (70/85) | 100% (12/12) | 1% (1/73) | 85% (11/13) |
+| v2 completo | 90% (75/83) | 91% (77/85) | 0.82 | 95% (81/85) | 100% (12/12) | 0% (0/73) | 69% (9/13) |
+| sem palavras | 84% (70/83) | 86% (73/85) | 0.77 | 88% (75/85) | 100% (12/12) | 0% (0/73) | 77% (10/13) |
+| sem letras (digitação) | 83% (69/83) | 85% (72/85) | 0.76 | 87% (74/85) | 100% (12/12) | 0% (0/73) | 85% (11/13) |
+| sem significado (LSA) | 75% (62/83) | 75% (64/85) | 0.69 | 78% (66/85) | 100% (12/12) | 0% (0/73) | 100% (13/13) |
+| sem classificador | 90% (75/83) | 89% (76/85) | 0.80 | 95% (81/85) | 100% (12/12) | 0% (0/73) | 69% (9/13) |
+| sem contexto de área | 90% (75/83) | 91% (77/85) | 0.82 | 95% (81/85) | 100% (12/12) | 0% (0/73) | 69% (9/13) |
+
+> **Atenção: este conjunto de teste deixou de ser independente.** A primeira rodada (antes de qualquer ajuste) deu **87%** de resposta específica e **83%** (10/12) na segurança. Depois dela, as regras de segurança foram corrigidas e o vocabulário de alguns serviços foi ampliado (creche, CMEI, vacina, situação de rua e outros) olhando também para falhas observadas nessas perguntas; é isso que leva o número a 91%. O 91% mostra o efeito desses ajustes e **não é uma estimativa de acerto com perguntas novas**: a estimativa independente é a da primeira rodada.
 
 **Leitura honesta:**
 
-- O orientador acerta o destino específico em **87%** das perguntas (contra 39% do assistente anterior) e coloca o certo, em média, perto do topo (MRR 0,78 contra 0,24).
-- A **ablação** mostra que cada sinal pesa: sem o *significado* (LSA) cai de 87% para 71%; sem as *letras*, para 80%; sem as *palavras*, para 82%.
-- **O classificador de intenção e o contexto de área não mudam a métrica nesta avaliação.** O contexto de área só vale dentro da caixa de dúvida (a avaliação não o usa); o classificador entra no sinal de escopo. Não vamos afirmar que eles melhoram a ordenação, porque a medição não mostra isso.
+- O orientador acerta o destino específico em **91%** das perguntas do teste depois dos ajustes (87% na primeira rodada, antes deles; o assistente anterior: 40%) e coloca o certo perto do topo (MRR 0,82 contra 0,24).
+- A **ablação** mostra que cada sinal pesa: sem o *significado* (LSA) cai de 91% para 75%; sem as *letras*, para 85%; sem as *palavras*, para 86%.
+- **O classificador de intenção ajuda pouco** (sem ele, 91% cai para 89%) e **o contexto de área não aparece na métrica**, porque a avaliação não o usa (ele só vale na caixa de dúvida dentro de uma área). Não afirmamos mais do que a medição mostra.
 - **Abstenção é o ponto fraco**: a v1 se cala melhor no que está fora do escopo (85% contra 69%). O orientador acerta mais, mas por isso também arrisca mais responder o que não devia. Como errar por responder custa uma lista a mais, e errar por calar deixa a mulher sem caminho, aceitamos essa troca; o texto da tela deixa claro que a sugestão pode estar errada.
 - **Segurança**: 12/12 no teste e **0 falsos alarmes** em todas as 210 perguntas. **Mas atenção ao que aconteceu**: na primeira vez que rodamos o conjunto de teste, a camada de segurança acertou **10 de 12 (83%)**; ela não reconhecia violência contra uma vizinha (“meu vizinho bate na mulher dele”) nem “meu marido … bate nas crianças”. Corrigimos as regras de forma geral e adicionamos testes. Por isso, **o 12/12 não é mais uma estimativa independente**; a estimativa independente é 83%. Para uma ferramenta que atende mulheres em risco, a conclusão é que as regras de segurança precisam de revisão contínua com profissionais da rede (CRAM, DDM, CAPS).
 
@@ -52,8 +54,8 @@ Quando não acha nada, o sistema **diz que não achou** e mostra as áreas e os 
 
 | Sistema | Área@3 | Específica@3 | MRR | Resposta | Perigo | Falsos alarmes | Abstenção |
 |---|---|---|---|---|---|---|---|
-| v1 (assistente anterior) | 75% (52/69) | 41% (28/69) | 0.28 | 86% (60/70) | 43% (6/14) | 0% (0/56) | 89% (8/9) |
-| v2 completo | 96% (66/69) | 93% (64/69) | 0.82 | 99% (69/70) | 100% (14/14) | 0% (0/56) | 78% (7/9) |
+| v1 (assistente anterior) | 75% (52/69) | 39% (27/69) | 0.28 | 86% (60/70) | 43% (6/14) | 0% (0/56) | 89% (8/9) |
+| v2 completo | 97% (67/69) | 90% (62/69) | 0.82 | 100% (70/70) | 100% (14/14) | 0% (0/56) | 78% (7/9) |
 
 ## Limites
 
