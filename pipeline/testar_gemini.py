@@ -68,7 +68,7 @@ def _mensagem_http(e: urllib.error.HTTPError) -> str:
 
 
 EXPLICACOES = {400: "pedido recusado (chave inválida ou digitada errada costuma dar este erro no Google)",
-               401: "chave inválida", 403: "a chave não tem permissão ou a API não está ativada para ela",
+               401: "chave inválida", 503: "o Google está com muita demanda neste modelo (a chave está certa; é temporário: tente de novo em alguns minutos ou use outro modelo, por exemplo gemini-flash-latest)", 403: "a chave não tem permissão ou a API não está ativada para ela",
                404: "modelo não encontrado para esta conta", 429: "limite de uso atingido ou sem cota"}
 
 
