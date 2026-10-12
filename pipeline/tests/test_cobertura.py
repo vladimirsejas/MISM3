@@ -38,7 +38,7 @@ def test_calcula_distancias_indices_e_ponderacao():
     assert 0 <= r["setores"][0]["ics"] <= 100
     assert r["bairros"][0]["bairro"] == "Ajapi"
     assert r["meta"]["gerado_em"] == "2026-10-12"
-    assert "nao provam" in r["meta"]["aviso"] or "não prova" in r["meta"]["aviso"]
+    assert "nao prova" in r["meta"]["aviso"]
 
 
 def test_categoria_sem_coordenada_e_ausente_nao_zero():
