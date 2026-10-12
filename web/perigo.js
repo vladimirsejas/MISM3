@@ -57,7 +57,7 @@
       contexto: ["delegacia da mulher", "\\bddm\\b", "\\bcram\\b", "patrulha maria da penha", "ligue 180", "casa abrigo", "casa de abrigo", "abrigo (?:pra|para) (?:mim|mulher|mim e meus filhos|minha familia)", "preciso de abrigo"],
       mensagem: "Se você está em perigo agora, ligue 190 (Polícia). O Ligue 180 orienta e encaminha, 24 horas, de graça. Você não precisa contar a sua história aqui.",
       telefones: ["190", "180"],
-      pins: [{ svc: "mulher/ddm", max: 1 }, { svc: "mulher/patrulha", max: 1 }]
+      pins: [{ svc: "mulher/ddm", max: 1 }, { svc: "mulher/patrulha", max: 1 }, { svc: "mulher/secretaria", max: 1 }]
     },
     saude: {
       forte: [

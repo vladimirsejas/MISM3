@@ -39,7 +39,7 @@ VOCABULARIO: dict[str, tuple[str, str]] = {
     "mulher/cram": ("CRAM: atendimento à mulher em situação de violência", "cram centro de referencia de atendimento a mulher violencia psicologa assistente social acolhimento escuta apoio violencia domestica"),
     "mulher/patrulha": ("Patrulha Maria da Penha", "patrulha maria da penha guarda civil acompanhamento medida protetiva visitas protecao"),
     "mulher/defensoria": ("Defensoria Pública (orientação jurídica gratuita)", "defensoria publica advogado advogada gratuito de graca pensao alimenticia guarda divorcio separacao medida protetiva direito juridico nudem"),
-    "mulher/secretaria": ("Secretaria Municipal da Mulher", "secretaria da mulher politicas para mulheres atendimento a mulher whatsapp"),
+    "mulher/secretaria": ("Secretaria Municipal da Mulher", "secretaria da mulher politicas para mulheres atendimento a mulher whatsapp cram centro de referencia de atendimento a mulher"),
     "assistencia/cras": ("CRAS: porta de entrada da assistência social", "cras assistencia social cesta basica comida fome sem renda sem dinheiro beneficio bolsa familia cadunico cadastro unico auxilio bpc ajuda financeira documentos acompanhamento da familia necessidade"),
     "assistencia/creas": ("CREAS: proteção quando direitos são violados", "creas violacao de direitos violencia abuso abandono negligencia situacao de rua morador de rua maus tratos trabalho infantil"),
     "assistencia/conselho_tutelar": ("Conselho Tutelar", "conselho tutelar crianca adolescente maus tratos abuso negligencia abandono denuncia direitos da crianca menor"),
