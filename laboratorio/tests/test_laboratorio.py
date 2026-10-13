@@ -32,6 +32,7 @@ def ok(texto):
 @pytest.fixture(autouse=True)
 def com_chave(monkeypatch):
     monkeypatch.setenv("GEMINI_API_KEY", CHAVE_FALSA)
+    monkeypatch.setattr(cliente_llm, "_dormir", lambda s: None)  # testes não esperam de verdade
 
 
 def test_sem_chave_nao_envia_nada(monkeypatch):
@@ -168,3 +169,26 @@ def test_chave_de_exemplo_nao_e_enviada(monkeypatch, valor):
 def test_chave_real_nao_e_confundida_com_exemplo():
     import config
     assert not config.parece_exemplo("AI" + "zaSyD-chave-de-verdade-0001")
+
+
+def _http(codigo):
+    return urllib.error.HTTPError("u", codigo, "m", {}, io.BytesIO(b"{}"))
+
+
+def test_503_temporario_tenta_de_novo_e_depois_funciona():
+    with mock.patch("urllib.request.urlopen", side_effect=[_http(503), _http(503), ok("ok")]) as u:
+        assert cliente_llm.gerar("x") == "ok"
+    assert u.call_count == 3
+
+
+def test_503_persistente_desiste_depois_de_5_tentativas_com_erro_claro():
+    with mock.patch("urllib.request.urlopen", side_effect=_http(503)) as u, pytest.raises(cliente_llm.ErroLab, match="503"):
+        cliente_llm.gerar("x")
+    assert u.call_count == len(cliente_llm.ESPERAS_S) + 1
+
+
+@pytest.mark.parametrize("codigo", [400, 401, 403, 404])
+def test_erros_definitivos_nao_tentam_de_novo(codigo):
+    with mock.patch("urllib.request.urlopen", side_effect=_http(codigo)) as u, pytest.raises(cliente_llm.ErroLab):
+        cliente_llm.gerar("x")
+    assert u.call_count == 1
