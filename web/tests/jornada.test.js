@@ -130,6 +130,10 @@ assert(secSaude, "a área Saúde precisa ter a seção apontada pelo plano");
 J.PERGUNTAS.forEach((p) => assert(!/violên|CPF|renda mensal|salário|nome/i.test(p.texto), "pergunta sensível demais: " + p.texto));
 
 /* ---- currículo ---- */
+global.self = { Jornada: J };
+require("../jornada-ui.js");
+const UI = global.self.JornadaUI;
+
 const cv = J.montarCurriculo({ nome: "  Maria  Souza ", telefone: "(19) 99439-4433", objetivo: "Auxiliar de cozinha",
   experiencias: "Cozinha do bar\n\n  Limpeza de casas  ", formacao: "", habilidades: "Atendimento\nCostura", disponibilidade: "Manhãs" });
 assert.strictEqual(cv.nome, "Maria Souza");
@@ -159,7 +163,7 @@ assert(/class="atalhos-trabalho"/.test(secaoCv), "oferece atalhos verticais para
 assert(/Transporte e passagem: planeje antes de sair/.test(secaoCv), "orienta sobre custo e planejamento do transporte");
 assert(/Tenho filhos\. Como organizar o cuidado\?/.test(secaoCv), "inclui orientação sobre cuidado dos filhos sem prometer vaga");
 assert(/Recebi um não\. E agora\?/.test(secaoCv), "acolhe a rejeição e sugere próximos passos realistas");
-assert(/unicesimar\\.edu\\.br\\/blog\\/como-se-vestir-para-entrevista-de-emprego/.test(secaoCv), "inclui o artigo da Unicesumar");
+assert(/unicesumar\\.edu\\.br\\/blog\\/como-se-vestir-para-entrevista-de-emprego/.test(secaoCv), "inclui o artigo da Unicesumar");
 assert(/passaportefashionista\\.com\\/5-dicas-infaliveis-para-se-vestir-bem-sem-gastar-muito/.test(secaoCv), "inclui o artigo Passaporte Fashionista");
 assert(/Peça ajuda à sua rede/.test(secaoCv), "inclui mensagem para rede de apoio");
 assert(/Cuidado com golpes de emprego/.test(secaoCv), "inclui prevenção de golpes");
@@ -172,9 +176,6 @@ assert.deepStrictEqual(J.dadosDesnecessarios({ a: "13500-190" }), ["parece haver
 assert.deepStrictEqual(J.dadosDesnecessarios({ a: "(19) 99439-4433 e (19) 3522-1930" }), [], "telefone não é dado desnecessário");
 
 /* ---- a tela escapa o que a pessoa digita ---- */
-global.self = { Jornada: J };
-require("../jornada-ui.js");
-const UI = global.self.JornadaUI;
 const html = UI.htmlCurriculo(J.montarCurriculo({ nome: "<img src=x onerror=alert(1)>", experiencias: "<script>alert(1)</script>" }));
 assert(!/<img|<script/.test(html), "texto digitado deve ser escapado");
 assert(/&lt;img/.test(html));
@@ -198,7 +199,7 @@ assert(passoVagas.extras.some((l) => /camara\.leg\.br\/legin\/fed\/lei\/2023\/le
 const interfaceTrabalho = UI.html();
 assert(/mepoupe\\.com\\/dicas-de-riqueza\\/procurando-emprego-como-se-vestir-sem-gastar-a-grana-que-voce-nao-tem/.test(interfaceTrabalho), "área Trabalho inclui a leitura da Me Poupe sobre roupa sem gastar");
 assert(/ciadeestagios\\.com\\.br\\/guia-profissional\\/como-se-vestir/.test(interfaceTrabalho), "área Trabalho inclui o guia da Cia de Estágios");
-assert(/unicesimar\\.edu\\.br\\/blog\\/como-se-vestir-para-entrevista-de-emprego/.test(interfaceTrabalho), "área Trabalho inclui o guia da Unicesumar");
+assert(/unicesumar\\.edu\\.br\\/blog\\/como-se-vestir-para-entrevista-de-emprego/.test(interfaceTrabalho), "área Trabalho inclui o guia da Unicesumar");
 assert(/passaportefashionista\\.com\\/5-dicas-infaliveis-para-se-vestir-bem-sem-gastar-muito/.test(interfaceTrabalho), "área Trabalho inclui dicas para se vestir bem gastando pouco");
 assert(/não precisa comprar roupa, sapato ou maquiagem/.test(interfaceTrabalho), "orientação de entrevista não exige gasto com roupa");
 console.log("jornada.test.js: perguntas, ordem e tamanho do plano, telefones do catálogo, links, promessas proibidas e currículo passaram");
