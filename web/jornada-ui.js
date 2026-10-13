@@ -47,7 +47,14 @@
       campoArea("c-habilidades", "O que você sabe fazer (uma por linha)", "Ex.: Atendimento ao público; costura; organização") +
       campoTexto("c-disponibilidade", "Disponibilidade de horário", 120) +
       '<div class="acoes"><button type="submit" class="btn">Gerar currículo</button><button type="button" class="btn secundario" data-limpar="curriculo">Limpar</button></div></form>' +
-      '<div id="curriculo-saida" aria-live="polite"></div></details></section>';
+      '<div id="curriculo-saida" aria-live="polite"></div></details>' +
+      '<div class="links-curriculo"><h3>Outras opções gratuitas</h3><ul>' +
+      '<li><a href="https://word.cloud.microsoft/create/pt-br/resume-templates/" target="_blank" rel="noopener noreferrer">Modelos de currículo — Microsoft Word</a></li>' +
+      '<li><a href="https://docs.google.com/document/u/0/" target="_blank" rel="noopener noreferrer">Google Docs — documentos e modelos</a></li>' +
+      '<li><a href="https://www.gov.br/trabalho-e-emprego/pt-br" target="_blank" rel="noopener noreferrer">Ministério do Trabalho e Emprego</a></li>' +
+      '<li><a href="https://servicos.mte.gov.br/" target="_blank" rel="noopener noreferrer">Emprega Brasil / SINE</a></li>' +
+      '<li><a href="https://www.gov.br/pt-br/servicos/obter-a-carteira-de-trabalho" target="_blank" rel="noopener noreferrer">Carteira de Trabalho Digital</a></li>' +
+      '</ul></div></section>';
   }
   function campoTexto(id, rotulo, max, valor) {
     return '<div class="campo"><label for="' + id + '">' + esc(rotulo) + '</label><input id="' + id + '" type="text" maxlength="' + max + '" autocomplete="off"' + (valor ? ' value="' + esc(valor) + '"' : "") + "></div>";
