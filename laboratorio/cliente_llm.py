@@ -4,10 +4,16 @@ Nenhum texto de usuária real é enviado: o laboratório só trabalha com pergun
 A chave nunca aparece em mensagens de erro, logs ou arquivos.
 """
 import json
+import time
 import urllib.error
 import urllib.request
 
 import config
+
+
+TEMPORARIOS = {429, 500, 502, 503, 504}  # vale tentar de novo
+ESPERAS_S = (3, 8, 20, 45)  # pausa antes de cada nova tentativa (até 5 tentativas no total)
+_dormir = time.sleep
 
 
 class ErroLab(Exception):
@@ -15,7 +21,7 @@ class ErroLab(Exception):
 
 
 EXPLICACOES = {400: "pedido recusado (o Google também usa 400 para chave inválida; confira a chave e o modelo)", 401: "chave inválida", 403: "a chave não tem permissão",
-               404: "modelo não encontrado para esta conta", 429: "limite de uso atingido"}
+               404: "modelo não encontrado para esta conta", 429: "limite de uso atingido", 503: "serviço sobrecarregado (já tentei de novo várias vezes; tente em alguns minutos)"}
 
 
 def _limpar(msg: str, chave: str) -> str:
@@ -41,15 +47,24 @@ def gerar(prompt: str, modelo: str | None = None) -> str:
     corpo = json.dumps({"contents": [{"parts": [{"text": prompt}]}]}).encode("utf-8")
     req = urllib.request.Request(f"{config.URL_BASE}/{modelo}:generateContent", data=corpo, method="POST",
                                  headers={"x-goog-api-key": chave, "content-type": "application/json"})
-    try:
-        with urllib.request.urlopen(req, timeout=config.TIMEOUT_S) as r:
-            dados = json.load(r)
-    except urllib.error.HTTPError as e:
-        raise ErroLab(_limpar(f"HTTP {e.code}: {EXPLICACOES.get(e.code, 'erro da API')}{_motivo(e)}", chave)) from None
-    except (urllib.error.URLError, TimeoutError, OSError) as e:
-        raise ErroLab(_limpar(f"sem conexão com a API ({type(e).__name__})", chave)) from None
-    except ValueError:
-        raise ErroLab("resposta da API não é JSON válido") from None
+    dados = None
+    for tentativa in range(len(ESPERAS_S) + 1):
+        try:
+            with urllib.request.urlopen(req, timeout=config.TIMEOUT_S) as r:
+                dados = json.load(r)
+            break
+        except urllib.error.HTTPError as e:
+            if e.code in TEMPORARIOS and tentativa < len(ESPERAS_S):
+                _dormir(ESPERAS_S[tentativa])
+                continue
+            raise ErroLab(_limpar(f"HTTP {e.code}: {EXPLICACOES.get(e.code, 'erro da API')}{_motivo(e)}", chave)) from None
+        except (urllib.error.URLError, TimeoutError, OSError) as e:
+            if tentativa < len(ESPERAS_S):
+                _dormir(ESPERAS_S[tentativa])
+                continue
+            raise ErroLab(_limpar(f"sem conexão com a API ({type(e).__name__})", chave)) from None
+        except ValueError:
+            raise ErroLab("resposta da API não é JSON válido") from None
     try:
         texto = "".join(p.get("text", "") for p in dados["candidates"][0]["content"]["parts"]).strip()
     except (KeyError, IndexError, TypeError, AttributeError):
