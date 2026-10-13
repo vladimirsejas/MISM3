@@ -33,8 +33,42 @@
     var topo = '<section class="secao jornada" aria-labelledby="titulo-jornada">' +
       '<h2 id="titulo-jornada" tabindex="-1">' + esc(J.titulo) + '</h2>' +
       '<div id="jornada-saida" aria-live="polite"></div></section>';
-    return topo + (J.temCurriculo ? htmlCurriculoSecao() : "");
+    return topo + (J.id === "trabalho" ? htmlRendaImediata() : "") + (J.temCurriculo ? htmlCurriculoSecao() : "");
   }
+  function htmlRendaImediata() {
+    return '<section class="secao renda-imediata" id="renda-imediata" aria-labelledby="titulo-renda-imediata">' +
+      '<h2 id="titulo-renda-imediata">Preciso de dinheiro esta semana</h2>' +
+      '<p>Comece por trabalhos pontuais perto de casa. Confirme pagamento, horário e transporte antes de aceitar. A disponibilidade varia: esta lista não é promessa de vaga.</p>' +
+      '<h3>Onde procurar primeiro</h3>' +
+      '<ul>' +
+      '<li><strong>Buffets infantis e festas:</strong> recepção, servir convidados, ajudar a montar mesas, recolher pratos, lavar louça e organizar o salão. Buffets e espaços de festa podem precisar de reforço temporário em fins de semana; pergunte diretamente como se candidatar e quando pagam.</li>' +
+      '<li><strong>Bares, lanchonetes e pizzarias:</strong> apoio na cozinha, lavagem de louça, montagem de pedidos e limpeza no fechamento.</li>' +
+      '<li><strong>Feiras e comércio de bairro:</strong> ajudar na montagem ou desmontagem, limpeza, reposição e organização; combine previamente se o pagamento será em dinheiro ou outra forma.</li>' +
+      '<li><strong>Serviços perto de casa:</strong> faxina, organização de armários, quintais e limpeza pós-obra; passar roupa e pequenos consertos de costura, como botões e barras.</li>' +
+      '<li><strong>Apoio comunitário:</strong> acompanhar pessoa idosa em compras ou consultas, ou ajudar uma família com trajeto escolar de criança, sempre com acordo claro e referências de confiança.</li>' +
+      '<li><strong>Comida por encomenda:</strong> bolos simples, doces ou marmitas somente após confirmar o pedido e combinar sinal suficiente para comprar os ingredientes. Não produza estoque nem pegue empréstimo para começar.</li>' +
+      '<li><strong>Pequenos reparos:</strong> só ofereça tarefas que você realmente sabe fazer, com ferramentas adequadas e segurança; não aceite serviço elétrico ou perigoso sem qualificação.</li>' +
+      '</ul>' +
+      '<h3>Quanto sobra de verdade?</h3>' +
+      '<p>Preencha os valores para descontar passagem, alimentação e cuidado das crianças. Use zero quando não houver esse gasto.</p>' +
+      '<div class="campo"><label for="renda-bruta">Pagamento combinado (R$)</label><input id="renda-bruta" type="number" min="0" step="0.01" inputmode="decimal" value="120"></div>' +
+      '<div class="campo"><label for="renda-transporte">Transporte ida e volta (R$)</label><input id="renda-transporte" type="number" min="0" step="0.01" inputmode="decimal" value="0"></div>' +
+      '<div class="campo"><label for="renda-alimentacao">Alimentação extra (R$)</label><input id="renda-alimentacao" type="number" min="0" step="0.01" inputmode="decimal" value="0"></div>' +
+      '<div class="campo"><label for="renda-cuidado">Cuidado das crianças (R$)</label><input id="renda-cuidado" type="number" min="0" step="0.01" inputmode="decimal" value="0"></div>' +
+      '<button type="button" class="btn" data-calcular-renda="1">Calcular quanto sobra</button>' +
+      '<p id="renda-liquida" role="status" aria-live="polite">Saldo após os gastos: R$ 120,00. Não inclui outros custos nem garante que o serviço compense.</p>' +
+      '<h3>Proteção contra golpes e exploração</h3>' +
+      '<ul><li>Não pague taxa para conseguir emprego, fazer exame admissional, comprar uniforme obrigatório ou participar de treinamento prometido como garantia de contratação.</li>' +
+      '<li>Evite plataformas que exigem recarga ou compra de créditos para liberar contatos. O GetNinjas, por exemplo, pode cobrar créditos de profissionais; não é uma opção gratuita garantida.</li>' +
+      '<li>Antes de ir a uma residência: compartilhe localização e endereço com alguém de confiança, combine horário de saída e valor total por escrito. Evite imóvel vazio ou local isolado e vá embora se sentir risco.</li>' +
+      '<li>Para festas e buffets, confirme o nome e endereço do estabelecimento, responsável, horário, tarefa, valor e data do pagamento antes do turno. Não entregue documentos originais.</li></ul>' +
+      '<h3>Mensagem pronta para enviar</h3>' +
+      '<p>Copie e adapte o texto abaixo para buffets, lanchonetes, comércios e grupos do bairro:</p>' +
+      '<textarea id="mensagem-renda" rows="5" readonly>Olá! Estou procurando trabalho temporário em Rio Claro, inclusive aos fins de semana. Posso ajudar com organização, limpeza, cozinha, atendimento ou apoio em festas e buffets infantis, conforme a função. Tenho disponibilidade em [dias/horários] e posso conversar para combinar tarefas, valor e pagamento. Se souber de alguma oportunidade, agradeço o contato!</textarea>' +
+      '<p class="meta">Antes de enviar, preencha seus dias e horários. Não publique endereço residencial nem documentos em grupos abertos.</p>' +
+      '</section>';
+  }
+
   function htmlCurriculoSecao() {
     return '<section class="secao curriculo" id="montar-curriculo" aria-labelledby="titulo-curriculo">' +
       '<details><summary><h2 id="titulo-curriculo">Montar um currículo</h2></summary>' +
@@ -320,7 +354,7 @@
           alvo.scrollIntoView({ block: "start" });
           var campo = $("c-nome"); if (campo) campo.focus({ preventScroll: true });
         }
-      } else if (t.getAttribute("data-limpar") === "plano") {
+      } else if (t.hasAttribute("data-calcular-renda")) {\n        var valor = function (id) { var n = Number($(id).value); return Number.isFinite(n) && n > 0 ? n : 0; };\n        var saldo = valor("renda-bruta") - valor("renda-transporte") - valor("renda-alimentacao") - valor("renda-cuidado");\n        var saidaRenda = $("renda-liquida");\n        if (saidaRenda) saidaRenda.textContent = "Saldo após os gastos: " + saldo.toLocaleString("pt-BR", { style: "currency", currency: "BRL" }) + ". Não inclui outros custos nem garante que o serviço compense.";\n      } else if (t.getAttribute("data-limpar") === "plano") {
         ultimo.resp = {}; ultimo.ordem = []; ultimo.puladas = []; ultimo.feitos = {}; ultimo.plano = null;
         desenhar(true);
       } else if (t.getAttribute("data-limpar") === "curriculo") {
