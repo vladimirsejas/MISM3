@@ -47,7 +47,17 @@
       campoArea("c-habilidades", "O que você sabe fazer (uma por linha)", "Ex.: Atendimento ao público; costura; organização") +
       campoTexto("c-disponibilidade", "Disponibilidade de horário", 120) +
       '<div class="acoes"><button type="submit" class="btn">Gerar currículo</button><button type="button" class="btn secundario" data-limpar="curriculo">Limpar</button></div></form>' +
-      '<div id="curriculo-saida" aria-live="polite"></div></details></section>';
+      '<div id="curriculo-saida" aria-live="polite"></div></details>' +
+      '<section class="dicas-entrevista" aria-labelledby="titulo-dicas-entrevista">' +
+      '<h2 id="titulo-dicas-entrevista">Como se vestir para a entrevista sem gastar</h2>' +
+      '<p>Você não precisa comprar roupa, sapato ou maquiagem para conseguir uma entrevista.</p>' +
+      '<ul><li>Escolha uma roupa limpa, inteira e confortável, que permita sentar e se movimentar.</li>' +
+      '<li>Prefira peças simples e discretas que você já tem; não precisa ser roupa social cara.</li>' +
+      '<li>Confira se a roupa está seca e, se possível, sem amassados. Um calçado limpo e seguro já serve.</li>' +
+      '<li>Se quiser e puder, peça uma peça emprestada. Não se endivide nem deixe de ir à entrevista por não ter roupa nova.</li>' +
+      '<li>Se a entrevista for por vídeo, procure um lugar iluminado e tranquilo e teste o áudio antes.</li></ul>' +
+      '<p>O mais importante é conseguir comparecer com conforto e segurança. A roupa não mede sua capacidade de trabalhar.</p>' +
+      '</section></section>';
   }
   function campoTexto(id, rotulo, max, valor) {
     return '<div class="campo"><label for="' + id + '">' + esc(rotulo) + '</label><input id="' + id + '" type="text" maxlength="' + max + '" autocomplete="off"' + (valor ? ' value="' + esc(valor) + '"' : "") + "></div>";
@@ -141,7 +151,8 @@
     var n = plano.primeiros || 3, todos = plano.passos;
     var avisos = '<div class="status" role="note">' + plano.avisos.map(function (a) { return "<p>" + esc(a) + "</p>"; }).join("") + "</div>";
     var ap = plano.apoio;
-    if (ap) {
+    /* Educação não recebe o convite de Trabalho dentro do resultado: a ligação entre áreas fica nos atalhos próprios da página. */
+    if (ap && J.id !== "educacao") {
       avisos = (paraPapel
         ? "<p>" + esc(ap.texto) + " (" + esc(ap.rotulo) + ")</p>"
         : '<aside class="apoio-extra"><p>' + esc(ap.texto) + '</p><p><a class="btn secundario" href="' + esc(ap.alvo) + '">' + esc(ap.rotulo) + "</a></p></aside>") + avisos;
@@ -171,7 +182,7 @@
     return '<div class="plano-tela"><h3 id="plano-foco" tabindex="-1">Seu plano: ' + qtd + (qtd === 1 ? " passo" : " passos") + "</h3>" +
       '<p class="meta">Faça um de cada vez, na ordem. Marque “Já fiz” para acompanhar.</p>' +
       htmlPlano(ultimo.plano, false) +
-      '<div class="acoes">' + (qtd ? '<button type="button" class="btn" data-imprimir="plano">Imprimir ou salvar em PDF</button>' : "") +
+      '<div class="acoes">' + (qtd && J.id !== "educacao" ? '<button type="button" class="btn" data-imprimir="plano">Imprimir ou salvar em PDF</button>' : "") +
       '<button type="button" class="btn secundario" data-passo="refazer">Mudar minhas respostas</button>' +
       '<button type="button" class="btn secundario" data-limpar="plano">Recomeçar</button></div></div>';
   }
