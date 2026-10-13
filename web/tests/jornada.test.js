@@ -41,7 +41,7 @@ assert.strictEqual(caso.passos.find((p) => p.id === "deslocamento").acao.alvo, "
 
 /* ---- telefones vêm do catálogo verificado; sem catálogo, não aparece telefone (nunca se inventa) ---- */
 assert.strictEqual(caso.passos[0].contato.telefone, "(19) 3522-1930");
-assert.strictEqual(caso.passos.find((p) => p.id === "vagas").contato.telefone, "(19) 3525-2785");
+assert.strictEqual(caso.passos.find((p) => p.id === "vagas").contato.telefone, "(19) 3524-0504");
 const semCatalogo = J.montarPlano({ renda_agora: "sim", objetivo: "emprego" });
 semCatalogo.passos.forEach((p) => assert.strictEqual(p.contato, null, "sem catálogo, sem telefone: " + p.id));
 const texto = JSON.stringify(caso.passos);
@@ -177,15 +177,15 @@ assert(/Vender o que você já tem/.test(secaoCv) && /Comida por encomenda/.test
 assert(/Cabelo e unhas sem gastar/.test(secaoCv) && /não precisa de salão, escova, esmalte nem manicure/.test(secaoCv), "cabelo e unhas sem exigir gasto");
 assert(/Falta o básico/.test(secaoCv) && /href="#assistencia"/.test(secaoCv) && /Nenhum benefício é automático/.test(secaoCv), "liga Trabalho à assistência social sem prometer benefício");
 assert(!/shopee/i.test(secaoCv), "não indica lojas como fonte de dicas");
-assert(!/Vagas e atendimento aqui em Rio Claro/.test(secaoCv) || !/\(19\) 3525-2785/.test(secaoCv), "sem catálogo, nenhum telefone é escrito à mão na tela");
+assert(!/Vagas e atendimento aqui em Rio Claro/.test(secaoCv) || !/\(19\) 3524-0504/.test(secaoCv), "sem catálogo, nenhum telefone é escrito à mão na tela");
 UI.usarCatalogo((id) => (catalogo.servicos || []).find((x) => x.id === id) || null);
 const secaoLocal = UI.html(true);
 const pat = (catalogo.servicos || []).find((x) => x.id === "man-pat");
 assert(pat && secaoLocal.includes(pat.telefone), "o telefone do PAT na tela vem do catálogo verificado");
 assert(/Vagas e atendimento aqui em Rio Claro/.test(secaoLocal) && /Ligue antes de ir/.test(secaoLocal), "bloco local manda confirmar antes de ir");
-assert(/Rua 3 com Avenida 12/.test(secaoLocal) && /Das 8h às 16h/.test(secaoLocal) && /sede da Acirc/.test(secaoLocal), "mostra endereço e horário do PAT na sede da Acirc, vindos do catálogo");
+assert(/Rua 3, nº 1636/.test(secaoLocal) && /Segunda a sexta, das 8h às 16h/.test(secaoLocal) && /\(19\) 3524-0504/.test(secaoLocal) && /sede da Acirc/.test(secaoLocal), "mostra endereço, dias, horário e telefone do PAT na sede da Acirc, vindos do catálogo");
+assert(!/3525-2785/.test(secaoLocal), "o telefone antigo da Unidade Cervezão não aparece mais");
 assert(!/Unidade Cervezão|Informação de 2023, não conferida/.test(secaoLocal), "não mostra o endereço antigo nem aviso de dúvida já resolvido");
-assert(!/Segunda a sexta|Seg a sex 8h às 12h e 13h às 16h[^"]*PAT/.test(secaoLocal.split("Secretaria de Desenvolvimento")[0]), "não inventa os dias de atendimento do PAT");
 assert(/este site não confirma onde isso é oferecido/.test(secaoLocal), "não promete impressão gratuita em lugar nenhum");
 assert(/Trabalho por conta própria: MEI/.test(secaoLocal) && /gov\.br\/empresas-e-negocios/.test(secaoLocal), "MEI com fonte oficial");
 assert(/Revenda por consignação/.test(secaoLocal) && /não compre kit inicial/.test(secaoLocal), "consignação sem comprar kit");

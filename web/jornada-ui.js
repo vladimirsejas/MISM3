@@ -129,7 +129,7 @@
       '</section>' +
       '<section class="apoio-trabalho" aria-labelledby="trabalho-local"><h3 id="trabalho-local">Vagas e atendimento aqui em Rio Claro</h3>' +
       '<p>Para quem precisa de resposta rápida, o atendimento presencial costuma ser mais direto que os grandes sites. Ligue antes de ir, para confirmar horário e documentos.</p><ul>' +
-      cartaoLocal("man-pat-acirc", "PAT — Posto de Atendimento ao Trabalhador (sede da Acirc)") + cartaoLocal("man-sde", "Secretaria de Desenvolvimento Econômico") +
+      cartaoLocal("man-pat", "PAT — Posto de Atendimento ao Trabalhador (sede da Acirc)") + cartaoLocal("man-sde", "Secretaria de Desenvolvimento Econômico") +
       '</ul>' +
       '<h4>Imprimir o currículo sem pagar</h4><p>Pergunte no PAT, em bibliotecas ou em centros comunitários se imprimem currículo sem custo; este site não confirma onde isso é oferecido. Se não conseguir imprimir, mande o currículo em PDF pelo WhatsApp ou mostre-o no celular.</p>' +
       '</section>' +
