@@ -35,6 +35,18 @@
       '<div id="jornada-saida" aria-live="polite"></div></section>';
     return topo + (J.temCurriculo ? htmlCurriculoSecao() : "");
   }
+  /* Cartão de um serviço do catálogo verificado (telefone, endereço e horário só se constarem; o aviso da fonte vai junto). */
+  function cartaoLocal(id, rotulo) {
+    var s = achar && achar(id);
+    if (!s) return "";
+    var partes = [];
+    if (s.telefone) partes.push("Telefone: " + esc(s.telefone));
+    if (s.endereco) partes.push("Endereço: " + esc(s.endereco));
+    if (s.horario) partes.push("Horário: " + esc(s.horario));
+    return "<li><strong>" + esc(rotulo || s.nome) + "</strong>" + (partes.length ? " — " + partes.join("; ") : "") + "." +
+      (s.observacao ? " <span class=\"meta\">" + esc(s.observacao) + "</span>" : "") +
+      (s.fonte_url ? ' <a href="' + esc(s.fonte_url) + '" ' + 'target="_blank" rel="noopener noreferrer">Fonte oficial</a>' : "") + "</li>";
+  }
   function htmlCurriculoSecao() {
     return '<section class="secao curriculo" id="montar-curriculo" aria-labelledby="titulo-curriculo">' +
       '<nav class="atalhos-trabalho" aria-label="Atalhos da área Trabalho"><h3>Por onde começar</h3><ul>' +
@@ -42,6 +54,7 @@
       '<li><a href="#trabalho-hoje">O que posso fazer hoje</a></li>' +
       '<li><a href="#trabalho-renda">Ideias de renda, da mais fácil à mais difícil</a></li>' +
       '<li><button type="button" class="btn secundario" data-curriculo>Montar meu currículo</button></li>' +
+      '<li><a href="#trabalho-local">Vagas e atendimento em Rio Claro</a></li>' +
       '<li><a href="#trabalho-sem-experiencia">Onde procurar trabalho</a></li>' +
       '<li><a href="#trabalho-entrevista">Preparar a entrevista</a></li>' +
       '<li><a href="#trabalho-aparencia">Cabelo e unhas sem gastar</a></li>' +
@@ -102,6 +115,8 @@
       '<li><strong>Serviço por diária</strong> (faxina, passar roupa, organização, ajudante). Precisa de: disponibilidade e transporte. Custo: passagem. Onde: grupos do bairro, conhecidos, condomínios. Cuidado: combine valor, horário e endereço antes de ir e avise alguém de confiança onde estará.</li>' +
       '<li><strong>Cuidar de crianças ou idosos</strong>. Precisa de: experiência real e referências de quem já confiou em você. Custo: nenhum. Onde: indicação de vizinhos e famílias conhecidas. Cuidado: combine tarefas e horários e não assuma cuidados de saúde que você não sabe fazer.</li>' +
       '<li><strong>Pequenos serviços</strong> (costura, ajustes, cabelo, unhas de vizinhas, reforço escolar). Precisa de: uma habilidade que você já tenha. Custo: pouco ou nenhum. Onde: indicação e grupos do bairro. Cuidado: diga o valor logo no início.</li>' +
+      '<li><strong>Revenda por consignação</strong> (roupas, cosméticos). Precisa de: um lojista que aceite deixar a mercadoria e receber depois da venda. Custo: nenhum, se for consignação de verdade. Cuidado: não compre kit inicial nem pague para revender; confira por escrito como será o acerto.</li>' +
+      '<li><strong>Cuidar de animais</strong> (passear com cães, cuidar quando os donos viajam). Precisa de: confiança de vizinhos. Custo: nenhum. Cuidado: combine valor e horário antes e tenha o contato do dono.</li>' +
       '<li><strong>Comida por encomenda</strong> (marmita, bolo, salgado). Precisa de: ingredientes e conta simples do custo. Custo: ingredientes, gás e embalagem. Onde: grupos do bairro e WhatsApp. Cuidado: faça só sob encomenda e peça sinal antes, para não perder ingredientes; verifique com a vigilância sanitária as regras para vender.</li>' +
       '<li><strong>Trabalho digital simples</strong> (digitar, responder mensagens, divulgar). Precisa de: celular e internet. Custo: pacote de dados. Cuidado: desconfie de quem promete ganho fácil ou pede dinheiro para começar.</li>' +
       '</ol><p class="meta">Se a ideia exigir comprar material ou estoque, comece pequeno, só com o que já foi pedido, para não ficar com dívida.</p></section>' +
@@ -111,8 +126,14 @@
       '<button type="button" class="btn secundario" data-copiar="modelo">Copiar modelo de currículo</button>' +
       '<textarea id="texto-modelo" class="texto-copia" rows="8" readonly>[NOME]\n[Telefone/WhatsApp] · [Bairro e cidade]\n\nOBJETIVO\nTrabalhar como [função desejada]\n\nHABILIDADES\n[Liste habilidades reais]\n\nEXPERIÊNCIA E ATIVIDADES\n[Trabalhos informais, voluntariado ou atividades reais]\n\nESTUDOS E CURSOS\n[Escolaridade e cursos, se houver]\n\nDISPONIBILIDADE\n[Horários em que pode trabalhar]</textarea>' +
       '</section>' +
+      '<section class="apoio-trabalho" aria-labelledby="trabalho-local"><h3 id="trabalho-local">Vagas e atendimento aqui em Rio Claro</h3>' +
+      '<p>Para quem precisa de resposta rápida, o atendimento presencial costuma ser mais direto que os grandes sites. Ligue antes de ir, para confirmar horário e documentos.</p><ul>' +
+      cartaoLocal("man-pat", "PAT — Posto de Atendimento ao Trabalhador") + cartaoLocal("man-sde", "Secretaria de Desenvolvimento Econômico") +
+      '</ul>' +
+      '<h4>Imprimir o currículo sem pagar</h4><p>Pergunte no PAT, em bibliotecas ou em centros comunitários se imprimem currículo sem custo; este site não confirma onde isso é oferecido. Se não conseguir imprimir, mande o currículo em PDF pelo WhatsApp ou mostre-o no celular.</p>' +
+      '</section>' +
       '<section class="apoio-trabalho" aria-labelledby="trabalho-sem-experiencia"><h3 id="trabalho-sem-experiencia">Onde procurar trabalho sem experiência</h3>' +
-      '<p>Tente perguntar diretamente sobre vagas de entrada em supermercados, padarias, lojas, restaurantes, hotéis, condomínios, empresas de limpeza, salões, clínicas e cozinhas. A contratação depende de cada empregador.</p>' +
+      '<p>Tente perguntar diretamente sobre vagas de entrada em supermercados, padarias, farmácias, lojas, restaurantes, hotéis e pousadas, condomínios, escolas e creches, empresas de limpeza, salões, clínicas e cozinhas. A contratação depende de cada empregador.</p>' +
       '<blockquote><p>Bom dia. Estou procurando trabalho e tenho interesse em [área/função]. Vocês estão recebendo currículos ou têm alguma vaga? Posso deixar meu contato?</p></blockquote>' +
       '</section>' +
       '<section class="apoio-trabalho" aria-labelledby="trabalho-direitos"><h3 id="trabalho-direitos">Serviços públicos e cursos gratuitos</h3><ul>' +
@@ -126,7 +147,7 @@
       '</ul><p>O CRAS pode orientar sobre CadÚnico e benefícios sociais. Nenhum benefício é automático: confirme os critérios e a documentação.</p>' +
       '<h4>Direitos básicos, em palavras simples</h4><p>Carteira assinada registra o vínculo de emprego. Vale-transporte ajuda no deslocamento conforme as regras. Férias, 13º salário e FGTS têm regras próprias; consulte os canais oficiais para entender cada caso.</p></section>' +
       '<section class="apoio-trabalho" aria-labelledby="trabalho-entrevista"><h3 id="trabalho-entrevista">Antes da entrevista</h3><ul>' +
-      '<li>Use roupa limpa, inteira e confortável. Você não precisa comprar roupa, sapato ou maquiagem para participar de uma entrevista.</li><li>Veja se tem alguma peça emprestada com alguém de confiança; escolha algo que permita sentar, andar e se movimentar à vontade.</li><li>Se puder, pesquise o tipo de ambiente da empresa, mas não deixe de comparecer só porque não tem roupa social.</li><li>Confira endereço, horário e como chegar. Leve o currículo no celular ou impresso, se tiver.</li><li>Se precisar de cuidado para os filhos, tente combinar com alguém de confiança e pense num plano alternativo.</li></ul>' +
+      '<li>Use roupa limpa, inteira e confortável. Você não precisa comprar roupa, sapato ou maquiagem para participar de uma entrevista.</li><li>Veja se tem alguma peça emprestada com alguém de confiança; escolha algo que permita sentar, andar e se movimentar à vontade.</li><li>Se puder, pesquise o tipo de ambiente da empresa, mas não deixe de comparecer só porque não tem roupa social.</li><li>Confira endereço, horário e como chegar. Leve o currículo no celular ou impresso, se tiver.</li><li>Carregue o celular antes de sair, leve água e um lanche simples e documento com foto. Combine a passagem no dia anterior.</li><li>Se tiver filho pequeno, deixe com alguém de confiança antes da entrevista.</li><li>Se precisar de cuidado para os filhos, tente combinar com alguém de confiança e pense num plano alternativo.</li></ul>' +
       '<h4>Leituras úteis: como se vestir sem gastar</h4><p>Estas orientações ajudam a escolher uma roupa adequada usando o que você já tem. São dicas, não regras obrigatórias: a roupa não define sua competência.</p><ul>' +
       '<li><a href="https://mepoupe.com/dicas-de-riqueza/procurando-emprego-como-se-vestir-sem-gastar-a-grana-que-voce-nao-tem/" target="_blank" rel="noopener noreferrer">Me Poupe! — Como se vestir sem gastar a grana que você não tem</a></li>' +
       '<li><a href="https://www.ciadeestagios.com.br/guia-profissional/como-se-vestir/" target="_blank" rel="noopener noreferrer">Cia de Estágios — Como se vestir para uma entrevista de emprego</a></li>' +
@@ -135,6 +156,8 @@
       '</ul><h4>“Fale sobre você”</h4><p>“Sou [nome], estou procurando uma oportunidade em [área]. Sou [qualidade verdadeira], aprendo com orientação e posso contribuir com [habilidade real].”</p>' +
       '<h4>“Por que quer trabalhar aqui?”</h4><p>“Tenho interesse nessa função e quero aprender e fazer um bom trabalho. Pelo que conheço, posso contribuir com [algo ligado à vaga].”</p>' +
       '<h4>“Qual é seu ponto a desenvolver?”</h4><p>Escolha algo verdadeiro e explique como está melhorando. Por exemplo: “Ainda tenho pouca experiência formal, então estou buscando aprender e praticar.”</p></section>' +
+      '<section class="apoio-trabalho" aria-labelledby="trabalho-mei"><h3 id="trabalho-mei">Trabalho por conta própria: MEI</h3>' +
+      '<p>Quem faz bicos, vende comida ou artesanato pode se formalizar como MEI pelo ' + '<a href="https://www.gov.br/empresas-e-negocios/pt-br/empreendedor" target="_blank" rel="noopener noreferrer">Portal do Empreendedor</a>' + ', onde o cadastro é gratuito. Depois do registro há contribuição mensal e regras de atividade permitida. Confira os critérios atuais; a Sala do Empreendedor, na Secretaria de Desenvolvimento Econômico, pode orientar.</p></section>' +
       '<section class="apoio-trabalho" aria-labelledby="trabalho-aparencia"><h3 id="trabalho-aparencia">Cabelo e unhas sem gastar</h3>' +
       '<p>Para uma entrevista ou um dia de trabalho, o que conta é estar limpa e à vontade. Você não precisa de salão, escova, esmalte nem manicure.</p>' +
       '<h4>Cabelo</h4><ul>' +
