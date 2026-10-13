@@ -142,7 +142,13 @@ assert(/id="montar-curriculo"/.test(secaoCv), "o formulário do currículo conti
 assert(/word\.cloud\.microsoft\.com/.test(secaoCv), "inclui modelos de currículo do Word");
 assert(/docs\.google\.com/.test(secaoCv), "inclui Google Docs");
 assert(/servicos\.mte\.gov\.br/.test(secaoCv), "inclui Emprega Brasil/SINE");
-assert(!/livecareer|canva\.com/i.test(secaoCv), "não inclui plataformas com fluxo freemium ou download pago");
+assert(/vagas\.com\.br/.test(secaoCv), "inclui Vagas.com.br");
+assert(/br\.indeed\.com/.test(secaoCv), "inclui Indeed Brasil");
+assert(/infojobs\.com\.br/.test(secaoCv), "inclui Infojobs");
+assert(/portal\.gupy\.io/.test(secaoCv), "inclui Gupy");
+assert(/br\.linkedin\.com\/jobs/.test(secaoCv), "inclui vagas do LinkedIn");
+assert(/trabalhabrasil\.com\.br/.test(secaoCv), "inclui Trabalha Brasil");
+assert(!/livecareer|canva\.com/i.test(secaoCv), "não inclui plataformas de currículo com recursos pagos");
 assert.deepStrictEqual(J.dadosDesnecessarios({ a: "123.456.789-09" }), ["parece haver um CPF"]);
 assert.deepStrictEqual(J.dadosDesnecessarios({ a: "13500-190" }), ["parece haver um CEP"]);
 assert.deepStrictEqual(J.dadosDesnecessarios({ a: "(19) 99439-4433 e (19) 3522-1930" }), [], "telefone não é dado desnecessário");
