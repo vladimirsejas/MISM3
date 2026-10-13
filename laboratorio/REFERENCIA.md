@@ -8,3 +8,7 @@
 - **Integridade:** `protegidos.sha256` guarda o hash de 199 arquivos de `web/`, `catalogo/`, `pipeline/`, `avaliacao/`, `dados/`, `docs/`, `.github/`, `README.md` e `requirements.txt`. Conferir: `python laboratorio/verificar_intacto.py`.
 
 Para desfazer tudo: apagar a pasta `laboratorio/`. O site e os modelos não dependem dela.
+
+## Alterações aprovadas depois da referência
+A tag `mism3-referencia-pre-lab` (commit `67e025a`) continua sendo o estado original. Mudanças no site feitas de propósito, por decisão do autor, e depois registradas em `protegidos.sha256`:
+- **12/10/2026:** nova ilustração em `web/img/faixa-mulheres.webp` e ajuste de `width`, `height` e `alt` dessa imagem em `web/index.html`. Nenhuma outra mudança no site.
