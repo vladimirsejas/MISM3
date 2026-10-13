@@ -141,9 +141,13 @@ assert.deepStrictEqual(cv.secoes.map((s) => s.titulo), ["Objetivo", "Experiênci
 assert.deepStrictEqual(cv.secoes[1].itens, ["Cozinha do bar", "Limpeza de casas"]);
 assert.strictEqual(J.montarCurriculo({}).vazio, true);
 assert.strictEqual(J.montarCurriculo({ experiencias: "x\n".repeat(40) }).secoes[0].itens.length, 12, "limita o número de linhas");
+/* A tela usa a jornada registrada (J.de), não o módulo todo: ela precisa conseguir montar o currículo. */
+const cvDaJornada = J.de("trabalho").montarCurriculo({ nome: "Maria", objetivo: "Auxiliar de cozinha" });
+assert.strictEqual(cvDaJornada.nome, "Maria", "a jornada Trabalho registrada monta o currículo");
+assert.strictEqual(typeof J.de("trabalho").dadosDesnecessarios, "function", "a jornada registrada avisa sobre dados desnecessários");
 const secaoCv = UI.html(true);
 assert(/id="montar-curriculo"/.test(secaoCv), "o formulário do currículo continua na jornada Trabalho");
-assert(/word\.cloud\.microsoft\.com/.test(secaoCv), "inclui modelos de currículo do Word");
+assert(/word\.cloud\.microsoft\/create/.test(secaoCv), "inclui modelos de currículo do Word");
 assert(/docs\.google\.com/.test(secaoCv), "inclui Google Docs");
 assert(/servicos\.mte\.gov\.br/.test(secaoCv), "inclui Emprega Brasil/SINE");
 assert(/vagas\.com\.br/.test(secaoCv), "inclui Vagas.com.br");
