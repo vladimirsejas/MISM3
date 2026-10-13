@@ -198,16 +198,22 @@ assert(/Revenda por consignação/.test(secaoLocal) && /não compre kit inicial/
 assert(/leve água e um lanche/.test(secaoLocal), "logística do dia da entrevista");
 assert(!/R\$\s?\d/.test(secaoLocal), "não promete valores de pagamento");
 assert(!/\d+ ?% das vagas/.test(secaoLocal), "sem estatística sem fonte");
-(secaoLocal.match(/href="#(trabalho-[a-z-]+)"/g) || []).forEach((h) => {
-  const id = h.slice(7, -1);
-  assert(secaoLocal.includes('id="' + id + '"'), "atalho sem destino: " + id);
-});
 UI.usarCatalogo(null);
-/* Todo atalho aponta para uma seção que existe na própria tela. */
-(secaoCv.match(/href="#(trabalho-[a-z-]+)"/g) || []).forEach((h) => {
-  const id = h.slice(7, -1);
-  assert(secaoCv.includes('id="' + id + '"') || secaoCv.includes("id='" + id + "'"), "atalho sem destino: " + id);
-});
+
+/* O roteador (app.js, render) lê o primeiro trecho do endereço como o nome de uma ÁREA: "#trabalho-agora" cairia na Home.
+   Então todo link interno precisa ser "#area" ou "#area/secao", com a área existente e a seção presente na tela. */
+const AREAS_SITE = require("../areas.js");
+function conferirLinksInternos(htmlTela, nome) {
+  (htmlTela.match(/href="#[^"]+"/g) || []).forEach((h) => {
+    const alvo = h.slice(7, -1), partes = alvo.split("/");
+    assert(AREAS_SITE.porId(partes[0]), nome + ": o link interno " + h + " leva à Home, porque '" + partes[0] + "' não é uma área (use #area/secao)");
+    if (partes[1] && partes[0] === "trabalho") assert(htmlTela.includes('id="' + partes[1] + '"'), nome + ": a seção " + partes[1] + " não existe na tela de Trabalho");
+  });
+}
+conferirLinksInternos(secaoCv, "Trabalho (sem catálogo)");
+UI.usarCatalogo((id) => (catalogo.servicos || []).find((x) => x.id === id) || null);
+conferirLinksInternos(UI.html(true), "Trabalho (com catálogo)");
+UI.usarCatalogo(null);
 
 assert.deepStrictEqual(J.dadosDesnecessarios({ a: "123.456.789-09" }), ["parece haver um CPF"]);
 assert.deepStrictEqual(J.dadosDesnecessarios({ a: "13500-190" }), ["parece haver um CEP"]);

@@ -51,21 +51,21 @@
   function htmlCurriculoSecao() {
     return '<section class="secao curriculo" id="montar-curriculo" aria-labelledby="titulo-curriculo">' +
       '<nav class="atalhos-trabalho" aria-label="Atalhos da área Trabalho"><h3>Por onde começar</h3><ul>' +
-      '<li><a href="#trabalho-agora">Preciso de dinheiro esta semana</a></li>' +
-      '<li><a href="#trabalho-hoje">O que posso fazer hoje</a></li>' +
-      '<li><a href="#trabalho-renda">Ideias de renda, da mais fácil à mais difícil</a></li>' +
+      '<li><a href="#trabalho/trabalho-agora">Preciso de dinheiro esta semana</a></li>' +
+      '<li><a href="#trabalho/trabalho-hoje">O que posso fazer hoje</a></li>' +
+      '<li><a href="#trabalho/trabalho-renda">Ideias de renda, da mais fácil à mais difícil</a></li>' +
       '<li><button type="button" class="btn secundario" data-curriculo>Montar meu currículo</button></li>' +
-      '<li><a href="#trabalho-local">Vagas e atendimento em Rio Claro</a></li>' +
-      '<li><a href="#trabalho-estudar">Estudar para trabalhar melhor</a></li>' +
-      '<li><a href="#trabalho-sem-experiencia">Onde procurar trabalho</a></li>' +
-      '<li><a href="#trabalho-entrevista">Preparar a entrevista</a></li>' +
-      '<li><a href="#trabalho-aparencia">Cabelo e unhas sem gastar</a></li>' +
-      '<li><a href="#trabalho-basico">Falta o básico: comida, passagem, filhos</a></li>' +
-      '<li><a href="#trabalho-transporte">Transporte e passagem</a></li>' +
-      '<li><a href="#trabalho-filhos">Cuidado dos filhos</a></li>' +
-      '<li><a href="#trabalho-golpes">Evitar golpes</a></li>' +
-      '<li><a href="#trabalho-rejeicao">Quando recebo um não</a></li>' +
-      '<li><a href="#trabalho-rede">Pedir ajuda à minha rede</a></li>' +
+      '<li><a href="#trabalho/trabalho-local">Vagas e atendimento em Rio Claro</a></li>' +
+      '<li><a href="#trabalho/trabalho-estudar">Estudar para trabalhar melhor</a></li>' +
+      '<li><a href="#trabalho/trabalho-sem-experiencia">Onde procurar trabalho</a></li>' +
+      '<li><a href="#trabalho/trabalho-entrevista">Preparar a entrevista</a></li>' +
+      '<li><a href="#trabalho/trabalho-aparencia">Cabelo e unhas sem gastar</a></li>' +
+      '<li><a href="#trabalho/trabalho-basico">Falta o básico: comida, passagem, filhos</a></li>' +
+      '<li><a href="#trabalho/trabalho-transporte">Transporte e passagem</a></li>' +
+      '<li><a href="#trabalho/trabalho-filhos">Cuidado dos filhos</a></li>' +
+      '<li><a href="#trabalho/trabalho-golpes">Evitar golpes</a></li>' +
+      '<li><a href="#trabalho/trabalho-rejeicao">Quando recebo um não</a></li>' +
+      '<li><a href="#trabalho/trabalho-rede">Pedir ajuda à minha rede</a></li>' +
       '</ul></nav>' +
       '<details><summary><h2 id="titulo-curriculo">Montar um currículo</h2></summary>' +
       '<p class="meta">Preencha só o que quiser. Não coloque CPF, RG, endereço completo nem data de nascimento exata. O texto não sai deste aparelho.</p>' +
