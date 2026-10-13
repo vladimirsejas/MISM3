@@ -25,4 +25,4 @@ python -m pytest laboratorio/tests -q                        # testes do laborat
 Nenhum resultado significa "segurança garantida": só que os critérios foram cumpridos nos conjuntos testados.
 
 ## Fases
-0 referência (feita) · 1 estrutura isolada (feita) · 2 integração testada com respostas simuladas (feita; chamada real depende da chave) · 3 gerar casos · 4 validar e lacrar · 5 medir e comparar · 6 decidir.
+0 referência (feita) · 1 estrutura isolada (feita) · 2 integração testada, com respostas simuladas e com chamada real ao Gemini (feita em 12/10/2026) · 3 gerar casos · 4 validar e lacrar · 5 medir e comparar · 6 decidir.
