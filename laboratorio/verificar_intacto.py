@@ -4,6 +4,7 @@
     python laboratorio/verificar_intacto.py --gerar    # só para recriar a referência, de propósito
 """
 import hashlib
+import subprocess
 import sys
 
 from config import LAB, PROTEGIDOS, RAIZ
@@ -12,14 +13,10 @@ ARQUIVO = LAB / "protegidos.sha256"
 
 
 def calcular() -> dict[str, str]:
-    h = {}
-    for pasta in PROTEGIDOS:
-        for f in sorted((RAIZ / pasta).rglob("*")):
-            if f.is_file() and "__pycache__" not in f.parts and ".pytest_cache" not in f.parts and f.suffix != ".pyc":
-                h[f.relative_to(RAIZ).as_posix()] = hashlib.sha256(f.read_bytes()).hexdigest()
-    h["README.md"] = hashlib.sha256((RAIZ / "README.md").read_bytes()).hexdigest()
-    h["requirements.txt"] = hashlib.sha256((RAIZ / "requirements.txt").read_bytes()).hexdigest()
-    return h
+    """Hash dos arquivos VERSIONADOS pelo Git nas pastas protegidas (arquivos soltos, como imagens novas ainda não commitadas, não contam)."""
+    saida = subprocess.run(["git", "ls-files", "-z", "--", *PROTEGIDOS, "README.md", "requirements.txt"], cwd=RAIZ,
+                           capture_output=True, check=True).stdout.decode("utf-8")
+    return {n: hashlib.sha256((RAIZ / n).read_bytes()).hexdigest() for n in sorted(saida.split("\0")) if n and (RAIZ / n).is_file()}
 
 
 def ler() -> dict[str, str]:
