@@ -177,6 +177,24 @@ assert(/Vender o que você já tem/.test(secaoCv) && /Comida por encomenda/.test
 assert(/Cabelo e unhas sem gastar/.test(secaoCv) && /não precisa de salão, escova, esmalte nem manicure/.test(secaoCv), "cabelo e unhas sem exigir gasto");
 assert(/Falta o básico/.test(secaoCv) && /href="#assistencia"/.test(secaoCv) && /Nenhum benefício é automático/.test(secaoCv), "liga Trabalho à assistência social sem prometer benefício");
 assert(!/shopee/i.test(secaoCv), "não indica lojas como fonte de dicas");
+assert(!/Vagas e atendimento aqui em Rio Claro/.test(secaoCv) || !/\(19\) 3525-2785/.test(secaoCv), "sem catálogo, nenhum telefone é escrito à mão na tela");
+UI.usarCatalogo((id) => (catalogo.servicos || []).find((x) => x.id === id) || null);
+const secaoLocal = UI.html(true);
+const pat = (catalogo.servicos || []).find((x) => x.id === "man-pat");
+assert(pat && secaoLocal.includes(pat.telefone), "o telefone do PAT na tela vem do catálogo verificado");
+assert(/Vagas e atendimento aqui em Rio Claro/.test(secaoLocal) && /Ligue antes de ir/.test(secaoLocal), "bloco local manda confirmar antes de ir");
+assert(/não publica endereço/.test(secaoLocal), "o aviso do catálogo sobre endereço ausente aparece na tela");
+assert(/este site não confirma onde isso é oferecido/.test(secaoLocal), "não promete impressão gratuita em lugar nenhum");
+assert(/Trabalho por conta própria: MEI/.test(secaoLocal) && /gov\.br\/empresas-e-negocios/.test(secaoLocal), "MEI com fonte oficial");
+assert(/Revenda por consignação/.test(secaoLocal) && /não compre kit inicial/.test(secaoLocal), "consignação sem comprar kit");
+assert(/leve água e um lanche/.test(secaoLocal), "logística do dia da entrevista");
+assert(!/R\$\s?\d/.test(secaoLocal), "não promete valores de pagamento");
+assert(!/\d+ ?% das vagas/.test(secaoLocal), "sem estatística sem fonte");
+(secaoLocal.match(/href="#(trabalho-[a-z-]+)"/g) || []).forEach((h) => {
+  const id = h.slice(7, -1);
+  assert(secaoLocal.includes('id="' + id + '"'), "atalho sem destino: " + id);
+});
+UI.usarCatalogo(null);
 /* Todo atalho aponta para uma seção que existe na própria tela. */
 (secaoCv.match(/href="#(trabalho-[a-z-]+)"/g) || []).forEach((h) => {
   const id = h.slice(7, -1);
