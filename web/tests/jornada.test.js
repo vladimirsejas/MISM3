@@ -149,6 +149,18 @@ assert(/portal\.gupy\.io/.test(secaoCv), "inclui Gupy");
 assert(/br\.linkedin\.com\/jobs/.test(secaoCv), "inclui vagas do LinkedIn");
 assert(/trabalhabrasil\.com\.br/.test(secaoCv), "inclui Trabalha Brasil");
 assert(!/livecareer|canva\.com/i.test(secaoCv), "não inclui plataformas de currículo com recursos pagos");
+assert(/Preciso de dinheiro esta semana/.test(secaoCv), "prioriza renda urgente");
+assert(/O que posso fazer hoje/.test(secaoCv), "tem checklist simples para hoje");
+assert(/Nunca trabalhei/.test(secaoCv), "explica currículo sem experiência");
+assert(/Onde procurar trabalho sem experiência/.test(secaoCv), "sugere locais para procurar vaga presencial");
+assert(/Serviços públicos e cursos gratuitos/.test(secaoCv), "reúne serviços públicos e cursos");
+assert(/Antes da entrevista/.test(secaoCv), "prepara para entrevista em linguagem simples");
+assert(/Peça ajuda à sua rede/.test(secaoCv), "inclui mensagem para rede de apoio");
+assert(/Cuidado com golpes de emprego/.test(secaoCv), "inclui prevenção de golpes");
+assert(/Se o desânimo apertar/.test(secaoCv), "inclui apoio emocional e CVV");
+assert(/data-copiar="rede"/.test(secaoCv) && /data-copiar="modelo"/.test(secaoCv), "oferece botões para copiar mensagens e modelo");
+assert(/não há pagamento garantido/.test(secaoCv), "não promete renda garantida");
+
 assert.deepStrictEqual(J.dadosDesnecessarios({ a: "123.456.789-09" }), ["parece haver um CPF"]);
 assert.deepStrictEqual(J.dadosDesnecessarios({ a: "13500-190" }), ["parece haver um CEP"]);
 assert.deepStrictEqual(J.dadosDesnecessarios({ a: "(19) 99439-4433 e (19) 3522-1930" }), [], "telefone não é dado desnecessário");
