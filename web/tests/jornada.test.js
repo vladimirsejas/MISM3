@@ -163,8 +163,8 @@ assert(/class="atalhos-trabalho"/.test(secaoCv), "oferece atalhos verticais para
 assert(/Transporte e passagem: planeje antes de sair/.test(secaoCv), "orienta sobre custo e planejamento do transporte");
 assert(/Tenho filhos\. Como organizar o cuidado\?/.test(secaoCv), "inclui orientação sobre cuidado dos filhos sem prometer vaga");
 assert(/Recebi um não\. E agora\?/.test(secaoCv), "acolhe a rejeição e sugere próximos passos realistas");
-assert(/unicesumar\\.edu\\.br\\/blog\\/como-se-vestir-para-entrevista-de-emprego/.test(secaoCv), "inclui o artigo da Unicesumar");
-assert(/passaportefashionista\\.com\\/5-dicas-infaliveis-para-se-vestir-bem-sem-gastar-muito/.test(secaoCv), "inclui o artigo Passaporte Fashionista");
+assert(interfaceTrabalho.includes("unicesumar.edu.br/blog/como-se-vestir-para-entrevista-de-emprego"), "área Trabalho inclui o guia da Unicesumar");
+assert(interfaceTrabalho.includes("passaportefashionista.com/5-dicas-infaliveis-para-se-vestir-bem-sem-gastar-muito"), "área Trabalho inclui dicas para se vestir bem gastando pouco");
 assert(/Peça ajuda à sua rede/.test(secaoCv), "inclui mensagem para rede de apoio");
 assert(/Cuidado com golpes de emprego/.test(secaoCv), "inclui prevenção de golpes");
 assert(/Se o desânimo apertar/.test(secaoCv), "inclui apoio emocional e CVV");
@@ -197,8 +197,8 @@ assert(passoVagas.pergunte.some((t) => /14\.542/.test(t) && /PAT/.test(t)), "a p
 assert(passoVagas.extras.some((l) => /camara\.leg\.br\/legin\/fed\/lei\/2023\/lei-14542/.test(l[1])), "link da lei na fonte oficial");
 
 const interfaceTrabalho = UI.html();
-assert(/mepoupe\\.com\\/dicas-de-riqueza\\/procurando-emprego-como-se-vestir-sem-gastar-a-grana-que-voce-nao-tem/.test(interfaceTrabalho), "área Trabalho inclui a leitura da Me Poupe sobre roupa sem gastar");
-assert(/ciadeestagios\\.com\\.br\\/guia-profissional\\/como-se-vestir/.test(interfaceTrabalho), "área Trabalho inclui o guia da Cia de Estágios");
+assert(interfaceTrabalho.includes("mepoupe.com/dicas-de-riqueza/procurando-emprego-como-se-vestir-sem-gastar-a-grana-que-voce-nao-tem"), "área Trabalho inclui a leitura da Me Poupe sobre roupa sem gastar");
+assert(interfaceTrabalho.includes("ciadeestagios.com.br/guia-profissional/como-se-vestir"), "área Trabalho inclui o guia da Cia de Estágios");
 assert(/unicesumar\\.edu\\.br\\/blog\\/como-se-vestir-para-entrevista-de-emprego/.test(interfaceTrabalho), "área Trabalho inclui o guia da Unicesumar");
 assert(/passaportefashionista\\.com\\/5-dicas-infaliveis-para-se-vestir-bem-sem-gastar-muito/.test(interfaceTrabalho), "área Trabalho inclui dicas para se vestir bem gastando pouco");
 assert(/não precisa comprar roupa, sapato ou maquiagem/.test(interfaceTrabalho), "orientação de entrevista não exige gasto com roupa");
