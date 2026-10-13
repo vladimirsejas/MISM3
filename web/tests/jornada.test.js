@@ -192,6 +192,8 @@ assert(passoVagas.extras.some((l) => /camara\.leg\.br\/legin\/fed\/lei\/2023\/le
 const interfaceTrabalho = UI.html();
 assert(/mepoupe\\.com\\/dicas-de-riqueza\\/procurando-emprego-como-se-vestir-sem-gastar-a-grana-que-voce-nao-tem/.test(interfaceTrabalho), "área Trabalho inclui a leitura da Me Poupe sobre roupa sem gastar");
 assert(/ciadeestagios\\.com\\.br\\/guia-profissional\\/como-se-vestir/.test(interfaceTrabalho), "área Trabalho inclui o guia da Cia de Estágios");
+assert(/unicesimar\\.edu\\.br\\/blog\\/como-se-vestir-para-entrevista-de-emprego/.test(interfaceTrabalho), "área Trabalho inclui o guia da Unicesumar");
+assert(/passaportefashionista\\.com\\/5-dicas-infaliveis-para-se-vestir-bem-sem-gastar-muito/.test(interfaceTrabalho), "área Trabalho inclui dicas para se vestir bem gastando pouco");
 assert(/não precisa comprar roupa, sapato ou maquiagem/.test(interfaceTrabalho), "orientação de entrevista não exige gasto com roupa");
 console.log("jornada.test.js: perguntas, ordem e tamanho do plano, telefones do catálogo, links, promessas proibidas e currículo passaram");
 
