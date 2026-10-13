@@ -41,3 +41,9 @@ def chave() -> str:
         if v:
             return v
     return ""
+
+
+def parece_exemplo(valor: str) -> bool:
+    """Valor de exemplo que ninguém trocou pela chave real (só zeros, 'cole...', 'sua-chave', 'xxx')."""
+    v = valor.strip().lower()
+    return bool(v) and (set(v) <= {"0"} or set(v) <= {"x"} or v.startswith(("cole", "sua-chave", "sua_chave", "troque", "preencha")))

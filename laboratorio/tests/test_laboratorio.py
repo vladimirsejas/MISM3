@@ -155,3 +155,16 @@ def test_nome_alternativo_google_api_key_e_env_da_raiz(tmp_path, monkeypatch):
     monkeypatch.delenv("GEMINI_API_KEY")
     monkeypatch.delenv("GOOGLE_API_KEY", raising=False)
     assert config.chave() == "CHAVE-GOOGLE"
+
+
+@pytest.mark.parametrize("valor", ["0" * 45, "xxxx", "cole-a-chave-aqui", "COLE_AQUI_A_CHAVE_REAL", "sua-chave"])
+def test_chave_de_exemplo_nao_e_enviada(monkeypatch, valor):
+    monkeypatch.setenv("GEMINI_API_KEY", valor)
+    with mock.patch("urllib.request.urlopen") as u, pytest.raises(cliente_llm.ErroLab, match="exemplo"):
+        cliente_llm.gerar("x")
+    u.assert_not_called()
+
+
+def test_chave_real_nao_e_confundida_com_exemplo():
+    import config
+    assert not config.parece_exemplo("AIzaSyD-chave-de-verdade-0001")

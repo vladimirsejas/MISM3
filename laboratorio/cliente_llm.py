@@ -35,6 +35,8 @@ def gerar(prompt: str, modelo: str | None = None) -> str:
     chave = config.chave()
     if not chave:
         raise ErroLab("Falta GEMINI_API_KEY. Nada foi enviado.")
+    if config.parece_exemplo(chave):
+        raise ErroLab("A chave encontrada parece um valor de exemplo (zeros ou texto de modelo). Troque pela chave real no .env ou em GEMINI_API_KEY. Nada foi enviado.")
     modelo = modelo or config.MODELO
     corpo = json.dumps({"contents": [{"parts": [{"text": prompt}]}]}).encode("utf-8")
     req = urllib.request.Request(f"{config.URL_BASE}/{modelo}:generateContent", data=corpo, method="POST",
