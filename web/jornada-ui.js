@@ -54,6 +54,15 @@
       '<li><a href="https://www.gov.br/trabalho-e-emprego/pt-br" target="_blank" rel="noopener noreferrer">Ministério do Trabalho e Emprego</a></li>' +
       '<li><a href="https://servicos.mte.gov.br/" target="_blank" rel="noopener noreferrer">Emprega Brasil / SINE</a></li>' +
       '<li><a href="https://www.gov.br/pt-br/servicos/obter-a-carteira-de-trabalho" target="_blank" rel="noopener noreferrer">Carteira de Trabalho Digital</a></li>' +
+      '</ul></div>' +
+      '<div class="links-vagas"><h3>Sites para procurar emprego</h3>' +
+      '<p class="meta">As opções básicas de busca e candidatura são gratuitas. Algumas plataformas oferecem recursos extras pagos; não pague para se candidatar a uma vaga.</p><ul>' +
+      '<li><a href="https://www.vagas.com.br/" target="_blank" rel="noopener noreferrer">Vagas.com.br</a> — busca de vagas e alertas.</li>' +
+      '<li><a href="https://br.indeed.com/" target="_blank" rel="noopener noreferrer">Indeed</a> — pesquisa por cargo, empresa e cidade.</li>' +
+      '<li><a href="https://www.infojobs.com.br/" target="_blank" rel="noopener noreferrer">Infojobs</a> — cadastro de currículo e candidatura; há recursos opcionais pagos.</li>' +
+      '<li><a href="https://portal.gupy.io/pt" target="_blank" rel="noopener noreferrer">Gupy</a> — vagas e etapas de seleção das empresas.</li>' +
+      '<li><a href="https://br.linkedin.com/jobs" target="_blank" rel="noopener noreferrer">LinkedIn — Vagas</a> — busca de oportunidades e contato profissional.</li>' +
+      '<li><a href="https://www.trabalhabrasil.com.br/" target="_blank" rel="noopener noreferrer">Trabalha Brasil</a> — classificados e busca de vagas.</li>' +
       '</ul></div></section>';
   }
   function campoTexto(id, rotulo, max, valor) {
