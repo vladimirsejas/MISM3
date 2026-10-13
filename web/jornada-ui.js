@@ -40,9 +40,12 @@
       '<nav class="atalhos-trabalho" aria-label="Atalhos da área Trabalho"><h3>Por onde começar</h3><ul>' +
       '<li><a href="#trabalho-agora">Preciso de dinheiro esta semana</a></li>' +
       '<li><a href="#trabalho-hoje">O que posso fazer hoje</a></li>' +
+      '<li><a href="#trabalho-renda">Ideias de renda, da mais fácil à mais difícil</a></li>' +
       '<li><button type="button" class="btn secundario" data-curriculo>Montar meu currículo</button></li>' +
       '<li><a href="#trabalho-sem-experiencia">Onde procurar trabalho</a></li>' +
       '<li><a href="#trabalho-entrevista">Preparar a entrevista</a></li>' +
+      '<li><a href="#trabalho-aparencia">Cabelo e unhas sem gastar</a></li>' +
+      '<li><a href="#trabalho-basico">Falta o básico: comida, passagem, filhos</a></li>' +
       '<li><a href="#trabalho-transporte">Transporte e passagem</a></li>' +
       '<li><a href="#trabalho-filhos">Cuidado dos filhos</a></li>' +
       '<li><a href="#trabalho-golpes">Evitar golpes</a></li>' +
@@ -92,6 +95,16 @@
       '<li><label><input type="checkbox"> Consultei ou baixei a <a href="https://www.gov.br/pt-br/servicos/obter-a-carteira-de-trabalho" target="_blank" rel="noopener noreferrer">Carteira de Trabalho Digital</a>.</label></li>' +
       '<li><label><input type="checkbox"> Procurei o <a href="https://servicos.mte.gov.br/" target="_blank" rel="noopener noreferrer">Emprega Brasil / SINE</a> ou o PAT da minha cidade.</label></li>' +
       '</ul><p class="meta">Se não tiver todos os documentos, não desista: pergunte ao PAT ou ao CRAS como regularizar sua situação.</p></section>' +
+      '<section class="apoio-trabalho" aria-labelledby="trabalho-renda"><h3 id="trabalho-renda">Ideias de renda, da mais fácil de começar à mais difícil</h3>' +
+      '<p class="meta">Nenhuma delas garante dinheiro: depende de ter cliente ou comprador. Comece pela que não exige gastar nada.</p>' +
+      '<ol class="lista-renda">' +
+      '<li><strong>Vender o que você já tem</strong> (roupas, objetos, móveis). Precisa de: celular e boas fotos. Custo: nenhum. Onde: grupos de venda do bairro e <a href="https://www.olx.com.br/" target="_blank" rel="noopener noreferrer">OLX</a>. Cuidado: combine retirada em local público e não passe código recebido por SMS.</li>' +
+      '<li><strong>Serviço por diária</strong> (faxina, passar roupa, organização, ajudante). Precisa de: disponibilidade e transporte. Custo: passagem. Onde: grupos do bairro, conhecidos, condomínios. Cuidado: combine valor, horário e endereço antes de ir e avise alguém de confiança onde estará.</li>' +
+      '<li><strong>Cuidar de crianças ou idosos</strong>. Precisa de: experiência real e referências de quem já confiou em você. Custo: nenhum. Onde: indicação de vizinhos e famílias conhecidas. Cuidado: combine tarefas e horários e não assuma cuidados de saúde que você não sabe fazer.</li>' +
+      '<li><strong>Pequenos serviços</strong> (costura, ajustes, cabelo, unhas de vizinhas, reforço escolar). Precisa de: uma habilidade que você já tenha. Custo: pouco ou nenhum. Onde: indicação e grupos do bairro. Cuidado: diga o valor logo no início.</li>' +
+      '<li><strong>Comida por encomenda</strong> (marmita, bolo, salgado). Precisa de: ingredientes e conta simples do custo. Custo: ingredientes, gás e embalagem. Onde: grupos do bairro e WhatsApp. Cuidado: faça só sob encomenda e peça sinal antes, para não perder ingredientes; verifique com a vigilância sanitária as regras para vender.</li>' +
+      '<li><strong>Trabalho digital simples</strong> (digitar, responder mensagens, divulgar). Precisa de: celular e internet. Custo: pacote de dados. Cuidado: desconfie de quem promete ganho fácil ou pede dinheiro para começar.</li>' +
+      '</ol><p class="meta">Se a ideia exigir comprar material ou estoque, comece pequeno, só com o que já foi pedido, para não ficar com dívida.</p></section>' +
       '<section class="apoio-trabalho" aria-labelledby="cv-sem-experiencia"><h3 id="cv-sem-experiencia">Nunca trabalhei. O que coloco no currículo?</h3>' +
       '<p>Você pode destacar habilidades, trabalhos informais, cuidados, atividades voluntárias, cursos e disponibilidade. Não invente emprego nem experiência formal.</p>' +
       '<p><strong>Exemplo para adaptar:</strong></p><pre class="modelo-curriculo">[NOME]\n[Telefone/WhatsApp] · [Bairro e cidade]\n\nOBJETIVO\nTrabalhar como [atendente, auxiliar de limpeza, ajudante de cozinha ou outra função]\n\nHABILIDADES\n• Organização e cuidado com ambientes\n• Atendimento e comunicação respeitosa\n• Uso de celular e WhatsApp\n• [Outras habilidades que você realmente tem]\n\nEXPERIÊNCIA E ATIVIDADES\n[Trabalhos informais, ajuda em negócio familiar, voluntariado ou outras atividades reais]\n\nESTUDOS E CURSOS\n[Escolaridade e cursos, se houver]\n\nDISPONIBILIDADE\n[Manhã, tarde, noite ou integral]</pre>' +
@@ -122,6 +135,19 @@
       '</ul><h4>“Fale sobre você”</h4><p>“Sou [nome], estou procurando uma oportunidade em [área]. Sou [qualidade verdadeira], aprendo com orientação e posso contribuir com [habilidade real].”</p>' +
       '<h4>“Por que quer trabalhar aqui?”</h4><p>“Tenho interesse nessa função e quero aprender e fazer um bom trabalho. Pelo que conheço, posso contribuir com [algo ligado à vaga].”</p>' +
       '<h4>“Qual é seu ponto a desenvolver?”</h4><p>Escolha algo verdadeiro e explique como está melhorando. Por exemplo: “Ainda tenho pouca experiência formal, então estou buscando aprender e praticar.”</p></section>' +
+      '<section class="apoio-trabalho" aria-labelledby="trabalho-aparencia"><h3 id="trabalho-aparencia">Cabelo e unhas sem gastar</h3>' +
+      '<p>Para uma entrevista ou um dia de trabalho, o que conta é estar limpa e à vontade. Você não precisa de salão, escova, esmalte nem manicure.</p>' +
+      '<h4>Cabelo</h4><ul>' +
+      '<li>Cabelo limpo e preso ou arrumado de um jeito simples já basta.</li>' +
+      '<li>Crespo e cacheado: <a href="https://elle.com.br/?p=165920" target="_blank" rel="noopener noreferrer">9 penteados fáceis para cabelos crespos (Elle)</a>, <a href="https://loreal-paris.com.br/tranca-embutida-para-cabelos-cacheados-confira-o-passo-a-passo-do-penteado-feito-na-diagonal" target="_blank" rel="noopener noreferrer">trança embutida para cacheados (L’Oréal Paris)</a> e <a href="https://www.belezanaweb.com.br/loucas-por-beleza/penteados-para-cabelos-cacheados/" target="_blank" rel="noopener noreferrer">penteados para cacheados (Beleza na Web)</a>.</li>' +
+      '<li>Penteados simples para qualquer cabelo: <a href="https://elle.com.br/?p=188314" target="_blank" rel="noopener noreferrer">9 penteados simples para fazer sozinha (Elle)</a>.</li>' +
+      '</ul>' +
+      '<h4>Unhas</h4><ul>' +
+      '<li>Mãos lavadas, unhas curtas e limpas. Não precisa de esmalte.</li>' +
+      '<li>Amoleça a ponta dos dedos em água morna, empurre a cutícula com cuidado e não corte a cutícula. Passe hidratante ou óleo de cozinha, se não tiver creme.</li>' +
+      '<li>Passo a passo: <a href="https://www.belezanaweb.com.br/loucas-por-beleza/como-fazer-as-unhas-passo-a-passo-para-iniciantes/" target="_blank" rel="noopener noreferrer">como cuidar das unhas, para iniciantes (Beleza na Web)</a> e <a href="https://catracalivre.com.br/saude-bem-estar/rotina-magica-para-unhas-bonitas-em-casa-e-super-fortes/" target="_blank" rel="noopener noreferrer">rotina de unhas em casa (Catraca Livre)</a>.</li>' +
+      '</ul>' +
+      '<p class="meta">São artigos de revistas e sites de beleza, que também vendem produtos: ignore a indicação de comprar o que você não tem. Se aparecer mancha, dor ou inchaço na unha, procure uma unidade de saúde.</p></section>' +
       '<section class="apoio-trabalho" id="trabalho-transporte" aria-labelledby="titulo-trabalho-transporte"><h3 id="titulo-trabalho-transporte">Transporte e passagem: planeje antes de sair</h3>' +
       '<p>Antes de aceitar uma entrevista ou diária, confira o endereço, o horário, o trajeto e quanto vai gastar para ir e voltar. Se o custo pesar, pergunte à empresa se há vale-transporte para a vaga ou se é possível fazer a primeira conversa por telefone ou vídeo. Não conte com ajuda de transporte sem confirmar.</p>' +
       '<p>Consulte os horários e as opções de deslocamento disponíveis na <a href="#transporte">área Transporte deste site</a>. Se não souber como chegar, peça orientação antes de sair.</p></section>' +
@@ -136,6 +162,12 @@
       '<textarea id="texto-rede" class="texto-copia" rows="4" readonly>Oi, tudo bem? Estou procurando trabalho como [cargo/área]. Se você souber de alguma vaga ou alguém que precise, pode me avisar? Posso mandar meu currículo. Obrigada!</textarea>' +
       '<button type="button" class="btn secundario" data-copiar="rede">Copiar mensagem para WhatsApp</button>' +
       '<p class="meta">Compartilhe só com quem você se sente segura. Não publique documentos pessoais em grupos.</p></section>' +
+      '<section class="apoio-trabalho" aria-labelledby="trabalho-basico"><h3 id="trabalho-basico">Falta o básico: comida, passagem ou cuidado dos filhos</h3>' +
+      '<p>Procurar emprego é mais difícil quando falta comida ou dinheiro de passagem. Você pode buscar apoio ao mesmo tempo em que procura renda.</p><ul>' +
+      '<li>Procure o CRAS do seu bairro: ele orienta sobre alimentação, CadÚnico e benefícios. Veja a área <a href="#assistencia">Assistência Social</a> deste site, com endereços e telefones.</li>' +
+      '<li>Nenhum benefício é automático nem garantido: o CRAS confirma se você se enquadra.</li>' +
+      '<li>Para passagem e horários, veja a área <a href="#transporte">Transporte</a>. Para os filhos, veja <a href="#educacao/educacao-filhos">Educação: filhos</a>.</li>' +
+      '</ul></section>' +
       '<section class="apoio-trabalho" aria-labelledby="trabalho-golpes"><h3 id="trabalho-golpes">Cuidado com golpes de emprego</h3><ul>' +
       '<li>Desconfie se cobrarem PIX ou taxa para contratar ou garantir vaga.</li><li>Desconfie de salário muito alto com promessa de contratação fácil e imediata.</li><li>Confirme a empresa e a vaga por um canal oficial.</li><li>Não envie foto de documentos nem dados bancários antes de confirmar a legitimidade e a necessidade.</li><li>Leia com cuidado se pedirem para comprar curso, material ou equipamento para poder trabalhar.</li></ul>' +
       '</section>' +
