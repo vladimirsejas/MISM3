@@ -63,7 +63,59 @@
       '<li><a href="https://portal.gupy.io/pt" target="_blank" rel="noopener noreferrer">Gupy</a> — vagas e etapas de seleção das empresas.</li>' +
       '<li><a href="https://br.linkedin.com/jobs" target="_blank" rel="noopener noreferrer">LinkedIn — Vagas</a> — busca de oportunidades e contato profissional.</li>' +
       '<li><a href="https://www.trabalhabrasil.com.br/" target="_blank" rel="noopener noreferrer">Trabalha Brasil</a> — classificados e busca de vagas.</li>' +
-      '</ul></div></section>';
+      '</ul></div>' +
+      '<section class="apoio-trabalho" aria-labelledby="trabalho-agora"><h3 id="trabalho-agora">Preciso de dinheiro esta semana</h3>' +
+      '<p>Para tentar conseguir renda rápida, ofereça um serviço que você já sabe fazer: faxina, passar roupa, cozinhar, cuidar de crianças ou idosos, lavar carro ou ajudar em comércio. Combine valor, horário e transporte antes. A renda varia e não há pagamento garantido.</p>' +
+      '<h4>Onde oferecer seu serviço</h4><ul>' +
+      '<li>Grupo de WhatsApp do bairro ou grupos locais de emprego no Facebook.</li>' +
+      '<li><a href="https://www.olx.com.br/" target="_blank" rel="noopener noreferrer">OLX</a> — confira as regras da categoria de serviços.</li>' +
+      '<li><a href="https://www.getninjas.com.br/" target="_blank" rel="noopener noreferrer">GetNinjas</a> — confira antes se há cobrança para receber contatos.</li>' +
+      '</ul><p><strong>Mensagem para anunciar:</strong></p><blockquote><p>Faço faxina, passo roupa e ajudo com organização da casa. Tenho disponibilidade em [dias/horários]. Se precisar ou souber de alguém, me chame no privado.</p></blockquote>' +
+      '<button type="button" class="btn secundario" data-copiar="anuncio">Copiar mensagem de serviço</button>' +
+      '<textarea id="texto-anuncio" class="texto-copia" rows="3" readonly>Faço faxina, passo roupa e ajudo com organização da casa. Tenho disponibilidade em [dias/horários]. Se precisar ou souber de alguém, me chame no privado.</textarea>' +
+      '<p class="meta">Não pague taxa para conseguir uma vaga. Para entregas por aplicativo, confirme os requisitos e o prazo de aprovação antes de contar com esse dinheiro.</p></section>' +
+      '<section class="apoio-trabalho" aria-labelledby="trabalho-hoje"><h3 id="trabalho-hoje">O que posso fazer hoje</h3>' +
+      '<ul class="lista-check">' +
+      '<li><label><input type="checkbox"> Separei documento de identidade, CPF e comprovante de residência, se tiver.</label></li>' +
+      '<li><label><input type="checkbox"> Consultei ou baixei a <a href="https://www.gov.br/pt-br/servicos/obter-a-carteira-de-trabalho" target="_blank" rel="noopener noreferrer">Carteira de Trabalho Digital</a>.</label></li>' +
+      '<li><label><input type="checkbox"> Procurei o <a href="https://servicos.mte.gov.br/" target="_blank" rel="noopener noreferrer">Emprega Brasil / SINE</a> ou o PAT da minha cidade.</label></li>' +
+      '</ul><p class="meta">Se não tiver todos os documentos, não desista: pergunte ao PAT ou ao CRAS como regularizar sua situação.</p></section>' +
+      '<section class="apoio-trabalho" aria-labelledby="cv-sem-experiencia"><h3 id="cv-sem-experiencia">Nunca trabalhei. O que coloco no currículo?</h3>' +
+      '<p>Você pode destacar habilidades, trabalhos informais, cuidados, atividades voluntárias, cursos e disponibilidade. Não invente emprego nem experiência formal.</p>' +
+      '<p><strong>Exemplo para adaptar:</strong></p><pre class="modelo-curriculo">[NOME]\n[Telefone/WhatsApp] · [Bairro e cidade]\n\nOBJETIVO\nTrabalhar como [atendente, auxiliar de limpeza, ajudante de cozinha ou outra função]\n\nHABILIDADES\n• Organização e cuidado com ambientes\n• Atendimento e comunicação respeitosa\n• Uso de celular e WhatsApp\n• [Outras habilidades que você realmente tem]\n\nEXPERIÊNCIA E ATIVIDADES\n[Trabalhos informais, ajuda em negócio familiar, voluntariado ou outras atividades reais]\n\nESTUDOS E CURSOS\n[Escolaridade e cursos, se houver]\n\nDISPONIBILIDADE\n[Manhã, tarde, noite ou integral]</pre>' +
+      '<button type="button" class="btn secundario" data-copiar="modelo">Copiar modelo de currículo</button>' +
+      '<textarea id="texto-modelo" class="texto-copia" rows="8" readonly>[NOME]\n[Telefone/WhatsApp] · [Bairro e cidade]\n\nOBJETIVO\nTrabalhar como [função desejada]\n\nHABILIDADES\n[Liste habilidades reais]\n\nEXPERIÊNCIA E ATIVIDADES\n[Trabalhos informais, voluntariado ou atividades reais]\n\nESTUDOS E CURSOS\n[Escolaridade e cursos, se houver]\n\nDISPONIBILIDADE\n[Horários em que pode trabalhar]</textarea>' +
+      '</section>' +
+      '<section class="apoio-trabalho" aria-labelledby="trabalho-sem-experiencia"><h3 id="trabalho-sem-experiencia">Onde procurar trabalho sem experiência</h3>' +
+      '<p>Tente perguntar diretamente sobre vagas de entrada em supermercados, padarias, lojas, restaurantes, hotéis, condomínios, empresas de limpeza, salões, clínicas e cozinhas. A contratação depende de cada empregador.</p>' +
+      '<blockquote><p>Bom dia. Estou procurando trabalho e tenho interesse em [área/função]. Vocês estão recebendo currículos ou têm alguma vaga? Posso deixar meu contato?</p></blockquote>' +
+      '</section>' +
+      '<section class="apoio-trabalho" aria-labelledby="trabalho-direitos"><h3 id="trabalho-direitos">Serviços públicos e cursos gratuitos</h3><ul>' +
+      '<li><a href="https://servicos.mte.gov.br/" target="_blank" rel="noopener noreferrer">Emprega Brasil / SINE</a> — consulta de vagas e serviços de emprego.</li>' +
+      '<li><a href="https://www.gov.br/pt-br/servicos/obter-a-carteira-de-trabalho" target="_blank" rel="noopener noreferrer">Carteira de Trabalho Digital</a>.</li>' +
+      '<li><a href="https://www.gov.br/pt-br/servicos/solicitar-o-seguro-desemprego" target="_blank" rel="noopener noreferrer">Seguro-desemprego</a> — depende dos requisitos e da situação de desligamento.</li>' +
+      '<li><a href="https://www.gov.br/mds/pt-br/acoes-e-programas/bolsa-familia" target="_blank" rel="noopener noreferrer">Bolsa Família</a> — regras e elegibilidade são avaliadas pelo programa.</li>' +
+      '<li><a href="https://www.gov.br/aneel/pt-br/assuntos/tarifa-social" target="_blank" rel="noopener noreferrer">Tarifa Social de Energia Elétrica</a> — consulte os critérios atuais.</li>' +
+      '<li><a href="https://www.ev.org.br/" target="_blank" rel="noopener noreferrer">Fundação Bradesco</a> — cursos on-line gratuitos.</li>' +
+      '<li><a href="https://www.qualificasp.sp.gov.br/" target="_blank" rel="noopener noreferrer">Qualifica SP</a> — confira turmas e inscrições abertas.</li>' +
+      '</ul><p>O CRAS pode orientar sobre CadÚnico e benefícios sociais. Nenhum benefício é automático: confirme os critérios e a documentação.</p>' +
+      '<h4>Direitos básicos, em palavras simples</h4><p>Carteira assinada registra o vínculo de emprego. Vale-transporte ajuda no deslocamento conforme as regras. Férias, 13º salário e FGTS têm regras próprias; consulte os canais oficiais para entender cada caso.</p></section>' +
+      '<section class="apoio-trabalho" aria-labelledby="trabalho-entrevista"><h3 id="trabalho-entrevista">Antes da entrevista</h3><ul>' +
+      '<li>Use roupa limpa e confortável; não precisa comprar roupa nem maquiagem.</li><li>Confira o endereço, o horário e como chegar.</li><li>Leve o currículo no celular ou impresso, se tiver.</li><li>Se precisar de cuidado para os filhos, tente combinar com alguém de confiança e pense num plano alternativo.</li></ul>' +
+      '<h4>“Fale sobre você”</h4><p>“Sou [nome], estou procurando uma oportunidade em [área]. Sou [qualidade verdadeira], aprendo com orientação e posso contribuir com [habilidade real].”</p>' +
+      '<h4>“Por que quer trabalhar aqui?”</h4><p>“Tenho interesse nessa função e quero aprender e fazer um bom trabalho. Pelo que conheço, posso contribuir com [algo ligado à vaga].”</p>' +
+      '<h4>“Qual é seu ponto a desenvolver?”</h4><p>Escolha algo verdadeiro e explique como está melhorando. Por exemplo: “Ainda tenho pouca experiência formal, então estou buscando aprender e praticar.”</p></section>' +
+      '<section class="apoio-trabalho" aria-labelledby="trabalho-rede"><h3 id="trabalho-rede">Peça ajuda à sua rede</h3>' +
+      '<p>Enviar uma mensagem a pessoas de confiança pode ajudar a encontrar oportunidades. Não existe garantia, mas você não precisa procurar sozinha.</p>' +
+      '<textarea id="texto-rede" class="texto-copia" rows="4" readonly>Oi, tudo bem? Estou procurando trabalho como [cargo/área]. Se você souber de alguma vaga ou alguém que precise, pode me avisar? Posso mandar meu currículo. Obrigada!</textarea>' +
+      '<button type="button" class="btn secundario" data-copiar="rede">Copiar mensagem para WhatsApp</button>' +
+      '<p class="meta">Compartilhe só com quem você se sente segura. Não publique documentos pessoais em grupos.</p></section>' +
+      '<section class="apoio-trabalho" aria-labelledby="trabalho-golpes"><h3 id="trabalho-golpes">Cuidado com golpes de emprego</h3><ul>' +
+      '<li>Desconfie se cobrarem PIX ou taxa para contratar ou garantir vaga.</li><li>Desconfie de salário muito alto com promessa de contratação fácil e imediata.</li><li>Confirme a empresa e a vaga por um canal oficial.</li><li>Não envie foto de documentos nem dados bancários antes de confirmar a legitimidade e a necessidade.</li><li>Leia com cuidado se pedirem para comprar curso, material ou equipamento para poder trabalhar.</li></ul>' +
+      '</section>' +
+      '<section class="apoio-trabalho" aria-labelledby="trabalho-apoio"><h3 id="trabalho-apoio">Se o desânimo apertar</h3>' +
+      '<p>Ficar sem trabalho não define seu valor. Faça um passo possível por vez e peça apoio a alguém de confiança. O <a href="https://cvv.org.br/" target="_blank" rel="noopener noreferrer">CVV</a> atende pelo 188, gratuitamente, 24 horas por dia. Para apoio social, procure o CRAS do seu território.</p>' +
+      '</section></section>';
   }
   function campoTexto(id, rotulo, max, valor) {
     return '<div class="campo"><label for="' + id + '">' + esc(rotulo) + '</label><input id="' + id + '" type="text" maxlength="' + max + '" autocomplete="off"' + (valor ? ' value="' + esc(valor) + '"' : "") + "></div>";
@@ -304,9 +356,19 @@
       }
     });
     document.addEventListener("click", function (e) {
-      var t = e.target.closest ? e.target.closest("[data-resp],[data-passo],[data-curriculo],[data-imprimir],[data-limpar]") : null;
+      var t = e.target.closest ? e.target.closest("[data-resp],[data-passo],[data-curriculo],[data-imprimir],[data-limpar],[data-copiar]") : null;
       if (!t) return;
-      if (t.hasAttribute("data-resp")) {
+      if (t.hasAttribute("data-copiar")) {
+        var tipoCopia = t.getAttribute("data-copiar");
+        var campoCopia = tipoCopia === "anuncio" ? $("texto-anuncio") : tipoCopia === "modelo" ? $("texto-modelo") : $("texto-rede");
+        if (campoCopia) {
+          campoCopia.focus(); campoCopia.select();
+          var copiou = false;
+          try { copiou = document.execCommand("copy"); } catch (_) {}
+          if (copiou) { t.textContent = "Mensagem copiada"; }
+          else { t.textContent = "Texto selecionado: use Ctrl+C para copiar"; }
+        }
+      } else if (t.hasAttribute("data-resp")) {
         responder(t.getAttribute("data-resp"), t.getAttribute("data-valor"));
         desenhar(true);
       } else if (t.getAttribute("data-passo") === "voltar") {
