@@ -189,6 +189,10 @@ assert(passoVagas, "o plano de quem procura vaga deve ter o passo de vagas");
 assert(passoVagas.pergunte.some((t) => /14\.542/.test(t) && /PAT/.test(t)), "a prioridade do Sine deve aparecer, mandando perguntar no PAT");
 assert(passoVagas.extras.some((l) => /camara\.leg\.br\/legin\/fed\/lei\/2023\/lei-14542/.test(l[1])), "link da lei na fonte oficial");
 
+const interfaceTrabalho = UI.html();
+assert(/mepoupe\\.com\\/dicas-de-riqueza\\/procurando-emprego-como-se-vestir-sem-gastar-a-grana-que-voce-nao-tem/.test(interfaceTrabalho), "área Trabalho inclui a leitura da Me Poupe sobre roupa sem gastar");
+assert(/ciadeestagios\\.com\\.br\\/guia-profissional\\/como-se-vestir/.test(interfaceTrabalho), "área Trabalho inclui o guia da Cia de Estágios");
+assert(/não precisa comprar roupa, sapato ou maquiagem/.test(interfaceTrabalho), "orientação de entrevista não exige gasto com roupa");
 console.log("jornada.test.js: perguntas, ordem e tamanho do plano, telefones do catálogo, links, promessas proibidas e currículo passaram");
 
 /* Pulou a pergunta do cuidado: o passo continua (ela tem filhos), mas sem afirmar que ela não tem com quem deixá-los. */
