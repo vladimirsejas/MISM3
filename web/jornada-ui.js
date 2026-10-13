@@ -40,7 +40,7 @@
       '<nav class="atalhos-trabalho" aria-label="Atalhos da área Trabalho"><h3>Por onde começar</h3><ul>' +
       '<li><a href="#trabalho-agora">Preciso de dinheiro esta semana</a></li>' +
       '<li><a href="#trabalho-hoje">O que posso fazer hoje</a></li>' +
-      '<li><a href="#montar-curriculo">Montar meu currículo</a></li>' +
+      '<li><button type="button" class="btn secundario" data-curriculo>Montar meu currículo</button></li>' +
       '<li><a href="#trabalho-sem-experiencia">Onde procurar trabalho</a></li>' +
       '<li><a href="#trabalho-entrevista">Preparar a entrevista</a></li>' +
       '<li><a href="#trabalho-transporte">Transporte e passagem</a></li>' +
