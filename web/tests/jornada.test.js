@@ -137,6 +137,12 @@ assert.deepStrictEqual(cv.secoes.map((s) => s.titulo), ["Objetivo", "Experiênci
 assert.deepStrictEqual(cv.secoes[1].itens, ["Cozinha do bar", "Limpeza de casas"]);
 assert.strictEqual(J.montarCurriculo({}).vazio, true);
 assert.strictEqual(J.montarCurriculo({ experiencias: "x\n".repeat(40) }).secoes[0].itens.length, 12, "limita o número de linhas");
+const secaoCv = UI.html(true);
+assert(/id="montar-curriculo"/.test(secaoCv), "o formulário do currículo continua na jornada Trabalho");
+assert(/word\.cloud\.microsoft\.com/.test(secaoCv), "inclui modelos de currículo do Word");
+assert(/docs\.google\.com/.test(secaoCv), "inclui Google Docs");
+assert(/servicos\.mte\.gov\.br/.test(secaoCv), "inclui Emprega Brasil/SINE");
+assert(!/livecareer|canva\.com/i.test(secaoCv), "não inclui plataformas com fluxo freemium ou download pago");
 assert.deepStrictEqual(J.dadosDesnecessarios({ a: "123.456.789-09" }), ["parece haver um CPF"]);
 assert.deepStrictEqual(J.dadosDesnecessarios({ a: "13500-190" }), ["parece haver um CEP"]);
 assert.deepStrictEqual(J.dadosDesnecessarios({ a: "(19) 99439-4433 e (19) 3522-1930" }), [], "telefone não é dado desnecessário");
