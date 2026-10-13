@@ -145,6 +145,9 @@ assert.deepStrictEqual(J.dadosDesnecessarios({ a: "(19) 99439-4433 e (19) 3522-1
 global.self = { Jornada: J };
 require("../jornada-ui.js");
 const UI = global.self.JornadaUI;
+const telaTrabalho = UI.html("trabalho");
+assert(/Como se vestir para a entrevista sem gastar/.test(telaTrabalho), "as dicas de roupa ficam visíveis na jornada Trabalho");
+assert(/não precisa comprar roupa, sapato ou maquiagem/.test(telaTrabalho), "as dicas não exigem gastos");
 const html = UI.htmlCurriculo(J.montarCurriculo({ nome: "<img src=x onerror=alert(1)>", experiencias: "<script>alert(1)</script>" }));
 assert(!/<img|<script/.test(html), "texto digitado deve ser escapado");
 assert(/&lt;img/.test(html));
