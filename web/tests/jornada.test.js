@@ -184,6 +184,8 @@ const pat = (catalogo.servicos || []).find((x) => x.id === "man-pat");
 assert(pat && secaoLocal.includes(pat.telefone), "o telefone do PAT na tela vem do catálogo verificado");
 assert(/Vagas e atendimento aqui em Rio Claro/.test(secaoLocal) && /Ligue antes de ir/.test(secaoLocal), "bloco local manda confirmar antes de ir");
 assert(/não publica endereço/.test(secaoLocal), "o aviso do catálogo sobre endereço ausente aparece na tela");
+assert(/Rua 3 com Avenida 12/.test(secaoLocal) && /sede da Acirc/.test(secaoLocal), "mostra o endereço do PAT na sede da Acirc, vindo do catálogo");
+assert(/Informação de 2023, não conferida/.test(secaoLocal), "avisa que o endereço da Acirc vem de uma publicação de 2023 e deve ser confirmado");
 assert(/este site não confirma onde isso é oferecido/.test(secaoLocal), "não promete impressão gratuita em lugar nenhum");
 assert(/Trabalho por conta própria: MEI/.test(secaoLocal) && /gov\.br\/empresas-e-negocios/.test(secaoLocal), "MEI com fonte oficial");
 assert(/Revenda por consignação/.test(secaoLocal) && /não compre kit inicial/.test(secaoLocal), "consignação sem comprar kit");
