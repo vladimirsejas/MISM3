@@ -37,6 +37,18 @@
   }
   function htmlCurriculoSecao() {
     return '<section class="secao curriculo" id="montar-curriculo" aria-labelledby="titulo-curriculo">' +
+      '<nav class="atalhos-trabalho" aria-label="Atalhos da área Trabalho"><h3>Por onde começar</h3><ul>' +
+      '<li><a href="#trabalho-agora">Preciso de dinheiro esta semana</a></li>' +
+      '<li><a href="#trabalho-hoje">O que posso fazer hoje</a></li>' +
+      '<li><a href="#montar-curriculo">Montar meu currículo</a></li>' +
+      '<li><a href="#trabalho-sem-experiencia">Onde procurar trabalho</a></li>' +
+      '<li><a href="#trabalho-entrevista">Preparar a entrevista</a></li>' +
+      '<li><a href="#trabalho-transporte">Transporte e passagem</a></li>' +
+      '<li><a href="#trabalho-filhos">Cuidado dos filhos</a></li>' +
+      '<li><a href="#trabalho-golpes">Evitar golpes</a></li>' +
+      '<li><a href="#trabalho-rejeicao">Quando recebo um não</a></li>' +
+      '<li><a href="#trabalho-rede">Pedir ajuda à minha rede</a></li>' +
+      '</ul></nav>' +
       '<details><summary><h2 id="titulo-curriculo">Montar um currículo</h2></summary>' +
       '<p class="meta">Preencha só o que quiser. Não coloque CPF, RG, endereço completo nem data de nascimento exata. O texto não sai deste aparelho.</p>' +
       '<form id="form-curriculo" autocomplete="off">' +
@@ -110,6 +122,15 @@
       '</ul><h4>“Fale sobre você”</h4><p>“Sou [nome], estou procurando uma oportunidade em [área]. Sou [qualidade verdadeira], aprendo com orientação e posso contribuir com [habilidade real].”</p>' +
       '<h4>“Por que quer trabalhar aqui?”</h4><p>“Tenho interesse nessa função e quero aprender e fazer um bom trabalho. Pelo que conheço, posso contribuir com [algo ligado à vaga].”</p>' +
       '<h4>“Qual é seu ponto a desenvolver?”</h4><p>Escolha algo verdadeiro e explique como está melhorando. Por exemplo: “Ainda tenho pouca experiência formal, então estou buscando aprender e praticar.”</p></section>' +
+      '<section class="apoio-trabalho" id="trabalho-transporte" aria-labelledby="titulo-trabalho-transporte"><h3 id="titulo-trabalho-transporte">Transporte e passagem: planeje antes de sair</h3>' +
+      '<p>Antes de aceitar uma entrevista ou diária, confira o endereço, o horário, o trajeto e quanto vai gastar para ir e voltar. Se o custo pesar, pergunte à empresa se há vale-transporte para a vaga ou se é possível fazer a primeira conversa por telefone ou vídeo. Não conte com ajuda de transporte sem confirmar.</p>' +
+      '<p>Consulte os horários e as opções de deslocamento disponíveis na <a href="#transporte">área Transporte deste site</a>. Se não souber como chegar, peça orientação antes de sair.</p></section>' +
+      '<section class="apoio-trabalho" id="trabalho-filhos" aria-labelledby="titulo-trabalho-filhos"><h3 id="titulo-trabalho-filhos">Tenho filhos. Como organizar o cuidado?</h3>' +
+      '<p>Se precisar de alguém para ficar com as crianças, tente combinar com pessoa de confiança e pense numa alternativa caso ela não possa. Pergunte à escola ou à rede municipal quais serviços e regras existem no seu caso; não presuma que haverá vaga imediata.</p>' +
+      '<p>Veja as informações disponíveis na <a href="#educacao/educacao-filhos">área Educação: filhos</a>. Para orientação sobre serviços e benefícios sociais, o CRAS pode explicar os caminhos do território.</p></section>' +
+      '<section class="apoio-trabalho" id="trabalho-rejeicao" aria-labelledby="titulo-trabalho-rejeicao"><h3 id="titulo-trabalho-rejeicao">Recebi um não. E agora?</h3>' +
+      '<p>Uma recusa dói, mas não define sua capacidade. Você não precisa resolver tudo hoje. Se tiver energia, escolha apenas um próximo passo: revisar o currículo, tentar uma vaga parecida ou pedir a alguém de confiança para olhar seu currículo.</p>' +
+      '<p>Se a empresa der retorno, use-o como informação; se não der, você pode seguir procurando. Não pague por promessa de vaga nem compartilhe documentos pessoais em grupos para provar que está procurando trabalho.</p></section>' +
       '<section class="apoio-trabalho" aria-labelledby="trabalho-rede"><h3 id="trabalho-rede">Peça ajuda à sua rede</h3>' +
       '<p>Enviar uma mensagem a pessoas de confiança pode ajudar a encontrar oportunidades. Não existe garantia, mas você não precisa procurar sozinha.</p>' +
       '<textarea id="texto-rede" class="texto-copia" rows="4" readonly>Oi, tudo bem? Estou procurando trabalho como [cargo/área]. Se você souber de alguma vaga ou alguém que precise, pode me avisar? Posso mandar meu currículo. Obrigada!</textarea>' +
