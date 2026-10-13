@@ -10,7 +10,7 @@ LAB = Path(__file__).resolve().parent
 RAIZ = LAB.parent
 # Pastas que o laboratório NUNCA pode alterar (o site, o catálogo, o pipeline e as avaliações atuais).
 PROTEGIDOS = ("web", "catalogo", "pipeline", "avaliacao", "dados", "docs", ".github")
-MODELO = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
+MODELO = os.environ.get("GEMINI_MODEL", "gemini-3.8-flash")
 URL_BASE = "https://generativelanguage.googleapis.com/v1beta/models"
 TIMEOUT_S = 30
 
