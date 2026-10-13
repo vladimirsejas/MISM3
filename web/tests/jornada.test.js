@@ -172,6 +172,16 @@ assert(/Cuidado com golpes de emprego/.test(secaoCv), "inclui prevenção de gol
 assert(/Se o desânimo apertar/.test(secaoCv), "inclui apoio emocional e CVV");
 assert(/data-copiar="rede"/.test(secaoCv) && /data-copiar="modelo"/.test(secaoCv), "oferece botões para copiar mensagens e modelo");
 assert(/não há pagamento garantido/.test(secaoCv), "não promete renda garantida");
+assert(/Ideias de renda, da mais fácil/.test(secaoCv) && /Nenhuma delas garante dinheiro/.test(secaoCv), "opções de renda por viabilidade, sem prometer ganho");
+assert(/Vender o que você já tem/.test(secaoCv) && /Comida por encomenda/.test(secaoCv) && /Trabalho digital simples/.test(secaoCv), "renda: usados, comida e trabalho digital");
+assert(/Cabelo e unhas sem gastar/.test(secaoCv) && /não precisa de salão, escova, esmalte nem manicure/.test(secaoCv), "cabelo e unhas sem exigir gasto");
+assert(/Falta o básico/.test(secaoCv) && /href="#assistencia"/.test(secaoCv) && /Nenhum benefício é automático/.test(secaoCv), "liga Trabalho à assistência social sem prometer benefício");
+assert(!/shopee/i.test(secaoCv), "não indica lojas como fonte de dicas");
+/* Todo atalho aponta para uma seção que existe na própria tela. */
+(secaoCv.match(/href="#(trabalho-[a-z-]+)"/g) || []).forEach((h) => {
+  const id = h.slice(7, -1);
+  assert(secaoCv.includes('id="' + id + '"') || secaoCv.includes("id='" + id + "'"), "atalho sem destino: " + id);
+});
 
 assert.deepStrictEqual(J.dadosDesnecessarios({ a: "123.456.789-09" }), ["parece haver um CPF"]);
 assert.deepStrictEqual(J.dadosDesnecessarios({ a: "13500-190" }), ["parece haver um CEP"]);
