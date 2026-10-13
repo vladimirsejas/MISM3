@@ -20,9 +20,9 @@ ARQUIVOS_ENV = (LAB / ".env", RAIZ / ".env")
 NOMES_CHAVE = ("GEMINI_API_KEY", "GOOGLE_API_KEY")  # GOOGLE_API_KEY é o nome padrão usado pelo Google
 
 
-def _ler_env(nome: str) -> str:
+def _ler_env(nome: str, arquivos=None) -> str:
     """Valor de `nome` nos arquivos .env (linhas NOME=valor; aspas opcionais; # comenta). Vazio se não houver."""
-    for arquivo in ARQUIVOS_ENV:
+    for arquivo in (arquivos or ARQUIVOS_ENV):
         try:
             linhas = arquivo.read_text(encoding="utf-8-sig").splitlines()
         except OSError:
@@ -47,3 +47,14 @@ def parece_exemplo(valor: str) -> bool:
     """Valor de exemplo que ninguém trocou pela chave real (só zeros, 'cole...', 'sua-chave', 'xxx')."""
     v = valor.strip().lower()
     return bool(v) and (set(v) <= {"0"} or set(v) <= {"x"} or v.startswith(("cole", "sua-chave", "sua_chave", "troque", "preencha")))
+
+
+def origem_chave() -> str:
+    """Diz DE ONDE a chave vem (nunca o valor): variável de ambiente, qual arquivo .env, ou 'nenhuma'."""
+    for nome in NOMES_CHAVE:
+        if os.environ.get(nome, "").strip():
+            return f"variável de ambiente {nome}"
+        for arquivo in ARQUIVOS_ENV:
+            if _ler_env(nome, (arquivo,)):
+                return f"arquivo {arquivo} ({nome})"
+    return "nenhuma"
