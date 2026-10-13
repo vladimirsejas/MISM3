@@ -120,3 +120,26 @@ def test_arquivos_protegidos_intactos():
     r = subprocess.run([sys.executable, str(LAB / "verificar_intacto.py")], capture_output=True, text=True, encoding="utf-8",
                        env={**os.environ, "PYTHONIOENCODING": "utf-8"})
     assert r.returncode == 0, r.stdout
+
+
+def test_chave_lida_do_arquivo_env_e_variavel_vale_mais(tmp_path, monkeypatch):
+    import config
+    arq = tmp_path / ".env"
+    arq.write_text('# comentario\nOUTRA=1\nGEMINI_API_KEY = "CHAVE-DO-ARQUIVO"\n', encoding="utf-8-sig")
+    monkeypatch.setattr(config, "ARQUIVO_ENV", arq)
+    monkeypatch.delenv("GEMINI_API_KEY")
+    assert config.chave() == "CHAVE-DO-ARQUIVO"
+    monkeypatch.setenv("GEMINI_API_KEY", "CHAVE-DA-VARIAVEL")
+    assert config.chave() == "CHAVE-DA-VARIAVEL"
+
+
+def test_sem_env_e_sem_variavel_chave_vazia(tmp_path, monkeypatch):
+    import config
+    monkeypatch.setattr(config, "ARQUIVO_ENV", tmp_path / "nao_existe.env")
+    monkeypatch.delenv("GEMINI_API_KEY")
+    assert config.chave() == ""
+
+
+def test_env_do_laboratorio_e_ignorado_pelo_git():
+    r = subprocess.run(["git", "check-ignore", "-q", "laboratorio/.env"], cwd=RAIZ)
+    assert r.returncode == 0, "laboratorio/.env NÃO está no .gitignore"
