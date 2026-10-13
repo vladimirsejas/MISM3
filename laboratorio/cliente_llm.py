@@ -14,12 +14,21 @@ class ErroLab(Exception):
     pass
 
 
-EXPLICACOES = {400: "pedido recusado (confira o modelo e o conteúdo)", 401: "chave inválida", 403: "a chave não tem permissão",
+EXPLICACOES = {400: "pedido recusado (o Google também usa 400 para chave inválida; confira a chave e o modelo)", 401: "chave inválida", 403: "a chave não tem permissão",
                404: "modelo não encontrado para esta conta", 429: "limite de uso atingido"}
 
 
 def _limpar(msg: str, chave: str) -> str:
     return msg.replace(chave, "***") if chave else msg
+
+
+def _motivo(e: urllib.error.HTTPError) -> str:
+    """Mensagem de erro que o Google devolve (ex.: 'API key not valid'), limitada a 200 caracteres; vazio se não houver."""
+    try:
+        m = json.loads(e.read().decode("utf-8", "replace")).get("error", {}).get("message", "")
+    except Exception:  # noqa: BLE001 - só para enriquecer a mensagem
+        return ""
+    return f" | Google diz: {m[:200]}" if m else ""
 
 
 def gerar(prompt: str, modelo: str | None = None) -> str:
@@ -34,7 +43,7 @@ def gerar(prompt: str, modelo: str | None = None) -> str:
         with urllib.request.urlopen(req, timeout=config.TIMEOUT_S) as r:
             dados = json.load(r)
     except urllib.error.HTTPError as e:
-        raise ErroLab(f"HTTP {e.code}: {EXPLICACOES.get(e.code, 'erro da API')}") from None
+        raise ErroLab(_limpar(f"HTTP {e.code}: {EXPLICACOES.get(e.code, 'erro da API')}{_motivo(e)}", chave)) from None
     except (urllib.error.URLError, TimeoutError, OSError) as e:
         raise ErroLab(_limpar(f"sem conexão com a API ({type(e).__name__})", chave)) from None
     except ValueError:

@@ -13,10 +13,10 @@ ARQUIVO = LAB / "protegidos.sha256"
 
 
 def calcular() -> dict[str, str]:
-    """Hash dos arquivos VERSIONADOS pelo Git nas pastas protegidas (arquivos soltos, como imagens novas ainda não commitadas, não contam)."""
+    """Hash dos arquivos VERSIONADOS pelo Git nas pastas protegidas, ignorando a diferença CRLF/LF do Windows (arquivos soltos, como imagens novas ainda não commitadas, não contam)."""
     saida = subprocess.run(["git", "ls-files", "-z", "--", *PROTEGIDOS, "README.md", "requirements.txt"], cwd=RAIZ,
                            capture_output=True, check=True).stdout.decode("utf-8")
-    return {n: hashlib.sha256((RAIZ / n).read_bytes()).hexdigest() for n in sorted(saida.split("\0")) if n and (RAIZ / n).is_file()}
+    return {n: hashlib.sha256((RAIZ / n).read_bytes().replace(b"\r\n", b"\n")).hexdigest() for n in sorted(saida.split("\0")) if n and (RAIZ / n).is_file()}
 
 
 def ler() -> dict[str, str]:
@@ -24,6 +24,7 @@ def ler() -> dict[str, str]:
 
 
 def main() -> int:
+    sys.stdout.reconfigure(encoding="utf-8")
     atual = calcular()
     if "--gerar" in sys.argv:
         ARQUIVO.write_text("".join(f"{v}  {k}\n" for k, v in sorted(atual.items())), encoding="utf-8")
