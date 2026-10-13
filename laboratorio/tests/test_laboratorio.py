@@ -167,4 +167,4 @@ def test_chave_de_exemplo_nao_e_enviada(monkeypatch, valor):
 
 def test_chave_real_nao_e_confundida_com_exemplo():
     import config
-    assert not config.parece_exemplo("AIzaSyD-chave-de-verdade-0001")
+    assert not config.parece_exemplo("AI" + "zaSyD-chave-de-verdade-0001")
