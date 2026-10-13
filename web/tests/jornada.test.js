@@ -188,6 +188,12 @@ assert(!/3525-2785/.test(secaoLocal), "o telefone antigo da Unidade Cervezão n�
 assert(!/Unidade Cervezão|Informação de 2023, não conferida/.test(secaoLocal), "não mostra o endereço antigo nem aviso de dúvida já resolvido");
 assert(/este site não confirma onde isso é oferecido/.test(secaoLocal), "não promete impressão gratuita em lugar nenhum");
 assert(/Trabalho por conta própria: MEI/.test(secaoLocal) && /gov\.br\/empresas-e-negocios/.test(secaoLocal), "MEI com fonte oficial");
+assert(/Estudar para trabalhar melhor/.test(secaoLocal) && /Comece por uma coisa só/.test(secaoLocal), "formação: começa por uma coisa só");
+["ev.org.br", "univesp.br", "vestibular.univesp.br", "ifsp.edu.br", "sp.senac.br", "learn.microsoft.com", "sebrae.com.br", "educacao-executiva.fgv.br"].forEach((h) => assert(secaoLocal.includes(h), "formação: falta o site oficial " + h));
+assert(/dois salários mínimos por pessoa/.test(secaoLocal) && /confira as regras atuais/.test(secaoLocal), "Senac: regra de renda com aviso para conferir");
+assert(!/\d+ ?horas|\d+ ?h\b(?! às)/.test(secaoLocal.split("trabalho-estudar")[2] || ""), "formação: não afirma carga horária que não foi confirmada");
+assert(!/inscrições abertas/.test(secaoLocal.split("trabalho-estudar")[2] || "") && /não confirma se há inscrição aberta/.test(secaoLocal), "formação: não afirma matrícula aberta");
+assert(/Concurso público/.test(secaoLocal) && /depende do edital/.test(secaoLocal), "concurso: depende do edital");
 assert(/Revenda por consignação/.test(secaoLocal) && /não compre kit inicial/.test(secaoLocal), "consignação sem comprar kit");
 assert(/leve água e um lanche/.test(secaoLocal), "logística do dia da entrevista");
 assert(!/R\$\s?\d/.test(secaoLocal), "não promete valores de pagamento");

@@ -56,6 +56,7 @@
       '<li><a href="#trabalho-renda">Ideias de renda, da mais fácil à mais difícil</a></li>' +
       '<li><button type="button" class="btn secundario" data-curriculo>Montar meu currículo</button></li>' +
       '<li><a href="#trabalho-local">Vagas e atendimento em Rio Claro</a></li>' +
+      '<li><a href="#trabalho-estudar">Estudar para trabalhar melhor</a></li>' +
       '<li><a href="#trabalho-sem-experiencia">Onde procurar trabalho</a></li>' +
       '<li><a href="#trabalho-entrevista">Preparar a entrevista</a></li>' +
       '<li><a href="#trabalho-aparencia">Cabelo e unhas sem gastar</a></li>' +
@@ -133,6 +134,21 @@
       '</ul>' +
       '<h4>Imprimir o currículo sem pagar</h4><p>Pergunte no PAT, em bibliotecas ou em centros comunitários se imprimem currículo sem custo; este site não confirma onde isso é oferecido. Se não conseguir imprimir, mande o currículo em PDF pelo WhatsApp ou mostre-o no celular.</p>' +
       '</section>' +
+      '<section class="apoio-trabalho" aria-labelledby="trabalho-estudar"><h3 id="trabalho-estudar">Estudar para trabalhar melhor</h3>' +
+      '<p><strong>Comece por uma coisa só.</strong> Para vaga administrativa, atendimento ou escritório, uma boa primeira escolha é Excel e Word, com prática de digitação, e não juntar muitos certificados. Certificado não garante vaga.</p>' +
+      '<h4>Cursos rápidos, para começar já</h4><ul>' +
+      '<li><a href="https://www.ev.org.br/" target="_blank" rel="noopener noreferrer">Escola Virtual da Fundação Bradesco</a> — cursos on-line gratuitos de informática, entre eles Excel e pacote Office. O cadastro pede CPF e e-mail; confira a carga horária e o certificado na página de cada curso.</li>' +
+      '<li><a href="https://www.sebrae.com.br/" target="_blank" rel="noopener noreferrer">Sebrae</a> — cursos gratuitos de atendimento, gestão financeira e empreendedorismo, úteis para vender e atender melhor.</li>' +
+      '<li><a href="https://learn.microsoft.com/pt-br/training/" target="_blank" rel="noopener noreferrer">Microsoft Learn</a> — treinamentos gratuitos sobre Excel, Power BI e Microsoft 365. É treinamento: não é o mesmo que uma certificação paga.</li>' +
+      '<li><a href="https://educacao-executiva.fgv.br/" target="_blank" rel="noopener noreferrer">FGV Educação Executiva</a> — a página tem cursos gratuitos; escolha os de gestão e finanças e veja a duração de cada um.</li>' +
+      '</ul>' +
+      '<h4>Formação mais longa (anos)</h4><ul>' +
+      '<li><a href="https://univesp.br/" target="_blank" rel="noopener noreferrer">UNIVESP</a> — graduações gratuitas a distância, com apoio em polos presenciais. Há vestibular: veja no <a href="https://vestibular.univesp.br/" target="_blank" rel="noopener noreferrer">site do vestibular</a> as datas atuais e se há inscrição aberta.</li>' +
+      '<li><a href="https://www.ifsp.edu.br/" target="_blank" rel="noopener noreferrer">IFSP</a> — cursos técnicos e superiores gratuitos; a oferta e os prazos mudam a cada edital, e alguns já estão encerrados. Veja o que está aberto agora.</li>' +
+      '<li><a href="https://www.sp.senac.br/" target="_blank" rel="noopener noreferrer">Senac São Paulo</a> — o Programa Senac de Gratuidade oferece bolsas integrais em cursos. A regra divulgada é renda de até dois salários mínimos por pessoa da família, com vaga por ordem de inscrição e prazo antes de a turma começar: confira as regras atuais no site.</li>' +
+      '</ul>' +
+      '<h4>Concurso público</h4><p>O que estudar depende do edital e da banca; curso de Excel não substitui a preparação. De modo geral, a base costuma incluir Português, Matemática ou raciocínio lógico e Informática, mais a matéria específica do cargo. Leia o edital do concurso que você quer e treine com provas anteriores da mesma banca.</p>' +
+      '<p class="meta">Estes são os sites oficiais das instituições, indicados em 13/10/2026. Este site não confirma se há inscrição aberta, gratuidade de cada curso nem carga horária: veja a oferta atual na página de cada um antes de se cadastrar. Nunca pague para se inscrever em curso ou concurso por intermediários.</p></section>' +
       '<section class="apoio-trabalho" aria-labelledby="trabalho-sem-experiencia"><h3 id="trabalho-sem-experiencia">Onde procurar trabalho sem experiência</h3>' +
       '<p>Tente perguntar diretamente sobre vagas de entrada em supermercados, padarias, farmácias, lojas, restaurantes, hotéis e pousadas, condomínios, escolas e creches, empresas de limpeza, salões, clínicas e cozinhas. A contratação depende de cada empregador.</p>' +
       '<blockquote><p>Bom dia. Estou procurando trabalho e tenho interesse em [área/função]. Vocês estão recebendo currículos ou têm alguma vaga? Posso deixar meu contato?</p></blockquote>' +
