@@ -60,7 +60,8 @@ assert.strictEqual(c.itens[0].area, "trabalho");
 /* ---- todo item tem título, destino e, quando é serviço, telefone ou fonte; nada de promessa ---- */
 ["preciso de remedio", "quero fazer preventivo", "meu filho esta agressivo"].forEach((t) => R(t).itens.forEach((i) => {
   assert(i.titulo && i.href && i.href.charAt(0) === "#", t + ": " + JSON.stringify(i));
-  assert(!/garant|voc[eê] tem direito a vaga|conseguir[aá]|aprovad/i.test(String(i.resumo)), "sem promessa: " + i.resumo);
+  /* "Não existe vaga garantida..." é o aviso contra a promessa; só a promessa em si é proibida. */
+  assert(!/garant|voc[eê] tem direito a vaga|conseguir[aá]|aprovad/i.test(String(i.resumo).replace(/n[ãa]o existe vaga garantida/gi, "")), "sem promessa: " + i.resumo);
 }));
 
 /* ---- explicação: mostra por que o item apareceu, com palavras que a pessoa escreveu ---- */
