@@ -32,7 +32,8 @@
     usar(id === true ? "trabalho" : id);
     var topo = '<section class="secao jornada" aria-labelledby="titulo-jornada">' +
       '<h2 id="titulo-jornada" tabindex="-1">' + esc(J.titulo) + '</h2>' +
-      '<div id="jornada-saida" aria-live="polite"></div></section>';
+      '<div id="jornada-saida" aria-live="polite"></div></section>' +
+      (J.id === "trabalho" ? '<nav class="atalhos-trabalho" aria-label="Atalhos de Trabalho"><a class="btn" href="#montar-curriculo">Montar meu currículo</a><a class="btn secundario" href="#dicas-apresentacao">Dicas de roupa, cabelo e unhas</a><a class="btn secundario" href="#renda-imediata">Preciso de dinheiro esta semana</a></nav>' : "");
     return topo + (J.id === "trabalho" ? htmlRendaImediata() : "") + (J.temCurriculo ? htmlCurriculoSecao() : "");
   }
   function htmlRendaImediata() {
@@ -71,7 +72,7 @@
 
   function htmlCurriculoSecao() {
     return '<section class="secao curriculo" id="montar-curriculo" aria-labelledby="titulo-curriculo">' +
-      '<details><summary><h2 id="titulo-curriculo">Montar um currículo</h2></summary>' +
+      '<details open><summary><span id="titulo-curriculo">Montar um currículo</span></summary>' +
       '<p class="meta">Preencha só o que quiser. Não coloque CPF, RG, endereço completo nem data de nascimento exata. O texto não sai deste aparelho.</p>' +
       '<form id="form-curriculo" autocomplete="off">' +
       campoTexto("c-nome", "Nome", 80) + campoTexto("c-telefone", "Telefone ou WhatsApp", 40) + campoTexto("c-email", "E-mail", 80) +
@@ -82,7 +83,7 @@
       campoTexto("c-disponibilidade", "Disponibilidade de horário", 120) +
       '<div class="acoes"><button type="submit" class="btn">Gerar currículo</button><button type="button" class="btn secundario" data-limpar="curriculo">Limpar</button></div></form>' +
       '<div id="curriculo-saida" aria-live="polite"></div></details>' +
-      '<section class="dicas-entrevista" aria-labelledby="titulo-dicas-entrevista">' +
+      '<section class="dicas-entrevista" id="dicas-apresentacao" aria-labelledby="titulo-dicas-entrevista">' +
       '<h2 id="titulo-dicas-entrevista">Como se vestir para a entrevista sem gastar</h2>' +
       '<p>Você não precisa comprar roupa, sapato ou maquiagem para conseguir uma entrevista.</p>' +
       '<ul><li>Escolha uma roupa limpa, inteira e confortável, que permita sentar e se movimentar.</li>' +
