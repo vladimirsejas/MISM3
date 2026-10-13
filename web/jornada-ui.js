@@ -90,7 +90,19 @@
       '<li>Confira se a roupa está seca e, se possível, sem amassados. Um calçado limpo e seguro já serve.</li>' +
       '<li>Se quiser e puder, peça uma peça emprestada. Não se endivide nem deixe de ir à entrevista por não ter roupa nova.</li>' +
       '<li>Se a entrevista for por vídeo, procure um lugar iluminado e tranquilo e teste o áudio antes.</li></ul>' +
-      '<p>O mais importante é conseguir comparecer com conforto e segurança. A roupa não mede sua capacidade de trabalhar.</p>' +
+      '<h3>Cabelo: arrumado sem gastar</h3>' +
+      '<ul><li>Use o penteado que você já sabe fazer e que deixa você confortável: preso, solto ou trançado.</li>' +
+      '<li>Se o cabelo estiver limpo, mas não der tempo de lavar, escolha um penteado simples; não precisa comprar produto nem ir ao salão.</li>' +
+      '<li>Prenda mechas que caiam no rosto se isso ajudar você a trabalhar ou conversar com tranquilidade. Para vagas de cozinha e alimentação, siga as regras de higiene e proteção do estabelecimento.</li></ul>' +
+      '<h3>Unhas: simples e limpas já bastam</h3>' +
+      '<ul><li>Lave e limpe as unhas; se puder, apare ou lixe as pontas para não enganchar.</li>' +
+      '<li>Esmalte é opcional. Não precisa pintar, comprar esmalte ou fazer manicure para uma entrevista.</li>' +
+      '<li>Para vagas de cozinha, saúde e cuidado, podem existir regras específicas de unhas curtas, sem esmalte ou sem unhas artificiais. Siga as regras do local.</li></ul>' +
+      '<h3>Links gratuitos para se preparar</h3>' +
+      '<ul><li><a href="https://www.gov.br/mds/pt-br/noticias-e-conteudos/publicacoes/desenvolvimento-social/CadernoAcessuas_Oficinas_de_Criatividade_2022.pdf" target="_blank" rel="noopener noreferrer">Guia gratuito do Governo Federal: dicas para entrevista</a> — inclui vestuário, cabelo, unhas e preparação.</li>' +
+      '<li><a href="https://prefeitura.sp.gov.br/web/desenvolvimento/w/dicas/entrevista_de_emprego/623" target="_blank" rel="noopener noreferrer">Prefeitura de São Paulo: como se preparar para a entrevista</a> — higiene, apresentação e comportamento.</li>' +
+      '<li><a href="https://www.gov.br/trabalho-e-emprego/pt-br/pdfs/manual-de-empregabilidade-e-lgbti-original.pdf/%40%40download/file" target="_blank" rel="noopener noreferrer">Manual de empregabilidade do Ministério do Trabalho</a> — orientações para entrevista.</li></ul>' +
+      '<p>O mais importante é comparecer com conforto e segurança. Roupa, cabelo e unhas não medem sua capacidade de trabalhar. Não se endivide nem deixe de ir a uma entrevista por não ter dinheiro para se arrumar.</p>' +
       '</section></section>';
   }
   function campoTexto(id, rotulo, max, valor) {
