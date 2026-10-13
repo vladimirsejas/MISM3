@@ -1,5 +1,6 @@
 """Garantias do laboratório: isolado do site, falha com clareza, não vaza a chave, não escreve fora de si."""
 import io
+import os
 import json
 import subprocess
 import sys
@@ -61,6 +62,14 @@ def test_erros_http_viram_erro_claro_sem_chave(codigo):
     assert str(codigo) in str(exc.value) and CHAVE_FALSA not in str(exc.value)
 
 
+def test_400_mostra_motivo_do_google_sem_vazar_a_chave():
+    corpo = json.dumps({"error": {"message": f"API key not valid ({CHAVE_FALSA}). Please pass a valid API key."}}).encode()
+    e = urllib.error.HTTPError("u", 400, "m", {}, io.BytesIO(corpo))
+    with mock.patch("urllib.request.urlopen", side_effect=e), pytest.raises(cliente_llm.ErroLab) as exc:
+        cliente_llm.gerar("x")
+    assert "API key not valid" in str(exc.value) and CHAVE_FALSA not in str(exc.value)
+
+
 @pytest.mark.parametrize("erro", [TimeoutError(), urllib.error.URLError("sem rede " + CHAVE_FALSA), ConnectionResetError()])
 def test_timeout_e_rede(erro):
     with mock.patch("urllib.request.urlopen", side_effect=erro), pytest.raises(cliente_llm.ErroLab) as exc:
@@ -108,5 +117,6 @@ def test_nenhuma_chave_real_versionada():
 
 
 def test_arquivos_protegidos_intactos():
-    r = subprocess.run([sys.executable, str(LAB / "verificar_intacto.py")], capture_output=True, text=True, encoding="utf-8")
+    r = subprocess.run([sys.executable, str(LAB / "verificar_intacto.py")], capture_output=True, text=True, encoding="utf-8",
+                       env={**os.environ, "PYTHONIOENCODING": "utf-8"})
     assert r.returncode == 0, r.stdout
