@@ -105,6 +105,8 @@
       '<h4>Leituras úteis: como se vestir sem gastar</h4><p>Estas orientações ajudam a escolher uma roupa adequada usando o que você já tem. São dicas, não regras obrigatórias: a roupa não define sua competência.</p><ul>' +
       '<li><a href="https://mepoupe.com/dicas-de-riqueza/procurando-emprego-como-se-vestir-sem-gastar-a-grana-que-voce-nao-tem/" target="_blank" rel="noopener noreferrer">Me Poupe! — Como se vestir sem gastar a grana que você não tem</a></li>' +
       '<li><a href="https://www.ciadeestagios.com.br/guia-profissional/como-se-vestir/" target="_blank" rel="noopener noreferrer">Cia de Estágios — Como se vestir para uma entrevista de emprego</a></li>' +
+      '<li><a href="https://www.unicesumar.edu.br/blog/como-se-vestir-para-entrevista-de-emprego/" target="_blank" rel="noopener noreferrer">Unicesumar — Como se vestir para entrevista de emprego</a></li>' +
+      '<li><a href="https://blog.passaportefashionista.com/5-dicas-infaliveis-para-se-vestir-bem-sem-gastar-muito/" target="_blank" rel="noopener noreferrer">Passaporte Fashionista — Como se vestir bem sem gastar muito</a></li>' +
       '</ul><h4>“Fale sobre você”</h4><p>“Sou [nome], estou procurando uma oportunidade em [área]. Sou [qualidade verdadeira], aprendo com orientação e posso contribuir com [habilidade real].”</p>' +
       '<h4>“Por que quer trabalhar aqui?”</h4><p>“Tenho interesse nessa função e quero aprender e fazer um bom trabalho. Pelo que conheço, posso contribuir com [algo ligado à vaga].”</p>' +
       '<h4>“Qual é seu ponto a desenvolver?”</h4><p>Escolha algo verdadeiro e explique como está melhorando. Por exemplo: “Ainda tenho pouca experiência formal, então estou buscando aprender e praticar.”</p></section>' +
