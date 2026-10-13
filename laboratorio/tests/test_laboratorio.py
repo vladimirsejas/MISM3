@@ -192,3 +192,16 @@ def test_erros_definitivos_nao_tentam_de_novo(codigo):
     with mock.patch("urllib.request.urlopen", side_effect=_http(codigo)) as u, pytest.raises(cliente_llm.ErroLab):
         cliente_llm.gerar("x")
     assert u.call_count == 1
+
+
+def test_origem_da_chave_nunca_mostra_o_valor(tmp_path, monkeypatch):
+    import config
+    arq = tmp_path / ".env"
+    arq.write_text("GEMINI_API_KEY=VALOR-SECRETO-XYZ\n", encoding="utf-8")
+    monkeypatch.setattr(config, "ARQUIVOS_ENV", (arq,))
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    monkeypatch.delenv("GOOGLE_API_KEY", raising=False)
+    origem = config.origem_chave()
+    assert str(arq) in origem and "VALOR-SECRETO" not in origem
+    monkeypatch.setattr(config, "ARQUIVOS_ENV", (tmp_path / "nada.env",))
+    assert config.origem_chave() == "nenhuma"
