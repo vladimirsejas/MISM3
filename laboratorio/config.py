@@ -15,22 +15,29 @@ URL_BASE = "https://generativelanguage.googleapis.com/v1beta/models"
 TIMEOUT_S = 30
 
 
-ARQUIVO_ENV = LAB / ".env"  # local, ignorado pelo Git (ver .gitignore); modelo em env.exemplo
+# Procurados nesta ordem; ambos ignorados pelo Git (ver .gitignore). Modelo em env.exemplo.
+ARQUIVOS_ENV = (LAB / ".env", RAIZ / ".env")
+NOMES_CHAVE = ("GEMINI_API_KEY", "GOOGLE_API_KEY")  # GOOGLE_API_KEY é o nome padrão usado pelo Google
 
 
 def _ler_env(nome: str) -> str:
-    """Valor de `nome` no arquivo laboratorio/.env (linhas NOME=valor; aspas opcionais; # comenta). Vazio se não houver."""
-    try:
-        linhas = ARQUIVO_ENV.read_text(encoding="utf-8-sig").splitlines()
-    except OSError:
-        return ""
-    for linha in linhas:
-        k, sep, v = linha.strip().partition("=")
-        if sep and k.strip() == nome:
-            return v.strip().strip("\"'").strip()
+    """Valor de `nome` nos arquivos .env (linhas NOME=valor; aspas opcionais; # comenta). Vazio se não houver."""
+    for arquivo in ARQUIVOS_ENV:
+        try:
+            linhas = arquivo.read_text(encoding="utf-8-sig").splitlines()
+        except OSError:
+            continue
+        for linha in linhas:
+            k, sep, v = linha.strip().partition("=")
+            if sep and k.strip() == nome and v.strip().strip("\"'").strip():
+                return v.strip().strip("\"'").strip()
     return ""
 
 
 def chave() -> str:
-    """A variável de ambiente vale mais que o .env; sem nenhuma das duas, devolve vazio."""
-    return os.environ.get("GEMINI_API_KEY", "").strip() or _ler_env("GEMINI_API_KEY")
+    """Variável de ambiente vale mais que os arquivos .env; sem nenhuma, devolve vazio."""
+    for nome in NOMES_CHAVE:
+        v = os.environ.get(nome, "").strip() or _ler_env(nome)
+        if v:
+            return v
+    return ""

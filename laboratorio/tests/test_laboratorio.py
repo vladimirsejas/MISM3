@@ -126,7 +126,7 @@ def test_chave_lida_do_arquivo_env_e_variavel_vale_mais(tmp_path, monkeypatch):
     import config
     arq = tmp_path / ".env"
     arq.write_text('# comentario\nOUTRA=1\nGEMINI_API_KEY = "CHAVE-DO-ARQUIVO"\n', encoding="utf-8-sig")
-    monkeypatch.setattr(config, "ARQUIVO_ENV", arq)
+    monkeypatch.setattr(config, "ARQUIVOS_ENV", (tmp_path / "nao_existe.env", arq))
     monkeypatch.delenv("GEMINI_API_KEY")
     assert config.chave() == "CHAVE-DO-ARQUIVO"
     monkeypatch.setenv("GEMINI_API_KEY", "CHAVE-DA-VARIAVEL")
@@ -135,11 +135,23 @@ def test_chave_lida_do_arquivo_env_e_variavel_vale_mais(tmp_path, monkeypatch):
 
 def test_sem_env_e_sem_variavel_chave_vazia(tmp_path, monkeypatch):
     import config
-    monkeypatch.setattr(config, "ARQUIVO_ENV", tmp_path / "nao_existe.env")
+    monkeypatch.setattr(config, "ARQUIVOS_ENV", (tmp_path / "nao_existe.env",))
     monkeypatch.delenv("GEMINI_API_KEY")
+    monkeypatch.delenv("GOOGLE_API_KEY", raising=False)
     assert config.chave() == ""
 
 
 def test_env_do_laboratorio_e_ignorado_pelo_git():
-    r = subprocess.run(["git", "check-ignore", "-q", "laboratorio/.env"], cwd=RAIZ)
-    assert r.returncode == 0, "laboratorio/.env NÃO está no .gitignore"
+    for caminho in ("laboratorio/.env", ".env"):
+        r = subprocess.run(["git", "check-ignore", "-q", caminho], cwd=RAIZ)
+        assert r.returncode == 0, f"{caminho} NÃO está no .gitignore"
+
+
+def test_nome_alternativo_google_api_key_e_env_da_raiz(tmp_path, monkeypatch):
+    import config
+    raiz_env = tmp_path / ".env"
+    raiz_env.write_text("GOOGLE_API_KEY=CHAVE-GOOGLE\n", encoding="utf-8")
+    monkeypatch.setattr(config, "ARQUIVOS_ENV", (tmp_path / "lab.env", raiz_env))
+    monkeypatch.delenv("GEMINI_API_KEY")
+    monkeypatch.delenv("GOOGLE_API_KEY", raising=False)
+    assert config.chave() == "CHAVE-GOOGLE"
