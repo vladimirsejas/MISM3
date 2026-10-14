@@ -259,9 +259,14 @@ lista.filter((x) => x.tipo === "emprego_curso").forEach((x) => assert(x.grupo, "
 assert(Areas.AREAS.find((a) => a.id === "trabalho").secoes[0].agrupar === true, "a lista de Trabalho deve ser agrupada, não limitada a 12 cartões");
 const trab = Areas.AREAS.find((a) => a.id === "trabalho").secoes[0], edu = Areas.AREAS.find((a) => a.id === "educacao").secoes.find((s) => s.agrupar);
 ["curso_superior_tecnologia", "graduacao"].forEach((st) => {
-  assert(!trab.subtipos.includes(st) && edu.subtipos.includes(st), "educação pura pertence só à área Educação: " + st);
+  assert(trab.subtipos.includes(st) && edu.subtipos.includes(st), "faculdades e cursos superiores servem a Educação e a Trabalho: " + st);
 });
-assert(!trab.grupos.includes("Concluir os estudos e graduação (SESI)"), "Trabalho não mostra o grupo de conclusão dos estudos: isso é da Educação");
+const FACUL = "Faculdades e cursos superiores";
+assert(trab.grupos.includes(FACUL), "Trabalho deve mostrar o grupo de faculdades e cursos superiores");
+["man-fatec-ia", "man-fatec-esg", "man-faculdade-sesi"].forEach((id) =>
+  assert(lista.find((x) => x.id === id).grupo.split(";").includes(FACUL), "faculdade deve estar no grupo de faculdades: " + id));
+assert(!/gratuit/i.test(lista.find((x) => x.id === "man-fatec-ia").nome + lista.find((x) => x.id === "man-fatec-esg").nome + FACUL), "a Fatec não pode ser anunciada como gratuita: a fonte arquivada não informa o custo");
+assert(!trab.grupos.includes("Concluir os estudos (SESI)"), "Trabalho não mostra o grupo de conclusão dos estudos (EJA e escola): isso é da Educação");
 const JUNTO = "Estudar e se qualificar ao mesmo tempo";
 assert(trab.grupos.includes(JUNTO), "Trabalho deve mostrar o grupo que combina estudo e qualificação");
 ["man-etec-rio-claro", "man-sesi-eja", "man-sesi-rio-claro"].forEach((id) =>
