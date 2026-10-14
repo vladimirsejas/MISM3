@@ -17,13 +17,13 @@
       secoes: [{
         titulo: "Canais oficiais",
         tipos: ["emprego_curso"], agrupar: true,
-        subtipos: ["pat", "conecta", "credito", "secretaria", "qualificacao", "fundo_social", "curso_profissionalizante", "curso_tecnico", "eja", "escola_sesi"],
-        grupos: ["Emprego e orientação", "Cursos gratuitos de qualificação", "Cursos profissionalizantes (qualificação profissional)", "Cursos técnicos (ensino técnico)", "Estudar e se qualificar ao mesmo tempo"],
+        subtipos: ["pat", "conecta", "credito", "secretaria", "qualificacao", "fundo_social", "curso_profissionalizante", "curso_tecnico", "eja", "escola_sesi", "graduacao", "curso_superior_tecnologia"],
+        grupos: ["Emprego e orientação", "Cursos gratuitos de qualificação", "Cursos profissionalizantes (qualificação profissional)", "Cursos técnicos (ensino técnico)", "Estudar e se qualificar ao mesmo tempo", "Faculdades e cursos superiores"],
         links: [
           ["Portal da Empregabilidade de Rio Claro", "https://vagas.rioclaro.sp.gov.br/", "Consultar oportunidades e informações para trabalhadores."],
           ["Trampolim — Governo de São Paulo", "https://www.trampolim.sp.gov.br/", "Consultar oportunidades e cursos disponíveis na plataforma."],
           ["Lei nº 14.542/2023: prioridade no Sine para mulheres em situação de violência", "https://www2.camara.leg.br/legin/fed/lei/2023/lei-14542-3-abril-2023-793992-publicacaooriginal-167489-pl.html", "A lei federal reserva 10% das vagas intermediadas pelo Sine para mulheres em situação de violência doméstica e familiar. Como isso funciona em Rio Claro e o que o atendimento pede, só o PAT pode dizer: pergunte lá."],
-          ["Estudar: concluir o ensino médio, faculdade e cursos superiores", "#educacao", "EJA gratuita, Faculdade SESI e os cursos superiores da Fatec estão na área Educação, que também reúne os cursos técnicos e profissionalizantes."]
+          ["Estudar: concluir o ensino médio e outras opções de estudo", "#educacao", "As faculdades e cursos superiores (Fatec, Faculdade SESI) aparecem aqui e também na área Educação. A EJA e o cursinho gratuito para o vestibular e o ENEM estão na área Educação."]
         ]
       }],
       pendencias: ["Este sistema não lista vagas abertas. Para ver vagas atuais, use os portais acima."]
@@ -51,8 +51,8 @@
             topicos: [
               ["Creche e pré-escola (0 a 5 anos)", "Em geral são organizadas pelo município. Procure a Secretaria Municipal da Educação."],
               ["Ensino fundamental", "É atendido por escolas do município e do estado. Pergunte na Secretaria qual escola e qual rede atendem o seu bairro."],
-              ["Ensino médio", "Em geral é responsabilidade do estado. Também há o ensino médio da rede SESI-SP (veja o grupo “Concluir os estudos e graduação”, mais abaixo) e escolas particulares."],
-              ["Jovem ou adulto que não concluiu os estudos", "Veja a EJA (Educação de Jovens e Adultos), no grupo “Concluir os estudos e graduação”, mais abaixo, ou pergunte na Secretaria Municipal da Educação."]
+              ["Ensino médio", "Em geral é responsabilidade do estado. Também há o ensino médio da rede SESI-SP (veja o grupo “Concluir os estudos (SESI)”, mais abaixo) e escolas particulares."],
+              ["Jovem ou adulto que não concluiu os estudos", "Veja a EJA (Educação de Jovens e Adultos), no grupo “Concluir os estudos (SESI)”, mais abaixo, ou pergunte na Secretaria Municipal da Educação."]
             ],
             fonte: ["Constituição Federal, art. 211", null, "regra geral; a organização de Rio Claro deve ser confirmada na Secretaria da Educação"] },
           { nome: "Crio meu filho sozinha: o que perguntar e a quem pedir apoio", sem_tel: true, resumo: "Ver o passo a passo",
