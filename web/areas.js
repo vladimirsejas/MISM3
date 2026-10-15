@@ -29,7 +29,7 @@
         titulo: "Onde procurar trabalho sem experiência", ancora: "trabalho-sem-experiencia",
         descricao: "Começar sem experiência é comum, e há portas de entrada que costumam aceitar quem está começando. Esta seção reúne dicas de por onde começar e, em seguida, os sites que divulgam concursos públicos.",
         tipos: [], links: [
-          ["Portal de Concursos do Estado de São Paulo", "https://www.concursopublico.sp.gov.br/PortalConcurso/noauth/PortalDeConcursos.do", "Concursos abertos e previstos do Governo do Estado de São Paulo."],
+          ["Portal de Concursos do Estado de São Paulo", "http://www.concursopublico.sp.gov.br/PortalConcurso/noauth/PortalDeConcursos.do", "Concursos abertos e previstos do Governo do Estado de São Paulo. O portal oficial só abre sem cadeado de segurança: o navegador pode avisar “Não seguro”, mas o endereço é o do Governo do Estado."],
           ["PCI Concursos", "https://www.pciconcursos.com.br/", "Site que reúne editais e concursos de todo o país. Não é um site oficial: confira sempre o edital na página da banca ou do órgão."],
           ["Vunesp — concursos e vestibulares", "https://www.vunesp.com.br/", "Banca organizadora de muitos concursos de prefeituras e do Estado. Veja os editais com inscrição aberta."],
           ["Cebraspe — inscrições abertas", "https://www.cebraspe.org.br/concursos/inscricoes-abertas/", "Banca organizadora de concursos federais e de outros órgãos. Lista os concursos com inscrição aberta."]
