@@ -189,10 +189,19 @@
         tipos: ["creche"], subtipos: ["escola_municipal"], links: []
       }, {
         titulo: "Para você: concluir os estudos e se qualificar", ancora: "educacao-voce",
-        descricao: "Você também pode estudar. Terminar o ensino médio, fazer faculdade e cursos profissionalizantes ou técnicos abre caminho para o trabalho. Há também um cursinho gratuito para o vestibular e o ENEM (as provas que dão acesso à faculdade), que serve para você e para os seus filhos, com contato pelo Instagram. Para uma formação mais longa, de anos, o grupo “Formação mais longa (anos)” reúne a UNIVESP (graduações gratuitas a distância), o IFSP (cursos técnicos e superiores gratuitos) e o Programa Senac de Gratuidade (bolsas integrais). Cada cartão diz quem oferece e como confirmar vagas, datas e custos com a própria instituição.",
+        descricao: "Você também pode estudar. Terminar o ensino médio, fazer faculdade e cursos profissionalizantes ou técnicos abre caminho para o trabalho. Há também um cursinho gratuito para o vestibular e o ENEM (as provas que dão acesso à faculdade), que serve para você e para os seus filhos, com contato pelo Instagram. Para uma formação mais longa, de anos, veja a seção “Formação mais longa (anos)”, logo abaixo. Cada cartão diz quem oferece e como confirmar vagas, datas e custos com a própria instituição.",
         tipos: ["emprego_curso"], agrupar: true,
-        subtipos: ["eja", "escola_sesi", "graduacao", "curso_superior_tecnologia", "curso_tecnico", "curso_profissionalizante", "formacao_gratuita", "cursinho_popular", "eja_unesp"],
+        subtipos: ["eja", "escola_sesi", "graduacao", "curso_superior_tecnologia", "curso_tecnico", "curso_profissionalizante", "cursinho_popular", "eja_unesp"],
         links: []
+      }, {
+        titulo: "Formação mais longa (anos)", ancora: "educacao-formacao-longa",
+        descricao: "Graduações e cursos que levam anos e são gratuitos. Oferta, prazos e regras mudam a cada edital ou período: confirme sempre na página de cada instituição antes de se inscrever.",
+        tipos: [], links: [
+          ["UNIVESP", "https://univesp.br/", "Graduações gratuitas a distância, com apoio em polos presenciais."],
+          ["Vestibular da UNIVESP", "https://vestibular.univesp.br/", "Há vestibular: veja aqui as datas atuais e se há inscrição aberta."],
+          ["IFSP — Instituto Federal de São Paulo", "https://www.ifsp.edu.br/", "Cursos técnicos e superiores gratuitos; a oferta e os prazos mudam a cada edital, e alguns já estão encerrados. Veja o que está aberto agora."],
+          ["Senac São Paulo — Programa Senac de Gratuidade", "https://www.sp.senac.br/", "Oferece bolsas integrais em cursos. A regra divulgada é renda de até dois salários mínimos por pessoa da família, com vaga por ordem de inscrição e prazo antes de a turma começar: confira as regras atuais no site."]
+        ]
       }],
       avisos: ["Uma escola ou creche cadastrada não confirma que há vaga. Confirme com a Secretaria da Educação."],
       pendencias: [

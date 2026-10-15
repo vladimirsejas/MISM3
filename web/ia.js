@@ -111,7 +111,7 @@
     casamento: [{ tipo: "mulher" }],
     filhos: [{ tipo: "creche", subtipos: ["secretaria"] }],
     emprego_curso: [{ tipo: "emprego_curso", subtipos: ["pat", "conecta", "credito", "secretaria", "fundo_social", "qualificacao", "curso_profissionalizante", "curso_tecnico"] }],
-    estudo: [{ tipo: "emprego_curso", subtipos: ["eja", "escola_sesi", "graduacao", "curso_superior_tecnologia", "curso_tecnico", "curso_profissionalizante", "formacao_gratuita"] }],
+    estudo: [{ tipo: "emprego_curso", subtipos: ["eja", "escola_sesi", "graduacao", "curso_superior_tecnologia", "curso_tecnico", "curso_profissionalizante"] }],
     saude: [{ tipo: "saude", subtipos: ["urgencia", "caps", "hospital", "especialidades", "secretaria", "cei", "centro_habilitacao"] }],
     familia: [{ tipo: "assistencia", subtipos: ["cras", "sede", "creas"] }],
     moradia: [],
