@@ -30,6 +30,7 @@
     eja: "Educação de Jovens e Adultos (EJA)",
     graduacao: "Graduação (licenciaturas)",
     curso_superior_tecnologia: "Curso superior de tecnologia",
+    formacao_gratuita: "Formação gratuita (graduação, técnico ou bolsa)",
     fundo_social: "Fundo Social de Solidariedade",
     sede: "Sede administrativa",
     municipal: "Rede municipal",
