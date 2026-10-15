@@ -20,10 +20,14 @@ Esta pesquisa foi feita sem conseguir abrir as páginas da Prefeitura: o ambient
 
 | Nome | O que é | Onde aparece | Nível |
 |---|---|---|---|
-| CADU (Cadu) | Central de Atendimento Digital da Prefeitura: aplicativo, portal e telefone/WhatsApp 0800 019 0505 | Matrícula e rematrícula; agendamento de consulta; inscrição nos cursos do Fundo Social; DAAE (água e esgoto); outros | B |
+| CADU (Cadu) | Aplicativo de atendimento digital da Prefeitura, com portal e telefone/WhatsApp 0800 019 0505. Na tela do app: Saúde, Educação, Desenvolvimento Social, Mais; "Cadastro Digital"; "Solicitações Digitais" | DAAE (água e esgoto) e Saúde dividem o **mesmo 0800**: **A**, pela notícia do DAAE arquivada em `docs/documetacao/daae-cadu-atendimento.pdf`. Matrícula e rematrícula; cursos do Fundo Social: B | A (DAAE, Saúde, categorias do app) / B (demais) |
 | CadÚnico (Cadastro Único) | Cadastro socioeconômico **federal**, feito pelo CRAS. É a porta de entrada de Bolsa Família, BPC, tarifa social de energia e outros. Estar inscrita **não** garante o benefício | gov.br e MDS; CRAS | B |
 
 **Correção:** na primeira análise falei em "três coisas com nome parecido" (escola, saúde, CadÚnico). A pesquisa mostra que o Cadu da escola e o da saúde são **o mesmo canal**. O problema real é outro: o site fala do Cadu em contextos separados sem dizer que é um canal só, e a mulher pode confundir Cadu com CadÚnico.
+
+**Um terceiro "cadastro" para não confundir (A):** o app do Cadu tem um botão "Cadastro Digital: clique aqui para manter o cadastro atualizado". É o cadastro **do próprio app**, não o CadÚnico. A página do DAAE não diz o que esse cadastro contém nem se ele leva ao CadÚnico, então o site não deve ligar um ao outro. Também fica pendente saber se a categoria "Desenvolvimento Social" do app oferece algo do CRAS; não afirmar até ver.
+
+**Horário do 0800 (A, na notícia do DAAE):** 24 h por telefone e WhatsApp. Atendente humano de segunda a sexta (exceto feriados nacionais), 7h às 19h; assistente virtual de segunda a sexta das 19h às 7h e 24 h em sábados, domingos e feriados. Isso encerra a dúvida "7h às 19h ou 7h às 17h" **para esse número**. Cuidado: a notícia do DAAE não mostra a data de publicação (diz só "a partir da próxima segunda-feira (13)", sem mês nem ano); o horário específico da Saúde ainda deve ser confirmado na Fundação de Saúde.
 
 **A sigla:** as fontes divergem (um resumo traz "Central de Atendimento Digital Unicidades", outro "UniCidadão"). Não escrever o significado da sigla no site até abrir a página oficial.
 
@@ -77,7 +81,7 @@ Cada proposta responde às três perguntas: onde começo, o que levo, o que faç
 - **Fontes a abrir:** Senado "Como fazer para pedir pensão alimentícia", Defensoria Pública de SP, Arpen-SP (reconhecimento em cartório).
 - **Pendência humana:** telefone ou forma de agendar da Defensoria em Rio Claro (o registro do catálogo está sem telefone).
 - **Trabalho compatível com o cuidado:** a jornada já pergunta se há com quem deixar a criança. Falta mostrar, quando a resposta é "não", o que existe: creche (já há jornada), contraturno (SCFV, já no catálogo) e cursos do Fundo Social, **com o canal de inscrição correto** (ver seção 2, item 2).
-- **Saúde da mulher:** subir para a área Saúde a informação do Cadu 0800 019 0505 (um resumo diz 7h às 19h em dias úteis; notícia antiga diz 7h às 17h: confirmar) e que mamografia e Papanicolau dependem de solicitação de profissional.
+- **Saúde da mulher:** subir para a área Saúde a informação do Cadu 0800 019 0505 (o horário do número está confirmado na notícia do DAAE, seção 2; o da Saúde em si, confirmar) e que mamografia e Papanicolau dependem de solicitação de profissional.
 
 ### P5. Avó que cria ou sustenta os netos
 - **Guarda, matrícula e saúde são questões diferentes.** O texto não deve afirmar que ordem judicial é sempre necessária. Dizer: pergunte na escola e na unidade de saúde o que aceitam; procure a Defensoria para avaliar o caso. Nenhuma fonte oficial sobre guarda foi achada (C): **fica como pendência**, não como texto.
@@ -128,6 +132,7 @@ Resumos de busca restritos ao domínio da Prefeitura (páginas **não abertas**)
 - [Matrículas e rematrículas na rede municipal começam em novembro](https://rioclaro.sp.gov.br/educacao/matriculas-e-rematriculas-na-rede-municipal-de-rio-claro-comecam-em-novembro/) (ano a confirmar)
 - [Nova central para agendamento de consultas](https://rioclaro.sp.gov.br/fundacao-de-saude/nova-central-para-agendamento-de-consultas-comeca-a-operar-na-2a-feira-em-rc/) e [Outubro Rosa reforça importância de exames preventivos](https://rioclaro.sp.gov.br/fundacao-de-saude/outubro-rosa-reforca-importancia-de-exames-preventivos/)
 - [Daae mantém atendimento telefônico no feriado da Revolução de 1932](https://rioclaro.sp.gov.br/daae/daae-mantem-atendimento-telefonico-no-feriado-da-revolucao-de-1932/) (Cadu no DAAE)
+- **Arquivada em PDF (lida):** [Daae adere atendimento via Cadu e muda número de telefone](https://daaerioclaro.sp.gov.br/daae-adere-atendimento-via-cadu-e-muda-numero-de-telefone/), impressa em 15/10/2026, em `docs/documetacao/daae-cadu-atendimento.pdf`
 - [Prefeitura fará atendimento especial para atualização do Cadastro Único](https://rioclaro.sp.gov.br/desenvolvimento-social/prefeitura-fara-atendimento-especial-para-atualizacao-do-cadastro-unico/)
 - [Armazém Solidário tem nova edição no Jardim Panorama](https://rioclaro.sp.gov.br/desenvolvimento-economico/armazem-solidario-tem-nova-edicao-no-jardim-panorama/)
 - [Prefeitura entrega cesta básica para 17 mil alunos](https://rioclaro.sp.gov.br/educacao/prefeitura-entrega-cesta-basica-para-17-mil-alunos-das-escolas-municipais/)
