@@ -29,13 +29,18 @@ Esta pesquisa foi feita sem conseguir abrir as páginas da Prefeitura: o ambient
 
 **Horário do 0800 (A, na notícia do DAAE):** 24 h por telefone e WhatsApp. Atendente humano de segunda a sexta (exceto feriados nacionais), 7h às 19h; assistente virtual de segunda a sexta das 19h às 7h e 24 h em sábados, domingos e feriados. Isso encerra a dúvida "7h às 19h ou 7h às 17h" **para esse número**. Cuidado: a notícia do DAAE não mostra a data de publicação (diz só "a partir da próxima segunda-feira (13)", sem mês nem ano); o horário específico da Saúde ainda deve ser confirmado na Fundação de Saúde.
 
-**A sigla:** as fontes divergem (um resumo traz "Central de Atendimento Digital Unicidades", outro "UniCidadão"). Não escrever o significado da sigla no site até abrir a página oficial.
+**A sigla (A, com ressalva):** a matéria publicitária da Prefeitura no g1 (10/10/2025, arquivada em `docs/documetacao/cadu-g1-especial-publicitario.pdf`) diz **"CADU – Central de Atendimento Digital Unicidades"**. Um resumo de busca trazia "UniCidadão"; vale a grafia da própria Prefeitura. Ressalva: é propaganda institucional ("conteúdo de responsabilidade do anunciante"), boa para dizer o que a Prefeitura afirma do seu app, não para prometer funcionalidade. O depoimento de moradora na matéria é publicidade e não deve ser usado.
+
+**O que o app oferece segundo essa matéria (A, como afirmação da Prefeitura):** agendar e desmarcar consultas no SUS; carteirinha de vacinação digital; serviços de zeladoria; avisos da Prefeitura; matrícula e rematrícula; "acesso a programas sociais". O menu mostra, entre outras, as categorias Saúde, Educação, Desenvolvimento Social, **Conecta** e **Desenvolvimento Econômico** (o catálogo tem o Conecta e a Secretaria de Desenvolvimento Econômico como serviços de emprego). Novas funcionalidades entram aos poucos, então a lista muda. **A matéria não diz quais programas sociais** nem se inclui o CadÚnico: pendente.
+
+**Para a usuária sem celular ou com pouca internet:** a matéria trata o app como caminho principal, e o site já registra que o CADU não tem endereço físico. O conteúdo novo deve sempre trazer o canal presencial ou o telefone ao lado do app.
 
 ### O que isso muda no site (conteúdo, não botão)
 1. Um parágrafo único "O que é o Cadu e para que serve", reaproveitado onde o Cadu aparece, mais uma linha "Cadu não é o CadÚnico" na área Assistência.
-2. **Fundo Social:** o registro do catálogo (`man-fundo-social`) traz só um WhatsApp. Um resumo de notícia de julho de 2026 diz que as inscrições nos cursos gratuitos (780 vagas, idade mínima 16) são **exclusivamente pelo Cadu**. Se for verdade, a jornada de Trabalho pode mandar a mulher a um canal que não inscreve. Verificar. (B)
-3. **Saúde:** o 0800 019 0505 e a informação de que mamografia e Papanicolau dependem de solicitação de profissional estão na `observacao` de um registro do catálogo (`man-cadu`), não no texto da área Saúde. Informação escondida. (A para a localização no código; B para o conteúdo)
-4. **Matrícula:** o calendário citado em notícias é do ciclo 2026. O site já avisa que 2027 precisa de confirmação; manter. Uma notícia sem ano ("rematrículas 11 a 19 de novembro; matrículas de 30 de novembro a 15 de dezembro") **não** pode ser usada sem ver o ano. (B)
+2. **Trabalho:** o menu do app tem "Conecta" e "Desenvolvimento Econômico". Verificar se a jornada de Trabalho deve dizer que parte do atendimento também está no app, sem substituir os telefones. (A para o menu; o que há dentro de cada categoria é pendente)
+3. **Fundo Social:** o registro do catálogo (`man-fundo-social`) traz só um WhatsApp. Um resumo de notícia de julho de 2026 diz que as inscrições nos cursos gratuitos (780 vagas, idade mínima 16) são **exclusivamente pelo Cadu**. Se for verdade, a jornada de Trabalho pode mandar a mulher a um canal que não inscreve. Verificar. (B)
+4. **Saúde:** o 0800 019 0505 e a informação de que mamografia e Papanicolau dependem de solicitação de profissional estão na `observacao` de um registro do catálogo (`man-cadu`), não no texto da área Saúde. Informação escondida. (A para a localização no código; B para o conteúdo)
+5. **Matrícula:** o calendário citado em notícias é do ciclo 2026. O site já avisa que 2027 precisa de confirmação; manter. Uma notícia sem ano ("rematrículas 11 a 19 de novembro; matrículas de 30 de novembro a 15 de dezembro") **não** pode ser usada sem ver o ano. (B)
 
 ## 3. Diagnóstico: o que existe e o que falta
 
@@ -132,6 +137,7 @@ Resumos de busca restritos ao domínio da Prefeitura (páginas **não abertas**)
 - [Matrículas e rematrículas na rede municipal começam em novembro](https://rioclaro.sp.gov.br/educacao/matriculas-e-rematriculas-na-rede-municipal-de-rio-claro-comecam-em-novembro/) (ano a confirmar)
 - [Nova central para agendamento de consultas](https://rioclaro.sp.gov.br/fundacao-de-saude/nova-central-para-agendamento-de-consultas-comeca-a-operar-na-2a-feira-em-rc/) e [Outubro Rosa reforça importância de exames preventivos](https://rioclaro.sp.gov.br/fundacao-de-saude/outubro-rosa-reforca-importancia-de-exames-preventivos/)
 - [Daae mantém atendimento telefônico no feriado da Revolução de 1932](https://rioclaro.sp.gov.br/daae/daae-mantem-atendimento-telefonico-no-feriado-da-revolucao-de-1932/) (Cadu no DAAE)
+- **Arquivada em PDF (lida):** matéria publicitária da Prefeitura no g1, "CADU transforma os serviços públicos em Rio Claro com mais praticidade" (10/10/2025), em `docs/documetacao/cadu-g1-especial-publicitario.pdf`
 - **Arquivada em PDF (lida):** [Daae adere atendimento via Cadu e muda número de telefone](https://daaerioclaro.sp.gov.br/daae-adere-atendimento-via-cadu-e-muda-numero-de-telefone/), impressa em 15/10/2026, em `docs/documetacao/daae-cadu-atendimento.pdf`
 - [Prefeitura fará atendimento especial para atualização do Cadastro Único](https://rioclaro.sp.gov.br/desenvolvimento-social/prefeitura-fara-atendimento-especial-para-atualizacao-do-cadastro-unico/)
 - [Armazém Solidário tem nova edição no Jardim Panorama](https://rioclaro.sp.gov.br/desenvolvimento-economico/armazem-solidario-tem-nova-edicao-no-jardim-panorama/)
