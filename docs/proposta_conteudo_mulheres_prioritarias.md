@@ -73,6 +73,7 @@ Cada proposta responde às três perguntas: onde começo, o que levo, o que faç
   - **Pista importante, sem data (B-):** um resumo cita uma notícia da Prefeitura, "Serviços do Cadastro Único a partir de 2ª-f serão realizados nos Cras", ligada a uma reforma no local onde o atendimento funcionava. Se o CadÚnico foi **transferido temporariamente** para os CRAS, o texto do site precisa saber se já voltou ao local original. Sem a notícia e sua data, não dá para dizer onde atender hoje.
   - **Não é fonte:** um PDF de `cadunico.com.br` ("CadÚnico 2026", CRAS Rio Claro Endereço, Telefone) foi descartado. É site privado de conteúdo genérico, sem horário, documento nem endereço de Rio Claro, e só remete à página da Prefeitura. Não foi arquivado. Serve de alerta de produto: a mulher que buscar "CadÚnico Rio Claro" cai nesse tipo de site, então o texto do MISM3 deve dizer que **a inscrição é gratuita, feita no CRAS, e que só o gov.br e a Prefeitura são oficiais**.
   - **Pista nova, de portal privado (C, não é fonte):** o arquivo OneNote de 15/10/2026 traz duas capturas do portal "Info Cidadão" (`infocidadao.com/sp/rio-claro`, "portal independente", com aviso de que não responde pelos dados) listando **7 locais**: os 6 CRAS e um **"Posto CadÚnico", Rua 3, 945, Centro**. Esse endereço é o do Paço Municipal, que consta no rodapé de uma página oficial da Prefeitura já arquivada (`cram-noticia-2016.pdf`). Hipótese de trabalho: o CadÚnico funciona normalmente no Paço e foi levado aos CRAS durante a reforma citada acima. **Hipótese, não fato:** falta a página oficial.
+  - **Decisão do mantenedor (15/10/2026):** o texto do site dirá que o CadÚnico é feito **no CRAS**, trará o **telefone do CRAS da usuária** (a ferramenta "qual CRAS atende o meu bairro" já existe) e a orientação de **ligar antes**. Isso resolve o risco de mandá-la ao lugar errado, desde que o texto **não afirme horário** nem cite o "Posto" do Centro. Duas premissas continuam sendo conferidas em página oficial: que o atendimento é no CRAS (há indício na Prefeitura e no gov.br, só em resumo) e a lista de documentos. Por isso o pedido de impressões abaixo cai de quatro para duas.
   - **O portal privado erra em 2 dos 6 CRAS**, comparado ao `cras.pdf` oficial: Jardim Brasília ("Rua 21, 54" no portal; a Prefeitura diz "endereço provisório") e Jardim Independência ("Rua M-7, 490" no portal; "Rua M7 nº 1031" na Prefeitura). Mãe Preta, Panorama, Terra Nova e Bom Sucesso batem. Por isso o portal não serve nem para endereço, e o site deve continuar usando só a página oficial.
   - **Detalhe de cautela:** o mesmo resumo diz "CadÚnico criado em 2003". Pelo que sei, ele é de 2001 e o Decreto 6.135/2007 o regulamenta; o dado é dispensável para a usuária e mostra por que o resumo não vale como fonte.
 - **Fonte a abrir:** gov.br "Inscrever-se no Cadastro Único", gov.br "Receber o Bolsa Família", MDS "BPC" e "BPC no Cadastro Único"; página oficial dos CRAS de Rio Claro.
@@ -137,7 +138,8 @@ Sobre "prontidão de 90%" e "MISM2": esta árvore do repositório não tem nenhu
 2. Ligar para a Secretaria de Desenvolvimento Social, (19) 3522-1930 (já no catálogo), e perguntar como a família é encaminhada às cestas e se o PAA e o Armazém Solidário estão ativos.
 3. Descobrir como se agenda a Defensoria em Rio Claro.
 4. Confirmar o canal de inscrição do Fundo Social (Cadu ou WhatsApp).
-5. **Imprimir em PDF, do site oficial**, três páginas, para tirar o CadÚnico da lista de pendências: (a) `desenvolvimentosocial.rc.sp.gov.br/?page_id=108` (citada como origem de horário e documentos); (b) `rioclaro.sp.gov.br/centro-ref-assistencia-social/` (página do CRAS na Prefeitura, que o resumo diz tratar de BPC e transferência de renda); (c) a notícia "Serviços do Cadastro Único a partir de 2ª-f serão realizados nos Cras", com a data visível. Se possível, uma quarta: (d) a página oficial que confirme onde fica o atendimento do Cadastro Único no Centro (o "Posto CadÚnico", Rua 3, 945, apontado só por portal privado).
+5. **Mínimo para publicar o P1 (duas impressões em PDF):** (1) a página do gov.br "Inscrever-se no Cadastro Único para Programas Sociais do Governo Federal" (documentos, quem faz, gratuidade, que não garante benefício); (2) a notícia da Prefeitura "Serviços do Cadastro Único ... serão realizados nos Cras" ou a página `rioclaro.sp.gov.br/centro-ref-assistencia-social/`, o que mostrar o CadÚnico no CRAS, com a data visível. **Opcionais, para completar:** o que está abaixo.
+   Lista completa de páginas que ajudam, para tirar o CadÚnico da lista de pendências: (a) `desenvolvimentosocial.rc.sp.gov.br/?page_id=108` (citada como origem de horário e documentos); (b) `rioclaro.sp.gov.br/centro-ref-assistencia-social/` (página do CRAS na Prefeitura, que o resumo diz tratar de BPC e transferência de renda); (c) a notícia "Serviços do Cadastro Único a partir de 2ª-f serão realizados nos Cras", com a data visível. Se possível, uma quarta: (d) a página oficial que confirme onde fica o atendimento do Cadastro Único no Centro (o "Posto CadÚnico", Rua 3, 945, apontado só por portal privado).
 
 ## 8. Fontes que indicaram os achados (a abrir e conferir)
 
@@ -163,3 +165,25 @@ Federais (resumos de busca; abrir):
 - [Como fazer para pedir pensão alimentícia (Senado)](https://www12.senado.leg.br/noticias/especiais/especial-cidadania/pensao-alimenticia-atende-necessidades-basicas-e-padrao-de-vida/como-fazer-para-pedir-pensao-alimenticia)
 
 Uma busca geral (sem restrição de domínio) trouxe descrições erradas, como chamar o Cadu de registro federal. Por isso nenhum achado desta página vem de busca aberta sem confirmação no domínio oficial.
+
+## 9. Rascunho de texto para o P1 (não publicar antes de abrir as fontes marcadas)
+
+Rascunho para a área Assistência. Não está no site. Cada afirmação traz o nível da seção 1; as de nível B só entram depois de abrir a fonte indicada. Segue o formato "onde começo, o que levo, se não der".
+
+> **Preciso de ajuda para sustentar minha família: comece pelo CRAS**
+>
+> **O que é o CadÚnico.** O Cadastro Único (CadÚnico) é um cadastro do governo federal, feito sem custo, que serve de porta de entrada para programas como o Bolsa Família e o BPC. Estar inscrita **não garante** receber o benefício: cada programa tem as suas regras. *(B: abrir a página do gov.br)*
+>
+> **Não confunda com o Cadu.** O Cadu é o aplicativo de atendimento da Prefeitura (consulta, matrícula, avisos). O CadÚnico é outra coisa. *(A: documentos do DAAE e do g1)*
+>
+> **Onde começo.** No CRAS do seu bairro. Veja qual é pelo nome do bairro e **ligue antes** para saber o dia, o horário e se é preciso agendar: [telefone do CRAS dela]. *(A para o telefone e o bairro; horário não é afirmado. A informação de que o CadÚnico é feito no CRAS: B, abrir a notícia ou a página da Prefeitura)*
+>
+> **O que levar** (confirme com o CRAS, a lista pode mudar). A pessoa responsável pela família: documento com foto, CPF ou título de eleitor e comprovante de residência. Para os outros moradores: ao menos um documento de cada um. *(B: abrir a página do gov.br)*
+>
+> **Se não conseguir.** Ligue para a Secretaria de Desenvolvimento Social, (19) 3522-1930, e pergunte quem pode atender. *(A)* Se alguém pedir dinheiro para fazer o cadastro, desconfie: a inscrição é gratuita, e só o gov.br e a Prefeitura são fontes oficiais. *(B)*
+>
+> **Se a pessoa da família tem 65 anos ou mais, ou tem deficiência.** Além do CadÚnico, o BPC é pedido ao INSS (135 ou Meu INSS), sem intermediário. As regras de renda estão no gov.br. *(B: abrir a página do MDS sobre o BPC)*
+>
+> Este texto orienta o primeiro passo. Ele não diz se você tem direito a algum benefício: quem avalia é o órgão responsável.
+
+**Para entrar no código depois:** o teste de `web/tests/jornada_assistencia.test.js` proíbe as palavras "CadÚnico" e "Bolsa Fam" nessa jornada. Ele precisa ser ajustado na mesma entrega, para continuar proibindo promessa ("você tem direito", "benefício garantido") mas permitir o nome do cadastro com fonte.
