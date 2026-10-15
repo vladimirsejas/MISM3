@@ -194,6 +194,9 @@ assert(/dois salários mínimos por pessoa/.test(secaoLocal) && /confira as regr
 assert(!/\d+ ?horas|\d+ ?h\b(?! às)/.test(secaoLocal.split("trabalho-estudar")[2] || ""), "formação: não afirma carga horária que não foi confirmada");
 assert(!/inscrições abertas/.test(secaoLocal.split("trabalho-estudar")[2] || "") && /não confirma se há inscrição aberta/.test(secaoLocal), "formação: não afirma matrícula aberta");
 assert(/Concurso público/.test(secaoLocal) && /depende do edital/.test(secaoLocal), "concurso: depende do edital");
+["concursopublico.sp.gov.br", "pciconcursos.com.br", "vunesp.com.br", "cebraspe.org.br/concursos/inscricoes-abertas"].forEach((h) => assert(secaoLocal.includes(h), "concurso: falta o site " + h));
+assert(/Buffet de festas \(adulto e infantil\)/.test(secaoLocal) && /não cadastra buffets/.test(secaoLocal), "dica de buffet adulto e infantil, sem prometer vaga");
+assert((secaoLocal.match(/id="trabalho-sem-experiencia"/g) || []).length === 1, "o bloco Onde procurar trabalho sem experiência existe uma vez só");
 assert(/Revenda por consignação/.test(secaoLocal) && /não compre kit inicial/.test(secaoLocal), "consignação sem comprar kit");
 assert(/leve água e um lanche/.test(secaoLocal), "logística do dia da entrevista");
 assert(!/R\$\s?\d/.test(secaoLocal), "não promete valores de pagamento");
