@@ -25,39 +25,6 @@
           ["Lei nº 14.542/2023: prioridade no Sine para mulheres em situação de violência", "https://www2.camara.leg.br/legin/fed/lei/2023/lei-14542-3-abril-2023-793992-publicacaooriginal-167489-pl.html", "A lei federal reserva 10% das vagas intermediadas pelo Sine para mulheres em situação de violência doméstica e familiar. Como isso funciona em Rio Claro e o que o atendimento pede, só o PAT pode dizer: pergunte lá."],
           ["Estudar: concluir o ensino médio, faculdade e cursos superiores", "#educacao", "EJA gratuita, Faculdade SESI e os cursos superiores da Fatec estão na área Educação, que também reúne os cursos técnicos e profissionalizantes."]
         ]
-      }, {
-        titulo: "Onde procurar trabalho sem experiência", ancora: "trabalho-sem-experiencia",
-        descricao: "Começar sem experiência é comum, e há portas de entrada que costumam aceitar quem está começando. Esta seção reúne dicas de por onde começar e, em seguida, os sites que divulgam concursos públicos.",
-        tipos: [], links: [
-          ["Portal de Concursos do Estado de São Paulo", "http://www.concursopublico.sp.gov.br/PortalConcurso/noauth/PortalDeConcursos.do", "Concursos abertos e previstos do Governo do Estado de São Paulo. O portal oficial só abre sem cadeado de segurança: o navegador pode avisar “Não seguro”, mas o endereço é o do Governo do Estado."],
-          ["PCI Concursos", "https://www.pciconcursos.com.br/", "Site que reúne editais e concursos de todo o país. Não é um site oficial: confira sempre o edital na página da banca ou do órgão."],
-          ["Vunesp — concursos e vestibulares", "https://www.vunesp.com.br/", "Banca organizadora de muitos concursos de prefeituras e do Estado. Veja os editais com inscrição aberta."],
-          ["Cebraspe — inscrições abertas", "https://www.cebraspe.org.br/concursos/inscricoes-abertas/", "Banca organizadora de concursos federais e de outros órgãos. Lista os concursos com inscrição aberta."]
-        ],
-        canais: [
-          { nome: "Buffet de festas (adulto e infantil): uma porta de entrada", sem_tel: true, resumo: "Ver a dica",
-            texto: "Buffets de festas, tanto para adultos (casamentos, formaturas, eventos) quanto infantis (aniversários), costumam precisar de gente nova e muitas vezes aceitam quem nunca trabalhou na área. É uma dica de por onde procurar, não uma vaga confirmada: este site não cadastra buffets de Rio Claro.",
-            topicos: [
-              ["Que funções existem", "Em buffet de festa adulta: garçom ou garçonete, copeira, auxiliar de cozinha, auxiliar de limpeza e montagem. Em buffet infantil: recreadora ou monitora, atendente, auxiliar de cozinha e de limpeza. Cada casa define o que pede."],
-              ["Como procurar", "Pergunte diretamente nos buffets da sua região, deixando o currículo e o telefone. Veja também o Portal da Empregabilidade, o PAT e o CONECTA, acima nesta página, e pergunte se há vaga para auxiliar ou para quem está começando."],
-              ["Sem experiência", "Diga com clareza que está começando e que quer aprender. Quem já cuidou de crianças ou ajudou em festas da família pode citar isso. Para buffet infantil, a paciência com crianças pesa."],
-              ["Dias e horários", "O trabalho em festas costuma ser à noite e nos fins de semana, em escala, e muitas vezes por diária. Pergunte antes o dia e o horário, como é o pagamento e se há registro em carteira, para ver se cabe na sua rotina e na de quem cuida dos seus filhos."],
-              ["Cuidado", "Não pague para conseguir vaga. Desconfie de quem pede dinheiro, documentos pelo WhatsApp sem conhecer a empresa ou depósito antecipado."]
-            ],
-            aviso: "Orientação geral, sem fonte oficial local. O que cada buffet exige, paga e oferece deve ser confirmado com ele.",
-            fonte: ["Orientação geral; sem fonte oficial local", null, "a ser confirmada com cada empresa"] },
-          { nome: "Concursos públicos: por onde começar", sem_tel: true, resumo: "Ver o passo a passo",
-            texto: "Concurso público é outra forma de começar, sem pedir experiência na maior parte dos cargos de nível fundamental e médio. O que vale é a prova. Os sites acima divulgam os editais.",
-            topicos: [
-              ["Leia o edital", "O edital diz os cargos, a escolaridade pedida, o salário, as datas, a taxa de inscrição e o conteúdo da prova. É o documento que vale: confirme sempre nele, e não em resumos."],
-              ["Taxa de inscrição", "Muitos concursos cobram taxa, e o edital costuma prever isenção para quem se enquadra em certas regras (por exemplo, quem está no CadÚnico). Veja no edital se você tem direito e até quando pedir."],
-              ["Prazos", "Inscrição e pedido de isenção têm datas curtas. Anote-as assim que achar o edital."],
-              ["Cargos sem exigência de experiência", "Muitos cargos de nível fundamental e médio pedem só a escolaridade. Se faltar o ensino médio, veja a EJA na área Educação."],
-              ["Cuidado", "Concurso de verdade não cobra para garantir aprovação nem vaga. Desconfie de quem promete isso."]
-            ],
-            aviso: "Os sites listados divulgam editais de terceiros. Este site não confere os concursos abertos nem garante vaga.",
-            fonte: ["Sites de bancas e portais de concursos", null, "orientação geral; confira cada edital"] }
-        ]
       }],
       pendencias: ["Este sistema não lista vagas abertas. Para ver vagas atuais, use os portais acima."]
     },

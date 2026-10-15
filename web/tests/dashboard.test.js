@@ -154,9 +154,7 @@ Areas.AREAS.forEach((a) => {
   const urls = [];
   a.secoes.forEach((s) => s.links.forEach((l) => {
     const interno = l[1].charAt(0) === "#";
-    /* Exceção conferida pelo mantenedor em 15/10/2026: o portal oficial de concursos do Estado só abre em http (o navegador mostra "Não seguro"). */
-    const httpConferido = l[1] === "http://www.concursopublico.sp.gov.br/PortalConcurso/noauth/PortalDeConcursos.do";
-    assert(/^https:\/\//.test(l[1]) || httpConferido || (interno && Areas.AREAS.some((x) => "#" + x.id === l[1])), a.id + ": link sem https e que não aponta para uma área existente: " + l[1]);
+    assert(/^https:\/\//.test(l[1]) || (interno && Areas.AREAS.some((x) => "#" + x.id === l[1])), a.id + ": link sem https e que não aponta para uma área existente: " + l[1]);
     assert(l[0] && l[2], a.id + ": link sem título ou descrição");
     urls.push(l[1]);
   }));
