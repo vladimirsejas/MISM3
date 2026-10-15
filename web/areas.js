@@ -25,6 +25,15 @@
           ["Lei nº 14.542/2023: prioridade no Sine para mulheres em situação de violência", "https://www2.camara.leg.br/legin/fed/lei/2023/lei-14542-3-abril-2023-793992-publicacaooriginal-167489-pl.html", "A lei federal reserva 10% das vagas intermediadas pelo Sine para mulheres em situação de violência doméstica e familiar. Como isso funciona em Rio Claro e o que o atendimento pede, só o PAT pode dizer: pergunte lá."],
           ["Estudar: concluir o ensino médio, faculdade e cursos superiores", "#educacao", "EJA gratuita, Faculdade SESI e os cursos superiores da Fatec estão na área Educação, que também reúne os cursos técnicos e profissionalizantes."]
         ]
+      }, {
+        titulo: "Formação mais longa (anos)", ancora: "trabalho-formacao-longa",
+        descricao: "Graduações e cursos que levam anos e são gratuitos. Oferta, prazos e regras mudam a cada edital ou período: confirme sempre na página de cada instituição antes de se inscrever. Esta lista também está na área Educação.",
+        tipos: [], links: [
+          ["UNIVESP", "https://univesp.br/", "Graduações gratuitas a distância, com apoio em polos presenciais."],
+          ["Vestibular da UNIVESP", "https://vestibular.univesp.br/", "Há vestibular: veja aqui as datas atuais e se há inscrição aberta."],
+          ["IFSP — Instituto Federal de São Paulo", "https://www.ifsp.edu.br/", "Cursos técnicos e superiores gratuitos; a oferta e os prazos mudam a cada edital, e alguns já estão encerrados. Veja o que está aberto agora."],
+          ["Senac São Paulo — Programa Senac de Gratuidade", "https://www.sp.senac.br/", "Oferece bolsas integrais em cursos. A regra divulgada é renda de até dois salários mínimos por pessoa da família, com vaga por ordem de inscrição e prazo antes de a turma começar: confira as regras atuais no site."]
+        ]
       }],
       pendencias: ["Este sistema não lista vagas abertas. Para ver vagas atuais, use os portais acima."]
     },
