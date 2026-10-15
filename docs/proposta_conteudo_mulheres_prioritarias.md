@@ -70,6 +70,13 @@ Cada proposta responde às três perguntas: onde começo, o que levo, o que faç
   - **Confirmado (A):** o telefone do CRAS Mãe Preta, (19) 3524-9954, e os endereços e bairros atendidos dos seis CRAS (`docs/documetacao/cras.pdf`, página oficial da Secretaria de Desenvolvimento Social, impressa em 10/10/2026). **Essa página não menciona Cadastro Único nem horário de atendimento.**
   - **Não confirmado (B-):** "o CadÚnico é feito nos CRAS, de segunda a sexta, das 8h às 17h". Veio de um resumo de busca atribuído a `desenvolvimentosocial.rc.sp.gov.br/?page_id=108`, página que não vimos. O único horário de 8h às 17h que temos em fonte é o da **sede** da Secretaria (8h às 12h e 13h às 17h), que é outro endereço. Não publicar horário de CRAS sem ver a página.
   - **Não confirmado (B-):** a lista de documentos (responsável: documento com foto, CPF ou título, comprovante de residência; demais membros: ao menos um documento cada) bate com o resumo do MDS visto antes, o que aumenta a confiança, mas ainda não foi lida na página da Prefeitura.
+  - **Páginas oficiais atuais da Secretaria de Desenvolvimento Social, identificadas em 15/10/2026 (B+):** o ChatGPT trouxe os endereços e eu os localizei por uma segunda via independente (busca restrita ao domínio `desenvolvimentosocial.rc.sp.gov.br`), que devolveu resumos coerentes. Nível **B+**: duas leituras independentes concordam, mas as páginas **não foram abertas nem arquivadas** (o ambiente bloqueia o domínio). As páginas: "Como me cadastro no CADÚNICO?" (`?page_id=3366`), "Unidades de Atendimento" (`?page_id=1270`), "Quem tem direito ao Bolsa Família?" (`?page_id=3375`), "Programa Bolsa Família" (`?page_id=1944`), "Cadastro único" (`?page_id=108`), "CRAS" (`?page_id=112`), "BPC" (`?page_id=1954`) e "Como Solicitar o BPC/LOAS?" (`?page_id=1927`), "Como Solicitar a Tarifa Social de Energia Elétrica?" (`?page_id=3384`). Resumo do que as duas leituras dizem:
+    - **Onde:** o cadastro é **presencial, não pelo site**, em "postos de atendimento do Cadastro Único" da Prefeitura ou nos CRAS. A página de unidades lista **"Cadastro Único, Paço Municipal, Rua 3, nº 945, Centro"**, atendimento presencial; o endereço do Paço bate com o Diário Oficial do município. Telefone e horário do posto **não** apareceram.
+    - **Quem deve ir:** o responsável pela família, **"de preferência mulher"** (municipal), e, no gov.br, 16 anos ou mais, "preferencialmente mulher". As duas fontes concordam.
+    - **Documentos:** responsável, documento com foto e CPF ou título de eleitor (obrigatório um dos dois), mais comprovante de residência recente, ou declaração de endereço se não houver; demais moradores, um documento de cada (certidão, RG, CPF, título ou carteira de trabalho); a Prefeitura acrescenta **comprovante de matrícula escolar para crianças e adolescentes** (o gov.br não diz isso).
+    - **Depois:** dados no sistema em até 45 dias; acompanhar pelo aplicativo CadÚnico; atualizar a cada 2 anos ou antes se mudar de endereço ou nascer alguém.
+    - **CadÚnico não é Bolsa Família:** para se **inscrever** no CadÚnico, a Prefeitura cita renda de até meio salário mínimo por pessoa, ou renda total de até 3 salários mínimos em situação de vulnerabilidade. Para **receber o Bolsa Família**, a página específica cita CadÚnico atualizado e renda por pessoa de até R$ 218 (exemplo de família de quatro: R$ 872), e diz que **não é preciso pedir o Bolsa Família**: o governo avalia.
+    - **Cuidados:** (1) uma das buscas apontou que a Prefeitura cita, em outra página, faixas antigas (R$ 85 e R$ 170); (2) o valor de R$ 218 pode ter mudado: não afirmo nem nego o valor atual, e o texto deve remeter ao gov.br no dia da publicação; (3) o **horário de 8h às 17h dos CRAS** continua sem confirmação em página que eu tenha visto (aparece no texto do ChatGPT e no que você colou antes, possivelmente da mesma origem); (4) tirar `utm_source=chatgpt.com` dos links ao citar.
   - **Confirmado em página oficial, de 2019 (A):** a Prefeitura publicou em 25/09/2019 "Totalmente reformado, Cadastro Único é entregue à comunidade" (arquivada em `docs/documetacao/cadastro-unico-reforma-2019.pdf`). **Existe um espaço próprio do Cadastro Único**, além dos CRAS. A secretária de Desenvolvimento Social diz ali que o Cadastro Único reúne informações para programas como Bolsa Família, tarifa social de energia elétrica, Minha Casa Minha Vida e carteira do idoso. Isso confirma, em fonte oficial, o elo CadÚnico e moradia (P2) e CadÚnico e tarifa social. **Limites:** a impressão não mostra endereço, telefone nem horário (e tem um trecho cortado entre as páginas 2 e 3), e é de 2019. O endereço Rua 3, nº 945 continua vindo só de portal privado e de texto colado, não desta página.
   - **Pista importante, sem data (B-):** um resumo cita uma notícia da Prefeitura, "Serviços do Cadastro Único a partir de 2ª-f serão realizados nos Cras", ligada a uma reforma no local onde o atendimento funcionava. Se o CadÚnico foi **transferido temporariamente** para os CRAS, o texto do site precisa saber se já voltou ao local original. Sem a notícia e sua data, não dá para dizer onde atender hoje. **Atualização:** como a reforma do espaço foi concluída em 25/09/2019 (item acima), é provável que essa transferência temporária para os CRAS tenha sido em 2019 e já tenha acabado. É inferência, sem a data da notícia; ela reduz a preocupação, não a elimina.
   - **Não é fonte:** um PDF de `cadunico.com.br` ("CadÚnico 2026", CRAS Rio Claro Endereço, Telefone) foi descartado. É site privado de conteúdo genérico, sem horário, documento nem endereço de Rio Claro, e só remete à página da Prefeitura. Não foi arquivado. Serve de alerta de produto: a mulher que buscar "CadÚnico Rio Claro" cai nesse tipo de site, então o texto do MISM3 deve dizer que **a inscrição é gratuita, feita no CRAS, e que só o gov.br e a Prefeitura são oficiais**.
@@ -168,24 +175,99 @@ Federais (resumos de busca; abrir):
 
 Uma busca geral (sem restrição de domínio) trouxe descrições erradas, como chamar o Cadu de registro federal. Por isso nenhum achado desta página vem de busca aberta sem confirmação no domínio oficial.
 
-## 9. Rascunho de texto para o P1 (não publicar antes de abrir as fontes marcadas)
+## 9. Texto proposto para a área Assistência Social: CadÚnico e Bolsa Família (rascunho v2)
 
-Rascunho para a área Assistência. Não está no site. Cada afirmação traz o nível da seção 1; as de nível B só entram depois de abrir a fonte indicada. Segue o formato "onde começo, o que levo, se não der".
+Rascunho. **Não está no site e nenhum código foi alterado.** Níveis: A = fonte oficial arquivada; B+ = duas leituras independentes de página oficial, página ainda não arquivada (seção 4, P1). Só o que for A pode ser publicado; o que for B+ espera a impressão em PDF.
 
-> **Preciso de ajuda para sustentar minha família: comece pelo CRAS**
->
-> **O que é o CadÚnico.** O Cadastro Único (CadÚnico) é um cadastro do governo federal, feito sem custo, que reúne as informações das famílias de baixa renda e serve de porta de entrada para programas como o Bolsa Família, a tarifa social de energia elétrica, o Minha Casa Minha Vida, a carteira do idoso e o BPC. Estar inscrita **não garante** receber o benefício: cada programa tem as suas regras. *(A para a lista de programas, que a Prefeitura citou em 2019: as regras de hoje estão no gov.br; B para "não garante", abrir a página do gov.br)*
->
-> **Não confunda com o Cadu.** O Cadu é o aplicativo de atendimento da Prefeitura (consulta, matrícula, avisos). O CadÚnico é outra coisa. *(A: documentos do DAAE e do g1)*
->
-> **Onde começo.** No CRAS do seu bairro. Veja qual é pelo nome do bairro e **ligue antes** para saber o dia, o horário e se é preciso agendar: [telefone do CRAS dela]. *(A para o telefone e o bairro; horário não é afirmado. A informação de que o CadÚnico é feito no CRAS: B, abrir a notícia ou a página da Prefeitura)*
->
-> **O que levar** (confirme com o CRAS, a lista pode mudar). A pessoa responsável pela família: documento com foto, CPF ou título de eleitor e comprovante de residência. Para os outros moradores: ao menos um documento de cada um. *(B: abrir a página do gov.br)*
->
-> **Se não conseguir.** Ligue para a Secretaria de Desenvolvimento Social, (19) 3522-1930, e pergunte quem pode atender. *(A)* Se alguém pedir dinheiro para fazer o cadastro, desconfie: a inscrição é gratuita, e só o gov.br e a Prefeitura são fontes oficiais. *(B)*
->
-> **Se a pessoa da família tem 65 anos ou mais, ou tem deficiência.** Além do CadÚnico, o BPC é pedido ao INSS (135 ou Meu INSS), sem intermediário. As regras de renda estão no gov.br. *(B: abrir a página do MDS sobre o BPC)*
->
-> Este texto orienta o primeiro passo. Ele não diz se você tem direito a algum benefício: quem avalia é o órgão responsável.
+**Onde entra, sem botão novo.** Como primeiro bloco da área Assistência Social, antes de "Seu CRAS", com a ferramenta "qual CRAS atende o meu bairro" que já existe fornecendo o telefone. Os mesmos fatos alimentam os campos "leve" e "pergunte" do passo "Procure o CRAS" da jornada de Assistência.
 
-**Para entrar no código depois:** o teste de `web/tests/jornada_assistencia.test.js` proíbe as palavras "CadÚnico" e "Bolsa Fam" nessa jornada. Ele precisa ser ajustado na mesma entrega, para continuar proibindo promessa ("você tem direito", "benefício garantido") mas permitir o nome do cadastro com fonte.
+> **Preciso de ajuda para sustentar minha família: comece pelo Cadastro Único**
+>
+> **O que é.** O Cadastro Único (CadÚnico) é o cadastro do governo federal que a Prefeitura faz, sem custo, para identificar famílias de baixa renda. Ele é a porta de entrada para programas como o Bolsa Família, a tarifa social de energia elétrica, o Minha Casa Minha Vida, a carteira do idoso e o BPC. **Fazer o cadastro não é receber o benefício:** cada programa tem regras próprias. *(A para a lista de programas, citada pela Prefeitura em 2019; B+ para o restante)*
+>
+> **Quem pode se cadastrar.** A Prefeitura informa que o cadastro é para famílias com renda de até meio salário mínimo por pessoa, ou renda total de até três salários mínimos em situação de vulnerabilidade social. Na dúvida, procure o atendimento: quem avalia é o cadastro, não este site. *(B+: copiar o texto exato da página `?page_id=3366` ou `?page_id=108`)*
+>
+> **Quem deve fazer.** A família indica uma pessoa responsável por prestar as informações de todos os moradores. Em regra ela tem 16 anos ou mais e, de preferência, é uma mulher da família. Se não houver uma mulher que possa ir, outra pessoa da família pode ser a responsável. *(B+: Prefeitura e gov.br concordam em "de preferência mulher"; o gov.br dá os 16 anos)*
+>
+> **Onde fazer.** Presencialmente: não é pelo site. Procure o CRAS do seu bairro, **[telefone do CRAS dela]**, ou o posto do Cadastro Único no **Paço Municipal, Rua 3, nº 945, Centro**. **Ligue antes** para saber o dia, o horário e se é preciso agendar. Para o posto, a Secretaria de Desenvolvimento Social atende no (19) 3522-1930. *(B+ para o endereço do posto; A para o telefone da Secretaria e dos CRAS; **horário não é afirmado**)*
+>
+> **O que levar** (originais; confirme com o atendimento). *Quem responde pela família:* documento com foto e CPF ou título de eleitor; comprovante de residência recente (conta de luz ou água); se não tiver comprovante, pergunte sobre a declaração de endereço. *Os outros moradores:* pelo menos um documento de cada um (certidão de nascimento ou casamento, RG, CPF, título de eleitor ou carteira de trabalho). *Crianças e adolescentes:* a Prefeitura também pede o comprovante de matrícula escolar. *(B+)*
+>
+> **Depois do atendimento.** Os dados entram no sistema em até 45 dias. Acompanhe pelo aplicativo CadÚnico. Atualize a cada 2 anos, ou antes se você mudar de endereço ou se alguém nascer na família. *(B+)*
+>
+> **E o Bolsa Família?** Você não precisa pedir o Bolsa Família: com o CadÚnico atualizado, o governo federal avalia a família. O critério principal é a renda por pessoa. A página da Prefeitura cita **até R$ 218 por pessoa [conferir o valor atual no gov.br no dia da publicação; ele pode mudar]**. Quem seleciona é o governo federal, não a Prefeitura, e uma família pode estar no CadÚnico sem receber o benefício. *(B+, com o valor sujeito a conferência)*
+>
+> **Se alguém da família tem 65 anos ou mais, ou tem deficiência.** O BPC é outro benefício: depois do CadÚnico, é pedido ao INSS (135 ou Meu INSS), sem intermediário. As regras estão no gov.br. A Prefeitura também tem páginas sobre o BPC. *(B+; abrir `?page_id=1954` e `?page_id=1927`)*
+>
+> **Cuidado.** A inscrição é gratuita. Só o gov.br e a Prefeitura são fontes oficiais; desconfie de quem cobra ou de sites que prometem benefício. *(B)*
+>
+> Este texto orienta o primeiro passo. Ele não diz se você tem direito a algum benefício. Fontes: Prefeitura de Rio Claro (Secretaria de Desenvolvimento Social) e gov.br, com a data da conferência.
+
+### Checagens pedidas antes de publicar
+
+1. **Dados municipais vigentes.** Imprimir em PDF e arquivar em `docs/documetacao/`: `?page_id=3366` (como me cadastro), `?page_id=1270` (unidades), `?page_id=3375` (Bolsa Família) e `?page_id=108` (Cadastro Único). Só depois o endereço do posto e o texto dos critérios passam de B+ para A.
+2. **Alinhamento com o gov.br.** Pela comparação dos resumos:
+
+| Item | Prefeitura | gov.br | Diferença |
+|---|---|---|---|
+| Quem responde pela família | "De preferência mulher" | 16 anos ou mais, preferencialmente mulher | Igual |
+| Documentos do responsável | Documento com foto e CPF ou título | Documento com foto, CPF ou título, comprovante de residência ou declaração | Igual |
+| Demais moradores | Certidão, RG, CPF, título ou carteira de trabalho | Pelo menos um documento de cada | Igual |
+| Crianças e adolescentes | **Comprovante de matrícula escolar** | Não consta | **A Prefeitura pede a mais** |
+| Atualização | A cada 2 anos | 24 meses (MDS) | Igual |
+| 45 dias para entrar no sistema | Consta | Não verificado | Só a Prefeitura |
+| Falta de documento | Não visto | Município cadastra mesmo assim, o cadastro fica incompleto | Só o gov.br |
+
+3. **Inscrição no CadÚnico não é requisito do Bolsa Família.** O texto separa os dois: o parágrafo "Quem pode se cadastrar" (cadastro) e o "E o Bolsa Família?" (benefício, com critério de renda próprio e seleção federal).
+4. **Valor de R$ 218.** Conferir no gov.br no dia da publicação. Se divergir, vale o gov.br e a página da Prefeitura vira pendência a corrigir. Um valor desatualizado pode fazer uma mulher achar que não pode se inscrever, então, na dúvida, o texto manda procurar o atendimento.
+5. **Horário.** Não afirmar horário de CRAS nem do posto até haver página atual impressa.
+
+### O que muda no código quando for a hora (hoje, nada)
+
+- `web/tests/jornada_assistencia.test.js` proíbe "CadÚnico" e "Bolsa Fam" na jornada: ajustar para continuar vetando promessa ("você tem direito", "benefício garantido") e aceitar o nome do cadastro.
+- O mesmo teste só aceita links externos que já constam em `areas.js` ou no catálogo: os novos links oficiais entram lá, com fonte e data.
+- Atualizar `docs/estado_do_projeto.md`, que hoje diz que a jornada de Assistência "não menciona CadÚnico".
+
+### Novas pistas encontradas (não confirmadas)
+
+- **Segurança alimentar (P3):** a busca devolveu o PDF do **Plano Municipal de Segurança Alimentar e Nutricional 2025-2028** (CAISAN), publicado no site da Secretaria em janeiro de 2026. É a fonte oficial mais promissora para a seção de comida; precisa ser impresso e lido.
+- **Tarifa social de energia (P2):** existe a página `?page_id=3384`, "Como Solicitar a Tarifa Social de Energia Elétrica?", que pode complementar a seção de Moradia já existente.
+
+## 10. Lista para conferir: o que abrir, o que verificar e como devolver
+
+**Regra combinada com o mantenedor (15/10/2026):** o que é oficial é oficial. Uma página oficial **aberta e arquivada em PDF** vale como fonte (nível A), sem dúvida adicional. A cautela dos níveis B e B+ existia só porque até agora só se viu um **resumo** da página, não a página. Duas ressalvas permanecem, e não são desconfiança da fonte: (1) a **data** (uma página de 2019 prova o que existia em 2019); (2) **cada assunto tem a sua fonte oficial**: para serviço local vale a Prefeitura; para regra federal (renda do Bolsa Família, BPC, quem é o responsável) vale o gov.br. Se as duas divergirem num valor federal, vale o gov.br.
+
+**Como devolver:** imprimir em PDF, no mesmo formato das anteriores (com a data e o endereço da página visíveis), e enviar. Se o PDF cortar o texto, enviar também o trecho copiado.
+
+### Para publicar o bloco do CadÚnico (prioridade 1)
+
+| # | Abrir | Verificar |
+|---|---|---|
+| 1 | https://desenvolvimentosocial.rc.sp.gov.br/?page_id=3366 | Documentos de cada pessoa; "de preferência mulher"; presencial; prazo de 45 dias; atualização a cada 2 anos; se traz telefone ou horário |
+| 2 | https://desenvolvimentosocial.rc.sp.gov.br/?page_id=1270 | Se lista "Cadastro Único, Paço Municipal, Rua 3, nº 945, Centro"; se traz telefone ou horário; os endereços dos CRAS |
+| 3 | https://desenvolvimentosocial.rc.sp.gov.br/?page_id=3375 | O critério de renda do Bolsa Família e a data da página |
+| 4 | https://www.gov.br/pt-br/servicos/inscrever-se-no-cadastro-unico-para-programas-sociais-do-governo-federal | Responsável com 16 anos ou mais, preferencialmente mulher; documentos; gratuidade; data da última modificação |
+| 5 | https://www.gov.br/pt-br/servicos/receber-o-bolsa-familia | **Valor atual** do critério de renda por pessoa (vale este, não o da Prefeitura, se divergir) |
+
+### Em seguida (prioridades 2 e 3)
+
+| Assunto | Abrir | Verificar |
+|---|---|---|
+| BPC | https://desenvolvimentosocial.rc.sp.gov.br/?page_id=1954 e `?page_id=1927`; https://www.gov.br/mds/pt-br/acoes-e-programas/suas/beneficios-assistenciais/beneficio-assistencial-ao-idoso-e-a-pessoa-com-deficiencia-bpc | Quem pode, como pedir (INSS, 135, Meu INSS), relação com o CadÚnico |
+| Moradia | https://rioclaro.sp.gov.br/wp-content/uploads/2025/11/CRITERIOS-DE-ELEGIBILIDADE.pdf; https://rioclaro.sp.gov.br/planejamento-e-habitacao/em-rio-claro-atualizacao-cadastral-para-programa-habitacional-vai-ate-28-de-fevereiro/ | Se há prioridade para **mulher responsável pela família, declarada no CadÚnico**; o que é preciso para atualizar o cadastro habitacional |
+| Tarifa social de energia | https://desenvolvimentosocial.rc.sp.gov.br/?page_id=3384 | Passo a passo e documentos |
+| Cursos do Fundo Social | https://rioclaro.sp.gov.br/secretarias/fundo-social-de-solidariedade/rio-claro-abre-inscricoes-para-cursos-de-qualificacao-gratuitos/ | Se a inscrição é **só pelo Cadu**; data; idade mínima; quantidade de vagas |
+| Comida | https://desenvolvimentosocial.rc.sp.gov.br/wp-content/uploads/2026/01/PLAMSAN-2025-2028.pdf | Quais ações existem hoje e como a família chega a elas (o arquivo é grande: imprimir só as páginas de ações) |
+| Pensão e paternidade | https://www12.senado.leg.br/noticias/especiais/especial-cidadania/pensao-alimenticia-atende-necessidades-basicas-e-padrao-de-vida/como-fazer-para-pedir-pensao-alimenticia | Documentos; o que fazer se o pai não consta na certidão; que a pensão vale a partir do pedido |
+
+### Conferência por quem frequenta os locais (complementar)
+
+Pessoas que usam o posto do Paço Municipal ou os CRAS podem dizer **o que mudou de verdade**: horário, se precisa agendar, quanto espera. Isso **não é fonte** (é relato, nível C) e não vira texto publicado; serve para descobrir divergência com a página oficial e para decidir o que perguntar ao órgão. O que for publicado continua vindo de página oficial ou de confirmação por telefone com o órgão. Perguntas, só factuais e sem identificar ninguém:
+
+1. Em que endereço foi atendida e em que dia da semana?
+2. Que horas chegou e que horas foi atendida?
+3. Precisou agendar antes, ou foi direto?
+4. Que documentos pediram além dos que a página lista?
+5. Ligou antes? Qual telefone atendeu?
+
+Registrar apenas o dia da conferência e as respostas, sem nome nem relato pessoal. Se várias respostas divergirem da página oficial, ligar para o órgão e atualizar a fonte.
