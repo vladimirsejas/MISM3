@@ -56,6 +56,7 @@ VOCABULARIO: dict[str, tuple[str, str]] = {
     "emprego_curso/curso_tecnico": ("Cursos técnicos (Etec)", "etec curso tecnico tecnico enfermagem informatica administracao centro paula souza"),
     "emprego_curso/curso_superior_tecnologia": ("Curso superior de tecnologia (Fatec)", "fatec faculdade tecnologia curso superior tecnologo inteligencia artificial faculdade publica estadual gratuita universidade publica"),
     "emprego_curso/graduacao": ("Faculdade (graduação)", "faculdade graduacao licenciatura pedagogia curso superior universidade vestibular bolsa"),
+    "emprego_curso/formacao_gratuita": ("Formação gratuita: UNIVESP, IFSP e bolsas do Senac", "univesp ifsp instituto federal senac gratuidade bolsa integral graduacao a distancia ead faculdade gratuita curso tecnico gratuito vestibular edital cursar faculdade sem pagar"),
     "emprego_curso/eja": ("EJA: terminar os estudos", "eja ensino medio supletivo terminar os estudos voltar a estudar concluir estudos jovens e adultos parei de estudar noite"),
     "emprego_curso/eja_unesp": ("PEJA (Unesp): educação de jovens e adultos", "peja unesp educacao de jovens e adultos 15 anos ou mais"),
     "emprego_curso/escola_sesi": ("SESI: ensino e EJA", "sesi escola ensino fundamental ensino medio eja gratuito"),
