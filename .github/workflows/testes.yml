@@ -33,5 +33,5 @@ jobs:
       - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva10.json
       # Reserva 11: validação independente da linguagem de responsabilidade familiar.
       - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva11.json
-      # Reserva 12: validación independiente del vocabulario de necesidades familiares.
+      # Reserva 12: validação independiente del vocabulario de necesidades familiares.
       - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva12.json
