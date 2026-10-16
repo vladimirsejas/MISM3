@@ -99,3 +99,12 @@ for f in web/tests/*.test.js; do node $f; done
 python pipeline/territorio.py          # cobertura e distâncias
 python pipeline/geocodificar_catalogo.py --cnefe <caminho do CNEFE>
 ```
+
+
+## Orientador: avó que sustenta netos e busca trabalho — 16/10/2026
+
+- **Implementado na branch de revisão:** duas pontes lexicais condicionadas em `web/orientar.js`: renda de aposentadoria/pensão junto de netos aponta também para Assistência; menção explícita a trabalho junto de aposentadoria/pensão também aponta para Trabalho.
+- **Testes automatizados:** 211 testes Python e toda a suíte JavaScript passaram no GitHub Actions. A execução de referência está em https://github.com/vladimirsejas/MISM3/actions/runs/38833737017.
+- **Avaliação sintética:** conjunto reserva4 passou de 16/20 para 17/20 no top-3; reserva5 passou de 18/20 para 19/20. Em reserva5, o perfil avó passou de 16/18 para 17/18 respostas certas no top-3 e de 9/18 para 11/18 com a área correta em primeiro lugar.
+- **Limites:** frases sintéticas da equipe, não validação com mulheres reais. Uma pergunta sobre uso do cartão/dinheiro sem consentimento ainda é direcionada incorretamente e precisa de um ciclo separado, com nova reserva antes de ajustes. A interface não foi conferida visualmente em navegador nesta execução.
+- **Estado:** proposta em PR; não integrada à `main`. MISM2 não foi alterado.
