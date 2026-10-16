@@ -37,8 +37,37 @@
   }
 
   /* Pontes lexicais locais: traduz o jeito popular de pedir para termos já presentes no índice verificado. */
+  /* Sinal lexical específico de cuidado familiar com necessidade material; não altera pesos nem limiares. */
+  function familiaComNecessidade(t) {
+    var contexto =
+      /\b(?:netos?|netas?|netinhas?|netinhos?)\b/.test(t) ||
+      (/\b(?:avo|vovo|vo)\b/.test(t) && /\b(?:criancas?|pequenos|meninos|meninas)\b/.test(t)) ||
+      (/\b(?:filha|filho)\b/.test(t) && /\b(?:criancas?|pequenos|meninos|meninas|filhos?)\b/.test(t) &&
+       /\b(?:cri[ao]\w*|cuid[ao]\w*|responsavel|responsabil\w*|comigo|deixou|mora comigo)\b/.test(t)) ||
+      (/\b(?:criancas?|meninos|meninas|pequenos|filhos?)\b/.test(t) &&
+       /\b(?:dependem de mim|depende de mim)\b/.test(t)) ||
+      (/\b(?:criancas?|meninos|meninas|pequenos|filhos?)\b/.test(t) &&
+       /\b(?:dinheiro|renda|recursos?|comida|aliment\w*|fome|nao chega|nao da|falta|faltando|despesas?|necessidades?|mercado|gas|botijao|contas?)\b/.test(t) &&
+       /\b(?:aposentadoria|aposentad[ao]s?|pensao|beneficio|renda|comigo|responsavel|responsabil\w*|cuid[ao]\w*|cri[ao]\w*|fiquei|ficou|moro|moram|deixou)\b/.test(t));
+    var necessidade = /\b(?:aposentadoria|aposentad[ao]s?|pensao|beneficio|renda|dinheiro|recursos?|contas?|despesas?|comida|aliment\w*|sustent\w*|cri[ao]\w*|cuid[ao]\w*|falta|faltando|nao da|nao sobra|nao consigo pagar|geladeira vazia|ajuda|apoio|orientacao|assistencia social|fome|nao chega|necessidades?|mercado|gas|botijao)\b/.test(t);
+    return contexto && necessidade;
+  }
+
+  /* Uso explícito de cartão/dinheiro sem consentimento: encaminha para Direitos e Assistência, sem classificar como perigo. */
+  function usoFinanceiroSemAutorizacao(t) {
+    var objeto = /\b(?:cartao|conta|dinheiro|beneficio|aposentadoria|pix|saque|saca|transferencia|compras?|senha)\b/.test(t);
+    var semConsentimento = /\b(?:sem autorizacao|sem minha autorizacao|sem consentimento|sem permissao|sem minha permissao|sem eu saber|sem eu deixar|sem pedir|sem me consultar|escondido|nao devolve|nao me deixa usar|nao me presta contas|nao me prestou contas|pega tudo|retira tudo)\b/.test(t);
+    var agenteAcao = /\b(?:filho|filha|neto|neta|sobrinho|sobrinha|parente|familiar|alguem)\b/.test(t) &&
+      /\b(?:pega|pegou|usa|usou|saca|sacou|transfere|transferiu|faz pix|fez pix|retira|retirou|tira|tirou|fica com|ficou com|faz compras|fez compras)\b/.test(t);
+    var consentido = /\b(?:com minha autorizacao|com minha permissao|com meu consentimento|eu autorizei|autorizei|eu deixei|com autorizacao)\b/.test(t);
+    return objeto && !consentido && (semConsentimento || agenteAcao);
+  }
+
   function expandirConsulta(texto) {
     var t = Regras.normalizar(texto), extra = [];
+    if (usoFinanceiroSemAutorizacao(t)) {
+      extra.push("direitos violacao de direitos pessoa idosa creas disque 100 assistencia social protecao financeira cartao dinheiro beneficio");
+    }
     /* "sustento" e "sustentabilidade" têm a mesma raiz de 5 letras ("suste") e a busca levava quem sustenta a casa ao curso de
        Sustentabilidade da Fatec. A palavra é trocada só na consulta (o índice e o Python não mudam). */
     t = t.replace(/\bsusten(?:to|tar|tando|ta|tamos|tei|tou)\b/g, "familia renda");
@@ -66,6 +95,15 @@
       extra.push("assistencia social cras beneficios cadastro unico tarifa social contas renda familia");
     }
     /* "Benefício" é como muita gente chama o Bolsa Família e os outros programas: o caminho é o Cadastro Único, no CRAS. */
+    /* Cuidado familiar com aperto financeiro ou pedido de apoio: acrescenta o caminho de Assistência. */
+    if (familiaComNecessidade(t)) {
+      extra.push("assistencia social cras cadastro unico familia renda");
+    }
+    /* Se a pessoa fala explicitamente em buscar trabalho junto da aposentadoria, mostrar Trabalho sem apagar Direitos. */
+    if (/\b(?:aposentadoria|aposentad[ao]s?|pensao)\b/.test(t) &&
+        /\b(?:emprego|trabalho|servico|trabalhar|vaga|bico|renda extra)\b/.test(t)) {
+      extra.push("emprego curso pat trabalho renda");
+    }
     /* Fora desta ponte: benefício do INSS (negado, aposentadoria), que é assunto de Direitos. */
     if (/\b(?:beneficios?|auxilio do governo|ajuda do governo|programa social|programas sociais)\b/.test(t) && !/\b(?:inss|negad[ao]|indeferid[ao]|aposentadoria|previdencia\w*)\b/.test(t)) {
       extra.push("cadastro unico bolsa familia beneficio assistencia social");
@@ -234,7 +272,9 @@
       var minimo = opcoes.minimo !== undefined ? opcoes.minimo : 0.3;
       /* Detector de escopo (aprendido): se achar que o assunto é de fora E a busca não achou correspondência forte, é fora do assunto. */
       var pEsc = opcoes.escopo ? opcoes.escopo(texto) : null, limEsc = opcoes.limiarEscopo !== undefined ? opcoes.limiarEscopo : 0.5;
-      var foraDeEscopo = !urgente && (melhor < minimo || (dicaT && melhor < minimo + 0.1 && confianca < 0.3) ||
+      var contextoAssistenciaFamilia = familiaComNecessidade(t);
+      var contextoFinanceiroSemAutorizacao = usoFinanceiroSemAutorizacao(t);
+      var foraDeEscopo = !urgente && !contextoAssistenciaFamilia && !contextoFinanceiroSemAutorizacao && (melhor < minimo || (dicaT && melhor < minimo + 0.1 && confianca < 0.3) ||
         (pEsc !== null && pEsc < limEsc && melhor < (opcoes.fortaCorrespondencia !== undefined ? opcoes.fortaCorrespondencia : 0.5)));
       var fix = perigo ? fixados(perigo.pins, pont) : [];
       var vistos = {}, porSvc = {}, escolhidos = [];

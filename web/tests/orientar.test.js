@@ -18,6 +18,29 @@ const svcs = (r) => r.itens.map((i) => i.svc);
 assert(svcs(R("preciso de vaga na creche pro meu filho de 2 anos")).slice(0, 3).some((s) => /creche|educacao/.test(String(s))) || areas(R("preciso de vaga na creche pro meu filho de 2 anos")).slice(0, 3).includes("educacao"));
 assert(areas(R("quero terminar o ensino medio")).slice(0, 3).includes("educacao"));
 assert(areas(R("preciso de um emprego urgente")).slice(0, 3).includes("trabalho"));
+assert(areas(R("sou aposentada e ajudo a criar meus netos, o dinheiro não dá")).slice(0, 3).includes("assistencia"), "aposentadoria insuficiente para sustentar netos leva à assistência");
+assert(areas(R("preciso de trabalho porque a aposentadoria não paga as despesas de todos")).slice(0, 3).includes("trabalho"), "busca explícita de trabalho não deve ser desviada só para aposentadoria");
+assert.strictEqual(areas(R("sou vó, crio meus netos e estou sem dinheiro para as despesas"))[0], "assistencia", "necessidade de assistência deve liderar quando a avó relata falta de dinheiro para criar netos");
+assert.strictEqual(areas(R("estou sustentando meus netos e a geladeira está vazia"))[0], "assistencia", "falta de comida para netos deve priorizar assistência");
+assert.strictEqual(areas(R("estou com os netos, não sobra dinheiro para comida"))[0], "assistencia", "aperto financeiro com netos deve priorizar assistência");
+assert(areas(R("minha filha deixou os pequenos aqui em casa e preciso de apoio social")).slice(0, 3).includes("assistencia"), "crianças deixadas com a avó e pedido de apoio social devem mostrar assistência");
+assert(areas(R("o INSS recusou meu pedido de aposentadoria e quero recorrer")).slice(0, 3).includes("direitos"), "contestação de aposentadoria negada continua em Direitos");
+assert.strictEqual(areas(R("minhas netas moram comigo e falta dinheiro para alimentação"))[0], "assistencia", "variação feminina netas também deve levar à assistência");
+assert(areas(R("minha pensão não dá para alimentar as crianças que estão sob meus cuidados")).slice(0, 3).includes("assistencia"), "pensão insuficiente e crianças sob cuidado devem mostrar assistência");
+assert.strictEqual(areas(R("minha aposentadoria mal cobre o mercado e o gás para os netinhos"))[0], "assistencia", "despesas de mercado e gás para netos priorizam assistência");
+const familiaSemSilencio = R("sou responsável pelos pequenos e falta dinheiro para pagar as contas");
+assert(!familiaSemSilencio.abstem && areas(familiaSemSilencio).includes("assistencia"), "necessidade familiar explícita não deve ser descartada como fora do escopo");
+const responsabilidade = R("assumi a responsabilidade pelos pequenos e não consigo pagar as contas");
+assert(!responsabilidade.abstem && areas(responsabilidade).includes("assistencia"), "variação da palavra responsabilidade deve manter a orientação social");
+const necessidadesCriancas = R("a pensão não dá para as necessidades dos pequenos sob meus cuidados");
+assert(!necessidadesCriancas.abstem && areas(necessidadesCriancas).includes("assistencia"), "necessidades das crianças sob cuidado devem levar à assistência");
+const rendaInsuficiente = R("estou cuidando das crianças e a renda não alcança para as necessidades delas");
+assert(!rendaInsuficiente.abstem && areas(rendaInsuficiente).includes("assistencia"), "renda insuficiente e cuidado infantil devem levar à assistência");
+const pequenosDependem = R("os pequenos dependem de mim e preciso de apoio no CRAS");
+assert(!pequenosDependem.abstem && areas(pequenosDependem).includes("assistencia"), "dependência das crianças e pedido de apoio não devem ser descartados");
+const semRecursos = R("estou cuidando das crianças e não tenho recursos para as despesas básicas");
+assert(!semRecursos.abstem && areas(semRecursos).includes("assistencia"), "falta de recursos em contexto de cuidado deve levar à assistência");
+
 assert(areas(R("presiso de advogdo de graça")).slice(0, 3).includes("direitos"), "tolera erro de digitação");
 assert(areas(R("upa mais proxima")).slice(0, 3).includes("saude"));
 const casaPropria = R("quero me inscrever pra casa própria");
@@ -80,4 +103,13 @@ assert(!/fetch\(/.test(srcUI), "orientacao-ui.js só busca o índice pela funç�
 
 /* ---- a tela escapa HTML do conteúdo ---- */
 assert(!/<script/.test(UI.html({ perigo: null, saudacao: false, geral: false, abstem: false, melhor: 0, itens: [{ rank: 1, id: "x", tipo: "servico", area: "saude", sec: "s", svc: "a/b", titulo: "<script>x</script>", resumo: "", href: "#saude/s", contato: null, fonte: null, palavras: [] }] }, {}, [])));
+/* ---- uso financeiro explicitamente não autorizado: Direitos + Assistência, sem ativar camada de perigo ---- */
+const usoCartaoSemPermissao = R("meu sobrinho ficou com meu cartão e fez um saque sem autorização");
+assert(!usoCartaoSemPermissao.abstem, "uso financeiro explicitamente sem autorização não deve ser descartado como fora do escopo");
+assert(areas(usoCartaoSemPermissao).slice(0, 3).includes("assistencia"), "uso financeiro sem autorização deve mostrar Assistência, onde estão CREAS e Disque 100");
+assert(!areas(usoCartaoSemPermissao).slice(0, 3).some((a) => ["educacao", "trabalho"].includes(a)), "uso financeiro sem autorização não deve ser desviado para educação ou trabalho");
+assert(!usoCartaoSemPermissao.perigo, "uso financeiro sem autorização, por si só, não deve ativar a camada de perigo");
+const saqueAutorizado = R("minha filha retira meu benefício com minha autorização");
+assert(!saqueAutorizado.perigo, "uso autorizado não deve ser classificado como perigo");
+assert(R("como desbloquear meu cartão no aplicativo do banco").abstem, "dúvida bancária comum continua fora do escopo");
 console.log("orientar.test.js ok");
