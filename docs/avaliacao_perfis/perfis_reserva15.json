@@ -1,0 +1,250 @@
+{
+  "meta": {
+    "escrito_em": "2026-10-16",
+    "autor": "equipe (assistente)",
+    "aviso": "Baseline do reconhecimento de uso de cartão/dinheiro sem autorização, antes de qualquer correção específica. Frases sintéticas, não coletadas de pessoas reais. Não usar para treino. Após consultar o resultado, não usar como avaliação independente.",
+    "campos": "mesmos de perfis.json"
+  },
+  "frases": [
+    {
+      "id": "r15c1",
+      "perfil": "cartao",
+      "texto": "meu filho pega meu cartão e tira dinheiro sem pedir",
+      "principal": "direitos",
+      "aceita": [
+        "assistencia"
+      ],
+      "precisa": [
+        "direitos",
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r15c2",
+      "perfil": "cartao",
+      "texto": "minha filha usa meu cartão sem minha autorização e não devolve",
+      "principal": "direitos",
+      "aceita": [
+        "assistencia"
+      ],
+      "precisa": [
+        "direitos",
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r15c3",
+      "perfil": "cartao",
+      "texto": "meu neto sacou minha aposentadoria sem meu consentimento",
+      "principal": "direitos",
+      "aceita": [
+        "assistencia"
+      ],
+      "precisa": [
+        "direitos",
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r15c4",
+      "perfil": "cartao",
+      "texto": "um familiar pegou meu cartão e fez compras escondido",
+      "principal": "direitos",
+      "aceita": [
+        "assistencia"
+      ],
+      "precisa": [
+        "direitos",
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r15c5",
+      "perfil": "cartao",
+      "texto": "alguém usa meu cartão para tirar meu benefício sem eu saber",
+      "principal": "direitos",
+      "aceita": [
+        "assistencia"
+      ],
+      "precisa": [
+        "direitos",
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r15c6",
+      "perfil": "cartao",
+      "texto": "meu filho fica com meu cartão e não me deixa usar meu dinheiro",
+      "principal": "direitos",
+      "aceita": [
+        "assistencia"
+      ],
+      "precisa": [
+        "direitos",
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r15c7",
+      "perfil": "cartao",
+      "texto": "minha filha transfere minha aposentadoria para a conta dela sem me consultar",
+      "principal": "direitos",
+      "aceita": [
+        "assistencia"
+      ],
+      "precisa": [
+        "direitos",
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r15c8",
+      "perfil": "cartao",
+      "texto": "meu sobrinho usa meu cartão do banco sem autorização",
+      "principal": "direitos",
+      "aceita": [
+        "assistencia"
+      ],
+      "precisa": [
+        "direitos",
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r15c9",
+      "perfil": "cartao",
+      "texto": "estão retirando dinheiro da minha conta sem minha permissão",
+      "principal": "direitos",
+      "aceita": [
+        "assistencia"
+      ],
+      "precisa": [
+        "direitos",
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r15c10",
+      "perfil": "cartao",
+      "texto": "meu filho pega minha senha e saca dinheiro sem pedir",
+      "principal": "direitos",
+      "aceita": [
+        "assistencia"
+      ],
+      "precisa": [
+        "direitos",
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r15c11",
+      "perfil": "cartao",
+      "texto": "um parente usa meu cartão e não me presta contas",
+      "principal": "direitos",
+      "aceita": [
+        "assistencia"
+      ],
+      "precisa": [
+        "direitos",
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r15c12",
+      "perfil": "cartao",
+      "texto": "descobri compras no cartão feitas por familiar sem consentimento",
+      "principal": "direitos",
+      "aceita": [
+        "assistencia"
+      ],
+      "precisa": [
+        "direitos",
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r15c13",
+      "perfil": "cartao",
+      "texto": "minha aposentadoria cai e meu filho pega tudo sem perguntar",
+      "principal": "direitos",
+      "aceita": [
+        "assistencia"
+      ],
+      "precisa": [
+        "direitos",
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r15c14",
+      "perfil": "cartao",
+      "texto": "meu neto faz pix da minha conta sem minha autorização",
+      "principal": "direitos",
+      "aceita": [
+        "assistencia"
+      ],
+      "precisa": [
+        "direitos",
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r15c15",
+      "perfil": "cartao",
+      "texto": "meu familiar fica com meu cartão e tira dinheiro quando quer",
+      "principal": "direitos",
+      "aceita": [
+        "assistencia"
+      ],
+      "precisa": [
+        "direitos",
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r15lim1",
+      "perfil": "limite",
+      "texto": "meu filho me ajuda a sacar o benefício com minha autorização",
+      "principal": null,
+      "aceita": [],
+      "precisa": [],
+      "fora": true
+    },
+    {
+      "id": "r15lim2",
+      "perfil": "limite",
+      "texto": "como desbloquear meu cartão no aplicativo do banco",
+      "principal": null,
+      "aceita": [],
+      "precisa": [],
+      "fora": true
+    },
+    {
+      "id": "r15lim3",
+      "perfil": "limite",
+      "texto": "como consultar o saldo da minha conta",
+      "principal": null,
+      "aceita": [],
+      "precisa": [],
+      "fora": true
+    },
+    {
+      "id": "r15lim4",
+      "perfil": "limite",
+      "texto": "quero trocar a senha do aplicativo do banco",
+      "principal": null,
+      "aceita": [],
+      "precisa": [],
+      "fora": true
+    },
+    {
+      "id": "r15lim5",
+      "perfil": "limite",
+      "texto": "como investir em bitcoin",
+      "principal": null,
+      "aceita": [],
+      "precisa": [],
+      "fora": true
+    }
+  ]
+}
