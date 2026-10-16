@@ -25,6 +25,8 @@ assert.strictEqual(areas(R("estou sustentando meus netos e a geladeira está vaz
 assert.strictEqual(areas(R("estou com os netos, não sobra dinheiro para comida"))[0], "assistencia", "aperto financeiro com netos deve priorizar assistência");
 assert(areas(R("minha filha deixou os pequenos aqui em casa e preciso de apoio social")).slice(0, 3).includes("assistencia"), "crianças deixadas com a avó e pedido de apoio social devem mostrar assistência");
 assert(areas(R("o INSS recusou meu pedido de aposentadoria e quero recorrer")).slice(0, 3).includes("direitos"), "contestação de aposentadoria negada continua em Direitos");
+assert.strictEqual(areas(R("minhas netas moram comigo e falta dinheiro para alimentação"))[0], "assistencia", "variação feminina netas também deve levar à assistência");
+assert(areas(R("minha pensão não dá para alimentar as crianças que estão sob meus cuidados")).slice(0, 3).includes("assistencia"), "pensão insuficiente e crianças sob cuidado devem mostrar assistência");
 
 assert(areas(R("presiso de advogdo de graça")).slice(0, 3).includes("direitos"), "tolera erro de digitação");
 assert(areas(R("upa mais proxima")).slice(0, 3).includes("saude"));
