@@ -1,0 +1,243 @@
+{
+  "meta": {
+    "escrito_em": "2026-10-16",
+    "autor": "equipe (assistente)",
+    "aviso": "Conjunto reservado criado antes de alterar o conteúdo do cartão CadÚnico. Frases sintéticas, não coletadas de pessoas reais. Medir baseline no CI antes de editar web/areas.js. Não usar para treino.",
+    "campos": "mesmos de perfis.json"
+  },
+  "frases": [
+    {
+      "id": "r18a1",
+      "perfil": "avo",
+      "texto": "sou aposentada e crio meus netos, onde peço ajuda com as despesas",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r18a2",
+      "perfil": "avo",
+      "texto": "minha aposentadoria sustenta meus netos que moram comigo",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r18a3",
+      "perfil": "avo",
+      "texto": "como faço o cadastro unico se eu cuido dos meus netos",
+      "principal": "assistencia",
+      "aceita": [
+        "educacao"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r18a4",
+      "perfil": "avo",
+      "texto": "sou vó e pago as contas da casa com a aposentadoria, preciso de orientação",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r18a5",
+      "perfil": "avo",
+      "texto": "meus netos vivem comigo e não sei como declarar a renda da família",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r18a6",
+      "perfil": "avo",
+      "texto": "crio meus netos e não sobra dinheiro para mim",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r18a7",
+      "perfil": "avo",
+      "texto": "o que levo no cras para atualizar o cadunico com meus netos",
+      "principal": "assistencia",
+      "aceita": [
+        "educacao"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r18a8",
+      "perfil": "avo",
+      "texto": "meu netinho mora comigo e eu sou quem sustenta a casa",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r18a9",
+      "perfil": "avo",
+      "texto": "a renda da aposentadoria é para mim e pras crianças, quero orientação no cras",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r18a10",
+      "perfil": "avo",
+      "texto": "minha filha deixou os filhos comigo e agora pago tudo com minha aposentadoria",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r18a11",
+      "perfil": "avo",
+      "texto": "sou vó, cuido de duas crianças e quero saber por onde começar no cadastro unico",
+      "principal": "assistencia",
+      "aceita": [
+        "educacao"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r18a12",
+      "perfil": "avo",
+      "texto": "não consigo manter meus netos só com o dinheiro da aposentadoria",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r18a13",
+      "perfil": "avo",
+      "texto": "meus netos moram na minha casa, como atualizo os dados da família",
+      "principal": "assistencia",
+      "aceita": [
+        "educacao"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r18a14",
+      "perfil": "avo",
+      "texto": "sou avó e responsável pelas crianças, preciso falar com o cras sobre cadastro",
+      "principal": "assistencia",
+      "aceita": [
+        "educacao"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r18a15",
+      "perfil": "avo",
+      "texto": "o dinheiro da aposentadoria não dá pra sustentar os netos e pagar as contas",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r18a16",
+      "perfil": "avo",
+      "texto": "o inss negou meu pedido de aposentadoria e quero contestar",
+      "principal": "direitos",
+      "aceita": [],
+      "precisa": [
+        "direitos"
+      ]
+    },
+    {
+      "id": "r18a17",
+      "perfil": "avo",
+      "texto": "preciso de vaga em creche para poder trabalhar",
+      "principal": "educacao",
+      "aceita": [
+        "trabalho"
+      ],
+      "precisa": [
+        "educacao",
+        "trabalho"
+      ]
+    },
+    {
+      "id": "r18a18",
+      "perfil": "avo",
+      "texto": "meu filho pega meu cartão e tira meu dinheiro sem autorização",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r18lim1",
+      "perfil": "limite",
+      "texto": "qual é a capital do Chile",
+      "principal": null,
+      "aceita": [],
+      "precisa": [],
+      "fora": true
+    },
+    {
+      "id": "r18lim2",
+      "perfil": "limite",
+      "texto": "me explique como investir em criptomoedas",
+      "principal": null,
+      "aceita": [],
+      "precisa": [],
+      "fora": true
+    }
+  ]
+}

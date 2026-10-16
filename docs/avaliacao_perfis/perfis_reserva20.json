@@ -1,0 +1,240 @@
+{
+  "meta": {
+    "escrito_em": "2026-10-16",
+    "autor": "equipe (assistente)",
+    "aviso": "Conjunto reservado de baseline antes de encurtar o tópico do CadÚnico para reduzir efeito colateral na busca. Frases sintéticas, não coletadas de pessoas reais. Não usar para treino; depois de consultar o resultado, manter só como regressão.",
+    "campos": "mesmos de perfis.json"
+  },
+  "frases": [
+    {
+      "id": "r20a1",
+      "perfil": "avo",
+      "texto": "sou uma senhora aposentada que cria os netos, preciso saber como ir no cadastro",
+      "principal": "assistencia",
+      "aceita": [
+        "educacao"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r20a2",
+      "perfil": "avo",
+      "texto": "minha neta veio morar comigo e quero atualizar os dados da família",
+      "principal": "assistencia",
+      "aceita": [
+        "educacao"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r20a3",
+      "perfil": "avo",
+      "texto": "meus netos moram na minha casa, o que eu falo no cras",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r20a4",
+      "perfil": "avo",
+      "texto": "a aposentadoria é usada pra pagar comida e contas dos meninos",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r20a5",
+      "perfil": "avo",
+      "texto": "cuido dos netos e quero saber quais documentos levar",
+      "principal": "assistencia",
+      "aceita": [
+        "educacao"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r20a6",
+      "perfil": "avo",
+      "texto": "sou avó, pago tudo para as crianças e preciso de orientação social",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r20a7",
+      "perfil": "avo",
+      "texto": "como informar a renda da aposentadoria no cadastro da família",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r20a8",
+      "perfil": "avo",
+      "texto": "meus netos dependem da minha aposentadoria, preciso atualizar o cadastro",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r20a9",
+      "perfil": "avo",
+      "texto": "não sei se neto que mora comigo entra no cadastro único",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r20a10",
+      "perfil": "avo",
+      "texto": "o que fazer se não tenho o cpf de uma criança para o cadunico",
+      "principal": "assistencia",
+      "aceita": [
+        "educacao"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r20a11",
+      "perfil": "avo",
+      "texto": "sou vó e sustento os pequenos, onde começo",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r20a12",
+      "perfil": "avo",
+      "texto": "a mãe dos meus netos trabalha fora e eles moram comigo, como declaro",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r20a13",
+      "perfil": "avo",
+      "texto": "minha aposentadoria é a renda da casa e tenho crianças comigo",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r20a14",
+      "perfil": "avo",
+      "texto": "fui ao cras e fiquei sem saber que documento falta",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r20a15",
+      "perfil": "avo",
+      "texto": "quero saber se preciso atualizar o cadastro quando um neto vem morar aqui",
+      "principal": "assistencia",
+      "aceita": [
+        "educacao"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r20lim1",
+      "perfil": "avo",
+      "texto": "meu benefício do inss foi negado e quero recorrer",
+      "principal": "direitos",
+      "aceita": [],
+      "precisa": [
+        "direitos"
+      ]
+    },
+    {
+      "id": "r20lim2",
+      "perfil": "avo",
+      "texto": "quero curso profissionalizante para voltar a trabalhar",
+      "principal": "trabalho",
+      "aceita": [
+        "estudo"
+      ],
+      "precisa": [
+        "trabalho"
+      ]
+    },
+    {
+      "id": "r20lim3",
+      "perfil": "avo",
+      "texto": "onde marco consulta com ginecologista",
+      "principal": "saude",
+      "aceita": [],
+      "precisa": [
+        "saude"
+      ]
+    },
+    {
+      "id": "r20lim4",
+      "perfil": "limite",
+      "texto": "como bloquear cartão bancário perdido",
+      "principal": null,
+      "aceita": [],
+      "precisa": [],
+      "fora": true
+    },
+    {
+      "id": "r20lim5",
+      "perfil": "limite",
+      "texto": "qual é a capital do Chile",
+      "principal": null,
+      "aceita": [],
+      "precisa": [],
+      "fora": true
+    }
+  ]
+}

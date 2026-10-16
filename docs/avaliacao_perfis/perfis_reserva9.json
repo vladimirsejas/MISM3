@@ -1,0 +1,247 @@
+{
+  "meta": {
+    "escrito_em": "2026-10-16",
+    "autor": "equipe (assistente)",
+    "aviso": "Conjunto consultado durante o desenvolvimento e usado para orientar ajustes; não é mais uma avaliação independente. Manter apenas como regressão no CI. Não usar para treino nem para estimar desempenho final.",
+    "campos": "mesmos de perfis.json"
+  },
+  "frases": [
+    {
+      "id": "r9f1",
+      "perfil": "avo",
+      "texto": "minha pensão é pouca para comprar comida para as crianças que ficam comigo",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r9f2",
+      "perfil": "avo",
+      "texto": "recebo aposentadoria mas falta dinheiro para alimentar os pequenos",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r9f3",
+      "perfil": "avo",
+      "texto": "a renda não chega para as despesas dos meninos que estou criando",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r9f4",
+      "perfil": "avo",
+      "texto": "não consigo pagar a comida das crianças com o benefício que recebo",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r9f5",
+      "perfil": "avo",
+      "texto": "minha aposentadoria não cobre mercado e gás para mim e os pequenos",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r9f6",
+      "perfil": "avo",
+      "texto": "estou sem dinheiro para alimentar as crianças que moram na minha casa",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r9f7",
+      "perfil": "avo",
+      "texto": "a pensão acaba cedo e preciso de ajuda para manter as crianças",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r9f8",
+      "perfil": "avo",
+      "texto": "tenho duas crianças sob meus cuidados e a renda não dá para comida",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r9f9",
+      "perfil": "avo",
+      "texto": "estou responsável pelos pequenos e não consigo pagar as contas básicas",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia",
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r9f10",
+      "perfil": "avo",
+      "texto": "minha pensão não basta para alimentar as crianças que estou criando",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r9f11",
+      "perfil": "avo",
+      "texto": "falta comida em casa desde que fiquei com os meninos",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r9f12",
+      "perfil": "avo",
+      "texto": "o benefício não cobre as despesas dos filhos que estão comigo",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r9f13",
+      "perfil": "avo",
+      "texto": "preciso de orientação social porque cuido das crianças e não tenho renda suficiente",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r9f14",
+      "perfil": "avo",
+      "texto": "estou alimentando os pequenos com o dinheiro contado da aposentadoria",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r9f15",
+      "perfil": "avo",
+      "texto": "as crianças dependem de mim e a pensão não paga nem o mercado",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r9f16",
+      "perfil": "avo",
+      "texto": "recebo pouco e fiquei responsável pelas crianças, preciso de apoio no CRAS",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r9f17",
+      "perfil": "avo",
+      "texto": "quero um emprego para ajudar a pagar as despesas das crianças",
+      "principal": "trabalho",
+      "aceita": [
+        "assistencia"
+      ],
+      "precisa": [
+        "trabalho"
+      ]
+    },
+    {
+      "id": "r9f18",
+      "perfil": "avo",
+      "texto": "preciso de creche para poder trabalhar enquanto cuido dos pequenos",
+      "principal": "educacao",
+      "aceita": [
+        "trabalho"
+      ],
+      "precisa": [
+        "educacao",
+        "trabalho"
+      ]
+    },
+    {
+      "id": "r9lim1",
+      "perfil": "avo",
+      "texto": "o INSS negou minha aposentadoria e quero recorrer da decisão",
+      "principal": "direitos",
+      "aceita": [],
+      "precisa": [
+        "direitos"
+      ]
+    },
+    {
+      "id": "r9lim2",
+      "perfil": "limite",
+      "texto": "qual é a capital do Chile",
+      "principal": null,
+      "aceita": [],
+      "precisa": [],
+      "fora": true
+    }
+  ]
+}
