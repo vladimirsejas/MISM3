@@ -32,6 +32,8 @@ const familiaSemSilencio = R("sou responsável pelos pequenos e falta dinheiro p
 assert(!familiaSemSilencio.abstem && areas(familiaSemSilencio).includes("assistencia"), "necessidade familiar explícita não deve ser descartada como fora do escopo");
 const responsabilidade = R("assumi a responsabilidade pelos pequenos e não consigo pagar as contas");
 assert(!responsabilidade.abstem && areas(responsabilidade).includes("assistencia"), "variação da palavra responsabilidade deve manter a orientação social");
+const necessidadesCriancas = R("a pensão não dá para as necessidades dos pequenos sob meus cuidados");
+assert(!necessidadesCriancas.abstem && areas(necessidadesCriancas).includes("assistencia"), "necessidades das crianças sob cuidado devem levar à assistência");
 
 assert(areas(R("presiso de advogdo de graça")).slice(0, 3).includes("direitos"), "tolera erro de digitação");
 assert(areas(R("upa mais proxima")).slice(0, 3).includes("saude"));
