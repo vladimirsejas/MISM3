@@ -103,4 +103,13 @@ assert(!/fetch\(/.test(srcUI), "orientacao-ui.js só busca o índice pela funç�
 
 /* ---- a tela escapa HTML do conteúdo ---- */
 assert(!/<script/.test(UI.html({ perigo: null, saudacao: false, geral: false, abstem: false, melhor: 0, itens: [{ rank: 1, id: "x", tipo: "servico", area: "saude", sec: "s", svc: "a/b", titulo: "<script>x</script>", resumo: "", href: "#saude/s", contato: null, fonte: null, palavras: [] }] }, {}, [])));
+/* ---- uso financeiro explicitamente não autorizado: Direitos + Assistência, sem ativar camada de perigo ---- */
+const usoCartaoSemPermissao = R("meu sobrinho ficou com meu cartão e fez um saque sem autorização");
+assert(!usoCartaoSemPermissao.abstem, "uso financeiro explicitamente sem autorização não deve ser descartado como fora do escopo");
+assert(areas(usoCartaoSemPermissao).slice(0, 3).includes("direitos"), "uso financeiro sem autorização deve mostrar Direitos");
+assert(areas(usoCartaoSemPermissao).slice(0, 3).includes("assistencia"), "uso financeiro sem autorização deve mostrar Assistência");
+assert(!usoCartaoSemPermissao.perigo, "uso financeiro sem autorização, por si só, não deve ativar a camada de perigo");
+const saqueAutorizado = R("minha filha retira meu benefício com minha autorização");
+assert(!saqueAutorizado.perigo, "uso autorizado não deve ser classificado como perigo");
+assert(R("como desbloquear meu cartão no aplicativo do banco").abstem, "dúvida bancária comum continua fora do escopo");
 console.log("orientar.test.js ok");
