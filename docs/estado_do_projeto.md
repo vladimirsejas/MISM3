@@ -109,3 +109,13 @@ python pipeline/geocodificar_catalogo.py --cnefe <caminho do CNEFE>
 - **Integridade da avaliação:** as reservas 4 a 13 foram consultadas durante o desenvolvimento e ficam apenas como regressão no CI; não são conjuntos independentes para estimar desempenho final.
 - **Limites restantes:** a frase genérica “preciso de orientação social porque não consigo manter os pequenos” ainda não recebe resposta; não ajustei o código com base nessa falha para preservar a reserva 14. A consulta sobre familiar que usa cartão/dinheiro sem autorização continua sendo uma tarefa separada. A orientação detalhada do CadÚnico ainda depende de conferência/arquivamento de fonte oficial. Não houve validação visual em navegador.
 - **Estado:** PR #57 segue em rascunho, sem mesclagem. MISM2 não foi alterado.
+
+
+## Orientador: uso financeiro sem autorização — 16/10/2026
+
+- **Implementação em revisão:** uma regra lexical reconhece uso de cartão, conta ou benefício explicitamente sem consentimento e encaminha para Assistência Social, onde já estão CREAS e Disque 100. O encaminhamento é específico para esse contexto; não altera `web/perigo.js`, telefones de emergência, pesos, limiares ou telas.
+- **Baseline antes da correção:** a reserva 15 teve 70% no total; só 10/15 frases de uso não autorizado chegaram ao top-3, a área esperada ficou em primeiro lugar em 2/15, e houve uma frase sem resposta. As falhas eram desviadas para Educação/Trabalho ou abstinham.
+- **Validação independente:** a reserva 17 terminou com 19/20 (95%) no total. No perfil cartão, 15/16 casos tiveram Assistência no top-3, 14/16 tiveram a área principal em primeiro lugar, cobertura de 88%, zero falsos alarmes de perigo e uma frase sem resposta. Execução: https://github.com/vladimirsejas/MISM3/actions/runs/38836324768.
+- **Limitação preservada:** a frase “um parente não quer devolver meu cartão e continua fazendo compras” ainda não recebe resposta. Não ajustei o código com base nessa falha para preservar a reserva 17.
+- **Integridade dos testes:** reservas 15 e 16 foram usadas durante o desenvolvimento/diagnóstico e não são independentes. A ajuda autorizada para sacar benefício foi corrigida como pedido de orientação social, não como violação. A reserva 17 é o conjunto independente deste ciclo.
+- **Estado:** PR #58 está em rascunho e depende do PR #57; nenhum PR foi mesclado.

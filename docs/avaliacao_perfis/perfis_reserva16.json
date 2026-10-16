@@ -2,7 +2,7 @@
   "meta": {
     "escrito_em": "2026-10-16",
     "autor": "equipe (assistente)",
-    "aviso": "Conjunto independente reservado antes da correção do reconhecimento de uso não autorizado de cartão/dinheiro. Frases sintéticas, não coletadas de pessoas reais. Não usar para treino nem para orientar ajustes depois de consultar os resultados.",
+    "aviso": "Conjunto diagnóstico consultado após a correção; rótulo de ajuda autorizada para sacar benefício foi corrigido para orientação social geral. Não é avaliação independente. Manter apenas como regressão no CI.",
     "campos": "mesmos de perfis.json"
   },
   "frases": [
@@ -203,12 +203,15 @@
     },
     {
       "id": "r16lim1",
-      "perfil": "limite",
+      "perfil": "cartao",
       "texto": "minha filha saca meu benefício com minha autorização",
-      "principal": null,
-      "aceita": [],
-      "precisa": [],
-      "fora": true
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
     },
     {
       "id": "r16lim2",

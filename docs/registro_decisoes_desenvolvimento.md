@@ -1023,3 +1023,12 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - A suíte completa passou no GitHub Actions: 211 testes Python, todos os testes JavaScript, avaliador de necessidades, avaliador do plano e reservas 4–14. A reserva 14 terminou com 19/20 (95%), zero falsos alarmes de perigo e uma ausência de resposta. A falha restante foi mantida como limitação, sem ajuste depois de observar o holdout.
 - As reservas 4–13 foram consultadas durante o desenvolvimento e devem ser tratadas apenas como regressão, não como validação independente. A reserva 14 é o conjunto independente deste ciclo.
 - Não foram alterados MISM2, conteúdo de `web/areas.js`, pesos/limiares, modelos treinados, camada de segurança, privacidade ou botões de emergência. O conteúdo CadÚnico detalhado e a validação visual seguem pendentes. PR #57 continua em rascunho, sem mesclagem.
+
+
+## 16/10/2026 — Uso financeiro sem autorização: encaminhamento para Assistência
+
+- O baseline da reserva 15 marcou 70% no total; 5 das 15 frases explícitas de uso não autorizado ficaram fora do top-3, a área esperada ficou em primeiro lugar em 2/15 e houve uma ausência de resposta.
+- Foi criada uma regra lexical separada em `web/orientar.js` para reconhecer cartão/conta/benefício + sinal explícito de falta de consentimento ou ação financeira de familiar. A consulta é expandida para os termos já presentes de Direitos/Assistência, CREAS e Disque 100. O contexto explícito também evita uma abstinência indevida de escopo. Nenhum peso/limiar ou componente de perigo foi alterado.
+- A reserva 17, criada antes de observar o resultado final e não usada para ajustes posteriores, marcou 19/20 (95%), com Assistência no top-3 em 15/16 casos de cartão, área principal em primeiro em 14/16, zero falsos alarmes de perigo e uma ausência de resposta.
+- A reserva 16 revelou que a expectativa de “fora do escopo” para ajuda autorizada a sacar benefício estava incorreta: esse pedido pode receber orientação social geral. A reserva 16 foi reclassificada como diagnóstico, não como avaliação independente.
+- Limitação conhecida: “um parente não quer devolver meu cartão e continua fazendo compras” ainda abstém. Mantida sem ajuste para não usar o holdout final para tuning. PR #58 segue em rascunho, dependente de #57, sem mesclagem.
