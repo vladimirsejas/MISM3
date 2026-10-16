@@ -1,0 +1,240 @@
+{
+  "meta": {
+    "escrito_em": "2026-10-16",
+    "autor": "equipe (assistente)",
+    "aviso": "Conjunto independente reservado antes de encurtar o tópico CadÚnico. Frases sintéticas, não coletadas de pessoas reais. Não usar para treino nem para orientar ajustes após consultar resultados.",
+    "campos": "mesmos de perfis.json"
+  },
+  "frases": [
+    {
+      "id": "r21a1",
+      "perfil": "avo",
+      "texto": "sou aposentada e fico com meus netos, como faço o cadastro da família",
+      "principal": "assistencia",
+      "aceita": [
+        "educacao"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r21a2",
+      "perfil": "avo",
+      "texto": "meus netos moram na minha casa e quero saber o que levar no cras",
+      "principal": "assistencia",
+      "aceita": [
+        "educacao"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r21a3",
+      "perfil": "avo",
+      "texto": "a aposentadoria é o dinheiro que uso para criar as crianças",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r21a4",
+      "perfil": "avo",
+      "texto": "preciso colocar no cadastro meu neto que passou a morar comigo",
+      "principal": "assistencia",
+      "aceita": [
+        "educacao"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r21a5",
+      "perfil": "avo",
+      "texto": "não sei como falar da aposentadoria no cadastro único",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r21a6",
+      "perfil": "avo",
+      "texto": "cuido dos netinhos e pago as contas com minha aposentadoria",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r21a7",
+      "perfil": "avo",
+      "texto": "sou avó e preciso atualizar os dados da família no cadunico",
+      "principal": "assistencia",
+      "aceita": [
+        "educacao"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r21a8",
+      "perfil": "avo",
+      "texto": "as crianças moram comigo, quais documentos devo perguntar no cras",
+      "principal": "assistencia",
+      "aceita": [
+        "educacao"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r21a9",
+      "perfil": "avo",
+      "texto": "minha pensão de aposentada sustenta a casa e os netos",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r21a10",
+      "perfil": "avo",
+      "texto": "meu neto está comigo e eu não sei se preciso atualizar o cadastro",
+      "principal": "assistencia",
+      "aceita": [
+        "educacao"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r21a11",
+      "perfil": "avo",
+      "texto": "a renda da casa é minha aposentadoria e preciso de apoio social",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r21a12",
+      "perfil": "avo",
+      "texto": "a mãe das crianças não mora aqui e eu que pago as despesas",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r21a13",
+      "perfil": "avo",
+      "texto": "falta documento de um dos netos, como faço para conversar no cras",
+      "principal": "assistencia",
+      "aceita": [
+        "educacao"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r21a14",
+      "perfil": "avo",
+      "texto": "sou vó e preciso explicar quem mora comigo no cadastro único",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r21a15",
+      "perfil": "avo",
+      "texto": "meu dinheiro de aposentadoria não dá para sustentar os netos",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r21lim1",
+      "perfil": "avo",
+      "texto": "o INSS negou meu benefício e quero recorrer",
+      "principal": "direitos",
+      "aceita": [],
+      "precisa": [
+        "direitos"
+      ]
+    },
+    {
+      "id": "r21lim2",
+      "perfil": "avo",
+      "texto": "quero procurar vaga de emprego na minha cidade",
+      "principal": "trabalho",
+      "aceita": [
+        "estudo"
+      ],
+      "precisa": [
+        "trabalho"
+      ]
+    },
+    {
+      "id": "r21lim3",
+      "perfil": "avo",
+      "texto": "como marco consulta de ginecologia no posto",
+      "principal": "saude",
+      "aceita": [],
+      "precisa": [
+        "saude"
+      ]
+    },
+    {
+      "id": "r21lim4",
+      "perfil": "limite",
+      "texto": "como cancelar meu cartão de crédito",
+      "principal": null,
+      "aceita": [],
+      "precisa": [],
+      "fora": true
+    },
+    {
+      "id": "r21lim5",
+      "perfil": "limite",
+      "texto": "qual é a capital do Chile",
+      "principal": null,
+      "aceita": [],
+      "precisa": [],
+      "fora": true
+    }
+  ]
+}

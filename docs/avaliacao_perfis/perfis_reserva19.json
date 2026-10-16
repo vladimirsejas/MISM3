@@ -1,0 +1,241 @@
+{
+  "meta": {
+    "escrito_em": "2026-10-16",
+    "autor": "equipe (assistente)",
+    "aviso": "Conjunto independente para validar a orientação de avós no CadÚnico após a mudança de conteúdo. Frases sintéticas, não coletadas de pessoas reais. Não usar para treino nem para ajustes após consultar resultados.",
+    "campos": "mesmos de perfis.json"
+  },
+  "frases": [
+    {
+      "id": "r19a1",
+      "perfil": "avo",
+      "texto": "sou vó e a aposentadoria é o que paga as contas dos netos",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r19a2",
+      "perfil": "avo",
+      "texto": "como colocar meus netos no cadastro unico se moram comigo",
+      "principal": "assistencia",
+      "aceita": [
+        "educacao"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r19a3",
+      "perfil": "avo",
+      "texto": "cuido dos meus netos e quero saber o que contar no cras",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r19a4",
+      "perfil": "avo",
+      "texto": "meus netos vivem na minha casa e eu ajudo com minha aposentadoria",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r19a5",
+      "perfil": "avo",
+      "texto": "minha renda é aposentadoria e sustento os netos, preciso atualizar cadastro",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r19a6",
+      "perfil": "avo",
+      "texto": "sou avó responsável pelas crianças e não sei que papel levar no cadunico",
+      "principal": "assistencia",
+      "aceita": [
+        "educacao"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r19a7",
+      "perfil": "avo",
+      "texto": "meu neto mora comigo desde que a mãe foi trabalhar, como explico no cadastro",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r19a8",
+      "perfil": "avo",
+      "texto": "não sei se preciso informar a aposentadoria quando fizer cadastro dos netos",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r19a9",
+      "perfil": "avo",
+      "texto": "quero ajuda no cras porque crio os netos com pouco dinheiro",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r19a10",
+      "perfil": "avo",
+      "texto": "moro com meus netos e pago aluguel e comida com aposentadoria",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r19a11",
+      "perfil": "avo",
+      "texto": "minha neta mora comigo e eu que pago as despesas",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r19a12",
+      "perfil": "avo",
+      "texto": "meus netos ficam comigo durante a semana mas moram com a mãe",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r19a13",
+      "perfil": "avo",
+      "texto": "sou vó, não tenho todos os documentos das crianças, o que pergunto no cras",
+      "principal": "assistencia",
+      "aceita": [
+        "educacao"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r19a14",
+      "perfil": "avo",
+      "texto": "quero atualizar o cadastro porque chegou um neto para morar aqui",
+      "principal": "assistencia",
+      "aceita": [
+        "educacao"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r19a15",
+      "perfil": "avo",
+      "texto": "a aposentadoria é minha renda e sustento a família, onde começo",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r19lim1",
+      "perfil": "avo",
+      "texto": "o inss negou minha aposentadoria e quero contestar",
+      "principal": "direitos",
+      "aceita": [],
+      "precisa": [
+        "direitos"
+      ]
+    },
+    {
+      "id": "r19lim2",
+      "perfil": "avo",
+      "texto": "preciso de creche para conseguir trabalhar",
+      "principal": "educacao",
+      "aceita": [
+        "trabalho"
+      ],
+      "precisa": [
+        "educacao",
+        "trabalho"
+      ]
+    },
+    {
+      "id": "r19lim3",
+      "perfil": "limite",
+      "texto": "como trocar a senha do aplicativo do banco",
+      "principal": null,
+      "aceita": [],
+      "precisa": [],
+      "fora": true
+    },
+    {
+      "id": "r19lim4",
+      "perfil": "avo",
+      "texto": "quero saber onde fazer mamografia",
+      "principal": "saude",
+      "aceita": [],
+      "precisa": [
+        "saude"
+      ]
+    },
+    {
+      "id": "r19lim5",
+      "perfil": "limite",
+      "texto": "qual é a capital do Chile",
+      "principal": null,
+      "aceita": [],
+      "precisa": [],
+      "fora": true
+    }
+  ]
+}
