@@ -106,8 +106,8 @@ assert(!/<script/.test(UI.html({ perigo: null, saudacao: false, geral: false, ab
 /* ---- uso financeiro explicitamente não autorizado: Direitos + Assistência, sem ativar camada de perigo ---- */
 const usoCartaoSemPermissao = R("meu sobrinho ficou com meu cartão e fez um saque sem autorização");
 assert(!usoCartaoSemPermissao.abstem, "uso financeiro explicitamente sem autorização não deve ser descartado como fora do escopo");
-assert(areas(usoCartaoSemPermissao).slice(0, 3).includes("direitos"), "uso financeiro sem autorização deve mostrar Direitos");
-assert(areas(usoCartaoSemPermissao).slice(0, 3).includes("assistencia"), "uso financeiro sem autorização deve mostrar Assistência");
+assert(areas(usoCartaoSemPermissao).slice(0, 3).includes("assistencia"), "uso financeiro sem autorização deve mostrar Assistência, onde estão CREAS e Disque 100");
+assert(!areas(usoCartaoSemPermissao).slice(0, 3).some((a) => ["educacao", "trabalho"].includes(a)), "uso financeiro sem autorização não deve ser desviado para educação ou trabalho");
 assert(!usoCartaoSemPermissao.perigo, "uso financeiro sem autorização, por si só, não deve ativar a camada de perigo");
 const saqueAutorizado = R("minha filha retira meu benefício com minha autorização");
 assert(!saqueAutorizado.perigo, "uso autorizado não deve ser classificado como perigo");
