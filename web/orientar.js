@@ -66,12 +66,15 @@
       extra.push("assistencia social cras beneficios cadastro unico tarifa social contas renda familia");
     }
     /* "Benefício" é como muita gente chama o Bolsa Família e os outros programas: o caminho é o Cadastro Único, no CRAS. */
-    /* Avó que sustenta netos: reconhecer aperto financeiro e pedidos de apoio, mesmo sem a palavra "aposentadoria". */
-    if ((/\b(?:netos?|netinhas?|netinhos?)\b/.test(t) ||
+    /* Avó/cuidadora: reconhecer aperto financeiro e pedidos de apoio, mesmo sem a palavra "aposentadoria". */
+    if ((/\b(?:netos?|netas?|netinhas?|netinhos?)\b/.test(t) ||
          (/\b(?:avo|vovo|vo)\b/.test(t) && /\b(?:criancas?|pequenos|meninos|meninas)\b/.test(t)) ||
          (/\b(?:filha|filho)\b/.test(t) && /\b(?:criancas?|pequenos|meninos|meninas|filhos?)\b/.test(t) &&
-          /\b(?:cri[ao]\w*|cuid[ao]\w*|responsavel|comigo|deixou|mora comigo)\b/.test(t))) &&
-        /\b(?:aposentadoria|aposentad[ao]s?|pensao|beneficio|renda|dinheiro|contas?|despesas?|comida|aliment\w*|sustent\w*|cri[ao]\w*|cuid[ao]\w*|falta|faltando|nao da|nao sobra|nao consigo pagar|geladeira vazia|ajuda|apoio|orientacao|assistencia social)\b/.test(t)) {
+          /\b(?:cri[ao]\w*|cuid[ao]\w*|responsavel|comigo|deixou|mora comigo)\b/.test(t)) ||
+         (/\b(?:criancas?|meninos|meninas|pequenos|filhos?)\b/.test(t) &&
+          /\b(?:dinheiro|comida|aliment\w*|fome|nao chega|nao da|falta|faltando|despesas?)\b/.test(t) &&
+          /\b(?:aposentadoria|aposentad[ao]s?|pensao|beneficio|renda|comigo|responsavel|cuid[ao]\w*|cri[ao]\w*|fiquei|ficou|moro|moram|deixou)\b/.test(t))) &&
+        /\b(?:aposentadoria|aposentad[ao]s?|pensao|beneficio|renda|dinheiro|contas?|despesas?|comida|aliment\w*|sustent\w*|cri[ao]\w*|cuid[ao]\w*|falta|faltando|nao da|nao sobra|nao consigo pagar|geladeira vazia|ajuda|apoio|orientacao|assistencia social|fome|nao chega)\b/.test(t)) {
       extra.push("assistencia social cras cadastro unico familia renda");
     }
     /* Se a pessoa fala explicitamente em buscar trabalho junto da aposentadoria, mostrar Trabalho sem apagar Direitos. */
