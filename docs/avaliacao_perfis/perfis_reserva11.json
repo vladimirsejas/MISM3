@@ -1,0 +1,249 @@
+{
+  "meta": {
+    "escrito_em": "2026-10-16",
+    "autor": "equipe (assistente)",
+    "aviso": "Décimo primeiro conjunto reservado antes de corrigir variações de linguagem sobre responsabilidade por crianças. Frases sintéticas, não coletadas de mulheres reais. Usar somente para validação final deste ciclo; não usar para treino nem para ajustes posteriores.",
+    "campos": "mesmos de perfis.json"
+  },
+  "frases": [
+    {
+      "id": "r11f1",
+      "perfil": "avo",
+      "texto": "estou com a responsabilidade pelos pequenos e as contas não fecham",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r11f2",
+      "perfil": "avo",
+      "texto": "fiquei responsável pelas crianças e estou sem dinheiro para comida",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r11f3",
+      "perfil": "avo",
+      "texto": "a responsabilidade pelos netos ficou comigo e não consigo pagar o mercado",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia",
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r11f4",
+      "perfil": "avo",
+      "texto": "estou cuidando dos pequenos e a renda não cobre as despesas básicas",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r11f5",
+      "perfil": "avo",
+      "texto": "assumi a responsabilidade das crianças e falta dinheiro para o gás",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r11f6",
+      "perfil": "avo",
+      "texto": "meus netinhos dependem de mim e a aposentadoria não chega para comida",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r11f7",
+      "perfil": "avo",
+      "texto": "estou responsável pelos filhos da minha filha e preciso de apoio social",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r11f8",
+      "perfil": "avo",
+      "texto": "a pensão não cobre as necessidades das crianças que estão sob minha responsabilidade",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r11f9",
+      "perfil": "avo",
+      "texto": "tenho a responsabilidade de criar meus netos mas falta dinheiro para manter a casa",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia",
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r11f10",
+      "perfil": "avo",
+      "texto": "estou com os pequenos em casa e não sobra nada para alimentação",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r11f11",
+      "perfil": "avo",
+      "texto": "assumi os cuidados dos netos e a aposentadoria mal paga o mercado",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r11f12",
+      "perfil": "avo",
+      "texto": "não consigo pagar as contas desde que fiquei responsável pelas crianças",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia",
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r11f13",
+      "perfil": "avo",
+      "texto": "sou avó e as despesas dos netos são maiores que minha renda",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r11f14",
+      "perfil": "avo",
+      "texto": "preciso de orientação do CRAS porque os pequenos dependem de mim",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r11f15",
+      "perfil": "avo",
+      "texto": "estou encarregada de cuidar das crianças e não tenho dinheiro para o básico",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r11f16",
+      "perfil": "avo",
+      "texto": "minha renda não dá para alimentar os netos que moram comigo",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r11f17",
+      "perfil": "avo",
+      "texto": "quero procurar emprego para ajudar nas despesas dos netinhos",
+      "principal": "trabalho",
+      "aceita": [
+        "assistencia"
+      ],
+      "precisa": [
+        "trabalho"
+      ]
+    },
+    {
+      "id": "r11f18",
+      "perfil": "avo",
+      "texto": "preciso de creche para trabalhar enquanto cuido das crianças",
+      "principal": "educacao",
+      "aceita": [
+        "trabalho"
+      ],
+      "precisa": [
+        "educacao",
+        "trabalho"
+      ]
+    },
+    {
+      "id": "r11lim1",
+      "perfil": "avo",
+      "texto": "o INSS negou minha aposentadoria e quero contestar",
+      "principal": "direitos",
+      "aceita": [],
+      "precisa": [
+        "direitos"
+      ]
+    },
+    {
+      "id": "r11lim2",
+      "perfil": "limite",
+      "texto": "como faço um bolo de chocolate",
+      "principal": null,
+      "aceita": [],
+      "precisa": [],
+      "fora": true
+    }
+  ]
+}
