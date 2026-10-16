@@ -91,3 +91,18 @@ Governo federal:
 - A prioridade **Minha Casa Minha Vida para a mulher responsável pela família** (depende de ler o PDF dos critérios de habitação).
 
 **Para virar [A] (tirar o aviso):** arquivar em PDF as páginas 1, 2, 3 e 7 da lista de fontes. Quando isso for feito, o aviso final deixa de ser necessário nas partes marcadas B+.
+
+
+---
+
+## Adendo T1 — orientação para avó que sustenta os netos com a aposentadoria (16/10/2026)
+
+**Tópico acrescentado ao cartão existente:** “Se você sustenta seus netos com a aposentadoria”. Não cria botão, porta ou tela nova.
+
+Comece pelo atendimento do Cadastro Único indicado para seu bairro. Conte a situação como ela é: quem mora na casa, quais netos vivem com você, quem divide as despesas e quais rendas entram, inclusive a aposentadoria. O cadastro deve refletir a situação real da família; só por receber aposentadoria não dá para concluir se algum programa será concedido ou não. Leve, se tiver, seus documentos, comprovante de residência e documentos das pessoas que moram na casa. Para as crianças, leve CPF ou certidão de nascimento, se tiver. A lista pode mudar: confirme com o CRAS antes de ir. Se algum neto mora em outro endereço, se faltar documento ou se houver dúvida sobre guarda ou responsabilidade, explique isso no atendimento e pergunte como declarar corretamente. Não omita renda nem invente informação. Se não conseguir atendimento, use o contato da Secretaria de Desenvolvimento Social já informado neste cartão. Esta orientação vem de páginas oficiais lidas em 16/10/2026, ainda não arquivadas em PDF: ainda não conferido, confirme no CRAS.
+
+**Fontes lidas em 16/10/2026, ainda não arquivadas em PDF:**
+- Prefeitura de Rio Claro, Secretaria de Desenvolvimento Social — https://desenvolvimentosocial.rc.sp.gov.br/?page_id=3366
+- Ministério do Desenvolvimento e Assistência Social — https://www.gov.br/mds/pt-br/acoes-e-programas/cadastro-unico/perguntas-frequentes-cadastro-unico
+
+**Status:** B+; manter o aviso “ainda não conferido, confirme no CRAS” até que as páginas sejam impressas em PDF e registradas em `docs/documetacao/LEIA-ME.md`. Não há promessa nem conclusão sobre elegibilidade a benefícios.

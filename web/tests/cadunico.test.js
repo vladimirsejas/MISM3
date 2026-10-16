@@ -16,9 +16,12 @@ assert(card.fonte && /^https:\/\//.test(card.fonte[1]) && /15\/10\/2026/.test(ca
 assert(card.aviso && /ainda não conferiu/.test(card.aviso) && /ligue antes/.test(card.aviso) && /não diz se a família tem direito/.test(card.aviso), "aviso: não conferido, ligue antes, não decide direito");
 
 const titulos = card.topicos.map((t) => t[0]).join(" | ");
-["urgente", "O que é o Cadastro Único", "Cadu", "Quem pode se cadastrar", "Quem da família deve ir", "Onde ir", "O que levar", "Depois do atendimento", "Bolsa Família", "65 anos", "Se não conseguir atendimento", "Cuidado"].forEach((t) =>
+["urgente", "O que é o Cadastro Único", "Cadu", "Quem pode se cadastrar", "Quem da família deve ir", "Onde ir", "O que levar", "Se você sustenta seus netos", "Depois do atendimento", "Bolsa Família", "65 anos", "Se não conseguir atendimento", "Cuidado"].forEach((t) =>
   assert(titulos.includes(t), "falta o tópico: " + t));
 assert.strictEqual(card.topicos[0][0], "Se a situação é urgente hoje", "o aviso de urgência vem primeiro: o cadastro leva dias e não resolve a fome de hoje");
+const topicoAvo = card.topicos.find((t) => /sustenta seus netos/.test(t[0]));
+assert(topicoAvo && /aposentadoria/.test(topicoAvo[1]) && /quem mora/.test(topicoAvo[1]), "o tópico orienta avós a declarar a situação real da família");
+assert(/ainda não conferido, confirme no CRAS/.test(topicoAvo[1]), "o tópico específico mantém aviso enquanto a fonte não estiver arquivada em PDF");
 
 const tudo = JSON.stringify(sec);
 assert(/BPC/.test(tudo) && /135/.test(tudo) && /não precisa de intermediário/.test(tudo), "o BPC é explicado: INSS, 135 ou Meu INSS, sem intermediário");
@@ -33,6 +36,7 @@ assert(/3522-1930/.test(tudo), "o telefone da Secretaria de Desenvolvimento Soci
 /* Só páginas oficiais: Prefeitura de Rio Claro e gov.br. */
 sec.links.forEach((l) => assert(/^https:\/\/(desenvolvimentosocial\.rc\.sp\.gov\.br|rioclaro\.sp\.gov\.br|www\.gov\.br)\//.test(l[1]), "link fora das páginas oficiais: " + l[1]));
 assert(sec.links.some((l) => /gov\.br\/pt-br\/servicos\/inscrever-se/.test(l[1])) && sec.links.some((l) => /page_id=3366/.test(l[1])), "traz a página municipal e a federal do cadastro");
+assert(sec.links.some((l) => /gov\.br\/mds\/pt-br\/acoes-e-programas\/cadastro-unico\/perguntas-frequentes-cadastro-unico/.test(l[1])), "traz FAQ oficial do MDS sobre composição familiar");
 assert(!/utm_|chatgpt/i.test(tudo), "sem parâmetros de rastreamento nos links");
 
 /* A pendência fica declarada enquanto as páginas não estiverem arquivadas. */
