@@ -1,0 +1,246 @@
+{
+  "meta": {
+    "escrito_em": "2026-10-16",
+    "autor": "equipe (assistente)",
+    "aviso": "Décimo quarto conjunto reservado antes da última correção de linguagem de recursos e dependência familiar. Frases sintéticas, não coletadas de mulheres reais. Usar somente para validação final deste ciclo; não usar para treino nem para ajustes posteriores.",
+    "campos": "mesmos de perfis.json"
+  },
+  "frases": [
+    {
+      "id": "r14f1",
+      "perfil": "avo",
+      "texto": "não tenho recursos para as necessidades dos netinhos que cuido",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r14f2",
+      "perfil": "avo",
+      "texto": "os pequenos dependem de mim e preciso de orientação social",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r14f3",
+      "perfil": "avo",
+      "texto": "estou cuidando das crianças e não tenho recursos para comprar o básico",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r14f4",
+      "perfil": "avo",
+      "texto": "meus netos dependem de mim e preciso saber onde buscar apoio",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r14f5",
+      "perfil": "avo",
+      "texto": "não tenho recursos suficientes para alimentar os pequenos que moram comigo",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r14f6",
+      "perfil": "avo",
+      "texto": "as crianças dependem de mim e preciso de orientação no CRAS",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r14f7",
+      "perfil": "avo",
+      "texto": "estou sem condições de manter os netinhos e preciso de apoio social",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r14f8",
+      "perfil": "avo",
+      "texto": "sou avó e não tenho recursos para pagar as despesas das crianças",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r14f9",
+      "perfil": "avo",
+      "texto": "os pequenos estão sob meus cuidados e falta dinheiro para a comida",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r14f10",
+      "perfil": "avo",
+      "texto": "preciso de ajuda porque as crianças dependem de mim para tudo",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r14f11",
+      "perfil": "avo",
+      "texto": "não consigo suprir as necessidades dos netos com minha renda",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r14f12",
+      "perfil": "avo",
+      "texto": "estou encarregada dos pequenos e preciso de apoio para a família",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r14f13",
+      "perfil": "avo",
+      "texto": "os filhos da minha filha dependem de mim e falta dinheiro para comida",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r14f14",
+      "perfil": "avo",
+      "texto": "não tenho recursos para cuidar dos netinhos como precisam",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r14f15",
+      "perfil": "avo",
+      "texto": "as crianças dependem de mim e estou sem renda para as despesas",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r14f16",
+      "perfil": "avo",
+      "texto": "preciso de orientação social porque não consigo manter os pequenos",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r14f17",
+      "perfil": "avo",
+      "texto": "quero procurar emprego para cuidar melhor das necessidades dos netos",
+      "principal": "trabalho",
+      "aceita": [
+        "assistencia"
+      ],
+      "precisa": [
+        "trabalho"
+      ]
+    },
+    {
+      "id": "r14f18",
+      "perfil": "avo",
+      "texto": "preciso de creche para conseguir trabalhar e cuidar das crianças",
+      "principal": "educacao",
+      "aceita": [
+        "trabalho"
+      ],
+      "precisa": [
+        "educacao",
+        "trabalho"
+      ]
+    },
+    {
+      "id": "r14lim1",
+      "perfil": "avo",
+      "texto": "o INSS negou minha aposentadoria e quero contestar",
+      "principal": "direitos",
+      "aceita": [],
+      "precisa": [
+        "direitos"
+      ]
+    },
+    {
+      "id": "r14lim2",
+      "perfil": "limite",
+      "texto": "me diga qual é a capital do Chile",
+      "principal": null,
+      "aceita": [],
+      "precisa": [],
+      "fora": true
+    }
+  ]
+}
