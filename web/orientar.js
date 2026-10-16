@@ -67,9 +67,9 @@
     }
     /* "Benefício" é como muita gente chama o Bolsa Família e os outros programas: o caminho é o Cadastro Único, no CRAS. */
     /* Avó que sustenta netos: reconhecer também relatos de aperto financeiro sem a palavra "aposentadoria". */
-    if ((/\\b(?:netos?|netinhas?|netinhos?)\\b/.test(t) ||
-         (/\\b(?:avo|vovo|vo)\\b/.test(t) && /\\b(?:criancas?|pequenos|meninos|meninas)\\b/.test(t))) &&
-        /\\b(?:aposentadoria|aposentad[ao]s?|pensao|beneficio|renda|dinheiro|contas?|despesas?|comida|aliment\\w*|sustent\\w*|cri[ao]\\w*|cuid[ao]\\w*|falta|faltando|nao da|nao sobra|nao consigo pagar|geladeira vazia)\\b/.test(t)) {
+    if ((/\b(?:netos?|netinhas?|netinhos?)\b/.test(t) ||
+         (/\b(?:avo|vovo|vo)\b/.test(t) && /\b(?:criancas?|pequenos|meninos|meninas)\b/.test(t))) &&
+        /\b(?:aposentadoria|aposentad[ao]s?|pensao|beneficio|renda|dinheiro|contas?|despesas?|comida|aliment\w*|sustent\w*|cri[ao]\w*|cuid[ao]\w*|falta|faltando|nao da|nao sobra|nao consigo pagar|geladeira vazia)\b/.test(t)) {
       extra.push("assistencia social cras cadastro unico familia renda");
     }
     /* Se a pessoa fala explicitamente em buscar trabalho junto da aposentadoria, mostrar Trabalho sem apagar Direitos. */
