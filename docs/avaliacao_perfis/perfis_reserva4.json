@@ -1,0 +1,247 @@
+{
+  "meta": {
+    "escrito_em": "2026-10-16",
+    "autor": "equipe (assistente), conjunto reservado antes de qualquer ajuste",
+    "aviso": "Quarto conjunto RESERVADO para medir o orientador antes de mudanças. Não usar para treino nem para ajustar regras/modelos após consultar os resultados. Frases sintéticas da equipe, não de mulheres reais.",
+    "campos": "mesmos de perfis.json"
+  },
+  "frases": [
+    {
+      "id": "r4av1",
+      "perfil": "avo",
+      "texto": "minha aposentadoria mal paga as contas e ainda crio dois netos",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r4av2",
+      "perfil": "avo",
+      "texto": "sou vó e pago comida roupa e escola das crianças com meu benefício",
+      "principal": "assistencia",
+      "aceita": [
+        "educacao"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r4av3",
+      "perfil": "avo",
+      "texto": "o dinheiro que recebo do INSS não chega para mim e meus netinhos",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r4av4",
+      "perfil": "avo",
+      "texto": "parei de comprar meus remédios para conseguir alimentar meus netos",
+      "principal": "assistencia",
+      "aceita": [
+        "saude"
+      ],
+      "precisa": [
+        "assistencia",
+        "saude"
+      ]
+    },
+    {
+      "id": "r4av5",
+      "perfil": "avo",
+      "texto": "minha filha deixou as crianças comigo e eu vivo só da aposentadoria",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r4av6",
+      "perfil": "avo",
+      "texto": "não sobra dinheiro da minha pensão para pagar o gás e a comida",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r4av7",
+      "perfil": "avo",
+      "texto": "meu filho pega meu cartão do banco e tira meu dinheiro sem pedir",
+      "principal": "direitos",
+      "aceita": [
+        "assistencia"
+      ],
+      "precisa": [
+        "direitos"
+      ]
+    },
+    {
+      "id": "r4av8",
+      "perfil": "avo",
+      "texto": "estou criando meus netos mas não tenho a guarda deles",
+      "principal": "direitos",
+      "aceita": [
+        "educacao",
+        "assistencia"
+      ],
+      "precisa": [
+        "direitos"
+      ]
+    },
+    {
+      "id": "r4av9",
+      "perfil": "avo",
+      "texto": "a escola não quer matricular meu neto porque não sou a mãe dele",
+      "principal": "educacao",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "educacao"
+      ]
+    },
+    {
+      "id": "r4av10",
+      "perfil": "avo",
+      "texto": "preciso levar minha neta ao posto mas não sei se posso acompanhar",
+      "principal": "saude",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "saude"
+      ]
+    },
+    {
+      "id": "r4av11",
+      "perfil": "avo",
+      "texto": "estou com os netos em casa e acabou toda a comida",
+      "principal": "assistencia",
+      "aceita": [],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r4av12",
+      "perfil": "avo",
+      "texto": "quero saber se posso cadastrar meus netos no cadastro único comigo",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r4av13",
+      "perfil": "avo",
+      "texto": "a aposentadoria é minha única renda e agora tenho três crianças para sustentar",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r4av14",
+      "perfil": "avo",
+      "texto": "meu neto precisa de creche para eu conseguir fazer uns bicos",
+      "principal": "educacao",
+      "aceita": [
+        "trabalho"
+      ],
+      "precisa": [
+        "educacao",
+        "trabalho"
+      ]
+    },
+    {
+      "id": "r4av15",
+      "perfil": "avo",
+      "texto": "quero pedir pensão para ajudar a criar meu neto",
+      "principal": "direitos",
+      "aceita": [
+        "assistencia"
+      ],
+      "precisa": [
+        "direitos"
+      ]
+    },
+    {
+      "id": "r4av16",
+      "perfil": "avo",
+      "texto": "estou cheia de contas atrasadas e não consigo manter a casa",
+      "principal": "direitos",
+      "aceita": [
+        "assistencia",
+        "moradia"
+      ],
+      "precisa": [
+        "direitos"
+      ]
+    },
+    {
+      "id": "r4av17",
+      "perfil": "avo",
+      "texto": "preciso arrumar um serviço porque a aposentadoria não dá para todos",
+      "principal": "trabalho",
+      "aceita": [
+        "assistencia"
+      ],
+      "precisa": [
+        "trabalho"
+      ]
+    },
+    {
+      "id": "r4av18",
+      "perfil": "avo",
+      "texto": "estou esgotada de cuidar dos meus netos e não tenho com quem contar",
+      "principal": "assistencia",
+      "aceita": [
+        "saude"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r4av19",
+      "perfil": "limite",
+      "texto": "como faço um bolo de fubá para vender",
+      "principal": null,
+      "aceita": [],
+      "precisa": [],
+      "fora": true
+    },
+    {
+      "id": "r4av20",
+      "perfil": "limite",
+      "texto": "me explica a diferença entre aposentadoria e pensão por morte",
+      "principal": "direitos",
+      "aceita": [],
+      "precisa": [
+        "direitos"
+      ]
+    }
+  ]
+}
