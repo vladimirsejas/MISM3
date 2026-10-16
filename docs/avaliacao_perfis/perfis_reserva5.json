@@ -2,7 +2,7 @@
   "meta": {
     "escrito_em": "2026-10-16",
     "autor": "equipe (assistente), conjunto reservado antes de correções",
-    "aviso": "Quinto conjunto reservado para comparar a orientação antes e depois das correções deste ciclo. Frases sintéticas da equipe, não de mulheres reais. Não usar para treino.",
+    "aviso": "Conjunto consultado durante o desenvolvimento e usado para orientar ajustes; não é mais uma avaliação independente. Manter apenas como regressão no CI. Não usar para treino nem para estimar desempenho final.",
     "campos": "mesmos de perfis.json"
   },
   "frases": [

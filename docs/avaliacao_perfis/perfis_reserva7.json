@@ -2,7 +2,7 @@
   "meta": {
     "escrito_em": "2026-10-16",
     "autor": "equipe (assistente)",
-    "aviso": "Sétimo conjunto reservado antes de qualquer correção da ponte lexical. Conjunto independente de frases sintéticas, não coletadas de mulheres reais. Não usar para treino nem ajustar regras/modelos após consultar resultados.",
+    "aviso": "Conjunto consultado durante o desenvolvimento e usado para orientar ajustes; não é mais uma avaliação independente. Manter apenas como regressão no CI. Não usar para treino nem para estimar desempenho final.",
     "campos": "mesmos de perfis.json"
   },
   "frases": [

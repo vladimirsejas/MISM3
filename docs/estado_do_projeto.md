@@ -101,10 +101,11 @@ python pipeline/geocodificar_catalogo.py --cnefe <caminho do CNEFE>
 ```
 
 
-## Orientador: avó que sustenta netos e busca trabalho — 16/10/2026
+## Orientador: avó/cuidadora, renda insuficiente e apoio social — 16/10/2026
 
-- **Implementado na branch de revisão:** duas pontes lexicais condicionadas em `web/orientar.js`: renda de aposentadoria/pensão junto de netos aponta também para Assistência; menção explícita a trabalho junto de aposentadoria/pensão também aponta para Trabalho.
-- **Testes automatizados:** 211 testes Python e toda a suíte JavaScript passaram no GitHub Actions. A execução de referência está em https://github.com/vladimirsejas/MISM3/actions/runs/38833737017.
-- **Avaliação sintética:** conjunto reserva4 passou de 16/20 para 17/20 no top-3; reserva5 passou de 18/20 para 19/20. Em reserva5, o perfil avó passou de 16/18 para 17/18 respostas certas no top-3 e de 9/18 para 11/18 com a área correta em primeiro lugar.
-- **Limites:** frases sintéticas da equipe, não validação com mulheres reais. Uma pergunta sobre uso do cartão/dinheiro sem consentimento ainda é direcionada incorretamente e precisa de um ciclo separado, com nova reserva antes de ajustes. A interface não foi conferida visualmente em navegador nesta execução.
-- **Estado:** proposta em PR; não integrada à `main`. MISM2 não foi alterado.
+- **Implementação em revisão:** a consulta lexical reconhece netos/netas, cuidado de crianças e pedidos explícitos de apoio familiar. Quando há sinais claros de cuidado e necessidade material, o orientador evita classificar a frase como fora do escopo. Pesos, limiares, modelos e camada de segurança não foram alterados.
+- **Testes:** a suíte completa passou no GitHub Actions: 211 testes Python, testes JavaScript, avaliador de necessidades e avaliador do plano.
+- **Validação independente:** `perfis_reserva14.json` marcou 19/20 (95%) no total; no perfil avó, 18/19 respostas corretas no top-3, 17/19 com a área principal em primeiro lugar, 92% de cobertura das necessidades, zero falsos alarmes de perigo e uma frase sem resposta. Execução: https://github.com/vladimirsejas/MISM3/actions/runs/38835434296.
+- **Integridade da avaliação:** as reservas 4 a 13 foram consultadas durante o desenvolvimento e ficam apenas como regressão no CI; não são conjuntos independentes para estimar desempenho final.
+- **Limites restantes:** a frase genérica “preciso de orientação social porque não consigo manter os pequenos” ainda não recebe resposta; não ajustei o código com base nessa falha para preservar a reserva 14. A consulta sobre familiar que usa cartão/dinheiro sem autorização continua sendo uma tarefa separada. A orientação detalhada do CadÚnico ainda depende de conferência/arquivamento de fonte oficial. Não houve validação visual em navegador.
+- **Estado:** PR #57 segue em rascunho, sem mesclagem. MISM2 não foi alterado.

@@ -1014,3 +1014,12 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - **Regressão:** dois testes em `web/tests/orientar.test.js` verificam os novos caminhos. GitHub Actions: 211 testes Python passaram, suíte JavaScript passou, avaliador de necessidades e avaliador do plano executaram sem erro. Execução: https://github.com/vladimirsejas/MISM3/actions/runs/38833737017.
 - **Resultado dos perfis após a mudança:** reserva4 17/20 no top-3 (antes 16/20); reserva5 19/20 (antes 18/20). Em reserva5, avó: 17/18 no top-3 e 11/18 com área certa em primeiro lugar. Ainda falha a consulta sobre familiar que usa cartão/dinheiro sem autorização; não se deve interpretar isso automaticamente como perigo imediato. Deve ser investigado em tarefa própria, com conjunto reservado novo antes de novos ajustes.
 - **Limitações e honestidade:** avaliação sintética, não desempenho com mulheres reais; interface não foi conferida visualmente em navegador. Não houve alteração no conteúdo publicado, no MISM2 nem na camada de segurança. PR #57 está em rascunho, aguardando revisão; não integrada à `main`.
+
+
+## 16/10/2026 — Orientação para avós/cuidadoras: validação final do ciclo
+
+- O baseline mostrou que Assistência podia aparecer no top-3, mas não em primeiro lugar; testes novos reproduziram esse problema e uma abstinência indevida em frase explícita de responsabilidade por crianças e dificuldade financeira.
+- A ponte lexical foi consolidada numa função específica de contexto familiar. Ela reconhece variações de netos/netas, responsabilidade, recursos, renda, necessidades e dependência infantil. Para esse contexto explícito, o orientador não aplica a recusa automática de escopo; valores de limiares e pesos continuam inalterados.
+- A suíte completa passou no GitHub Actions: 211 testes Python, todos os testes JavaScript, avaliador de necessidades, avaliador do plano e reservas 4–14. A reserva 14 terminou com 19/20 (95%), zero falsos alarmes de perigo e uma ausência de resposta. A falha restante foi mantida como limitação, sem ajuste depois de observar o holdout.
+- As reservas 4–13 foram consultadas durante o desenvolvimento e devem ser tratadas apenas como regressão, não como validação independente. A reserva 14 é o conjunto independente deste ciclo.
+- Não foram alterados MISM2, conteúdo de `web/areas.js`, pesos/limiares, modelos treinados, camada de segurança, privacidade ou botões de emergência. O conteúdo CadÚnico detalhado e a validação visual seguem pendentes. PR #57 continua em rascunho, sem mesclagem.
