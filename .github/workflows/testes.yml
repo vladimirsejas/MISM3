@@ -18,6 +18,33 @@ jobs:
       - run: PYTHONPATH=pipeline python -m pytest pipeline/tests -q
       - run: for f in web/tests/*.test.js; do node "$f" || exit 1; done
       - run: python avaliacao/avaliar.py v2 --conjunto todos
+      - run: node avaliacao/avaliar_plano.js
+      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva4.json
+      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva5.json
+      # Reserva 6: medir o baseline antes de qualquer correção adicional.
+      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva6.json
+      # Reserva 7: validação independente; não usar para novos ajustes após consultar os resultados.
+      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva7.json
+      # Reserva 8: validação independente do ciclo atual; não usar para ajustes posteriores.
+      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva8.json
+      # Reserva 9: validação independente após a extensão do reconhecimento familiar.
+      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva9.json
+      # Reserva 10: validação final independente após a correção de escopo.
+      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva10.json
+      # Reserva 11: validação independente da linguagem de responsabilidade familiar.
+      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva11.json
+      # Reserva 12: validação independiente del vocabulario de necesidades familiares.
+      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva12.json
+      # Reserva 13: validação independente do ciclo de orientação familiar.
+      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva13.json
+      # Reserva 14: conjunto independente para conferir dependência infantil e recursos.
+      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva14.json
+      # Reserva 18: baseline para o conteúdo específico de avós no CadÚnico.
+      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva18.json
+      # Reserva 19: validação independente do conteúdo de apoio para avós.
+      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva19.json
+      # Reserva 20: baseline antes de encurtar o tópico e reduzir efeitos colaterais no índice.
+      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva20.json
       # Temporário: compara falhas específicas antes/depois de regenerar o índice; remover após diagnóstico.
       - name: Comparar falhas específicas antes/depois do tópico CadÚnico
         run: |
@@ -50,28 +77,3 @@ jobs:
           if new:
               raise SystemExit(1)
           PY
-      - run: node avaliacao/avaliar_plano.js
-      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva4.json
-      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva5.json
-      # Reserva 6: medir o baseline antes de qualquer correção adicional.
-      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva6.json
-      # Reserva 7: validação independente; não usar para novos ajustes após consultar os resultados.
-      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva7.json
-      # Reserva 8: validação independente do ciclo atual; não usar para ajustes posteriores.
-      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva8.json
-      # Reserva 9: validação independente após a extensão do reconhecimento familiar.
-      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva9.json
-      # Reserva 10: validação final independente após a correção de escopo.
-      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva10.json
-      # Reserva 11: validação independente da linguagem de responsabilidade familiar.
-      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva11.json
-      # Reserva 12: validação independiente del vocabulario de necesidades familiares.
-      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva12.json
-      # Reserva 13: validação independente do ciclo de orientação familiar.
-      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva13.json
-      # Reserva 14: conjunto independente para conferir dependência infantil e recursos.
-      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva14.json
-      # Reserva 18: baseline para o conteúdo específico de avós no CadÚnico.
-      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva18.json
-      # Reserva 19: validação independente do conteúdo de apoio para avós.
-      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva19.json
