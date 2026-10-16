@@ -21,4 +21,5 @@ jobs:
       - run: node avaliacao/avaliar_plano.js
       - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva4.json
       - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva5.json
+      # Reserva 6: medir o baseline antes de qualquer correção adicional.
       - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva6.json
