@@ -67,13 +67,13 @@
     }
     /* "Benefício" é como muita gente chama o Bolsa Família e os outros programas: o caminho é o Cadastro Único, no CRAS. */
     /* Avó que sustenta netos: separar a renda da aposentadoria do caminho de assistência. Ponte curta e condicionada. */
-    if (/\\b(?:netos?|netinhas?|netinhos?)\\b/.test(t) &&
-        /\\b(?:aposentadoria|aposentad[ao]s?|pensao|beneficio|renda|sustent\\w*|cria\\w*|cuida\\w*|alimenta\\w*)\\b/.test(t)) {
+    if (/\b(?:netos?|netinhas?|netinhos?)\b/.test(t) &&
+        /\b(?:aposentadoria|aposentad[ao]s?|pensao|beneficio|renda|sustent\\w*|cria\\w*|cuida\\w*|alimenta\\w*)\b/.test(t)) {
       extra.push("assistencia social cras cadastro unico familia renda");
     }
     /* Se a pessoa fala explicitamente em buscar trabalho junto da aposentadoria, mostrar Trabalho sem apagar Direitos. */
-    if (/\\b(?:aposentadoria|aposentad[ao]s?|pensao)\\b/.test(t) &&
-        /\\b(?:emprego|trabalho|servico|trabalhar|vaga|bico|renda extra)\\b/.test(t)) {
+    if (/\b(?:aposentadoria|aposentad[ao]s?|pensao)\b/.test(t) &&
+        /\b(?:emprego|trabalho|servico|trabalhar|vaga|bico|renda extra)\b/.test(t)) {
       extra.push("emprego curso pat trabalho renda");
     }
     /* Fora desta ponte: benefício do INSS (negado, aposentadoria), que é assunto de Direitos. */
