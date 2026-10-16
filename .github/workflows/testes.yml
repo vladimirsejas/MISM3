@@ -3,11 +3,15 @@ on:
   pull_request:
   push:
     branches: [main]
+permissions:
+  contents: write
 jobs:
   testes:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -22,6 +26,16 @@ jobs:
           name: indice-orientacao-gerado
           path: web/dados/indice_orientacao.json
           if-no-files-found: error
+      # Temporário: grava o arquivo produzido pelo gerador na branch do PR.
+      - name: Commit do índice gerado
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add web/dados/indice_orientacao.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Regenera índice de orientação do CadÚnico"
+            git push origin "HEAD:${{ github.head_ref }}"
+          fi
       - run: PYTHONPATH=pipeline python -m pytest pipeline/tests -q
       - run: for f in web/tests/*.test.js; do node "$f" || exit 1; done
       - run: python avaliacao/avaliar.py v2 --conjunto todos
