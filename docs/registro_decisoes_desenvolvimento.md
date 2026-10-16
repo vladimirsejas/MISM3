@@ -979,3 +979,11 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - **Resultado honesto:** na medição limpa (reserva 3) o ganho do orientador é pequeno (área certa em 1º lugar 12 para 13 de 25; cobertura de necessidades 67% para 75%). Na avaliação oficial: nenhuma pergunta pior que antes. Validação com mulheres: **não existe**.
 - **Pendências:** imprimir em PDF as páginas oficiais do CadÚnico (Prefeitura e gov.br) para tirar o aviso; horário do CRAS e do posto; prioridade no Minha Casa Minha Vida; falsos alarmes do detector de perigo; frases reais de usuárias.
 
+## 16/10/2026 — Defensoria Pública no passo a passo de pensão e guarda (área Direitos)
+
+- **Arquivos recebidos:** três PDFs. Só `defensoria-sp-agende-atendimento.pdf` entrou em `docs/documetacao/`. Os outros dois **não foram arquivados**: uma segunda impressão da notícia de 26/06/2025 (repete o PDF que já havia, e está mais incompleta) e uma matéria do Senado sobre o fundo da Defensoria **da União** (não trata de pensão e não é a Defensoria de Rio Claro).
+- **O que entrou:** cartão em Direitos, seção "Separação, pensão e guarda" (`web/areas.js`), com quem é atendido, como agendar, urgência, o que levar, endereço, o que a Defensoria pode fazer e o caso de quem cria netos sem guarda. O registro `man-defensoria-nudem` do catálogo foi atualizado (assistente virtual hoje chamada Júlia; entra-se com gov.br ou com nome e CPF). Teste novo: `web/tests/defensoria.test.js`.
+- **Correção minha:** eu havia afirmado que "a fonte não publica telefone". A página tem um item "Telefone para atendimento" que veio **fechado** na impressão: o telefone existe e ainda não foi lido. O cartão não traz nenhum telefone.
+- **Não foi escrito, de propósito:** o passo a passo de pensão alimentícia e de reconhecimento de paternidade (documentos, o que fazer se o pai não consta, que a pensão vale a partir do pedido). Falta a página certa do Senado ("Como fazer para pedir pensão alimentícia") ou da Defensoria; sem fonte lida, o projeto não afirma.
+- **Verificação:** 19 arquivos de Node e 211 de Python passam; avaliação oficial sem nenhuma pergunta pior; índice regerado (164 destinos).
+
