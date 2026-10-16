@@ -113,3 +113,48 @@ const saqueAutorizado = R("minha filha retira meu benefício com minha autoriza�
 assert(!saqueAutorizado.perigo, "uso autorizado não deve ser classificado como perigo");
 assert(R("como desbloquear meu cartão no aplicativo do banco").abstem, "dúvida bancária comum continua fora do escopo");
 console.log("orientar.test.js ok");
+
+/* ---- Reforços de Trabalho: cartões que já existem na tela e que o orientador SOMA à resposta, sem tirar nada ---- */
+const ids = (r) => r.itens.map((i) => i.id);
+const REFORCOS_IDS = ["ferr-entrevista-aparencia", "ferr-dinheiro-semana", "ferr-quanto-sobra"];
+const ehReforco = (i) => REFORCOS_IDS.indexOf(i) >= 0;
+assert.strictEqual(R("com que roupa eu vou na entrevista").itens[0].id, "ferr-entrevista-aparencia", "roupa para entrevista: o cartão de aparência vem em 1º");
+assert.strictEqual(R("nao tenho dinheiro para arrumar o cabelo para a entrevista").itens[0].id, "ferr-entrevista-aparencia", "cabelo para entrevista leva ao cartão");
+assert.strictEqual(R("como me vestir para procurar emprego").itens[0].id, "ferr-entrevista-aparencia", "vestir para procurar emprego leva ao cartão");
+assert.strictEqual(R("preciso de dinheiro essa semana").itens[0].id, "ferr-dinheiro-semana", "dinheiro esta semana leva ao bloco de renda rápida");
+assert.strictEqual(R("quanto vou ganhar de verdade com um bico depois de pagar passagem").itens[0].id, "ferr-quanto-sobra", "conta do bico leva ao bloco de saldo");
+["ferr-entrevista-aparencia", "ferr-dinheiro-semana", "ferr-quanto-sobra"].forEach((id) => {
+  const u = (indice.reforcos || []).filter((x) => x.id === id)[0];
+  assert(u && /^#trabalho\/[\w-]+$/.test(u.href) && u.area === "trabalho", "o reforço existe no índice e aponta para um bloco de Trabalho: " + id);
+});
+assert(!(indice.unidades || []).some((u) => ehReforco(u.id)), "os reforços ficam FORA das unidades do índice (não treinam o LSA nem mudam a nota de ninguém)");
+
+/* Não contaminam perguntas sem relação nem as de violência (palavras como "roupa", "cabelo" e "dinheiro" já causaram isso). */
+["como emagrecer rapido", "quanto e 15 vezes 12", "quanto custa uma passagem pra sao paulo", "me ajuda com meu trabalho de matematica",
+ "ele rasgou minhas roupas e disse que eu nao valho nada", "vi uma crianca sendo arrastada pelo cabelo na rua pela mae",
+ "levei um soco na boca e sai de casa so com a roupa do corpo", "ele puxou meu cabelo e me jogou no chao",
+ "meu marido pegou o dinheiro todo e nao me deixa trabalhar",
+ "ele me bateu e eu preciso de dinheiro hoje para sair de casa"].forEach((t) =>
+  assert(!ids(R(t)).some(ehReforco), "sem reforço de Trabalho em: " + t));
+
+/* Somam sem tirar: tirando os reforços, a lista é a mesma que o orientador daria sem eles. */
+const motorSem = Orientar.criar(Object.assign({}, indice, { reforcos: [] }), { dica: UI.criarDica(IA, Regras), escopo: (t) => escopo.probabilidades(t).no_escopo, limiarEscopo: escopo.limiares.no_escopo });
+["como me preparar pra uma entrevista de emprego", "to morrendo de ansiedade pra entrevista de emprego", "preciso de uma renda extra urgente",
+ "com que roupa eu vou na entrevista", "como me vestir para procurar emprego", "preciso de um emprego e de um curriculo",
+ "sou avo, crio meus netos e preciso de trabalho", "meu filho esta muito agressivo e triste"].forEach((t) => {
+  const com = ids(R(t)).filter((i) => !ehReforco(i)), sem = ids(motorSem.responder(t));
+  assert.deepStrictEqual(com, sem.slice(0, com.length), "a ordem do que já aparecia não muda: " + t);
+  assert(com.length >= Math.min(6, sem.length), "nenhum item antigo some: " + t);
+});
+/* Pergunta geral sobre entrevista: os 3 primeiros ficam como estavam e o cartão vem logo depois. */
+assert.strictEqual(R("como me preparar pra uma entrevista de emprego").itens[3].id, "ferr-entrevista-aparencia", "entrevista em geral: o cartão vem depois dos 3 primeiros");
+
+/* Avó que cria netos e procura trabalho: Trabalho entra na resposta sem tirar Assistência (CRAS e Cadastro Único). */
+["sou vovo e crio duas criancas, procuro emprego", "criei meus netos e agora preciso voltar a trabalhar", "sou avo, crio meus netos e preciso de trabalho"].forEach((t) => {
+  const a = areas(R(t));
+  assert(a.indexOf("trabalho") >= 0, "avó que procura trabalho vê Trabalho: " + t);
+});
+assert(areas(R("sou avo, crio meus netos e preciso de trabalho")).indexOf("assistencia") >= 0, "e continua vendo Assistência");
+/* Quem diz que não consegue manter/sustentar as crianças: Assistência, não silêncio. */
+["nao estou dando conta de sustentar as criancas", "sozinha para manter meus filhos pequenos"].forEach((t) =>
+  assert(areas(R(t)).indexOf("assistencia") >= 0, "não consigo manter as crianças leva à Assistência: " + t));

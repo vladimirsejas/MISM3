@@ -138,6 +138,20 @@ FERRAMENTAS = [
 ]
 
 
+# Cartões da tela de Trabalho que o orientador acrescenta à frente da lista quando o pedido é claro (web/orientar.js, reforcosDe).
+# Ficam FORA de "unidades" de propósito: não entram na busca nem no treino do LSA, então não mudam a nota de nenhum outro destino
+# (medido na avaliação: palavras comuns como "roupa" ou "dinheiro" no texto contaminavam perguntas sem relação).
+REFORCOS = [
+    {"id": "ferr-entrevista-aparencia", "area": "trabalho", "sec": "trabalho-aparencia", "titulo": "Entrevista: roupa, cabelo e unhas sem gastar",
+     "resumo": "Dicas simples para ir à entrevista com conforto, sem comprar nada e sem se endividar.", "href": "#trabalho/trabalho-aparencia"},
+    {"id": "ferr-dinheiro-semana", "area": "trabalho", "sec": "trabalho-agora", "titulo": "Preciso de dinheiro esta semana",
+     "resumo": "Serviços que você já sabe fazer, onde oferecer e uma mensagem pronta para anunciar.", "href": "#trabalho/trabalho-agora"},
+    {"id": "ferr-quanto-sobra", "area": "trabalho", "sec": "renda-imediata", "titulo": "Trabalhos pontuais e quanto sobra",
+     "resumo": "Onde procurar trabalho de um dia e uma conta simples para ver quanto sobra depois de passagem, comida e cuidado das crianças.",
+     "href": "#trabalho/renda-imediata"},
+]
+
+
 def sem_acento(t: str) -> str:
     return "".join(c for c in unicodedata.normalize("NFD", str(t or "")) if unicodedata.category(c) != "Mn")
 
@@ -321,6 +335,7 @@ def gerar() -> dict:
         "meta": {"descricao": "Destinos do motor de orientação (serviços, seções, ferramentas) e matriz de significado (LSA). Gerado por pipeline/indice_orientacao.py: não edite à mão.",
                  "n_destinos": len(un)},
         "unidades": un,
+        "reforcos": [{**r, "tipo": "ferramenta", "svc": None, "needs": []} for r in REFORCOS],
         "lsa": construir_indice(un),
     }
 

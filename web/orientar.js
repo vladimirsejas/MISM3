@@ -23,6 +23,7 @@
    "posso pode fazer faco faz saber aqui ali la isso isto esse essa muito muita mais menos ja nao sim tambem so ainda eu voce me te lhe nos ela ele eles " +
    "elas dele dela ver ha hoje agora gostaria algum alguma coisa coisas ajuda ajudar to ta casa").split(" ").forEach(function (p) { PARADAS[p] = 1; });
 
+
   function raizDa(p) {
     if (/^filh[oa]s?$/.test(p)) return "filho";
     if (/^(bebe|bebes)$/.test(p)) return "bebe";
@@ -63,6 +64,25 @@
     return objeto && !consentido && (semConsentimento || agenteAcao);
   }
 
+  /* Cartões da tela de Trabalho que já existem e que o orientador acrescenta à frente da lista quando o pedido é claro.
+     Não mexem na pergunta (acrescentar palavras a ela dilui a nota de todo o resto): só somam um item. */
+  function reforcosDe(t) {
+    var itens = [];
+    var aparencia = /\b(?:roupa|roupas|vestir|vestido|cabelo|unhas?|arrumar|me arrumar|aparencia)\b/.test(t);
+    if (/\b(?:entrevista|entrevistas)\b/.test(t) || (aparencia && /\b(?:emprego|trabalho|vaga|curriculo)\b/.test(t))) {
+      /* Pergunta sobre roupa, cabelo ou unhas: o cartão vai em 1º. Pergunta geral sobre entrevista: vai depois dos 3 primeiros, que seguem como estavam. */
+      itens.push(["ferr-entrevista-aparencia", aparencia ? 0 : 3]);
+    }
+    if (/\b(?:dinheiro|renda)\b/.test(t) && /\b(?:essa semana|esta semana|rapido|urgente|hoje|agora)\b/.test(t) &&
+        !/\b(?:bate|bateu|apanh\w*|ameac\w*|agred\w*|violen\w*|soco|matar|morrer|me matar)\b/.test(t)) {
+      itens.push(["ferr-dinheiro-semana", 0]);
+    }
+    if (/\b(?:quanto (?:eu )?(?:vou )?(?:ganho|ganhar|sobra)|compensa|vale a pena)\b/.test(t) && /\b(?:bico|servico|passagem|diaria|trabalho)\b/.test(t)) {
+      itens.push(["ferr-quanto-sobra", 0]);
+    }
+    return itens;
+  }
+
   function expandirConsulta(texto) {
     var t = Regras.normalizar(texto), extra = [];
     if (usoFinanceiroSemAutorizacao(t)) {
@@ -100,9 +120,17 @@
       extra.push("assistencia social cras cadastro unico familia renda");
     }
     /* Se a pessoa fala explicitamente em buscar trabalho junto da aposentadoria, mostrar Trabalho sem apagar Direitos. */
-    if (/\b(?:aposentadoria|aposentad[ao]s?|pensao)\b/.test(t) &&
-        /\b(?:emprego|trabalho|servico|trabalhar|vaga|bico|renda extra)\b/.test(t)) {
+    var cuidaDeNetos = /\b(?:netos?|netas?|netinh[ao]s?)\b/.test(t) ||
+      (/\b(?:avo|vovo|vo)\b/.test(t) && /\b(?:criancas?|pequenos|meninos|meninas)\b/.test(t));
+    if ((cuidaDeNetos || /\b(?:aposentadoria|aposentad[ao]s?|pensao)\b/.test(t)) &&
+        /\b(?:emprego|trabalho|trabalhar|servico|vaga|bico|renda extra|procuro|procurando)\b/.test(t)) {
       extra.push("emprego curso pat trabalho renda");
+    }
+    /* Quem não consegue manter ou sustentar crianças: o caminho é Assistência (CRAS e Cadastro Único), sem classificar como perigo. */
+    if (/\b(?:criancas?|pequenos|filhos?|netos?|meninos|meninas)\b/.test(t) &&
+        /\b(?:nao consigo|nao estou conseguindo|nao estou dando conta|nao dou conta|nao da conta|nao da pra|sozinha para)\b/.test(t) &&
+        /\b(?:manter|sustentar|criar|cuidar|dar conta)\b/.test(t)) {
+      extra.push("assistencia social cras cadastro unico familia renda");
     }
     /* Fora desta ponte: benefício do INSS (negado, aposentadoria), que é assunto de Direitos. */
     if (/\b(?:beneficios?|auxilio do governo|ajuda do governo|programa social|programas sociais)\b/.test(t) && !/\b(?:inss|negad[ao]|indeferid[ao]|aposentadoria|previdencia\w*)\b/.test(t)) {
@@ -162,6 +190,8 @@
     opcoes = opcoes || {};
     var pesos = Object.assign({}, PESOS, opcoes.pesos || {});
     var U = indice.unidades, N = U.length, lsa = indice.lsa;
+    /* Cartões acrescentados por reforcosDe(): ficam fora da busca, da nota "melhor" e do corte (ver pipeline/indice_orientacao.py). */
+    var REFORCOS = {}; (indice.reforcos || []).forEach(function (r) { REFORCOS[r.id] = r; });
     var posTermo = Object.create(null);
     lsa.termos.forEach(function (t, i) { posTermo[t] = i; });
 
@@ -277,6 +307,7 @@
       var foraDeEscopo = !urgente && !contextoAssistenciaFamilia && !contextoFinanceiroSemAutorizacao && (melhor < minimo || (dicaT && melhor < minimo + 0.1 && confianca < 0.3) ||
         (pEsc !== null && pEsc < limEsc && melhor < (opcoes.fortaCorrespondencia !== undefined ? opcoes.fortaCorrespondencia : 0.5)));
       var fix = perigo ? fixados(perigo.pins, pont) : [];
+      var acrescentados = 0;
       var vistos = {}, porSvc = {}, escolhidos = [];
       function aceitar(x, fixado) {
         var chave = x.u.tipo === "servico" ? x.u.id : x.u.tipo + "|" + x.u.area + "|" + x.u.sec + "|" + x.u.titulo;
@@ -289,7 +320,13 @@
       var limiar = opcoes.limiar !== undefined ? opcoes.limiar : 0.2;
       var corte = opcoes.corte !== undefined ? opcoes.corte : 0.5; /* só entra o que tem pelo menos metade da nota do primeiro */
       if (urgente || (!foraDeEscopo && melhor >= limiar)) pont.forEach(function (x) { if (escolhidos.length < 6 && (urgente || (x.s >= limiar * 0.55 && x.s >= melhor * corte))) aceitar(x, false); });
-      var itens = escolhidos.slice(0, 6).map(function (e, i) {
+      /* O cartão "quanto sobra" vale mesmo se a pergunta parecer fora do assunto: só dispara com "quanto ganho/sobra" + bico, serviço ou passagem. */
+      reforcosDe(t).slice().reverse().forEach(function (par) {
+        if (foraDeEscopo && par[0] !== "ferr-quanto-sobra") return;
+        var u = REFORCOS[par[0]], antes = escolhidos.length;
+        if (u) { aceitar({ u: u, s: 0 }, false); if (escolhidos.length > antes) { escolhidos.splice(Math.min(par[1], antes), 0, escolhidos.pop()); acrescentados++; } }
+      });
+      var itens = escolhidos.slice(0, 6 + acrescentados).map(function (e, i) { /* o cartão acrescentado soma: nada do que já aparecia sai */
         var u = e.x.u;
         return { rank: i + 1, id: u.id, tipo: u.tipo, area: u.area, sec: u.sec, svc: u.svc, titulo: u.titulo, resumo: u.resumo, href: u.href,
                  contato: u.contato || null, fonte: u.fonte || null, n: u.n || null, pontos: Math.round(e.x.s * 1000) / 1000,
