@@ -30,6 +30,8 @@ assert(areas(R("minha pensão não dá para alimentar as crianças que estão so
 assert.strictEqual(areas(R("minha aposentadoria mal cobre o mercado e o gás para os netinhos"))[0], "assistencia", "despesas de mercado e gás para netos priorizam assistência");
 const familiaSemSilencio = R("sou responsável pelos pequenos e falta dinheiro para pagar as contas");
 assert(!familiaSemSilencio.abstem && areas(familiaSemSilencio).includes("assistencia"), "necessidade familiar explícita não deve ser descartada como fora do escopo");
+const responsabilidade = R("assumi a responsabilidade pelos pequenos e não consigo pagar as contas");
+assert(!responsabilidade.abstem && areas(responsabilidade).includes("assistencia"), "variação da palavra responsabilidade deve manter a orientação social");
 
 assert(areas(R("presiso de advogdo de graça")).slice(0, 3).includes("direitos"), "tolera erro de digitação");
 assert(areas(R("upa mais proxima")).slice(0, 3).includes("saude"));
