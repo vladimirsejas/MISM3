@@ -22,6 +22,9 @@ assert(areas(R("sou aposentada e ajudo a criar meus netos, o dinheiro não dá")
 assert(areas(R("preciso de trabalho porque a aposentadoria não paga as despesas de todos")).slice(0, 3).includes("trabalho"), "busca explícita de trabalho não deve ser desviada só para aposentadoria");
 assert.strictEqual(areas(R("sou vó, crio meus netos e estou sem dinheiro para as despesas"))[0], "assistencia", "necessidade de assistência deve liderar quando a avó relata falta de dinheiro para criar netos");
 assert.strictEqual(areas(R("estou sustentando meus netos e a geladeira está vazia"))[0], "assistencia", "falta de comida para netos deve priorizar assistência");
+assert.strictEqual(areas(R("estou com os netos, não sobra dinheiro para comida"))[0], "assistencia", "aperto financeiro com netos deve priorizar assistência");
+assert(areas(R("minha filha deixou os pequenos aqui em casa e preciso de apoio social")).slice(0, 3).includes("assistencia"), "crianças deixadas com a avó e pedido de apoio social devem mostrar assistência");
+assert(areas(R("o INSS recusou meu pedido de aposentadoria e quero recorrer")).slice(0, 3).includes("direitos"), "contestação de aposentadoria negada continua em Direitos");
 
 assert(areas(R("presiso de advogdo de graça")).slice(0, 3).includes("direitos"), "tolera erro de digitação");
 assert(areas(R("upa mais proxima")).slice(0, 3).includes("saude"));
