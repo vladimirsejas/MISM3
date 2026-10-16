@@ -1005,3 +1005,12 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - **Medição:** avaliação oficial igual ou melhor em todos os conjuntos (desenvolvimento 66/68, específica 61/68). Perfis: desenvolvimento 32/32; reserva 3 caiu de 24 para 23 de 28: "estou pensando em montar uma barraquinha de lanche" ficou a 0,004 do limite de abstenção depois do recálculo do índice (antes a resposta que aparecia era a seção de Separação, sem sentido). Não mexi no limite. A falta de conteúdo sobre empreender em pequena escala segue como lacuna.
 - **Pendências:** fonte atual sobre reconhecimento de paternidade (o Senado de 2012 só diz que, sem o nome do pai, é preciso ação de investigação de paternidade); os seis itens fechados da página da Defensoria; a página de habitação (Minha Casa Minha Vida).
 
+
+
+## 16/10/2026 — Orientador: renda de aposentadoria/pensão e netos
+
+- **Problema medido antes da correção:** o conjunto reservado `perfis_reserva4.json` ficou em 16/20 respostas certas no top-3; no conjunto `perfis_reserva5.json`, criado antes do ajuste, o baseline foi 18/20. Os dois conjuntos são sintéticos e escritos pela equipe.
+- **Mudança mínima:** em `web/orientar.js`, acrescentadas duas pontes curtas condicionadas: quando netos aparece junto de aposentadoria/pensão/benefício/renda/cuidado/sustento, acrescenta termos de Assistência/CadÚnico; quando aposentadoria/pensão aparece junto de busca explícita de trabalho, acrescenta termos de Trabalho. Não foram alterados pesos, limiares, modelos ou camada de segurança.
+- **Regressão:** dois testes em `web/tests/orientar.test.js` verificam os novos caminhos. GitHub Actions: 211 testes Python passaram, suíte JavaScript passou, avaliador de necessidades e avaliador do plano executaram sem erro. Execução: https://github.com/vladimirsejas/MISM3/actions/runs/38833737017.
+- **Resultado dos perfis após a mudança:** reserva4 17/20 no top-3 (antes 16/20); reserva5 19/20 (antes 18/20). Em reserva5, avó: 17/18 no top-3 e 11/18 com área certa em primeiro lugar. Ainda falha a consulta sobre familiar que usa cartão/dinheiro sem autorização; não se deve interpretar isso automaticamente como perigo imediato. Deve ser investigado em tarefa própria, com conjunto reservado novo antes de novos ajustes.
+- **Limitações e honestidade:** avaliação sintética, não desempenho com mulheres reais; interface não foi conferida visualmente em navegador. Não houve alteração no conteúdo publicado, no MISM2 nem na camada de segurança. PR #57 está em rascunho, aguardando revisão; não integrada à `main`.
