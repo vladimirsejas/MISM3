@@ -25,5 +25,5 @@ jobs:
       - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva6.json
       # Reserva 7: validação independente; não usar para novos ajustes após consultar os resultados.
       - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva7.json
-      # Reserva 8: validação independiente do ciclo atual; não usar para ajustes posteriores.
+      # Reserva 8: validação independente do ciclo atual; não usar para ajustes posteriores.
       - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva8.json
