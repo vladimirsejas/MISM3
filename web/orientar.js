@@ -49,7 +49,7 @@
       (/\b(?:criancas?|meninos|meninas|pequenos|filhos?)\b/.test(t) &&
        /\b(?:dinheiro|renda|recursos?|comida|aliment\w*|fome|nao chega|nao da|falta|faltando|despesas?|necessidades?|mercado|gas|botijao|contas?)\b/.test(t) &&
        /\b(?:aposentadoria|aposentad[ao]s?|pensao|beneficio|renda|comigo|responsavel|responsabil\w*|cuid[ao]\w*|(?:crio|cria|criam|criei|criou|criando|criar|criamos|criado|criada)|fiquei|ficou|moro|moram|deixou)\b/.test(t));
-    var necessidade = /\b(?:aposentadoria|aposentad[ao]s?|pensao|beneficio|renda|dinheiro|recursos?|contas?|despesas?|comida|aliment\w*|sustent\w*|(?:crio|cria|criam|criei|criou|criando|criar|criamos|criado|criada)|cuid[ao]\w*|falta|faltando|nao da|nao sobra|nao consigo pagar|geladeira vazia|ajuda|apoio|orientacao|assistencia social|fome|nao chega|necessidades?|mercado|gas|botijao)\b/.test(t);
+    var necessidade = /\b(?:aposentadoria|aposentad[ao]s?|pensao|beneficio|renda|dinheiro|recursos?|contas?|despesas?|comida|aliment\w*|sustent\w*|falta|faltando|nao da|nao sobra|nao consigo pagar|geladeira vazia|ajuda|apoio|orientacao|assistencia social|fome|nao chega|necessidades?|mercado|gas|botijao)\b/.test(t);
     return contexto && necessidade;
   }
 
