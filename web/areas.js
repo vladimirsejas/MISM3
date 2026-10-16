@@ -553,12 +553,12 @@
               aviso: "O curso e o Centro Dia vêm de resumos de notícia, sem a página aberta: confirme com o Fundo Social e com o CRAS antes de ir. A convivência vem do cadastro dos CRAS e das unidades.",
               fonte: ["Prefeitura de Rio Claro: cadastro dos CRAS e das unidades de convivência; resumos de notícias do Fundo Social e do Centro Dia", "https://rioclaro.sp.gov.br/secretaria/fundo-social-de-solidariedade/", "convivência: página dos CRAS impressa em 10/10/2026; curso e Centro Dia: resumos de busca, não conferidos"] },
             { nome: "Alguém usa meu cartão ou minha aposentadoria sem eu querer", sem_tel: true, resumo: "Ver onde pedir ajuda",
-              texto: "Se alguém fica com o seu cartão ou com o seu dinheiro contra a sua vontade, você pode pedir ajuda. Veja os canais abaixo.",
+              texto: "Se alguém fica com o seu dinheiro contra a sua vontade, você pode pedir ajuda. Veja os canais abaixo.",
               topicos: [
                 ["Disque 100", "Recebe denúncias de violações de direitos de pessoas idosas, 24 horas por dia, todos os dias. A ligação é gratuita, de qualquer telefone, fixo ou celular. Qualquer pessoa pode relatar, seja a vítima ou quem conhece o caso. A página oficial não lista tipos de violação: o serviço avalia o que fazer."],
                 ["Orientação jurídica", "A Defensoria Pública atende quem não tem condições de pagar. Pergunte a ela o que fazer. O cartão está na área Direitos."],
                 ["Perigo agora", "Se há ameaça ou agressão em andamento, ligue 190 (Polícia Militar)."],
-                ["Antes de ligar", "Se puder, anote datas, valores e quem usou o cartão. Não passe dados de acesso a ninguém que diga ser do banco ou do INSS."]
+                ["Antes de ligar", "Se puder, anote datas, valores e quem usou o dinheiro. Não passe dados de acesso a ninguém que diga ser do banco ou do INSS."]
               ],
               aviso: "Este site não diz se o que aconteceu com você é uma violação nem o que será decidido. Quem avalia é o serviço que você procurar.",
               fonte: ["gov.br: Denunciar violação de direitos humanos (Disque 100)", "https://www.gov.br/pt-br/servicos/denunciar-violacao-de-direitos-humanos", "última modificação 15/12/2025; página impressa em 10/10/2026"] }
