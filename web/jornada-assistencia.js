@@ -1,8 +1,9 @@
 /* Jornada "Assistência social": uma pergunta -> plano curto com o primeiro canal, por que começar por ele, o que perguntar e o que
    fazer se não der certo. Três caminhos: falta de dinheiro ou de apoio no básico; direitos violados (violência, abandono, negligência);
    convivência para filhos ou pessoas idosas.
-   Só usa o que a área Assistência Social e o catálogo verificado já afirmam. Não fala de benefício específico (por exemplo CadÚnico):
-   o projeto não tem fonte para isso, então o passo manda perguntar ao CRAS. Lógica pura (sem DOM, sem rede, sem gravar nada). */
+   Só usa o que a área Assistência Social e o catálogo verificado já afirmam. Fala do Cadastro Único (CadÚnico) como o primeiro passo no CRAS,
+   com o texto e as fontes da área; não afirma que a pessoa tem direito a benefício algum nem diz valor de renda ou horário.
+   Lógica pura (sem DOM, sem rede, sem gravar nada). */
 (function (raiz, fabrica) {
   if (typeof module === "object" && module.exports) module.exports = fabrica(require("./jornada.js"));
   else raiz.JornadaAssistencia = fabrica(raiz.Jornada);
@@ -10,6 +11,7 @@
   "use strict";
   var A = J.ajudantes, interno = A.interno, contato = A.contato;
 
+  var CADUNICO = ["Como me cadastro no CadÚnico? — Prefeitura de Rio Claro", "https://desenvolvimentosocial.rc.sp.gov.br/?page_id=3366", "Quem pode, documentos e onde fazer, segundo a Secretaria de Desenvolvimento Social."];
   var LISTA_CRAS = ["CRAS e Centros de Convivência — página oficial", "https://desenvolvimentosocial.rc.sp.gov.br/?page_id=1651", "Lista oficial dos CRAS, dos bairros que cada um atende e dos serviços de convivência."];
   var DISQUE_100 = { nome: "Disque Direitos Humanos", telefone: "100" };
 
@@ -26,11 +28,11 @@
   function passoCras(achar) {
     return {
       id: "cras", titulo: "Procure o CRAS do seu bairro",
-      porque: "O CRAS é a porta de entrada da assistência social, perto de onde você mora. Orienta sobre benefícios e programas de apoio quando falta dinheiro para o básico. Quem avalia o seu caso é o próprio CRAS, não este site.",
+      porque: "O CRAS é a porta de entrada da assistência social, perto de onde você mora. É lá que se faz o Cadastro Único (CadÚnico), que é a porta para programas como o Bolsa Família. Quem avalia o seu caso é o órgão responsável, não este site.",
       acao: interno("#mapa/cras", "Ver qual CRAS atende o meu bairro"),
-      leve: ["Documento com foto e comprovante de residência, se tiver. Confirme a lista com o CRAS."],
-      pergunte: ["Quais benefícios e programas existem e o que é preciso para pedir cada um.", "Horário de atendimento: o site nem sempre traz o horário de cada unidade."],
-      extras: [LISTA_CRAS],
+      leve: ["Quem responde pela família: documento com foto, CPF ou título de eleitor e comprovante de residência. Dos outros moradores: pelo menos um documento de cada um. Confirme a lista com o CRAS."],
+      pergunte: ["Como fazer ou atualizar o Cadastro Único e quais documentos levar.", "Dia, horário e se é preciso marcar: o site nem sempre traz o horário de cada unidade."],
+      extras: [CADUNICO, LISTA_CRAS],
       contato: contato(achar, "man-desenv-social-sede", "Secretaria de Desenvolvimento Social"),
       alternativa: "Se o CRAS estiver longe ou sem horário, ligue antes para a Secretaria de Desenvolvimento Social."
     };

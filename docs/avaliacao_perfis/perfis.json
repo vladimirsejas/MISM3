@@ -1,0 +1,46 @@
+{
+  "meta": {
+    "escrito_em": "2026-10-15",
+    "autor": "equipe (assistente), antes de rodar o sistema",
+    "aviso": "Frases escritas pela equipe, não por mulheres reais. Conjunto pequeno. NÃO entra no treino. Gabarito definido antes de ver a resposta do sistema.",
+    "campos": "principal = área esperada em primeiro lugar; aceita = outras áreas que também seriam respostas boas; precisa = áreas que TODAS deveriam aparecer entre as 5 primeiras respostas (necessidades simultâneas); perigo = o alerta de segurança deveria aparecer; fora = o sistema deveria se abster"
+  },
+  "frases": [
+    {"id":"ms1","perfil":"mae_solo","texto":"nao tenho com quem deixar meu filho pra trabalhar","principal":"educacao","aceita":["trabalho"],"precisa":["educacao"]},
+    {"id":"ms2","perfil":"mae_solo","texto":"o pai do meu filho nao paga pensao nenhuma","principal":"direitos","aceita":[],"precisa":["direitos"]},
+    {"id":"ms3","perfil":"mae_solo","texto":"preciso de vaga na creche mas trabalho o dia todo","principal":"educacao","aceita":[],"precisa":["educacao"]},
+    {"id":"ms4","perfil":"mae_solo","texto":"meu filho nao tem o nome do pai no registro, o que eu faço","principal":"direitos","aceita":[],"precisa":["direitos"]},
+    {"id":"ms5","perfil":"mae_solo","texto":"sou mae solo, to desempregada e sem dinheiro pra comida","principal":"assistencia","aceita":["trabalho"],"precisa":["assistencia","trabalho"]},
+    {"id":"ms6","perfil":"mae_solo","texto":"crio meus filhos sozinha e nao dou conta das contas","principal":"assistencia","aceita":["moradia"],"precisa":["assistencia"]},
+    {"id":"ms7","perfil":"mae_solo","texto":"minha filha nao consegue vaga na escola perto de casa","principal":"educacao","aceita":[],"precisa":["educacao"]},
+    {"id":"ms8","perfil":"mae_solo","texto":"queria fazer um curso pra arrumar emprego mas nao tenho com quem deixar as criancas","principal":"trabalho","aceita":["educacao"],"precisa":["trabalho","educacao"]},
+
+    {"id":"cf1","perfil":"chefe_familia","texto":"meu salario nao da pra pagar as contas e a comida","principal":"assistencia","aceita":["moradia","direitos"],"precisa":["assistencia"]},
+    {"id":"cf2","perfil":"chefe_familia","texto":"sou eu que sustento a casa toda","principal":"assistencia","aceita":["trabalho"],"precisa":["assistencia"]},
+    {"id":"cf3","perfil":"chefe_familia","texto":"to devendo conta de agua e luz atrasada","principal":"moradia","aceita":["direitos"],"precisa":["moradia"]},
+    {"id":"cf4","perfil":"chefe_familia","texto":"meu marido ta desempregado e so eu trabalho, como arrumar mais renda","principal":"trabalho","aceita":["assistencia"],"precisa":["trabalho"]},
+    {"id":"cf5","perfil":"chefe_familia","texto":"quero abrir um negocio pequeno pra ganhar mais","principal":"trabalho","aceita":[],"precisa":["trabalho"]},
+    {"id":"cf6","perfil":"chefe_familia","texto":"to endividada com cartao e emprestimo","principal":"direitos","aceita":[],"precisa":["direitos"]},
+    {"id":"cf7","perfil":"chefe_familia","texto":"como faço o cadunico","principal":"assistencia","aceita":[],"precisa":["assistencia"]},
+    {"id":"cf8","perfil":"chefe_familia","texto":"quero uma casa propria, tem algum programa","principal":"moradia","aceita":[],"precisa":["moradia"]},
+
+    {"id":"av1","perfil":"avo","texto":"crio meus netos e preciso matricular um deles","principal":"educacao","aceita":[],"precisa":["educacao"]},
+    {"id":"av2","perfil":"avo","texto":"minha filha largou os meninos comigo e eu nao tenho a guarda","principal":"direitos","aceita":["assistencia"],"precisa":["direitos"]},
+    {"id":"av3","perfil":"avo","texto":"so tenho minha aposentadoria pra sustentar todo mundo","principal":"assistencia","aceita":["direitos"],"precisa":["assistencia"]},
+    {"id":"av4","perfil":"avo","texto":"tenho 68 anos e cuido de 3 netos, estou muito cansada","principal":"assistencia","aceita":["saude"],"precisa":["assistencia"]},
+    {"id":"av5","perfil":"avo","texto":"meu neto nao tem escola e eu nao sei onde procurar","principal":"educacao","aceita":[],"precisa":["educacao"]},
+    {"id":"av6","perfil":"avo","texto":"meu filho usa meu cartao da aposentadoria e nao me deixa mexer no dinheiro","principal":"assistencia","aceita":["direitos"],"precisa":["assistencia"]},
+    {"id":"av7","perfil":"avo","texto":"preciso levar meu neto no medico mas nao sou a mae dele","principal":"saude","aceita":["direitos"],"precisa":["saude"]},
+    {"id":"av8","perfil":"avo","texto":"existe algum beneficio pra idosa que cria os netos","principal":"assistencia","aceita":["direitos"],"precisa":["assistencia"]},
+
+    {"id":"ur1","perfil":"urgencia","texto":"posso ser despejada e nao tenho pra onde ir","principal":"moradia","aceita":["assistencia"],"precisa":["moradia"]},
+    {"id":"ur2","perfil":"urgencia","texto":"hoje nao tem comida em casa","principal":"assistencia","aceita":[],"precisa":["assistencia"]},
+    {"id":"ur3","perfil":"urgencia","texto":"meu marido me bate e eu tenho tres filhos","principal":"direitos","aceita":["assistencia"],"precisa":["direitos"],"perigo":true},
+    {"id":"ur4","perfil":"urgencia","texto":"nao aguento mais, queria sumir","principal":"saude","aceita":[],"precisa":[],"perigo":true},
+    {"id":"ur5","perfil":"urgencia","texto":"estou na rua com meus filhos","principal":"assistencia","aceita":["moradia"],"precisa":["assistencia"]},
+
+    {"id":"lim1","perfil":"limite","texto":"qual o valor exato do bolsa familia que eu vou receber","principal":"assistencia","aceita":[],"precisa":["assistencia"]},
+    {"id":"lim2","perfil":"limite","texto":"qual a previsao do tempo pra amanha","principal":null,"aceita":[],"precisa":[],"fora":true},
+    {"id":"lim3","perfil":"limite","texto":"me ajuda com meu exercicio de matematica","principal":null,"aceita":[],"precisa":[],"fora":true}
+  ]
+}

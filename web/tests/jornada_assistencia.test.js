@@ -38,8 +38,10 @@ assert.strictEqual(plano(undefined).passos.length, 0, "sem resposta, sem passos 
   assert(/não garante|nenhum deles garante/.test(pl.avisos[0]), "avisa que não garante atendimento nem benefício");
   assert(/Em perigo agora/.test(pl.avisos[pl.avisos.length - 1]), "o aviso de segurança acompanha todo plano");
 });
-const proibido = /você (tem|terá) direito|vaga garantida|garantimos|você está apta|você não é elegível|benefício garantido|CadÚnico|Bolsa Fam/i;
-["apoio", "direitos", "convivencia"].forEach((r) => assert(!proibido.test(JSON.stringify(plano(r).passos)), "promete ou afirma sem fonte: " + r));
+const proibido = /você (tem|terá) direito|vaga garantida|garantimos|você está apta|você não é elegível|benefício garantido|R\$ ?\d|\b\d{1,2}h às \d{1,2}h/i;
+["apoio", "direitos", "convivencia"].forEach((r) => assert(!proibido.test(JSON.stringify(plano(r).passos)), "promete, diz valor ou horário sem fonte: " + r));
+/* O CadÚnico pode ser nomeado (tem fonte oficial e aviso na área), mas só no passo do CRAS do caminho "apoio". */
+assert(/Cadastro Único/.test(JSON.stringify(plano("apoio").passos[0])), "o passo do CRAS cita o Cadastro Único");
 
 /* ---- 4. Telefones e links vêm de fonte do projeto ---- */
 const permitidos = new Set(servicos.map((s) => s.fonte_url));
@@ -75,4 +77,4 @@ assert(sem.passos.length === 3 && sem.passos[0].contato === null && sem.passos[2
 const index = fs.readFileSync(path.join(web, "index.html"), "utf8");
 assert(index.indexOf("jornada-assistencia.js") > index.indexOf("jornada.js") && index.indexOf("jornada-assistencia.js") < index.indexOf("jornada-ui.js"));
 assert(/\^\\d\{3\}\$/.test(fs.readFileSync(path.join(web, "jornada-ui.js"), "utf8")), "a tela transforma o 100 em link de ligar");
-console.log("jornada_assistencia.test.js: 4 caminhos conferidos, telefones e links com fonte, sem benefício específico nem promessa");
+console.log("jornada_assistencia.test.js: 4 caminhos conferidos, telefones e links com fonte, sem promessa, sem valor de renda e sem horário");

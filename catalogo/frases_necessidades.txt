@@ -381,3 +381,65 @@ nenhuma | que dia é hoje
 nenhuma | horário do shopping
 nenhuma | como cuidar de uma planta
 nenhuma | oi, estou testando o site
+
+# ---------------------------------------------------------------- terceira rodada (16/10/2026): mãe solo, quem sustenta a casa, avó cuidadora
+# Escritas para cobrir lacunas medidas em docs/avaliacao_perfis/. Nenhuma delas está nos conjuntos de avaliação (perfis*.json, perguntas.json).
+moradia | o proprietário pediu a casa de volta e não tenho para onde levar meus filhos
+moradia | estou morando de favor e a pessoa quer que eu saia
+moradia | meu aluguel está atrasado há meses e a imobiliária ameaçou tirar a gente
+moradia | nossa casa caiu com a chuva e estamos sem lugar pra ficar
+moradia | dormimos na rodoviária porque não temos onde ficar
+moradia | fui expulsa de casa e estou na calçada com uma mochila
+moradia | preciso de um abrigo para mim e para as crianças hoje
+moradia | vendi meus móveis para pagar o aluguel e agora não tenho mais onde morar
+moradia | como faço para conseguir uma moradia popular com urgência
+moradia | o dono do barraco vai derrubar e a gente não tem outro lugar
+dividas | os juros do cartão não param de crescer e não consigo pagar o mínimo
+dividas | todo dia chega mensagem de cobrança de uma loja onde comprei a prazo
+dividas | quero limpar meu nome mas não sei por onde começar
+dividas | peguei um empréstimo para pagar outro e agora a bola de neve só aumenta
+dividas | estou com o nome no spc e não consigo comprar nada a prazo
+dividas | o banco desconta metade do meu salário por causa de um financiamento
+dividas | como negociar as parcelas que atrasei sem pagar mais juros
+dividas | devo para várias lojas e não sei qual pagar primeiro
+familia | sou a única pessoa que bota dinheiro dentro de casa
+familia | meu salário vai todo no aluguel e no mercado e ainda falta pra completar
+familia | toda a despesa da casa fica comigo e já não aguento
+familia | ganho muito pouco e preciso de ajuda do governo pra criar meus filhos
+familia | como entro nos programas sociais se a renda da minha casa é baixa
+familia | faltou comida esta semana e tenho crianças pequenas em casa
+familia | somos cinco pessoas vivendo com um salário mínimo
+familia | mantenho meus pais idosos e meus filhos com o que ganho
+familia | quero me cadastrar para receber algum benefício social
+familia | onde peço uma cesta de alimentos pra minha família
+familia | minha renda não paga nem o básico do mês
+familia | preciso saber como funciona o cadastro único
+filhos | sou avó e preciso matricular minha neta na escola do bairro
+filhos | meu neto mora comigo e eu cuido dele, como consigo uma vaga na creche
+filhos | crio os filhos da minha filha e preciso de ajuda com a escola deles
+filhos | preciso de um lugar seguro para minha filhinha ficar durante o meu turno
+filhos | a escolinha mais perto fica longe e não tem vaga para meu menino de dois anos
+filhos | meu pequeno vai fazer três anos, como o inscrevo na educação infantil
+filhos | preciso de apoio para os filhos no contraturno da escola
+filhos | quero saber onde deixar as crianças enquanto estudo à noite
+casamento | minha nora foi embora e eu fiquei com os netos sem nenhum documento
+casamento | como regularizar a guarda dos netos que moram comigo
+casamento | posso pedir pensão para os pais dos netos que eu crio
+casamento | o pai nunca assumiu a criança e quero colocar o nome dele no registro
+casamento | o pai prometeu pagar pensão e nunca depositou nada
+casamento | como entrar com ação de alimentos contra o pai do meu filho
+casamento | quero fazer o exame de dna para o pai reconhecer a filha
+casamento | quanto tempo demora para sair a pensão depois que eu peço
+saude | cuidar das crianças sozinha está acabando com a minha saúde
+saude | estou sem forças depois de tantos anos cuidando da família
+saude | choro todos os dias e não tenho com quem conversar
+saude | preciso de psicólogo pelo posto mas não sei como marcar
+saude | tenho dor nas costas de carregar criança o dia inteiro
+saude | minha pressão subiu com tanto estresse em casa
+saude | como marcar consulta pra minha neta no posto de saúde
+emprego_curso | quero revender roupa pra completar a renda mas não sei como começar
+emprego_curso | faço bolo e salgado em casa e gostaria de vender de forma legal
+emprego_curso | procuro faxina ou diária perto da minha casa
+emprego_curso | existe curso grátis de costura ou de cabeleireira
+emprego_curso | como abrir um mei para vender meus produtos
+emprego_curso | procuro serviço que eu possa fazer em casa com meus filhos pequenos

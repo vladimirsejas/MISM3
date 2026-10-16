@@ -116,7 +116,7 @@
       ? "Fonte: " + (c.fonte[1] ? '<a href="' + esc(c.fonte[1]) + '" target="_blank" rel="noopener noreferrer">' + esc(c.fonte[0]) + "</a>" : esc(c.fonte[0])) + " · " + esc(c.fonte[2]) + "."
       : "Canal nacional oficial.";
     return '<article class="cartao"><h3>' + esc(c.nome) + "</h3>" +
-      (c.sem_tel ? "" : '<p><a class="tel-grande" href="tel:' + esc(c.tel) + '">' + esc(c.tel) + "</a></p>") +
+      (c.sem_tel ? "" : '<p><a class="tel-grande" href="tel:' + esc(String(c.tel).replace(/[^\d+]/g, "")) + '">' + esc(c.tel) + "</a></p>") +
       "<p>" + esc(c.texto) + "</p>" +
       (c.topicos ? '<details class="detalhes-canal"><summary>' + esc(c.resumo || "Ver quem tem direito, documentos e prazos") + '</summary><dl>' +
         c.topicos.map(function (t) { return "<dt>" + esc(t[0]) + "</dt><dd>" + esc(t[1]) + "</dd>"; }).join("") + "</dl></details>" : "") +

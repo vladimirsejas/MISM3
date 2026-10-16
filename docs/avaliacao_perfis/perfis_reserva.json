@@ -1,0 +1,43 @@
+{
+  "meta": {
+    "escrito_em": "2026-10-15",
+    "autor": "equipe (assistente), ANTES de qualquer correção do orientador",
+    "aviso": "Conjunto RESERVADO: frases novas, escritas antes das correções, para medir se elas valem além das frases de desenvolvimento (perfis.json). Não usar no treino nem para ajustar regras. Frases escritas pela equipe, não por mulheres reais.",
+    "campos": "mesmos de perfis.json"
+  },
+  "frases": [
+    {"id":"rms1","perfil":"mae_solo","texto":"meu ex nao ajuda com nada e eu pago tudo sozinha","principal":"direitos","aceita":["assistencia"],"precisa":["direitos"]},
+    {"id":"rms2","perfil":"mae_solo","texto":"nao tenho ninguem pra ficar com o bebe quando eu for trabalhar","principal":"educacao","aceita":["trabalho"],"precisa":["educacao"]},
+    {"id":"rms3","perfil":"mae_solo","texto":"sou mae de dois e o dinheiro acaba antes do fim do mes","principal":"assistencia","aceita":["moradia"],"precisa":["assistencia"]},
+    {"id":"rms4","perfil":"mae_solo","texto":"como pedir pensao pro pai da minha filha","principal":"direitos","aceita":[],"precisa":["direitos"]},
+    {"id":"rms5","perfil":"mae_solo","texto":"quero voltar a estudar mas tenho um filho pequeno","principal":"educacao","aceita":["trabalho"],"precisa":["educacao"]},
+    {"id":"rms6","perfil":"mae_solo","texto":"to sem emprego e com tres criancas pra criar sozinha","principal":"trabalho","aceita":["assistencia"],"precisa":["trabalho","assistencia"]},
+
+    {"id":"rcf1","perfil":"chefe_familia","texto":"sustento minha mae e meus filhos com um salario so","principal":"assistencia","aceita":["trabalho"],"precisa":["assistencia"]},
+    {"id":"rcf2","perfil":"chefe_familia","texto":"estou com o nome sujo e nao consigo sair do vermelho","principal":"direitos","aceita":[],"precisa":["direitos"]},
+    {"id":"rcf3","perfil":"chefe_familia","texto":"a luz foi cortada porque nao consegui pagar","principal":"moradia","aceita":["assistencia","direitos"],"precisa":["moradia"]},
+    {"id":"rcf4","perfil":"chefe_familia","texto":"preciso de um segundo trabalho pra fechar o mes","principal":"trabalho","aceita":[],"precisa":["trabalho"]},
+    {"id":"rcf5","perfil":"chefe_familia","texto":"como me inscrevo nos programas do governo pra familia de baixa renda","principal":"assistencia","aceita":[],"precisa":["assistencia"]},
+    {"id":"rcf6","perfil":"chefe_familia","texto":"o aluguel subiu e nao vou conseguir pagar","principal":"moradia","aceita":["assistencia"],"precisa":["moradia"]},
+
+    {"id":"rav1","perfil":"avo","texto":"minha neta mora comigo desde bebe e agora precisa de escola","principal":"educacao","aceita":[],"precisa":["educacao"]},
+    {"id":"rav2","perfil":"avo","texto":"sou avo e cuido sozinha de dois netos, estou esgotada","principal":"assistencia","aceita":["saude"],"precisa":["assistencia"]},
+    {"id":"rav3","perfil":"avo","texto":"minha aposentadoria nao chega pra sustentar a casa","principal":"assistencia","aceita":["direitos"],"precisa":["assistencia"]},
+    {"id":"rav4","perfil":"avo","texto":"os pais dos meus netos sumiram, o que eu faco com a guarda","principal":"direitos","aceita":["assistencia"],"precisa":["direitos"]},
+    {"id":"rav5","perfil":"avo","texto":"tenho 70 anos e quero conversar com outras pessoas, to muito sozinha","principal":"assistencia","aceita":["saude"],"precisa":["assistencia"]},
+    {"id":"rav6","perfil":"avo","texto":"preciso vacinar meu neto mas ele ta no meu nome nao no da mae","principal":"saude","aceita":["direitos"],"precisa":["saude"]},
+    {"id":"rav7","perfil":"avo","texto":"minha filha pega minha aposentadoria e nao sobra nada pra mim","principal":"assistencia","aceita":["direitos"],"precisa":["assistencia"]},
+
+    {"id":"rur1","perfil":"urgencia","texto":"durmo no carro com meus filhos faz tres dias","principal":"assistencia","aceita":["moradia"],"precisa":["assistencia"]},
+    {"id":"rur2","perfil":"urgencia","texto":"fui despejada hoje e nao tenho onde ficar","principal":"moradia","aceita":["assistencia"],"precisa":["moradia"]},
+    {"id":"rur3","perfil":"urgencia","texto":"meus filhos estao com fome e eu nao tenho dinheiro","principal":"assistencia","aceita":[],"precisa":["assistencia"]},
+    {"id":"rur4","perfil":"urgencia","texto":"ele ameacou me matar se eu sair de casa","principal":"direitos","aceita":["assistencia"],"precisa":["direitos"],"perigo":true},
+    {"id":"rur5","perfil":"urgencia","texto":"to pensando em tirar minha vida","principal":"saude","aceita":[],"precisa":[],"perigo":true},
+    {"id":"rur6","perfil":"urgencia","texto":"vou ficar sem casa na semana que vem com as criancas","principal":"moradia","aceita":["assistencia"],"precisa":["moradia"]},
+
+    {"id":"rlim1","perfil":"limite","texto":"quanto eu vou receber de bolsa familia se tenho tres filhos","principal":"assistencia","aceita":[],"precisa":["assistencia"]},
+    {"id":"rlim2","perfil":"limite","texto":"me explica como resolver uma equacao de segundo grau","principal":null,"aceita":[],"precisa":[],"fora":true},
+    {"id":"rlim3","perfil":"limite","texto":"faz um resumo do livro dom casmurro pra mim","principal":null,"aceita":[],"precisa":[],"fora":true},
+    {"id":"rlim4","perfil":"limite","texto":"qual time ganhou o campeonato ontem","principal":null,"aceita":[],"precisa":[],"fora":true}
+  ]
+}
