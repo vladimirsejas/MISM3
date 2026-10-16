@@ -4,7 +4,7 @@ const assert = require("assert"), fs = require("fs"), path = require("path");
 const Areas = require("../areas.js");
 const sec = Areas.porId("direitos").secoes[0];
 assert.strictEqual(sec.titulo, "Separação, pensão e guarda");
-const card = sec.canais[0];
+const card = sec.canais.find((c) => /^Defensoria Pública/.test(c.nome));
 assert(card && card.tel === "0800 773 4340" && !card.sem_tel && card.topicos.length >= 8, "o cartão traz o telefone e o passo a passo");
 assert(/^https:\/\/www\.defensoria\.sp\.def\.br\//.test(card.fonte[1]) && /15\/10\/2026/.test(card.fonte[2]) && /Instagram|conta oficial/.test(card.fonte[2]), "fonte oficial, data e a conta oficial que traz o telefone");
 assert(/não diz se o seu caso será atendido/.test(card.aviso) && /confirme/.test(card.aviso), "aviso: não decide o caso e manda confirmar");

@@ -65,6 +65,11 @@
         /\bfamilia renda\b/.test(t)) {
       extra.push("assistencia social cras beneficios cadastro unico tarifa social contas renda familia");
     }
+    /* "Benefício" é como muita gente chama o Bolsa Família e os outros programas: o caminho é o Cadastro Único, no CRAS. */
+    /* Fora desta ponte: benefício do INSS (negado, aposentadoria), que é assunto de Direitos. */
+    if (/\b(?:beneficios?|auxilio do governo|ajuda do governo|programa social|programas sociais)\b/.test(t) && !/\b(?:inss|negad[ao]|indeferid[ao]|aposentadoria|previdencia\w*)\b/.test(t)) {
+      extra.push("cadastro unico bolsa familia beneficio assistencia social");
+    }
     /* Cuidadora sobrecarregada: apoio emocional e convivência, não silêncio. */
     if (/\b(?:cansad[ao]|esgotad[ao]|exaust[ao]|sobrecarregad[ao]|estressad[ao]|sem folga)\b/.test(t)) {
       extra.push("saude mental apoio psicologico cras convivencia familia");

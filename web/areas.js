@@ -277,6 +277,19 @@
           titulo: "Separação, pensão e guarda",
           tipos: [],
           canais: [
+            { nome: "Pensão alimentícia: como pedir e o que levar", sem_tel: true, resumo: "Ver o passo a passo",
+              texto: "Para pedir pensão para um filho ou para um neto que vive com você. A pensão é pedida na Justiça.",
+              topicos: [
+                ["Onde pedir", "O Senado informa que é preciso procurar um advogado ou a Defensoria Pública. A Defensoria é para quem não pode pagar as despesas do processo sem prejudicar o sustento próprio e o da família. O cartão logo abaixo explica como falar com a Defensoria de Rio Claro."],
+                ["Quem comparece", "Se quem vai receber a pensão tem mais de 18 anos, é a própria pessoa. Se é menor de idade, é quem tem a guarda. Se a pessoa está doente ou não pode ir, pode fazer uma procuração para alguém ir no lugar dela."],
+                ["O que levar: se quem vai receber é menor de 18 anos", "Certidão de nascimento da criança ou do adolescente. RG, CPF e comprovante de residência de quem é responsável por ela. O endereço de casa ou do trabalho de quem deve pagar a pensão."],
+                ["O que levar: se quem vai receber tem mais de 18 anos", "RG, CPF e comprovante de residência de quem vai pedir a pensão, e o endereço de casa ou do trabalho de quem deve pagar."],
+                ["Se o pai não consta na certidão de nascimento", "O Senado informa que é preciso que o nome do pai conste da certidão e que, se não constar, é necessário propor uma ação de investigação de paternidade. A Defensoria ou o advogado explica como. Pergunte a eles se há outro caminho no seu caso."],
+                ["Se você cria os netos e não tem a guarda", "O Senado informa que, quando quem recebe a pensão é menor de idade, quem comparece é quem tem a guarda. Procure a Defensoria para avaliar como regularizar a guarda e pedir a pensão."],
+                ["Uma lei nova, que ainda não vale", "A Lei nº 15.479/2026, conhecida como Lei do Pix Pensão, prevê que a pensão seja descontada automaticamente da conta de quem deve pagar e passada para a conta de quem recebe, por determinação da Justiça. Ela só entra em vigor em julho de 2027."]
+              ],
+              aviso: "A orientação sobre como pedir e quais documentos levar vem de um texto do Senado Federal de 04/09/2012: leis e procedimentos podem ter mudado, então confirme na Defensoria ou com o advogado. Este texto não diz qual será o valor da pensão nem o que a Justiça vai decidir.",
+              fonte: ["Senado Federal (Agência Senado e Rádio Senado)", "https://www12.senado.leg.br/noticias/especiais/especial-cidadania/pensao-alimenticia-atende-necessidades-basicas-e-padrao-de-vida/como-fazer-para-pedir-pensao-alimenticia", "“Como fazer para pedir pensão alimentícia” (04/09/2012) e “Nova lei cria transferência automática da pensão alimentícia” (30/07/2026), impressas em 15/10/2026"] },
             { nome: "Defensoria Pública: como pedir ajuda jurídica gratuita (pensão, guarda, reconhecimento do pai)", tel: "0800 773 4340", resumo: "Ver o passo a passo",
               texto: "Para quem não pode pagar advogado. Vale para pedir pensão, regularizar a guarda de um filho ou de um neto e tratar do reconhecimento do pai.",
               topicos: [
@@ -293,7 +306,9 @@
               fonte: ["Defensoria Pública do Estado de São Paulo", "https://www.defensoria.sp.def.br/", "notícia de 26/06/2025, página “Agende seu atendimento” e postagem da conta oficial da Defensoria (abril de 2026), impressas em 11/10 e 15/10/2026"] }
           ],
           links: [
-            ["Defensoria Pública do Estado de São Paulo", "https://www.defensoria.sp.def.br/", "Canais oficiais de orientação jurídica e critérios de atendimento."]
+            ["Defensoria Pública do Estado de São Paulo", "https://www.defensoria.sp.def.br/", "Canais oficiais de orientação jurídica e critérios de atendimento."],
+            ["Como fazer para pedir pensão alimentícia — Senado Federal", "https://www12.senado.leg.br/noticias/especiais/especial-cidadania/pensao-alimenticia-atende-necessidades-basicas-e-padrao-de-vida/como-fazer-para-pedir-pensao-alimenticia", "Onde pedir, quem comparece e quais documentos levar (texto de 2012)."],
+            ["Nova lei cria transferência automática da pensão alimentícia — Rádio Senado", "https://www12.senado.leg.br/radio/1/noticia/2026/07/30/nova-lei-cria-transferencia-automatica-da-pensao-alimenticia", "A Lei do Pix Pensão (Lei nº 15.479/2026), que entra em vigor em julho de 2027."]
           ]
         },
         {
