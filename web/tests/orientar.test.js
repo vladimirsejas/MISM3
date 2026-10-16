@@ -36,6 +36,10 @@ const necessidadesCriancas = R("a pensão não dá para as necessidades dos pequ
 assert(!necessidadesCriancas.abstem && areas(necessidadesCriancas).includes("assistencia"), "necessidades das crianças sob cuidado devem levar à assistência");
 const rendaInsuficiente = R("estou cuidando das crianças e a renda não alcança para as necessidades delas");
 assert(!rendaInsuficiente.abstem && areas(rendaInsuficiente).includes("assistencia"), "renda insuficiente e cuidado infantil devem levar à assistência");
+const pequenosDependem = R("os pequenos dependem de mim e preciso de apoio no CRAS");
+assert(!pequenosDependem.abstem && areas(pequenosDependem).includes("assistencia"), "dependência das crianças e pedido de apoio não devem ser descartados");
+const semRecursos = R("estou cuidando das crianças e não tenho recursos para as despesas básicas");
+assert(!semRecursos.abstem && areas(semRecursos).includes("assistencia"), "falta de recursos em contexto de cuidado deve levar à assistência");
 
 assert(areas(R("presiso de advogdo de graça")).slice(0, 3).includes("direitos"), "tolera erro de digitação");
 assert(areas(R("upa mais proxima")).slice(0, 3).includes("saude"));
