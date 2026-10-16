@@ -45,6 +45,8 @@ jobs:
       - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva19.json
       # Reserva 20: baseline antes de encurtar o tópico e reduzir efeitos colaterais no índice.
       - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva20.json
+      # Reserva 21: validação independente do tópico CadÚnico encurtado.
+      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva21.json
       # Temporário: compara falhas específicas antes/depois de regenerar o índice; remover após diagnóstico.
       - name: Comparar falhas específicas antes/depois do tópico CadÚnico
         run: |
