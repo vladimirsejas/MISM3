@@ -25,10 +25,11 @@ assert(/ainda não conferido, confirme no CRAS/.test(topicoAvo[1]), "o tópico e
 
 const tudo = JSON.stringify(sec);
 assert(/BPC/.test(tudo) && /135/.test(tudo) && /não precisa de intermediário/.test(tudo), "o BPC é explicado: INSS, 135 ou Meu INSS, sem intermediário");
-assert(!/você (tem|terá) direito|garant|aprovad|vai receber|com certeza/i.test(tudo.replace(/não diz se a família tem direito/g, "")), "o bloco não promete");
+assert(!/você (tem|terá) direito|garant|aprovad|vai receber|com certeza/i.test(tudo.replace(/não diz se a família tem direito/g, "").replace(/não garante/g, "")), "o bloco não promete");
 assert(!/R\$ ?\d/.test(tudo), "nenhum valor monetário de renda");
 assert(!/\b\d{1,2}\s?h\b|\bdas \d{1,2}h/i.test(tudo), "nenhum horário de atendimento: a fonte não traz");
-assert(/de preferência, ser uma mulher da família/.test(tudo) && /outra pessoa da família pode ser a responsável/.test(tudo), "a preferência por mulher é explicada sem excluir ninguém");
+assert(/Responsável Familiar tem pelo menos 16 anos, mora na casa e responde pela entrevista/.test(tudo) && /composição deve refletir quem mora no domicílio e compartilha rendas e despesas/.test(tudo), "quem responde pela família: 16 anos ou mais, mora na casa, e a composição reflete quem divide renda e despesas");
+assert(!/obrigatoriamente (uma )?mulher|só (uma )?mulher pode|apenas (uma )?mulher/i.test(tudo), "o texto não exige que a responsável seja mulher");
 assert(/Não confunda com o Cadu/.test(tudo) && /gratuita/.test(tudo), "separa o Cadu do CadÚnico e diz que a inscrição é gratuita");
 assert(/não é preciso pedir o Bolsa Família|Não é preciso pedir o Bolsa Família/.test(tudo) && /não a Prefeitura/.test(tudo), "separa cadastro de benefício e diz quem seleciona");
 assert(/3522-1930/.test(tudo), "o telefone da Secretaria de Desenvolvimento Social está no bloco");
