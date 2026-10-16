@@ -53,8 +53,21 @@
     return contexto && necessidade;
   }
 
+  /* Uso explícito de cartão/dinheiro sem consentimento: encaminha para Direitos e Assistência, sem classificar como perigo. */
+  function usoFinanceiroSemAutorizacao(t) {
+    var objeto = /\b(?:cartao|conta|dinheiro|beneficio|aposentadoria|pix|saque|saca|transferencia|compras?|senha)\b/.test(t);
+    var semConsentimento = /\b(?:sem autorizacao|sem minha autorizacao|sem consentimento|sem permissao|sem minha permissao|sem eu saber|sem eu deixar|sem pedir|sem me consultar|escondido|nao devolve|nao me deixa usar|nao me presta contas|nao me prestou contas|pega tudo|retira tudo)\b/.test(t);
+    var agenteAcao = /\b(?:filho|filha|neto|neta|sobrinho|sobrinha|parente|familiar|alguem)\b/.test(t) &&
+      /\b(?:pega|pegou|usa|usou|saca|sacou|transfere|transferiu|faz pix|fez pix|retira|retirou|tira|tirou|fica com|ficou com|faz compras|fez compras)\b/.test(t);
+    var consentido = /\b(?:com minha autorizacao|com minha permissao|com meu consentimento|eu autorizei|autorizei|eu deixei|com autorizacao)\b/.test(t);
+    return objeto && !consentido && (semConsentimento || agenteAcao);
+  }
+
   function expandirConsulta(texto) {
     var t = Regras.normalizar(texto), extra = [];
+    if (usoFinanceiroSemAutorizacao(t)) {
+      extra.push("direitos violacao de direitos pessoa idosa creas disque 100 assistencia social protecao financeira cartao dinheiro beneficio");
+    }
     /* "sustento" e "sustentabilidade" têm a mesma raiz de 5 letras ("suste") e a busca levava quem sustenta a casa ao curso de
        Sustentabilidade da Fatec. A palavra é trocada só na consulta (o índice e o Python não mudam). */
     t = t.replace(/\bsusten(?:to|tar|tando|ta|tamos|tei|tou)\b/g, "familia renda");
@@ -260,7 +273,8 @@
       /* Detector de escopo (aprendido): se achar que o assunto é de fora E a busca não achou correspondência forte, é fora do assunto. */
       var pEsc = opcoes.escopo ? opcoes.escopo(texto) : null, limEsc = opcoes.limiarEscopo !== undefined ? opcoes.limiarEscopo : 0.5;
       var contextoAssistenciaFamilia = familiaComNecessidade(t);
-      var foraDeEscopo = !urgente && !contextoAssistenciaFamilia && (melhor < minimo || (dicaT && melhor < minimo + 0.1 && confianca < 0.3) ||
+      var contextoFinanceiroSemAutorizacao = usoFinanceiroSemAutorizacao(t);
+      var foraDeEscopo = !urgente && !contextoAssistenciaFamilia && !contextoFinanceiroSemAutorizacao && (melhor < minimo || (dicaT && melhor < minimo + 0.1 && confianca < 0.3) ||
         (pEsc !== null && pEsc < limEsc && melhor < (opcoes.fortaCorrespondencia !== undefined ? opcoes.fortaCorrespondencia : 0.5)));
       var fix = perigo ? fixados(perigo.pins, pont) : [];
       var vistos = {}, porSvc = {}, escolhidos = [];
