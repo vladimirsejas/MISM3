@@ -20,3 +20,4 @@ jobs:
       - run: python avaliacao/avaliar.py v2 --conjunto todos
       - run: node avaliacao/avaliar_plano.js
       - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva4.json
+      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva5.json
