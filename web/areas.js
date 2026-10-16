@@ -68,6 +68,16 @@
             ],
             aviso: "São perguntas para levar, não regras confirmadas: os critérios e procedimentos de Rio Claro dependem da Secretaria Municipal da Educação.",
             fonte: ["Orientação geral; sem fonte oficial local", null, "a ser confirmada"] },
+          { nome: "Crio meu neto: como pedir a matrícula", sem_tel: true, resumo: "Ver o passo a passo",
+            texto: "Quem cria o neto ou a neta pode procurar a matrícula pelos mesmos caminhos desta seção. O que vale como prova de que a criança mora com você é decidido pela Secretaria Municipal da Educação e pela escola.",
+            topicos: [
+              ["Por onde pedir", "Siga os cartões desta seção: o aplicativo CADU ou a Secretaria Municipal da Educação, pessoalmente. Se precisar de ajuda para preencher, peça na Secretaria."],
+              ["Pergunte o que vale", "Pergunte à Secretaria e à escola o que aceitam quando o neto vive com a avó e não há guarda judicial. A pesquisa indica que pode ser pedido o termo de guarda: confirme com eles antes de assumir que é preciso."],
+              ["Se pedirem a guarda no papel", "Procure a Defensoria Pública (cartão na área Direitos): ela avalia o caso e atende quem não tem condições de pagar."],
+              ["Outras ajudas para quem cria netos", "Moradia, renda, convivência e proteção da avó estão no bloco “Sou avó ou pessoa idosa”, na área Assistência Social."]
+            ],
+            aviso: "A informação sobre documentos vem de pesquisa e não foi conferida em fonte oficial de Rio Claro. Quem informa o que é aceito é a Secretaria Municipal da Educação.",
+            fonte: ["Pesquisa; sem fonte oficial local conferida", null, "a ser confirmada"] },
           { nome: "Cada tipo de escola tem um caminho", sem_tel: true, resumo: "Ver o passo a passo",
             texto: "O pedido de vaga não é o mesmo em todo lugar. Comece pelo caminho da escola que você procura.",
             topicos: [
@@ -334,10 +344,19 @@
     },
     {
       exemploDuvida: "como pagar menos na conta de luz?", id: "moradia", nome: "Moradia", icone: "moradia",
-      intro: "Água, energia e habitação: tarifas sociais, programas e benefícios.",
+      intro: "Água, energia e habitação: tarifas sociais, programas e benefícios. Há um caminho para avós que criam os netos.",
+      guia: {
+        titulo: "O que você encontra nesta página",
+        texto: "Contas mais baratas e o caminho para a casa própria.",
+        itens: [
+          { titulo: "Conta de água e de luz mais barata", texto: "A tarifa social do DAAE (água e esgoto) e o que saber sobre a tarifa social de energia.", ancora: "secao-1", botao: "Ver as tarifas" },
+          { titulo: "Sou avó e crio meus netos: casa própria", texto: "O que o texto oficial pede para provar que o neto faz parte da família, e por onde começar.", ancora: "secao-3", botao: "Ver o caminho da avó" },
+          { titulo: "Casa própria: renda, ordem da fila e o que conta a seu favor", texto: "Os tetos de renda de 2026 e os critérios que a Prefeitura publica. Este site não inscreve nem garante vaga.", ancora: "secao-3", botao: "Ver os critérios" }
+        ]
+      },
       secoes: [
         {
-          titulo: "Água e esgoto — Tarifa Social (DAAE)",
+          titulo: "Água e esgoto — Tarifa Social (DAAE)", ancora: "secao-1",
           tipos: [],
           canais: [
             { nome: "Tarifa Residencial Social de Água e Esgoto — DAAE", sem_tel: true,
@@ -360,7 +379,7 @@
           ]
         },
         {
-          titulo: "Energia elétrica — Tarifa Social (Elektro)",
+          titulo: "Energia elétrica — Tarifa Social (Elektro)", ancora: "secao-2",
           tipos: [],
           canais: [
             { nome: "Elektro — atendimento ao cliente em Rio Claro (energia elétrica)", sem_tel: true,
@@ -374,9 +393,46 @@
           ]
         },
         {
-          titulo: "Habitação",
+          titulo: "Habitação", ancora: "secao-3",
           tipos: [],
+          canais: [
+            { nome: "Sou avó e crio meus netos: casa própria e moradia", sem_tel: true, resumo: "Ver o passo a passo",
+              texto: "Para quem cria neto ou neta e quer entrar na fila da casa própria. O ponto que mais costuma travar é provar que a criança faz parte da sua família. Este cartão mostra o que o texto oficial pede.",
+              topicos: [
+                ["O que o texto oficial pede", "A Portaria MCID nº 738/2024 dá prioridade a famílias com criança ou adolescente, comprovada por certidão de nascimento, de guarda ou de tutela. A certidão de nascimento do seu neto mostra quem são os pais dele, e não mostra você. Por isso, quando não há guarda nem tutela, a prova pode não ficar completa só com a certidão. A Portaria não diz o que a Prefeitura aceita nesse caso."],
+                ["Primeiro passo: pergunte à Secretaria", "Pergunte à Secretaria de Planejamento e Habitação quais documentos ela aceita para provar que o seu neto mora com você e depende de você. Quem decide o que vale é a Secretaria, e não este sistema. Anote o que ela responder e, se puder, peça por escrito."],
+                ["Se falta o documento do neto", "Procure a Defensoria Pública antes de depender dessa prova: ela avalia como regularizar a situação legal do seu neto e atende quem não tem condições de pagar. O cartão “Defensoria Pública” da área Direitos explica quem é atendido, como agendar e o que levar. Regularizar essa situação não garante vaga nem prioridade: só deixa em ordem o documento que a Portaria cita."],
+                ["Fique como responsável no CadÚnico", "A Portaria também dá prioridade à mulher responsável pela unidade familiar, declarada no CadÚnico. Para isso o cadastro precisa estar feito e atualizado. O passo a passo está no primeiro bloco da área Assistência Social. Pergunte no CRAS como registrar os netos que você cria."],
+                ["O que mais pode contar a seu favor", "Pessoa idosa na família é outro critério (a Portaria não informa a idade: confirme). Em caso de empate, a Portaria desempata pela maior idade de quem assina o contrato, e a guarda não entra no desempate. Se você mora com a sua filha e os netos na mesma casa e quer um lugar só seu, isso pode se encaixar em coabitação."],
+                ["Se os pais não ajudam", "O cartão “Pensão alimentícia” da área Direitos explica como pedir a pensão para os netos. No caso de criança, quem comparece é quem tem a guarda."]
+              ],
+              aviso: "Orientação, não decisão: este sistema não sabe quais documentos a Secretaria aceita e não garante vaga, pontuação nem prioridade. Quem confirma é a Secretaria de Planejamento e Habitação. Quando o neto vive com você sem o documento, buscar antes a orientação da Defensoria é o caminho que este projeto recomenda para evitar problemas com a pontuação.",
+              fonte: ["Ministério das Cidades (Portaria MCID nº 738/2024), no PDF da Prefeitura de Rio Claro", "https://rioclaro.sp.gov.br/wp-content/uploads/2025/11/CRITERIOS-DE-ELEGIBILIDADE.pdf", "arts. 9º, 11 e 13 da Portaria, lidos em 16/10/2026; a recomendação sobre a Defensoria é deste projeto"] },
+            { nome: "Casa própria (Minha Casa, Minha Vida): renda, ordem da fila e o que conta a seu favor", sem_tel: true, resumo: "Ver os critérios",
+              texto: "Resumo dos critérios federais que a Prefeitura publica para os empreendimentos habitacionais. Serve para você se preparar e saber o que perguntar na Secretaria de Planejamento e Habitação. Quem confirma inscrição, ordem e documentos é a Prefeitura, não este sistema.",
+              topicos: [
+                ["Teto de renda", "A Portaria MCID nº 333/2026 (Diário Oficial da União de 01/04/2026) fixa a renda bruta familiar mensal, para quem mora em área urbana: Faixa Urbano 1, até R$ 3.200,00; Faixa Urbano 2, de R$ 3.200,01 até R$ 5.000,00; Faixa Urbano 3, de R$ 5.000,01 até R$ 9.600,00. Renda bruta é a de toda a família somada, antes dos descontos. Nos empreendimentos com recursos do FAR, o critério é a Faixa Urbano 1. A Faixa Urbano 2 só vale quando a Prefeitura indica a família diretamente (veja mais abaixo). Os valores são atualizados todo ano: confirme o teto em vigor na Secretaria."],
+                ["O que a lei chama de família", "A Lei nº 11.977/2009 diz que o grupo familiar é formado por uma ou mais pessoas que contribuem para o rendimento da família ou que têm as despesas atendidas por ela, e aceita todas as espécies de família reconhecidas pela lei brasileira, inclusive a de uma pessoa só. A lei fala em despesas atendidas, e não em parentesco. Pela redação, a avó que sustenta os netos se encaixa nessa definição, mas é a Secretaria que decide como registrar a sua família."],
+                ["Quem passa na frente", "A Portaria MCID nº 738/2024 manda a Prefeitura ordenar as famílias que cumprem os requisitos dando preferência a quem se enquadra no maior número destes critérios: mulher responsável pela unidade familiar, declarada no CadÚnico; pessoa negra na família, declarada no CadÚnico; pessoa com deficiência, comprovada por avaliação biopsicossocial; pessoa idosa; criança ou adolescente; pessoa com câncer ou doença rara crônica e degenerativa, com laudo médico; mulher vítima de violência doméstica e familiar, com registro da denúncia no Ministério Público; indígenas e quilombolas, declarados no CadÚnico; moradia em área de risco reconhecida pelo mapeamento oficial ou pela Defesa Civil; e contrato desfeito sem culpa do beneficiário. A Lei nº 11.977/2009 também dá prioridade a famílias com mulher responsável pela unidade familiar e a famílias com pessoa com deficiência."],
+                ["Se há empate", "Quando várias famílias cumprem o mesmo número de critérios e há menos unidades do que famílias, a Portaria manda desempatar pela maior idade do titular do contrato, comprovada por documento civil com data de nascimento."],
+                ["Precisa estar em déficit habitacional", "Além da renda, a família precisa fazer parte do déficit habitacional da cidade, comprovado pelo ateste da Prefeitura e pelas informações de moradia do CadÚnico. A Portaria pede pelo menos uma destas situações: viver em casa precária (parede que não é de alvenaria nem de madeira aparelhada, ou moradia improvisada); coabitação (famílias que moram juntas na mesma casa e querem ter casa só delas, comprovado por autodeclaração); casa alugada com mais de 3 pessoas por dormitório; aluguel que pesa mais de 30% da renda da família, comprovado por contrato ou recibo; aluguel social provisório, comprovado pela Prefeitura; ou situação de rua ou trajetória de rua, que tem regras próprias de atendimento."],
+                ["Se você cria os netos", "Veja o cartão “Sou avó e crio meus netos: casa própria e moradia”, logo acima. Ele trata da prova de que o neto faz parte da família, da guarda e da Defensoria."],
+                ["Contrato no nome da mulher", "A Lei nº 11.977/2009 diz que os contratos e registros do programa são feitos, de preferência, no nome da mulher. Quando a mulher é a responsável pela família, o contrato pode ser assinado sem a assinatura do cônjuge (exceto quando há dinheiro do FGTS). Em separação ou divórcio, o título do imóvel vai para a mulher (exceto com FGTS); se a guarda dos filhos for só do pai, o título vai para ele. Se isso se aplica ao seu caso, confirme com a Defensoria."],
+                ["Indicação direta pela Prefeitura", "A Prefeitura pode indicar famílias sem passar pela ordem da fila nestes casos: perdeu o único imóvel em emergência ou calamidade pública reconhecida pelo governo federal (decretada a partir de 01/01/2023); perdeu o único imóvel por obra pública federal; ou vem de área de risco “alto” ou “muito alto”, limitada a 20% das unidades (30% se a cidade tiver Plano Municipal de Redução de Riscos). Nesses casos o teto de renda é o da Faixa Urbano 2."],
+                ["O que costuma ser pedido", "Os textos citam: documento civil com data de nascimento (pessoa idosa e desempate); certidão de nascimento, de guarda ou de tutela (criança ou adolescente); contrato ou recibo de aluguel (aluguel acima de 30% da renda); laudo médico (câncer ou doença rara); avaliação biopsicossocial (deficiência); e declaração no CadÚnico (mulher responsável, pessoa negra, indígenas e quilombolas). A lista final de documentos é da Prefeitura: peça a lista atual na Secretaria."],
+                ["Se a renda passa do teto da Faixa 1", "A Portaria 333/2026 vai até R$ 13.000,00 de renda bruta familiar mensal. A CAIXA descreve a modalidade Classe Média, para famílias com renda de até R$ 13 mil, como financiamento: casa ou apartamento novo, usado ou na planta, de até R$ 600 mil; entrada mínima de 20% do valor do imóvel (o FGTS pode ser usado como entrada ou nas parcelas); juros nominais de 10% ao ano; prazo de até 35 anos. O passo a passo da CAIXA é: simulação, análise de crédito com a documentação, análise de engenharia do imóvel e assinatura do contrato. Os textos que recebemos não trazem as condições das Faixas Urbano 2 e 3: consulte a CAIXA. Alô CAIXA: 4004 0 104 (capitais e regiões metropolitanas) ou 0800 104 0 104 (demais regiões)."],
+                ["Documentos para pedir financiamento na CAIXA", "Um folheto da CAIXA, criado em maio de 2017, lista os documentos básicos para pedir crédito imobiliário. Quem compra (pessoa física): documento oficial de identificação e comprovante de renda atualizado, emitido há no máximo 2 meses. Para usar o FGTS: última declaração do Imposto de Renda com o recibo de entrega à Receita Federal, e carteira de trabalho ou extrato do FGTS. Do imóvel: certidão atualizada de inteiro teor da matrícula. Quem vende (pessoa física): documento oficial de identificação e comprovante de estado civil. O folheto diz que a CAIXA pode pedir documentos adicionais. Ele tem quase 10 anos: confirme a lista atual com a CAIXA (telefones no tópico anterior). Isto vale para o financiamento pela CAIXA, não para a fila da Prefeitura."],
+                ["O que o PDF da Prefeitura não diz", "O arquivo publicado no site da Prefeitura é a Portaria federal na forma geral. Onde ela deixa a escolha para a cidade, aparece só um “x” (distância até o empreendimento e anos de inscrição no cadastro habitacional). Por ele, não dá para saber se Rio Claro usa esses critérios nem com quais números. Pergunte também se há inscrição aberta e como atualizar o cadastro."]
+              ],
+              aviso: "Resumo de textos oficiais, sem garantia de vaga, de prioridade ou de contemplação. As portarias e a lei podem ter sido alteradas depois: o teto de renda vale desde 01/04/2026 e é atualizado todo ano. A Prefeitura só pede documentos pelos canais oficiais da Secretaria: desconfie de quem cobra para garantir casa.",
+              fonte: ["Ministério das Cidades (Portarias MCID nº 738/2024 e nº 333/2026) e Lei nº 11.977/2009", "https://rioclaro.sp.gov.br/wp-content/uploads/2025/11/CRITERIOS-DE-ELEGIBILIDADE.pdf", "Portaria 738/2024 (PDF no site da Prefeitura); Portaria 333/2026 (Diário Oficial da União de 01/04/2026); Lei 11.977/2009 (texto compilado enviado pelo mantenedor); página da CAIXA “Minha Casa, Minha Vida – Classe Média” (impressa em 16/10/2026) e folheto da CAIXA “Documentação básica para solicitação de Crédito Imobiliário” (arquivo de maio de 2017); lidos em 16/10/2026"] }
+          ],
           links: [
+            ["Critérios de elegibilidade (Portaria MCID 738/2024): PDF da Prefeitura", "https://rioclaro.sp.gov.br/wp-content/uploads/2025/11/CRITERIOS-DE-ELEGIBILIDADE.pdf", "O texto completo da Portaria, como a Prefeitura publica. Foi a fonte do cartão acima."],
+            ["Portaria MCID nº 333/2026: limites de renda do Minha Casa, Minha Vida", "https://www.in.gov.br/web/dou/-/portaria-mcid-n-333-de-30-de-marco-de-2026-697065554", "Publicação oficial (Diário Oficial da União, 01/04/2026) com os tetos de renda das faixas. Os valores são atualizados todo ano."],
+            ["Minha Casa, Minha Vida – Classe Média (CAIXA)", "https://www.caixa.gov.br/voce/habitacao/minha-casa-minha-vida/classe-media/Paginas/default.aspx", "Página da CAIXA sobre o financiamento para renda de até R$ 13 mil, com o passo a passo e os telefones. Não é o programa da fila da Prefeitura: confirme as condições vigentes na CAIXA."],
+            ["Atualização cadastral para programa habitacional: aviso da Prefeitura", "https://rioclaro.sp.gov.br/planejamento-e-habitacao/em-rio-claro-atualizacao-cadastral-para-programa-habitacional-vai-ate-28-de-fevereiro/", "Notícia da Prefeitura sobre a atualização do cadastro habitacional. Veja nela o prazo e como fazer, e confirme na Secretaria se há novo período."],
+            ["Aviso da Prefeitura sobre golpe com moradias do programa habitacional", "https://rioclaro.sp.gov.br/planejamento-e-habitacao/criminosos-aplicam-golpe-oferecendo-moradias-do-programa-habitacional-de-rc/", "A Prefeitura alerta que criminosos oferecem moradias do programa. Leia antes de passar documentos ou dinheiro a alguém."],
             ["Secretaria de Habitação de Rio Claro", "https://rioclaro.sp.gov.br/secretaria/secretaria-de-planejamento-e-habitacao/", "A Prefeitura publica os contatos da secretaria e links para cadastro habitacional e critérios."],
             ["CRAS — Centros de Referência de Assistência Social", "https://rioclaro.sp.gov.br/centro-ref-assistencia-social/", "Orientação sobre benefícios e proteção social."]
           ]
@@ -390,6 +446,15 @@
     {
       exemploDuvida: "estou sem comida em casa", id: "assistencia", nome: "Assistência Social", icone: "assistencia", jornada: "assistencia",
       intro: "CRAS, CREAS, Conselho Tutelar e serviços de convivência de Rio Claro.",
+      guia: {
+        titulo: "O que você encontra nesta página",
+        texto: "Caminhos para pedir ajuda, para você e para a sua família.",
+        itens: [
+          { titulo: "Preciso de ajuda para sustentar minha família", texto: "O Cadastro Único, que é a porta de entrada dos programas do governo: quem pode, o que levar e onde ir.", ancora: "assistencia-cadunico", botao: "Ver o passo a passo" },
+          { titulo: "Sou avó ou pessoa idosa", texto: "Netos que moram comigo, aposentadoria e BPC, convivência para pessoas idosas e onde pedir ajuda se alguém usa o meu cartão.", ancora: "assistencia-avo", botao: "Ver o que existe" },
+          { titulo: "Qual é o meu CRAS?", texto: "Escreva o nome do seu bairro e veja o CRAS que atende você.", ancora: "secao-1", botao: "Achar o meu CRAS" }
+        ]
+      },
       secoes: [
         {
           titulo: "Preciso de ajuda para sustentar minha família: comece pelo Cadastro Único", ancora: "assistencia-cadunico",
@@ -432,6 +497,55 @@
           descricao: "O CRAS é a porta de entrada da assistência social, perto de onde você mora.",
           tipos: ["assistencia"], subtipos: ["cras"], busca: "bairro",
           links: [["CRAS e Centros de Convivência — página oficial", "https://desenvolvimentosocial.rc.sp.gov.br/?page_id=1651", "Lista oficial dos CRAS, dos bairros que cada um atende e dos serviços de convivência."]]
+        },
+        {
+          titulo: "Sou avó ou pessoa idosa: convivência, aposentadoria e proteção", ancora: "assistencia-avo",
+          descricao: "Quem cria os netos ou sustenta a família depois dos 60 também tem caminhos para si. Aqui estão os que as fontes do projeto confirmam e, com aviso, os que ainda precisam ser conferidos.",
+          tipos: [],
+          canais: [
+            { nome: "Netos que moram comigo: escola, atendimento e documentos", sem_tel: true, resumo: "Ver o passo a passo",
+              texto: "Guarda, escola e atendimento de saúde são assuntos diferentes, e cada lugar tem as suas regras. Pergunte em cada um o que aceitam, antes de assumir que é preciso um documento da Justiça.",
+              topicos: [
+                ["Escola", "Para a matrícula, veja o cartão “Crio meu neto” na área Educação. A Secretaria Municipal da Educação e a escola dizem o que aceitam."],
+                ["Atendimento de saúde do neto", "Pergunte no local de atendimento o que aceitam quando quem leva a criança é a avó. Os endereços e os telefones estão na área Saúde."],
+                ["Quem responde legalmente pela criança", "Se a escola ou outro lugar pedir a guarda, procure a Defensoria Pública. Ela avalia o caso e atende quem não tem condições de pagar. O cartão está na área Direitos."],
+                ["Pensão e casa própria", "Para pedir pensão aos pais, veja o cartão “Pensão alimentícia” na área Direitos. Para a fila da casa própria, veja “Sou avó e crio meus netos” na área Moradia."]
+              ],
+              aviso: "Orientação do projeto, não decisão: este sistema não sabe o que cada escola ou unidade de saúde aceita. Quem confirma é o próprio lugar.",
+              fonte: ["Plano de conteúdo do projeto (item P5) e cartões deste site", null, "orientação; sem fonte oficial local sobre o que cada serviço aceita"] },
+            { nome: "Aposentadoria, BPC e a renda da casa", sem_tel: true, resumo: "Ver o que é cada coisa",
+              texto: "Aposentadoria e BPC são coisas diferentes, com regras e lugares de pedido diferentes. Este site não decide quem recebe cada um deles.",
+              topicos: [
+                ["Comece pelo Cadastro Único", "Para os programas do governo, o começo costuma ser o Cadastro Único, feito no CRAS, sem custo. O passo a passo está no primeiro bloco desta área."],
+                ["BPC, para quem tem 65 anos ou mais", "O BPC é outro benefício, para quem tem 65 anos ou mais ou tem deficiência. Depois do CadÚnico, ele é pedido ao INSS, pelo telefone 135 ou pelo aplicativo Meu INSS, sem custo e sem intermediário. As regras estão no gov.br."],
+                ["Aposentadoria", "A simulação do Meu INSS é só uma projeção: não garante o benefício. Ela está na área Direitos, em “Aposentadoria e dívidas”."],
+                ["Conta de água mais barata", "O DAAE tem tarifa social para família inscrita no CadÚnico e para família com pessoa idosa de 65 anos ou mais que receba o BPC. O cartão está na área Moradia."],
+                ["O que este site não diz", "Se ter netos em casa ou receber aposentadoria muda o direito a um benefício. Cada programa tem as suas regras, e quem decide é o programa: pergunte no CRAS."]
+              ],
+              aviso: "Resumo de textos já usados em outros blocos deste site. Valores, regras de renda e prazos mudam: confirme no CRAS, no INSS e no gov.br.",
+              fonte: ["Blocos “Cadastro Único e Bolsa Família”, “Aposentadoria e dívidas” e “Água e esgoto” deste site", null, "informativo do DAAE e páginas oficiais já citadas nesses blocos"] },
+            { nome: "Convivência, curso e apoio para pessoas idosas", sem_tel: true, resumo: "Ver o que existe",
+              texto: "Quem passa o dia com a casa e com os netos também precisa de convivência e de apoio.",
+              topicos: [
+                ["Convivência para pessoas idosas (65 anos ou mais)", "Cinco CRAS oferecem convivência para pessoas idosas, e há duas unidades parceiras: o Centro de Convivência do Idoso (Abrigo São Vicente de Paulo) e o grupo Protagonistas da Vida (UDAM). A lista com endereço e telefone está na seção “Convivência e apoio”, mais abaixo. O horário não consta na fonte: ligue antes de ir."],
+                ["Curso de cuidador de idosos (não conferido)", "Um resumo de notícia da Prefeitura diz que o Fundo Social formou 20 cuidadores de idosos em um curso gratuito de 80 horas, com inscrição pelo Cadu. A página não foi aberta e não sabemos se há nova turma: pergunte ao Fundo Social. Pode ser um caminho de renda para quem já cuida."],
+                ["Centro Dia do Idoso (não conferido)", "Um resumo de notícia da Prefeitura diz que o Centro Dia do Idoso tem 60 vagas para idosos semidependentes e que uma segunda unidade foi anunciada, sem abertura confirmada. A página não foi aberta: pergunte no CRAS como pedir vaga."],
+                ["Se você está esgotada", "Ficar sozinha com tudo cansa. O CVV, no 188, conversa com quem está sofrendo, 24 horas por dia. As unidades de saúde estão na área Saúde."]
+              ],
+              aviso: "O curso e o Centro Dia vêm de resumos de notícia, sem a página aberta: confirme com o Fundo Social e com o CRAS antes de ir. A convivência vem do cadastro dos CRAS e das unidades.",
+              fonte: ["Prefeitura de Rio Claro: cadastro dos CRAS e das unidades de convivência; resumos de notícias do Fundo Social e do Centro Dia", "https://rioclaro.sp.gov.br/secretaria/fundo-social-de-solidariedade/", "convivência: página dos CRAS impressa em 10/10/2026; curso e Centro Dia: resumos de busca, não conferidos"] },
+            { nome: "Alguém usa meu cartão ou minha aposentadoria sem eu querer", sem_tel: true, resumo: "Ver onde pedir ajuda",
+              texto: "Se alguém fica com o seu cartão ou com o seu dinheiro contra a sua vontade, você pode pedir ajuda. Veja os canais abaixo.",
+              topicos: [
+                ["Disque 100", "Recebe denúncias de violações de direitos de pessoas idosas, 24 horas por dia, todos os dias. A ligação é gratuita, de qualquer telefone, fixo ou celular. Qualquer pessoa pode relatar, seja a vítima ou quem conhece o caso. A página oficial não lista tipos de violação: o serviço avalia o que fazer."],
+                ["Orientação jurídica", "A Defensoria Pública atende quem não tem condições de pagar. Pergunte a ela o que fazer. O cartão está na área Direitos."],
+                ["Perigo agora", "Se há ameaça ou agressão em andamento, ligue 190 (Polícia Militar)."],
+                ["Antes de ligar", "Se puder, anote datas, valores e quem usou o cartão. Não passe dados de acesso a ninguém que diga ser do banco ou do INSS."]
+              ],
+              aviso: "Este site não diz se o que aconteceu com você é uma violação nem o que será decidido. Quem avalia é o serviço que você procurar.",
+              fonte: ["gov.br: Denunciar violação de direitos humanos (Disque 100)", "https://www.gov.br/pt-br/servicos/denunciar-violacao-de-direitos-humanos", "última modificação 15/12/2025; página impressa em 10/10/2026"] }
+          ],
+          links: []
         },
         {
           titulo: "Proteção e denúncia", ancora: "secao-2",
