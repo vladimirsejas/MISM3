@@ -1,0 +1,248 @@
+{
+  "meta": {
+    "escrito_em": "2026-10-16",
+    "autor": "equipe (assistente)",
+    "aviso": "Sétimo conjunto reservado antes de qualquer correção da ponte lexical. Conjunto independente de frases sintéticas, não coletadas de mulheres reais. Não usar para treino nem ajustar regras/modelos após consultar resultados.",
+    "campos": "mesmos de perfis.json"
+  },
+  "frases": [
+    {
+      "id": "r7av1",
+      "perfil": "avo",
+      "texto": "virei responsável pelos meus netos e meu dinheiro não cobre nem o básico",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r7av2",
+      "perfil": "avo",
+      "texto": "sou avó e estou bancando a criação das crianças com uma aposentadoria pequena",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r7av3",
+      "perfil": "avo",
+      "texto": "meus netos dependem de mim e estou faltando comida em casa",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r7av4",
+      "perfil": "avo",
+      "texto": "crio meus netos e não tenho como pagar as despesas do mês",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia",
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r7av5",
+      "perfil": "avo",
+      "texto": "estou criando as crianças da minha filha e preciso de orientação social",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r7av6",
+      "perfil": "avo",
+      "texto": "a pensão que recebo não sustenta a mim e aos meus netos",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r7av7",
+      "perfil": "avo",
+      "texto": "meus netinhos ficam comigo e não consigo comprar tudo que precisam",
+      "principal": "assistencia",
+      "aceita": [
+        "educacao"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r7av8",
+      "perfil": "avo",
+      "texto": "cuido dos netos todo dia e estou sem dinheiro para mercado",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r7av9",
+      "perfil": "avo",
+      "texto": "me aposentei mas agora tenho duas crianças para criar",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r7av10",
+      "perfil": "avo",
+      "texto": "minha renda é só a aposentadoria e moro com os netos",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r7av11",
+      "perfil": "avo",
+      "texto": "estou sustentando meus netos e a geladeira está vazia",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r7av12",
+      "perfil": "avo",
+      "texto": "fiquei com a guarda de fato dos netos e preciso de ajuda para manter a casa",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos",
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r7av13",
+      "perfil": "avo",
+      "texto": "não sobra da minha aposentadoria depois que pago as coisas dos netos",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r7av14",
+      "perfil": "avo",
+      "texto": "minhas netas moram comigo e quero saber como buscar apoio no CRAS",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r7av15",
+      "perfil": "avo",
+      "texto": "estou alimentando meus netos com o pouco que recebo por mês",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r7av16",
+      "perfil": "avo",
+      "texto": "sou vó, cuido dos pequenos e não estou conseguindo fechar as contas",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r7av17",
+      "perfil": "avo",
+      "texto": "quero voltar a trabalhar porque agora sustento meus netos também",
+      "principal": "trabalho",
+      "aceita": [
+        "assistencia"
+      ],
+      "precisa": [
+        "trabalho"
+      ]
+    },
+    {
+      "id": "r7av18",
+      "perfil": "avo",
+      "texto": "preciso de vaga de creche para conseguir trabalhar e cuidar dos meus netos",
+      "principal": "educacao",
+      "aceita": [
+        "trabalho"
+      ],
+      "precisa": [
+        "educacao",
+        "trabalho"
+      ]
+    },
+    {
+      "id": "r7lim1",
+      "perfil": "avo",
+      "texto": "o INSS negou minha aposentadoria e quero saber como contestar",
+      "principal": "direitos",
+      "aceita": [],
+      "precisa": [
+        "direitos"
+      ]
+    },
+    {
+      "id": "r7lim2",
+      "perfil": "limite",
+      "texto": "quero uma receita de bolo de cenoura para o aniversário do meu neto",
+      "principal": null,
+      "aceita": [],
+      "precisa": [],
+      "fora": true
+    }
+  ]
+}
