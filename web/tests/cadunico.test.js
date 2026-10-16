@@ -12,7 +12,7 @@ assert(area.secoes[1].busca === "bairro", "a busca por bairro continua na seçã
 
 const card = sec.canais[0];
 assert(card && card.sem_tel === true && card.topicos.length >= 10, "um cartão com o passo a passo completo");
-assert(card.fonte && /^https:\/\//.test(card.fonte[1]) && /15\/10\/2026/.test(card.fonte[2]), "o cartão traz fonte oficial e a data da leitura");
+assert(card.fonte && /^https:\/\//.test(card.fonte[1]) && /16\/10\/2026/.test(card.fonte[2]), "o cartão traz fonte oficial e a data da leitura");
 assert(card.aviso && /ainda não conferiu/.test(card.aviso) && /ligue antes/.test(card.aviso) && /não diz se a família tem direito/.test(card.aviso), "aviso: não conferido, ligue antes, não decide direito");
 
 const titulos = card.topicos.map((t) => t[0]).join(" | ");
