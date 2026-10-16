@@ -57,7 +57,7 @@
       extra.push("moradia despejo aluguel social");
     }
     /* Dívidas: levam a Direitos (Procon, superendividamento). Antes "empréstimo" casava com o crédito do Banco do Povo. */
-    if (/\b(?:endividad[ao]s?|devendo|divida|dividas|nome sujo|negativad[ao]|no vermelho|superendivid\w*|cartao estourado|cartao atrasado)\b/.test(t)) {
+    if (/\b(?:endividad[ao]s?|devendo(?! (?:a |o |de |da )?(?:conta|luz|agua|aluguel))|divida|dividas|nome sujo|negativad[ao]|no vermelho|superendivid\w*|cartao estourado|cartao atrasado)\b/.test(t)) {
       extra.push("dividas superendividamento procon");
     }
     /* Sustento da casa e dinheiro que não fecha: o CRAS é a porta (CadÚnico, benefícios, tarifa social). */

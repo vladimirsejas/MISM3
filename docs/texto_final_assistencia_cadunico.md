@@ -1,6 +1,6 @@
 # Texto final para a área Assistência Social: Cadastro Único e Bolsa Família
 
-Pronto para a próxima fase (colocar no site). **Nada disto está no site ainda e nenhum código foi alterado.** Escrito em 16/10/2026, a partir de `docs/proposta_conteudo_mulheres_prioritarias.md` (seção 9, versão 2), em linguagem curta, na ordem em que a mulher dá os passos.
+**Status: implementado em 16/10/2026** em `web/areas.js` (bloco `assistencia-cadunico`), com o aviso de urgência acrescentado no topo (decisão posterior a este texto: o cadastro leva dias e não resolve a fome de hoje) e o tópico "Não confunda com o Cadu". O texto abaixo é a versão que deu origem à implementação. Escrito em 16/10/2026, a partir de `docs/proposta_conteudo_mulheres_prioritarias.md` (seção 9, versão 2), em linguagem curta, na ordem em que a mulher dá os passos.
 
 ## Como cada parte entra (regra do projeto: fonte, data e aviso)
 

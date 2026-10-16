@@ -74,6 +74,7 @@ VOCABULARIO_SECOES: dict[str, str] = {
     "moradia/secao-2": "luz conta de luz energia eletrica elektro tarifa social desconto cortaram a luz conta alta",
     "moradia/secao-3": "habitacao casa propria moradia popular cadastro habitacional minha casa minha vida aluguel aluguel social despejo despejada morar sem casa sem teto lugar para morar moro de favor",
     "assistencia/secao-1": "cras assistencia comida fome cesta basica sem renda beneficio bolsa familia cadunico documentos certidao registro civil segunda via ajuda financeira",
+    "assistencia/assistencia-cadunico": "cadastro unico cadunico bolsa familia beneficio bpc renda da familia ajuda do governo programa social como me cadastro documentos para o cadastro responsavel pela familia sustentar a familia sustento da casa contas sem renda sem dinheiro passo a passo",
     "assistencia/secao-2": "denuncia violacao de direitos crianca adolescente maus tratos abuso negligencia abandono creas conselho tutelar disque 100",
     "assistencia/secao-3": "convivencia contraturno idoso criancas atividades deficiencia apae",
     "saude/saude-familia-drogas": "drogas alcool bebe bebado alcoolatra viciado vicio crack maconha cocaina dependente quimico dependencia familia de dependente grupo de apoio narcoticos anonimos alcoolicos anonimos amor exigente parar de beber parar de usar caps ad",
