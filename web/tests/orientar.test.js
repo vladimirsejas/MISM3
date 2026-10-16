@@ -27,6 +27,9 @@ assert(areas(R("minha filha deixou os pequenos aqui em casa e preciso de apoio s
 assert(areas(R("o INSS recusou meu pedido de aposentadoria e quero recorrer")).slice(0, 3).includes("direitos"), "contestação de aposentadoria negada continua em Direitos");
 assert.strictEqual(areas(R("minhas netas moram comigo e falta dinheiro para alimentação"))[0], "assistencia", "variação feminina netas também deve levar à assistência");
 assert(areas(R("minha pensão não dá para alimentar as crianças que estão sob meus cuidados")).slice(0, 3).includes("assistencia"), "pensão insuficiente e crianças sob cuidado devem mostrar assistência");
+assert.strictEqual(areas(R("minha aposentadoria mal cobre o mercado e o gás para os netinhos"))[0], "assistencia", "despesas de mercado e gás para netos priorizam assistência");
+const familiaSemSilencio = R("sou responsável pelos pequenos e falta dinheiro para pagar as contas");
+assert(!familiaSemSilencio.abstem && areas(familiaSemSilencio).includes("assistencia"), "necessidade familiar explícita não deve ser descartada como fora do escopo");
 
 assert(areas(R("presiso de advogdo de graça")).slice(0, 3).includes("direitos"), "tolera erro de digitação");
 assert(areas(R("upa mais proxima")).slice(0, 3).includes("saude"));
