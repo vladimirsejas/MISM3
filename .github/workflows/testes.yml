@@ -35,3 +35,5 @@ jobs:
       - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva11.json
       # Reserva 12: validação independiente del vocabulario de necesidades familiares.
       - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva12.json
+      # Reserva 13: validação independente da linguagem de renda e cuidado.
+      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva13.json
