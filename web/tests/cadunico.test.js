@@ -25,7 +25,7 @@ assert(/ainda não conferido, confirme no CRAS/.test(topicoAvo[1]), "o tópico e
 
 const tudo = JSON.stringify(sec);
 assert(/BPC/.test(tudo) && /135/.test(tudo) && /não precisa de intermediário/.test(tudo), "o BPC é explicado: INSS, 135 ou Meu INSS, sem intermediário");
-assert(!/você (tem|terá) direito|garant|aprovad|vai receber|com certeza/i.test(tudo.replace(/não diz se a família tem direito/g, "").replace(/não garante/g, "")), "o bloco não promete");
+assert(!/você (tem|terá) direito|garant|aprovad|vai receber|com certeza/i.test(tudo.replace(/não diz se a família tem direito/g, "").replace(/não garante/g, "")), "o bloco não promete (dizer que o cadastro NÃO garante benefício é o aviso contra a promessa)");
 assert(!/R\$ ?\d/.test(tudo), "nenhum valor monetário de renda");
 assert(!/\b\d{1,2}\s?h\b|\bdas \d{1,2}h/i.test(tudo), "nenhum horário de atendimento: a fonte não traz");
 assert(/Responsável Familiar tem pelo menos 16 anos, mora na casa e responde pela entrevista/.test(tudo) && /composição deve refletir quem mora no domicílio e compartilha rendas e despesas/.test(tudo), "quem responde pela família: 16 anos ou mais, mora na casa, e a composição reflete quem divide renda e despesas");

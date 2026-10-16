@@ -47,3 +47,9 @@ jobs:
       - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva20.json
       # Reserva 21: validação independente do tópico CadÚnico encurtado.
       - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva21.json
+      # Reserva 15: baseline antes de corrigir uso não autorizado de cartão/dinheiro.
+      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva15.json
+      # Reserva 16: conjunto independente para conferir o encaminhamento final.
+      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva16.json
+      # Reserva 17: validação independente com rótulos alinhados aos destinos sociais existentes.
+      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva17.json
