@@ -31,3 +31,5 @@ jobs:
       - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva9.json
       # Reserva 10: validação final independente após a correção de escopo.
       - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva10.json
+      # Reserva 11: validação independente da linguagem de responsabilidade familiar.
+      - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva11.json
