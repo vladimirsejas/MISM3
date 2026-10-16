@@ -1,5 +1,5 @@
-/* Bloco "Cadastro Único e Bolsa Família" da área Assistência Social (texto final de docs/texto_final_assistencia_cadunico.md).
-   Confere: é o primeiro bloco, tem fonte e aviso, só cita páginas oficiais, não promete, não diz valor de renda nem horário. */
+/* Bloco "Cadastro Único e Bolsa Família" da área Assistência Social.
+   Confere: primeiro bloco, fonte e aviso, páginas oficiais, sem promessa, valor monetário ou horário não confirmado. */
 const assert = require("assert");
 const Areas = require("../areas.js");
 
@@ -12,18 +12,21 @@ assert(area.secoes[1].busca === "bairro", "a busca por bairro continua na seçã
 
 const card = sec.canais[0];
 assert(card && card.sem_tel === true && card.topicos.length >= 10, "um cartão com o passo a passo completo");
-assert(card.fonte && /^https:\/\//.test(card.fonte[1]) && /15\/10\/2026/.test(card.fonte[2]), "o cartão traz fonte oficial e a data da leitura");
+assert(card.fonte && /^https:\/\//.test(card.fonte[1]) && /16\/10\/2026/.test(card.fonte[2]), "o cartão traz fonte oficial e a data da leitura");
 assert(card.aviso && /ainda não conferiu/.test(card.aviso) && /ligue antes/.test(card.aviso) && /não diz se a família tem direito/.test(card.aviso), "aviso: não conferido, ligue antes, não decide direito");
 
 const titulos = card.topicos.map((t) => t[0]).join(" | ");
-["urgente", "O que é o Cadastro Único", "Cadu", "Quem pode se cadastrar", "Quem da família deve ir", "Onde ir", "O que levar", "Depois do atendimento", "Bolsa Família", "65 anos", "Se não conseguir atendimento", "Cuidado"].forEach((t) =>
+["urgente", "O que é o Cadastro Único", "Cadu", "Quem pode se cadastrar", "Quem da família deve ir", "Onde ir", "O que levar", "Se você sustenta seus netos", "Depois do atendimento", "Bolsa Família", "65 anos", "Se não conseguir atendimento", "Cuidado"].forEach((t) =>
   assert(titulos.includes(t), "falta o tópico: " + t));
 assert.strictEqual(card.topicos[0][0], "Se a situação é urgente hoje", "o aviso de urgência vem primeiro: o cadastro leva dias e não resolve a fome de hoje");
+const topicoAvo = card.topicos.find((t) => /sustenta seus netos/.test(t[0]));
+assert(topicoAvo && /aposentadoria/.test(topicoAvo[1]) && /quem mora/.test(topicoAvo[1]), "o tópico orienta avós a declarar a situação real da família");
+assert(/ainda não conferido, confirme no CRAS/.test(topicoAvo[1]), "o tópico específico mantém aviso enquanto a fonte não estiver arquivada em PDF");
 
 const tudo = JSON.stringify(sec);
 assert(/BPC/.test(tudo) && /135/.test(tudo) && /não precisa de intermediário/.test(tudo), "o BPC é explicado: INSS, 135 ou Meu INSS, sem intermediário");
-assert(!/você (tem|terá) direito|garant|aprovad|vai receber|com certeza/i.test(tudo.replace(/não diz se a família tem direito/g, "")), "o bloco não promete");
-assert(!/R\$ ?\d/.test(tudo), "nenhum valor de renda: o limite do Bolsa Família muda e vale o gov.br");
+assert(!/você (tem|terá) direito|garant|aprovad|vai receber|com certeza/i.test(tudo.replace(/não diz se a família tem direito/g, "").replace(/não garante benefício/g, "")), "o bloco não promete (dizer que o cadastro NÃO garante benefício é o aviso contra a promessa)");
+assert(!/R\$ ?\d/.test(tudo), "nenhum valor monetário de renda");
 assert(!/\b\d{1,2}\s?h\b|\bdas \d{1,2}h/i.test(tudo), "nenhum horário de atendimento: a fonte não traz");
 assert(/de preferência, ser uma mulher da família/.test(tudo) && /outra pessoa da família pode ser a responsável/.test(tudo), "a preferência por mulher é explicada sem excluir ninguém");
 assert(/Não confunda com o Cadu/.test(tudo) && /gratuita/.test(tudo), "separa o Cadu do CadÚnico e diz que a inscrição é gratuita");
@@ -33,6 +36,7 @@ assert(/3522-1930/.test(tudo), "o telefone da Secretaria de Desenvolvimento Soci
 /* Só páginas oficiais: Prefeitura de Rio Claro e gov.br. */
 sec.links.forEach((l) => assert(/^https:\/\/(desenvolvimentosocial\.rc\.sp\.gov\.br|rioclaro\.sp\.gov\.br|www\.gov\.br)\//.test(l[1]), "link fora das páginas oficiais: " + l[1]));
 assert(sec.links.some((l) => /gov\.br\/pt-br\/servicos\/inscrever-se/.test(l[1])) && sec.links.some((l) => /page_id=3366/.test(l[1])), "traz a página municipal e a federal do cadastro");
+assert(sec.links.some((l) => /gov\.br\/mds\/pt-br\/acoes-e-programas\/cadastro-unico\/perguntas-frequentes-cadastro-unico/.test(l[1])), "traz FAQ oficial do MDS sobre composição familiar");
 assert(!/utm_|chatgpt/i.test(tudo), "sem parâmetros de rastreamento nos links");
 
 /* A pendência fica declarada enquanto as páginas não estiverem arquivadas. */
