@@ -48,10 +48,45 @@
       (s.aviso ? " <strong class=\"aviso-nao-conferido\">" + esc(s.aviso) + "</strong>" : "") +
       (s.fonte_url ? ' <a href="' + esc(s.fonte_url) + '" ' + 'target="_blank" rel="noopener noreferrer">Fonte oficial</a>' : "") + "</li>";
   }
+  function htmlRendaImediata() {
+    return '<section class="secao renda-imediata" id="renda-imediata" aria-labelledby="titulo-renda-imediata">' +
+      '<h3 id="titulo-renda-imediata">Trabalhos pontuais e quanto sobra</h3>' +
+      '<p>Comece por trabalhos pontuais perto de casa. Confirme pagamento, horário e transporte antes de aceitar. A disponibilidade varia: esta lista não é promessa de vaga.</p>' +
+      '<h4>Onde procurar primeiro</h4>' +
+      '<ul>' +
+      '<li><strong>Buffets infantis e festas:</strong> recepção, servir convidados, ajudar a montar mesas, recolher pratos, lavar louça e organizar o salão. Buffets e espaços de festa podem precisar de reforço temporário em fins de semana; pergunte diretamente como se candidatar e quando pagam.</li>' +
+      '<li><strong>Bares, lanchonetes e pizzarias:</strong> apoio na cozinha, lavagem de louça, montagem de pedidos e limpeza no fechamento.</li>' +
+      '<li><strong>Feiras e comércio de bairro:</strong> ajudar na montagem ou desmontagem, limpeza, reposição e organização; combine previamente se o pagamento será em dinheiro ou outra forma.</li>' +
+      '<li><strong>Serviços perto de casa:</strong> faxina, organização de armários, quintais e limpeza pós-obra; passar roupa e pequenos consertos de costura, como botões e barras.</li>' +
+      '<li><strong>Apoio comunitário:</strong> acompanhar pessoa idosa em compras ou consultas, ou ajudar uma família com trajeto escolar de criança, sempre com acordo claro e referências de confiança.</li>' +
+      '<li><strong>Comida por encomenda:</strong> bolos simples, doces ou marmitas somente após confirmar o pedido e combinar sinal suficiente para comprar os ingredientes. Não produza estoque nem pegue empréstimo para começar.</li>' +
+      '<li><strong>Pequenos reparos:</strong> só ofereça tarefas que você realmente sabe fazer, com ferramentas adequadas e segurança; não aceite serviço elétrico ou perigoso sem qualificação.</li>' +
+      '</ul>' +
+      '<h4>Quanto sobra de verdade?</h4>' +
+      '<p>Preencha os valores para descontar passagem, alimentação e cuidado das crianças. Use zero quando não houver esse gasto.</p>' +
+      '<div class="campo"><label for="renda-bruta">Pagamento combinado (R$)</label><input id="renda-bruta" type="number" min="0" step="0.01" inputmode="decimal" placeholder="o que foi combinado"></div>' +
+      '<div class="campo"><label for="renda-transporte">Transporte ida e volta (R$)</label><input id="renda-transporte" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0 se não houver"></div>' +
+      '<div class="campo"><label for="renda-alimentacao">Alimentação extra (R$)</label><input id="renda-alimentacao" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0 se não houver"></div>' +
+      '<div class="campo"><label for="renda-cuidado">Cuidado das crianças (R$)</label><input id="renda-cuidado" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0 se não houver"></div>' +
+      '<button type="button" class="btn" data-calcular-renda="1">Calcular quanto sobra</button>' +
+      '<p id="renda-liquida" role="status" aria-live="polite">Preencha os valores acima e toque em “Calcular quanto sobra”. O resultado não inclui outros custos nem garante que o serviço compense.</p>' +
+      '<h4>Proteção contra golpes e exploração</h4>' +
+      '<ul><li>Não pague taxa para conseguir emprego, fazer exame admissional, comprar uniforme obrigatório ou participar de treinamento prometido como garantia de contratação.</li>' +
+      '<li>Evite plataformas que exigem recarga ou compra de créditos para liberar contatos. O GetNinjas, por exemplo, pode cobrar créditos de profissionais; não é uma opção gratuita garantida.</li>' +
+      '<li>Antes de ir a uma residência: compartilhe localização e endereço com alguém de confiança, combine horário de saída e valor total por escrito. Evite imóvel vazio ou local isolado e vá embora se sentir risco.</li>' +
+      '<li>Para festas e buffets, confirme o nome e endereço do estabelecimento, responsável, horário, tarefa, valor e data do pagamento antes do turno. Não entregue documentos originais.</li></ul>' +
+      '<h4>Mensagem pronta para enviar</h4>' +
+      '<p>Copie e adapte o texto abaixo para buffets, lanchonetes, comércios e grupos do bairro:</p>' +
+      '<textarea id="mensagem-renda" rows="5" readonly>Olá! Estou procurando trabalho temporário em Rio Claro, inclusive aos fins de semana. Posso ajudar com organização, limpeza, cozinha, atendimento ou apoio em festas e buffets infantis, conforme a função. Tenho disponibilidade em [dias/horários] e posso conversar para combinar tarefas, valor e pagamento. Se souber de alguma oportunidade, agradeço o contato!</textarea>' +
+      '<p class="meta">Antes de enviar, preencha seus dias e horários. Não publique endereço residencial nem documentos em grupos abertos.</p>' +
+      '</section>';
+  }
+
   function htmlCurriculoSecao() {
     return '<section class="secao curriculo" id="montar-curriculo" aria-labelledby="titulo-curriculo">' +
       '<nav class="atalhos-trabalho" aria-label="Atalhos da área Trabalho"><h3>Por onde começar</h3><ul>' +
       '<li><a href="#trabalho/trabalho-agora">Preciso de dinheiro esta semana</a></li>' +
+      '<li><a href="#trabalho/renda-imediata">Trabalhos pontuais e quanto sobra</a></li>' +
       '<li><a href="#trabalho/trabalho-hoje">O que posso fazer hoje</a></li>' +
       '<li><a href="#trabalho/trabalho-renda">Ideias de renda, da mais fácil à mais difícil</a></li>' +
       '<li><button type="button" class="btn secundario" data-curriculo>Montar meu currículo</button></li>' +
@@ -104,6 +139,7 @@
       '<button type="button" class="btn secundario" data-copiar="anuncio">Copiar mensagem de serviço</button>' +
       '<textarea id="texto-anuncio" class="texto-copia" rows="3" readonly>Faço faxina, passo roupa e ajudo com organização da casa. Tenho disponibilidade em [dias/horários]. Se precisar ou souber de alguém, me chame no privado.</textarea>' +
       '<p class="meta">Não pague taxa para conseguir uma vaga. Para entregas por aplicativo, confirme os requisitos e o prazo de aprovação antes de contar com esse dinheiro.</p></section>' +
+      htmlRendaImediata() +
       '<section class="apoio-trabalho" aria-labelledby="trabalho-hoje"><h3 id="trabalho-hoje">O que posso fazer hoje</h3>' +
       '<ul class="lista-check">' +
       '<li><label><input type="checkbox"> Separei documento de identidade, CPF e comprovante de residência, se tiver.</label></li>' +
@@ -454,7 +490,7 @@
       }
     });
     document.addEventListener("click", function (e) {
-      var t = e.target.closest ? e.target.closest("[data-resp],[data-passo],[data-curriculo],[data-imprimir],[data-limpar],[data-copiar]") : null;
+      var t = e.target.closest ? e.target.closest("[data-resp],[data-passo],[data-curriculo],[data-imprimir],[data-limpar],[data-copiar],[data-calcular-renda]") : null;
       if (!t) return;
       if (t.hasAttribute("data-copiar")) {
         var tipoCopia = t.getAttribute("data-copiar");
@@ -485,6 +521,11 @@
           alvo.scrollIntoView({ block: "start" });
           var campo = $("c-nome"); if (campo) campo.focus({ preventScroll: true });
         }
+      } else if (t.hasAttribute("data-calcular-renda")) {
+        var valor = function (id) { var n = Number($(id).value); return Number.isFinite(n) && n > 0 ? n : 0; };
+        var saldo = valor("renda-bruta") - valor("renda-transporte") - valor("renda-alimentacao") - valor("renda-cuidado");
+        var saidaRenda = $("renda-liquida");
+        if (saidaRenda) saidaRenda.textContent = "Saldo após os gastos: " + saldo.toLocaleString("pt-BR", { style: "currency", currency: "BRL" }) + (saldo < 0 ? ". Atenção: com esses gastos, este serviço custaria mais do que paga" : "") + ". Não inclui outros custos nem garante que o serviço compense.";
       } else if (t.getAttribute("data-limpar") === "plano") {
         ultimo.resp = {}; ultimo.ordem = []; ultimo.puladas = []; ultimo.feitos = {}; ultimo.plano = null;
         desenhar(true);

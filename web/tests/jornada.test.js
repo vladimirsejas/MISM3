@@ -197,6 +197,18 @@ assert(/Concurso público/.test(secaoLocal) && /depende do edital/.test(secaoLoc
 assert(/Revenda por consignação/.test(secaoLocal) && /não compre kit inicial/.test(secaoLocal), "consignação sem comprar kit");
 assert(/leve água e um lanche/.test(secaoLocal), "logística do dia da entrevista");
 assert(!/R\$\s?\d/.test(secaoLocal), "não promete valores de pagamento");
+
+/* Renda imediata (trabalhos pontuais, calculadora de saldo e mensagem pronta), recuperada da branch gracious-hopper. */
+assert(/Trabalhos pontuais e quanto sobra/.test(secaoLocal) && /id="renda-imediata"/.test(secaoLocal), "a jornada Trabalho tem o bloco de trabalhos pontuais e saldo");
+assert(/href="#trabalho\/renda-imediata"/.test(secaoLocal), "o menu 'Por onde começar' leva ao bloco de saldo");
+assert(/buffets infantis/i.test(secaoLocal) && /fins de semana/.test(secaoLocal), "inclui trabalho temporário em buffets infantis");
+assert(/data-calcular-renda/.test(secaoLocal) && /renda-transporte/.test(secaoLocal) && /renda-cuidado/.test(secaoLocal), "inclui cálculo do saldo depois dos custos");
+assert(!/id="renda-bruta"[^>]*value=/.test(secaoLocal), "a calculadora não vem com valor de pagamento pré-preenchido");
+assert(/GetNinjas/.test(secaoLocal) && /não pague taxa/i.test(secaoLocal), "alerta para plataformas pagas e golpes");
+assert(/mensagem-renda/.test(secaoLocal), "inclui mensagem pronta para procurar trabalho");
+/* O botão só funciona se o tratador de cliques o reconhece (já falhou assim: o texto aparecia e o botão não fazia nada). */
+const fonteUI = require("fs").readFileSync(require("path").join(__dirname, "..", "jornada-ui.js"), "utf8");
+assert(/closest\("[^"]*\[data-calcular-renda\][^"]*"\)/.test(fonteUI), "o clique em 'Calcular quanto sobra' está ligado ao tratador de cliques");
 assert(!/\d+ ?% das vagas/.test(secaoLocal), "sem estatística sem fonte");
 UI.usarCatalogo(null);
 
