@@ -2,7 +2,7 @@
   "meta": {
     "escrito_em": "2026-10-16",
     "autor": "equipe (assistente)",
-    "aviso": "Décimo segundo conjunto reservado antes de ajustar vocabulário de necessidade familiar. Frases sintéticas, não coletadas de mulheres reais. Usar somente como validação final deste ciclo; não usar para treino nem para ajustes posteriores.",
+    "aviso": "Conjunto consultado durante o desenvolvimento e usado para orientar ajustes; não é mais uma avaliação independente. Manter apenas como regressão no CI. Não usar para treino nem para estimar desempenho final.",
     "campos": "mesmos de perfis.json"
   },
   "frases": [
