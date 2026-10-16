@@ -21,6 +21,7 @@ jobs:
       # Temporário: compara falhas específicas antes/depois de regenerar o índice; remover após diagnóstico.
       - name: Comparar falhas específicas antes/depois do tópico CadÚnico
         run: |
+          git fetch --unshallow origin chatgpt/avo-cuidadora-correcao
           git worktree add --detach /tmp/mism3-before 522e854e0e9f4bc8dc82c9d5a8a60d574e0114ec
           python /tmp/mism3-before/avaliacao/avaliar.py v2 --conjunto todos --erros > /tmp/mism3-before.md
           python avaliacao/avaliar.py v2 --conjunto todos --erros > /tmp/mism3-after.md
