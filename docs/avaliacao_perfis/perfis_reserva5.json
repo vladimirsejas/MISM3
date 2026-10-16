@@ -1,0 +1,245 @@
+{
+  "meta": {
+    "escrito_em": "2026-10-16",
+    "autor": "equipe (assistente), conjunto reservado antes de correções",
+    "aviso": "Conjunto consultado durante o desenvolvimento e usado para orientar ajustes; não é mais uma avaliação independente. Manter apenas como regressão no CI. Não usar para treino nem para estimar desempenho final.",
+    "campos": "mesmos de perfis.json"
+  },
+  "frases": [
+    {
+      "id": "r5av1",
+      "perfil": "avo",
+      "texto": "sou aposentada e ajudo a criar meus netos, o dinheiro não dá",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r5av2",
+      "perfil": "avo",
+      "texto": "minha pensão sustenta a casa e três crianças",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r5av3",
+      "perfil": "avo",
+      "texto": "cuido dos meus netos e preciso atualizar o cadastro da família",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r5av4",
+      "perfil": "avo",
+      "texto": "recebo aposentadoria e estou sem dinheiro para comprar comida",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r5av5",
+      "perfil": "avo",
+      "texto": "minha renda é a aposentadoria e agora moro com minha filha e os netos",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r5av6",
+      "perfil": "avo",
+      "texto": "meu benefício acaba antes do fim do mês e eu sustento meus netos",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r5av7",
+      "perfil": "avo",
+      "texto": "meu neto mora comigo e preciso saber onde buscar apoio para a família",
+      "principal": "assistencia",
+      "aceita": [
+        "educacao"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r5av8",
+      "perfil": "avo",
+      "texto": "estou criando minha neta e quero saber quais documentos levar ao CRAS",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r5av9",
+      "perfil": "avo",
+      "texto": "preciso de trabalho porque a aposentadoria não paga as despesas de todos",
+      "principal": "trabalho",
+      "aceita": [
+        "assistencia"
+      ],
+      "precisa": [
+        "trabalho"
+      ]
+    },
+    {
+      "id": "r5av10",
+      "perfil": "avo",
+      "texto": "quero procurar emprego para ajudar a sustentar meus netos",
+      "principal": "trabalho",
+      "aceita": [
+        "assistencia"
+      ],
+      "precisa": [
+        "trabalho"
+      ]
+    },
+    {
+      "id": "r5av11",
+      "perfil": "avo",
+      "texto": "meu filho usa meu cartão e tira meu dinheiro sem minha autorização",
+      "principal": "direitos",
+      "aceita": [
+        "assistencia"
+      ],
+      "precisa": [
+        "direitos"
+      ]
+    },
+    {
+      "id": "r5av12",
+      "perfil": "avo",
+      "texto": "estou criando meus netos e preciso saber se posso fazer o CadÚnico",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r5av13",
+      "perfil": "avo",
+      "texto": "não consigo pagar comida e remédios para mim e para as crianças",
+      "principal": "assistencia",
+      "aceita": [
+        "saude"
+      ],
+      "precisa": [
+        "assistencia",
+        "saude"
+      ]
+    },
+    {
+      "id": "r5av14",
+      "perfil": "avo",
+      "texto": "a aposentadoria não chega para as despesas da minha casa",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r5av15",
+      "perfil": "avo",
+      "texto": "minha filha foi embora e fiquei responsável pelos meus netos",
+      "principal": "direitos",
+      "aceita": [
+        "assistencia"
+      ],
+      "precisa": [
+        "direitos"
+      ]
+    },
+    {
+      "id": "r5av16",
+      "perfil": "avo",
+      "texto": "não tenho a guarda dos meus netos e preciso matricular um deles",
+      "principal": "educacao",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "educacao"
+      ]
+    },
+    {
+      "id": "r5av17",
+      "perfil": "avo",
+      "texto": "estou muito cansada de cuidar das crianças sem ajuda",
+      "principal": "assistencia",
+      "aceita": [
+        "saude"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r5av18",
+      "perfil": "avo",
+      "texto": "quero saber se a aposentadoria me impede de cadastrar minha família",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r5lim1",
+      "perfil": "limite",
+      "texto": "me ensina a fazer pão de queijo",
+      "principal": null,
+      "aceita": [],
+      "precisa": [],
+      "fora": true
+    },
+    {
+      "id": "r5lim2",
+      "perfil": "limite",
+      "texto": "qual é a capital do Chile",
+      "principal": null,
+      "aceita": [],
+      "precisa": [],
+      "fora": true
+    }
+  ]
+}

@@ -1005,3 +1005,30 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - **Medição:** avaliação oficial igual ou melhor em todos os conjuntos (desenvolvimento 66/68, específica 61/68). Perfis: desenvolvimento 32/32; reserva 3 caiu de 24 para 23 de 28: "estou pensando em montar uma barraquinha de lanche" ficou a 0,004 do limite de abstenção depois do recálculo do índice (antes a resposta que aparecia era a seção de Separação, sem sentido). Não mexi no limite. A falta de conteúdo sobre empreender em pequena escala segue como lacuna.
 - **Pendências:** fonte atual sobre reconhecimento de paternidade (o Senado de 2012 só diz que, sem o nome do pai, é preciso ação de investigação de paternidade); os seis itens fechados da página da Defensoria; a página de habitação (Minha Casa Minha Vida).
 
+
+
+## 16/10/2026 — Orientador: renda de aposentadoria/pensão e netos
+
+- **Problema medido antes da correção:** o conjunto reservado `perfis_reserva4.json` ficou em 16/20 respostas certas no top-3; no conjunto `perfis_reserva5.json`, criado antes do ajuste, o baseline foi 18/20. Os dois conjuntos são sintéticos e escritos pela equipe.
+- **Mudança mínima:** em `web/orientar.js`, acrescentadas duas pontes curtas condicionadas: quando netos aparece junto de aposentadoria/pensão/benefício/renda/cuidado/sustento, acrescenta termos de Assistência/CadÚnico; quando aposentadoria/pensão aparece junto de busca explícita de trabalho, acrescenta termos de Trabalho. Não foram alterados pesos, limiares, modelos ou camada de segurança.
+- **Regressão:** dois testes em `web/tests/orientar.test.js` verificam os novos caminhos. GitHub Actions: 211 testes Python passaram, suíte JavaScript passou, avaliador de necessidades e avaliador do plano executaram sem erro. Execução: https://github.com/vladimirsejas/MISM3/actions/runs/38833737017.
+- **Resultado dos perfis após a mudança:** reserva4 17/20 no top-3 (antes 16/20); reserva5 19/20 (antes 18/20). Em reserva5, avó: 17/18 no top-3 e 11/18 com área certa em primeiro lugar. Ainda falha a consulta sobre familiar que usa cartão/dinheiro sem autorização; não se deve interpretar isso automaticamente como perigo imediato. Deve ser investigado em tarefa própria, com conjunto reservado novo antes de novos ajustes.
+- **Limitações e honestidade:** avaliação sintética, não desempenho com mulheres reais; interface não foi conferida visualmente em navegador. Não houve alteração no conteúdo publicado, no MISM2 nem na camada de segurança. PR #57 está em rascunho, aguardando revisão; não integrada à `main`.
+
+
+## 16/10/2026 — Orientação para avós/cuidadoras: validação final do ciclo
+
+- O baseline mostrou que Assistência podia aparecer no top-3, mas não em primeiro lugar; testes novos reproduziram esse problema e uma abstinência indevida em frase explícita de responsabilidade por crianças e dificuldade financeira.
+- A ponte lexical foi consolidada numa função específica de contexto familiar. Ela reconhece variações de netos/netas, responsabilidade, recursos, renda, necessidades e dependência infantil. Para esse contexto explícito, o orientador não aplica a recusa automática de escopo; valores de limiares e pesos continuam inalterados.
+- A suíte completa passou no GitHub Actions: 211 testes Python, todos os testes JavaScript, avaliador de necessidades, avaliador do plano e reservas 4–14. A reserva 14 terminou com 19/20 (95%), zero falsos alarmes de perigo e uma ausência de resposta. A falha restante foi mantida como limitação, sem ajuste depois de observar o holdout.
+- As reservas 4–13 foram consultadas durante o desenvolvimento e devem ser tratadas apenas como regressão, não como validação independente. A reserva 14 é o conjunto independente deste ciclo.
+- Não foram alterados MISM2, conteúdo de `web/areas.js`, pesos/limiares, modelos treinados, camada de segurança, privacidade ou botões de emergência. O conteúdo CadÚnico detalhado e a validação visual seguem pendentes. PR #57 continua em rascunho, sem mesclagem.
+
+
+## 16/10/2026 — Uso financeiro sem autorização: encaminhamento para Assistência
+
+- O baseline da reserva 15 marcou 70% no total; 5 das 15 frases explícitas de uso não autorizado ficaram fora do top-3, a área esperada ficou em primeiro lugar em 2/15 e houve uma ausência de resposta.
+- Foi criada uma regra lexical separada em `web/orientar.js` para reconhecer cartão/conta/benefício + sinal explícito de falta de consentimento ou ação financeira de familiar. A consulta é expandida para os termos já presentes de Direitos/Assistência, CREAS e Disque 100. O contexto explícito também evita uma abstinência indevida de escopo. Nenhum peso/limiar ou componente de perigo foi alterado.
+- A reserva 17, criada antes de observar o resultado final e não usada para ajustes posteriores, marcou 19/20 (95%), com Assistência no top-3 em 15/16 casos de cartão, área principal em primeiro em 14/16, zero falsos alarmes de perigo e uma ausência de resposta.
+- A reserva 16 revelou que a expectativa de “fora do escopo” para ajuda autorizada a sacar benefício estava incorreta: esse pedido pode receber orientação social geral. A reserva 16 foi reclassificada como diagnóstico, não como avaliação independente.
+- Limitação conhecida: “um parente não quer devolver meu cartão e continua fazendo compras” ainda abstém. Mantida sem ajuste para não usar o holdout final para tuning. PR #58 segue em rascunho, dependente de #57, sem mesclagem.
