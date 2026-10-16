@@ -34,6 +34,8 @@ const responsabilidade = R("assumi a responsabilidade pelos pequenos e não cons
 assert(!responsabilidade.abstem && areas(responsabilidade).includes("assistencia"), "variação da palavra responsabilidade deve manter a orientação social");
 const necessidadesCriancas = R("a pensão não dá para as necessidades dos pequenos sob meus cuidados");
 assert(!necessidadesCriancas.abstem && areas(necessidadesCriancas).includes("assistencia"), "necessidades das crianças sob cuidado devem levar à assistência");
+const rendaInsuficiente = R("estou cuidando das crianças e a renda não alcança para as necessidades delas");
+assert(!rendaInsuficiente.abstem && areas(rendaInsuficiente).includes("assistencia"), "renda insuficiente e cuidado infantil devem levar à assistência");
 
 assert(areas(R("presiso de advogdo de graça")).slice(0, 3).includes("direitos"), "tolera erro de digitação");
 assert(areas(R("upa mais proxima")).slice(0, 3).includes("saude"));
