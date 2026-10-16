@@ -1,0 +1,42 @@
+{
+  "meta": {
+    "escrito_em": "2026-10-15",
+    "autor": "equipe (assistente), depois da primeira rodada de pontes e ANTES do retreino dos modelos",
+    "aviso": "Segundo conjunto RESERVADO. O primeiro (perfis_reserva.json) ficou parcialmente contaminado porque algumas palavras das pontes de busca coincidiram com frases dele; este foi escrito com outras formulações. Não usar no treino nem para ajustar regras. Frases da equipe, não de mulheres reais.",
+    "campos": "mesmos de perfis.json"
+  },
+  "frases": [
+    {"id":"r2ms1","perfil":"mae_solo","texto":"o pai da minha menina sumiu e nunca deu um centavo","principal":"direitos","aceita":["assistencia"],"precisa":["direitos"]},
+    {"id":"r2ms2","perfil":"mae_solo","texto":"quem cuida do meu filho enquanto eu estou no servico","principal":"educacao","aceita":["trabalho"],"precisa":["educacao"]},
+    {"id":"r2ms3","perfil":"mae_solo","texto":"crio sozinha duas criancas e ganho muito pouco","principal":"assistencia","aceita":["trabalho"],"precisa":["assistencia"]},
+    {"id":"r2ms4","perfil":"mae_solo","texto":"queria fazer faculdade mas nao tenho com quem largar meu pequeno","principal":"educacao","aceita":["trabalho"],"precisa":["educacao"]},
+    {"id":"r2ms5","perfil":"mae_solo","texto":"fiquei viuva com dois filhos e nao sei por onde comecar","principal":"assistencia","aceita":["direitos"],"precisa":["assistencia"]},
+    {"id":"r2ms6","perfil":"mae_solo","texto":"preciso colocar meu filho de tres anos numa escolinha publica","principal":"educacao","aceita":[],"precisa":["educacao"]},
+
+    {"id":"r2cf1","perfil":"chefe_familia","texto":"tudo da casa depende so de mim e nao ta dando","principal":"assistencia","aceita":["trabalho","moradia"],"precisa":["assistencia"]},
+    {"id":"r2cf2","perfil":"chefe_familia","texto":"a financeira fica me cobrando todo dia por uma parcela atrasada","principal":"direitos","aceita":[],"precisa":["direitos"]},
+    {"id":"r2cf3","perfil":"chefe_familia","texto":"a conta de agua veio altissima e vou ficar sem pagar","principal":"moradia","aceita":["direitos","assistencia"],"precisa":["moradia"]},
+    {"id":"r2cf4","perfil":"chefe_familia","texto":"onde acho vaga de emprego perto do meu bairro","principal":"trabalho","aceita":[],"precisa":["trabalho"]},
+    {"id":"r2cf5","perfil":"chefe_familia","texto":"minha familia ganha pouco, existe algum auxilio do governo","principal":"assistencia","aceita":[],"precisa":["assistencia"]},
+    {"id":"r2cf6","perfil":"chefe_familia","texto":"quero vender doce pra complementar a renda, como comeco","principal":"trabalho","aceita":[],"precisa":["trabalho"]},
+
+    {"id":"r2av1","perfil":"avo","texto":"sou eu quem leva e busca meu netinho na escola mas nao sou a responsavel no papel","principal":"educacao","aceita":["direitos"],"precisa":["educacao"]},
+    {"id":"r2av2","perfil":"avo","texto":"minha filha foi embora e deixou duas criancas pra eu criar","principal":"direitos","aceita":["assistencia","educacao"],"precisa":["direitos"]},
+    {"id":"r2av3","perfil":"avo","texto":"a aposentadoria de um salario nao da pra cinco pessoas","principal":"assistencia","aceita":["direitos"],"precisa":["assistencia"]},
+    {"id":"r2av4","perfil":"avo","texto":"tenho dor nas pernas e mesmo assim cuido das criancas o dia todo","principal":"saude","aceita":["assistencia"],"precisa":["saude"]},
+    {"id":"r2av5","perfil":"avo","texto":"gostaria de participar de algum grupo de idosos","principal":"assistencia","aceita":[],"precisa":["assistencia"]},
+    {"id":"r2av6","perfil":"avo","texto":"minha neta de 15 anos engravidou e eu nao sei como ajudar","principal":"saude","aceita":["assistencia","direitos"],"precisa":["saude"]},
+
+    {"id":"r2ur1","perfil":"urgencia","texto":"o dono mandou a gente sair da casa ate sexta","principal":"moradia","aceita":["assistencia","direitos"],"precisa":["moradia"]},
+    {"id":"r2ur2","perfil":"urgencia","texto":"nao temos nada pra comer hoje a noite","principal":"assistencia","aceita":[],"precisa":["assistencia"]},
+    {"id":"r2ur3","perfil":"urgencia","texto":"fugi de casa com meus filhos e nao tenho pra onde ir","principal":"direitos","aceita":["assistencia","moradia"],"precisa":["direitos"],"perigo":true},
+    {"id":"r2ur4","perfil":"urgencia","texto":"vou acabar com tudo, nao vejo saida","principal":"saude","aceita":[],"precisa":[],"perigo":true},
+    {"id":"r2ur5","perfil":"urgencia","texto":"estamos acampadas na praca sem lugar fixo desde ontem","principal":"assistencia","aceita":["moradia"],"precisa":["assistencia"]},
+    {"id":"r2ur6","perfil":"urgencia","texto":"cortaram a energia e tenho um bebe doente em casa","principal":"moradia","aceita":["saude","assistencia"],"precisa":["moradia"]},
+
+    {"id":"r2lim1","perfil":"limite","texto":"vou ter direito ao bpc, me diz se eu sou elegivel","principal":"assistencia","aceita":["direitos"],"precisa":["assistencia"]},
+    {"id":"r2lim2","perfil":"limite","texto":"como faco um bolo de cenoura","principal":null,"aceita":[],"precisa":[],"fora":true},
+    {"id":"r2lim3","perfil":"limite","texto":"preciso fazer a licao de casa de geografia do meu irmao","principal":null,"aceita":[],"precisa":[],"fora":true},
+    {"id":"r2lim4","perfil":"limite","texto":"me ensina a calcular juros compostos","principal":null,"aceita":[],"precisa":[],"fora":true}
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "meta": {
+    "escrito_em": "2026-10-15",
+    "autor": "equipe (assistente), ANTES de escrever as frases de treino novas e de retreinar os modelos",
+    "aviso": "Terceiro conjunto RESERVADO, para a medição final. As reservas 1 e 2 já foram vistas durante o ajuste e servem só de referência. Este não deve ser consultado para ajustar nada. Frases da equipe, não de mulheres reais.",
+    "campos": "mesmos de perfis.json"
+  },
+  "frases": [
+    {"id":"r3ms1","perfil":"mae_solo","texto":"o pai do meu filho nunca registrou ele e agora some","principal":"direitos","aceita":[],"precisa":["direitos"]},
+    {"id":"r3ms2","perfil":"mae_solo","texto":"to sem ter onde deixar minha pequena pra ir trabalhar de manha","principal":"educacao","aceita":["trabalho"],"precisa":["educacao"]},
+    {"id":"r3ms3","perfil":"mae_solo","texto":"vivo com um filho so e meu salario nao cobre as despesas da casa","principal":"assistencia","aceita":["moradia","trabalho"],"precisa":["assistencia"]},
+    {"id":"r3ms4","perfil":"mae_solo","texto":"gostaria de terminar o ensino medio mas e dificil com crianca em casa","principal":"educacao","aceita":["trabalho"],"precisa":["educacao"]},
+    {"id":"r3ms5","perfil":"mae_solo","texto":"minha caçula ainda nao tem vaga em nenhuma escolinha do bairro","principal":"educacao","aceita":[],"precisa":["educacao"]},
+    {"id":"r3ms6","perfil":"mae_solo","texto":"separei e fiquei com tudo nas costas, sem renda e com duas criancas","principal":"assistencia","aceita":["direitos","trabalho"],"precisa":["assistencia"]},
+
+    {"id":"r3cf1","perfil":"chefe_familia","texto":"eu seguro as despesas da familia inteira e estou no limite","principal":"assistencia","aceita":["trabalho","moradia"],"precisa":["assistencia"]},
+    {"id":"r3cf2","perfil":"chefe_familia","texto":"estou com varias prestacoes em atraso e tenho medo de perder meus bens","principal":"direitos","aceita":[],"precisa":["direitos"]},
+    {"id":"r3cf3","perfil":"chefe_familia","texto":"nao consegui pagar a conta de luz de tres meses","principal":"moradia","aceita":["assistencia","direitos"],"precisa":["moradia"]},
+    {"id":"r3cf4","perfil":"chefe_familia","texto":"quero um curso gratuito pra conseguir um trabalho melhor","principal":"trabalho","aceita":["educacao"],"precisa":["trabalho"]},
+    {"id":"r3cf5","perfil":"chefe_familia","texto":"como funciona o cadastro pra receber ajuda do governo","principal":"assistencia","aceita":[],"precisa":["assistencia"]},
+    {"id":"r3cf6","perfil":"chefe_familia","texto":"estou pensando em montar uma barraquinha de lanche","principal":"trabalho","aceita":[],"precisa":["trabalho"]},
+
+    {"id":"r3av1","perfil":"avo","texto":"meus netos moram comigo e o mais velho precisa ser matriculado","principal":"educacao","aceita":[],"precisa":["educacao"]},
+    {"id":"r3av2","perfil":"avo","texto":"a mae das criancas abandonou elas comigo, como fico responsavel","principal":"direitos","aceita":["assistencia"],"precisa":["direitos"]},
+    {"id":"r3av3","perfil":"avo","texto":"minha pensao e pequena e divido com meus netos e minha filha","principal":"assistencia","aceita":["direitos"],"precisa":["assistencia"]},
+    {"id":"r3av4","perfil":"avo","texto":"passo o dia cuidando dos pequenos e nao tenho tempo pra mim","principal":"assistencia","aceita":["saude"],"precisa":["assistencia"]},
+    {"id":"r3av5","perfil":"avo","texto":"preciso marcar medico pra mim e pros meninos que crio","principal":"saude","aceita":[],"precisa":["saude"]},
+    {"id":"r3av6","perfil":"avo","texto":"meu genro tomou o dinheiro da minha aposentadoria","principal":"assistencia","aceita":["direitos"],"precisa":["assistencia"]},
+
+    {"id":"r3ur1","perfil":"urgencia","texto":"recebi a ordem de despejo e tenho que sair em uma semana","principal":"moradia","aceita":["assistencia","direitos"],"precisa":["moradia"]},
+    {"id":"r3ur2","perfil":"urgencia","texto":"a geladeira esta vazia e as criancas estao pedindo comida","principal":"assistencia","aceita":[],"precisa":["assistencia"]},
+    {"id":"r3ur3","perfil":"urgencia","texto":"meu companheiro quebrou meu celular e disse que vai me machucar","principal":"direitos","aceita":["assistencia"],"precisa":["direitos"],"perigo":true},
+    {"id":"r3ur4","perfil":"urgencia","texto":"nao quero mais viver assim","principal":"saude","aceita":[],"precisa":[],"perigo":true},
+    {"id":"r3ur5","perfil":"urgencia","texto":"minha familia e eu estamos sem teto desde o incendio","principal":"assistencia","aceita":["moradia"],"precisa":["assistencia"]},
+    {"id":"r3ur6","perfil":"urgencia","texto":"a agua foi cortada e tenho idoso e crianca em casa","principal":"moradia","aceita":["assistencia"],"precisa":["moradia"]},
+
+    {"id":"r3lim1","perfil":"limite","texto":"se eu tiver renda de mil reais eu recebo o bolsa familia","principal":"assistencia","aceita":[],"precisa":["assistencia"]},
+    {"id":"r3lim2","perfil":"limite","texto":"qual a receita de feijoada","principal":null,"aceita":[],"precisa":[],"fora":true},
+    {"id":"r3lim3","perfil":"limite","texto":"me ajuda com o trabalho de ciencias sobre o sistema solar","principal":null,"aceita":[],"precisa":[],"fora":true},
+    {"id":"r3lim4","perfil":"limite","texto":"quanto e 15 por cento de 200","principal":null,"aceita":[],"precisa":[],"fora":true}
+  ]
+}

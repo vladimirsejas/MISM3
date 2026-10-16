@@ -1,11 +1,13 @@
 /* Mede o orientador atual (avaliacao/sistema_v2.js, os mesmos módulos do navegador) com as frases de perfis.json.
-   Uso: node docs/avaliacao_perfis/rodar_perfis.js [--detalhe]
+   Uso: node docs/avaliacao_perfis/rodar_perfis.js [arquivo.json] [--detalhe]   (padrão: perfis.json; o conjunto reservado é perfis_reserva.json)
    Não altera nada: só lê o site e imprime o resultado. */
 const fs = require("fs"), path = require("path");
 const web = path.resolve(__dirname, "..", "..", "web");
 const catalogo = JSON.parse(fs.readFileSync(path.join(web, "dados", "catalogo_manual.json"), "utf8")).servicos;
 const responder = require(path.resolve(__dirname, "..", "..", "avaliacao", "sistema_v2.js"))(web, catalogo);
-const frases = JSON.parse(fs.readFileSync(path.join(__dirname, "perfis.json"), "utf8")).frases;
+const arquivo = process.argv.slice(2).find((a) => /\.json$/.test(a)) || "perfis.json";
+const frases = JSON.parse(fs.readFileSync(path.join(__dirname, arquivo), "utf8")).frases;
+console.log("conjunto: " + arquivo + " (" + frases.length + " frases)\n");
 const detalhe = process.argv.includes("--detalhe");
 const perfis = {}, linhas = [];
 frases.forEach((q) => {

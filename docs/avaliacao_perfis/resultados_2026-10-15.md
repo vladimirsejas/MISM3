@@ -48,3 +48,57 @@ Nas 26 frases aprovadas há também **respostas fracas que passaram**: em vária
 4. **"Crio sozinha" mais "contas" ou "dinheiro"** deveria incluir Assistência.
 5. **Escopo:** reforçar frases fora do assunto que contêm palavras de escola ("exercício", "lição de casa").
 6. Repetir esta medição **depois** de qualquer mudança no orientador, e **antes** de abrir ao público.
+
+---
+
+# Depois das correções (16/10/2026)
+
+Autorizado pelo mantenedor, o orientador foi corrigido em duas camadas e medido de novo. As seções acima ficam como estavam: são a medição **antes**.
+
+## O que foi mudado
+1. **Pontes de busca** (`web/orientar.js`, função `expandirConsulta`): "estou na rua", "dormimos na calçada" e "sem onde morar" passam a levar a moradia de rua; "despejada" e "perdi a casa" levam a moradia; dívidas ("endividada", "nome sujo", "no vermelho") levam a Direitos (Procon); "só eu pago", "dinheiro não chega" e "chefe de família" levam à Assistência (CRAS); "cansada", "esgotada" levam a apoio e convivência. "Sustento" deixa de casar com "Sustentabilidade" (as duas tinham a mesma raiz de 5 letras e a busca devolvia o curso da Fatec).
+2. **Exclusão**: o crédito do Banco do Povo não aparece mais para quem fala em dívida ("endividada", "nome sujo"...).
+3. **Treino**: 59 frases novas em `catalogo/frases_necessidades.txt` (moradia urgente, dívidas, sustento e renda, avó e netos, guarda e pensão, saúde de quem cuida, renda por conta própria) e 15 em `catalogo/frases_fora_do_escopo.txt` (dever de casa e contas). Nenhuma está nos conjuntos de avaliação. Os modelos de necessidades e de escopo foram retreinados com `pipeline/treinar_necessidades.py` e `pipeline/treinar_escopo.py`.
+4. **Um teste ajustado** (`web/tests/orientar.test.js`): ele proibia qualquer resposta com "garant…", e passou a barrar uma frase que **negue** a garantia ("Não existe vaga garantida só por estar cadastrada") só quando ela é promessa. A frase negativa já existia no site; o que mudou foi um cartão de creche aparecer em 6º lugar para uma consulta ambígua. Qualquer promessa real continua barrada.
+
+## O que foi tentado e **abandonado** (por piorar)
+- Uma ponte para "neto/avó" (acrescentava "família, crianças, guarda"): fez "meus netos… precisa ser matriculado" ficar **sem resposta**. Retirada.
+- A expressão "fechar o mês" na ponte de renda: levava quem queria **trabalho** para a Assistência. Retirada.
+- Pontes longas de moradia e de dívidas: faziam uma só área dominar frases com várias necessidades ("moro na rua e preciso de ajuda" perdeu a Assistência; "perdi o emprego, estou sem comida e devendo a luz" perdeu Trabalho, Assistência e Moradia). A avaliação oficial pegou as duas; ambas foram encurtadas.
+
+## Resultado
+Quatro conjuntos de frases, escritos pela equipe. **Só o último é limpo**: foi escrito antes das frases de treino e nunca foi consultado para ajustar nada.
+
+| Conjunto | Papel | Antes (top-3) | Depois (top-3) |
+|---|---|---|---|
+| `perfis.json` | Desenvolvimento: as falhas foram corrigidas contra ele | 26 de 32 (81%) | 32 de 32 (100%) |
+| `perfis_reserva.json` | Reserva 1: **contaminada** (algumas palavras das pontes coincidem com frases dele) | 24 de 29 (83%) | 28 de 29 (97%) |
+| `perfis_reserva2.json` | Reserva 2: escrita depois da 1ª rodada; parcialmente vista | 23 de 28 (82%) | 25 de 28 (89%) |
+| `perfis_reserva3.json` | **Reserva 3: limpa** | 24 de 28 (86%) | 24 de 28 (86%) |
+
+**Como ler:** os ganhos grandes (100%, 97%) são em frases contra as quais o sistema foi ajustado e **não provam** melhora para o mundo real. A medida honesta é a reserva 3: o total "top-3" **não mudou**. Olhando as medidas mais sensíveis dela, houve ganho **pequeno**:
+
+| Reserva 3 (25 frases de necessidade) | Antes | Depois |
+|---|---|---|
+| Área certa em 1º lugar | 12 (48%) | 13 (52%) |
+| Cobertura das necessidades (top-5) | 67% | 75% |
+| Abstenções certas (3 frases fora do assunto) | 1 | 1 |
+
+Com 25 frases, essa diferença está dentro do ruído. Casos em que a resposta **melhorou de qualidade** sem mudar o resultado "certo/errado": "o pai do meu filho nunca registrou ele e agora some" passou a mostrar Direitos primeiro, e "meu salário não cobre as despesas da casa" passou a mostrar Assistência/CRAS em 1º (antes era Educação).
+
+**Avaliação oficial do projeto** (`avaliacao/avaliar.py v2 --conjunto todos`): **2 perguntas melhoraram e nenhuma piorou**; os cinco conjuntos ficaram iguais ou melhores. Validação cruzada do modelo: F1 76% (antes 76%), com 408 frases (antes 349). Testes: 17 arquivos de Node, 211 de Python e `avaliar_plano.js`, tudo passando.
+
+## O que ainda falha
+- **Moradia continua a classe mais fraca** do modelo (recall de 57% na validação cruzada) e ainda erra "durmo no carro com meus filhos" (reserva 1) e "estamos sem teto desde o incendio" (reserva 3, em 1º vem Assistência e Moradia só em 3º).
+- **Pedidos de renda por conta própria**: "quero vender doce pra complementar a renda" fica sem resposta.
+- **Cuidadora**: "passo o dia cuidando dos pequenos e não tenho tempo pra mim" e "minha neta de 15 anos engravidou" não acham resposta.
+- **Dívida sem a palavra "dívida"**: "estou com várias prestações em atraso e tenho medo de perder meus bens" não acha resposta.
+- **Fora do assunto**: "qual a receita de feijoada" e "me ajuda com o trabalho de ciências" ainda recebem resposta.
+- **Falsos alarmes de perigo** (alerta de proteção em frase que não pedia): "o pai da minha menina sumiu e nunca deu um centavo" e "minha filha foi embora e deixou duas crianças pra eu criar". Já existiam antes das correções e **não foram mexidos**: a camada de segurança errar para mais custa uma tela a mais, mas erodir a confiança em quem não está em perigo é um custo real.
+- Alguns desses itens são lacunas de **conteúdo** (não há cartão para "vender em casa" ou "gravidez na adolescência" nas áreas), não de modelo.
+
+## Próximos passos sugeridos
+1. Frases **reais** de mulheres, coletadas com consentimento, são o que realmente falta; as frases desta equipe têm um teto.
+2. Mais frases de moradia urgente e de dívida sem a palavra "dívida".
+3. Rever os falsos alarmes de perigo com a equipe que conhece o atendimento (o ajuste do detector de segurança precisa de revisão humana, não só de números).
+4. Escrever uma **reserva 4**, limpa, antes de qualquer nova rodada de ajustes.

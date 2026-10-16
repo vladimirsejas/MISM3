@@ -60,7 +60,9 @@ assert.strictEqual(c.itens[0].area, "trabalho");
 /* ---- todo item tem título, destino e, quando é serviço, telefone ou fonte; nada de promessa ---- */
 ["preciso de remedio", "quero fazer preventivo", "meu filho esta agressivo"].forEach((t) => R(t).itens.forEach((i) => {
   assert(i.titulo && i.href && i.href.charAt(0) === "#", t + ": " + JSON.stringify(i));
-  assert(!/garant|voc[eê] tem direito a vaga|conseguir[aá]|aprovad/i.test(String(i.resumo)), "sem promessa: " + i.resumo);
+  /* Frases que NEGAM a garantia ("Não existe vaga garantida só por estar cadastrada...") são o contrário de promessa e não contam. */
+  const semNegacao = String(i.resumo).split(/(?<=[.!?])\s+/).filter((f) => !/\bn[ãa]o (?:existe|h[áa]|significa|garante)\b/i.test(f)).join(" ");
+  assert(!/garant|voc[eê] tem direito a vaga|conseguir[aá]|aprovad/i.test(semNegacao), "sem promessa: " + i.resumo);
 }));
 
 /* ---- explicação: mostra por que o item apareceu, com palavras que a pessoa escreveu ---- */

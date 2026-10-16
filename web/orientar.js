@@ -39,11 +39,35 @@
   /* Pontes lexicais locais: traduz o jeito popular de pedir para termos já presentes no índice verificado. */
   function expandirConsulta(texto) {
     var t = Regras.normalizar(texto), extra = [];
+    /* "sustento" e "sustentabilidade" têm a mesma raiz de 5 letras ("suste") e a busca levava quem sustenta a casa ao curso de
+       Sustentabilidade da Fatec. A palavra é trocada só na consulta (o índice e o Python não mudam). */
+    t = t.replace(/\bsusten(?:to|tar|tando|ta|tamos|tei|tou)\b/g, "familia renda");
     if (/\b(?:casa propria|casa popular|minha casa minha vida|financiamento habitacional|cadastro habitacional|inscricao habitacional)\b/.test(t)) {
       extra.push("moradia habitacao casa propria cadastro habitacional aluguel social secretaria habitacao");
     }
-    if (/\b(?:moro na rua|morando na rua|vivo na rua|vivendo na rua|situacao de rua|sem teto|sem casa)\b/.test(t)) {
+    /* Moradia urgente: o modelo via a moradia, mas a ponte só conhecia "moro na rua". Agora também "estou na rua", "dormimos na calçada",
+       "despejada", "sem onde morar", "perdi a casa". */
+    if (/\b(?:moro na rua|morando na rua|vivo na rua|vivendo na rua|situacao de rua|sem teto|sem casa)\b/.test(t) ||
+        /\b(?:estou|to|tou|estamos|fiquei|ficamos|moro|moramos|vivo|vivemos|durmo|dormimos|dormindo|passando|passamos)\b(?: [a-z]+){0,3} (?:na rua|na calcada|na praca)\b/.test(t) ||
+        /\b(?:sem|nao tenho|nao temos) (?:lugar|onde|local|pra onde|para onde)(?: pra| para)? (?:morar|ficar|dormir|ir)\b/.test(t)) {
       extra.push("situacao de rua morador de rua sem casa sem teto assistencia social cras creas moradia acolhimento");
+    }
+    /* Despejo e perda da casa: só a ponte curta (a de rua, mais longa, escondia as respostas de Assistência). */
+    if (/\b(?:despejad[ao]s?|ser despejad[ao]s?|perdi a casa|perdemos a casa|aviso de despejo)\b/.test(t)) {
+      extra.push("moradia despejo aluguel social");
+    }
+    /* Dívidas: levam a Direitos (Procon, superendividamento). Antes "empréstimo" casava com o crédito do Banco do Povo. */
+    if (/\b(?:endividad[ao]s?|devendo|divida|dividas|nome sujo|negativad[ao]|no vermelho|superendivid\w*|cartao estourado|cartao atrasado)\b/.test(t)) {
+      extra.push("dividas superendividamento procon");
+    }
+    /* Sustento da casa e dinheiro que não fecha: o CRAS é a porta (CadÚnico, benefícios, tarifa social). */
+    if (/\b(?:chefe de familia|chefio a (?:casa|familia)|pago tudo sozinha|so eu (?:trabalho|pago|mantenho)|eu que (?:pago|mantenho|trabalho)|mantenho (?:a|minha|meus|sozinha)|dinheiro (?:acaba|nao chega|nao da|nao dura|nao sobra)|(?:nao dou|nao da) conta das contas|nao da pra pagar|salario nao (?:da|chega|cobre)|so (?:um|1) salario|contas (?:pesando|atrasando|atrasadas)|nao sobra nada)\b/.test(t) ||
+        /\bfamilia renda\b/.test(t)) {
+      extra.push("assistencia social cras beneficios cadastro unico tarifa social contas renda familia");
+    }
+    /* Cuidadora sobrecarregada: apoio emocional e convivência, não silêncio. */
+    if (/\b(?:cansad[ao]|esgotad[ao]|exaust[ao]|sobrecarregad[ao]|estressad[ao]|sem folga)\b/.test(t)) {
+      extra.push("saude mental apoio psicologico cras convivencia familia");
     }
     if (/\bvacina(?:s|cao|r)?\b/.test(t)) {
       extra.push("saude posto de saude ubs usf vacinacao imunizacao carteira de vacinacao");
@@ -70,6 +94,11 @@
   /* Serviços especializados: só entram na lista quando o texto fala do assunto (ex.: o pronto atendimento de ginecologia não serve a dor de dente). */
   var CONDICOES = {
     "man-saude-pa-ginecologia": /gravid|gestan|gestac|parto|ginecolog|obstetr|menstru|sangramento|pre natal|prenatal|contrac|aborto|corrimento|maternidade|bebe|recem nascid|puerper|mulher/
+  };
+
+  /* Serviços que NÃO devem aparecer em certos assuntos: crédito para empreender não é resposta a quem está endividada. */
+  var EXCLUSOES = {
+    "man-banco-do-povo": /endivid|divida|devendo|nome sujo|negativad|no vermelho|superendivid/
   };
 
   var PESOS = { palavras: 0.4, letras: 0.6, significado: 0.3, intencao: 0.1, area: 0.12 };
@@ -148,6 +177,7 @@
         if (dica && u.needs && u.needs.length) s += pesos.intencao * Math.max.apply(null, u.needs.map(function (n) { return dica[n] || 0; }));
         if (ctx && ctx.area && u.area === ctx.area) s += pesos.area;
         if (CONDICOES[u.id] && !CONDICOES[u.id].test(tn)) s -= 1; /* serviço especializado só aparece quando o assunto é dele */
+        if (EXCLUSOES[u.id] && EXCLUSOES[u.id].test(tn)) s -= 1; /* e há serviços que não servem a certos assuntos */
         if (u.tipo === "area") s -= 0.04; /* destinos genéricos (a área inteira) só aparecem depois dos específicos */
         return { u: u, s: s, palavras: sw, letras: sc, significado: sl };
       });
