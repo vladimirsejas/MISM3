@@ -1,0 +1,251 @@
+{
+  "meta": {
+    "escrito_em": "2026-10-16",
+    "autor": "equipe (assistente)",
+    "aviso": "Oitavo conjunto reservado antes de nova correção da ponte lexical. Frases sintéticas e independentes, não coletadas de mulheres reais. Usar somente para validação final deste ciclo; não usar para treino nem para ajustes posteriores.",
+    "campos": "mesmos de perfis.json"
+  },
+  "frases": [
+    {
+      "id": "r8av1",
+      "perfil": "avo",
+      "texto": "meu dinheiro não dá para criar meus netos e pagar as contas",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia",
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r8av2",
+      "perfil": "avo",
+      "texto": "sou vovó e estou sem comida para os pequenos que moram comigo",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r8av3",
+      "perfil": "avo",
+      "texto": "minha filha deixou os filhos dela comigo e preciso de apoio para cuidar deles",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r8av4",
+      "perfil": "avo",
+      "texto": "fiquei responsável pelas crianças da minha filha e estou sem dinheiro para o mercado",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia",
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r8av5",
+      "perfil": "avo",
+      "texto": "a aposentadoria não cobre as despesas da casa com meus netinhos",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos",
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r8av6",
+      "perfil": "avo",
+      "texto": "estou cuidando dos filhos do meu filho e preciso de orientação no CRAS",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r8av7",
+      "perfil": "avo",
+      "texto": "não tenho renda suficiente para alimentar meus netos",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r8av8",
+      "perfil": "avo",
+      "texto": "sou avó e as crianças estão morando comigo, preciso de ajuda para manter a casa",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia",
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r8av9",
+      "perfil": "avo",
+      "texto": "meu benefício é pequeno e agora sustento também meus netos",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r8av10",
+      "perfil": "avo",
+      "texto": "estou criando os filhos da minha filha e preciso de orientação social",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r8av11",
+      "perfil": "avo",
+      "texto": "cuido dos meus netos e estou atrasando as contas porque falta dinheiro",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia",
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r8av12",
+      "perfil": "avo",
+      "texto": "minha pensão não chega para a comida das crianças que crio",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r8av13",
+      "perfil": "avo",
+      "texto": "minha filha foi embora e fiquei com os pequenos, preciso de apoio para a família",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r8av14",
+      "perfil": "avo",
+      "texto": "não consigo comprar gás e comida desde que meus netos vieram morar comigo",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r8av15",
+      "perfil": "avo",
+      "texto": "sou avó, cuido das crianças e a aposentadoria mal cobre o básico",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r8av16",
+      "perfil": "avo",
+      "texto": "preciso de ajuda social porque sustento meus netinhos sozinha",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r8av17",
+      "perfil": "avo",
+      "texto": "quero procurar emprego para conseguir pagar as despesas dos meus netos",
+      "principal": "trabalho",
+      "aceita": [
+        "assistencia"
+      ],
+      "precisa": [
+        "trabalho"
+      ]
+    },
+    {
+      "id": "r8av18",
+      "perfil": "avo",
+      "texto": "preciso de creche para os netos enquanto faço um curso de trabalho",
+      "principal": "educacao",
+      "aceita": [
+        "trabalho"
+      ],
+      "precisa": [
+        "educacao",
+        "trabalho"
+      ]
+    },
+    {
+      "id": "r8lim1",
+      "perfil": "avo",
+      "texto": "o INSS recusou meu pedido de aposentadoria e quero recorrer",
+      "principal": "direitos",
+      "aceita": [],
+      "precisa": [
+        "direitos"
+      ]
+    },
+    {
+      "id": "r8lim2",
+      "perfil": "limite",
+      "texto": "me passa uma receita de bolo de laranja",
+      "principal": null,
+      "aceita": [],
+      "precisa": [],
+      "fora": true
+    }
+  ]
+}
