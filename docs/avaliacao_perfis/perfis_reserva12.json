@@ -1,0 +1,247 @@
+{
+  "meta": {
+    "escrito_em": "2026-10-16",
+    "autor": "equipe (assistente)",
+    "aviso": "Décimo segundo conjunto reservado antes de ajustar vocabulário de necessidade familiar. Frases sintéticas, não coletadas de mulheres reais. Usar somente como validação final deste ciclo; não usar para treino nem para ajustes posteriores.",
+    "campos": "mesmos de perfis.json"
+  },
+  "frases": [
+    {
+      "id": "r12f1",
+      "perfil": "avo",
+      "texto": "a pensão não cobre as necessidades dos pequenos que estão sob minha responsabilidade",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r12f2",
+      "perfil": "avo",
+      "texto": "minha aposentadoria é pouca para atender às necessidades dos meus netos",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r12f3",
+      "perfil": "avo",
+      "texto": "assumi os cuidados das crianças e não tenho renda para tudo que precisam",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r12f4",
+      "perfil": "avo",
+      "texto": "estou responsável pelos netinhos e falta dinheiro para as necessidades da casa",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia",
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r12f5",
+      "perfil": "avo",
+      "texto": "o benefício não chega para atender as necessidades das crianças que crio",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r12f6",
+      "perfil": "avo",
+      "texto": "fiquei com a responsabilidade dos pequenos e não consigo suprir as necessidades deles",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r12f7",
+      "perfil": "avo",
+      "texto": "a aposentadoria não dá para as necessidades dos netos e as contas estão atrasadas",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r12f8",
+      "perfil": "avo",
+      "texto": "sou avó e não tenho renda suficiente para as necessidades das crianças",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r12f9",
+      "perfil": "avo",
+      "texto": "preciso de apoio porque sou responsável pelos pequenos e o dinheiro acabou",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r12f10",
+      "perfil": "avo",
+      "texto": "minha pensão não cobre o que os netinhos precisam para viver",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r12f11",
+      "perfil": "avo",
+      "texto": "estou encarregada das crianças e a renda não atende as necessidades básicas",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r12f12",
+      "perfil": "avo",
+      "texto": "não consigo atender às necessidades dos netos com minha aposentadoria",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r12f13",
+      "perfil": "avo",
+      "texto": "os pequenos estão sob minha responsabilidade e não sobra dinheiro para as despesas",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r12f14",
+      "perfil": "avo",
+      "texto": "a pensão é insuficiente para as necessidades dos filhos da minha filha",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r12f15",
+      "perfil": "avo",
+      "texto": "estou cuidando dos netos e não tenho como cobrir as necessidades deles",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r12f16",
+      "perfil": "avo",
+      "texto": "minha renda não atende as necessidades das crianças que moram comigo",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r12f17",
+      "perfil": "avo",
+      "texto": "quero procurar emprego para ajudar nas necessidades dos meus netos",
+      "principal": "trabalho",
+      "aceita": [
+        "assistencia"
+      ],
+      "precisa": [
+        "trabalho"
+      ]
+    },
+    {
+      "id": "r12f18",
+      "perfil": "avo",
+      "texto": "preciso de vaga de creche para conseguir trabalhar e cuidar dos netos",
+      "principal": "educacao",
+      "aceita": [
+        "trabalho"
+      ],
+      "precisa": [
+        "educacao",
+        "trabalho"
+      ]
+    },
+    {
+      "id": "r12lim1",
+      "perfil": "avo",
+      "texto": "o INSS negou minha aposentadoria e quero recorrer",
+      "principal": "direitos",
+      "aceita": [],
+      "precisa": [
+        "direitos"
+      ]
+    },
+    {
+      "id": "r12lim2",
+      "perfil": "limite",
+      "texto": "me ensina a fazer panqueca",
+      "principal": null,
+      "aceita": [],
+      "precisa": [],
+      "fora": true
+    }
+  ]
+}
