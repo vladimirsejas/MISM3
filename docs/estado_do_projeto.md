@@ -99,3 +99,13 @@ for f in web/tests/*.test.js; do node $f; done
 python pipeline/territorio.py          # cobertura e distâncias
 python pipeline/geocodificar_catalogo.py --cnefe <caminho do CNEFE>
 ```
+
+
+## Orientador: avó/cuidadora, renda insuficiente e apoio social — 16/10/2026
+
+- **Implementação em revisão:** a consulta lexical reconhece netos/netas, cuidado de crianças e pedidos explícitos de apoio familiar. Quando há sinais claros de cuidado e necessidade material, o orientador evita classificar a frase como fora do escopo. Pesos, limiares, modelos e camada de segurança não foram alterados.
+- **Testes:** a suíte completa passou no GitHub Actions: 211 testes Python, testes JavaScript, avaliador de necessidades e avaliador do plano.
+- **Validação independente:** `perfis_reserva14.json` marcou 19/20 (95%) no total; no perfil avó, 18/19 respostas corretas no top-3, 17/19 com a área principal em primeiro lugar, 92% de cobertura das necessidades, zero falsos alarmes de perigo e uma frase sem resposta. Execução: https://github.com/vladimirsejas/MISM3/actions/runs/38835434296.
+- **Integridade da avaliação:** as reservas 4 a 13 foram consultadas durante o desenvolvimento e ficam apenas como regressão no CI; não são conjuntos independentes para estimar desempenho final.
+- **Limites restantes:** a frase genérica “preciso de orientação social porque não consigo manter os pequenos” ainda não recebe resposta; não ajustei o código com base nessa falha para preservar a reserva 14. A consulta sobre familiar que usa cartão/dinheiro sem autorização continua sendo uma tarefa separada. A orientação detalhada do CadÚnico ainda depende de conferência/arquivamento de fonte oficial. Não houve validação visual em navegador.
+- **Estado:** PR #57 segue em rascunho, sem mesclagem. MISM2 não foi alterado.
