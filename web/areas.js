@@ -277,19 +277,20 @@
           titulo: "Separação, pensão e guarda",
           tipos: [],
           canais: [
-            { nome: "Defensoria Pública: como pedir ajuda jurídica gratuita (pensão, guarda, reconhecimento do pai)", sem_tel: true, resumo: "Ver o passo a passo",
+            { nome: "Defensoria Pública: como pedir ajuda jurídica gratuita (pensão, guarda, reconhecimento do pai)", tel: "0800 773 4340", resumo: "Ver o passo a passo",
               texto: "Para quem não pode pagar advogado. Vale para pedir pensão, regularizar a guarda de um filho ou de um neto e tratar do reconhecimento do pai.",
               topicos: [
                 ["Quem a Defensoria atende", "Pessoas que não têm condições de pagar advogado. Em geral, famílias com renda de até 3 salários mínimos por mês. O limite pode subir para 4 salários mínimos em alguns casos: família com mais de 5 pessoas; gastos comprovados com tratamento de doença grave ou com remédio de uso contínuo; pessoa com deficiência na família; ou pessoa idosa na família, desde que ela tenha 4 ou mais membros. Em caso de violência doméstica e familiar contra a mulher, o atendimento independe da renda."],
-                ["Como agendar", "O agendamento é pelo portal da Defensoria (defensoria.sp.def.br), pelo celular ou pelo computador, com a assistente virtual (hoje chamada Júlia). Dá para entrar com a conta gov.br ou só com o nome e o CPF. Em 2025, a Defensoria informou o atendimento da assistente virtual em dias úteis, das 8h às 18h."],
+                ["Como agendar", "Pelo portal da Defensoria (defensoria.sp.def.br), pelo celular ou pelo computador, com a assistente virtual Júlia, que a Defensoria diz estar disponível 24 horas. Dá para entrar com a conta gov.br ou só com o nome e o CPF. Também dá para ligar para o 0800 773 4340, das 7h às 19h, em dias úteis."],
                 ["Se é urgente", "Quem não pode esperar tem vagas com espera reduzida: a Defensoria analisa a urgência de acordo com o caso, considerando se a demora pode causar prejuízo grave ou de difícil reparação. Em finais de semana e feriados há atendimento só de casos urgentes, das 7h às 12h."],
                 ["O que levar", "Podem ser pedidos documentos que mostrem a renda e os gastos da família, como carteira de trabalho e holerite, entre outros. O site da Defensoria tem uma página “Documentos para atendimento” e um item “Preparando-se para o atendimento”: veja antes de ir."],
                 ["Onde fica", "A unidade de Rio Claro atende na Rua Um, nº 659, bairro Saúde, desde 01/07/2025, segundo a Defensoria. Confirme o endereço antes de ir."],
+                ["Cuidado com golpes", "A Defensoria informa que não cobra por atendimento. Desconfie de quem pedir dinheiro para marcar ou para resolver o seu caso."],
                 ["O que a Defensoria pode fazer", "Entrar com ações na Justiça, atuar em processos em andamento e promover acordos e conciliações entre as pessoas. No agendamento, pergunte se o seu caso (pensão, guarda ou reconhecimento do pai) pode ser atendido."],
                 ["Se você cria os netos e não tem a guarda", "Procure a Defensoria para avaliar o seu caso. Escolas e unidades de saúde têm regras próprias: pergunte lá o que aceitam enquanto isso."]
               ],
-              aviso: "Estas informações vêm da Defensoria Pública do Estado de São Paulo (notícia de 26/06/2025 e página “Agende seu atendimento”). O endereço e os horários podem ter mudado: confirme. Este texto não diz se o seu caso será atendido nem o que a Justiça vai decidir sobre pensão ou guarda.",
-              fonte: ["Defensoria Pública do Estado de São Paulo", "https://www.defensoria.sp.def.br/", "notícia de 26/06/2025 e página “Agende seu atendimento”, impressas em 11/10 e 15/10/2026"] }
+              aviso: "Estas informações vêm da Defensoria Pública do Estado de São Paulo (notícia de 26/06/2025, página “Agende seu atendimento” e conta oficial da Defensoria no Instagram, de abril de 2026). O endereço e os horários podem ter mudado: confirme. Este texto não diz se o seu caso será atendido nem o que a Justiça vai decidir sobre pensão ou guarda.",
+              fonte: ["Defensoria Pública do Estado de São Paulo", "https://www.defensoria.sp.def.br/", "notícia de 26/06/2025, página “Agende seu atendimento” e postagem da conta oficial da Defensoria (abril de 2026), impressas em 11/10 e 15/10/2026"] }
           ],
           links: [
             ["Defensoria Pública do Estado de São Paulo", "https://www.defensoria.sp.def.br/", "Canais oficiais de orientação jurídica e critérios de atendimento."]

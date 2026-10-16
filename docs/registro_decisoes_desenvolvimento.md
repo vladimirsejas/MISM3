@@ -987,3 +987,10 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - **Não foi escrito, de propósito:** o passo a passo de pensão alimentícia e de reconhecimento de paternidade (documentos, o que fazer se o pai não consta, que a pensão vale a partir do pedido). Falta a página certa do Senado ("Como fazer para pedir pensão alimentícia") ou da Defensoria; sem fonte lida, o projeto não afirma.
 - **Verificação:** 19 arquivos de Node e 211 de Python passam; avaliação oficial sem nenhuma pergunta pior; índice regerado (164 destinos).
 
+## 16/10/2026 — Telefone e horário da Defensoria (resolvidos pela conta oficial no Instagram)
+
+- **Fonte nova:** `defensoria-sp-instagram-rio-claro.pdf`, postagem da conta oficial verificada @defensoria_sp (abril de 2026): endereço Rua Um, nº 659; assistente virtual Júlia disponível 24 horas; telefone **0800 773 4340, das 7h às 19h, em dias úteis**. É rede social da instituição, então o aviso do cartão manda confirmar; o telefone também foi para o catálogo (`man-defensoria-nudem`).
+- **O que mudou:** o cartão da Defensoria na área Direitos ganhou o telefone (link de ligar), o horário atual da assistente virtual (a notícia de 2025 dizia 8h às 18h; vale o de 2026) e um aviso de golpe ("a Defensoria informa que não cobra por atendimento": só o título dessa postagem aparece na impressão, então a frase é prudente e curta).
+- **Código:** `web/app.js` passou a montar o link de ligar só com os dígitos do telefone (antes usava o texto como estava), para aceitar "0800 773 4340" com espaços sem quebrar o link. Vale para todos os cartões de canal.
+- **Pendências:** os seis itens que vieram fechados na página "Agende seu atendimento" (quem tem direito, preparando-se, atendimentos urgentes...) e o passo a passo de pensão alimentícia e reconhecimento de paternidade.
+
