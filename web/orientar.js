@@ -43,13 +43,13 @@
       /\b(?:netos?|netas?|netinhas?|netinhos?)\b/.test(t) ||
       (/\b(?:avo|vovo|vo)\b/.test(t) && /\b(?:criancas?|pequenos|meninos|meninas)\b/.test(t)) ||
       (/\b(?:filha|filho)\b/.test(t) && /\b(?:criancas?|pequenos|meninos|meninas|filhos?)\b/.test(t) &&
-       /\b(?:cri[ao]\w*|cuid[ao]\w*|responsavel|responsabil\w*|comigo|deixou|mora comigo)\b/.test(t)) ||
+       /\b(?:(?:crio|cria|criam|criei|criou|criando|criar|criamos|criado|criada)|cuid[ao]\w*|responsavel|responsabil\w*|comigo|deixou|mora comigo)\b/.test(t)) ||
       (/\b(?:criancas?|meninos|meninas|pequenos|filhos?)\b/.test(t) &&
        /\b(?:dependem de mim|depende de mim)\b/.test(t)) ||
       (/\b(?:criancas?|meninos|meninas|pequenos|filhos?)\b/.test(t) &&
        /\b(?:dinheiro|renda|recursos?|comida|aliment\w*|fome|nao chega|nao da|falta|faltando|despesas?|necessidades?|mercado|gas|botijao|contas?)\b/.test(t) &&
-       /\b(?:aposentadoria|aposentad[ao]s?|pensao|beneficio|renda|comigo|responsavel|responsabil\w*|cuid[ao]\w*|cri[ao]\w*|fiquei|ficou|moro|moram|deixou)\b/.test(t));
-    var necessidade = /\b(?:aposentadoria|aposentad[ao]s?|pensao|beneficio|renda|dinheiro|recursos?|contas?|despesas?|comida|aliment\w*|sustent\w*|cri[ao]\w*|cuid[ao]\w*|falta|faltando|nao da|nao sobra|nao consigo pagar|geladeira vazia|ajuda|apoio|orientacao|assistencia social|fome|nao chega|necessidades?|mercado|gas|botijao)\b/.test(t);
+       /\b(?:aposentadoria|aposentad[ao]s?|pensao|beneficio|renda|comigo|responsavel|responsabil\w*|cuid[ao]\w*|(?:crio|cria|criam|criei|criou|criando|criar|criamos|criado|criada)|fiquei|ficou|moro|moram|deixou)\b/.test(t));
+    var necessidade = /\b(?:aposentadoria|aposentad[ao]s?|pensao|beneficio|renda|dinheiro|recursos?|contas?|despesas?|comida|aliment\w*|sustent\w*|(?:crio|cria|criam|criei|criou|criando|criar|criamos|criado|criada)|cuid[ao]\w*|falta|faltando|nao da|nao sobra|nao consigo pagar|geladeira vazia|ajuda|apoio|orientacao|assistencia social|fome|nao chega|necessidades?|mercado|gas|botijao)\b/.test(t);
     return contexto && necessidade;
   }
 
