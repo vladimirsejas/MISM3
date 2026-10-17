@@ -41,7 +41,7 @@ assert.strictEqual(caso.passos.find((p) => p.id === "deslocamento").acao.alvo, "
 
 /* ---- telefones vêm do catálogo verificado; sem catálogo, não aparece telefone (nunca se inventa) ---- */
 assert.strictEqual(caso.passos[0].contato.telefone, "(19) 3522-1930");
-assert.strictEqual(caso.passos.find((p) => p.id === "vagas").contato.telefone, "(19) 3525-2785");
+assert.strictEqual(caso.passos.find((p) => p.id === "vagas").contato.telefone, "(19) 3524-0504");
 const semCatalogo = J.montarPlano({ renda_agora: "sim", objetivo: "emprego" });
 semCatalogo.passos.forEach((p) => assert.strictEqual(p.contato, null, "sem catálogo, sem telefone: " + p.id));
 const texto = JSON.stringify(caso.passos);
@@ -130,6 +130,10 @@ assert(secSaude, "a área Saúde precisa ter a seção apontada pelo plano");
 J.PERGUNTAS.forEach((p) => assert(!/violên|CPF|renda mensal|salário|nome/i.test(p.texto), "pergunta sensível demais: " + p.texto));
 
 /* ---- currículo ---- */
+global.self = { Jornada: J };
+require("../jornada-ui.js");
+const UI = global.self.JornadaUI;
+
 const cv = J.montarCurriculo({ nome: "  Maria  Souza ", telefone: "(19) 99439-4433", objetivo: "Auxiliar de cozinha",
   experiencias: "Cozinha do bar\n\n  Limpeza de casas  ", formacao: "", habilidades: "Atendimento\nCostura", disponibilidade: "Manhãs" });
 assert.strictEqual(cv.nome, "Maria Souza");
@@ -137,14 +141,100 @@ assert.deepStrictEqual(cv.secoes.map((s) => s.titulo), ["Objetivo", "Experiênci
 assert.deepStrictEqual(cv.secoes[1].itens, ["Cozinha do bar", "Limpeza de casas"]);
 assert.strictEqual(J.montarCurriculo({}).vazio, true);
 assert.strictEqual(J.montarCurriculo({ experiencias: "x\n".repeat(40) }).secoes[0].itens.length, 12, "limita o número de linhas");
+/* A tela usa a jornada registrada (J.de), não o módulo todo: ela precisa conseguir montar o currículo. */
+const cvDaJornada = J.de("trabalho").montarCurriculo({ nome: "Maria", objetivo: "Auxiliar de cozinha" });
+assert.strictEqual(cvDaJornada.nome, "Maria", "a jornada Trabalho registrada monta o currículo");
+assert.strictEqual(typeof J.de("trabalho").dadosDesnecessarios, "function", "a jornada registrada avisa sobre dados desnecessários");
+const secaoCv = UI.html(true);
+assert(/id="montar-curriculo"/.test(secaoCv), "o formulário do currículo continua na jornada Trabalho");
+assert(/word\.cloud\.microsoft\/create/.test(secaoCv), "inclui modelos de currículo do Word");
+assert(/docs\.google\.com/.test(secaoCv), "inclui Google Docs");
+assert(/servicos\.mte\.gov\.br/.test(secaoCv), "inclui Emprega Brasil/SINE");
+assert(/vagas\.com\.br/.test(secaoCv), "inclui Vagas.com.br");
+assert(/br\.indeed\.com/.test(secaoCv), "inclui Indeed Brasil");
+assert(/infojobs\.com\.br/.test(secaoCv), "inclui Infojobs");
+assert(/portal\.gupy\.io/.test(secaoCv), "inclui Gupy");
+assert(/br\.linkedin\.com\/jobs/.test(secaoCv), "inclui vagas do LinkedIn");
+assert(/trabalhabrasil\.com\.br/.test(secaoCv), "inclui Trabalha Brasil");
+assert(!/livecareer|canva\.com/i.test(secaoCv), "não inclui plataformas de currículo com recursos pagos");
+assert(/Preciso de dinheiro esta semana/.test(secaoCv), "prioriza renda urgente");
+assert(/O que posso fazer hoje/.test(secaoCv), "tem checklist simples para hoje");
+assert(/Nunca trabalhei/.test(secaoCv), "explica currículo sem experiência");
+assert(/Onde procurar trabalho sem experiência/.test(secaoCv), "sugere locais para procurar vaga presencial");
+assert(/Serviços públicos e cursos gratuitos/.test(secaoCv), "reúne serviços públicos e cursos");
+assert(/Antes da entrevista/.test(secaoCv), "prepara para entrevista em linguagem simples");
+assert(/class="atalhos-trabalho"/.test(secaoCv), "oferece atalhos verticais para encontrar os assuntos");
+assert(/Transporte e passagem: planeje antes de sair/.test(secaoCv), "orienta sobre custo e planejamento do transporte");
+assert(/Tenho filhos\. Como organizar o cuidado\?/.test(secaoCv), "inclui orientação sobre cuidado dos filhos sem prometer vaga");
+assert(/Recebi um não\. E agora\?/.test(secaoCv), "acolhe a rejeição e sugere próximos passos realistas");
+assert(/Peça ajuda à sua rede/.test(secaoCv), "inclui mensagem para rede de apoio");
+assert(/Cuidado com golpes de emprego/.test(secaoCv), "inclui prevenção de golpes");
+assert(/Se o desânimo apertar/.test(secaoCv), "inclui apoio emocional e CVV");
+assert(/data-copiar="rede"/.test(secaoCv) && /data-copiar="modelo"/.test(secaoCv), "oferece botões para copiar mensagens e modelo");
+assert(/não há pagamento garantido/.test(secaoCv), "não promete renda garantida");
+assert(/Ideias de renda, da mais fácil/.test(secaoCv) && /Nenhuma delas garante dinheiro/.test(secaoCv), "opções de renda por viabilidade, sem prometer ganho");
+assert(/Vender o que você já tem/.test(secaoCv) && /Comida por encomenda/.test(secaoCv) && /Trabalho digital simples/.test(secaoCv), "renda: usados, comida e trabalho digital");
+assert(/Cabelo e unhas sem gastar/.test(secaoCv) && /não precisa de salão, escova, esmalte nem manicure/.test(secaoCv), "cabelo e unhas sem exigir gasto");
+assert(/Falta o básico/.test(secaoCv) && /href="#assistencia"/.test(secaoCv) && /Nenhum benefício é automático/.test(secaoCv), "liga Trabalho à assistência social sem prometer benefício");
+assert(!/shopee/i.test(secaoCv), "não indica lojas como fonte de dicas");
+assert(!/Vagas e atendimento aqui em Rio Claro/.test(secaoCv) || !/\(19\) 3524-0504/.test(secaoCv), "sem catálogo, nenhum telefone é escrito à mão na tela");
+UI.usarCatalogo((id) => (catalogo.servicos || []).find((x) => x.id === id) || null);
+const secaoLocal = UI.html(true);
+const pat = (catalogo.servicos || []).find((x) => x.id === "man-pat");
+assert(pat && secaoLocal.includes(pat.telefone), "o telefone do PAT na tela vem do catálogo verificado");
+assert(/Vagas e atendimento aqui em Rio Claro/.test(secaoLocal) && /Ligue antes de ir/.test(secaoLocal), "bloco local manda confirmar antes de ir");
+assert(/Rua 3, nº 1636/.test(secaoLocal) && /Segunda a sexta, das 8h às 16h/.test(secaoLocal) && /\(19\) 3524-0504/.test(secaoLocal) && /sede da Acirc/.test(secaoLocal), "mostra endereço, dias, horário e telefone do PAT na sede da Acirc, vindos do catálogo");
+assert(!/3525-2785/.test(secaoLocal), "o telefone antigo da Unidade Cervezão não aparece mais");
+assert(!/Unidade Cervezão|Informação de 2023, não conferida/.test(secaoLocal), "não mostra o endereço antigo nem aviso de dúvida já resolvido");
+assert(/este site não confirma onde isso é oferecido/.test(secaoLocal), "não promete impressão gratuita em lugar nenhum");
+assert(/Trabalho por conta própria: MEI/.test(secaoLocal) && /gov\.br\/empresas-e-negocios/.test(secaoLocal), "MEI com fonte oficial");
+assert(/Estudar para trabalhar melhor/.test(secaoLocal) && /Comece por uma coisa só/.test(secaoLocal), "formação: começa por uma coisa só");
+["ev.org.br", "univesp.br", "vestibular.univesp.br", "ifsp.edu.br", "sp.senac.br", "learn.microsoft.com", "sebrae.com.br", "educacao-executiva.fgv.br"].forEach((h) => assert(secaoLocal.includes(h), "formação: falta o site oficial " + h));
+assert(/dois salários mínimos por pessoa/.test(secaoLocal) && /confira as regras atuais/.test(secaoLocal), "Senac: regra de renda com aviso para conferir");
+assert(!/\d+ ?horas|\d+ ?h\b(?! às)/.test(secaoLocal.split("trabalho-estudar")[2] || ""), "formação: não afirma carga horária que não foi confirmada");
+assert(!/inscrições abertas/.test(secaoLocal.split("trabalho-estudar")[2] || "") && /não confirma se há inscrição aberta/.test(secaoLocal), "formação: não afirma matrícula aberta");
+assert(/Concurso público/.test(secaoLocal) && /depende do edital/.test(secaoLocal), "concurso: depende do edital");
+["concursopublico.sp.gov.br", "pciconcursos.com.br", "vunesp.com.br", "cebraspe.org.br/concursos/inscricoes-abertas"].forEach((h) => assert(secaoLocal.includes(h), "concurso: falta o site " + h));
+assert(/Buffet de festas \(adulto e infantil\)/.test(secaoLocal) && /não cadastra buffets/.test(secaoLocal), "dica de buffet adulto e infantil, sem prometer vaga");
+assert((secaoLocal.match(/id="trabalho-sem-experiencia"/g) || []).length === 1, "o bloco Onde procurar trabalho sem experiência existe uma vez só");
+assert(/Revenda por consignação/.test(secaoLocal) && /não compre kit inicial/.test(secaoLocal), "consignação sem comprar kit");
+assert(/leve água e um lanche/.test(secaoLocal), "logística do dia da entrevista");
+assert(!/R\$\s?\d/.test(secaoLocal), "não promete valores de pagamento");
+
+/* Renda imediata (trabalhos pontuais, calculadora de saldo e mensagem pronta), recuperada da branch gracious-hopper. */
+assert(/Trabalhos pontuais e quanto sobra/.test(secaoLocal) && /id="renda-imediata"/.test(secaoLocal), "a jornada Trabalho tem o bloco de trabalhos pontuais e saldo");
+assert(/href="#trabalho\/renda-imediata"/.test(secaoLocal), "o menu 'Por onde começar' leva ao bloco de saldo");
+assert(/buffets infantis/i.test(secaoLocal) && /fins de semana/.test(secaoLocal), "inclui trabalho temporário em buffets infantis");
+assert(/data-calcular-renda/.test(secaoLocal) && /renda-transporte/.test(secaoLocal) && /renda-cuidado/.test(secaoLocal), "inclui cálculo do saldo depois dos custos");
+assert(!/id="renda-bruta"[^>]*value=/.test(secaoLocal), "a calculadora não vem com valor de pagamento pré-preenchido");
+assert(/GetNinjas/.test(secaoLocal) && /não pague taxa/i.test(secaoLocal), "alerta para plataformas pagas e golpes");
+assert(/mensagem-renda/.test(secaoLocal), "inclui mensagem pronta para procurar trabalho");
+/* O botão só funciona se o tratador de cliques o reconhece (já falhou assim: o texto aparecia e o botão não fazia nada). */
+const fonteUI = require("fs").readFileSync(require("path").join(__dirname, "..", "jornada-ui.js"), "utf8");
+assert(/closest\("[^"]*\[data-calcular-renda\][^"]*"\)/.test(fonteUI), "o clique em 'Calcular quanto sobra' está ligado ao tratador de cliques");
+assert(!/\d+ ?% das vagas/.test(secaoLocal), "sem estatística sem fonte");
+UI.usarCatalogo(null);
+
+/* O roteador (app.js, render) lê o primeiro trecho do endereço como o nome de uma ÁREA: "#trabalho-agora" cairia na Home.
+   Então todo link interno precisa ser "#area" ou "#area/secao", com a área existente e a seção presente na tela. */
+const AREAS_SITE = require("../areas.js");
+function conferirLinksInternos(htmlTela, nome) {
+  (htmlTela.match(/href="#[^"]+"/g) || []).forEach((h) => {
+    const alvo = h.slice(7, -1), partes = alvo.split("/");
+    assert(AREAS_SITE.porId(partes[0]), nome + ": o link interno " + h + " leva à Home, porque '" + partes[0] + "' não é uma área (use #area/secao)");
+    if (partes[1] && partes[0] === "trabalho") assert(htmlTela.includes('id="' + partes[1] + '"'), nome + ": a seção " + partes[1] + " não existe na tela de Trabalho");
+  });
+}
+conferirLinksInternos(secaoCv, "Trabalho (sem catálogo)");
+UI.usarCatalogo((id) => (catalogo.servicos || []).find((x) => x.id === id) || null);
+conferirLinksInternos(UI.html(true), "Trabalho (com catálogo)");
+UI.usarCatalogo(null);
+
 assert.deepStrictEqual(J.dadosDesnecessarios({ a: "123.456.789-09" }), ["parece haver um CPF"]);
 assert.deepStrictEqual(J.dadosDesnecessarios({ a: "13500-190" }), ["parece haver um CEP"]);
 assert.deepStrictEqual(J.dadosDesnecessarios({ a: "(19) 99439-4433 e (19) 3522-1930" }), [], "telefone não é dado desnecessário");
 
 /* ---- a tela escapa o que a pessoa digita ---- */
-global.self = { Jornada: J };
-require("../jornada-ui.js");
-const UI = global.self.JornadaUI;
 const html = UI.htmlCurriculo(J.montarCurriculo({ nome: "<img src=x onerror=alert(1)>", experiencias: "<script>alert(1)</script>" }));
 assert(!/<img|<script/.test(html), "texto digitado deve ser escapado");
 assert(/&lt;img/.test(html));
@@ -165,6 +255,14 @@ assert(passoVagas, "o plano de quem procura vaga deve ter o passo de vagas");
 assert(passoVagas.pergunte.some((t) => /14\.542/.test(t) && /PAT/.test(t)), "a prioridade do Sine deve aparecer, mandando perguntar no PAT");
 assert(passoVagas.extras.some((l) => /camara\.leg\.br\/legin\/fed\/lei\/2023\/lei-14542/.test(l[1])), "link da lei na fonte oficial");
 
+const interfaceTrabalho = UI.html();
+assert(interfaceTrabalho.includes("mepoupe.com/dicas-de-riqueza/procurando-emprego-como-se-vestir-sem-gastar-a-grana-que-voce-nao-tem"), "área Trabalho inclui a leitura da Me Poupe sobre roupa sem gastar");
+assert(interfaceTrabalho.includes("ciadeestagios.com.br/guia-profissional/como-se-vestir"), "área Trabalho inclui o guia da Cia de Estágios");
+
+
+assert(/não precisa comprar roupa, sapato ou maquiagem/.test(interfaceTrabalho), "orientação de entrevista não exige gasto com roupa");
+assert(interfaceTrabalho.includes("unicesumar.edu.br/blog/como-se-vestir-para-entrevista-de-emprego"), "área Trabalho inclui o guia da Unicesumar");
+assert(interfaceTrabalho.includes("passaportefashionista.com/5-dicas-infaliveis-para-se-vestir-bem-sem-gastar-muito"), "área Trabalho inclui dicas para se vestir bem gastando pouco");
 console.log("jornada.test.js: perguntas, ordem e tamanho do plano, telefones do catálogo, links, promessas proibidas e currículo passaram");
 
 /* Pulou a pergunta do cuidado: o passo continua (ela tem filhos), mas sem afirmar que ela não tem com quem deixá-los. */

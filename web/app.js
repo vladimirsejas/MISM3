@@ -336,6 +336,11 @@
     var alvo = document.getElementById(id);
     if (!alvo) return false;
     if (alvo.tagName === "DETAILS") alvo.open = true;
+    /* O destino do currículo é uma seção com um <details> interno. Abrimos o formulário ao chegar pelo orientador. */
+    if (id === "montar-curriculo") {
+      var detalheCurriculo = alvo.querySelector("details");
+      if (detalheCurriculo) detalheCurriculo.open = true;
+    }
     var recolhida = alvo.querySelector("details.secao-recolhida");
     if (recolhida) recolhida.open = true;
     var calmo = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;

@@ -1,0 +1,246 @@
+{
+  "meta": {
+    "escrito_em": "2026-10-16",
+    "autor": "equipe (assistente)",
+    "aviso": "Conjunto consultado durante o desenvolvimento e usado para orientar ajustes; não é mais uma avaliação independente. Manter apenas como regressão no CI. Não usar para treino nem para estimar desempenho final.",
+    "campos": "mesmos de perfis.json"
+  },
+  "frases": [
+    {
+      "id": "r13f1",
+      "perfil": "avo",
+      "texto": "assumi os cuidados dos pequenos e minha renda não cobre o que eles precisam",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r13f2",
+      "perfil": "avo",
+      "texto": "cuido dos netos e o dinheiro não chega para as despesas da família",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r13f3",
+      "perfil": "avo",
+      "texto": "estou criando as crianças e a renda mal dá para alimentação",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r13f4",
+      "perfil": "avo",
+      "texto": "minha pensão é insuficiente para as necessidades dos netinhos",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r13f5",
+      "perfil": "avo",
+      "texto": "fiquei encarregada dos pequenos e não sobra renda para o mercado",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r13f6",
+      "perfil": "avo",
+      "texto": "a aposentadoria não cobre as despesas dos netos que moram comigo",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r13f7",
+      "perfil": "avo",
+      "texto": "sou responsável pelas crianças e falta dinheiro para as necessidades delas",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r13f8",
+      "perfil": "avo",
+      "texto": "os filhos da minha filha estão comigo e não tenho renda para alimentá-los",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r13f9",
+      "perfil": "avo",
+      "texto": "minha renda não dá para manter a casa e cuidar dos netinhos",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r13f10",
+      "perfil": "avo",
+      "texto": "estou com a responsabilidade dos netos e o dinheiro acabou",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r13f11",
+      "perfil": "avo",
+      "texto": "não consigo atender às necessidades das crianças que crio",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r13f12",
+      "perfil": "avo",
+      "texto": "a pensão não chega para comprar comida para os pequenos",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r13f13",
+      "perfil": "avo",
+      "texto": "fiquei responsável pelos netos e as contas básicas estão atrasadas",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r13f14",
+      "perfil": "avo",
+      "texto": "estou cuidando das crianças e não tenho recursos para tudo que precisam",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r13f15",
+      "perfil": "avo",
+      "texto": "minha aposentadoria é a única renda e agora sustento os netos",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r13f16",
+      "perfil": "avo",
+      "texto": "preciso de orientação social porque os pequenos dependem de mim",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r13f17",
+      "perfil": "avo",
+      "texto": "quero conseguir emprego para pagar as despesas dos meus netos",
+      "principal": "trabalho",
+      "aceita": [
+        "assistencia"
+      ],
+      "precisa": [
+        "trabalho"
+      ]
+    },
+    {
+      "id": "r13f18",
+      "perfil": "avo",
+      "texto": "preciso de creche para poder trabalhar e cuidar dos pequenos",
+      "principal": "educacao",
+      "aceita": [
+        "trabalho"
+      ],
+      "precisa": [
+        "educacao",
+        "trabalho"
+      ]
+    },
+    {
+      "id": "r13lim1",
+      "perfil": "avo",
+      "texto": "o INSS negou minha aposentadoria e preciso contestar",
+      "principal": "direitos",
+      "aceita": [],
+      "precisa": [
+        "direitos"
+      ]
+    },
+    {
+      "id": "r13lim2",
+      "perfil": "limite",
+      "texto": "qual é a capital do Chile",
+      "principal": null,
+      "aceita": [],
+      "precisa": [],
+      "fora": true
+    }
+  ]
+}
