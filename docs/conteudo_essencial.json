@@ -175,6 +175,10 @@
    ],
    "atalhos": [
     "Meu filho ou familiar usa álcool ou drogas -> #saude-familia-drogas",
+    "Preciso de ajuda para a saúde mental -> #saude-unidades",
+    "Preciso de atendimento urgente -> #saude-unidades",
+    "Preciso de remédio -> #saude-unidades",
+    "Quero ser atendida no posto de saúde -> #saude-unidades",
     "Unidades de saúde -> #saude-unidades"
    ],
    "ancoras": [
@@ -219,8 +223,17 @@
     "https://www12.senado.leg.br/noticias/especiais/especial-cidadania/pensao-alimenticia-atende-necessidades-basicas-e-padrao-de-vida/como-fazer-para-pedir-pensao-alimenticia",
     "https://www12.senado.leg.br/radio/1/noticia/2026/07/30/nova-lei-cria-transferencia-automatica-da-pensao-alimenticia"
    ],
-   "atalhos": [],
-   "ancoras": []
+   "atalhos": [
+    "Aposentadoria e dívidas -> #secao-3",
+    "Preciso de orientação jurídica sem poder pagar advogado -> #secao-1",
+    "Preciso de pensão ou da guarda dos filhos (ou dos netos) -> #secao-1",
+    "Sofro violência ou tenho medo de alguém -> #secao-2"
+   ],
+   "ancoras": [
+    "secao-1",
+    "secao-2",
+    "secao-3"
+   ]
   },
   "moradia": {
    "secoes": [

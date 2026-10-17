@@ -235,6 +235,10 @@
         titulo: "O que você encontra nesta página",
         texto: "Cuidar de quem você ama também cansa. Aqui estão a saúde para você e os caminhos para quando um filho ou outro familiar usa álcool ou drogas.",
         itens: [
+          { titulo: "Preciso de atendimento urgente", texto: "UPAs e hospitais, com endereço e telefone. Em urgência médica, ligue 192 (SAMU).", ancora: "saude-unidades", botao: "Ver UPAs e hospitais" },
+          { titulo: "Quero ser atendida no posto de saúde", texto: "Os postos de saúde (UBS e USF) de Rio Claro, com endereço e telefone. Ligue antes para saber como ser atendida.", ancora: "saude-unidades", botao: "Ver os postos de saúde" },
+          { titulo: "Preciso de ajuda para a saúde mental", texto: "O CVV, no 188, conversa 24 horas por dia, de graça. Os CAPS, serviços de saúde mental da rede pública, estão na lista de unidades.", ancora: "saude-unidades", botao: "Ver os CAPS" },
+          { titulo: "Preciso de remédio", texto: "A Farmácia Central e o Dispensário de Medicamentos estão na lista de unidades. Ligue para saber o que é preciso levar.", ancora: "saude-unidades", botao: "Ver as farmácias" },
           { titulo: "Meu filho ou familiar usa álcool ou drogas", texto: "Por onde começar, o que fazer numa crise, onde ligar e como cuidar de você nesse caminho. A culpa não é sua.", ancora: "saude-familia-drogas", botao: "Ver o que fazer" },
           { titulo: "Unidades de saúde", texto: "Postos, UPAs, hospitais e especialidades, com endereço e telefone.", ancora: "saude-unidades", botao: "Ver as unidades" }
         ]
@@ -300,9 +304,19 @@
     {
       exemploDuvida: "preciso de advogado de graça", id: "direitos", nome: "Direitos", icone: "direitos",
       intro: "Orientação jurídica, separação, pensão, aposentadoria, dívidas e proteção contra a violência.",
+      guia: {
+        titulo: "O que você encontra nesta página",
+        texto: "Escolha a sua situação. Se você está em perigo agora, use o botão “Em perigo agora?” no topo da página ou ligue 190.",
+        itens: [
+          { titulo: "Sofro violência ou tenho medo de alguém", texto: "Os canais de proteção, a Delegacia de Defesa da Mulher, a Patrulha Maria da Penha e a Defensoria. Violência contra a mulher: ligue 180, 24 horas, de graça.", ancora: "secao-2", botao: "Ver os canais de proteção" },
+          { titulo: "Preciso de pensão ou da guarda dos filhos (ou dos netos)", texto: "Como pedir a pensão, o que levar e como falar com a Defensoria.", ancora: "secao-1", botao: "Ver pensão e guarda" },
+          { titulo: "Preciso de orientação jurídica sem poder pagar advogado", texto: "A Defensoria Pública atende quem não tem condições de pagar: como agendar e o que levar.", ancora: "secao-1", botao: "Ver a Defensoria" },
+          { titulo: "Aposentadoria e dívidas", texto: "Simular a aposentadoria no Meu INSS e onde buscar ajuda com dívidas.", ancora: "secao-3", botao: "Ver aposentadoria e dívidas" }
+        ]
+      },
       secoes: [
         {
-          titulo: "Separação, pensão e guarda",
+          titulo: "Separação, pensão e guarda", ancora: "secao-1",
           tipos: [],
           canais: [
             { nome: "Pensão alimentícia: como pedir e o que levar", sem_tel: true, resumo: "Ver o passo a passo",
@@ -340,7 +354,7 @@
           ]
         },
         {
-          titulo: "Violência e proteção",
+          titulo: "Violência e proteção", ancora: "secao-2",
           tipos: ["mulher"],
           urgente: true,
           links: [
@@ -349,7 +363,7 @@
           ]
         },
         {
-          titulo: "Aposentadoria e dívidas",
+          titulo: "Aposentadoria e dívidas", ancora: "secao-3",
           tipos: [],
           links: [
             ["Procon de Rio Claro", "https://rioclaro.sp.gov.br/secretaria/secretaria-de-justica/", "A página municipal informa os contatos das unidades do Procon, para orientação sobre dívidas de consumo."],
