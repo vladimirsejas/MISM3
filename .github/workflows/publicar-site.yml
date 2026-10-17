@@ -1,0 +1,41 @@
+# Publica a pasta web/ no GitHub Pages (https://vladimirsejas.github.io/MISM3/).
+# Só roda depois que o Pages for ligado em Settings > Pages > Source: "GitHub Actions" (ver docs/publicar_no_github_pages.md).
+# NÃO publica: os testes, o protótipo do painel da Secretaria e os dados de teste dele.
+name: Publicar site
+
+on:
+  push:
+    branches: [main, claude/maes-solo-educacao]
+    paths: ["web/**", ".github/workflows/publicar-site.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Montar a pasta do site
+        run: |
+          cp -r web _site
+          rm -rf _site/tests
+          rm -f _site/painel-secretaria.html _site/painel.js _site/painel-ui.js _site/dados/painel_teste.json
+          touch _site/.nojekyll
+          test -f _site/index.html
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deploy
+        uses: actions/deploy-pages@v4
