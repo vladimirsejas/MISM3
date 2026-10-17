@@ -1091,3 +1091,10 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - **A trava pegou uma mudança minha:** renomeei o atalho "Unidades de saúde" e `conteudo_essencial.test.js` reprovou. Voltei ao título original.
 - **Verificado no Chromium** em 1100 e 390 px: os 5 atalhos testados levam à seção certa, sem erro de JavaScript.
 
+
+## 17/10/2026 — PDFs enviados pelo notebook e confirmação do grupo familiar do BPC
+
+- Dos 15 PDFs da branch `fontes-pdfs-notebook`, foram arquivados 3 (Lei 8.742/1993 compilada, Lei 14.601/2023, postagem do PAT de 2023); os outros 12 eram cópias, sites privados ou assunto não usado (ver `docs/documetacao/LEIA-ME.md`).
+- Lido o art. 20, § 1º da Lei 8.742/1993: a família do BPC não inclui avós nem netos, exceto menores tutelados. O tópico do BPC no cartão do CadÚnico agora cita isso. O restante do aviso do cartão continua "não conferido".
+- Lei 14.601/2023, art. 4º, I: no Bolsa Família a família é o grupo doméstico no mesmo domicílio que divide rendimento e despesas. O valor per capita de elegibilidade não é citado no site: precisa ser conferido no regulamento.
+- Orientador reavaliado: mesmos acertos de antes (só variou o MRR na terceira casa decimal).
