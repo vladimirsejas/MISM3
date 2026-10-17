@@ -79,7 +79,9 @@
     var m = motor(def.PERGUNTAS, def.aplica, def.depois);
     JORNADAS[def.id] = {
       id: def.id, titulo: def.titulo, tituloImpressao: def.tituloImpressao, temCurriculo: !!def.temCurriculo, primeiraDecideCaminho: !!def.primeiraDecideCaminho,
-      PERGUNTAS: def.PERGUNTAS, limpar: m.limpar, aplicaveis: m.aplicaveis, proxima: m.proxima, montarPlano: def.montarPlano
+      PERGUNTAS: def.PERGUNTAS, limpar: m.limpar, aplicaveis: m.aplicaveis, proxima: m.proxima, montarPlano: def.montarPlano,
+      /* A tela chama estas duas direto na jornada em uso; sem elas o botão "Gerar currículo" falha. */
+      montarCurriculo: montarCurriculo, dadosDesnecessarios: dadosDesnecessarios
     };
   }
   function de(id) { return JORNADAS[id] || null; }

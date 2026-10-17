@@ -175,7 +175,8 @@ assert(moradiaLinks.some((l) => l[1] === "https://www.gov.br/aneel/pt-br/assunto
 assert(Areas.porId("moradia").pendencias.some((p) => /Elektro/.test(p) && /não verifica critérios/.test(p)), "o sistema não deve afirmar critérios de elegibilidade da tarifa social");
 assert(!Areas.porId("moradia").pendencias.some((p) => /link oficial ainda não foi verificado/.test(p)), "pendência de link resolvida");
 assert(moradiaLinks.some((l) => l[1] === "https://daaerioclaro.sp.gov.br/linha-0800-do-daae-passa-a-atender-whatsapp/" && /0800/.test(l[0])), "link do aviso do DAAE sobre o 0800 por WhatsApp");
-assert(!/0800 ?\d/.test(JSON.stringify(Areas.porId("moradia"))), "nenhum número 0800 pode ser escrito sem fonte lida");
+/* Única exceção: o Alô CAIXA (0800 104 0 104), lido na página da CAIXA de 16/10/2026 (docs/documetacao/caixa-minha-casa-minha-vida-classe-media.pdf). */
+assert(!/0800 ?\d/.test(JSON.stringify(Areas.porId("moradia")).split("0800 104 0 104").join("")), "nenhum número 0800 pode ser escrito sem fonte lida");
 const daae = moradiaLinks.find((l) => l[1] === "https://daaerioclaro.sp.gov.br/familias-de-baixa-renda-podem-solicitar-desconto-ao-daae-na-conta-de-agua-e-esgoto/");
 assert(daae && /DAAE/.test(daae[0]), "link do site do DAAE sobre o desconto na conta de água");
 const agua = moradiaCanais.find((c) => /Água e Esgoto — DAAE/.test(c.nome));

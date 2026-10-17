@@ -91,3 +91,28 @@ Governo federal:
 - A prioridade **Minha Casa Minha Vida para a mulher responsável pela família** (depende de ler o PDF dos critérios de habitação).
 
 **Para virar [A] (tirar o aviso):** arquivar em PDF as páginas 1, 2, 3 e 7 da lista de fontes. Quando isso for feito, o aviso final deixa de ser necessário nas partes marcadas B+.
+
+
+---
+
+## Adendo T1 — orientação para avó que sustenta os netos com a aposentadoria (16/10/2026)
+
+**Tópico acrescentado ao cartão existente:** “Se você sustenta seus netos com a aposentadoria”. Não cria botão, porta ou tela nova.
+
+Comece pelo atendimento do Cadastro Único do seu bairro. Conte quem mora na casa, quais netos vivem com você, quem divide as despesas e todas as rendas, inclusive a aposentadoria. Só receber aposentadoria não permite dizer se algum programa será concedido ou não. Leve seus documentos, comprovante de residência e documentos dos moradores, se tiver. Para as crianças, leve CPF ou certidão de nascimento, se tiver. Confirme a lista atual com o CRAS. Se faltar documento, algum neto morar em outro endereço ou houver dúvida sobre guarda, explique a situação e pergunte como declarar. Se não conseguir atendimento, use o contato da Secretaria de Desenvolvimento Social já informado neste cartão. Fontes oficiais lidas em 16/10/2026, ainda sem PDF arquivado: ainda não conferido, confirme no CRAS.
+
+**Fontes lidas em 16/10/2026, ainda não arquivadas em PDF:**
+- Prefeitura de Rio Claro, Secretaria de Desenvolvimento Social — https://desenvolvimentosocial.rc.sp.gov.br/?page_id=3366
+- Ministério do Desenvolvimento e Assistência Social — https://www.gov.br/mds/pt-br/acoes-e-programas/cadastro-unico/perguntas-frequentes-cadastro-unico
+
+**Status:** B+; manter o aviso “ainda não conferido, confirme no CRAS” até que as páginas sejam impressas em PDF e registradas em `docs/documetacao/LEIA-ME.md`. Não há promessa nem conclusão sobre elegibilidade a benefícios.
+
+
+## Complemento T1 — regras do cadastro, responsabilidade familiar e BPC (16/10/2026)
+
+O texto do cartão foi revisado com base nas páginas oficiais consultadas:
+- MDS, Cadastro Único — https://www.gov.br/mds/pt-br/acoes-e-programas/cadastro-unico
+- MDS, Perguntas frequentes do Cadastro Único — https://www.gov.br/mds/pt-br/acoes-e-programas/cadastro-unico/perguntas-frequentes-cadastro-unico
+- MDS, cálculo de renda e grupo familiar para o BPC — https://www.gov.br/mds/pt-br/acoes-e-programas/SUAS/beneficios-assistenciais/como-calcular-a-renda-per-capita-familiar
+
+A orientação diferencia a composição do CadÚnico do grupo familiar usado para calcular o BPC. Não promete elegibilidade ou concessão de benefício. As páginas ainda não foram arquivadas em PDF em `docs/documetacao/`; por isso, o cartão mantém a advertência “ainda não conferido, confirme no CRAS”.
