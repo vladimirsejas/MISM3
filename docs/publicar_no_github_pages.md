@@ -10,13 +10,13 @@ O repositório `vladimirsejas/MISM3` é **público**, então o GitHub Pages é g
 5. Espere uns 2 minutos. O endereço aparece no resumo do fluxo e em **Settings > Pages**.
 
 ## O que vai e o que NÃO vai para a internet
-- **Vai:** a pasta `web/` (as páginas, o catálogo verificado, os horários de ônibus, o modelo de IA e o questionário).
-- **Não vai:** os testes e o **protótipo do painel da Secretaria com dados de teste** (`painel-secretaria.html`, `painel.js`, `painel-ui.js`, `dados/painel_teste.json`). O painel real nunca deve ser público: ele precisa de login num servidor da Prefeitura.
-- **Não existe no site publicado:** `servicos.json` e `cep_indice.json` (ficam só no computador do autor e não estão no repositório). Sem eles, a **busca por CEP não é oferecida** e o cadastro de unidades de saúde do CNES não aparece. O catálogo verificado à mão funciona normalmente.
+- **Vai:** a pasta `web/` inteira (as páginas, o catálogo verificado, os horários de ônibus, os modelos de IA, o questionário, o índice de CEP e o **protótipo do painel da Secretaria**).
+- **Não vai:** só a pasta `web/tests/` (os testes).
+- **Atenção ao painel:** no ramo `main` o painel da Secretaria faz parte da tela inicial (link "Painel da Secretaria") e **ficará público**. Ele só tem **dados de teste**, sorteados por computador, e diz isso numa faixa amarela e nos dados. Mesmo assim, é uma decisão sua: se preferir não expor o painel antes de a Secretaria ver, retire o link da tela inicial antes de ligar o Pages. O painel **real** nunca deve ser público: precisa de login num servidor da Prefeitura.
 
 ## Antes de divulgar o endereço
 - O site se declara **estudo acadêmico, não oficial da Prefeitura** (aviso no rodapé). Mantenha assim.
-- Revise o que ficará público: o cartão do **Peniel** na área Saúde está marcado como "não confirmado por ligação"; o **questionário** diz que a coleta está desligada; a página **Entre Mulheres** diz que o canal de cadastro ainda não foi definido.
+- Revise o que ficará público: o painel mostra só dados de teste (faixa amarela); o cartão do **Peniel** na área Saúde está marcado como "não confirmado por ligação"; o **questionário** diz que a coleta está desligada; a página **Entre Mulheres** diz que o canal de cadastro ainda não foi definido.
 - O código e os documentos do repositório já são públicos, inclusive este.
 
 ## Como atualizar
