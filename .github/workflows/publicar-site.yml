@@ -1,6 +1,6 @@
 # Publica a pasta web/ no GitHub Pages (https://vladimirsejas.github.io/MISM3/).
 # Só roda depois que o Pages for ligado em Settings > Pages > Source: "GitHub Actions" (ver docs/publicar_no_github_pages.md).
-# NÃO publica: os testes, o protótipo do painel da Secretaria e os dados de teste dele.
+# NÃO publica: a pasta de testes. (O protótipo do painel da Secretaria, com dados de teste, faz parte do site no ramo main e vai junto.)
 name: Publicar site
 
 on:
@@ -30,7 +30,6 @@ jobs:
         run: |
           cp -r web _site
           rm -rf _site/tests
-          rm -f _site/painel-secretaria.html _site/painel.js _site/painel-ui.js _site/dados/painel_teste.json
           touch _site/.nojekyll
           test -f _site/index.html
       - uses: actions/configure-pages@v5
