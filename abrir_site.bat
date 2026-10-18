@@ -1,6 +1,6 @@
 @echo off
 setlocal EnableExtensions
-title MISM3 - Mulher em Rede
+title MISM3 - Observatorio da Mulher
 
 rem ======================================================================
 rem  ABRIR O SITE (um clique)
@@ -29,7 +29,7 @@ for /l %%P in (8000,1,8010) do (
 if not defined PORTA goto sem_porta
 
 echo.
-echo  MISM3 - Mulher em Rede
+echo  MISM3 - Observatorio da Mulher
 echo  ----------------------
 echo  Endereco do site: http://localhost:%PORTA%/%PAGINA%
 echo  O navegador vai abrir sozinho em instantes.
