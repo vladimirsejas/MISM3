@@ -1,4 +1,4 @@
-/* Interface do Mulher em Rede (MISM3). O CEP digitado nunca sai do navegador e nunca é gravado. */
+/* Interface do Observatório da Mulher (MISM3). O CEP digitado nunca sai do navegador e nunca é gravado. */
 (function () {
   "use strict";
   var $ = function (id) { return document.getElementById(id); };
@@ -496,7 +496,7 @@
     esconderVistas();
     $("inicio-tela").hidden = false; $("area").hidden = true; $("fontes").hidden = true;
     $("navegacao").hidden = true; $("secao-atual").hidden = true;
-    document.title = "Mulher em Rede – Rio Claro";
+    document.title = "Observatório da Mulher – Rio Claro";
     limparResultadoCep();
   }
 
@@ -515,7 +515,7 @@
     var temServicos = area.secoes.some(function (s) { return s.tipos.length; });
     $("busca-por-cep").hidden = !(dados.indice && temServicos);
     limparResultadoCep();
-    document.title = area.nome + " – Mulher em Rede";
+    document.title = area.nome + " – Observatório da Mulher";
   }
 
   /* ---------------------------------------------------------------- vistas do dashboard
@@ -550,7 +550,7 @@
     esconderVistas(); $(v.el).hidden = false;
     $("navegacao").hidden = false; $("secao-atual").hidden = false;
     $("nome-secao").textContent = "Início › " + v.nome;
-    document.title = v.nome + " – Mulher em Rede";
+    document.title = v.nome + " – Observatório da Mulher";
     limparResultadoCep();
     if (!vistasProntas[chave]) {
       vistasProntas[chave] = true;

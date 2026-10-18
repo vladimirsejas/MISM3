@@ -1,4 +1,4 @@
-/* IA do Mulher em Rede: lê o que a mulher escreve e sugere por onde começar.
+/* IA do Observatório da Mulher: lê o que a mulher escreve e sugere por onde começar.
    Combina duas coisas: (1) um modelo de aprendizado de máquina treinado pela equipe (pipeline/treinar_necessidades.py), cujos pesos
    ficam em dados/modelo_necessidades.json, e (2) as regras de palavras-chave de necessidades.js. O texto é lido e descartado NO
    APARELHO: nada é enviado, gravado nem registrado. Não decide direitos nem faz diagnóstico: só sugere áreas do site. */

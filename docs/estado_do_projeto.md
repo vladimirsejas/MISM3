@@ -4,7 +4,7 @@
 
 ## O princípio
 
-> **O Mulher em Rede (MISM3) oferece orientação baseada nas evidências disponíveis.** Não substitui a avaliação de profissionais, não determina automaticamente as necessidades de uma pessoa e explicita a origem, a data e os limites de cada informação que usa.
+> **O Observatório da Mulher (MISM3) oferece orientação baseada nas evidências disponíveis.** Não substitui a avaliação de profissionais, não determina automaticamente as necessidades de uma pessoa e explicita a origem, a data e os limites de cada informação que usa.
 
 Não vendemos o sistema como diagnóstico social, nem como prova de que um serviço resolve um problema.
 

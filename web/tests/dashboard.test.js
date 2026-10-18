@@ -1,4 +1,4 @@
-/* Teste estrutural da tela inicial e das áreas (especificação "Mulher em Rede").
+/* Teste estrutural da tela inicial e das áreas (especificação "Observatório da Mulher").
    Não substitui o teste no navegador: confere o que dá para garantir lendo os arquivos. */
 const assert = require("assert");
 const fs = require("fs");
@@ -354,19 +354,22 @@ assert(secEsc && secEsc.recolhida && secEsc.filtro && JSON.stringify(secEsc.subt
 assert(Areas.AREAS.find((a) => a.id === "educacao").secoes.find((sec) => sec.titulo === "Canais oficiais").subtipos.join() === "secretaria", "os canais oficiais devem mostrar só o cartão da Secretaria");
 assert(/data-filtro/.test(ler("app.js")) && /semAcento/.test(ler("app.js")), "a busca por nome ou bairro deve ignorar acentos");
 // Brasão do município (cabeçalho e rodapé) + aviso de projeto acadêmico (não oficial)
-assert(/<img class="marca-brasao" src="img\/brasao-rio-claro-96\.webp"[^>]*width="\d+" height="\d+"/.test(index), "o cabeçalho usa o brasão original de Rio Claro, com largura e altura");
+assert(!/marca-brasao/.test(index), "o cabeçalho mostra só o nome e a cidade, sem brasão (decisão do autor, 18/10/2026)");
 assert(/<img class="brasao" src="img\/brasao-rio-claro-256\.webp"[^>]*width="\d+" height="\d+"[^>]*alt="Brasão do município de Rio Claro/.test(index), "o rodapé usa o brasão original de Rio Claro, com alt, largura e altura");
 assert(/estudo acadêmico de demonstração/.test(index) && /não é um site oficial da Prefeitura de Rio Claro/.test(index), "o rodapé deve dizer que o site é acadêmico e não oficial");
 assert(/não fala em nome da Prefeitura/.test(index), "o rodapé deve deixar claro que o site não fala em nome da Prefeitura");
-["brasao-rio-claro-96.webp", "brasao-rio-claro-256.webp", "brasao-estilizado.webp"].forEach((nome) => {
+["brasao-rio-claro-256.webp", "capa-mulheres.webp"].forEach((nome) => {
   const arq = path.join(web, "img", nome);
   assert(fs.existsSync(arq) && fs.statSync(arq).size < 120 * 1024, `${nome} deve existir e ser leve (< 120 KB)`);
 });
 
 /* ---- Tela inicial acolhedora: hero, emergência, contatos essenciais, acesso rápido e paleta ---- */
 assert(/<h1 id="titulo-inicio"[^>]*>Você não está <em>sozinha<\/em><\/h1>/.test(index), "a tela inicial deve acolher: 'Você não está sozinha'");
-assert(/<div class="heroi-arte">\s*<img class="heroi-brasao" src="img\/brasao-estilizado\.webp"[^>]*alt="Brasão estilizado/.test(index) && !/heroi-mulheres/.test(index + css), "a arte do topo é o brasão estilizado (a mesma imagem leve do rodapé), com texto alternativo");
-assert(/<img src="img\/faixa-mulheres\.webp"[^>]*alt="[^"]*idosa[^"]*gorda/.test(index) && fs.statSync(path.join(web, "img/faixa-mulheres.webp")).size < 120 * 1024, "a faixa de mulheres (idosa, tons e cabelos diversos, mulher gorda) deve existir, ser leve e ter texto alternativo");
+assert(/<div class="heroi-arte">\s*<img class="heroi-capa" src="img\/capa-mulheres\.webp"[^>]*width="\d+" height="\d+"[^>]*alt="[^"]*idosa[^"]*gorda/.test(index) && !/heroi-mulheres|brasao-estilizado|heroi-brasao/.test(index + css), "a capa é a ilustração das seis mulheres (idosa, tons e cabelos diversos, mulher gorda), com texto alternativo; o brasão estilizado com a leoa saiu");
+const inicioTela = index.slice(index.indexOf('id="inicio-tela"'), index.indexOf('id="ia-caixa"'));
+assert((inicioTela.match(/<img /g) || []).length === 1 && !/faixa-mulheres/.test(index), "a abertura tem uma capa só: uma imagem antes da caixa da IA, sem a faixa repetida");
+assert(/<p class="heroi-etiqueta"><strong>MISM3<\/strong> · Monitoramento Inteligente da Saúde da Mulher<\/p>/.test(index), "a abertura diz o que é o MISM3: Monitoramento Inteligente da Saúde da Mulher");
+assert(!/Informação que fortalece|heroi-lide|heroi-nota/.test(index), "a abertura não repete frases: sem 'Informação que fortalece', sem a frase longa e sem a nota solta");
 assert(/Cada informação mostra a fonte e a data/.test(index), "a tela inicial só pode prometer o que o site cumpre: fonte e data");
 assert(/id="abrir-emergencia"/.test(index) && /abrir-emergencia/.test(app) && /stopPropagation/.test(app), "a tela inicial deve ter o botão Emergência que abre o painel do topo");
 ["190", "192", "180", "100"].forEach((n) => assert(new RegExp('href="tel:' + n + '"').test(inicio), "contato essencial nacional ausente: " + n));
@@ -405,8 +408,9 @@ const razao = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) +
 assert(razao("#ffffff", vars["pri-esc"]) >= 6.5 && razao("#ffffff", vars.alerta) >= 6.5, "texto branco sobre botões e emergência deve ter contraste >= 6,5:1");
 ["bg", "card", "rosa", "verde", "pessego"].forEach((f) => assert(razao(vars["pri-esc"], vars[f]) >= 6.5, "links com contraste menor que 6,5:1 sobre " + f));
 // Nome do projeto: o mesmo em todos os lugares, com a cidade ao lado
-assert(/class="marca"[^>]*>.*Mulher em Rede<span class="marca-local">Rio Claro<\/span>/.test(index), "o nome deve ser 'Mulher em Rede', com 'Rio Claro' ao lado, nas duas páginas");
-assert(/<title>Mulher em Rede – Rio Claro<\/title>/.test(index) && /Mulher em Rede \(MISM3\)/.test(index), "título e rodapé devem usar o mesmo nome");
+assert(/class="marca"[^>]*>.*Observatório da Mulher<span class="marca-local">Rio Claro<\/span>/.test(index), "o nome deve ser 'Observatório da Mulher', com 'Rio Claro' ao lado");
+assert(/<title>Observatório da Mulher – Rio Claro<\/title>/.test(index) && /Observatório da Mulher \(MISM3\)/.test(index), "título e rodapé devem usar o mesmo nome");
+assert(!/Mulher em Rede/.test(index + rede + app + ler("entre-mulheres.js") + ler("entre-mulheres-ui.js")), "o nome antigo 'Mulher em Rede' não deve aparecer no site");
 assert(!/Mulheres de Rio Claro/.test(index + rede + app), "o nome 'Mulheres de Rio Claro' sugere um site da cidade e não deve ser usado enquanto o projeto não for oficial");
 
 /* ---- Transporte: horários da SOU, sem nada inventado ---- */
