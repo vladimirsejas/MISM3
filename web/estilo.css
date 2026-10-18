@@ -1,4 +1,4 @@
-/* Mulher em Rede (MISM3) — estilo do dashboard (index.html).
+/* Observatório da Mulher (MISM3) — estilo do dashboard (index.html).
    Paleta acolhedora (rosa, pêssego e verde-sálvia). Contrastes conferidos por cálculo e por teste:
    texto principal >= 13:1 em todos os fundos, texto suave >= 5,5:1, botões e links >= 6,5:1. */
 :root{
@@ -64,7 +64,7 @@ h1[tabindex="-1"]:focus{outline:none}
 /* ---------- tela inicial (acolhedora) ---------- */
 .heroi{display:grid;gap:1rem;align-items:center;margin:1rem 0 1.4rem;padding:1.7rem 1.3rem;border-radius:28px;border:1px solid var(--bor);overflow:hidden;position:relative;
   background:radial-gradient(520px 320px at 100% 0%,#fbe0d6 0%,transparent 70%),radial-gradient(420px 300px at 0% 100%,#e9eedd 0%,transparent 70%),linear-gradient(135deg,#fff4ee,var(--hero))}
-.heroi-etiqueta{display:inline-block;font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;color:var(--pri-esc);font-weight:700;margin:0 0 .7rem;padding:.3rem .8rem;border-radius:999px;background:rgba(255,255,255,.7);border:1px solid var(--bor)}
+.heroi-etiqueta{display:inline-block;font-size:.74rem;line-height:1.4;letter-spacing:.07em;text-transform:uppercase;color:var(--pri-esc);font-weight:600;margin:0 0 .7rem;padding:.35rem .9rem;border-radius:16px;background:rgba(255,255,255,.7);border:1px solid var(--bor)}
 .heroi h1{font-family:var(--serif);font-weight:500;font-size:clamp(2.3rem,9vw,3.8rem);line-height:1.05;color:var(--fg);margin:0 0 .8rem}
 .heroi h1 em{color:var(--pri);font-style:italic}
 .heroi-lide{font-size:1.1rem;max-width:46ch}
@@ -76,8 +76,7 @@ h1[tabindex="-1"]:focus{outline:none}
 .btn-heroi-2{border:1.5px solid var(--pri-esc);background:rgba(255,255,255,.75);color:var(--pri-esc)}
 .btn-heroi-2:hover{background:#fff}
 .heroi-arte{order:-1;line-height:0}
-.heroi-arte .heroi-brasao{max-width:210px}
-.heroi-brasao{display:block;width:100%;height:auto;max-width:400px;margin:0 auto;border-radius:24px;border:1px solid var(--bor);box-shadow:0 10px 30px rgba(120,40,60,.15)}
+.heroi-capa{display:block;width:100%;height:auto;margin:0 auto;border-radius:24px;border:1px solid var(--bor);box-shadow:0 10px 30px rgba(120,40,60,.15)}
 .titulo-bloco{font-family:var(--serif);font-weight:500;font-size:1.55rem;margin:1.5rem 0 .8rem;color:var(--fg)}
 .titulo-bloco:focus{outline:none}
 .portas{display:grid;grid-template-columns:minmax(0,1fr);gap:.7rem;list-style:none;margin:0 0 1.8rem;padding:0}
@@ -115,9 +114,8 @@ h1[tabindex="-1"]:focus{outline:none}
 .lista-acesso a::after{content:"›";color:var(--pri);font-size:1.5rem;line-height:1}
 .lista-acesso a:hover{color:var(--pri-esc)}
 @media(min-width:760px){
-  .heroi{grid-template-columns:1.1fr .9fr;padding:2.4rem 2.4rem}
+  .heroi{grid-template-columns:.85fr 1.15fr;padding:2.4rem 2.4rem}
   .heroi-arte{order:0}
-  .heroi-arte .heroi-brasao{max-width:400px}
   .portas{grid-template-columns:repeat(2,minmax(0,1fr));gap:.9rem}
   .blocos-inicio{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)}
 }

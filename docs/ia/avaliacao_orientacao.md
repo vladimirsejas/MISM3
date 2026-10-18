@@ -1,4 +1,4 @@
-# Avaliação do orientador (busca + segurança) do Mulher em Rede
+# Avaliação do orientador (busca + segurança) do Observatório da Mulher
 
 Este documento mostra **como o orientador foi medido**, o que deu certo e **o que não deu**. Os números vêm de `avaliacao/` e podem ser repetidos por qualquer pessoa:
 

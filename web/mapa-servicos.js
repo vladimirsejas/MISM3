@@ -1,4 +1,4 @@
-/* Mapa de serviços do Mulher em Rede: lógica pura (sem DOM), testável no Node e usada no navegador.
+/* Mapa de serviços do Observatório da Mulher: lógica pura (sem DOM), testável no Node e usada no navegador.
    Princípio: só desenha ponto onde existe localização de verdade. Serviço sem localização fica na lista, com link para
    pesquisar o endereço, e nunca ganha um ponto inventado. */
 (function (raiz, fabrica) {

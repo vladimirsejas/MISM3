@@ -147,7 +147,7 @@ def analisar(geojson, servicos, indice_cep, k_grupos=3, hoje=None) -> dict:
     grupos = agrupar(saida_b, k_grupos)
     return {
         "meta": {
-            "fonte": "IBGE, Censo Demográfico 2022 (setores) e catálogo verificado do Mulher em Rede",
+            "fonte": "IBGE, Censo Demográfico 2022 (setores) e catálogo verificado do Observatório da Mulher",
             "gerado_em": (hoje or date.today()).isoformat(),
             "aviso": AVISO,
             "cobertura_dos_servicos": {c: {"com_coordenada": len(por_cat[c]), "cadastrados": totais[c]} for c in CATEGORIAS},

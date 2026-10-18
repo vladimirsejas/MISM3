@@ -1,4 +1,4 @@
-# Arquitetura de IA do Mulher em Rede
+# Arquitetura de IA do Observatório da Mulher
 
 Escrito em 11/10/2026. Define o papel de cada tecnologia, o que está implementado e o que não está, sem chamar de IA o que é regra.
 
