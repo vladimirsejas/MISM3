@@ -43,7 +43,13 @@ const mental = sau.guia.itens.find((i) => /saúde mental/.test(i.titulo));
 assert(/188/.test(mental.texto) && /CVV/.test(mental.texto) && /CAPS/.test(mental.texto), "saúde mental: CVV 188 e CAPS");
 assert(sau.guia.itens.some((i) => i.ancora === "saude-familia-drogas"), "o atalho de familiar que usa álcool ou drogas continua");
 assert(!/Peniel/i.test(JSON.stringify(sau.guia)), "o guia não dá destaque à Comunidade Terapêutica Peniel (informação não confirmada por ligação)");
-assert(!/saúde da mulher|mamografia|papanicolau/i.test(JSON.stringify(sau.guia)), "sem atalho de saúde da mulher enquanto não houver fonte no projeto");
+/* Antes (até 30/10/2026) esta linha PROIBIA o atalho de saúde da mulher "enquanto não houver fonte no projeto". Em 31/10/2026 a fonte passou a existir
+   (página da Fundação Municipal de Saúde de 07/10/2026, Nota Técnica 626/2025 e páginas do Ministério da Saúde, todas abertas e lidas). A regra continua
+   valendo no sentido inverso: o atalho só pode existir se a seção tiver fonte aberta e datada em cada cartão. */
+const atalhoMulher = sau.guia.itens.find((i) => i.ancora === "saude-mulher");
+assert(atalhoMulher && /mamografia/i.test(atalhoMulher.titulo + atalhoMulher.texto) && /Papanicolau/i.test(atalhoMulher.texto), "o atalho de saúde da mulher existe e aponta para a seção saude-mulher");
+const secMulher = sau.secoes.find((s) => s.ancora === "saude-mulher");
+assert(secMulher && secMulher.canais.length >= 3 && secMulher.canais.every((c) => c.fonte && /^https:\/\//.test(c.fonte[1]) && /31\/10\/2026/.test(c.fonte[2])), "cada cartão de saúde da mulher tem fonte aberta com data de leitura");
 
 /* 4) Já existiam e continuam: Assistência e Moradia. */
 assert(Areas.porId("assistencia").guia.itens.some((i) => i.ancora === "assistencia-avo") && Areas.porId("moradia").guia.itens.some((i) => i.ancora === "secao-3"), "Assistência e Moradia mantêm os atalhos da avó e da casa própria");

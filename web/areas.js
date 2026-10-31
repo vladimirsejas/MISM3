@@ -228,7 +228,7 @@
     },
     {
       exemploDuvida: "meu filho usa drogas, onde pedir ajuda?", id: "saude", nome: "Saúde", icone: "saude",
-      intro: "Unidades de saúde e serviços de atendimento. Em urgência médica, ligue 192.",
+      intro: "Unidades de saúde e serviços de atendimento, mamografia, preventivo e pré-natal. Em urgência médica, ligue 192.",
       guia: {
         titulo: "O que você encontra nesta página",
         texto: "Cuidar de quem você ama também cansa. Aqui estão a saúde para você e os caminhos para quando um filho ou outro familiar usa álcool ou drogas.",
@@ -237,11 +237,56 @@
           { titulo: "Quero ser atendida no posto de saúde", texto: "Os postos de saúde (UBS e USF) de Rio Claro, com endereço e telefone. Ligue antes para saber como ser atendida.", ancora: "saude-unidades", botao: "Ver os postos de saúde" },
           { titulo: "Preciso de ajuda para a saúde mental", texto: "O CVV, no 188, conversa 24 horas por dia, de graça. Os CAPS, serviços de saúde mental da rede pública, estão na lista de unidades.", ancora: "saude-unidades", botao: "Ver os CAPS" },
           { titulo: "Preciso de remédio", texto: "A Farmácia Central e o Dispensário de Medicamentos estão na lista de unidades. Ligue para saber o que é preciso levar.", ancora: "saude-unidades", botao: "Ver as farmácias" },
+          { titulo: "Quero fazer mamografia ou preventivo, ou estou grávida", texto: "Como conseguir mamografia e Papanicolau em Rio Claro, o que o Ministério da Saúde orienta e como começar o pré-natal.", ancora: "saude-mulher", botao: "Ver saúde da mulher" },
           { titulo: "Meu filho ou familiar usa álcool ou drogas", texto: "Por onde começar, o que fazer numa crise, onde ligar e como cuidar de você nesse caminho. A culpa não é sua.", ancora: "saude-familia-drogas", botao: "Ver o que fazer" },
           { titulo: "Unidades de saúde", texto: "Postos, UPAs, hospitais e especialidades, com endereço e telefone.", ancora: "saude-unidades", botao: "Ver as unidades" }
         ]
       },
       secoes: [
+        {
+          titulo: "Saúde da mulher: mamografia, preventivo e gravidez", ancora: "saude-mulher",
+          descricao: "Os exames de prevenção e o pré-natal começam na unidade de saúde perto de você. Aqui está o que a Fundação Municipal de Saúde e o Ministério da Saúde publicaram, o que este site não conseguiu confirmar e onde ligar. Este site não faz diagnóstico: quem avalia o seu caso é a equipe de saúde.",
+          tipos: [], links: [
+            ["Nota Técnica nº 626/2025: mamografia no SUS (Ministério da Saúde)", "https://ninho.inca.gov.br/jspui/bitstream/123456789/17713/1/SEI_0050548355_Nota_Tecnica_626.pdf", "Explica quem tem acesso à mamografia no SUS e quais sinais pedem procurar a unidade em qualquer idade."],
+            ["Teste de DNA-HPV no SUS (Ministério da Saúde, 15/08/2025)", "https://www.gov.br/saude/pt-br/assuntos/noticias/2025/agosto/ministerio-da-saude-oferta-tecnologia-inovadora-100-nacional-para-detectar-cancer-do-colo-do-utero-no-sus", "Notícia do Ministério sobre o teste que vai substituir o Papanicolau aos poucos."],
+            ["Pré-natal (Ministério da Saúde)", "https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/g/gravidez/pre-natal", "Quando começar, onde ir e como é o acompanhamento."],
+            ["CNES (DATASUS): cadastro dos estabelecimentos de saúde, competência 08/2026", "https://cnes.datasus.gov.br/", "Cadastro oficial usado para ver quais unidades públicas registram mamografia e pré-natal. Cadastro não é vaga nem agenda."],
+            ["Cadu na Prefeitura de Rio Claro (25/08/2023)", "https://rioclaro.sp.gov.br/fundacao-de-saude/nova-central-para-agendamento-de-consultas-comeca-a-operar-na-2a-feira-em-rc/", "Notícia de 2023: o Cadu agenda consultas nas unidades básicas e o Papanicolau por telefone."]
+          ],
+          canais: [
+            { nome: "Mamografia: como conseguir em Rio Claro", tel: "0800 019 0505", resumo: "Ver o passo a passo",
+              texto: "A mamografia é o exame que procura sinais de câncer de mama. O caminho em Rio Claro começa numa consulta na unidade de saúde.",
+              topicos: [
+                ["O que a Fundação de Saúde informou em 07/10/2026", "A Fundação Municipal de Saúde informou que, a partir dos 40 anos, todas as mulheres têm direito ao rastreamento do câncer de mama por mamografia, que pode ser pedida nas unidades de saúde. Informou também que Rio Claro não tinha fila para mamografia nem para Papanicolau naquela data. Isso pode mudar: confirme na unidade."],
+                ["Quem pede o exame", "Segundo a Fundação, a mamografia é feita a partir de um pedido do médico ou do enfermeiro. Por isso o primeiro passo é uma consulta na sua unidade de saúde."],
+                ["Como marcar a consulta", "Direto na unidade de saúde ou pelo Cadu (telefone e WhatsApp), no 0800 019 0505. A ficha do Cadu está na lista de unidades, mais abaixo."],
+                ["Onde o exame é feito", "No cadastro do CNES (agosto de 2026), o AME (Ambulatório Médico de Especialidades de Rio Claro, da Secretaria de Estado da Saúde) é a única unidade pública cadastrada na cidade que registra a mamografia como serviço próprio. Quatro UBS registram a mamografia como serviço feito por outro estabelecimento: nelas você faz a consulta e recebe o pedido, e o exame é feito em outro lugar, que a unidade informa. Cadastro não é agenda nem vaga: confirme com a sua unidade."],
+                ["O que o Ministério da Saúde orienta", "A Nota Técnica nº 626/2025 diz que o rastreamento regular pelo SUS é para mulheres de 50 a 74 anos, a cada dois anos. Para quem tem de 40 a 49 anos, ou mais de 74, e não tem sintomas, o SUS não impede o exame: a mulher pode pedir, desde que um profissional de saúde explique os riscos e os benefícios. A idade que a Fundação cita (a partir de 40 anos) e a do rastreamento regular do Ministério (50 a 74 anos) se completam: pergunte na unidade o que vale para o seu caso."],
+                ["Se você notou uma alteração na mama", "Procure a unidade em qualquer idade, sem esperar a data do exame. O Ministério lista como sinais de alerta: nódulo endurecido ou que vai crescendo, saída de sangue por um dos mamilos, pele da mama com aspecto de casca de laranja ou repuxada, mudança no formato do mamilo, lesão de pele na mama que não melhora com pomada, caroço na axila e mama inflamada que não melhora depois do antibiótico. O Ministério diz que a mulher com um sinal de alerta deve ter prioridade na marcação. Isto não é diagnóstico: só a equipe de saúde avalia."]
+              ],
+              aviso: "A informação sobre fila e idade é de uma publicação da Fundação de 07/10/2026 e pode mudar. Este site não sabe os dias e os horários de coleta de cada unidade, nem se há mutirão agora: ligue antes de ir. Ter direito ao exame não garante data nem vaga.",
+              fonte: ["Fundação Municipal de Saúde de Rio Claro: Outubro Rosa reforça importância de exames preventivos", "https://rioclaro.sp.gov.br/fundacao-de-saude/outubro-rosa-reforca-importancia-de-exames-preventivos/", "Publicada em 07/10/2026; página aberta e lida em 31/10/2026. A parte nacional vem da Nota Técnica nº 626/2025 do Ministério da Saúde (INCA), lida na íntegra na mesma data. Os serviços por unidade vêm do cadastro do CNES, competência 08/2026 (tabelas rlEstabServClass e tbEstabelecimento), lido em 31/10/2026."] },
+            { nome: "Preventivo do colo do útero: Papanicolau e teste de DNA-HPV", tel: "0800 019 0505", resumo: "Ver o passo a passo",
+              texto: "O exame preventivo procura alterações no colo do útero antes de elas causarem sintomas. Em Rio Claro, a Fundação cita o Papanicolau.",
+              topicos: [
+                ["Como conseguir em Rio Claro", "Segundo a Fundação (07/10/2026), o Papanicolau é feito a partir de um pedido do médico ou do enfermeiro: marque consulta direto na unidade ou pelo Cadu, no 0800 019 0505. Em 2023 a Prefeitura já informava que o Papanicolau pode ser agendado por telefone pelo Cadu."],
+                ["Para quem é o rastreamento", "O Ministério da Saúde indica o rastreamento organizado do câncer do colo do útero para mulheres de 25 a 64 anos."],
+                ["O teste novo: DNA-HPV", "Desde agosto de 2025, o Ministério da Saúde oferece no SUS o teste de DNA-HPV, que vai substituir o Papanicolau aos poucos. Começou em 12 estados, em um município de cada um. Com resultado negativo, o Ministério fala em repetir o teste em até cinco anos. Este site não encontrou informação de que o DNA-HPV já seja feito em Rio Claro: a Fundação cita o Papanicolau. Pergunte na sua unidade qual exame é feito."]
+              ],
+              aviso: "O que vale em Rio Claro é o que a sua unidade informar. Este site não sabe quando o DNA-HPV chega à cidade, nem o intervalo que a Fundação usa hoje para repetir o Papanicolau. Isto não é diagnóstico.",
+              fonte: ["Fundação Municipal de Saúde de Rio Claro: Outubro Rosa reforça importância de exames preventivos", "https://rioclaro.sp.gov.br/fundacao-de-saude/outubro-rosa-reforca-importancia-de-exames-preventivos/", "Publicada em 07/10/2026; página aberta e lida em 31/10/2026. O DNA-HPV vem da notícia do Ministério da Saúde de 15/08/2025, também lida em 31/10/2026."] },
+            { nome: "Pré-natal: quando e onde começar", sem_tel: true, resumo: "Ver o passo a passo",
+              texto: "O pré-natal é o acompanhamento da gravidez. Quanto mais cedo começa, melhor a equipe consegue acompanhar você e o bebê.",
+              topicos: [
+                ["Quando começar", "Assim que descobrir ou desconfiar da gravidez, de preferência até a 12ª semana, segundo o Ministério da Saúde."],
+                ["Onde ir", "Na unidade de atenção básica mais próxima da sua casa (UBS ou USF). A lista de unidades, com endereço e telefone, está mais abaixo. No cadastro do CNES (agosto de 2026), 17 UBS e USF de Rio Claro registram o acompanhamento do pré-natal como serviço próprio, em vários bairros. A Prefeitura informa que o Cadu, no 0800 019 0505, agenda consultas nas unidades básicas."],
+                ["Como é o acompanhamento", "O Ministério fala em consultas todo mês até a 28ª semana, a cada 15 dias da 28ª à 36ª semana e toda semana no fim da gravidez. Depois do parto, também há consulta na unidade."],
+                ["Atendimento ginecológico e da gravidez fora de hora", "Rio Claro tem o Pronto Atendimento de Ginecologia e Obstetrícia, na Av. 15, s/n, Centro, anexo à maternidade, telefone (19) 3535-7002, que a lista da Fundação indica como aberto 24 horas. Veja a ficha dele em Unidades de saúde, mais abaixo, e confirme por telefone."]
+              ],
+              aviso: "Este site não traz o número mínimo de consultas nem a lista de exames do pré-natal, porque a página do Ministério que consultamos não os informa. A equipe da unidade explica o que vale para você. Em urgência, ligue 192.",
+              fonte: ["Ministério da Saúde: Pré-natal", "https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/g/gravidez/pre-natal", "Página aberta e lida em 31/10/2026; ela não mostra data de atualização. O Pronto Atendimento vem da lista de endereços da Fundação Municipal de Saúde (10/10/2026). As 17 UBS e USF vêm do cadastro do CNES, competência 08/2026, lido em 31/10/2026."] }
+          ]
+        },
         {
           titulo: "Meu filho ou familiar usa álcool ou drogas", ancora: "saude-familia-drogas",
           descricao: "Muitas mães passam por isso, e ninguém precisa enfrentar sozinha. Você pode ligar e pedir orientação mesmo que a pessoa ainda não queira se tratar.",
