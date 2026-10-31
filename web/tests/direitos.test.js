@@ -16,6 +16,9 @@ const conteudo = JSON.stringify(secao);
   assert(new RegExp(t, "i").test(conteudo), "falta rota ou alternativa para: " + t));
 assert(/não substitui a orientação de uma advogada ou advogado/.test(conteudo), "o MPT não é apresentado como representação individual");
 assert(/não há unidade da DPU de Rio Claro|nem confirma unidade da DPU em Rio Claro/.test(conteudo), "não inventa unidade local da DPU");
+assert(/Rua Três, 1026, Centro, CEP 13500-910/.test(conteudo), "endereço da APS Rio Claro está no encaminhamento previdenciário");
+assert(/segunda a sábado, das 7h às 22h/.test(conteudo) && /agendamento pelo Meu INSS ou 135/.test(conteudo), "horário do 135 e agendamento presencial estão explicados");
+assert(!/3524-2212|3534-3166|7h às 17h/.test(conteudo), "não publica telefone e horário local sem confirmação oficial");
 assert(/em favor de seus assistidos/.test(conteudo) && /não é um canal direto de atendimento ao público/.test(conteudo), "explica corretamente o alcance do ACT INSS-DPU");
 assert(/dados de contato diferentes/.test(conteudo) && /não fixa endereço nem telefone/.test(conteudo), "CEJUSC mostra a divergência e não publica contato local incerto");
 assert(/não confirma que o serviço esteja recebendo casos novos agora/.test(conteudo), "NPJ/SAJU não é anunciado como serviço ativo confirmado");
@@ -33,6 +36,8 @@ const links = secao.links;
   "https://www.prt15.mpt.mp.br/servicos/denuncias",
   "https://www.dpu.def.br/contatos-dpu",
   "https://www.gov.br/inss/pt-br/canais_atendimento/acts/acordos-de-cooperacao-tecnica-acts-nacionais/dpu-defensoria-publica-da-uniao",
+  "https://www.gov.br/inss/pt-br/canais_atendimento/central-135",
+  "https://www.gov.br/inss/pt-br/centrais-de-conteudo/publicacoes/contratos-e-licitacoes/superintendencia-regional-sudeste-i-sao-paulo/pregao-eletronico-no90011-2025-contratacao-de-servicos-de-vigilancia-integrada-no-ambito-da-srse-i/anexo_x-20302607.pdf/@@download/file",
   "https://www.consumidor.gov.br/",
   "https://rioclaro.sp.gov.br/justica/procon-de-rio-claro-realiza-mil-atendimentos-mensais/",
   "https://www.anhanguera.com/central-de-atendimento/",
