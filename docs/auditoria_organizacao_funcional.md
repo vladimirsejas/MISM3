@@ -80,6 +80,8 @@ Direitos tem "Aposentadoria e dívidas" (simular no Meu INSS); Assistência tem 
 ## 5. O que não pode sair
 Jornada e currículo de Trabalho; calculadora de renda líquida; caminho de mãe solo (a lógica fica, só deixa de ser duplicada); jornada de Educação; a seção "Mais de um serviço ao mesmo tempo"; Cadastro Único e Assistência; busca de CRAS por bairro; mapa com localização exata e aproximada; privacidade por desenho; trava do conteúdo essencial; avaliações do orientador; separação entre orientação e inteligência territorial. **Repetição útil não é redundância:** o 180 em várias portas e a creche em Educação e Trabalho ficam.
 
+> **Passo 2 feito em 31/10/2026:** a tabela de casa principal de cada assunto está em `casa_principal.md`.
+
 ## 6. Ordem sugerida (nada foi feito)
 1. Destravar a CI: explicar os 14 PDFs no LEIA-ME (decisão do mantenedor sobre os 7 duplicados) e voltar a rodar as 145 conferências.
 2. Separar curso de emprego no catálogo e no orientador; Educação como casa dos cursos.
