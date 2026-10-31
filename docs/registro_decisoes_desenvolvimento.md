@@ -1112,3 +1112,10 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 
 - Acrescentada a página do INSS sobre o Acordo de Cooperação Técnica com a DPU na rota de benefício federal. A página, publicada em 06/09/2022, diz que a DPU pode, em favor de seus assistidos, requerer serviços/benefícios por canais remotos e pedir reabertura de processos de benefício assistencial em situação específica de falha de comunicação.
 - A interface deixa claro que o ACT não é canal direto ao público e não confirma unidade local ou elegibilidade; encaminha a pessoa a consultar a DPU. Fonte completa e limites em `docs/acesso_a_justica.md`.
+
+
+## 31/10/2026 — Fontes oficiais atuais da Defensoria em Rio Claro
+
+- O cartão e o catálogo de `man-defensoria-nudem` passam a apontar diretamente para a página oficial de agendamento, que confirma Júlia 24h e o telefone 0800 773 4340 em dias úteis, das 7h às 19h. A página também informa agendamento prévio antes de comparecer.
+- O endereço Rua Um, nº 659, Saúde, fica associado diretamente à notícia oficial da nova sede, publicada em 26/06/2025 e válida desde 01/07/2025. O texto mantém orientação para confirmar antes do deslocamento.
+- Fontes e links atuais: página de [agendamento DPESP](https://www.defensoria.sp.def.br/web/guest/atendimento/agende-seu-atendimento) e [notícia da sede de Rio Claro](https://www.defensoria.sp.def.br/noticias/-/noticia/6485928/defensoria-de-sp-inaugura-nova-sede-em-rio-claro-na-proxima-terca-feira-1-7).
