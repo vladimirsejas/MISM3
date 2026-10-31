@@ -1126,3 +1126,8 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - Acrescentado o endereço da APS Rio Claro (Rua Três, 1026, Centro, CEP 13500-910) a partir de publicação oficial do INSS. O atendimento presencial exige agendamento; o encaminhamento orienta confirmar horário local, data e documentos pelo Meu INSS ou 135.
 - Incluída a Central 135: atendimento humano de segunda a sábado, 7h–22h, conforme página oficial do INSS.
 - Os dois telefones locais e o horário 7h–17h fornecidos em páginas secundárias não foram reproduzidos, pois não foi encontrada confirmação atual em fonte oficial. Fontes e justificativa em `docs/acesso_a_justica.md`.
+
+## 31/10/2026 — Atualização do CEJUSC de Rio Claro
+
+- Atualizado o cartão e o catálogo a partir do diretório oficial atual do TJSP: Fórum, Avenida 5, 535, sala 104; (19) 3531-6137; e-mail `cejusc.rioclaro@tjsp.jus.br`; atendimento das 13h às 17h; atuação pré-processual cível e de família.
+- A notícia do TJSP de 2018 sustenta a informação de gratuidade e o recebimento de solicitações pré-processuais por e-mail, mas seus endereço/telefone/horário são antigos. O produto orienta confirmar documentos e procedimento antes de enviar dados pessoais; processo em andamento requer confirmação do fluxo com a unidade judicial ou o CEJUSC.
