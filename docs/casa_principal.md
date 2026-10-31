@@ -41,7 +41,7 @@ Contei quantas vezes cada assunto é mencionado em cada área, no texto de `web/
 | Avó que cria os netos | **Assistência**, seção "Sou avó ou pessoa idosa" | Educação (matrícula do neto), Moradia (casa própria da avó), Direitos (guarda e pensão) | M 23, A 19, E 8, D 7 | **Feito, por ângulo.** Cada porta explica só o seu pedaço (matrícula, casa, guarda); o resto aponta para Assistência. |
 | Transporte e horários | **Recurso transversal** (área Transporte) | Trabalho (bloco "Transporte e passagem") | T 17 | **Feito.** Não vira porta nova. |
 | Mapa e busca por CEP | **Recurso transversal** (mapa da tela inicial) | Educação tem "Creches e escolas perto de mim (pelo CEP)"; os dois leem o mesmo catálogo | — | **Feito.** Não conferi se outras áreas têm busca própria. |
-| Contatos de emergência | **Recurso transversal** | Todas as portas | 4 cópias no código: `index.html` (duas listas), `areas.js` (`EMERGENCIA`), `perigo.js` | **Proposto:** fonte única. Hoje os números coincidem. |
+| Contatos de emergência | **Recurso transversal** | Todas as portas | Eram 5 lugares: `index.html` (duas listas), `areas.js` (`EMERGENCIA`), `perigo.js`, `jornada-assistencia.js` e 5 frases de `app.js` | **Feito** em 31/10/2026: fonte única em `EMERGENCIA` (`web/areas.js`); as listas do `index.html` são geradas dela e `web/tests/emergencia.test.js` reprova qualquer divergência, inclusive em frases. |
 | Profissionais e negócios de mulheres | **Entre Mulheres** | — | — | **Feito.** Não é catálogo de serviço público; hoje sem cadastros. |
 
 ## Quando aparecer um assunto novo
