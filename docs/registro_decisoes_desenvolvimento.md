@@ -1258,3 +1258,7 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - **Informação do autor:** ele procurou cerca de uma hora e não existe contato próprio do NPJ/SAJU, nem na página do curso de Direito do Claretiano. Os únicos contatos oferecidos são o telefone e WhatsApp (19) 2111-6000 e a Central 0800 722 6450. O formulário de atendimento do site é para estudantes, não para o público.
 - **O que mudou:** o tópico "Telefones para ligar" diz que o contato é geral (não do SAJU), orienta dizer que se quer saber do atendimento jurídico gratuito do SAJU e avisa que o formulário não serve ao público. O aviso do cartão diz que atendimento atual, critérios e agenda não foram confirmados. `direitos.test.js` trava as três coisas.
 
+## 31/10/2026 — Instagram do NPJ Anhanguera: aparece, mas não como canal de comunicação
+
+- **Pedido do autor:** colocar o Instagram, mas não como canal de comunicação. O cartão agora o apresenta como perfil que divulga o atendimento do NPJ e manda a mulher falar com a faculdade pelo endereço ou pelo contato institucional; diz para não enviar documentos nem contar o caso pelo Instagram. `direitos.test.js` trava isso (estrago de teste detectado).
+

@@ -23,7 +23,7 @@ assert(/em favor de seus assistidos/.test(conteudo) && /não é um canal direto 
 assert(/Avenida 5, nº 535, Centro, sala 104/.test(conteudo) && /3531-6137/.test(conteudo) && /13h às 17h/.test(conteudo), "CEJUSC usa o endereço, telefone e horário do diretório oficial atual");
 assert(/atende gratuitamente/.test(conteudo) && /Antes de enviar dados pessoais/.test(conteudo), "CEJUSC esclarece gratuidade e protege dados ao orientar contato por e-mail");
 assert(/não confirma que o serviço esteja recebendo casos novos agora/.test(conteudo), "NPJ/SAJU não é anunciado como serviço ativo confirmado");
-assert(/Anhanguera — unidade na Rua 2; atendimento jurídico a confirmar/.test(conteudo) && /@npj_anhanguera/.test(conteudo), "inclui o Instagram do NPJ como contato, sem confirmar intake");
+assert(/Anhanguera — unidade na Rua 2; atendimento jurídico a confirmar/.test(conteudo) && /@npj_anhanguera/.test(conteudo), "inclui o Instagram do NPJ, sem confirmar intake");
 assert(/13504-090/.test(conteudo) && /não que o NPJ esteja atendendo visitantes nesse local/.test(conteudo), "distingue endereço da faculdade de atendimento local do NPJ");
 assert(/Rua 5, 821/.test(conteudo) && /CEP 13500-040/.test(conteudo), "Procon Centro fica identificável pelo endereço informado");
 assert(/Rua M-15, 411/.test(conteudo) && /3523-5985/.test(conteudo) && /3532-1550/.test(conteudo), "Procon Cervezão apresenta endereço e telefones publicados pela Prefeitura");
@@ -71,4 +71,9 @@ const clar = JSON.stringify(secao.canais.find((c) => /Claretiano/.test(c.nome)))
 assert(/\(19\) 2111-6000/.test(clar) && /0800 722 6450/.test(clar), "Claretiano: telefone e 0800 da instituição");
 assert(/não publica um contato próprio do NPJ\/SAJU/.test(clar) && /contatos gerais da instituição/.test(clar), "Claretiano: diz que o contato é geral, não do SAJU");
 assert(/formulário de atendimento do site do Claretiano é para estudantes/.test(clar) && !/atendimento\.claretiano/.test(clar), "Claretiano: não indica o formulário de estudantes");
+
+/* Instagram do NPJ Anhanguera: aparece, mas nunca como canal de comunicação (pedido do autor, 31/10/2026). */
+const anh = JSON.stringify(secao.canais.find((c) => /^Anhanguera/.test(c.nome)));
+assert(/não um canal para falar do seu caso/.test(anh) && /Não use o Instagram para enviar documentos ou contar o seu caso/.test(anh), "Anhanguera: o Instagram não é canal de comunicação");
+assert(!/pergunte (por mensagem|pelo Instagram)|Acesse @npj_anhanguera e pergunte/i.test(anh + JSON.stringify(secao.links)), "Anhanguera: não manda perguntar pelo Instagram");
 
