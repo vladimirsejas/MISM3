@@ -44,7 +44,8 @@ Python (instalar: `python -m pip install -r requirements.txt`; fonte única das 
 
 | Biblioteca | Onde é usada | Para que serve |
 |---|---|---|
-| pandas | `pipeline/cnes.py`, `common.py`, `indice_cep.py`, `oferta_educacao_infantil.py`, `servicos.py` e testes | Leitura e tratamento de CSV grandes (CNES, CNEFE, Censo Escolar) |
+| pandas | `pipeline/cnes.py`, `common.py`, `indice_cep.py`, `oferta_educacao_infantil.py`, `servicos.py` e testes | Leitura e tratamento de CSV e Parquet (CNES, CNEFE, Censo Escolar) |
+| pyarrow | `pipeline/cnes.py` | Leitura de arquivos Parquet do CNES |
 | numpy | `analise_territorial.py`, `common.py`, `indice_cep.py`, `indice_orientacao.py`, `treinar_necessidades.py`, `treinar_perigo.py`, `treinar_escopo.py` | Arrays, cálculo numérico, distâncias |
 | scikit-learn | `treinar_necessidades.py`, `treinar_perigo.py`, `treinar_escopo.py` (TfidfVectorizer, LogisticRegression, OneVsRestClassifier, StratifiedKFold); `indice_orientacao.py` (TfidfVectorizer, TruncatedSVD); `analise_territorial.py` (KMeans) | Treino dos modelos, TF-IDF, redução de dimensão (LSA) e agrupamento. Traz o scipy como dependência |
 | pyshp (módulo `shapefile`) | `pipeline/setores.py` | Ler o shapefile de setores censitários do IBGE |
