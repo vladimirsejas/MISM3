@@ -131,3 +131,9 @@ def test_carregar_prefere_parquet_quando_ambos_existem(pasta):
     df.to_parquet(pasta / "tbEstabelecimento202608.parquet", index=False)
     servs, _ = cnes.carregar(pasta, INDICE, "2026-10-08")
     assert "Ubs Jardim Água" in [s["nome"] for s in servs]
+
+
+def test_tabela_pequena_csv_sem_coluna_devolve_vazio(tmp_path):
+    arq = tmp_path / "tbTeste202608.csv"
+    arq.write_text("CO_A;OUTRA\n1;x\n", encoding="utf-8")
+    assert cnes.ler_tabela_pequena(arq, "CO_A", "DS_QUE_NAO_EXISTE") == {}

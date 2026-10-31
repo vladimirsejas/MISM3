@@ -45,7 +45,7 @@ Python (instalar: `python -m pip install -r requirements.txt`; fonte única das 
 | Biblioteca | Onde é usada | Para que serve |
 |---|---|---|
 | pandas | `pipeline/cnes.py`, `common.py`, `indice_cep.py`, `oferta_educacao_infantil.py`, `servicos.py` e testes | Leitura e tratamento de CSV e Parquet (CNES, CNEFE, Censo Escolar) |
-| pyarrow | `pipeline/cnes.py`, `pipeline/oferta_educacao_infantil.py` | Leitura de arquivos Parquet do CNES e do Censo Escolar |
+| pyarrow | `pipeline/cnes.py`, `pipeline/indice_cep.py`, `pipeline/oferta_educacao_infantil.py` | Leitura de arquivos Parquet do CNES e do Censo Escolar |
 | numpy | `analise_territorial.py`, `common.py`, `indice_cep.py`, `indice_orientacao.py`, `treinar_necessidades.py`, `treinar_perigo.py`, `treinar_escopo.py` | Arrays, cálculo numérico, distâncias |
 | scikit-learn | `treinar_necessidades.py`, `treinar_perigo.py`, `treinar_escopo.py` (TfidfVectorizer, LogisticRegression, OneVsRestClassifier, StratifiedKFold); `indice_orientacao.py` (TfidfVectorizer, TruncatedSVD); `analise_territorial.py` (KMeans) | Treino dos modelos, TF-IDF, redução de dimensão (LSA) e agrupamento. Traz o scipy como dependência |
 | pyshp (módulo `shapefile`) | `pipeline/setores.py` | Ler o shapefile de setores censitários do IBGE |
@@ -125,7 +125,7 @@ Não existe: modelo de linguagem, embeddings neurais, previsão de risco, elegib
 | `baixar.py` | URLs do IBGE, INEP, CNES | `dados/bruto/` | stdlib (`urllib`, `zipfile`) |
 | `common.py` | Utilidades compartilhadas (download com retomada, distância) | | pandas, numpy |
 | `cnes.py` | Base completa do CNES em CSV ou Parquet | Diagnóstico e estabelecimentos de saúde | pandas, pyarrow |
-| `indice_cep.py` | CNEFE 2022 | `web/dados/cep_indice.json` | pandas, numpy |
+| `indice_cep.py` | CNEFE 2022 | `web/dados/cep_indice.json` | pandas, numpy, pyarrow |
 | `ceps_lista.py` | Lista de CEPs com coordenada | Dados para o índice | stdlib |
 | `servicos.py` | `catalogo/servicos_manuais.csv`, CNES, INEP | `web/dados/catalogo_manual.json` e `servicos.json` | pandas |
 | `geocodificar_catalogo.py` | Catálogo | Planilha de sugestões de CEP e coordenada | stdlib |

@@ -72,7 +72,7 @@ def ler_tabela_pequena(caminho: Path | None, col_codigo: str, col_texto: str) ->
 
     if not caminho:
         return {}
-    df = ler_tabela(caminho, [col_codigo, col_texto])
+    df = ler_tabela(caminho)  # tabelas auxiliares sao pequenas; le tudo e confere as colunas abaixo (CSV sem a coluna devolve {})
     if col_codigo not in df.columns or col_texto not in df.columns:
         return {}
     return {str(c).strip(): str(t).strip() for c, t in zip(df[col_codigo], df[col_texto])
