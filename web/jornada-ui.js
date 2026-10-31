@@ -253,9 +253,7 @@
       '<li><a href="https://educacao-executiva.fgv.br/" target="_blank" rel="noopener noreferrer">FGV Educação Executiva</a> — a página tem cursos gratuitos; escolha os de gestão e finanças e veja a duração de cada um.</li>' +
       '</ul>' +
       '<h4>Formação mais longa (anos)</h4><ul>' +
-      '<li><a href="https://univesp.br/" target="_blank" rel="noopener noreferrer">UNIVESP</a> — graduações gratuitas a distância, com apoio em polos presenciais. Há vestibular: veja no <a href="https://vestibular.univesp.br/" target="_blank" rel="noopener noreferrer">site do vestibular</a> as datas atuais e se há inscrição aberta.</li>' +
-      '<li><a href="https://www.ifsp.edu.br/" target="_blank" rel="noopener noreferrer">IFSP</a> — cursos técnicos e superiores gratuitos; a oferta e os prazos mudam a cada edital, e alguns já estão encerrados. Veja o que está aberto agora.</li>' +
-      '<li><a href="https://www.sp.senac.br/" target="_blank" rel="noopener noreferrer">Senac São Paulo</a> — o Programa Senac de Gratuidade oferece bolsas integrais em cursos. A regra divulgada é renda de até dois salários mínimos por pessoa da família, com vaga por ordem de inscrição e prazo antes de a turma começar: confira as regras atuais no site.</li>' +
+      '<li><a href="#educacao/educacao-formacao-longa">Ver a lista completa na área Educação</a>: UNIVESP (com o vestibular), IFSP e o Programa Senac de Gratuidade. A lista fica num lugar só, na Educação, para a oferta e as regras não ficarem diferentes entre as áreas.</li>' +
       '</ul>' +
       '<h4>Concurso público</h4><p>O que estudar depende do edital e da banca; curso de Excel não substitui a preparação. De modo geral, a base costuma incluir Português, Matemática ou raciocínio lógico e Informática, mais a matéria específica do cargo. Leia o edital do concurso que você quer e treine com provas anteriores da mesma banca. Muitos concursos cobram taxa de inscrição, e o edital pode prever isenção: veja as regras e os prazos nele.</p>' +
       '<p>Sites que indicam concursos:</p><ul>' +

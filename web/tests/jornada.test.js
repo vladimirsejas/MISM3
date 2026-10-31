@@ -189,8 +189,17 @@ assert(!/Unidade Cervezão|Informação de 2023, não conferida/.test(secaoLocal
 assert(/este site não confirma onde isso é oferecido/.test(secaoLocal), "não promete impressão gratuita em lugar nenhum");
 assert(/Trabalho por conta própria: MEI/.test(secaoLocal) && /gov\.br\/empresas-e-negocios/.test(secaoLocal), "MEI com fonte oficial");
 assert(/Estudar para trabalhar melhor/.test(secaoLocal) && /Comece por uma coisa só/.test(secaoLocal), "formação: começa por uma coisa só");
-["ev.org.br", "univesp.br", "vestibular.univesp.br", "ifsp.edu.br", "sp.senac.br", "learn.microsoft.com", "sebrae.com.br", "educacao-executiva.fgv.br"].forEach((h) => assert(secaoLocal.includes(h), "formação: falta o site oficial " + h));
-assert(/dois salários mínimos por pessoa/.test(secaoLocal) && /confira as regras atuais/.test(secaoLocal), "Senac: regra de renda com aviso para conferir");
+["ev.org.br", "learn.microsoft.com", "sebrae.com.br", "educacao-executiva.fgv.br"].forEach((h) => assert(secaoLocal.includes(h), "formação: falta o site oficial " + h));
+/* Formação mais longa (UNIVESP, IFSP, Senac gratuito): desde 31/10/2026 a lista mora só na área Educação e Trabalho aponta para ela
+   (antes havia três cópias iguais). O teste continua exigindo cada site e a regra de renda do Senac, agora no lugar certo. */
+const secLonga = Areas.porId("educacao").secoes.find((s) => s.ancora === "educacao-formacao-longa");
+["univesp.br", "vestibular.univesp.br", "ifsp.edu.br", "sp.senac.br"].forEach((h) => assert(secLonga.links.some((l) => l[1].includes(h)), "formação mais longa: falta " + h + " na área Educação"));
+assert(secaoLocal.includes('href="#educacao/educacao-formacao-longa"'), "o bloco de estudo de Trabalho aponta para a lista de Educação");
+assert(!/univesp\.br|ifsp\.edu\.br|sp\.senac\.br/.test(secaoLocal), "a lista de formação mais longa não é mais copiada dentro de Trabalho");
+const linkSenac = secLonga.links.find((l) => /sp\.senac/.test(l[1]));
+assert(/dois salários mínimos por pessoa/.test(linkSenac[2]) && /confira as regras atuais/.test(linkSenac[2]), "Senac: regra de renda com aviso para conferir (na área Educação)");
+const secTrabLonga = Areas.porId("trabalho").secoes.find((s) => s.ancora === "trabalho-formacao-longa");
+assert(secTrabLonga.links.length === 1 && secTrabLonga.links[0][1] === "#educacao/educacao-formacao-longa", "a seção de Trabalho tem só o apontador para Educação");
 assert(!/\d+ ?horas|\d+ ?h\b(?! às)/.test(secaoLocal.split("trabalho-estudar")[2] || ""), "formação: não afirma carga horária que não foi confirmada");
 assert(!/inscrições abertas/.test(secaoLocal.split("trabalho-estudar")[2] || "") && /não confirma se há inscrição aberta/.test(secaoLocal), "formação: não afirma matrícula aberta");
 assert(/Concurso público/.test(secaoLocal) && /depende do edital/.test(secaoLocal), "concurso: depende do edital");
