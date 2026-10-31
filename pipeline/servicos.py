@@ -235,14 +235,18 @@ def main() -> None:
         print("AVISO: cep_indice.json ausente (rode indice_cep.py). Servicos sem coordenada ficarao 'sem_local'.")
 
     cnes = None
+    pastas_cnes = (BRUTO / "cnes", RAIZ / "docs" / "cnes",
+                   RAIZ / "dados" / "parquet" / "cnes_restante",
+                   RAIZ / "dados" / "parquet" / "cnes")
     pasta_cnes = Path(sys.argv[1]) if len(sys.argv) > 1 else next(
-        (p for p in (BRUTO / "cnes", RAIZ / "docs" / "cnes") if list(p.glob("tbEstabelecimento*.csv"))), None)
+        (p for p in pastas_cnes if list(p.glob("tbEstabelecimento*.csv")) or
+         list(p.glob("tbEstabelecimento*.parquet"))), None)
     if pasta_cnes:
         import cnes as modulo_cnes
         cnes, cont = modulo_cnes.carregar(pasta_cnes, indice, agora_iso())
         print("CNES (%s): %s" % (pasta_cnes, cont))
     else:
-        print("AVISO: CNES ausente. Coloque a base completa em docs/cnes (ou passe a pasta: python pipeline/servicos.py caminho).")
+        print("AVISO: CNES ausente. Coloque a base completa em docs/cnes ou dados/parquet/cnes_restante (ou passe a pasta: python pipeline/servicos.py caminho).")
 
     escolas = None
     csvs = sorted(set((BRUTO / "escolas").glob("microdados_ed_basica*.csv")) |
