@@ -25,7 +25,9 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import MUNICIPIO_IBGE7, RAIZ, WEB_DADOS, agora_iso, erro, salvar_json  # noqa: E402
 
-PASTA_PADRAO = RAIZ / "docs" / "educacao" / "dados"
+PASTA_CSV = RAIZ / "docs" / "educacao" / "dados"
+PASTA_PARQUET = RAIZ / "dados" / "parquet" / "git_historico" / "educacao" / "dados"
+PASTA_PADRAO = PASTA_CSV if PASTA_CSV.exists() else PASTA_PARQUET
 ARQUIVOS = {
     "escola": "Tabela_Escola_2025_V2.csv",
     "matricula": "Tabela_Matricula_2025_V2.csv",
@@ -63,9 +65,33 @@ def detectar_codificacao(caminho: Path) -> str:
                 return "utf-8-sig"
 
 
+def caminho_tabela(pasta: Path, nome_csv: str) -> Path:
+    """Resolve a tabela na pasta: Parquet tem prioridade; CSV continua aceito."""
+    nome = Path(nome_csv).stem
+    for extensao in (".parquet", ".pq", ".csv"):
+        caminho = Path(pasta) / (nome + extensao)
+        if caminho.exists():
+            return caminho
+    return Path(pasta) / nome_csv
+
+
 def ler_filtrado(caminho: Path, colunas: list[str], municipio: str = MUNICIPIO_IBGE7):
-    """Lê só as colunas pedidas e só as linhas do município, em blocos (o arquivo inteiro não cabe com folga na memória)."""
+    """Lê apenas as colunas necessárias e filtra Rio Claro; CSV em blocos, Parquet por colunas."""
     import pandas as pd
+
+    if caminho.suffix.lower() in (".parquet", ".pq"):
+        import pyarrow.parquet as pq
+
+        cabecalho = pq.read_schema(caminho).names
+        faltando = [c for c in colunas if c not in cabecalho]
+        if faltando:
+            raise ValueError("%s sem as colunas %s. Colunas do arquivo: %s" %
+                             (caminho.name, faltando, cabecalho[:30]))
+        df = pd.read_parquet(caminho, columns=colunas).astype("string")
+        # Parquets originados de CSVs podem inferir códigos numéricos como float (3543907.0).
+        # Remove apenas o sufixo decimal artificial, sem alterar zeros à esquerda.
+        df["CO_MUNICIPIO"] = df["CO_MUNICIPIO"].str.strip().str.replace(r"\.0$", "", regex=True)
+        return df[df["CO_MUNICIPIO"] == municipio].reset_index(drop=True)
 
     codificacao = detectar_codificacao(caminho)
     cabecalho = pd.read_csv(caminho, sep=";", nrows=0, encoding=codificacao, dtype=str)
@@ -152,16 +178,16 @@ def main() -> int:
     ap.add_argument("--pasta", type=Path, default=PASTA_PADRAO, help="pasta com as três tabelas do INEP")
     ap.add_argument("--saida", type=Path, default=WEB_DADOS / "oferta_educacao_infantil.json")
     a = ap.parse_args()
-    caminhos = {k: a.pasta / n for k, n in ARQUIVOS.items()}
+    caminhos = {k: caminho_tabela(a.pasta, n) for k, n in ARQUIVOS.items()}
     if not caminhos["escola"].exists():
-        erro("Não achei %s. Passe a pasta certa com --pasta." % caminhos["escola"])
+        erro("Não achei Tabela_Escola_2025_V2.csv ou .parquet em %s. Passe a pasta certa com --pasta." % a.pasta)
     try:
         dados = {k: ler_filtrado(c, COLUNAS[k]) for k, c in caminhos.items() if c.exists()}
     except ValueError as e:
         erro(str(e))
     for k, c in caminhos.items():
         if not c.exists():
-            print("AVISO: %s não encontrado; os campos dessa tabela ficam vazios (null)." % c.name)
+            print("AVISO: tabela %s não encontrada; os campos dessa tabela ficam vazios (null)." % c.stem)
     if dados["escola"].empty:
         erro("Nenhuma escola do município %s na tabela de escolas. Confira se o arquivo é de 2025 e nacional." % MUNICIPIO_IBGE7)
     saida = montar(dados["escola"], dados.get("matricula"), dados.get("turma"))

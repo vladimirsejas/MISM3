@@ -2,7 +2,8 @@
 # O site em si nao usa Python em tempo de execucao: web/ e HTML, CSS e JavaScript estaticos.
 # Instalar: python -m pip install -r requirements.txt
 # O README (secao "Bibliotecas") descreve onde cada uma e usada; pipeline/tests/test_dependencias.py confere.
-pandas>=2.0          # leitura e tratamento de CSV grandes (CNES, CNEFE, Censo Escolar)
+pandas>=2.0          # leitura e tratamento de CSV e Parquet (CNES, CNEFE, Censo Escolar)
+pyarrow>=15.0        # leitura de arquivos Parquet no pipeline
 numpy>=1.26          # arrays e calculo numerico
 scikit-learn>=1.4    # treino dos modelos, TF-IDF, SVD (LSA) e KMeans (scipy vem junto)
 pyshp>=2.3           # leitura do shapefile de setores censitarios (modulo: shapefile)

@@ -1,9 +1,9 @@
 """Passo - estabelecimentos de saude de Rio Claro a partir da BASE COMPLETA DO CNES (DATASUS).
 
-Entrada: a pasta com os CSVs da base completa (ex.: docs/cnes), em especial
-    tbEstabelecimento<AAAAMM>.csv   (estabelecimentos, ~290 MB, base nacional)
-    tbTipoUnidade<AAAAMM>.csv       (codigo do tipo -> nome do tipo)
-    tbTurnoAtendimento<AAAAMM>.csv  (codigo do turno -> descricao)
+Entrada: pasta com CSVs ou Parquets da base completa do CNES, em especial
+    tbEstabelecimento<AAAAMM>      (estabelecimentos, base nacional)
+    tbTipoUnidade<AAAAMM>          (codigo do tipo -> nome do tipo)
+    tbTurnoAtendimento<AAAAMM>     (codigo do turno -> descricao)
 
 Decisoes de privacidade e qualidade:
   * Le SO as colunas necessarias (usecols). As colunas de CPF/CNPJ de pessoas NUNCA sao carregadas.
@@ -14,7 +14,7 @@ Decisoes de privacidade e qualidade:
     com o diagnostico).
 
 Uso:
-    python pipeline/cnes.py docs/cnes --diagnostico   # so contagens, para conferir as regras
+    python pipeline/cnes.py docs/cnes --diagnostico   # CSV ou Parquet; so contagens
     (o servicos.py chama este modulo para montar o catalogo)
 """
 from __future__ import annotations
@@ -34,9 +34,28 @@ BLOCO = 200_000
 
 
 def achar_arquivo(pasta: Path, prefixo: str) -> Path | None:
-    achados = sorted(Path(pasta).glob(prefixo + "*.csv"))
-    return achados[-1] if achados else None
+    """Localiza a versão mais recente; prefere Parquet quando CSV e Parquet coexistem."""
+    pasta = Path(pasta)
+    parquet = sorted(pasta.glob(prefixo + "*.parquet"))
+    if parquet:
+        return parquet[-1]
+    csv = sorted(pasta.glob(prefixo + "*.csv"))
+    return csv[-1] if csv else None
 
+
+def eh_parquet(caminho: Path) -> bool:
+    return Path(caminho).suffix.lower() in {".parquet", ".pq"}
+
+
+def ler_tabela(caminho: Path, colunas: list[str] | None = None):
+    """Le CSV ou Parquet; devolve campos como texto para manter o contrato do pipeline."""
+    import pandas as pd
+
+    if eh_parquet(caminho):
+        df = pd.read_parquet(caminho, columns=colunas)
+        return df.astype("string")
+    return pd.read_csv(caminho, sep=";", dtype=str, encoding=detectar_encoding(caminho),
+                       usecols=colunas)
 
 def detectar_encoding(caminho: Path) -> str:
     with open(caminho, "rb") as f:
@@ -53,15 +72,39 @@ def ler_tabela_pequena(caminho: Path | None, col_codigo: str, col_texto: str) ->
 
     if not caminho:
         return {}
-    df = pd.read_csv(caminho, sep=";", dtype=str, encoding=detectar_encoding(caminho))
+    df = ler_tabela(caminho, [col_codigo, col_texto])
     if col_codigo not in df.columns or col_texto not in df.columns:
         return {}
-    return {str(c).strip(): str(t).strip() for c, t in zip(df[col_codigo], df[col_texto])}
-
+    return {str(c).strip(): str(t).strip() for c, t in zip(df[col_codigo], df[col_texto])
+            if pd.notna(c) and pd.notna(t)}
 
 def ler_estabelecimentos(caminho: Path, ceps_do_municipio: set[str] | None = None):
-    """Devolve DataFrame (so Rio Claro) lendo em blocos. Filtro: gestor = 354390 OU CEP no indice."""
+    """Devolve DataFrame (so Rio Claro), lendo CSV em blocos ou Parquet por colunas.
+
+    O Parquet e lido somente com COLUNAS; CPF/CNPJ de pessoas nunca sao solicitados.
+    """
     import pandas as pd
+
+    if eh_parquet(caminho):
+        import pyarrow.parquet as pq
+
+        arquivo = pq.ParquetFile(caminho)
+        cab = arquivo.schema_arrow.names
+        obrigatorias = ("CO_UNIDADE", "NO_FANTASIA", "CO_CEP", "CO_MUNICIPIO_GESTOR")
+        faltam = [c for c in obrigatorias if c not in cab]
+        if faltam:
+            raise ValueError("tbEstabelecimento sem colunas %s. Colunas: %s" % (faltam, list(cab)))
+        usar = [c for c in COLUNAS if c in cab]
+        partes = []
+        for lote in arquivo.iter_batches(batch_size=BLOCO, columns=usar):
+            bloco = lote.to_pandas().astype("string")
+            gestor = bloco["CO_MUNICIPIO_GESTOR"].fillna("").str.strip().str[:6] == MUNICIPIO_IBGE6
+            if ceps_do_municipio:
+                cep_ok = bloco["CO_CEP"].map(normalizar_cep).isin(ceps_do_municipio)
+                partes.append(bloco[gestor | cep_ok])
+            else:
+                partes.append(bloco[gestor])
+        return pd.concat(partes, ignore_index=True) if partes else pd.DataFrame(columns=usar, dtype="string")
 
     enc = detectar_encoding(caminho)
     cab = pd.read_csv(caminho, sep=";", dtype=str, encoding=enc, nrows=0).columns
@@ -79,7 +122,6 @@ def ler_estabelecimentos(caminho: Path, ceps_do_municipio: set[str] | None = Non
         else:
             partes.append(bloco[gestor])
     return pd.concat(partes, ignore_index=True) if partes else pd.DataFrame(columns=usar)
-
 
 def filtrar(df, prefixos=PREFIXOS_NATUREZA):
     """Aplica as regras de inclusao e devolve (df_filtrado, contagens)."""
@@ -158,7 +200,7 @@ def para_numero_escalar(v):
 def carregar(pasta: Path, indice: dict, hoje: str) -> tuple[list[dict], dict]:
     arq = achar_arquivo(pasta, "tbEstabelecimento")
     if not arq:
-        raise FileNotFoundError("tbEstabelecimento*.csv nao encontrado em %s" % pasta)
+        raise FileNotFoundError("tbEstabelecimento*.csv ou .parquet nao encontrado em %s" % pasta)
     tipos = ler_tabela_pequena(achar_arquivo(pasta, "tbTipoUnidade"), "CO_TIPO_UNIDADE", "DS_TIPO_UNIDADE")
     turnos = ler_tabela_pequena(achar_arquivo(pasta, "tbTurnoAtendimento"), "CO_TURNO_ATENDIMENTO", "DS_TURNO_ATENDIMENTO")
     tipos_estab = ler_tabela_pequena(achar_arquivo(pasta, "tbTipoEstabelecimento"), "CO_TIPO_ESTABELECIMENTO", "DS_TIPO_ESTABELECIMENTO")
@@ -183,7 +225,7 @@ def diagnostico(pasta: Path, indice: dict) -> None:
         return
     tipos = ler_tabela_pequena(achar_arquivo(pasta, "tbTipoUnidade"), "CO_TIPO_UNIDADE", "DS_TIPO_UNIDADE")
     mun = ler_tabela_pequena(achar_arquivo(pasta, "tbMunicipio"), "CO_MUNICIPIO", "NO_MUNICIPIO")
-    print("Arquivo: %s (codificacao %s)" % (arq.name, detectar_encoding(arq)))
+    print("Arquivo: %s (%s)" % (arq.name, "Parquet" if eh_parquet(arq) else "codificacao " + detectar_encoding(arq)))
     print("Municipio %s na tbMunicipio: %s" % (MUNICIPIO_IBGE6, mun.get(MUNICIPIO_IBGE6, "(nao encontrado)")))
     df = ler_estabelecimentos(arq, set(indice) if indice else None)
     print("Estabelecimentos de Rio Claro (gestor %s%s): %d" % (MUNICIPIO_IBGE6, " ou CEP do indice" if indice else "", len(df)))
