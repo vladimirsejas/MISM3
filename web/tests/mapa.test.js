@@ -168,3 +168,24 @@ console.log("mapa.test.js: ok (" + lista.length + " serviços; " + n.endereco + 
   assert.deepStrictEqual(MS.cepsDoBairro("Jardim Brasília", indice, setorBairro), MS.cepsDoBairro("Jd. Brasilia", indice, setorBairro));
   console.log("ok: CEP <-> bairro (" + comBairro.length + " CEPs com bairro provável)");
 }
+
+/* Agrupar (como no mapa do MISM 1): serviços no mesmo local viram um marcador com número; sem posição não entra; só endereço deixa o grupo "cheio". */
+{
+  const A = require("assert"), MSx = require("../mapa-servicos.js");
+  const mk = (id, lat, lon, precisao) => ({ id, tipo: "creche", pos: lat == null ? null : { lat, lon, precisao } });
+  const gs = MSx.agrupar([mk("a", -22.4101, -47.5601, "endereco"), mk("b", -22.41012, -47.56012, "cep"), mk("c", -22.42, -47.57, "cep"), mk("d", null)]);
+  A.strictEqual(gs.length, 2, "dois locais: o par no mesmo ponto e o isolado; o sem posição não entra");
+  A.deepStrictEqual(gs[0].itens.map((x) => x.id), ["a", "b"], "os dois do mesmo local ficam juntos");
+  A.strictEqual(gs[0].aproximado, false, "com um serviço pelo endereço, o grupo é cheio");
+  A.strictEqual(gs[1].aproximado, true, "só CEP: grupo vazado");
+  A.strictEqual(MSx.agrupar([]).length, 0);
+  const pts = [];
+  for (let i = 0; i < 20; i++) pts.push([-22.41 + i * 0.001, -47.56 + i * 0.001]);
+  pts.push([-22.1, -47.2]);
+  const cx = MSx.caixaCentral(pts);
+  A(cx[1][0] < -22.3 && cx[1][1] < -47.3, "um ponto muito longe não afasta a vista inicial");
+  A.deepStrictEqual(MSx.caixaCentral([[-22.4, -47.5]]), [[-22.4, -47.5], [-22.4, -47.5]], "com poucos pontos usa todos");
+  A.strictEqual(MSx.caixaCentral([]), null);
+  A(/<text[^>]*>7<\/text>/.test(MSx.svgGrupo(7, false, "#a0404c")) && /<text[^>]*>0<\/text>/.test(MSx.svgGrupo("<b>", false, "#a0404c")), "o número do grupo é sempre um inteiro (texto não entra no SVG)");
+  console.log("ok: serviços no mesmo local agrupados, vista central, número seguro");
+}

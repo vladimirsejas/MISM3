@@ -229,6 +229,39 @@
     return "Posição aproximada pelo CEP (raio de cerca de " + pos.raio_m + " m)";
   }
 
+  /* Serviços no mesmo local (mesma coordenada, ou a menos de uns 10 m) viram UM marcador com o número deles, como no mapa do
+     MISM 1: assim escolas e unidades do mesmo prédio não ficam empilhadas uma sobre a outra. Só entram os que têm posição.
+     Cada grupo: { lat, lon, itens: [serviços], aproximado: true se NENHUM tem posição pelo endereço }. */
+  function agrupar(lista) {
+    var grupos = {}, ordem = [];
+    lista.forEach(function (s) {
+      if (!s.pos) return;
+      var chave = s.pos.lat.toFixed(4) + "|" + s.pos.lon.toFixed(4);
+      if (!grupos[chave]) { grupos[chave] = { lat: s.pos.lat, lon: s.pos.lon, itens: [], aproximado: true }; ordem.push(chave); }
+      grupos[chave].itens.push(s);
+      if (s.pos.precisao === "endereco") grupos[chave].aproximado = false;
+    });
+    return ordem.map(function (k) { return grupos[k]; });
+  }
+
+  /* Vista inicial: a caixa que cobre a parte central dos pontos (do 5º ao 95º percentil de cada eixo), para que um ou dois
+     serviços longe do centro não afastem o mapa até os pontos virarem um monte. Quem quer ver os outros é só afastar o mapa. */
+  function caixaCentral(pontos) {
+    if (!pontos.length) return null;
+    function corte(v, p) { var o = v.slice().sort(function (a, b) { return a - b; }); return o[Math.min(o.length - 1, Math.max(0, Math.round(p * (o.length - 1))))]; }
+    var la = pontos.map(function (p) { return p[0]; }), lo = pontos.map(function (p) { return p[1]; });
+    var a = pontos.length >= 12 ? 0.05 : 0, b = pontos.length >= 12 ? 0.95 : 1;
+    return [[corte(la, a), corte(lo, a)], [corte(la, b), corte(lo, b)]];
+  }
+
+  /* SVG do marcador de GRUPO (2 ou mais serviços no mesmo local): círculo com o número. O número é sempre um inteiro nosso. */
+  function svgGrupo(n, aproximado, cor) {
+    var fill = aproximado ? "#ffffff" : cor, stroke = aproximado ? cor : "#ffffff", texto = aproximado ? cor : "#ffffff";
+    return '<svg viewBox="0 0 40 40" width="40" height="40" aria-hidden="true" focusable="false"><circle cx="20" cy="20" r="17" fill="' + fill +
+      '" stroke="' + stroke + '" stroke-width="3"/><text x="20" y="25.5" text-anchor="middle" font-size="16" font-weight="700" font-family="sans-serif" fill="' +
+      texto + '">' + (Number(n) | 0) + "</text></svg>";
+  }
+
   /* SVG do marcador: cheio = pelo endereço; vazado = aproximado pelo CEP. Só constantes, nunca texto de serviço. */
   function svgMarcador(tipo, aproximado) {
     var e = ESTILO[tipo] || ESTILO.assistencia, pts = PONTOS_FORMA[e.forma];
@@ -239,7 +272,7 @@
   }
 
   return { CAIXA: CAIXA, RAIO_MAX_CEP_M: RAIO_MAX_CEP_M, ESTILO: ESTILO, dentroDeRioClaro: dentroDeRioClaro, posicao: posicao,
-    preparar: preparar, contagem: contagem, filtrar: filtrar, ordenar: ordenar, maisPertoPorTipo: maisPertoPorTipo, bairroDoCep: bairroDoCep, cepsDoBairro: cepsDoBairro, linkGoogleMaps: linkGoogleMaps,
+    preparar: preparar, contagem: contagem, filtrar: filtrar, ordenar: ordenar, maisPertoPorTipo: maisPertoPorTipo, bairroDoCep: bairroDoCep, cepsDoBairro: cepsDoBairro, linkGoogleMaps: linkGoogleMaps, agrupar: agrupar, caixaCentral: caixaCentral, svgGrupo: svgGrupo,
     rotuloPrecisao: rotuloPrecisao, primeiroTelefone: primeiroTelefone, normalizarBairro: normalizarBairro,
     apelidosConfirmados: apelidosConfirmados, termosDeBusca: termosDeBusca, crasDoBairro: crasDoBairro, svgMarcador: svgMarcador, semAcento: semAcento };
 });

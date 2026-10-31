@@ -92,9 +92,10 @@
   /* ---------------------------------------------------------------- mapa */
   function iniciarMapa(setores) {
     if (typeof L === "undefined") { mensagem("O mapa não pôde ser carregado, mas a lista abaixo funciona normalmente."); return; }
-    mapa = L.map("mapa-servicos", { zoomControl: true, attributionControl: true }).setView([-22.41, -47.56], 12);
+    mapa = L.map("mapa-servicos", { zoomControl: false, attributionControl: true, minZoom: 10, maxZoom: 18 }).setView([-22.41, -47.56], 12);
+    L.control.zoom({ position: "bottomright" }).addTo(mapa);
     if (setores) {
-      var contorno = L.geoJSON(setores, { style: { color: "#d8bfb8", weight: 0.7, fillColor: "#f3e3dd", fillOpacity: 0.55 }, interactive: false }).addTo(mapa);
+      var contorno = L.geoJSON(setores, { style: { color: "#d8bfb8", weight: 0.7, fillColor: "#f3e3dd", fillOpacity: 0.18 }, interactive: false }).addTo(mapa);
       try { mapa.fitBounds(contorno.getBounds()); } catch (e) { /* contorno inválido: segue com a vista padrão */ }
     }
     camadaPontos = L.layerGroup().addTo(mapa);
@@ -108,19 +109,42 @@
     camadaPontos.clearLayers();
     marcadores = {};
     var pts = [];
-    lista.forEach(function (s) {
-      if (!s.pos) return;
-      var icone = L.divIcon({ className: "mapa-pino", html: MS.svgMarcador(s.tipo, s.pos.precisao === "cep"), iconSize: [28, 28], iconAnchor: [14, 14], popupAnchor: [0, -12] });
-      var m = L.marker([s.pos.lat, s.pos.lon], { icon: icone, title: s.nome, alt: s.nome, keyboard: true });
-      m.bindPopup(cartao(s, false), { maxWidth: 320 });
+    MS.agrupar(lista).forEach(function (g) {
+      var m, s = g.itens[0];
+      if (g.itens.length === 1) {
+        var icone = L.divIcon({ className: "mapa-pino", html: MS.svgMarcador(s.tipo, g.aproximado), iconSize: [36, 36], iconAnchor: [18, 18], popupAnchor: [0, -14] });
+        m = L.marker([g.lat, g.lon], { icon: icone, title: s.nome, alt: s.nome, keyboard: true });
+        m.bindPopup(cartao(s, false), { maxWidth: 320 });
+      } else {
+        var cor = MS.ESTILO[s.tipo] ? MS.ESTILO[s.tipo].cor : "#7a2f45";
+        var nome = g.itens.length + " serviços neste local";
+        m = L.marker([g.lat, g.lon], { icon: L.divIcon({ className: "mapa-pino", html: MS.svgGrupo(g.itens.length, g.aproximado, cor), iconSize: [40, 40], iconAnchor: [20, 20], popupAnchor: [0, -16] }), title: nome, alt: nome, keyboard: true });
+        var caixa = el("div", "mapa-grupo");
+        caixa.appendChild(el("p", "mapa-grupo-titulo", nome));
+        g.itens.forEach(function (x) { caixa.appendChild(cartao(x, false)); });
+        m.bindPopup(caixa, { maxWidth: 340, maxHeight: 360 });
+      }
       m.addTo(camadaPontos);
-      marcadores[s.id] = m;
-      pts.push([s.pos.lat, s.pos.lon]);
+      g.itens.forEach(function (x) { marcadores[x.id] = m; });
+      pts.push([g.lat, g.lon]);
     });
     if (estado.origem) pts.push(estado.origem);
-    if (pts.length && (primeiraVez || estado.origem)) mapa.fitBounds(pts, { padding: [30, 30], maxZoom: 15 });
+    var vista = estado.origem ? pts : MS.caixaCentral(pts);
+    if (vista && (primeiraVez || estado.origem)) mapa.fitBounds(vista, { padding: [40, 40], maxZoom: 15 });
     primeiraVez = false;
     setTimeout(function () { mapa.invalidateSize(); }, 50);
+  }
+
+  /* Base cinza clara com nomes de ruas (a mesma do mapa do MISM 1): fica ligada desde o início para os pontos se destacarem. */
+  function ligarBase(ligar) {
+    if (!mapa) return;
+    if (ligar && !tiles) {
+      tiles = L.layerGroup([
+        L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}", { maxNativeZoom: 16, maxZoom: 18, attribution: "Mapa-base: Esri" }),
+        L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}", { maxNativeZoom: 16, maxZoom: 18 })
+      ]).addTo(mapa);
+      tiles.eachLayer(function (l) { l.bringToBack(); });
+    } else if (!ligar && tiles) { mapa.removeLayer(tiles); tiles = null; }
   }
 
   function mostrarNoMapa(s) {
@@ -293,9 +317,7 @@
   $("mais-servicos").addEventListener("click", function () { estado.limite += POR_PAGINA; atualizar(); });
   $("usar-tiles-mapa").addEventListener("change", function (e) {
     if (!mapa) return;
-    if (e.target.checked) {
-      tiles = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: "© OpenStreetMap contributors" }).addTo(mapa);
-    } else if (tiles) { mapa.removeLayer(tiles); tiles = null; }
+    ligarBase(e.target.checked);
   });
   /* Na tela inicial o botão "Sair desta página agora" já é tratado pelo app.js (e limpa tudo dela). */
   if (!document.getElementById("inicio-tela")) {
@@ -315,6 +337,7 @@
       estado.todos = MS.preparar(r[0].servicos || [], estado.indice);
       montarFiltros();
       iniciarMapa(r[2]);
+      ligarBase($("usar-tiles-mapa").checked);
       atualizar();
     }).catch(function () {
       mensagem("Não foi possível carregar os serviços agora. Tente de novo em instantes. Para apoio imediato: Ligue 180 (violência) ou 190 (emergência).");
