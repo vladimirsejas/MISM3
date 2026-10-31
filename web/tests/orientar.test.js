@@ -116,13 +116,18 @@ console.log("orientar.test.js ok");
 
 /* ---- Reforços de Trabalho: cartões que já existem na tela e que o orientador SOMA à resposta, sem tirar nada ---- */
 const ids = (r) => r.itens.map((i) => i.id);
-const REFORCOS_IDS = ["ferr-entrevista-aparencia", "ferr-dinheiro-semana", "ferr-quanto-sobra"];
+const REFORCOS_IDS = ["ferr-central-justica", "ferr-entrevista-aparencia", "ferr-dinheiro-semana", "ferr-quanto-sobra"];
 const ehReforco = (i) => REFORCOS_IDS.indexOf(i) >= 0;
 assert.strictEqual(R("com que roupa eu vou na entrevista").itens[0].id, "ferr-entrevista-aparencia", "roupa para entrevista: o cartão de aparência vem em 1º");
 assert.strictEqual(R("nao tenho dinheiro para arrumar o cabelo para a entrevista").itens[0].id, "ferr-entrevista-aparencia", "cabelo para entrevista leva ao cartão");
 assert.strictEqual(R("como me vestir para procurar emprego").itens[0].id, "ferr-entrevista-aparencia", "vestir para procurar emprego leva ao cartão");
 assert.strictEqual(R("preciso de dinheiro essa semana").itens[0].id, "ferr-dinheiro-semana", "dinheiro esta semana leva ao bloco de renda rápida");
 assert.strictEqual(R("quanto vou ganhar de verdade com um bico depois de pagar passagem").itens[0].id, "ferr-quanto-sobra", "conta do bico leva ao bloco de saldo");
+assert.strictEqual(R("como acho ajuda jurídica gratuita").itens[0].id, "ferr-central-justica", "pedido direto de ajuda jurídica gratuita leva à central" );
+assert(ids(R("onde denuncio assédio moral no trabalho")).slice(0, 4).includes("ferr-central-justica"), "assédio no trabalho encontra a seção com os caminhos do MPT e assistência jurídica");
+assert.strictEqual(R("não pagaram meu salário").itens[0].id, "ferr-central-justica", "salário não pago leva à rota trabalhista e jurídica" );
+const violenciaComPedidoJuridico = R("meu marido me bate e preciso de advogada");
+assert(violenciaComPedidoJuridico.itens[0].fixado && violenciaComPedidoJuridico.itens[0].area === "direitos", "pedido jurídico não passa à frente da rota fixada de violência");
 ["ferr-entrevista-aparencia", "ferr-dinheiro-semana", "ferr-quanto-sobra"].forEach((id) => {
   const u = (indice.reforcos || []).filter((x) => x.id === id)[0];
   assert(u && /^#trabalho\/[\w-]+$/.test(u.href) && u.area === "trabalho", "o reforço existe no índice e aponta para um bloco de Trabalho: " + id);
