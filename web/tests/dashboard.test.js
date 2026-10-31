@@ -154,7 +154,10 @@ Areas.AREAS.forEach((a) => {
   const urls = [];
   a.secoes.forEach((s) => s.links.forEach((l) => {
     const interno = l[1].charAt(0) === "#";
-    assert(/^https:\/\//.test(l[1]) || (interno && Areas.AREAS.some((x) => "#" + x.id === l[1])), a.id + ": link sem https e que não aponta para uma área existente: " + l[1]);
+    /* Interno: "#area" ou "#area/seção" (o roteador de app.js entende os dois); a seção precisa existir na área de destino. */
+    const [destinoId, destinoSecao] = interno ? l[1].slice(1).split("/") : [];
+    const destino = interno ? Areas.AREAS.find((x) => x.id === destinoId) : null;
+    assert(/^https:\/\//.test(l[1]) || (destino && (!destinoSecao || destino.secoes.some((x) => x.ancora === destinoSecao))), a.id + ": link sem https e que não aponta para uma área e seção existentes: " + l[1]);
     assert(l[0] && l[2], a.id + ": link sem título ou descrição");
     urls.push(l[1]);
   }));
@@ -264,11 +267,18 @@ const trab = Areas.AREAS.find((a) => a.id === "trabalho").secoes[0], edu = Areas
 });
 assert(!trab.grupos.includes("Concluir os estudos e graduação (SESI)"), "Trabalho não mostra o grupo de conclusão dos estudos: isso é da Educação");
 const JUNTO = "Estudar e se qualificar ao mesmo tempo";
-assert(trab.grupos.includes(JUNTO), "Trabalho deve mostrar o grupo que combina estudo e qualificação");
-["man-etec-rio-claro", "man-sesi-eja", "man-sesi-rio-claro"].forEach((id) =>
-  assert(lista.find((x) => x.id === id).grupo.split(";").includes(JUNTO), "oferta que combina escolaridade e qualificação deve estar no grupo conjunto: " + id));
-["curso_profissionalizante", "curso_tecnico"].forEach((st) => {
-  assert(trab.subtipos.includes(st) && edu.subtipos.includes(st), "cursos profissionalizantes e técnicos servem a Educação e a Trabalho: " + st);
+/* DECISÃO DE 31/10/2026 (passo 1 da reorganização, ver docs/registro_decisoes_desenvolvimento.md): antes, os cursos profissionalizantes e técnicos
+   (SENAI, Senac, SEST SENAT, Etec) e o grupo "Estudar e se qualificar ao mesmo tempo" apareciam em Trabalho E em Educação. Agora cada serviço de curso
+   mora só em Educação, que é onde a mulher procura estudar; Trabalho mantém emprego e qualificação municipal e aponta para Educação. Nada saiu do site
+   nem do catálogo: o teste continua exigindo que TODO serviço apareça em alguma área (mais abaixo) e que cada oferta esteja no grupo certo. */
+assert(!trab.grupos.includes(JUNTO) && edu.agrupar === true && !edu.grupos, "o grupo que combina estudo e qualificação sai de Trabalho e aparece em Educação (que mostra todos os grupos dos seus subtipos)");
+["man-etec-rio-claro", "man-sesi-eja", "man-sesi-rio-claro"].forEach((id) => {
+  const x = lista.find((y) => y.id === id);
+  assert(x.grupo.split(";").includes(JUNTO), "oferta que combina escolaridade e qualificação deve estar no grupo conjunto: " + id);
+  assert(edu.subtipos.includes(x.subtipo) && !trab.subtipos.includes(x.subtipo), "e esse grupo aparece só em Educação: " + id);
+});
+["curso_profissionalizante", "curso_tecnico", "eja", "escola_sesi"].forEach((st) => {
+  assert(edu.subtipos.includes(st) && !trab.subtipos.includes(st), "cursos moram só em Educação (Trabalho aponta para lá): " + st);
 });
 const aparece = (sec, x) => sec.subtipos.includes(x.subtipo) && (!sec.grupos || x.grupo.split(";").some((g) => sec.grupos.includes(g)));
 lista.filter((x) => x.tipo === "emprego_curso").forEach((x) =>

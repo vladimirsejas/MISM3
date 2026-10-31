@@ -689,14 +689,19 @@
     }
   ];
 
-  /* Contatos de emergência: canais nacionais oficiais. Mantidos aqui para os testes conferirem. */
+  /* Contatos de emergência: canais nacionais oficiais. FONTE ÚNICA (31/10/2026): o número, o nome e a descrição de cada um moram só aqui.
+     As duas listas de web/index.html (a caixa "Em perigo agora?" e os "Contatos essenciais") ficam entre marcadores EMERGENCIA-INICIO / EMERGENCIA-FIM e
+     são GERADAS daqui: para mudar um telefone, edite esta lista e rode  node web/tests/emergencia.test.js --sincronizar  (a CI reprova se o HTML diferir).
+     A página continua estática de propósito: a lista precisa aparecer mesmo se o JavaScript falhar.
+     Campos: tel, nome, quando (caixa "Em perigo agora?"); rotulo (nome curto lido pelo leitor de tela, se diferente de nome); contato (texto pequeno da lista "Contatos essenciais"; o campo
+     ausente tira o contato dessa lista, o texto vazio o mantém sem texto pequeno). web/tests/emergencia.test.js confere também perigo.js e todas as frases do site que citam um número. */
   var EMERGENCIA = [
-    { tel: "190", nome: "Polícia Militar", quando: "Perigo imediato, agressão em andamento ou ameaça." },
-    { tel: "192", nome: "SAMU", quando: "Urgência médica ou pessoa ferida." },
+    { tel: "190", nome: "Polícia Militar", quando: "Perigo imediato, agressão em andamento ou ameaça.", contato: "" },
+    { tel: "192", nome: "SAMU", quando: "Urgência médica ou pessoa ferida.", contato: "Urgência médica" },
     { tel: "193", nome: "Bombeiros", quando: "Incêndio, resgate ou acidente." },
-    { tel: "180", nome: "Central de Atendimento à Mulher", quando: "Violência contra a mulher: orientação, denúncia e encaminhamento. 24 horas, gratuito." },
-    { tel: "100", nome: "Disque Direitos Humanos", quando: "Violações de direitos humanos, como contra crianças, idosos e pessoas com deficiência. 24 horas, gratuito." },
-    { tel: "188", nome: "CVV — apoio emocional", quando: "Conversa de apoio em momentos de sofrimento. 24 horas, gratuito." }
+    { tel: "180", nome: "Central de Atendimento à Mulher", quando: "Violência contra a mulher: orientação, denúncia e encaminhamento. 24 horas, gratuito.", contato: "Violência contra a mulher. 24 horas, gratuito" },
+    { tel: "100", nome: "Disque Direitos Humanos", quando: "Violações de direitos humanos, como contra crianças, idosos e pessoas com deficiência. 24 horas, gratuito.", contato: "24 horas, gratuito" },
+    { tel: "188", nome: "CVV — apoio emocional", rotulo: "CVV", quando: "Conversa de apoio em momentos de sofrimento. 24 horas, gratuito." }
   ];
 
   /* Página "Entre Mulheres": serviços que mulheres oferecem a outras mulheres.
