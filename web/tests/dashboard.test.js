@@ -200,7 +200,7 @@ assert(index.includes('class="pular"'), "falta o link para pular ao conteúdo");
 /* ---- 6c. Fontes arquivadas: todo PDF citado no LEIA-ME existe, e todo PDF da pasta está explicado ---- */
 const pastaFontes = path.join(web, "..", "docs", "documetacao");
 const leia = fs.readFileSync(path.join(pastaFontes, "LEIA-ME.md"), "utf8");
-const citados = Array.from(leia.matchAll(/`([\w.-]+\.pdf)`/g), (m) => m[1]).filter((f, i, a) => a.indexOf(f) === i);
+const citados = Array.from(leia.matchAll(/`([^`\n]+\.pdf)`/g), (m) => m[1]).filter((f, i, a) => a.indexOf(f) === i); /* aceita nomes com espaço e acento, como "pensãoal.pdf" */
 const existentes = fs.readdirSync(pastaFontes).filter((f) => f.endsWith(".pdf"));
 citados.forEach((f) => assert(existentes.includes(f), "PDF citado no LEIA-ME não existe: " + f));
 existentes.forEach((f) => assert(citados.includes(f), "PDF sem explicação no LEIA-ME: " + f));
