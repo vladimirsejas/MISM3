@@ -1197,3 +1197,58 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - **Origem dita com honestidade:** a página da Fundação (07/10/2026) só informa pedido de médico ou enfermeiro e consulta na unidade ou pelo Cadu. A parte "a equipe da unidade marca o exame" é **informação do autor do site, que trabalha na Fundação Municipal de Saúde**, e o texto diz isso; não foi apresentada como fonte pública lida.
 - **Trava:** `saude_mulher.test.js` exige UBS e USF por extenso, UPA/CAPS fora do caminho, a equipe marcando, a origem dita e a ausência de pedido em UPA (2 estragos de teste detectados). `conteudo_essencial.json`: o tópico renomeado foi aceito de propósito.
 
+
+
+## 31/10/2026 — Central de Justiça e Direitos (branch `codex/central-acesso-justica`)
+
+- Preservado o identificador público `direitos` e os atalhos existentes; acrescentada a seção 4 **Onde buscar orientação e encaminhamento jurídico?**, com rotas por necessidade e salvaguardas para violência.
+- O orientador agora encaminha pedidos genéricos de ajuda jurídica gratuita e demandas trabalhistas à central. A prioridade dos encaminhamentos de violência foi mantida. O índice foi regenerado: 181 destinos.
+- A triagem de assistência dativa OAB-SP e a Defensoria são apresentadas como portas independentes. CEJUSC é descrito como conciliação/mediação, não representação. Nenhuma promessa de elegibilidade, advogado ou resultado.
+- OAB Rio Claro: somente contato geral verificado. NPJ/SAJU Claretiano: evidência institucional de atuação em 2025, mas intake atual não confirmado. CEJUSC local: diretório oficial e outras páginas divergem; endereço/telefone não foram fixados como confirmados. Anhanguera não é apresentada como atendimento ativo. Fontes e decisões em `docs/acesso_a_justica.md`.
+- `web/tests/direitos.test.js` e casos novos em `orientar.test.js`; sem validação com usuárias nem publicação.
+
+
+## 31/10/2026 — Correções locais: Procon e unidade Anhanguera
+
+- O mantenedor informou o endereço do Procon Centro: Rua 5, 821, Centro, CEP 13500-040. A Prefeitura confirma Rua 5, 821 e a operação das duas unidades em notícia de 14/03/2025; o CEP permanece identificado como informação do mantenedor. Horários e telefone não foram acrescentados por falta de confirmação recente na fonte consultada.
+- O mantenedor informou que a unidade Anhanguera que conhece fica na Rua 2. A central agora a mostra como possibilidade a confirmar, registrando que o número/endereço completo e a existência de atendimento jurídico ativo não foram confirmados. Linka o canal institucional para consulta.
+
+
+## 31/10/2026 — ACT nacional INSS-DPU
+
+- Acrescentada a página do INSS sobre o Acordo de Cooperação Técnica com a DPU na rota de benefício federal. A página, publicada em 06/09/2022, diz que a DPU pode, em favor de seus assistidos, requerer serviços/benefícios por canais remotos e pedir reabertura de processos de benefício assistencial em situação específica de falha de comunicação.
+- A interface deixa claro que o ACT não é canal direto ao público e não confirma unidade local ou elegibilidade; encaminha a pessoa a consultar a DPU. Fonte completa e limites em `docs/acesso_a_justica.md`.
+
+
+## 31/10/2026 — Fontes oficiais atuais da Defensoria em Rio Claro
+
+- O cartão e o catálogo de `man-defensoria-nudem` passam a apontar diretamente para a página oficial de agendamento, que confirma Júlia 24h e o telefone 0800 773 4340 em dias úteis, das 7h às 19h. A página também informa agendamento prévio antes de comparecer.
+- O endereço Rua Um, nº 659, Saúde, fica associado diretamente à notícia oficial da nova sede, publicada em 26/06/2025 e válida desde 01/07/2025. O texto mantém orientação para confirmar antes do deslocamento.
+- Fontes e links atuais: página de [agendamento DPESP](https://www.defensoria.sp.def.br/web/guest/atendimento/agende-seu-atendimento) e [notícia da sede de Rio Claro](https://www.defensoria.sp.def.br/noticias/-/noticia/6485928/defensoria-de-sp-inaugura-nova-sede-em-rio-claro-na-proxima-terca-feira-1-7).
+
+
+## 31/10/2026 — APS Rio Claro e Central 135 do INSS
+
+- Acrescentado o endereço da APS Rio Claro (Rua Três, 1026, Centro, CEP 13500-910) a partir de publicação oficial do INSS. O atendimento presencial exige agendamento; o encaminhamento orienta confirmar horário local, data e documentos pelo Meu INSS ou 135.
+- Incluída a Central 135: atendimento humano de segunda a sábado, 7h–22h, conforme página oficial do INSS.
+- Os dois telefones locais e o horário 7h–17h fornecidos em páginas secundárias não foram reproduzidos, pois não foi encontrada confirmação atual em fonte oficial. Fontes e justificativa em `docs/acesso_a_justica.md`.
+
+## 31/10/2026 — Atualização do CEJUSC de Rio Claro
+
+- Atualizado o cartão e o catálogo a partir do diretório oficial atual do TJSP: Fórum, Avenida 5, 535, sala 104; (19) 3531-6137; e-mail `cejusc.rioclaro@tjsp.jus.br`; atendimento das 13h às 17h; atuação pré-processual cível e de família.
+- A notícia do TJSP de 2018 sustenta a informação de gratuidade e o recebimento de solicitações pré-processuais por e-mail, mas seus endereço/telefone/horário são antigos. O produto orienta confirmar documentos e procedimento antes de enviar dados pessoais; processo em andamento requer confirmação do fluxo com a unidade judicial ou o CEJUSC.
+
+## 31/10/2026 — Contato e horário publicados do Procon Cervezão
+
+- A página atual da Secretaria de Justiça lista os telefones (19) 3523-5985 e (19) 3532-1550. Notícia municipal de 2025 confirma endereço Rua M-15, 411. A página da Fundação Procon-SP (registro de 28/08/2019) também lista CEP 13505-371, atendimento de segunda a sexta, 8h–16h, e agendamento por telefone ou e-mail até as 15h.
+- O horário e agendamento são apresentados com a data da fonte, com orientação para confirmação por o registro ser de 2019. A notícia de 2017 enviada pelo mantenedor segue como fonte histórica sobre a gratuidade e ampliação de horário, sem tratá-la como atualização operacional.
+
+## 31/10/2026 — Contato do NPJ Anhanguera
+
+- Incluído o Instagram `@npj_anhanguera` como canal para perguntar sobre intake comunitário, critérios, custo, agenda e documentos. O perfil e seu horário presencial (dias úteis, 8h20–12h e 14h–18h) foram informados pelo mantenedor e não puderam ser verificados independentemente nesta consulta.
+- O endereço da Faculdade Anhanguera (Rua 2, 3117, Vila Operária, CEP 13504-090) foi conferido no Parecer CNE/CES nº 106/2025; a fonte não comprova funcionamento do atendimento do NPJ nesse endereço. A interface mantém o serviço como possibilidade, não como garantia de atendimento jurídico gratuito.
+
+## 31/10/2026 — Portal e critérios da Defensoria Pública de SP
+
+- O portal oficial da DPESP foi revisado e os links diretos de critérios de atendimento e documentos foram acrescentados ao cartão da Defensoria. O critério público considera renda, patrimônio e despesas; informa limite geral de até 3 salários mínimos, com ampliação em situações específicas, e hipóteses independentes de renda para violência doméstica contra a mulher, defesa criminal e curadoria especial processual.
+- O cartão passa a mencionar a hipótese publicada para família com pessoa egressa do sistema prisional no limite ampliado e mantém aviso de que somente a Defensoria decide elegibilidade. Horário de contato, agendamento e endereço local permanecem ancorados nas páginas já verificadas.
