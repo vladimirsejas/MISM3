@@ -70,6 +70,7 @@ VOCABULARIO_SECOES: dict[str, str] = {
     "direitos/secao-1": "pensao alimenticia pensao guarda divorcio separacao separar advogado pai dos meus filhos nao paga pensao ex marido ex companheiro nao deixa ver o filho visita",
     "direitos/secao-2": "violencia domestica agressao ameaca ameacou medo marido companheiro namorado ex bate bateu apanhando apanhar persegue humilha medida protetiva sair de casa abuso estupro violencia psicologica agressor denunciar",
     "direitos/secao-3": "aposentadoria inss beneficio negado divida dividas nome sujo negativado renegociar cobranca conta atrasada",
+    "direitos/secao-4": "preciso de ajuda juridica advogada advogado defensoria oab assistencia judiciaria dativa triagem juridica trabalho trabalhista salario demissao assedio moral sexual discriminacao mpt sindicato aluguel despejo moradia imovel heranca inventario bens partilha consumidor procon banco consumidor gov cejusc conciliacao mediacao inss bpc loas beneficio recurso negado dpu documento direitos pessoa idosa deficiencia onde procurar ajuda",
     "moradia/secao-1": "agua conta de agua daae tarifa social esgoto desconto conta cara",
     "moradia/secao-2": "luz conta de luz energia eletrica elektro tarifa social desconto cortaram a luz conta alta",
     "moradia/secao-3": "habitacao casa propria moradia popular cadastro habitacional minha casa minha vida aluguel aluguel social despejo despejada morar sem casa sem teto lugar para morar moro de favor",
@@ -107,7 +108,8 @@ def necessidades_do_destino(u: dict) -> list[str]:
     if tipo == "emprego_curso":
         return ["estudo", "emprego_curso"]
     if area == "direitos":
-        return {"secao-1": ["casamento"], "secao-2": ["violencia"], "secao-3": ["dividas"]}.get(sec, ["casamento", "violencia", "dividas"])
+        return {"secao-1": ["casamento"], "secao-2": ["violencia"], "secao-3": ["dividas"],
+                "secao-4": ["casamento", "dividas"]}.get(sec, ["casamento", "violencia", "dividas"])
     if area == "moradia":
         return ["moradia"]
     if area == "saude":
@@ -144,6 +146,8 @@ FERRAMENTAS = [
 # Ficam FORA de "unidades" de propósito: não entram na busca nem no treino do LSA, então não mudam a nota de nenhum outro destino
 # (medido na avaliação: palavras comuns como "roupa" ou "dinheiro" no texto contaminavam perguntas sem relação).
 REFORCOS = [
+    {"id": "ferr-central-justica", "area": "direitos", "sec": "secao-4", "titulo": "Encontrar orientação e encaminhamento jurídico",
+     "resumo": "Compare os caminhos da Defensoria, do convênio OAB-SP e de serviços adequados ao assunto.", "href": "#direitos/secao-4"},
     {"id": "ferr-entrevista-aparencia", "area": "trabalho", "sec": "trabalho-aparencia", "titulo": "Entrevista: roupa, cabelo e unhas sem gastar",
      "resumo": "Dicas simples para ir à entrevista com conforto, sem comprar nada e sem se endividar.", "href": "#trabalho/trabalho-aparencia"},
     {"id": "ferr-dinheiro-semana", "area": "trabalho", "sec": "trabalho-agora", "titulo": "Preciso de dinheiro esta semana",
