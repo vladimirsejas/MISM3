@@ -500,6 +500,9 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:#8a1c1c!im
 /* Atalhos verticais da área Trabalho: navegação curta, visível e responsiva. */
 .atalhos-trabalho{margin:1rem 0 1.5rem;padding:1rem;border:1px solid var(--bor);border-radius:var(--raio);background:var(--hero)}
 .atalhos-trabalho h3{margin-bottom:.5rem}
+.atalhos-trabalho h4{margin:1.1rem 0 .45rem;color:var(--pri-esc);font-size:1rem}
+.atalhos-trabalho h4:first-of-type{margin-top:.2rem}
+.secao>h2.grupo-trabalho{margin-top:2.2rem}
 .atalhos-trabalho ul{display:flex;flex-direction:column;gap:.35rem;list-style:none;padding:0;margin:0}
 .atalhos-trabalho a{display:block;padding:.55rem .7rem;border-radius:9px;background:var(--card);border:1px solid var(--bor);font-weight:650;text-decoration:none}
 .atalhos-trabalho a:hover{text-decoration:underline;background:var(--lilas)}
