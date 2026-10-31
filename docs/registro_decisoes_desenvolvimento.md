@@ -1252,3 +1252,9 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 
 - O portal oficial da DPESP foi revisado e os links diretos de critérios de atendimento e documentos foram acrescentados ao cartão da Defensoria. O critério público considera renda, patrimônio e despesas; informa limite geral de até 3 salários mínimos, com ampliação em situações específicas, e hipóteses independentes de renda para violência doméstica contra a mulher, defesa criminal e curadoria especial processual.
 - O cartão passa a mencionar a hipótese publicada para família com pessoa egressa do sistema prisional no limite ampliado e mantém aviso de que somente a Defensoria decide elegibilidade. Horário de contato, agendamento e endereço local permanecem ancorados nas páginas já verificadas.
+
+## 31/10/2026 — Claretiano (SAJU): os telefones gerais ficam, como o único contato que a instituição oferece
+
+- **Informação do autor:** ele procurou cerca de uma hora e não existe contato próprio do NPJ/SAJU, nem na página do curso de Direito do Claretiano. Os únicos contatos oferecidos são o telefone e WhatsApp (19) 2111-6000 e a Central 0800 722 6450. O formulário de atendimento do site é para estudantes, não para o público.
+- **O que mudou:** o tópico "Telefones para ligar" diz que o contato é geral (não do SAJU), orienta dizer que se quer saber do atendimento jurídico gratuito do SAJU e avisa que o formulário não serve ao público. O aviso do cartão diz que atendimento atual, critérios e agenda não foram confirmados. `direitos.test.js` trava as três coisas.
+
