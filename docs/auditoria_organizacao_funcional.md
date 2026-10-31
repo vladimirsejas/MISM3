@@ -1,6 +1,6 @@
 # Auditoria de organização funcional do MISM3: a planta do armário
 
-31/10/2026. Somente leitura: nenhum arquivo do site foi alterado por esta auditoria. Cada achado diz como foi conferido. Complementa `analise_reorganizacao.md` (mesma data).
+31/10/2026. Somente leitura: nenhum arquivo do site foi alterado por esta auditoria. Cada achado diz como foi conferido. Complementa `analise_reorganizacao.md` (mesma data). Um texto colado do ChatGPT foi usado como **sugestão**, não como ordem: o que ele traz de bom foi conferido e incorporado; o que não confere está marcado abaixo.
 
 Critério: abrir cada porta e cada prateleira e perguntar se o objeto está no lugar certo, se há dois iguais, se algo está na gaveta errada ou escondido, e se o que parece organizado por fora está por dentro.
 
@@ -14,7 +14,7 @@ Critério: abrir cada porta e cada prateleira e perguntar se o objeto está no l
 | Painel usa 420 registros sintéticos | **Confirmado.** `painel_teste.json`: 420 registros. |
 | Coleta do questionário desligada | **Confirmado.** `coleta.json`: `ativa: false`. |
 | Transporte: 5 linhas, 382 horários, validade até 04/02/2027, Arco-Íris/Mãe Preta ausente, Circular I só no sentido Volta | **Confirmado** em `horarios_onibus.json`. Feriados também não constam. |
-| `estado_do_projeto.md` diz 19 perguntas; o código tem 20 | **Confirmado.** O código e `mapa_de_dados.md` dizem 20. |
+| `estado_do_projeto.md` diz 19 perguntas; o código tem 20 | **Parcialmente.** O código tem 20 itens: 19 de marcar (15 de escolha única, 4 de várias) e 1 campo de texto opcional (`fale_de_voce`). Então "19" e "20" descrevem o mesmo questionário de dois jeitos; falta padronizar a frase ("19 perguntas de marcar e um espaço opcional"). |
 | `questionario_observatorio.md` diz "nenhum texto livre" e depois descreve o campo "Fale de você" | **Confirmado**, linhas 6 e 13: o documento se contradiz. |
 | Números de emergência repetidos em vários arquivos | **Confirmado**: `index.html` (duas listas), `areas.js` (`EMERGENCIA`) e `perigo.js`. Hoje coincidem (190, 192, 193, 180, 100, 188). |
 | `estado_do_projeto.md` diz que só existe a jornada de Trabalho | **Não confirmado.** O documento lista as três jornadas (Trabalho, Educação, Assistência). Está velho em outras coisas (data de 11/10, 19 perguntas), mas não nisso. |
@@ -70,8 +70,8 @@ Direitos tem "Aposentadoria e dívidas" (simular no Meu INSS); Assistência tem 
 - *Questionário:* coleta desligada, e a página diz (2.6).
 
 ## 4. Documentação que não acompanha o código
-- `estado_do_projeto.md`: data 11/10/2026 e "19 perguntas" (são 20).
-- `questionario_observatorio.md`: se contradiz sobre texto livre.
+- `estado_do_projeto.md`: data 11/10/2026; diz "19 perguntas" sem mencionar o espaço de texto (são 19 de marcar + 1 opcional).
+- `questionario_observatorio.md`: abre dizendo "nenhum texto livre" (linha 6), mas tem o espaço "Fale de você" (linha 13) e o título "As 20 perguntas" (linha 21).
 - LEIA-ME de `docs/documetacao/`: 14 PDFs sem explicação (2.4).
 - `mapa_de_dados.md`: confere (20 perguntas); a contagem de horários do catálogo é de antes: hoje 49 com horário e 115 sem.
 
