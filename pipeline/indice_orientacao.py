@@ -70,6 +70,7 @@ VOCABULARIO_SECOES: dict[str, str] = {
     "direitos/secao-1": "pensao alimenticia pensao guarda divorcio separacao separar advogado pai dos meus filhos nao paga pensao ex marido ex companheiro nao deixa ver o filho visita",
     "direitos/secao-2": "violencia domestica agressao ameaca ameacou medo marido companheiro namorado ex bate bateu apanhando apanhar persegue humilha medida protetiva sair de casa abuso estupro violencia psicologica agressor denunciar",
     "direitos/secao-3": "aposentadoria inss beneficio negado divida dividas nome sujo negativado renegociar cobranca conta atrasada",
+    "direitos/secao-4": "preciso de ajuda juridica advogada advogado defensoria oab assistencia judiciaria dativa triagem juridica trabalho trabalhista salario demissao assedio moral sexual discriminacao mpt sindicato aluguel despejo moradia imovel heranca inventario bens partilha consumidor procon banco consumidor gov cejusc conciliacao mediacao inss bpc loas beneficio recurso negado dpu documento direitos pessoa idosa deficiencia onde procurar ajuda",
     "moradia/secao-1": "agua conta de agua daae tarifa social esgoto desconto conta cara",
     "moradia/secao-2": "luz conta de luz energia eletrica elektro tarifa social desconto cortaram a luz conta alta",
     "moradia/secao-3": "habitacao casa propria moradia popular cadastro habitacional minha casa minha vida aluguel aluguel social despejo despejada morar sem casa sem teto lugar para morar moro de favor",
@@ -77,8 +78,10 @@ VOCABULARIO_SECOES: dict[str, str] = {
     "assistencia/assistencia-cadunico": "cadastro unico cadunico bolsa familia beneficio bpc renda da familia ajuda do governo programa social como me cadastro documentos para o cadastro responsavel pela familia sustentar a familia sustento da casa contas sem renda sem dinheiro passo a passo",
     "assistencia/secao-2": "denuncia violacao de direitos crianca adolescente maus tratos abuso negligencia abandono creas conselho tutelar disque 100",
     "assistencia/secao-3": "convivencia contraturno idoso criancas atividades deficiencia apae",
+    "saude/saude-apoio-emocional": "cvv 188 apoio emocional saude mental ansiedade depressao triste tristeza desanimo desanimada sozinha solidao choro desabafar conversar com alguem preciso conversar caps psicologo psiquiatra terapia sofrimento esgotada estresse",
     "saude/saude-familia-drogas": "drogas alcool bebe bebado alcoolatra viciado vicio crack maconha cocaina dependente quimico dependencia familia de dependente grupo de apoio narcoticos anonimos alcoolicos anonimos amor exigente parar de beber parar de usar caps ad",
-    "saude/saude-unidades": "posto de saude ubs usf upa hospital consulta medico unidade de saude remedio exame vacina preventivo",
+    "saude/saude-mulher": "mamografia mamo exame de mama cancer de mama nodulo na mama caroco no seio seio preventivo papanicolau exame preventivo colo do utero hpv dna hpv ginecologista consulta ginecologica gravida gravidez gestante pre natal prenatal barriga estou gravida saude da mulher exame da mulher fazer mamografia fazer preventivo",
+    "saude/saude-unidades": "posto de saude ubs usf upa hospital consulta medico unidade de saude remedio exame vacina",
     "educacao/educacao-filhos": "creche vaga matricula escola filho filha crianca transferir transferencia rematricula calendario escolar cmei nao tenho com quem deixar meu filho",
     "educacao/educacao-voce": "eja ensino medio terminar os estudos faculdade vestibular enem cursinho curso tecnico etec fatec voltar a estudar parei de estudar",
     "educacao/educacao-escolas": "escola municipal creche emef emei cmei lista das escolas telefone endereco perto de casa bairro",
@@ -105,7 +108,8 @@ def necessidades_do_destino(u: dict) -> list[str]:
     if tipo == "emprego_curso":
         return ["estudo", "emprego_curso"]
     if area == "direitos":
-        return {"secao-1": ["casamento"], "secao-2": ["violencia"], "secao-3": ["dividas"]}.get(sec, ["casamento", "violencia", "dividas"])
+        return {"secao-1": ["casamento"], "secao-2": ["violencia"], "secao-3": ["dividas"],
+                "secao-4": ["casamento", "dividas"]}.get(sec, ["casamento", "violencia", "dividas"])
     if area == "moradia":
         return ["moradia"]
     if area == "saude":
@@ -142,6 +146,8 @@ FERRAMENTAS = [
 # Ficam FORA de "unidades" de propósito: não entram na busca nem no treino do LSA, então não mudam a nota de nenhum outro destino
 # (medido na avaliação: palavras comuns como "roupa" ou "dinheiro" no texto contaminavam perguntas sem relação).
 REFORCOS = [
+    {"id": "ferr-central-justica", "area": "direitos", "sec": "secao-4", "titulo": "Encontrar orientação e encaminhamento jurídico",
+     "resumo": "Compare os caminhos da Defensoria, do convênio OAB-SP e de serviços adequados ao assunto.", "href": "#direitos/secao-4"},
     {"id": "ferr-entrevista-aparencia", "area": "trabalho", "sec": "trabalho-aparencia", "titulo": "Entrevista: roupa, cabelo e unhas sem gastar",
      "resumo": "Dicas simples para ir à entrevista com conforto, sem comprar nada e sem se endividar.", "href": "#trabalho/trabalho-aparencia"},
     {"id": "ferr-dinheiro-semana", "area": "trabalho", "sec": "trabalho-agora", "titulo": "Preciso de dinheiro esta semana",
@@ -194,7 +200,7 @@ def carregar_areas() -> dict:
     """Exporta o conteúdo das áreas (web/areas.js) pelo Node: a fonte da verdade do texto das áreas continua sendo uma só."""
     js = ("const A=require('./web/areas.js');process.stdout.write(JSON.stringify({AREAS:A.AREAS.map(a=>({id:a.id,nome:a.nome,intro:a.intro,"
           "secoes:(a.secoes||[]).map(s=>({titulo:s.titulo,ancora:s.ancora||null,descricao:s.descricao||'',tipos:s.tipos||[],subtipos:s.subtipos||null,"
-          "links:(s.links||[]).map(l=>l[0]),canais:(s.canais||[]).map(c=>({nome:c.nome,texto:c.texto||'',topicos:c.topicos||[],aviso:c.aviso||'',fonte:c.fonte||null}))}))}))}))")
+          "links:(s.links||[]).filter(l=>!/^#/.test(l[1])).map(l=>l[0]),canais:(s.canais||[]).map(c=>({nome:c.nome,texto:c.texto||'',topicos:c.topicos||[],aviso:c.aviso||'',fonte:c.fonte||null}))}))}))}))")
     r = subprocess.run(["node", "-e", js], cwd=RAIZ, capture_output=True, text=True, encoding="utf-8", check=True)  # utf-8 explícito: no Windows o padrão é cp1252
     return json.loads(r.stdout)
 

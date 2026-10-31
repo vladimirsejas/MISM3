@@ -6,7 +6,7 @@
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#7a2b37">
-<title>Mulher em Rede – Rio Claro</title>
+<title>Observatório da Mulher – Rio Claro</title>
 <link rel="stylesheet" href="vendor/leaflet.css">
 <link rel="stylesheet" href="estilo.css">
 </head>
@@ -27,7 +27,7 @@
 
 <header class="topo">
   <div class="topo-in">
-    <a class="marca" href="index.html" id="marca"><img class="marca-brasao" src="img/brasao-rio-claro-96.webp" width="48" height="50" alt="">Mulher em Rede<span class="marca-local">Rio Claro</span></a>
+    <a class="marca" href="index.html" id="marca">Observatório da Mulher<span class="marca-local">Rio Claro</span></a>
     <nav class="navegacao" aria-label="Navegação" id="navegacao" hidden>
       <a class="btn-nav" id="voltar" href="index.html">← Voltar</a>
       <a class="btn-nav" id="inicio" href="index.html">Início</a>
@@ -38,12 +38,14 @@
         <h2 id="titulo-emergencia">Ligue agora</h2>
         <p class="orientacao">Se puder, vá para um lugar seguro e diga seu endereço. A ligação é gratuita.</p>
         <ul class="contatos">
+          <!-- EMERGENCIA-INICIO painel: gerado de EMERGENCIA em web/areas.js; edite la e rode  node web/tests/emergencia.test.js --sincronizar -->
           <li><a class="tel" href="tel:190" aria-label="Ligar para 190, Polícia Militar">190</a><div><strong>Polícia Militar</strong><span>Perigo imediato, agressão em andamento ou ameaça.</span></div></li>
           <li><a class="tel" href="tel:192" aria-label="Ligar para 192, SAMU">192</a><div><strong>SAMU</strong><span>Urgência médica ou pessoa ferida.</span></div></li>
           <li><a class="tel" href="tel:193" aria-label="Ligar para 193, Bombeiros">193</a><div><strong>Bombeiros</strong><span>Incêndio, resgate ou acidente.</span></div></li>
           <li><a class="tel" href="tel:180" aria-label="Ligar para 180, Central de Atendimento à Mulher">180</a><div><strong>Central de Atendimento à Mulher</strong><span>Violência contra a mulher: orientação, denúncia e encaminhamento. 24 horas, gratuito.</span></div></li>
           <li><a class="tel" href="tel:100" aria-label="Ligar para 100, Disque Direitos Humanos">100</a><div><strong>Disque Direitos Humanos</strong><span>Violações de direitos humanos, como contra crianças, idosos e pessoas com deficiência. 24 horas, gratuito.</span></div></li>
           <li><a class="tel" href="tel:188" aria-label="Ligar para 188, CVV">188</a><div><strong>CVV — apoio emocional</strong><span>Conversa de apoio em momentos de sofrimento. 24 horas, gratuito.</span></div></li>
+          <!-- EMERGENCIA-FIM painel -->
         </ul>
         <button id="sair-rapido" class="sair" type="button">Sair desta página agora</button>
         <p class="sair-nota">Abre outro site, mas <strong>não apaga</strong> o histórico do navegador. Em aparelho compartilhado, use uma janela anônima.</p>
@@ -59,24 +61,18 @@
   <section id="inicio-tela" aria-labelledby="titulo-inicio">
     <div class="heroi">
       <div class="heroi-texto">
-        <p class="heroi-etiqueta">Informação que fortalece</p>
+        <p class="heroi-etiqueta"><strong>MISM3</strong> · Monitoramento Inteligente da Saúde da Mulher</p>
         <h1 id="titulo-inicio" tabindex="-1">Você não está <em>sozinha</em></h1>
-        <p class="heroi-lide">Caminhos, contatos e serviços oficiais de Rio Claro (SP) para apoiar mulheres em todas as fases da vida: trabalho, estudo, saúde, direitos, moradia e apoio.</p>
         <div class="heroi-acoes">
           <button type="button" class="btn-heroi" data-rolar="areas-inicio">Escolha uma área <span aria-hidden="true">↓</span></button>
           <button type="button" class="btn-heroi-2" data-rolar="ia-caixa">Prefiro escrever o que preciso</button>
           <button type="button" class="btn-heroi-2" data-rolar="mapa-inicio">Ver o mapa de serviços</button>
         </div>
-        <p class="heroi-nota">Cada informação mostra a fonte e a data em que foi conferida.</p>
       </div>
       <div class="heroi-arte">
-        <img class="heroi-brasao" src="img/brasao-estilizado.webp" width="640" height="620" decoding="async" alt="Brasão estilizado de Rio Claro: uma torre, uma leoa deitada, ramos de flores e a faixa “Não mexa no que está em paz”.">
+        <img class="heroi-capa" src="img/capa-mulheres.webp" width="1200" height="670" decoding="async" alt="Seis mulheres de perfil entre flores, em aquarela: uma idosa de cabelo grisalho e óculos, mulheres de pele, idade e cabelos diferentes e uma mulher gorda de coque, lado a lado.">
       </div>
     </div>
-
-    <figure class="faixa-mulheres">
-      <img src="img/faixa-mulheres.webp" width="1600" height="640" decoding="async" alt="Seis mulheres entre flores, em aquarela: uma idosa de cabelo prateado, mulheres de pele e cabelos diferentes e uma mulher gorda de coque, sorrindo. Todas fazem parte da rede.">
-    </figure>
 
     <section class="ia-caixa" id="ia-caixa" aria-labelledby="titulo-ia">
       <h2 id="titulo-ia">Conte com suas palavras</h2>
@@ -147,8 +143,8 @@
 
       <p id="resumo-mapa" class="mapa-resumo" aria-live="polite"></p>
       <div id="mapa-servicos" class="mapa-caixa" aria-label="Mapa dos serviços cadastrados"></div>
-      <p class="mapa-legenda">Ponto <strong>cheio</strong>: posição pelo endereço. Ponto <strong>vazado</strong>: posição aproximada pelo CEP do serviço. Distâncias são em linha reta, não o caminho a pé.</p>
-      <label class="tiles"><input type="checkbox" id="usar-tiles-mapa"> Mostrar ruas (carrega imagens do OpenStreetMap; o servidor do mapa saberá a região que você está vendo)</label>
+      <p class="mapa-legenda">Ponto <strong>cheio</strong>: posição pelo endereço. Ponto <strong>vazado</strong>: posição aproximada pelo CEP do serviço. Círculo com <strong>número</strong>: vários serviços no mesmo local (toque para ver todos). Distâncias são em linha reta, não o caminho a pé.</p>
+      <label class="tiles"><input type="checkbox" id="usar-tiles-mapa" checked> Mostrar ruas e nomes (carrega imagens da Esri; o servidor do mapa saberá a região que você está vendo. Desmarque para ver só os pontos)</label>
       <section id="mais-perto" class="mapa-mais-perto" aria-labelledby="titulo-mais-perto" hidden>
         <h3 id="titulo-mais-perto">O que fica mais perto de você</h3>
         <p class="meta" id="nota-mais-perto"></p>
@@ -168,10 +164,12 @@
       <section class="bloco" aria-labelledby="titulo-contatos">
         <h2 id="titulo-contatos">Contatos essenciais</h2>
         <ul class="lista-contatos" id="lista-contatos">
+          <!-- EMERGENCIA-INICIO contatos: gerado de EMERGENCIA em web/areas.js; edite la e rode  node web/tests/emergencia.test.js --sincronizar -->
           <li><span class="c-nome">Polícia Militar</span><a class="c-tel grave" href="tel:190" aria-label="Ligar para 190, Polícia Militar">190</a></li>
           <li><span class="c-nome">SAMU<small>Urgência médica</small></span><a class="c-tel grave" href="tel:192" aria-label="Ligar para 192, SAMU">192</a></li>
           <li><span class="c-nome">Central de Atendimento à Mulher<small>Violência contra a mulher. 24 horas, gratuito</small></span><a class="c-tel grave" href="tel:180" aria-label="Ligar para 180, Central de Atendimento à Mulher">180</a></li>
           <li><span class="c-nome">Disque Direitos Humanos<small>24 horas, gratuito</small></span><a class="c-tel grave" href="tel:100" aria-label="Ligar para 100, Disque Direitos Humanos">100</a></li>
+          <!-- EMERGENCIA-FIM contatos -->
         </ul>
         <p class="meta">Os telefones de Rio Claro vêm do cadastro verificado. Confirme antes de ir.</p>
       </section>
@@ -344,11 +342,11 @@
   <div class="rodape-sobre">
     <img class="brasao" src="img/brasao-rio-claro-256.webp" width="128" height="132" loading="lazy" decoding="async" alt="Brasão do município de Rio Claro: coroa mural, escudo vermelho com um barrete frígio em quadro amarelo e um leão deitado, ramos de palmeira e a faixa “Quieta non movere”.">
     <div>
-      <p><strong>Mulher em Rede (MISM3) é um estudo acadêmico de demonstração.</strong> Não é vendido, não tem fins comerciais e <strong>não é um site oficial da Prefeitura de Rio Claro</strong>. Ele mostra o que se pode fazer para reunir, de forma clara, informações públicas da cidade.</p>
-      <p>O brasão é o do município de Rio Claro e aparece aqui apenas para identificar a cidade; este site <strong>não fala em nome da Prefeitura</strong>. A ilustração do topo é uma arte própria, em versão estilizada. Para informações oficiais, procure os canais da Prefeitura.</p>
+      <p><strong>O Observatório da Mulher (MISM3) é um estudo acadêmico de demonstração.</strong> Não é vendido, não tem fins comerciais e <strong>não é um site oficial da Prefeitura de Rio Claro</strong>. Ele mostra o que se pode fazer para reunir, de forma clara, informações públicas da cidade.</p>
+      <p>O brasão é o do município de Rio Claro e aparece aqui apenas para identificar a cidade; este site <strong>não fala em nome da Prefeitura</strong>. A ilustração da capa é uma arte em aquarela. Para informações oficiais, procure os canais da Prefeitura.</p>
     </div>
   </div>
-  <p>Os dados vêm de páginas e bases públicas oficiais e podem estar desatualizados. Um serviço cadastrado não garante vaga nem horário: confirme sempre com o órgão.</p>
+  <p>Cada informação mostra a fonte e a data em que foi conferida. Os dados vêm de páginas e bases públicas oficiais e podem estar desatualizados. Um serviço cadastrado não garante vaga nem horário: confirme sempre com o órgão.</p>
   <p id="fontes" hidden></p>
 </footer>
 

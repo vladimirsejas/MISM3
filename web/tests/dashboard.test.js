@@ -1,4 +1,4 @@
-/* Teste estrutural da tela inicial e das áreas (especificação "Mulher em Rede").
+/* Teste estrutural da tela inicial e das áreas (especificação "Observatório da Mulher").
    Não substitui o teste no navegador: confere o que dá para garantir lendo os arquivos. */
 const assert = require("assert");
 const fs = require("fs");
@@ -154,7 +154,10 @@ Areas.AREAS.forEach((a) => {
   const urls = [];
   a.secoes.forEach((s) => s.links.forEach((l) => {
     const interno = l[1].charAt(0) === "#";
-    assert(/^https:\/\//.test(l[1]) || (interno && Areas.AREAS.some((x) => "#" + x.id === l[1])), a.id + ": link sem https e que não aponta para uma área existente: " + l[1]);
+    /* Interno: "#area" ou "#area/seção" (o roteador de app.js entende os dois); a seção precisa existir na área de destino. */
+    const [destinoId, destinoSecao] = interno ? l[1].slice(1).split("/") : [];
+    const destino = interno ? Areas.AREAS.find((x) => x.id === destinoId) : null;
+    assert(/^https:\/\//.test(l[1]) || (destino && (!destinoSecao || destino.secoes.some((x) => x.ancora === destinoSecao))), a.id + ": link sem https e que não aponta para uma área e seção existentes: " + l[1]);
     assert(l[0] && l[2], a.id + ": link sem título ou descrição");
     urls.push(l[1]);
   }));
@@ -200,7 +203,7 @@ assert(index.includes('class="pular"'), "falta o link para pular ao conteúdo");
 /* ---- 6c. Fontes arquivadas: todo PDF citado no LEIA-ME existe, e todo PDF da pasta está explicado ---- */
 const pastaFontes = path.join(web, "..", "docs", "documetacao");
 const leia = fs.readFileSync(path.join(pastaFontes, "LEIA-ME.md"), "utf8");
-const citados = Array.from(leia.matchAll(/`([\w.-]+\.pdf)`/g), (m) => m[1]).filter((f, i, a) => a.indexOf(f) === i);
+const citados = Array.from(leia.matchAll(/`([^`\n]+\.pdf)`/g), (m) => m[1]).filter((f, i, a) => a.indexOf(f) === i); /* aceita nomes com espaço e acento, como "pensãoal.pdf" */
 const existentes = fs.readdirSync(pastaFontes).filter((f) => f.endsWith(".pdf"));
 citados.forEach((f) => assert(existentes.includes(f), "PDF citado no LEIA-ME não existe: " + f));
 existentes.forEach((f) => assert(citados.includes(f), "PDF sem explicação no LEIA-ME: " + f));
@@ -264,11 +267,18 @@ const trab = Areas.AREAS.find((a) => a.id === "trabalho").secoes[0], edu = Areas
 });
 assert(!trab.grupos.includes("Concluir os estudos e graduação (SESI)"), "Trabalho não mostra o grupo de conclusão dos estudos: isso é da Educação");
 const JUNTO = "Estudar e se qualificar ao mesmo tempo";
-assert(trab.grupos.includes(JUNTO), "Trabalho deve mostrar o grupo que combina estudo e qualificação");
-["man-etec-rio-claro", "man-sesi-eja", "man-sesi-rio-claro"].forEach((id) =>
-  assert(lista.find((x) => x.id === id).grupo.split(";").includes(JUNTO), "oferta que combina escolaridade e qualificação deve estar no grupo conjunto: " + id));
-["curso_profissionalizante", "curso_tecnico"].forEach((st) => {
-  assert(trab.subtipos.includes(st) && edu.subtipos.includes(st), "cursos profissionalizantes e técnicos servem a Educação e a Trabalho: " + st);
+/* DECISÃO DE 31/10/2026 (passo 1 da reorganização, ver docs/registro_decisoes_desenvolvimento.md): antes, os cursos profissionalizantes e técnicos
+   (SENAI, Senac, SEST SENAT, Etec) e o grupo "Estudar e se qualificar ao mesmo tempo" apareciam em Trabalho E em Educação. Agora cada serviço de curso
+   mora só em Educação, que é onde a mulher procura estudar; Trabalho mantém emprego e qualificação municipal e aponta para Educação. Nada saiu do site
+   nem do catálogo: o teste continua exigindo que TODO serviço apareça em alguma área (mais abaixo) e que cada oferta esteja no grupo certo. */
+assert(!trab.grupos.includes(JUNTO) && edu.agrupar === true && !edu.grupos, "o grupo que combina estudo e qualificação sai de Trabalho e aparece em Educação (que mostra todos os grupos dos seus subtipos)");
+["man-etec-rio-claro", "man-sesi-eja", "man-sesi-rio-claro"].forEach((id) => {
+  const x = lista.find((y) => y.id === id);
+  assert(x.grupo.split(";").includes(JUNTO), "oferta que combina escolaridade e qualificação deve estar no grupo conjunto: " + id);
+  assert(edu.subtipos.includes(x.subtipo) && !trab.subtipos.includes(x.subtipo), "e esse grupo aparece só em Educação: " + id);
+});
+["curso_profissionalizante", "curso_tecnico", "eja", "escola_sesi"].forEach((st) => {
+  assert(edu.subtipos.includes(st) && !trab.subtipos.includes(st), "cursos moram só em Educação (Trabalho aponta para lá): " + st);
 });
 const aparece = (sec, x) => sec.subtipos.includes(x.subtipo) && (!sec.grupos || x.grupo.split(";").some((g) => sec.grupos.includes(g)));
 lista.filter((x) => x.tipo === "emprego_curso").forEach((x) =>
@@ -354,19 +364,22 @@ assert(secEsc && secEsc.recolhida && secEsc.filtro && JSON.stringify(secEsc.subt
 assert(Areas.AREAS.find((a) => a.id === "educacao").secoes.find((sec) => sec.titulo === "Canais oficiais").subtipos.join() === "secretaria", "os canais oficiais devem mostrar só o cartão da Secretaria");
 assert(/data-filtro/.test(ler("app.js")) && /semAcento/.test(ler("app.js")), "a busca por nome ou bairro deve ignorar acentos");
 // Brasão do município (cabeçalho e rodapé) + aviso de projeto acadêmico (não oficial)
-assert(/<img class="marca-brasao" src="img\/brasao-rio-claro-96\.webp"[^>]*width="\d+" height="\d+"/.test(index), "o cabeçalho usa o brasão original de Rio Claro, com largura e altura");
+assert(!/marca-brasao/.test(index), "o cabeçalho mostra só o nome e a cidade, sem brasão (decisão do autor, 18/10/2026)");
 assert(/<img class="brasao" src="img\/brasao-rio-claro-256\.webp"[^>]*width="\d+" height="\d+"[^>]*alt="Brasão do município de Rio Claro/.test(index), "o rodapé usa o brasão original de Rio Claro, com alt, largura e altura");
 assert(/estudo acadêmico de demonstração/.test(index) && /não é um site oficial da Prefeitura de Rio Claro/.test(index), "o rodapé deve dizer que o site é acadêmico e não oficial");
 assert(/não fala em nome da Prefeitura/.test(index), "o rodapé deve deixar claro que o site não fala em nome da Prefeitura");
-["brasao-rio-claro-96.webp", "brasao-rio-claro-256.webp", "brasao-estilizado.webp"].forEach((nome) => {
+["brasao-rio-claro-256.webp", "capa-mulheres.webp"].forEach((nome) => {
   const arq = path.join(web, "img", nome);
   assert(fs.existsSync(arq) && fs.statSync(arq).size < 120 * 1024, `${nome} deve existir e ser leve (< 120 KB)`);
 });
 
 /* ---- Tela inicial acolhedora: hero, emergência, contatos essenciais, acesso rápido e paleta ---- */
 assert(/<h1 id="titulo-inicio"[^>]*>Você não está <em>sozinha<\/em><\/h1>/.test(index), "a tela inicial deve acolher: 'Você não está sozinha'");
-assert(/<div class="heroi-arte">\s*<img class="heroi-brasao" src="img\/brasao-estilizado\.webp"[^>]*alt="Brasão estilizado/.test(index) && !/heroi-mulheres/.test(index + css), "a arte do topo é o brasão estilizado (a mesma imagem leve do rodapé), com texto alternativo");
-assert(/<img src="img\/faixa-mulheres\.webp"[^>]*alt="[^"]*idosa[^"]*gorda/.test(index) && fs.statSync(path.join(web, "img/faixa-mulheres.webp")).size < 120 * 1024, "a faixa de mulheres (idosa, tons e cabelos diversos, mulher gorda) deve existir, ser leve e ter texto alternativo");
+assert(/<div class="heroi-arte">\s*<img class="heroi-capa" src="img\/capa-mulheres\.webp"[^>]*width="\d+" height="\d+"[^>]*alt="[^"]*idosa[^"]*gorda/.test(index) && !/heroi-mulheres|brasao-estilizado|heroi-brasao/.test(index + css), "a capa é a ilustração das seis mulheres (idosa, tons e cabelos diversos, mulher gorda), com texto alternativo; o brasão estilizado com a leoa saiu");
+const inicioTela = index.slice(index.indexOf('id="inicio-tela"'), index.indexOf('id="ia-caixa"'));
+assert((inicioTela.match(/<img /g) || []).length === 1 && !/faixa-mulheres/.test(index), "a abertura tem uma capa só: uma imagem antes da caixa da IA, sem a faixa repetida");
+assert(/<p class="heroi-etiqueta"><strong>MISM3<\/strong> · Monitoramento Inteligente da Saúde da Mulher<\/p>/.test(index), "a abertura diz o que é o MISM3: Monitoramento Inteligente da Saúde da Mulher");
+assert(!/Informação que fortalece|heroi-lide|heroi-nota/.test(index), "a abertura não repete frases: sem 'Informação que fortalece', sem a frase longa e sem a nota solta");
 assert(/Cada informação mostra a fonte e a data/.test(index), "a tela inicial só pode prometer o que o site cumpre: fonte e data");
 assert(/id="abrir-emergencia"/.test(index) && /abrir-emergencia/.test(app) && /stopPropagation/.test(app), "a tela inicial deve ter o botão Emergência que abre o painel do topo");
 ["190", "192", "180", "100"].forEach((n) => assert(new RegExp('href="tel:' + n + '"').test(inicio), "contato essencial nacional ausente: " + n));
@@ -405,8 +418,9 @@ const razao = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) +
 assert(razao("#ffffff", vars["pri-esc"]) >= 6.5 && razao("#ffffff", vars.alerta) >= 6.5, "texto branco sobre botões e emergência deve ter contraste >= 6,5:1");
 ["bg", "card", "rosa", "verde", "pessego"].forEach((f) => assert(razao(vars["pri-esc"], vars[f]) >= 6.5, "links com contraste menor que 6,5:1 sobre " + f));
 // Nome do projeto: o mesmo em todos os lugares, com a cidade ao lado
-assert(/class="marca"[^>]*>.*Mulher em Rede<span class="marca-local">Rio Claro<\/span>/.test(index), "o nome deve ser 'Mulher em Rede', com 'Rio Claro' ao lado, nas duas páginas");
-assert(/<title>Mulher em Rede – Rio Claro<\/title>/.test(index) && /Mulher em Rede \(MISM3\)/.test(index), "título e rodapé devem usar o mesmo nome");
+assert(/class="marca"[^>]*>.*Observatório da Mulher<span class="marca-local">Rio Claro<\/span>/.test(index), "o nome deve ser 'Observatório da Mulher', com 'Rio Claro' ao lado");
+assert(/<title>Observatório da Mulher – Rio Claro<\/title>/.test(index) && /Observatório da Mulher \(MISM3\)/.test(index), "título e rodapé devem usar o mesmo nome");
+assert(!/Mulher em Rede/.test(index + rede + app + ler("entre-mulheres.js") + ler("entre-mulheres-ui.js")), "o nome antigo 'Mulher em Rede' não deve aparecer no site");
 assert(!/Mulheres de Rio Claro/.test(index + rede + app), "o nome 'Mulheres de Rio Claro' sugere um site da cidade e não deve ser usado enquanto o projeto não for oficial");
 
 /* ---- Transporte: horários da SOU, sem nada inventado ---- */

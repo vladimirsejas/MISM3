@@ -68,6 +68,11 @@
      Não mexem na pergunta (acrescentar palavras a ela dilui a nota de todo o resto): só somam um item. */
   function reforcosDe(t) {
     var itens = [];
+    var perigoOuViolencia = /\b(?:violenc\w*|agred\w*|apanh\w*|me bate(?:u|ndo)?|ameac\w*|perseg\w*|medida protetiva|perigo|em risco|estupro|abuso sexual)\b/.test(t);
+    var buscaJuridica = /\b(?:advogad\w*|defensoria|oab|ajuda juridica|orientacao juridica|assistencia juridica|ajuda juridica gratuita|ajuda gratuita|assessoria juridica|direitos juridicos)\b/.test(t);
+    var questaoTrabalhista = /\b(?:salari\w*|demiss\w*|rescis\w*|fgts|hora extra|ferias|carteira assinada|vinculo empregaticio|direitos trabalhistas|sindicato)\b/.test(t) ||
+      (/\b(?:assedi\w*|discrimin\w*|humilha\w*)\b/.test(t) && /\b(?:trabalho|trabalh\w*|emprego|patrao|chefe|empresa|colega|escritorio)\b/.test(t));
+    if (!perigoOuViolencia && (buscaJuridica || questaoTrabalhista)) itens.push(["ferr-central-justica", 0]);
     var aparencia = /\b(?:roupa|roupas|vestir|vestido|cabelo|unhas?|arrumar|me arrumar|aparencia)\b/.test(t);
     if (/\b(?:entrevista|entrevistas)\b/.test(t) || (aparencia && /\b(?:emprego|trabalho|vaga|curriculo)\b/.test(t))) {
       /* Pergunta sobre roupa, cabelo ou unhas: o cartão vai em 1º. Pergunta geral sobre entrevista: vai depois dos 3 primeiros, que seguem como estavam. */
@@ -322,7 +327,7 @@
       if (urgente || (!foraDeEscopo && melhor >= limiar)) pont.forEach(function (x) { if (escolhidos.length < 6 && (urgente || (x.s >= limiar * 0.55 && x.s >= melhor * corte))) aceitar(x, false); });
       /* O cartão "quanto sobra" vale mesmo se a pergunta parecer fora do assunto: só dispara com "quanto ganho/sobra" + bico, serviço ou passagem. */
       reforcosDe(t).slice().reverse().forEach(function (par) {
-        if (foraDeEscopo && par[0] !== "ferr-quanto-sobra") return;
+        if (foraDeEscopo && par[0] !== "ferr-quanto-sobra" && par[0] !== "ferr-central-justica") return;
         var u = REFORCOS[par[0]], antes = escolhidos.length;
         if (u) { aceitar({ u: u, s: 0 }, false); if (escolhidos.length > antes) { escolhidos.splice(Math.min(par[1], antes), 0, escolhidos.pop()); acrescentados++; } }
       });
