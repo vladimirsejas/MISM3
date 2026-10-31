@@ -21,8 +21,10 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from ceps_lista import CAMINHO_PADRAO as CAMINHO_LISTA_CEPS, ler_lista_ceps  # noqa: E402
-from common import (BRUTO, MUNICIPIO_IBGE7, MUNICIPIO_NOME, UF, WEB_DADOS, achar_coluna, agora_iso, erro,  # noqa: E402
+from common import (BRUTO, DADOS as DADOS_RAIZ, MUNICIPIO_IBGE7, MUNICIPIO_NOME, UF, WEB_DADOS, achar_coluna, agora_iso, erro,  # noqa: E402
                     haversine_m, ler_csv_flex, normalizar_cep, para_numero, salvar_json)
+
+DADOS_PARQUET = DADOS_RAIZ / "parquet"
 
 RAIO_MIN_M = 150
 RAIO_MIN_POUCOS_M = 300  # CEPs com poucos enderecos: borra mais
@@ -98,6 +100,17 @@ def completar_com_lista(indice: dict, lista: list[dict], raio_m: int = RAIO_LIST
 
 def ler_cnefe() -> "pd.DataFrame":  # noqa: F821
     pasta = BRUTO / "cnefe"
+    parquets = [
+        DADOS_PARQUET / "mapa_nacional" / "Agregados_por_CEP_CNEFE_Censo_2022.parquet",
+        pasta / "Agregados_por_CEP_CNEFE_Censo_2022.parquet",
+    ]
+    for caminho in parquets:
+        if caminho.exists():
+            import pandas as pd
+            # A tabela nacional agregada é pequena em disco; mantém as colunas originais
+            # para que construir_indice valide os nomes e não invente equivalências.
+            return pd.read_parquet(caminho).astype("string")
+
     zips = sorted(pasta.glob("*.zip"))
     csvs = sorted(pasta.glob("*.csv"))
     if zips:
@@ -109,7 +122,7 @@ def ler_cnefe() -> "pd.DataFrame":  # noqa: F821
                 return ler_csv_flex(f.read())
     if csvs:
         return ler_csv_flex(csvs[0])
-    erro("CNEFE nao encontrado em %s. Rode antes: python pipeline/baixar.py cnefe" % pasta)
+    erro("CNEFE nao encontrado em %s nem em dados/parquet/mapa_nacional. Rode antes: python pipeline/baixar.py cnefe" % pasta)
 
 
 def main() -> None:
