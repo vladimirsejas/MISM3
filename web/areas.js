@@ -303,14 +303,14 @@
     },
     {
       exemploDuvida: "preciso de advogado de graça", id: "direitos", nome: "Direitos", icone: "direitos",
-      intro: "Orientação jurídica, separação, pensão, aposentadoria, dívidas e proteção contra a violência.",
+      intro: "Justiça e direitos: encontre orientação, assistência gratuita e serviços adequados à sua situação em Rio Claro.",
       guia: {
-        titulo: "O que você encontra nesta página",
+        titulo: "Central de Justiça e Direitos",
         texto: "Escolha a sua situação. Se você está em perigo agora, use o botão “Em perigo agora?” no topo da página ou ligue 190.",
         itens: [
           { titulo: "Sofro violência ou tenho medo de alguém", texto: "Os canais de proteção, a Delegacia de Defesa da Mulher, a Patrulha Maria da Penha e a Defensoria. Violência contra a mulher: ligue 180, 24 horas, de graça.", ancora: "secao-2", botao: "Ver os canais de proteção" },
           { titulo: "Preciso de pensão ou da guarda dos filhos (ou dos netos)", texto: "Como pedir a pensão, o que levar e como falar com a Defensoria.", ancora: "secao-1", botao: "Ver pensão e guarda" },
-          { titulo: "Preciso de orientação jurídica sem poder pagar advogado", texto: "A Defensoria Pública atende quem não tem condições de pagar: como agendar e o que levar.", ancora: "secao-1", botao: "Ver a Defensoria" },
+          { titulo: "Preciso de orientação jurídica gratuita", texto: "Compare os caminhos da Defensoria, do convênio OAB-SP e de outros serviços; cada instituição faz sua própria triagem.", ancora: "secao-4", botao: "Encontrar um caminho de atendimento" },
           { titulo: "Aposentadoria e dívidas", texto: "Simular a aposentadoria no Meu INSS e onde buscar ajuda com dívidas.", ancora: "secao-3", botao: "Ver aposentadoria e dívidas" }
         ]
       },
@@ -368,7 +368,63 @@
           links: [
             ["Procon de Rio Claro", "https://rioclaro.sp.gov.br/secretaria/secretaria-de-justica/", "A página municipal informa os contatos das unidades do Procon, para orientação sobre dívidas de consumo."],
             ["Procon-SP — Apoio ao Superendividado", "https://www.procon.sp.gov.br/espaco-consumidor/#ApoioSuperendividado", "Programa estadual com inscrição online e triagem para quem não consegue pagar dívidas sem comprometer a subsistência."],
-            ["Meu INSS — Simular aposentadoria", "https://www.gov.br/pt-br/servicos/simular-aposentadoria", "Projeção do tempo que falta, com base nos vínculos registrados. Não garante concessão de benefício."]
+            ["Meu INSS — Simular aposentadoria", "https://www.gov.br/pt-br/servicos/simular-aposentadoria", "Projeção do tempo que falta, com base nos vínculos registrados. Não garante concessão de benefício."],
+            ["INSS — recorrer de benefício negado", "https://www.gov.br/pt-br/servicos/apresentar-recurso-ordinario-inicial", "O recurso administrativo é protocolado pelos canais do INSS. Veja o prazo e os documentos na página oficial."]
+          ]
+        },
+        {
+          titulo: "Onde buscar orientação e encaminhamento jurídico?", ancora: "secao-4",
+          tipos: [],
+          descricao: "O caminho depende do assunto e da triagem de cada instituição. Este site organiza portas de entrada; não analisa processos, não escolhe profissional para você e não garante que um serviço assumirá o caso.",
+          canais: [
+            { nome: "Qual porta pode ajudar com cada assunto?", resumo: "Ver os caminhos por necessidade",
+              texto: "Comece pelo assunto que mais se aproxima do que você precisa. Se houver risco ou violência, veja primeiro “Violência e proteção”.",
+              topicos: [
+                ["Violência, ameaça ou medida protetiva", "Se o perigo é agora, ligue 190. O Ligue 180 orienta e encaminha. Para assistência jurídica, a Defensoria faz a própria triagem; veja também a seção “Violência e proteção”."],
+                ["Pensão, guarda, separação, herança, moradia ou bens", "A Defensoria Pública de SP e o convênio de assistência jurídica suplementar OAB-SP/Defensoria podem ser portas de entrada, sujeitas à triagem, à elegibilidade e ao assunto coberto. Pergunte se o caso é atendido antes de reunir documentos ou se deslocar."],
+                ["Salário, demissão, assédio ou discriminação no trabalho", "O Ministério Público do Trabalho recebe denúncias sobre irregularidades e condições de trabalho, incluindo assédio e discriminação. Sua atuação não substitui a orientação de uma advogada ou advogado para pedir valores individuais; para isso, consulte o sindicato da categoria ou uma assistência jurídica que confirme atender a matéria."],
+                ["Dívidas, banco e consumo", "Comece pelo Procon ou pela plataforma Consumidor.gov.br, quando a empresa participar. O CEJUSC pode receber certos conflitos para tentativa de conciliação; confirme o procedimento e lembre que ele não oferece representação jurídica."],
+                ["INSS, BPC ou outro benefício federal negado", "Para contestar uma decisão administrativa, consulte o Meu INSS e a página oficial de recurso. A Defensoria Pública da União pode avaliar demandas federais, como benefícios do INSS, mas a triagem confirma atribuição e elegibilidade; não há unidade da DPU de Rio Claro confirmada neste cadastro."],
+                ["Documentos, discriminação ou outros direitos", "A Defensoria pode verificar se a demanda cabe no atendimento. Para relatar violação de direitos humanos, o Disque 100 é um canal de denúncia e encaminhamento; não é serviço de advocacia."],
+                ["Não sei por onde começar", "Use a triagem oficial da Defensoria ou do convênio OAB-SP. Explique o assunto diretamente ao órgão, sem compartilhar senha gov.br, código de acesso ou detalhes íntimos em canais que você não confirmou como oficiais."]
+              ],
+              aviso: "Os serviços têm atribuições diferentes. Denúncia ao MPT, reclamação ao Procon, mediação no CEJUSC e recurso administrativo do INSS não equivalem a representação por advogada(o) em um processo.",
+              fonte: ["Defensoria Pública de SP; OAB-SP; MPT; INSS; DPU; CNJ", "https://www.defensoria.sp.def.br/", "Páginas institucionais consultadas em 31/10/2026"] },
+            { nome: "Assistência jurídica suplementar — convênio OAB-SP e Defensoria", resumo: "Acessar a triagem oficial",
+              texto: "A OAB-SP e a Defensoria Pública do Estado mantêm convênio para assistência jurídica suplementar. A triagem é feita no portal oficial do convênio; o pedido não assegura atendimento nem define previamente o resultado do caso.",
+              topicos: [
+                ["Como começar", "Abra o formulário oficial de triagem e confira os requisitos e assuntos atendidos. A página solicita dados pessoais e de renda: use somente o domínio oficial da OAB-SP e não forneça senha gov.br ou códigos a intermediários."],
+                ["O que esta página não é", "A OAB não é uma unidade da Defensoria. O convênio é um fluxo específico entre a OAB-SP e a Defensoria; a Subseção local pode orientar sobre canais, mas não presumimos que ela receba todos os pedidos."],
+                ["Rio Claro", "A página oficial da 4ª Subseção publica o telefone (19) 99938-4627 e o e-mail rioclaro@oabsp.org.br. Pergunte à Subseção sobre o canal local e a Comissão da Mulher Advogada. Esse contato geral não é apresentado como triagem jurídica." ]
+              ],
+              aviso: "A inscrição de uma advogada ou advogado na OAB não certifica qualidade, especialidade ou adequação ao seu caso. Este site não ranqueia nem recomenda profissionais individuais.",
+              fonte: ["OAB-SP e Defensoria Pública do Estado de São Paulo", "https://www.oabsp.org.br/comissao/advocacia-dativa", "Páginas oficiais e triagem consultadas em 31/10/2026"] },
+            { nome: "CEJUSC — conciliação e mediação", resumo: "Consultar o TJSP e confirmar o atendimento local",
+              texto: "Os CEJUSCs podem receber pedidos pré-processuais de conciliação e mediação em conflitos cíveis e de família, conforme o serviço local. Um acordo depende da vontade das partes e da adequação do caso.",
+              topicos: [
+                ["Antes de procurar", "Consulte a relação oficial de endereços do TJSP e confirme com o CEJUSC de Rio Claro o endereço, horário, documentos e forma de iniciar o pedido. Publicações do TJSP consultadas trazem dados de contato diferentes."],
+                ["Quando não substitui assistência jurídica", "O CEJUSC não representa uma parte nem substitui advogada, advogado ou defensoria. Em situação de violência, ameaça ou coerção, priorize proteção e orientação jurídica antes de qualquer tentativa de acordo."],
+                ["Privacidade", "O TJSP publicou atendimento pré-processual por e-mail. Antes de enviar dados pessoais ou relato do conflito, confirme se esse é o canal atual e o que deve ser enviado."]
+              ],
+              aviso: "O cadastro não fixa endereço nem telefone do CEJUSC de Rio Claro porque as páginas oficiais consultadas divergem. Confirme os dados na relação atual do TJSP antes de ir.",
+              fonte: ["Tribunal de Justiça de São Paulo e Conselho Nacional de Justiça", "https://portal.tjsp.jus.br/Download/Conciliacao/Nucleo/Enderecos_Cejusc.pdf", "Relação oficial do TJSP e páginas institucionais consultadas em 31/10/2026"] },
+            { nome: "NPJ/SAJU do Claretiano — possibilidade a confirmar", resumo: "Pergunte à instituição se há triagem aberta",
+              texto: "O Claretiano publicou em outubro de 2025 que estudantes do NPJ e do SAJU trabalhavam com casos reais em prol da população de baixa renda. Isso não confirma que o serviço esteja recebendo casos novos agora.",
+              topicos: [
+                ["Antes de se deslocar", "Confirme diretamente com o Claretiano se há atendimento jurídico comunitário ativo em Rio Claro, quais assuntos atende, critérios, agenda, documentos e necessidade de agendamento."],
+                ["Endereço da unidade", "A página institucional da unidade informa Avenida Santo Antônio Maria Claret, 1724, Cidade Claret. O endereço da instituição não confirma que o atendimento jurídico aconteça ali ou esteja disponível."]
+              ],
+              aviso: "Possibilidade local parcialmente confirmada por notícia institucional de 15/10/2025; disponibilidade e acesso atuais não confirmados. A Anhanguera não foi incluída como serviço ativo porque não localizei confirmação institucional atual de atendimento em Rio Claro.",
+              fonte: ["Claretiano — Centro Universitário de Rio Claro", "https://blog.claretiano.edu.br/2025/10/15/direito-completa-25-anos-de-historia-e-compromisso-com-a-sociedade-de-rio-claro/", "Notícia institucional de 15/10/2025; unidade consultada em 31/10/2026"] }
+          ],
+          links: [
+            ["Triagem de assistência judiciária — OAB-SP/Defensoria", "https://www2.oabsp.org.br/asp/dotnet/AJ/Triagem/WzdCadastroTriagem", "Formulário oficial de triagem do convênio OAB-SP e Defensoria Pública. A triagem verifica dados e elegibilidade; não garante que o caso será aceito."],
+            ["OAB Rio Claro — 4ª Subseção", "https://www.oabsp.org.br/subsecao/rio-claro", "Página oficial com endereço, telefone (19) 99938-4627 e e-mail. Contato institucional; pergunte sobre os canais de assistência jurídica."],
+            ["Ministério Público do Trabalho — denúncias", "https://www.prt15.mpt.mp.br/servicos/denuncias", "Canal para denunciar irregularidades trabalhistas ao MPT da 15ª Região; não substitui a contratação ou o encaminhamento de representação individual."],
+            ["DPU — atendimento e assistência jurídica federal", "https://www.dpu.def.br/contatos-dpu", "Consulte unidades e canais da Defensoria Pública da União. A DPU avalia demandas de competência federal e a elegibilidade; não há unidade local confirmada neste cadastro."],
+            ["Consumidor.gov.br", "https://www.consumidor.gov.br/", "Plataforma oficial de interlocução com empresas participantes; verifique se a empresa está cadastrada. Não substitui orientação jurídica."],
+            ["TJSP — relação dos CEJUSCs", "https://portal.tjsp.jus.br/Download/Conciliacao/Nucleo/Enderecos_Cejusc.pdf", "Consulte os canais atuais e confirme o contato de Rio Claro antes de se deslocar; dados publicados em outras páginas variam."],
+            ["Claretiano — unidade de Rio Claro", "https://claretiano.edu.br/rioclaro", "Contato institucional para perguntar se o NPJ/SAJU está recebendo casos; a disponibilidade atual não foi confirmada."]
           ]
         }
       ],

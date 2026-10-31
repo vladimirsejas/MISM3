@@ -1091,3 +1091,12 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - **A trava pegou uma mudança minha:** renomeei o atalho "Unidades de saúde" e `conteudo_essencial.test.js` reprovou. Voltei ao título original.
 - **Verificado no Chromium** em 1100 e 390 px: os 5 atalhos testados levam à seção certa, sem erro de JavaScript.
 
+
+
+## 31/10/2026 — Central de Justiça e Direitos (branch `codex/central-acesso-justica`)
+
+- Preservado o identificador público `direitos` e os atalhos existentes; acrescentada a seção 4 **Onde buscar orientação e encaminhamento jurídico?**, com rotas por necessidade e salvaguardas para violência.
+- O orientador agora encaminha pedidos genéricos de ajuda jurídica gratuita e demandas trabalhistas à central. A prioridade dos encaminhamentos de violência foi mantida. O índice foi regenerado: 180 destinos.
+- A triagem de assistência dativa OAB-SP e a Defensoria são apresentadas como portas independentes. CEJUSC é descrito como conciliação/mediação, não representação. Nenhuma promessa de elegibilidade, advogado ou resultado.
+- OAB Rio Claro: somente contato geral verificado. NPJ/SAJU Claretiano: evidência institucional de atuação em 2025, mas intake atual não confirmado. CEJUSC local: diretório oficial e outras páginas divergem; endereço/telefone não foram fixados como confirmados. Anhanguera não é apresentada como atendimento ativo. Fontes e decisões em `docs/acesso_a_justica.md`.
+- `web/tests/direitos.test.js` e casos novos em `orientar.test.js`; sem validação com usuárias nem publicação.
