@@ -383,7 +383,7 @@
                 ["Violência, ameaça ou medida protetiva", "Se o perigo é agora, ligue 190. O Ligue 180 orienta e encaminha. Para assistência jurídica, a Defensoria faz a própria triagem; veja também a seção “Violência e proteção”."],
                 ["Pensão, guarda, separação, herança, moradia ou bens", "A Defensoria Pública de SP e o convênio de assistência jurídica suplementar OAB-SP/Defensoria podem ser portas de entrada, sujeitas à triagem, à elegibilidade e ao assunto coberto. Pergunte se o caso é atendido antes de reunir documentos ou se deslocar."],
                 ["Salário, demissão, assédio ou discriminação no trabalho", "O Ministério Público do Trabalho recebe denúncias sobre irregularidades e condições de trabalho, incluindo assédio e discriminação. Sua atuação não substitui a orientação de uma advogada ou advogado para pedir valores individuais; para isso, consulte o sindicato da categoria ou uma assistência jurídica que confirme atender a matéria."],
-                ["Dívidas, banco e consumo", "Comece pelo Procon ou pela plataforma Consumidor.gov.br, quando a empresa participar. O CEJUSC pode receber certos conflitos para tentativa de conciliação; confirme o procedimento e lembre que ele não oferece representação jurídica."],
+                ["Dívidas, banco e consumo", "Procure o Procon de Rio Claro: unidade Centro na Rua 5, 821, Centro, CEP 13500-040 (a Prefeitura confirma Rua 5, 821; CEP informado pelo mantenedor), ou use Consumidor.gov.br quando a empresa participar. O CEJUSC pode receber certos conflitos para tentativa de conciliação; confirme o procedimento e lembre que ele não oferece representação jurídica."],
                 ["INSS, BPC ou outro benefício federal negado", "Para contestar uma decisão administrativa, consulte o Meu INSS e a página oficial de recurso. A Defensoria Pública da União pode avaliar demandas federais, como benefícios do INSS, mas a triagem confirma atribuição e elegibilidade; não há unidade da DPU de Rio Claro confirmada neste cadastro."],
                 ["Documentos, discriminação ou outros direitos", "A Defensoria pode verificar se a demanda cabe no atendimento. Para relatar violação de direitos humanos, o Disque 100 é um canal de denúncia e encaminhamento; não é serviço de advocacia."],
                 ["Não sei por onde começar", "Use a triagem oficial da Defensoria ou do convênio OAB-SP. Explique o assunto diretamente ao órgão, sem compartilhar senha gov.br, código de acesso ou detalhes íntimos em canais que você não confirmou como oficiais."]
@@ -414,8 +414,16 @@
                 ["Antes de se deslocar", "Confirme diretamente com o Claretiano se há atendimento jurídico comunitário ativo em Rio Claro, quais assuntos atende, critérios, agenda, documentos e necessidade de agendamento."],
                 ["Endereço da unidade", "A página institucional da unidade informa Avenida Santo Antônio Maria Claret, 1724, Cidade Claret. O endereço da instituição não confirma que o atendimento jurídico aconteça ali ou esteja disponível."]
               ],
-              aviso: "Possibilidade local parcialmente confirmada por notícia institucional de 15/10/2025; disponibilidade e acesso atuais não confirmados. A Anhanguera não foi incluída como serviço ativo porque não localizei confirmação institucional atual de atendimento em Rio Claro.",
-              fonte: ["Claretiano — Centro Universitário de Rio Claro", "https://blog.claretiano.edu.br/2025/10/15/direito-completa-25-anos-de-historia-e-compromisso-com-a-sociedade-de-rio-claro/", "Notícia institucional de 15/10/2025; unidade consultada em 31/10/2026"] }
+              aviso: "Possibilidade local parcialmente confirmada por notícia institucional de 15/10/2025; disponibilidade e acesso atuais não confirmados.",
+              fonte: ["Claretiano — Centro Universitário de Rio Claro", "https://blog.claretiano.edu.br/2025/10/15/direito-completa-25-anos-de-historia-e-compromisso-com-a-sociedade-de-rio-claro/", "Notícia institucional de 15/10/2025; unidade consultada em 31/10/2026"] },
+            { nome: "Anhanguera — unidade na Rua 2; atendimento jurídico a confirmar", resumo: "Pergunte à instituição se há núcleo jurídico em atendimento",
+              texto: "O mantenedor do MISM3 informa que a unidade da Anhanguera fica na Rua 2 de Rio Claro. Não foi confirmada oferta atual de orientação jurídica gratuita nessa unidade.",
+              topicos: [
+                ["Antes de ir", "Confirme com a instituição se há curso de Direito e Núcleo de Prática Jurídica nesta unidade, se recebe casos novos, quais assuntos atende, critérios, agenda, endereço completo e documentos."],
+                ["Localização", "A referência à Rua 2 foi informada pelo mantenedor; o endereço completo não foi verificado. A existência de uma unidade não confirma atendimento jurídico no local."]
+              ],
+              aviso: "A localização na Rua 2 é informação do mantenedor do projeto. O endereço completo e a oferta atual de atendimento jurídico não foram confirmados.",
+              fonte: ["Mantenedor do MISM3; Anhanguera — Central de Atendimento", "https://www.anhanguera.com/central-de-atendimento/", "Localização informada pelo mantenedor; atendimento jurídico local não confirmado em 31/10/2026"] }
           ],
           links: [
             ["Triagem de assistência judiciária — OAB-SP/Defensoria", "https://www2.oabsp.org.br/asp/dotnet/AJ/Triagem/WzdCadastroTriagem", "Formulário oficial de triagem do convênio OAB-SP e Defensoria Pública. A triagem verifica dados e elegibilidade; não garante que o caso será aceito."],
@@ -423,8 +431,10 @@
             ["Ministério Público do Trabalho — denúncias", "https://www.prt15.mpt.mp.br/servicos/denuncias", "Canal para denunciar irregularidades trabalhistas ao MPT da 15ª Região; não substitui a contratação ou o encaminhamento de representação individual."],
             ["DPU — atendimento e assistência jurídica federal", "https://www.dpu.def.br/contatos-dpu", "Consulte unidades e canais da Defensoria Pública da União. A DPU avalia demandas de competência federal e a elegibilidade; não há unidade local confirmada neste cadastro."],
             ["Consumidor.gov.br", "https://www.consumidor.gov.br/", "Plataforma oficial de interlocução com empresas participantes; verifique se a empresa está cadastrada. Não substitui orientação jurídica."],
+            ["Procon de Rio Claro — unidades e atendimento", "https://rioclaro.sp.gov.br/justica/procon-de-rio-claro-realiza-mil-atendimentos-mensais/", "Notícia municipal de 2025 informa as unidades Centro (Rua 5, 821) e Cervezão (Rua M-15, 411). Confirme horário e canais antes de ir."],
             ["TJSP — relação dos CEJUSCs", "https://portal.tjsp.jus.br/Download/Conciliacao/Nucleo/Enderecos_Cejusc.pdf", "Consulte os canais atuais e confirme o contato de Rio Claro antes de se deslocar; dados publicados em outras páginas variam."],
-            ["Claretiano — unidade de Rio Claro", "https://claretiano.edu.br/rioclaro", "Contato institucional para perguntar se o NPJ/SAJU está recebendo casos; a disponibilidade atual não foi confirmada."]
+            ["Claretiano — unidade de Rio Claro", "https://claretiano.edu.br/rioclaro", "Contato institucional para perguntar se o NPJ/SAJU está recebendo casos; a disponibilidade atual não foi confirmada."],
+            ["Anhanguera — contato institucional", "https://www.anhanguera.com/central-de-atendimento/", "Canal institucional para confirmar endereço da unidade e se há atendimento jurídico comunitário ativo em Rio Claro."]
           ]
         }
       ],

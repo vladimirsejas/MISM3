@@ -1096,7 +1096,13 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 ## 31/10/2026 — Central de Justiça e Direitos (branch `codex/central-acesso-justica`)
 
 - Preservado o identificador público `direitos` e os atalhos existentes; acrescentada a seção 4 **Onde buscar orientação e encaminhamento jurídico?**, com rotas por necessidade e salvaguardas para violência.
-- O orientador agora encaminha pedidos genéricos de ajuda jurídica gratuita e demandas trabalhistas à central. A prioridade dos encaminhamentos de violência foi mantida. O índice foi regenerado: 180 destinos.
+- O orientador agora encaminha pedidos genéricos de ajuda jurídica gratuita e demandas trabalhistas à central. A prioridade dos encaminhamentos de violência foi mantida. O índice foi regenerado: 181 destinos.
 - A triagem de assistência dativa OAB-SP e a Defensoria são apresentadas como portas independentes. CEJUSC é descrito como conciliação/mediação, não representação. Nenhuma promessa de elegibilidade, advogado ou resultado.
 - OAB Rio Claro: somente contato geral verificado. NPJ/SAJU Claretiano: evidência institucional de atuação em 2025, mas intake atual não confirmado. CEJUSC local: diretório oficial e outras páginas divergem; endereço/telefone não foram fixados como confirmados. Anhanguera não é apresentada como atendimento ativo. Fontes e decisões em `docs/acesso_a_justica.md`.
 - `web/tests/direitos.test.js` e casos novos em `orientar.test.js`; sem validação com usuárias nem publicação.
+
+
+## 31/10/2026 — Correções locais: Procon e unidade Anhanguera
+
+- O mantenedor informou o endereço do Procon Centro: Rua 5, 821, Centro, CEP 13500-040. A Prefeitura confirma Rua 5, 821 e a operação das duas unidades em notícia de 14/03/2025; o CEP permanece identificado como informação do mantenedor. Horários e telefone não foram acrescentados por falta de confirmação recente na fonte consultada.
+- O mantenedor informou que a unidade Anhanguera que conhece fica na Rua 2. A central agora a mostra como possibilidade a confirmar, registrando que o número/endereço completo e a existência de atendimento jurídico ativo não foram confirmados. Linka o canal institucional para consulta.
