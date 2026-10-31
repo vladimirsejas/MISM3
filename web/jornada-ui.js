@@ -84,51 +84,30 @@
 
   function htmlCurriculoSecao() {
     return '<section class="secao curriculo" id="montar-curriculo" aria-labelledby="titulo-curriculo">' +
-      '<nav class="atalhos-trabalho" aria-label="Atalhos da área Trabalho"><h3>Por onde começar</h3><ul>' +
+      '<nav class="atalhos-trabalho" aria-label="Atalhos da área Trabalho"><h3>Por onde começar</h3>' +
+      '<h4>Dinheiro rápido</h4><ul>' +
       '<li><a href="#trabalho/trabalho-agora">Preciso de dinheiro esta semana</a></li>' +
       '<li><a href="#trabalho/renda-imediata">Trabalhos pontuais e quanto sobra</a></li>' +
       '<li><a href="#trabalho/trabalho-hoje">O que posso fazer hoje</a></li>' +
       '<li><a href="#trabalho/trabalho-renda">Ideias de renda, da mais fácil à mais difícil</a></li>' +
-      '<li><button type="button" class="btn secundario" data-curriculo>Montar meu currículo</button></li>' +
+      '<li><a href="#trabalho/trabalho-golpes">Evitar golpes</a></li>' +
+      '<li><a href="#trabalho/trabalho-basico">Falta o básico: comida, passagem, filhos</a></li>' +
+      '</ul><h4>Encontrar trabalho</h4><ul>' +
       '<li><a href="#trabalho/trabalho-local">Vagas e atendimento em Rio Claro</a></li>' +
-      '<li><a href="#trabalho/trabalho-estudar">Estudar para trabalhar melhor</a></li>' +
       '<li><a href="#trabalho/trabalho-sem-experiencia">Onde procurar trabalho</a></li>' +
+      '<li><a href="#trabalho/sites-vagas">Sites para procurar emprego</a></li>' +
+      '<li><a href="#trabalho/trabalho-rede">Pedir ajuda à minha rede</a></li>' +
+      '</ul><h4>Me candidatar</h4><ul>' +
+      '<li><button type="button" class="btn secundario" data-curriculo>Montar meu currículo</button></li>' +
       '<li><a href="#trabalho/trabalho-entrevista">Preparar a entrevista</a></li>' +
       '<li><a href="#trabalho/trabalho-aparencia">Cabelo e unhas sem gastar</a></li>' +
-      '<li><a href="#trabalho/trabalho-basico">Falta o básico: comida, passagem, filhos</a></li>' +
+      '<li><a href="#trabalho/trabalho-rejeicao">Quando recebo um não</a></li>' +
+      '</ul><h4>Estudar e o que atrapalha</h4><ul>' +
+      '<li><a href="#trabalho/trabalho-estudar">Estudar para trabalhar melhor</a></li>' +
       '<li><a href="#trabalho/trabalho-transporte">Transporte e passagem</a></li>' +
       '<li><a href="#trabalho/trabalho-filhos">Cuidado dos filhos</a></li>' +
-      '<li><a href="#trabalho/trabalho-golpes">Evitar golpes</a></li>' +
-      '<li><a href="#trabalho/trabalho-rejeicao">Quando recebo um não</a></li>' +
-      '<li><a href="#trabalho/trabalho-rede">Pedir ajuda à minha rede</a></li>' +
       '</ul></nav>' +
-      '<details><summary><h2 id="titulo-curriculo">Montar um currículo</h2></summary>' +
-      '<p class="meta">Preencha só o que quiser. Não coloque CPF, RG, endereço completo nem data de nascimento exata. O texto não sai deste aparelho.</p>' +
-      '<form id="form-curriculo" autocomplete="off">' +
-      campoTexto("c-nome", "Nome", 80) + campoTexto("c-telefone", "Telefone ou WhatsApp", 40) + campoTexto("c-email", "E-mail", 80) +
-      campoTexto("c-cidade", "Cidade", 60, "Rio Claro - SP") + campoTexto("c-objetivo", "Que tipo de trabalho você procura?", 120) +
-      campoArea("c-experiencias", "Experiências (uma por linha)", "Ex.: Auxiliar de cozinha, bar do João, 2022 a 2024") +
-      campoArea("c-formacao", "Estudos e cursos (um por linha)", "Ex.: Ensino médio completo") +
-      campoArea("c-habilidades", "O que você sabe fazer (uma por linha)", "Ex.: Atendimento ao público; costura; organização") +
-      campoTexto("c-disponibilidade", "Disponibilidade de horário", 120) +
-      '<div class="acoes"><button type="submit" class="btn">Gerar currículo</button><button type="button" class="btn secundario" data-limpar="curriculo">Limpar</button></div></form>' +
-      '<div id="curriculo-saida" aria-live="polite"></div></details>' +
-      '<div class="links-curriculo"><h3>Outras opções gratuitas</h3><ul>' +
-      '<li><a href="https://word.cloud.microsoft/create/pt-br/resume-templates/" target="_blank" rel="noopener noreferrer">Modelos de currículo — Microsoft Word</a></li>' +
-      '<li><a href="https://docs.google.com/document/u/0/" target="_blank" rel="noopener noreferrer">Google Docs — documentos e modelos</a></li>' +
-      '<li><a href="https://www.gov.br/trabalho-e-emprego/pt-br" target="_blank" rel="noopener noreferrer">Ministério do Trabalho e Emprego</a></li>' +
-      '<li><a href="https://servicos.mte.gov.br/" target="_blank" rel="noopener noreferrer">Emprega Brasil / SINE</a></li>' +
-      '<li><a href="https://www.gov.br/pt-br/servicos/obter-a-carteira-de-trabalho" target="_blank" rel="noopener noreferrer">Carteira de Trabalho Digital</a></li>' +
-      '</ul></div>' +
-      '<div class="links-vagas"><h3>Sites para procurar emprego</h3>' +
-      '<p class="meta">As opções básicas de busca e candidatura são gratuitas. Algumas plataformas oferecem recursos extras pagos; não pague para se candidatar a uma vaga.</p><ul>' +
-      '<li><a href="https://www.vagas.com.br/" target="_blank" rel="noopener noreferrer">Vagas.com.br</a> — busca de vagas e alertas.</li>' +
-      '<li><a href="https://br.indeed.com/" target="_blank" rel="noopener noreferrer">Indeed</a> — pesquisa por cargo, empresa e cidade.</li>' +
-      '<li><a href="https://www.infojobs.com.br/" target="_blank" rel="noopener noreferrer">Infojobs</a> — cadastro de currículo e candidatura; há recursos opcionais pagos.</li>' +
-      '<li><a href="https://portal.gupy.io/pt" target="_blank" rel="noopener noreferrer">Gupy</a> — vagas e etapas de seleção das empresas.</li>' +
-      '<li><a href="https://br.linkedin.com/jobs" target="_blank" rel="noopener noreferrer">LinkedIn — Vagas</a> — busca de oportunidades e contato profissional.</li>' +
-      '<li><a href="https://www.trabalhabrasil.com.br/" target="_blank" rel="noopener noreferrer">Trabalha Brasil</a> — classificados e busca de vagas.</li>' +
-      '</ul></div>' +
+      '<h2 class="grupo-trabalho" id="grupo-dinheiro">Dinheiro rápido</h2>' +
       '<section class="apoio-trabalho" aria-labelledby="trabalho-agora"><h3 id="trabalho-agora">Preciso de dinheiro esta semana</h3>' +
       '<p>Para tentar conseguir renda rápida, ofereça um serviço que você já sabe fazer: faxina, passar roupa, cozinhar, cuidar de crianças ou idosos, lavar carro ou ajudar em comércio. Combine valor, horário e transporte antes. A renda varia e não há pagamento garantido.</p>' +
       '<h4>Onde oferecer seu serviço</h4><ul>' +
@@ -158,18 +137,113 @@
       '<li><strong>Comida por encomenda</strong> (marmita, bolo, salgado). Precisa de: ingredientes e conta simples do custo. Custo: ingredientes, gás e embalagem. Onde: grupos do bairro e WhatsApp. Cuidado: faça só sob encomenda e peça sinal antes, para não perder ingredientes; verifique com a vigilância sanitária as regras para vender.</li>' +
       '<li><strong>Trabalho digital simples</strong> (digitar, responder mensagens, divulgar). Precisa de: celular e internet. Custo: pacote de dados. Cuidado: desconfie de quem promete ganho fácil ou pede dinheiro para começar.</li>' +
       '</ol><p class="meta">Se a ideia exigir comprar material ou estoque, comece pequeno, só com o que já foi pedido, para não ficar com dívida.</p></section>' +
-      '<section class="apoio-trabalho" aria-labelledby="cv-sem-experiencia"><h3 id="cv-sem-experiencia">Nunca trabalhei. O que coloco no currículo?</h3>' +
-      '<p>Você pode destacar habilidades, trabalhos informais, cuidados, atividades voluntárias, cursos e disponibilidade. Não invente emprego nem experiência formal.</p>' +
-      '<p><strong>Exemplo para adaptar:</strong></p><pre class="modelo-curriculo">[NOME]\n[Telefone/WhatsApp] · [Bairro e cidade]\n\nOBJETIVO\nTrabalhar como [atendente, auxiliar de limpeza, ajudante de cozinha ou outra função]\n\nHABILIDADES\n• Organização e cuidado com ambientes\n• Atendimento e comunicação respeitosa\n• Uso de celular e WhatsApp\n• [Outras habilidades que você realmente tem]\n\nEXPERIÊNCIA E ATIVIDADES\n[Trabalhos informais, ajuda em negócio familiar, voluntariado ou outras atividades reais]\n\nESTUDOS E CURSOS\n[Escolaridade e cursos, se houver]\n\nDISPONIBILIDADE\n[Manhã, tarde, noite ou integral]</pre>' +
-      '<button type="button" class="btn secundario" data-copiar="modelo">Copiar modelo de currículo</button>' +
-      '<textarea id="texto-modelo" class="texto-copia" rows="8" readonly>[NOME]\n[Telefone/WhatsApp] · [Bairro e cidade]\n\nOBJETIVO\nTrabalhar como [função desejada]\n\nHABILIDADES\n[Liste habilidades reais]\n\nEXPERIÊNCIA E ATIVIDADES\n[Trabalhos informais, voluntariado ou atividades reais]\n\nESTUDOS E CURSOS\n[Escolaridade e cursos, se houver]\n\nDISPONIBILIDADE\n[Horários em que pode trabalhar]</textarea>' +
+      '<section class="apoio-trabalho" aria-labelledby="trabalho-mei"><h3 id="trabalho-mei">Trabalho por conta própria: MEI</h3>' +
+      '<p>Quem faz bicos, vende comida ou artesanato pode se formalizar como MEI pelo ' + '<a href="https://www.gov.br/empresas-e-negocios/pt-br/empreendedor" target="_blank" rel="noopener noreferrer">Portal do Empreendedor</a>' + ', onde o cadastro é gratuito. Depois do registro há contribuição mensal e regras de atividade permitida. Confira os critérios atuais; a Sala do Empreendedor, na Secretaria de Desenvolvimento Econômico, pode orientar.</p></section>' +
+      '<section class="apoio-trabalho" aria-labelledby="trabalho-golpes"><h3 id="trabalho-golpes">Cuidado com golpes de emprego</h3><ul>' +
+      '<li>Desconfie se cobrarem PIX ou taxa para contratar ou garantir vaga.</li><li>Desconfie de salário muito alto com promessa de contratação fácil e imediata.</li><li>Confirme a empresa e a vaga por um canal oficial.</li><li>Não envie foto de documentos nem dados bancários antes de confirmar a legitimidade e a necessidade.</li><li>Leia com cuidado se pedirem para comprar curso, material ou equipamento para poder trabalhar.</li></ul>' +
       '</section>' +
+      '<section class="apoio-trabalho" aria-labelledby="trabalho-basico"><h3 id="trabalho-basico">Falta o básico: comida, passagem ou cuidado dos filhos</h3>' +
+      '<p>Procurar emprego é mais difícil quando falta comida ou dinheiro de passagem. Você pode buscar apoio ao mesmo tempo em que procura renda.</p><ul>' +
+      '<li>Procure o CRAS do seu bairro: ele orienta sobre alimentação, CadÚnico e benefícios. Veja a área <a href="#assistencia">Assistência Social</a> deste site, com endereços e telefones.</li>' +
+      '<li>Nenhum benefício é automático nem garantido: o CRAS confirma se você se enquadra.</li>' +
+      '<li>Para passagem e horários, veja a área <a href="#transporte">Transporte</a>. Para os filhos, veja <a href="#educacao/educacao-filhos">Educação: filhos</a>.</li>' +
+      '</ul></section>' +
+      '<h2 class="grupo-trabalho" id="grupo-encontrar">Encontrar trabalho</h2>' +
       '<section class="apoio-trabalho" aria-labelledby="trabalho-local"><h3 id="trabalho-local">Vagas e atendimento aqui em Rio Claro</h3>' +
       '<p>Para quem precisa de resposta rápida, o atendimento presencial costuma ser mais direto que os grandes sites. Ligue antes de ir, para confirmar horário e documentos.</p><ul>' +
       cartaoLocal("man-pat", "PAT — Posto de Atendimento ao Trabalhador (sede da Acirc)") + cartaoLocal("man-sde", "Secretaria de Desenvolvimento Econômico") +
       '</ul>' +
       '<h4>Imprimir o currículo sem pagar</h4><p>Pergunte no PAT, em bibliotecas ou em centros comunitários se imprimem currículo sem custo; este site não confirma onde isso é oferecido. Se não conseguir imprimir, mande o currículo em PDF pelo WhatsApp ou mostre-o no celular.</p>' +
       '</section>' +
+      '<section class="apoio-trabalho" aria-labelledby="trabalho-sem-experiencia"><h3 id="trabalho-sem-experiencia">Onde procurar trabalho sem experiência</h3>' +
+      '<p>Tente perguntar diretamente sobre vagas de entrada em supermercados, padarias, farmácias, lojas, restaurantes, hotéis e pousadas, condomínios, escolas e creches, empresas de limpeza, salões, clínicas e cozinhas. A contratação depende de cada empregador.</p>' +
+      '<blockquote><p>Bom dia. Estou procurando trabalho e tenho interesse em [área/função]. Vocês estão recebendo currículos ou têm alguma vaga? Posso deixar meu contato?</p></blockquote>' +
+      '<h4>Buffet de festas (adulto e infantil)</h4><p>Buffets de festas costumam precisar de gente nova e muitas vezes aceitam quem nunca trabalhou na área. Vale perguntar nos de festa adulta (casamentos, formaturas, eventos) e nos de festa infantil (aniversários).</p><ul>' +
+      '<li><strong>Funções:</strong> no buffet adulto, garçom ou garçonete, copeira, auxiliar de cozinha e de limpeza e montagem; no infantil, recreadora ou monitora, atendente e auxiliar de cozinha e de limpeza. Cada casa define o que pede.</li>' +
+      '<li><strong>Como procurar:</strong> pergunte direto no buffet, deixando o currículo e o telefone, e diga com clareza que está começando e quer aprender. Quem já cuidou de crianças ou ajudou em festas da família pode citar isso.</li>' +
+      '<li><strong>Horários:</strong> o trabalho costuma ser à noite e nos fins de semana, em escala ou por diária. Pergunte antes o dia, o horário, como é o pagamento e se há registro em carteira, para ver se cabe na sua rotina e na de quem cuida dos seus filhos.</li>' +
+      '</ul><p class="meta">É uma dica de por onde procurar, não uma vaga confirmada: este site não cadastra buffets de Rio Claro. Nunca pague para conseguir uma vaga.</p>' +
+      '</section>' +
+      '<div class="links-vagas" id="sites-vagas"><h3>Sites para procurar emprego</h3>' +
+      '<p class="meta">As opções básicas de busca e candidatura são gratuitas. Algumas plataformas oferecem recursos extras pagos; não pague para se candidatar a uma vaga.</p><ul>' +
+      '<li><a href="https://www.vagas.com.br/" target="_blank" rel="noopener noreferrer">Vagas.com.br</a> — busca de vagas e alertas.</li>' +
+      '<li><a href="https://br.indeed.com/" target="_blank" rel="noopener noreferrer">Indeed</a> — pesquisa por cargo, empresa e cidade.</li>' +
+      '<li><a href="https://www.infojobs.com.br/" target="_blank" rel="noopener noreferrer">Infojobs</a> — cadastro de currículo e candidatura; há recursos opcionais pagos.</li>' +
+      '<li><a href="https://portal.gupy.io/pt" target="_blank" rel="noopener noreferrer">Gupy</a> — vagas e etapas de seleção das empresas.</li>' +
+      '<li><a href="https://br.linkedin.com/jobs" target="_blank" rel="noopener noreferrer">LinkedIn — Vagas</a> — busca de oportunidades e contato profissional.</li>' +
+      '<li><a href="https://www.trabalhabrasil.com.br/" target="_blank" rel="noopener noreferrer">Trabalha Brasil</a> — classificados e busca de vagas.</li>' +
+      '</ul></div>' +
+      '<section class="apoio-trabalho" aria-labelledby="trabalho-direitos"><h3 id="trabalho-direitos">Serviços públicos e cursos gratuitos</h3><ul>' +
+      '<li><a href="https://servicos.mte.gov.br/" target="_blank" rel="noopener noreferrer">Emprega Brasil / SINE</a> — consulta de vagas e serviços de emprego.</li>' +
+      '<li><a href="https://www.gov.br/pt-br/servicos/obter-a-carteira-de-trabalho" target="_blank" rel="noopener noreferrer">Carteira de Trabalho Digital</a>.</li>' +
+      '<li><a href="https://www.gov.br/pt-br/servicos/solicitar-o-seguro-desemprego" target="_blank" rel="noopener noreferrer">Seguro-desemprego</a> — depende dos requisitos e da situação de desligamento.</li>' +
+      '<li><a href="https://www.gov.br/mds/pt-br/acoes-e-programas/bolsa-familia" target="_blank" rel="noopener noreferrer">Bolsa Família</a> — regras e elegibilidade são avaliadas pelo programa.</li>' +
+      '<li><a href="https://www.gov.br/aneel/pt-br/assuntos/tarifa-social" target="_blank" rel="noopener noreferrer">Tarifa Social de Energia Elétrica</a> — consulte os critérios atuais.</li>' +
+      '<li><a href="https://www.ev.org.br/" target="_blank" rel="noopener noreferrer">Fundação Bradesco</a> — cursos on-line gratuitos.</li>' +
+      '<li><a href="https://www.qualificasp.sp.gov.br/" target="_blank" rel="noopener noreferrer">Qualifica SP</a> — confira turmas e inscrições abertas.</li>' +
+      '</ul><p>O CRAS pode orientar sobre CadÚnico e benefícios sociais. Nenhum benefício é automático: confirme os critérios e a documentação.</p>' +
+      '<h4>Direitos básicos, em palavras simples</h4><p>Carteira assinada registra o vínculo de emprego. Vale-transporte ajuda no deslocamento conforme as regras. Férias, 13º salário e FGTS têm regras próprias; consulte os canais oficiais para entender cada caso.</p></section>' +
+      '<section class="apoio-trabalho" aria-labelledby="trabalho-rede"><h3 id="trabalho-rede">Peça ajuda à sua rede</h3>' +
+      '<p>Enviar uma mensagem a pessoas de confiança pode ajudar a encontrar oportunidades. Não existe garantia, mas você não precisa procurar sozinha.</p>' +
+      '<textarea id="texto-rede" class="texto-copia" rows="4" readonly>Oi, tudo bem? Estou procurando trabalho como [cargo/área]. Se você souber de alguma vaga ou alguém que precise, pode me avisar? Posso mandar meu currículo. Obrigada!</textarea>' +
+      '<button type="button" class="btn secundario" data-copiar="rede">Copiar mensagem para WhatsApp</button>' +
+      '<p class="meta">Compartilhe só com quem você se sente segura. Não publique documentos pessoais em grupos.</p></section>' +
+      '<h2 class="grupo-trabalho" id="grupo-candidatar">Me candidatar</h2>' +
+      '<details><summary><h2 id="titulo-curriculo">Montar um currículo</h2></summary>' +
+      '<p class="meta">Preencha só o que quiser. Não coloque CPF, RG, endereço completo nem data de nascimento exata. O texto não sai deste aparelho.</p>' +
+      '<form id="form-curriculo" autocomplete="off">' +
+      campoTexto("c-nome", "Nome", 80) + campoTexto("c-telefone", "Telefone ou WhatsApp", 40) + campoTexto("c-email", "E-mail", 80) +
+      campoTexto("c-cidade", "Cidade", 60, "Rio Claro - SP") + campoTexto("c-objetivo", "Que tipo de trabalho você procura?", 120) +
+      campoArea("c-experiencias", "Experiências (uma por linha)", "Ex.: Auxiliar de cozinha, bar do João, 2022 a 2024") +
+      campoArea("c-formacao", "Estudos e cursos (um por linha)", "Ex.: Ensino médio completo") +
+      campoArea("c-habilidades", "O que você sabe fazer (uma por linha)", "Ex.: Atendimento ao público; costura; organização") +
+      campoTexto("c-disponibilidade", "Disponibilidade de horário", 120) +
+      '<div class="acoes"><button type="submit" class="btn">Gerar currículo</button><button type="button" class="btn secundario" data-limpar="curriculo">Limpar</button></div></form>' +
+      '<div id="curriculo-saida" aria-live="polite"></div></details>' +
+      '<div class="links-curriculo"><h3>Outras opções gratuitas</h3><ul>' +
+      '<li><a href="https://word.cloud.microsoft/create/pt-br/resume-templates/" target="_blank" rel="noopener noreferrer">Modelos de currículo — Microsoft Word</a></li>' +
+      '<li><a href="https://docs.google.com/document/u/0/" target="_blank" rel="noopener noreferrer">Google Docs — documentos e modelos</a></li>' +
+      '<li><a href="https://www.gov.br/trabalho-e-emprego/pt-br" target="_blank" rel="noopener noreferrer">Ministério do Trabalho e Emprego</a></li>' +
+      '<li><a href="https://servicos.mte.gov.br/" target="_blank" rel="noopener noreferrer">Emprega Brasil / SINE</a></li>' +
+      '<li><a href="https://www.gov.br/pt-br/servicos/obter-a-carteira-de-trabalho" target="_blank" rel="noopener noreferrer">Carteira de Trabalho Digital</a></li>' +
+      '</ul></div>' +
+      '<section class="apoio-trabalho" aria-labelledby="cv-sem-experiencia"><h3 id="cv-sem-experiencia">Nunca trabalhei. O que coloco no currículo?</h3>' +
+      '<p>Você pode destacar habilidades, trabalhos informais, cuidados, atividades voluntárias, cursos e disponibilidade. Não invente emprego nem experiência formal.</p>' +
+      '<p><strong>Exemplo para adaptar:</strong></p><pre class="modelo-curriculo">[NOME]\n[Telefone/WhatsApp] · [Bairro e cidade]\n\nOBJETIVO\nTrabalhar como [atendente, auxiliar de limpeza, ajudante de cozinha ou outra função]\n\nHABILIDADES\n• Organização e cuidado com ambientes\n• Atendimento e comunicação respeitosa\n• Uso de celular e WhatsApp\n• [Outras habilidades que você realmente tem]\n\nEXPERIÊNCIA E ATIVIDADES\n[Trabalhos informais, ajuda em negócio familiar, voluntariado ou outras atividades reais]\n\nESTUDOS E CURSOS\n[Escolaridade e cursos, se houver]\n\nDISPONIBILIDADE\n[Manhã, tarde, noite ou integral]</pre>' +
+      '<button type="button" class="btn secundario" data-copiar="modelo">Copiar modelo de currículo</button>' +
+      '<textarea id="texto-modelo" class="texto-copia" rows="8" readonly>[NOME]\n[Telefone/WhatsApp] · [Bairro e cidade]\n\nOBJETIVO\nTrabalhar como [função desejada]\n\nHABILIDADES\n[Liste habilidades reais]\n\nEXPERIÊNCIA E ATIVIDADES\n[Trabalhos informais, voluntariado ou atividades reais]\n\nESTUDOS E CURSOS\n[Escolaridade e cursos, se houver]\n\nDISPONIBILIDADE\n[Horários em que pode trabalhar]</textarea>' +
+      '</section>' +
+      '<section class="apoio-trabalho" aria-labelledby="trabalho-entrevista"><h3 id="trabalho-entrevista">Antes da entrevista</h3><ul>' +
+      '<li>Use roupa limpa, inteira e confortável. Você não precisa comprar roupa, sapato ou maquiagem para participar de uma entrevista.</li><li>Veja se tem alguma peça emprestada com alguém de confiança; escolha algo que permita sentar, andar e se movimentar à vontade.</li><li>Se puder, pesquise o tipo de ambiente da empresa, mas não deixe de comparecer só porque não tem roupa social.</li><li>Confira endereço, horário e como chegar. Leve o currículo no celular ou impresso, se tiver.</li><li>Carregue o celular antes de sair, leve água e um lanche simples e documento com foto. Combine a passagem no dia anterior.</li><li>Se tiver filho pequeno, deixe com alguém de confiança antes da entrevista.</li><li>Se precisar de cuidado para os filhos, tente combinar com alguém de confiança e pense num plano alternativo.</li><li>Se a entrevista for por vídeo, procure um lugar iluminado e tranquilo e teste o áudio antes.</li></ul>' +
+      '<h4>Leituras úteis: como se vestir sem gastar</h4><p>Estas orientações ajudam a escolher uma roupa adequada usando o que você já tem. São dicas, não regras obrigatórias: a roupa não define sua competência.</p><ul>' +
+      '<li><a href="https://mepoupe.com/dicas-de-riqueza/procurando-emprego-como-se-vestir-sem-gastar-a-grana-que-voce-nao-tem/" target="_blank" rel="noopener noreferrer">Me Poupe! — Como se vestir sem gastar a grana que você não tem</a></li>' +
+      '<li><a href="https://www.ciadeestagios.com.br/guia-profissional/como-se-vestir/" target="_blank" rel="noopener noreferrer">Cia de Estágios — Como se vestir para uma entrevista de emprego</a></li>' +
+      '<li><a href="https://www.unicesumar.edu.br/blog/como-se-vestir-para-entrevista-de-emprego/" target="_blank" rel="noopener noreferrer">Unicesumar — Como se vestir para entrevista de emprego</a></li>' +
+      '<li><a href="https://blog.passaportefashionista.com/5-dicas-infaliveis-para-se-vestir-bem-sem-gastar-muito/" target="_blank" rel="noopener noreferrer">Passaporte Fashionista — Como se vestir bem sem gastar muito</a></li>' +
+      '</ul><h4>Guias oficiais gratuitos para se preparar</h4><ul>' +
+      '<li><a href="https://www.gov.br/mds/pt-br/noticias-e-conteudos/publicacoes/desenvolvimento-social/CadernoAcessuas_Oficinas_de_Criatividade_2022.pdf" target="_blank" rel="noopener noreferrer">Guia gratuito do Governo Federal: dicas para entrevista</a> — inclui vestuário, cabelo, unhas e preparação.</li>' +
+      '<li><a href="https://prefeitura.sp.gov.br/web/desenvolvimento/w/dicas/entrevista_de_emprego/623" target="_blank" rel="noopener noreferrer">Prefeitura de São Paulo: como se preparar para a entrevista</a> — higiene, apresentação e comportamento.</li>' +
+      '<li><a href="https://www.gov.br/trabalho-e-emprego/pt-br/pdfs/manual-de-empregabilidade-e-lgbti-original.pdf/%40%40download/file" target="_blank" rel="noopener noreferrer">Manual de empregabilidade do Ministério do Trabalho</a> — orientações para entrevista.</li>' +
+      '</ul><h4>“Fale sobre você”</h4><p>“Sou [nome], estou procurando uma oportunidade em [área]. Sou [qualidade verdadeira], aprendo com orientação e posso contribuir com [habilidade real].”</p>' +
+      '<h4>“Por que quer trabalhar aqui?”</h4><p>“Tenho interesse nessa função e quero aprender e fazer um bom trabalho. Pelo que conheço, posso contribuir com [algo ligado à vaga].”</p>' +
+      '<h4>“Qual é seu ponto a desenvolver?”</h4><p>Escolha algo verdadeiro e explique como está melhorando. Por exemplo: “Ainda tenho pouca experiência formal, então estou buscando aprender e praticar.”</p></section>' +
+      '<section class="apoio-trabalho" aria-labelledby="trabalho-aparencia"><h3 id="trabalho-aparencia">Cabelo e unhas sem gastar</h3>' +
+      '<p>Para uma entrevista ou um dia de trabalho, o que conta é estar limpa e à vontade. Você não precisa de salão, escova, esmalte nem manicure.</p>' +
+      '<h4>Cabelo</h4><ul>' +
+      '<li>Cabelo limpo e preso ou arrumado de um jeito simples já basta.</li>' +
+      '<li>Crespo e cacheado: <a href="https://elle.com.br/?p=165920" target="_blank" rel="noopener noreferrer">9 penteados fáceis para cabelos crespos (Elle)</a>, <a href="https://loreal-paris.com.br/tranca-embutida-para-cabelos-cacheados-confira-o-passo-a-passo-do-penteado-feito-na-diagonal" target="_blank" rel="noopener noreferrer">trança embutida para cacheados (L’Oréal Paris)</a> e <a href="https://www.belezanaweb.com.br/loucas-por-beleza/penteados-para-cabelos-cacheados/" target="_blank" rel="noopener noreferrer">penteados para cacheados (Beleza na Web)</a>.</li>' +
+      '<li>Penteados simples para qualquer cabelo: <a href="https://elle.com.br/?p=188314" target="_blank" rel="noopener noreferrer">9 penteados simples para fazer sozinha (Elle)</a>.</li>' +
+      '</ul>' +
+      '<h4>Unhas</h4><ul>' +
+      '<li>Mãos lavadas, unhas curtas e limpas. Não precisa de esmalte.</li>' +
+      '<li>Amoleça a ponta dos dedos em água morna, empurre a cutícula com cuidado e não corte a cutícula. Passe hidratante ou óleo de cozinha, se não tiver creme.</li>' +
+      '<li>Passo a passo: <a href="https://www.belezanaweb.com.br/loucas-por-beleza/como-fazer-as-unhas-passo-a-passo-para-iniciantes/" target="_blank" rel="noopener noreferrer">como cuidar das unhas, para iniciantes (Beleza na Web)</a> e <a href="https://catracalivre.com.br/saude-bem-estar/rotina-magica-para-unhas-bonitas-em-casa-e-super-fortes/" target="_blank" rel="noopener noreferrer">rotina de unhas em casa (Catraca Livre)</a>.</li>' +
+      '</ul>' +
+      '<p class="meta">São artigos de revistas e sites de beleza, que também vendem produtos: ignore a indicação de comprar o que você não tem. Se aparecer mancha, dor ou inchaço na unha, procure uma unidade de saúde.</p></section>' +
+      '<section class="apoio-trabalho" id="trabalho-rejeicao" aria-labelledby="titulo-trabalho-rejeicao"><h3 id="titulo-trabalho-rejeicao">Recebi um não. E agora?</h3>' +
+      '<p>Uma recusa dói, mas não define sua capacidade. Você não precisa resolver tudo hoje. Se tiver energia, escolha apenas um próximo passo: revisar o currículo, tentar uma vaga parecida ou pedir a alguém de confiança para olhar seu currículo.</p>' +
+      '<p>Se a empresa der retorno, use-o como informação; se não der, você pode seguir procurando. Não pague por promessa de vaga nem compartilhe documentos pessoais em grupos para provar que está procurando trabalho.</p></section>' +
+      '<h2 class="grupo-trabalho" id="grupo-estudar">Estudar para ganhar mais</h2>' +
       '<section class="apoio-trabalho" aria-labelledby="trabalho-estudar"><h3 id="trabalho-estudar">Estudar para trabalhar melhor</h3>' +
       '<p><strong>Comece por uma coisa só.</strong> Para vaga administrativa, atendimento ou escritório, uma boa primeira escolha é Excel e Word, com prática de digitação, e não juntar muitos certificados. Certificado não garante vaga.</p>' +
       '<h4>Cursos rápidos, para começar já</h4><ul>' +
@@ -191,77 +265,13 @@
       '<li><a href="https://www.cebraspe.org.br/concursos/inscricoes-abertas/" target="_blank" rel="noopener noreferrer">Cebraspe — inscrições abertas</a> — banca de concursos federais e de outros órgãos.</li>' +
       '</ul>' +
       '<p class="meta">Estes são os sites oficiais das instituições, indicados em 13/10/2026. Este site não confirma se há inscrição aberta, gratuidade de cada curso nem carga horária: veja a oferta atual na página de cada um antes de se cadastrar. Nunca pague para se inscrever em curso ou concurso por intermediários.</p></section>' +
-      '<section class="apoio-trabalho" aria-labelledby="trabalho-sem-experiencia"><h3 id="trabalho-sem-experiencia">Onde procurar trabalho sem experiência</h3>' +
-      '<p>Tente perguntar diretamente sobre vagas de entrada em supermercados, padarias, farmácias, lojas, restaurantes, hotéis e pousadas, condomínios, escolas e creches, empresas de limpeza, salões, clínicas e cozinhas. A contratação depende de cada empregador.</p>' +
-      '<blockquote><p>Bom dia. Estou procurando trabalho e tenho interesse em [área/função]. Vocês estão recebendo currículos ou têm alguma vaga? Posso deixar meu contato?</p></blockquote>' +
-      '<h4>Buffet de festas (adulto e infantil)</h4><p>Buffets de festas costumam precisar de gente nova e muitas vezes aceitam quem nunca trabalhou na área. Vale perguntar nos de festa adulta (casamentos, formaturas, eventos) e nos de festa infantil (aniversários).</p><ul>' +
-      '<li><strong>Funções:</strong> no buffet adulto, garçom ou garçonete, copeira, auxiliar de cozinha e de limpeza e montagem; no infantil, recreadora ou monitora, atendente e auxiliar de cozinha e de limpeza. Cada casa define o que pede.</li>' +
-      '<li><strong>Como procurar:</strong> pergunte direto no buffet, deixando o currículo e o telefone, e diga com clareza que está começando e quer aprender. Quem já cuidou de crianças ou ajudou em festas da família pode citar isso.</li>' +
-      '<li><strong>Horários:</strong> o trabalho costuma ser à noite e nos fins de semana, em escala ou por diária. Pergunte antes o dia, o horário, como é o pagamento e se há registro em carteira, para ver se cabe na sua rotina e na de quem cuida dos seus filhos.</li>' +
-      '</ul><p class="meta">É uma dica de por onde procurar, não uma vaga confirmada: este site não cadastra buffets de Rio Claro. Nunca pague para conseguir uma vaga.</p>' +
-      '</section>' +
-      '<section class="apoio-trabalho" aria-labelledby="trabalho-direitos"><h3 id="trabalho-direitos">Serviços públicos e cursos gratuitos</h3><ul>' +
-      '<li><a href="https://servicos.mte.gov.br/" target="_blank" rel="noopener noreferrer">Emprega Brasil / SINE</a> — consulta de vagas e serviços de emprego.</li>' +
-      '<li><a href="https://www.gov.br/pt-br/servicos/obter-a-carteira-de-trabalho" target="_blank" rel="noopener noreferrer">Carteira de Trabalho Digital</a>.</li>' +
-      '<li><a href="https://www.gov.br/pt-br/servicos/solicitar-o-seguro-desemprego" target="_blank" rel="noopener noreferrer">Seguro-desemprego</a> — depende dos requisitos e da situação de desligamento.</li>' +
-      '<li><a href="https://www.gov.br/mds/pt-br/acoes-e-programas/bolsa-familia" target="_blank" rel="noopener noreferrer">Bolsa Família</a> — regras e elegibilidade são avaliadas pelo programa.</li>' +
-      '<li><a href="https://www.gov.br/aneel/pt-br/assuntos/tarifa-social" target="_blank" rel="noopener noreferrer">Tarifa Social de Energia Elétrica</a> — consulte os critérios atuais.</li>' +
-      '<li><a href="https://www.ev.org.br/" target="_blank" rel="noopener noreferrer">Fundação Bradesco</a> — cursos on-line gratuitos.</li>' +
-      '<li><a href="https://www.qualificasp.sp.gov.br/" target="_blank" rel="noopener noreferrer">Qualifica SP</a> — confira turmas e inscrições abertas.</li>' +
-      '</ul><p>O CRAS pode orientar sobre CadÚnico e benefícios sociais. Nenhum benefício é automático: confirme os critérios e a documentação.</p>' +
-      '<h4>Direitos básicos, em palavras simples</h4><p>Carteira assinada registra o vínculo de emprego. Vale-transporte ajuda no deslocamento conforme as regras. Férias, 13º salário e FGTS têm regras próprias; consulte os canais oficiais para entender cada caso.</p></section>' +
-      '<section class="apoio-trabalho" aria-labelledby="trabalho-entrevista"><h3 id="trabalho-entrevista">Antes da entrevista</h3><ul>' +
-      '<li>Use roupa limpa, inteira e confortável. Você não precisa comprar roupa, sapato ou maquiagem para participar de uma entrevista.</li><li>Veja se tem alguma peça emprestada com alguém de confiança; escolha algo que permita sentar, andar e se movimentar à vontade.</li><li>Se puder, pesquise o tipo de ambiente da empresa, mas não deixe de comparecer só porque não tem roupa social.</li><li>Confira endereço, horário e como chegar. Leve o currículo no celular ou impresso, se tiver.</li><li>Carregue o celular antes de sair, leve água e um lanche simples e documento com foto. Combine a passagem no dia anterior.</li><li>Se tiver filho pequeno, deixe com alguém de confiança antes da entrevista.</li><li>Se precisar de cuidado para os filhos, tente combinar com alguém de confiança e pense num plano alternativo.</li><li>Se a entrevista for por vídeo, procure um lugar iluminado e tranquilo e teste o áudio antes.</li></ul>' +
-      '<h4>Leituras úteis: como se vestir sem gastar</h4><p>Estas orientações ajudam a escolher uma roupa adequada usando o que você já tem. São dicas, não regras obrigatórias: a roupa não define sua competência.</p><ul>' +
-      '<li><a href="https://mepoupe.com/dicas-de-riqueza/procurando-emprego-como-se-vestir-sem-gastar-a-grana-que-voce-nao-tem/" target="_blank" rel="noopener noreferrer">Me Poupe! — Como se vestir sem gastar a grana que você não tem</a></li>' +
-      '<li><a href="https://www.ciadeestagios.com.br/guia-profissional/como-se-vestir/" target="_blank" rel="noopener noreferrer">Cia de Estágios — Como se vestir para uma entrevista de emprego</a></li>' +
-      '<li><a href="https://www.unicesumar.edu.br/blog/como-se-vestir-para-entrevista-de-emprego/" target="_blank" rel="noopener noreferrer">Unicesumar — Como se vestir para entrevista de emprego</a></li>' +
-      '<li><a href="https://blog.passaportefashionista.com/5-dicas-infaliveis-para-se-vestir-bem-sem-gastar-muito/" target="_blank" rel="noopener noreferrer">Passaporte Fashionista — Como se vestir bem sem gastar muito</a></li>' +
-      '</ul><h4>Guias oficiais gratuitos para se preparar</h4><ul>' +
-      '<li><a href="https://www.gov.br/mds/pt-br/noticias-e-conteudos/publicacoes/desenvolvimento-social/CadernoAcessuas_Oficinas_de_Criatividade_2022.pdf" target="_blank" rel="noopener noreferrer">Guia gratuito do Governo Federal: dicas para entrevista</a> — inclui vestuário, cabelo, unhas e preparação.</li>' +
-      '<li><a href="https://prefeitura.sp.gov.br/web/desenvolvimento/w/dicas/entrevista_de_emprego/623" target="_blank" rel="noopener noreferrer">Prefeitura de São Paulo: como se preparar para a entrevista</a> — higiene, apresentação e comportamento.</li>' +
-      '<li><a href="https://www.gov.br/trabalho-e-emprego/pt-br/pdfs/manual-de-empregabilidade-e-lgbti-original.pdf/%40%40download/file" target="_blank" rel="noopener noreferrer">Manual de empregabilidade do Ministério do Trabalho</a> — orientações para entrevista.</li>' +
-      '</ul><h4>“Fale sobre você”</h4><p>“Sou [nome], estou procurando uma oportunidade em [área]. Sou [qualidade verdadeira], aprendo com orientação e posso contribuir com [habilidade real].”</p>' +
-      '<h4>“Por que quer trabalhar aqui?”</h4><p>“Tenho interesse nessa função e quero aprender e fazer um bom trabalho. Pelo que conheço, posso contribuir com [algo ligado à vaga].”</p>' +
-      '<h4>“Qual é seu ponto a desenvolver?”</h4><p>Escolha algo verdadeiro e explique como está melhorando. Por exemplo: “Ainda tenho pouca experiência formal, então estou buscando aprender e praticar.”</p></section>' +
-      '<section class="apoio-trabalho" aria-labelledby="trabalho-mei"><h3 id="trabalho-mei">Trabalho por conta própria: MEI</h3>' +
-      '<p>Quem faz bicos, vende comida ou artesanato pode se formalizar como MEI pelo ' + '<a href="https://www.gov.br/empresas-e-negocios/pt-br/empreendedor" target="_blank" rel="noopener noreferrer">Portal do Empreendedor</a>' + ', onde o cadastro é gratuito. Depois do registro há contribuição mensal e regras de atividade permitida. Confira os critérios atuais; a Sala do Empreendedor, na Secretaria de Desenvolvimento Econômico, pode orientar.</p></section>' +
-      '<section class="apoio-trabalho" aria-labelledby="trabalho-aparencia"><h3 id="trabalho-aparencia">Cabelo e unhas sem gastar</h3>' +
-      '<p>Para uma entrevista ou um dia de trabalho, o que conta é estar limpa e à vontade. Você não precisa de salão, escova, esmalte nem manicure.</p>' +
-      '<h4>Cabelo</h4><ul>' +
-      '<li>Cabelo limpo e preso ou arrumado de um jeito simples já basta.</li>' +
-      '<li>Crespo e cacheado: <a href="https://elle.com.br/?p=165920" target="_blank" rel="noopener noreferrer">9 penteados fáceis para cabelos crespos (Elle)</a>, <a href="https://loreal-paris.com.br/tranca-embutida-para-cabelos-cacheados-confira-o-passo-a-passo-do-penteado-feito-na-diagonal" target="_blank" rel="noopener noreferrer">trança embutida para cacheados (L’Oréal Paris)</a> e <a href="https://www.belezanaweb.com.br/loucas-por-beleza/penteados-para-cabelos-cacheados/" target="_blank" rel="noopener noreferrer">penteados para cacheados (Beleza na Web)</a>.</li>' +
-      '<li>Penteados simples para qualquer cabelo: <a href="https://elle.com.br/?p=188314" target="_blank" rel="noopener noreferrer">9 penteados simples para fazer sozinha (Elle)</a>.</li>' +
-      '</ul>' +
-      '<h4>Unhas</h4><ul>' +
-      '<li>Mãos lavadas, unhas curtas e limpas. Não precisa de esmalte.</li>' +
-      '<li>Amoleça a ponta dos dedos em água morna, empurre a cutícula com cuidado e não corte a cutícula. Passe hidratante ou óleo de cozinha, se não tiver creme.</li>' +
-      '<li>Passo a passo: <a href="https://www.belezanaweb.com.br/loucas-por-beleza/como-fazer-as-unhas-passo-a-passo-para-iniciantes/" target="_blank" rel="noopener noreferrer">como cuidar das unhas, para iniciantes (Beleza na Web)</a> e <a href="https://catracalivre.com.br/saude-bem-estar/rotina-magica-para-unhas-bonitas-em-casa-e-super-fortes/" target="_blank" rel="noopener noreferrer">rotina de unhas em casa (Catraca Livre)</a>.</li>' +
-      '</ul>' +
-      '<p class="meta">São artigos de revistas e sites de beleza, que também vendem produtos: ignore a indicação de comprar o que você não tem. Se aparecer mancha, dor ou inchaço na unha, procure uma unidade de saúde.</p></section>' +
+      '<h2 class="grupo-trabalho" id="grupo-atrapalha">O que atrapalha</h2>' +
       '<section class="apoio-trabalho" id="trabalho-transporte" aria-labelledby="titulo-trabalho-transporte"><h3 id="titulo-trabalho-transporte">Transporte e passagem: planeje antes de sair</h3>' +
       '<p>Antes de aceitar uma entrevista ou diária, confira o endereço, o horário, o trajeto e quanto vai gastar para ir e voltar. Se o custo pesar, pergunte à empresa se há vale-transporte para a vaga ou se é possível fazer a primeira conversa por telefone ou vídeo. Não conte com ajuda de transporte sem confirmar.</p>' +
       '<p>Consulte os horários e as opções de deslocamento disponíveis na <a href="#transporte">área Transporte deste site</a>. Se não souber como chegar, peça orientação antes de sair.</p></section>' +
       '<section class="apoio-trabalho" id="trabalho-filhos" aria-labelledby="titulo-trabalho-filhos"><h3 id="titulo-trabalho-filhos">Tenho filhos. Como organizar o cuidado?</h3>' +
       '<p>Se precisar de alguém para ficar com as crianças, tente combinar com pessoa de confiança e pense numa alternativa caso ela não possa. Pergunte à escola ou à rede municipal quais serviços e regras existem no seu caso; não presuma que haverá vaga imediata.</p>' +
       '<p>Veja as informações disponíveis na <a href="#educacao/educacao-filhos">área Educação: filhos</a>. Para orientação sobre serviços e benefícios sociais, o CRAS pode explicar os caminhos do território.</p></section>' +
-      '<section class="apoio-trabalho" id="trabalho-rejeicao" aria-labelledby="titulo-trabalho-rejeicao"><h3 id="titulo-trabalho-rejeicao">Recebi um não. E agora?</h3>' +
-      '<p>Uma recusa dói, mas não define sua capacidade. Você não precisa resolver tudo hoje. Se tiver energia, escolha apenas um próximo passo: revisar o currículo, tentar uma vaga parecida ou pedir a alguém de confiança para olhar seu currículo.</p>' +
-      '<p>Se a empresa der retorno, use-o como informação; se não der, você pode seguir procurando. Não pague por promessa de vaga nem compartilhe documentos pessoais em grupos para provar que está procurando trabalho.</p></section>' +
-      '<section class="apoio-trabalho" aria-labelledby="trabalho-rede"><h3 id="trabalho-rede">Peça ajuda à sua rede</h3>' +
-      '<p>Enviar uma mensagem a pessoas de confiança pode ajudar a encontrar oportunidades. Não existe garantia, mas você não precisa procurar sozinha.</p>' +
-      '<textarea id="texto-rede" class="texto-copia" rows="4" readonly>Oi, tudo bem? Estou procurando trabalho como [cargo/área]. Se você souber de alguma vaga ou alguém que precise, pode me avisar? Posso mandar meu currículo. Obrigada!</textarea>' +
-      '<button type="button" class="btn secundario" data-copiar="rede">Copiar mensagem para WhatsApp</button>' +
-      '<p class="meta">Compartilhe só com quem você se sente segura. Não publique documentos pessoais em grupos.</p></section>' +
-      '<section class="apoio-trabalho" aria-labelledby="trabalho-basico"><h3 id="trabalho-basico">Falta o básico: comida, passagem ou cuidado dos filhos</h3>' +
-      '<p>Procurar emprego é mais difícil quando falta comida ou dinheiro de passagem. Você pode buscar apoio ao mesmo tempo em que procura renda.</p><ul>' +
-      '<li>Procure o CRAS do seu bairro: ele orienta sobre alimentação, CadÚnico e benefícios. Veja a área <a href="#assistencia">Assistência Social</a> deste site, com endereços e telefones.</li>' +
-      '<li>Nenhum benefício é automático nem garantido: o CRAS confirma se você se enquadra.</li>' +
-      '<li>Para passagem e horários, veja a área <a href="#transporte">Transporte</a>. Para os filhos, veja <a href="#educacao/educacao-filhos">Educação: filhos</a>.</li>' +
-      '</ul></section>' +
-      '<section class="apoio-trabalho" aria-labelledby="trabalho-golpes"><h3 id="trabalho-golpes">Cuidado com golpes de emprego</h3><ul>' +
-      '<li>Desconfie se cobrarem PIX ou taxa para contratar ou garantir vaga.</li><li>Desconfie de salário muito alto com promessa de contratação fácil e imediata.</li><li>Confirme a empresa e a vaga por um canal oficial.</li><li>Não envie foto de documentos nem dados bancários antes de confirmar a legitimidade e a necessidade.</li><li>Leia com cuidado se pedirem para comprar curso, material ou equipamento para poder trabalhar.</li></ul>' +
-      '</section>' +
       '<section class="apoio-trabalho" aria-labelledby="trabalho-apoio"><h3 id="trabalho-apoio">Se o desânimo apertar</h3>' +
       '<p>Ficar sem trabalho não define seu valor. Faça um passo possível por vez e peça apoio a alguém de confiança. O <a href="https://cvv.org.br/" target="_blank" rel="noopener noreferrer">CVV</a> atende pelo 188, gratuitamente, 24 horas por dia. Para apoio social, procure o CRAS do seu território.</p>' +
       '</section></section>';
@@ -533,7 +543,8 @@
         var alvo = $("montar-curriculo");
         if (alvo) {
           var det = alvo.querySelector("details"); if (det) det.open = true;
-          alvo.scrollIntoView({ block: "start" });
+          /* O formulário não fica mais logo abaixo do menu (agora está no grupo "Me candidatar"): rola até ele, não até o topo da seção. */
+          (det || alvo).scrollIntoView({ block: "start" });
           var campo = $("c-nome"); if (campo) campo.focus({ preventScroll: true });
         }
       } else if (t.hasAttribute("data-calcular-renda")) {
