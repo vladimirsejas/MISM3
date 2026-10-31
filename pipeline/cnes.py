@@ -1,9 +1,9 @@
 """Passo - estabelecimentos de saude de Rio Claro a partir da BASE COMPLETA DO CNES (DATASUS).
 
-Entrada: a pasta com os CSVs da base completa (ex.: docs/cnes), em especial
-    tbEstabelecimento<AAAAMM>.csv   (estabelecimentos, ~290 MB, base nacional)
-    tbTipoUnidade<AAAAMM>.csv       (codigo do tipo -> nome do tipo)
-    tbTurnoAtendimento<AAAAMM>.csv  (codigo do turno -> descricao)
+Entrada: pasta com CSVs ou Parquets da base completa do CNES, em especial
+    tbEstabelecimento<AAAAMM>      (estabelecimentos, base nacional)
+    tbTipoUnidade<AAAAMM>          (codigo do tipo -> nome do tipo)
+    tbTurnoAtendimento<AAAAMM>     (codigo do turno -> descricao)
 
 Decisoes de privacidade e qualidade:
   * Le SO as colunas necessarias (usecols). As colunas de CPF/CNPJ de pessoas NUNCA sao carregadas.
@@ -14,7 +14,7 @@ Decisoes de privacidade e qualidade:
     com o diagnostico).
 
 Uso:
-    python pipeline/cnes.py docs/cnes --diagnostico   # so contagens, para conferir as regras
+    python pipeline/cnes.py docs/cnes --diagnostico   # CSV ou Parquet; so contagens
     (o servicos.py chama este modulo para montar o catalogo)
 """
 from __future__ import annotations
