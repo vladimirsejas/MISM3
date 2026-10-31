@@ -140,3 +140,27 @@ def test_utf8_com_bom_e_detectado(tmp_path):
     escreve(tmp_path, "t.csv", cols, [(RC, "1", "ESCOLA AÇÃO")], codificacao="utf-8-sig")
     assert o.detectar_codificacao(tmp_path / "t.csv") == "utf-8-sig"
     assert o.ler_filtrado(tmp_path / "t.csv", cols).iloc[0]["NO_ENTIDADE"] == "ESCOLA AÇÃO"
+
+
+def test_le_parquet_com_mesmo_resultado_do_csv(pasta, tmp_path):
+    pytest.importorskip("pyarrow")
+    esperado = o.ler_filtrado(pasta / o.ARQUIVOS["escola"], o.COLUNAS["escola"])
+    diretorio = tmp_path / "parquet"
+    diretorio.mkdir()
+    for chave, nome in o.ARQUIVOS.items():
+        pd.read_csv(pasta / nome, sep=";", dtype=str).to_parquet(
+            diretorio / (Path(nome).stem + ".parquet"), index=False)
+    caminho = o.caminho_tabela(diretorio, o.ARQUIVOS["escola"])
+    obtido = o.ler_filtrado(caminho, o.COLUNAS["escola"])
+    assert obtido.to_dict("records") == esperado.to_dict("records")
+
+
+def test_parquet_tem_prioridade_sobre_csv(pasta, tmp_path):
+    pytest.importorskip("pyarrow")
+    nome = o.ARQUIVOS["escola"]
+    df = pd.read_csv(pasta / nome, sep=";", dtype=str)
+    diretorio = tmp_path / "dados"
+    diretorio.mkdir()
+    df.to_parquet(diretorio / (Path(nome).stem + ".parquet"), index=False)
+    (diretorio / nome).write_text("arquivo CSV que não deve ser escolhido", encoding="utf-8")
+    assert o.caminho_tabela(diretorio, nome).suffix == ".parquet"
