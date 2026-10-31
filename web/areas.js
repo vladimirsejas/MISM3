@@ -371,6 +371,36 @@
             ["Meu INSS — Simular aposentadoria", "https://www.gov.br/pt-br/servicos/simular-aposentadoria", "Projeção do tempo que falta, com base nos vínculos registrados. Não garante concessão de benefício."]
           ]
         }
+        ,{
+          titulo: "Mais de um serviço ao mesmo tempo", ancora: "secao-4",
+          descricao: "Quase nenhuma situação se resolve num lugar só. Aqui está quais serviços de Rio Claro costumam se conectar em cada situação e o que perguntar antes de ir.",
+          tipos: [],
+          canais: [
+            { nome: "Quem atende junto: a rede para a sua situação", sem_tel: true, resumo: "Ver a rede por situação",
+              texto: "Em outras cidades e países, o atendimento à mulher foi reunido num só endereço, para ela não ter de descobrir sozinha por onde começar. Este site não encontrou um lugar assim em Rio Claro: cada serviço fica no seu endereço. Esta lista mostra como eles se conectam, para você não começar pelo lugar errado. Você não precisa ir a todos. Em cada um, pergunte para onde encaminham.",
+              topicos: [
+                ["Violência ou medo de alguém", "Perigo agora: 190. Orientação e encaminhamento, 24 horas e de graça: 180. Depois, a Delegacia de Defesa da Mulher e a Patrulha Maria da Penha; a Secretaria Municipal da Mulher; o CREAS, para o acompanhamento social; a Defensoria, para as medidas na Justiça, a pensão e a guarda dos filhos; e a unidade de saúde ou o pronto atendimento, se houver ferimento ou outro cuidado de saúde. Filhos em risco: Conselho Tutelar."],
+                ["Sem trabalho e com filhos pequenos", "1) CRAS: Cadastro Único e orientação sobre benefícios. 2) Secretaria da Educação: creche ou escola dos filhos. 3) Fundo Social, Centro de Qualificação Profissional, SENAI e Senac: cursos. 4) Portal da Empregabilidade, Conecta, PAT e Secretaria de Desenvolvimento Econômico: vagas. Sem creche, o trabalho fica difícil de aceitar: por isso a creche vem antes das vagas."],
+                ["Falta comida ou dinheiro para as contas", "CRAS primeiro. Em paralelo, as tarifas sociais de água e de energia (área Moradia). Se houver dívidas, o Procon (área Direitos)."],
+                ["Falta de casa ou aluguel que não cabe", "CRAS para a orientação e o Cadastro Único; Habitação, para saber das inscrições e dos programas; tarifas sociais de água e de energia enquanto isso (área Moradia)."],
+                ["Pensão, guarda ou separação", "Defensoria Pública, para quem não pode pagar advogado. O CRAS pode ajudar com documentos e com o Cadastro Único. Se há violência, comece pelo primeiro item desta lista."],
+                ["Cuido de um neto, de um pai ou de uma mãe", "CRAS, para a orientação e os benefícios da família; Secretaria da Educação, para a matrícula do neto; Defensoria, para avaliar a guarda; unidade de saúde, para o cuidado de quem precisa."]
+              ],
+              aviso: "A ordem é uma sugestão de por onde começar, não uma regra: cada serviço avalia o seu caso e nenhum garante vaga, benefício ou atendimento. Os serviços citados estão cadastrados nas outras áreas deste site, com endereço, telefone e data de conferência; confirme-os antes de ir. A ideia de mostrar a rede inteira vem dos centros integrados de atendimento à mulher e é uma adaptação para Rio Claro, não um serviço que já exista aqui.",
+              fonte: ["Centros de Justiça da Família de Nova York (ENDGBV): ficha oficial de 2025 sobre os serviços reunidos no mesmo lugar", "https://www.nyc.gov/assets/ocdv/downloads/pdf/ENDGBV-FJC-One-Pager-ENGLISH.pdf", "Ideia de organização, conferida em 31/10/2026. Os serviços de Rio Claro seguem as outras áreas deste site."] },
+            { nome: "Antes de ir: quatro perguntas para o serviço caber na sua rotina", sem_tel: true, resumo: "Ver as quatro perguntas",
+              texto: "Um serviço pode existir e, mesmo assim, não servir: o horário bate com o seu trabalho, a condução custa caro, ou não há com quem deixar as crianças. Faça estas perguntas ao ligar, antes de ir.",
+              topicos: [
+                ["Fica perto?", "Pergunte como chegar e quantas conduções são. No mapa da página inicial, informe o seu bairro ou o CEP: a distância mostrada é em linha reta e não mostra o tempo da viagem."],
+                ["Funciona no meu horário?", "Pergunte os dias e os horários de atendimento e se é preciso agendar. Muitos serviços atendem só em horário comercial: se você trabalha nesse horário, pergunte se há outro dia ou outro canal, como telefone ou WhatsApp."],
+                ["Quanto custa chegar e voltar?", "Some a ida e a volta. Se o serviço é gratuito mas o transporte pesa, pergunte se parte do atendimento pode ser feita por telefone ou por mensagem."],
+                ["Posso levar as crianças?", "Pergunte se pode ir com os filhos e se há um espaço para eles ficarem durante o atendimento. Este site não confirmou, para nenhum serviço de Rio Claro, que haja esse espaço: não suponha que exista. Peça também para anotar o seu pedido, para você não ter de repetir a história a cada serviço."]
+              ],
+              aviso: "Estas são perguntas para você fazer, não promessas do serviço. Nenhum dos serviços cadastrados informa, nas fontes consultadas, que ofereça cuidado para as crianças durante o atendimento.",
+              fonte: ["Centros de Justiça da Família de Nova York (ENDGBV): cuidado de crianças durante o atendimento, a partir de 3 anos", "https://www.nyc.gov/assets/ocdv/downloads/pdf/ENDGBV-FJC-One-Pager-ENGLISH.pdf", "Ideia de organização, conferida em 31/10/2026. Em Rio Claro, vale como pergunta, não como informação."] }
+          ],
+          links: []
+        }
       ],
       avisos: ["Nunca compartilhe senhas ou códigos de acesso com intermediários. Simulações de aposentadoria são projeções e não garantem benefício."]
     },
