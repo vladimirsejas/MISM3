@@ -107,9 +107,13 @@ def ler_cnefe() -> "pd.DataFrame":  # noqa: F821
     for caminho in parquets:
         if caminho.exists():
             import pandas as pd
-            # A tabela nacional agregada é pequena em disco; mantém as colunas originais
-            # para que construir_indice valide os nomes e não invente equivalências.
-            return pd.read_parquet(caminho).astype("string")
+            import pyarrow.parquet as pq
+            nomes = pq.read_schema(caminho).names
+            # O agregado por CEP do Censo 2022 traz so contagens de enderecos: sem LATITUDE/LONGITUDE
+            # ele NAO serve para montar o indice. Nesse caso segue para o CNEFE com coordenadas.
+            if all(achar_coluna(nomes, c) for c in ("CEP", "LATITUDE", "LONGITUDE")):
+                return pd.read_parquet(caminho).astype("string")
+            print("AVISO: %s nao tem LATITUDE/LONGITUDE (so agregados); ignorado. Colunas: %s" % (caminho.name, nomes[:8]))
 
     zips = sorted(pasta.glob("*.zip"))
     csvs = sorted(pasta.glob("*.csv"))

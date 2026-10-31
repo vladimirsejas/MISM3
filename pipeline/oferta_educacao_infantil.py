@@ -27,12 +27,20 @@ from common import MUNICIPIO_IBGE7, RAIZ, WEB_DADOS, agora_iso, erro, salvar_jso
 
 PASTA_CSV = RAIZ / "docs" / "educacao" / "dados"
 PASTA_PARQUET = RAIZ / "dados" / "parquet" / "git_historico" / "educacao" / "dados"
-PASTA_PADRAO = PASTA_CSV if PASTA_CSV.exists() else PASTA_PARQUET
 ARQUIVOS = {
     "escola": "Tabela_Escola_2025_V2.csv",
     "matricula": "Tabela_Matricula_2025_V2.csv",
     "turma": "Tabela_Turma_2025_V2.csv",
 }
+
+
+def _tem_escola(pasta: Path) -> bool:
+    nome = Path(ARQUIVOS["escola"]).stem
+    return any((pasta / (nome + e)).exists() for e in (".parquet", ".pq", ".csv"))
+
+
+# Escolhe a pasta que realmente tem a tabela de escolas (CSV ou Parquet), não só a que existe.
+PASTA_PADRAO = next((p for p in (PASTA_CSV, PASTA_PARQUET) if _tem_escola(p)), PASTA_CSV)
 # colunas lidas de cada tabela (as demais, 200+ por arquivo, não interessam)
 COLUNAS = {
     "escola": ["CO_MUNICIPIO", "CO_ENTIDADE", "NO_ENTIDADE", "TP_DEPENDENCIA", "TP_LOCALIZACAO",
