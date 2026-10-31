@@ -111,3 +111,23 @@ def test_estrutura_de_apoio_fica_fora_do_site(tmp_path):
     servs, cont = cnes.carregar(tmp_path, INDICE, "2026-10-08")
     assert [s["nome"] for s in servs] == ["Ubs A"]
     assert cont["fora_do_site_apoio_ou_outros"] == 1 and cont["no_site"] == 1
+
+
+
+def test_le_parquet_sem_carregar_cpf(pasta, tmp_path):
+    pytest.importorskip("pyarrow")
+    df_csv = cnes.ler_estabelecimentos(pasta / "tbEstabelecimento202608.csv", set(INDICE))
+    arquivo = tmp_path / "tbEstabelecimento202608.parquet"
+    df_csv.to_parquet(arquivo, index=False)
+    lido = cnes.ler_estabelecimentos(arquivo, set(INDICE))
+    assert "NU_CPF" not in lido.columns and "CO_CPFDIRETORCLN" not in lido.columns
+    assert sorted(lido["CO_UNIDADE"].tolist()) == sorted(df_csv["CO_UNIDADE"].tolist())
+
+
+def test_carregar_prefere_parquet_quando_ambos_existem(pasta):
+    pytest.importorskip("pyarrow")
+    csv = pasta / "tbEstabelecimento202608.csv"
+    df = cnes.ler_estabelecimentos(csv, set(INDICE))
+    df.to_parquet(pasta / "tbEstabelecimento202608.parquet", index=False)
+    servs, _ = cnes.carregar(pasta, INDICE, "2026-10-08")
+    assert "Ubs Jardim Água" in [s["nome"] for s in servs]
