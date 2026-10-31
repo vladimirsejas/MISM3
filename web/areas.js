@@ -17,8 +17,9 @@
       secoes: [{
         titulo: "Canais oficiais",
         tipos: ["emprego_curso"], agrupar: true,
-        subtipos: ["pat", "conecta", "credito", "secretaria", "qualificacao", "fundo_social", "curso_profissionalizante", "curso_tecnico", "eja", "escola_sesi"],
-        grupos: ["Emprego e orientação", "Cursos gratuitos de qualificação", "Cursos profissionalizantes (qualificação profissional)", "Cursos técnicos (ensino técnico)", "Estudar e se qualificar ao mesmo tempo"],
+        /* Aqui ficam emprego e a qualificação municipal. Os cursos de SENAI, Senac, SEST SENAT, Etec, EJA e SESI moram só em Educação ("Para você"), para um curso mudar de endereço ou de turma em um lugar só. */
+        subtipos: ["pat", "conecta", "credito", "secretaria", "qualificacao", "fundo_social"],
+        grupos: ["Emprego e orientação", "Cursos gratuitos de qualificação"],
         links: [
           ["Portal da Empregabilidade de Rio Claro", "https://vagas.rioclaro.sp.gov.br/", "Consultar oportunidades e informações para trabalhadores."],
           ["Trampolim — Governo de São Paulo", "https://www.trampolim.sp.gov.br/", "Consultar oportunidades e cursos disponíveis na plataforma."],
@@ -27,12 +28,9 @@
         ]
       }, {
         titulo: "Formação mais longa (anos)", ancora: "trabalho-formacao-longa",
-        descricao: "Graduações e cursos que levam anos e são gratuitos. Oferta, prazos e regras mudam a cada edital ou período: confirme sempre na página de cada instituição antes de se inscrever. Esta lista também está na área Educação.",
+        descricao: "Graduações e cursos gratuitos que levam anos (UNIVESP, IFSP e o Programa Senac de Gratuidade) ficam na área Educação, que mantém esta lista num lugar só para a oferta, os prazos e as regras não ficarem diferentes em duas áreas. Oferta, prazos e regras mudam a cada edital ou período: confirme sempre na página de cada instituição antes de se inscrever.",
         tipos: [], links: [
-          ["UNIVESP", "https://univesp.br/", "Graduações gratuitas a distância, com apoio em polos presenciais."],
-          ["Vestibular da UNIVESP", "https://vestibular.univesp.br/", "Há vestibular: veja aqui as datas atuais e se há inscrição aberta."],
-          ["IFSP — Instituto Federal de São Paulo", "https://www.ifsp.edu.br/", "Cursos técnicos e superiores gratuitos; a oferta e os prazos mudam a cada edital, e alguns já estão encerrados. Veja o que está aberto agora."],
-          ["Senac São Paulo — Programa Senac de Gratuidade", "https://www.sp.senac.br/", "Oferece bolsas integrais em cursos. A regra divulgada é renda de até dois salários mínimos por pessoa da família, com vaga por ordem de inscrição e prazo antes de a turma começar: confira as regras atuais no site."]
+          ["Formação mais longa: UNIVESP, IFSP e Senac gratuito (na área Educação)", "#educacao/educacao-formacao-longa", "A lista completa, com o vestibular da UNIVESP e as regras de cada instituição, está na área Educação."]
         ]
       }],
       pendencias: ["Este sistema não lista vagas abertas. Para ver vagas atuais, use os portais acima."]
@@ -230,20 +228,95 @@
     },
     {
       exemploDuvida: "meu filho usa drogas, onde pedir ajuda?", id: "saude", nome: "Saúde", icone: "saude",
-      intro: "Unidades de saúde e serviços de atendimento. Em urgência médica, ligue 192.",
+      intro: "Unidades de saúde e serviços de atendimento, mamografia, preventivo e pré-natal. Em urgência médica, ligue 192.",
       guia: {
         titulo: "O que você encontra nesta página",
         texto: "Cuidar de quem você ama também cansa. Aqui estão a saúde para você e os caminhos para quando um filho ou outro familiar usa álcool ou drogas.",
         itens: [
           { titulo: "Preciso de atendimento urgente", texto: "UPAs e hospitais, com endereço e telefone. Em urgência médica, ligue 192 (SAMU).", ancora: "saude-unidades", botao: "Ver UPAs e hospitais" },
           { titulo: "Quero ser atendida no posto de saúde", texto: "Os postos de saúde (UBS e USF) de Rio Claro, com endereço e telefone. Ligue antes para saber como ser atendida.", ancora: "saude-unidades", botao: "Ver os postos de saúde" },
-          { titulo: "Preciso de ajuda para a saúde mental", texto: "O CVV, no 188, conversa 24 horas por dia, de graça. Os CAPS, serviços de saúde mental da rede pública, estão na lista de unidades.", ancora: "saude-unidades", botao: "Ver os CAPS" },
+          { titulo: "Preciso de ajuda para a saúde mental", texto: "O CVV, no 188, conversa 24 horas por dia, de graça. Os CAPS, serviços de saúde mental da rede pública, estão na lista de unidades.", ancora: "saude-apoio-emocional", botao: "Ver apoio emocional e CAPS" },
           { titulo: "Preciso de remédio", texto: "A Farmácia Central e o Dispensário de Medicamentos estão na lista de unidades. Ligue para saber o que é preciso levar.", ancora: "saude-unidades", botao: "Ver as farmácias" },
+          { titulo: "Quero fazer mamografia ou preventivo, ou estou grávida", texto: "Como conseguir mamografia e Papanicolau em Rio Claro, o que o Ministério da Saúde orienta e como começar o pré-natal.", ancora: "saude-mulher", botao: "Ver saúde da mulher" },
           { titulo: "Meu filho ou familiar usa álcool ou drogas", texto: "Por onde começar, o que fazer numa crise, onde ligar e como cuidar de você nesse caminho. A culpa não é sua.", ancora: "saude-familia-drogas", botao: "Ver o que fazer" },
           { titulo: "Unidades de saúde", texto: "Postos, UPAs, hospitais e especialidades, com endereço e telefone.", ancora: "saude-unidades", botao: "Ver as unidades" }
         ]
       },
       secoes: [
+        {
+          titulo: "Saúde da mulher: mamografia, preventivo e gravidez", ancora: "saude-mulher",
+          descricao: "Os exames de prevenção e o pré-natal começam na UBS ou na USF perto de você. Aqui está o que a Fundação Municipal de Saúde e o Ministério da Saúde publicaram, o que este site não conseguiu confirmar e onde ligar. Este site não faz diagnóstico: quem avalia o seu caso é a equipe de saúde.",
+          tipos: [], links: [
+            ["Nota Técnica nº 626/2025: mamografia no SUS (Ministério da Saúde)", "https://ninho.inca.gov.br/jspui/bitstream/123456789/17713/1/SEI_0050548355_Nota_Tecnica_626.pdf", "Explica quem tem acesso à mamografia no SUS e quais sinais pedem procurar a unidade em qualquer idade."],
+            ["Teste de DNA-HPV no SUS (Ministério da Saúde, 15/08/2025)", "https://www.gov.br/saude/pt-br/assuntos/noticias/2025/agosto/ministerio-da-saude-oferta-tecnologia-inovadora-100-nacional-para-detectar-cancer-do-colo-do-utero-no-sus", "Notícia do Ministério sobre o teste que vai substituir o Papanicolau aos poucos."],
+            ["Pré-natal (Ministério da Saúde)", "https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/g/gravidez/pre-natal", "Quando começar, onde ir e como é o acompanhamento."],
+            ["CNES (DATASUS): cadastro dos estabelecimentos de saúde, competência 08/2026", "https://cnes.datasus.gov.br/", "Cadastro oficial usado para ver quais unidades públicas registram mamografia e pré-natal. Cadastro não é vaga nem agenda."],
+            ["Cadu na Prefeitura de Rio Claro (25/08/2023)", "https://rioclaro.sp.gov.br/fundacao-de-saude/nova-central-para-agendamento-de-consultas-comeca-a-operar-na-2a-feira-em-rc/", "Notícia de 2023: o Cadu agenda consultas nas unidades básicas e o Papanicolau por telefone."]
+          ],
+          canais: [
+            { nome: "Mamografia: como conseguir em Rio Claro", tel: "0800 019 0505", resumo: "Ver o passo a passo",
+              texto: "A mamografia é o exame que procura sinais de câncer de mama. O caminho em Rio Claro começa numa consulta na UBS ou na USF do seu bairro.",
+              topicos: [
+                ["O que a Fundação de Saúde informou em 07/10/2026", "A Fundação Municipal de Saúde informou que, a partir dos 40 anos, todas as mulheres têm direito ao rastreamento do câncer de mama por mamografia, que pode ser pedida nas unidades. Informou também que Rio Claro não tinha fila para mamografia nem para Papanicolau naquela data. Isso pode mudar: confirme na unidade."],
+                ["Qual unidade procurar", "A UBS (Unidade Básica de Saúde, o posto de saúde) ou a USF (Unidade de Saúde da Família) do seu bairro. É lá que o médico ou o enfermeiro avalia você e pede a mamografia. A UPA e o CAPS atendem outras necessidades (urgência e saúde mental): para a mamografia, vá à UBS ou à USF."],
+                ["Quem marca o exame", "Segundo a Fundação, a mamografia é feita a partir de um pedido do médico ou do enfermeiro. Informação do autor deste site, que trabalha na Fundação Municipal de Saúde: assim que o médico pede, os funcionários da própria UBS ou USF marcam o exame para a mulher. Ela não precisa correr atrás de agendamento em outro lugar."],
+                ["Como marcar a consulta", "Direto na UBS ou na USF, ou pelo Cadu (telefone e WhatsApp), no 0800 019 0505. A ficha do Cadu está na lista de unidades, mais abaixo."],
+                ["Onde o exame é feito", "No cadastro do CNES (agosto de 2026), o AME (Ambulatório Médico de Especialidades de Rio Claro, da Secretaria de Estado da Saúde) é a única unidade pública cadastrada na cidade que registra a mamografia como serviço próprio. Quatro UBS registram a mamografia como serviço feito por outro estabelecimento: nelas você faz a consulta e recebe o pedido, e o exame é feito em outro lugar, que a unidade informa. Cadastro não é agenda nem vaga: confirme com a sua unidade."],
+                ["O que o Ministério da Saúde orienta", "A Nota Técnica nº 626/2025 diz que o rastreamento regular pelo SUS é para mulheres de 50 a 74 anos, a cada dois anos. Para quem tem de 40 a 49 anos, ou mais de 74, e não tem sintomas, o SUS não impede o exame: a mulher pode pedir, desde que um profissional de saúde explique os riscos e os benefícios. A idade que a Fundação cita (a partir de 40 anos) e a do rastreamento regular do Ministério (50 a 74 anos) se completam: pergunte na unidade o que vale para o seu caso."],
+                ["Se você notou uma alteração na mama", "Procure a unidade em qualquer idade, sem esperar a data do exame. O Ministério lista como sinais de alerta: nódulo endurecido ou que vai crescendo, saída de sangue por um dos mamilos, pele da mama com aspecto de casca de laranja ou repuxada, mudança no formato do mamilo, lesão de pele na mama que não melhora com pomada, caroço na axila e mama inflamada que não melhora depois do antibiótico. O Ministério diz que a mulher com um sinal de alerta deve ter prioridade na marcação. Isto não é diagnóstico: só a equipe de saúde avalia."]
+              ],
+              aviso: "A informação sobre fila e idade é de uma publicação da Fundação de 07/10/2026 e pode mudar. Este site não sabe os dias e os horários de coleta de cada unidade, nem se há mutirão agora: ligue antes de ir. Ter direito ao exame não garante data nem vaga.",
+              fonte: ["Fundação Municipal de Saúde de Rio Claro: Outubro Rosa reforça importância de exames preventivos", "https://rioclaro.sp.gov.br/fundacao-de-saude/outubro-rosa-reforca-importancia-de-exames-preventivos/", "Publicada em 07/10/2026; página aberta e lida em 31/10/2026. A parte nacional vem da Nota Técnica nº 626/2025 do Ministério da Saúde (INCA), lida na íntegra na mesma data. Os serviços por unidade vêm do cadastro do CNES, competência 08/2026 (tabelas rlEstabServClass e tbEstabelecimento), lido em 31/10/2026."] },
+            { nome: "Preventivo do colo do útero: Papanicolau e teste de DNA-HPV", tel: "0800 019 0505", resumo: "Ver o passo a passo",
+              texto: "O exame preventivo procura alterações no colo do útero antes de elas causarem sintomas. Em Rio Claro, a Fundação cita o Papanicolau.",
+              topicos: [
+                ["Como conseguir em Rio Claro", "Segundo a Fundação (07/10/2026), o Papanicolau é feito a partir de um pedido do médico ou do enfermeiro: marque consulta direto na UBS ou na USF do seu bairro, ou pelo Cadu, no 0800 019 0505. Informação do autor deste site, que trabalha na Fundação Municipal de Saúde: assim que o médico ou o enfermeiro pede o exame, os funcionários da própria UBS ou USF marcam a coleta para a mulher. Em 2023 a Prefeitura já informava que o Papanicolau pode ser agendado por telefone pelo Cadu."],
+                ["Para quem é o rastreamento", "O Ministério da Saúde indica o rastreamento organizado do câncer do colo do útero para mulheres de 25 a 64 anos."],
+                ["O teste novo: DNA-HPV", "Desde agosto de 2025, o Ministério da Saúde oferece no SUS o teste de DNA-HPV, que vai substituir o Papanicolau aos poucos. Começou em 12 estados, em um município de cada um. Com resultado negativo, o Ministério fala em repetir o teste em até cinco anos. Este site não encontrou informação de que o DNA-HPV já seja feito em Rio Claro: a Fundação cita o Papanicolau. Pergunte na sua unidade qual exame é feito."]
+              ],
+              aviso: "O que vale em Rio Claro é o que a sua unidade informar. Este site não sabe quando o DNA-HPV chega à cidade, nem o intervalo que a Fundação usa hoje para repetir o Papanicolau. Isto não é diagnóstico.",
+              fonte: ["Fundação Municipal de Saúde de Rio Claro: Outubro Rosa reforça importância de exames preventivos", "https://rioclaro.sp.gov.br/fundacao-de-saude/outubro-rosa-reforca-importancia-de-exames-preventivos/", "Publicada em 07/10/2026; página aberta e lida em 31/10/2026. O DNA-HPV vem da notícia do Ministério da Saúde de 15/08/2025, também lida em 31/10/2026."] },
+            { nome: "Pré-natal: quando e onde começar", sem_tel: true, resumo: "Ver o passo a passo",
+              texto: "O pré-natal é o acompanhamento da gravidez. Quanto mais cedo começa, melhor a equipe consegue acompanhar você e o bebê.",
+              topicos: [
+                ["Quando começar", "Assim que descobrir ou desconfiar da gravidez, de preferência até a 12ª semana, segundo o Ministério da Saúde."],
+                ["Onde ir", "Na unidade de atenção básica mais próxima da sua casa (UBS ou USF). A lista de unidades, com endereço e telefone, está mais abaixo. No cadastro do CNES (agosto de 2026), 17 UBS e USF de Rio Claro registram o acompanhamento do pré-natal como serviço próprio, em vários bairros. A Prefeitura informa que o Cadu, no 0800 019 0505, agenda consultas nas unidades básicas."],
+                ["Como é o acompanhamento", "O Ministério fala em consultas todo mês até a 28ª semana, a cada 15 dias da 28ª à 36ª semana e toda semana no fim da gravidez. Depois do parto, também há consulta na unidade."],
+                ["Atendimento ginecológico e da gravidez fora de hora", "Rio Claro tem o Pronto Atendimento de Ginecologia e Obstetrícia, na Av. 15, s/n, Centro, anexo à maternidade, telefone (19) 3535-7002, que a lista da Fundação indica como aberto 24 horas. Veja a ficha dele em Unidades de saúde, mais abaixo, e confirme por telefone."]
+              ],
+              aviso: "Este site não traz o número mínimo de consultas nem a lista de exames do pré-natal, porque a página do Ministério que consultamos não os informa. A equipe da unidade explica o que vale para você. Em urgência, ligue 192.",
+              fonte: ["Ministério da Saúde: Pré-natal", "https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/g/gravidez/pre-natal", "Página aberta e lida em 31/10/2026; ela não mostra data de atualização. O Pronto Atendimento vem da lista de endereços da Fundação Municipal de Saúde (10/10/2026). As 17 UBS e USF vêm do cadastro do CNES, competência 08/2026, lido em 31/10/2026."] }
+          ]
+        },
+        {
+          titulo: "Saúde mental e apoio emocional", ancora: "saude-apoio-emocional",
+          descricao: "Telefone de apoio emocional e serviços de saúde mental de Rio Claro. Este site não faz diagnóstico: quem avalia o seu caso é a equipe de saúde.",
+          tipos: [], links: [
+            ["Centro de Valorização da Vida (CVV)", "https://cvv.org.br/", "Site oficial: o telefone 188, a conversa por chat e por e-mail e guias sobre como falar de suicídio com segurança e como ajudar alguém em risco."]
+          ],
+          canais: [
+            { nome: "CVV: conversar com alguém agora, pelo 188", tel: "188", resumo: "Ver como funciona",
+              texto: "Quando o peso está grande demais, você não precisa carregar sozinha. O CVV (Centro de Valorização da Vida) oferece apoio emocional e prevenção do suicídio, de graça.",
+              topicos: [
+                ["Quem atende", "Voluntários do CVV, segundo o próprio site. A conversa é sigilosa, sem julgamentos, críticas ou comparações."],
+                ["Como falar", "Ligue 188, de graça, 24 horas por dia. O CVV também oferece conversa por chat e por e-mail pelo site cvv.org.br; o site não informa os horários dessas conversas."],
+                ["Se você pensa em se machucar", "Ligue agora para o 188. Se você estiver passando mal, ligue também para o 192 (SAMU). Você não está sozinha."],
+                ["Se a preocupação é com outra pessoa", "O site do CVV tem um guia sobre como ajudar alguém que pode estar em risco e sobre como falar de suicídio com segurança. Ele está no link desta seção."]
+              ],
+              aviso: "O CVV é um serviço feito por voluntários: este site não sabe se há espera nem como cada conversa é conduzida, e ele não substitui a consulta com a equipe de saúde. Se você está passando mal ou em risco agora, ligue 192 (SAMU).",
+              fonte: ["Centro de Valorização da Vida (CVV): página inicial", "https://cvv.org.br/", "Página aberta e lida em 31/10/2026."] },
+            { nome: "Saúde mental na rede pública de Rio Claro", sem_tel: true, resumo: "Ver por onde começar",
+              texto: "Os serviços de saúde mental da rede pública de Rio Claro estão na lista de unidades desta página.",
+              topicos: [
+                ["Onde ficam os CAPS", "Os CAPS (Centros de Atenção Psicossocial) estão na lista de unidades, mais abaixo, no grupo Saúde mental (CAPS), com endereço e telefone conferidos em 10/10/2026."],
+                ["Por onde começar", "Ligue antes e pergunte como ser atendida: este site não confirma quais serviços recebem quem chega sem encaminhamento, nem os horários de cada um. Você também pode procurar a unidade de saúde do seu bairro, cuja lista está mais abaixo."],
+                ["Se o problema é álcool ou outras drogas na família", "Veja a seção Meu filho ou familiar usa álcool ou drogas, nesta mesma página."],
+                ["Se você está passando muito mal agora", "Ligue 192 (SAMU)."]
+              ],
+              aviso: "Cadastro de serviço não é vaga nem atendimento garantido: confirme por telefone antes de ir.",
+              fonte: ["Fundação Municipal de Saúde de Rio Claro: endereços das unidades", "https://www.saude-rioclaro.org.br/enderecos.htm", "Lista usada nas fichas do grupo Saúde mental (CAPS), conferida em 10/10/2026."] }
+          ]
+        },
         {
           titulo: "Meu filho ou familiar usa álcool ou drogas", ancora: "saude-familia-drogas",
           descricao: "Muitas mães passam por isso, e ninguém precisa enfrentar sozinha. Você pode ligar e pedir orientação mesmo que a pessoa ainda não queira se tratar.",
@@ -303,14 +376,14 @@
     },
     {
       exemploDuvida: "preciso de advogado de graça", id: "direitos", nome: "Direitos", icone: "direitos",
-      intro: "Orientação jurídica, separação, pensão, aposentadoria, dívidas e proteção contra a violência.",
+      intro: "Justiça e direitos: encontre orientação, assistência gratuita e serviços adequados à sua situação em Rio Claro.",
       guia: {
-        titulo: "O que você encontra nesta página",
+        titulo: "Central de Justiça e Direitos",
         texto: "Escolha a sua situação. Se você está em perigo agora, use o botão “Em perigo agora?” no topo da página ou ligue 190.",
         itens: [
           { titulo: "Sofro violência ou tenho medo de alguém", texto: "Os canais de proteção, a Delegacia de Defesa da Mulher, a Patrulha Maria da Penha e a Defensoria. Violência contra a mulher: ligue 180, 24 horas, de graça.", ancora: "secao-2", botao: "Ver os canais de proteção" },
           { titulo: "Preciso de pensão ou da guarda dos filhos (ou dos netos)", texto: "Como pedir a pensão, o que levar e como falar com a Defensoria.", ancora: "secao-1", botao: "Ver pensão e guarda" },
-          { titulo: "Preciso de orientação jurídica sem poder pagar advogado", texto: "A Defensoria Pública atende quem não tem condições de pagar: como agendar e o que levar.", ancora: "secao-1", botao: "Ver a Defensoria" },
+          { titulo: "Preciso de orientação jurídica gratuita", texto: "Compare os caminhos da Defensoria, do convênio OAB-SP e de outros serviços; cada instituição faz sua própria triagem.", ancora: "secao-5", botao: "Encontrar um caminho de atendimento" },
           { titulo: "Aposentadoria e dívidas", texto: "Simular a aposentadoria no Meu INSS e onde buscar ajuda com dívidas.", ancora: "secao-3", botao: "Ver aposentadoria e dívidas" }
         ]
       },
@@ -335,20 +408,23 @@
             { nome: "Defensoria Pública: como pedir ajuda jurídica gratuita (pensão, guarda, reconhecimento do pai)", tel: "0800 773 4340", resumo: "Ver o passo a passo",
               texto: "Para quem não pode pagar advogado. Vale para pedir pensão, regularizar a guarda de um filho ou de um neto e tratar do reconhecimento do pai.",
               topicos: [
-                ["Quem a Defensoria atende", "Pessoas que não têm condições de pagar advogado. Em geral, famílias com renda de até 3 salários mínimos por mês. O limite pode subir para 4 salários mínimos em alguns casos: família com mais de 5 pessoas; gastos comprovados com tratamento de doença grave ou com remédio de uso contínuo; pessoa com deficiência na família; ou pessoa idosa na família, desde que ela tenha 4 ou mais membros. Em caso de violência doméstica e familiar contra a mulher, o atendimento independe da renda."],
+                ["Quem a Defensoria atende", "Pessoas que não têm condições de pagar advogado. Em geral, famílias com renda de até 3 salários mínimos por mês. O limite pode subir para 4 salários mínimos em alguns casos: família com mais de 5 pessoas; gastos comprovados com tratamento de doença grave ou com remédio de uso contínuo; pessoa com deficiência na família; ou pessoa idosa ou egressa do sistema prisional na família, desde que ela tenha 4 ou mais membros. A Defensoria também avalia renda, patrimônio e gastos mensais. Em caso de violência doméstica e familiar contra a mulher, o atendimento independe da renda. Consulte os critérios oficiais, pois a triagem é feita pela própria instituição."],
                 ["Como agendar", "Pelo portal da Defensoria (defensoria.sp.def.br), pelo celular ou pelo computador, com a assistente virtual Júlia, que a Defensoria diz estar disponível 24 horas. Dá para entrar com a conta gov.br ou só com o nome e o CPF. Também dá para ligar para o 0800 773 4340, das 7h às 19h, em dias úteis."],
                 ["Se é urgente", "Quem não pode esperar tem vagas com espera reduzida: a Defensoria analisa a urgência de acordo com o caso, considerando se a demora pode causar prejuízo grave ou de difícil reparação. Em finais de semana e feriados há atendimento só de casos urgentes, das 7h às 12h."],
-                ["O que levar", "Podem ser pedidos documentos que mostrem a renda e os gastos da família, como carteira de trabalho e holerite, entre outros. O site da Defensoria tem uma página “Documentos para atendimento” e um item “Preparando-se para o atendimento”: veja antes de ir."],
+                ["O que levar", "Podem ser pedidos documentos que mostrem renda, patrimônio e gastos da família, como carteira de trabalho e holerite, entre outros. Consulte a lista oficial de documentos gerais e a relação mínima específica para cada tipo de caso antes do atendimento."],
                 ["Onde fica", "A unidade de Rio Claro atende na Rua Um, nº 659, bairro Saúde, desde 01/07/2025, segundo a Defensoria. Confirme o endereço antes de ir."],
                 ["Cuidado com golpes", "A Defensoria informa que não cobra por atendimento. Desconfie de quem pedir dinheiro para marcar ou para resolver o seu caso."],
                 ["O que a Defensoria pode fazer", "Entrar com ações na Justiça, atuar em processos em andamento e promover acordos e conciliações entre as pessoas. No agendamento, pergunte se o seu caso (pensão, guarda ou reconhecimento do pai) pode ser atendido."],
                 ["Se você cria os netos e não tem a guarda", "Procure a Defensoria para avaliar o seu caso. Escolas e unidades de saúde têm regras próprias: pergunte lá o que aceitam enquanto isso."]
               ],
-              aviso: "Estas informações vêm da Defensoria Pública do Estado de São Paulo (notícia de 26/06/2025, página “Agende seu atendimento” e conta oficial da Defensoria no Instagram, de abril de 2026). O endereço e os horários podem ter mudado: confirme. Este texto não diz se o seu caso será atendido nem o que a Justiça vai decidir sobre pensão ou guarda.",
-              fonte: ["Defensoria Pública do Estado de São Paulo", "https://www.defensoria.sp.def.br/", "notícia de 26/06/2025, página “Agende seu atendimento” e postagem da conta oficial da Defensoria (abril de 2026), impressas em 11/10 e 15/10/2026"] }
+              aviso: "Estas informações vêm de páginas oficiais da Defensoria Pública do Estado de São Paulo. O endereço local foi anunciado em 26/06/2025; telefone e horário foram conferidos na página de agendamento consultada em 31/10/2026. Confirme antes de ir. Este texto não diz se o seu caso será atendido nem o que a Justiça vai decidir sobre pensão ou guarda.",
+              fonte: ["Defensoria Pública do Estado de São Paulo — nova sede de Rio Claro", "https://www.defensoria.sp.def.br/noticias/-/noticia/6485928/defensoria-de-sp-inaugura-nova-sede-em-rio-claro-na-proxima-terca-feira-1-7", "Notícia oficial publicada em 26/06/2025 sobre a mudança a partir de 01/07/2025; telefone e horário confirmados na página oficial de agendamento em 31/10/2026"] }
           ],
           links: [
-            ["Defensoria Pública do Estado de São Paulo", "https://www.defensoria.sp.def.br/", "Canais oficiais de orientação jurídica e critérios de atendimento."],
+            ["Agende atendimento na Defensoria Pública de SP", "https://www.defensoria.sp.def.br/web/guest/atendimento/agende-seu-atendimento", "Agendamento online com a Júlia 24 horas por dia; por telefone, 0800 773 4340, de segunda a sexta, das 7h às 19h. É preciso agendar antes de comparecer."],
+            ["Quem pode ser atendido — critérios oficiais da Defensoria SP", "https://www.defensoria.sp.def.br/atendimento/quem-pode-ser-atendido", "A Defensoria avalia renda, patrimônio e gastos; publica critérios gerais de renda e situações que podem elevar o limite ou dispensá-lo. A decisão de elegibilidade é da própria instituição."],
+            ["Documentos para atendimento — Defensoria SP", "https://www.defensoria.sp.def.br/atendimento/documentos-para-atendimento", "Lista oficial de documentos gerais e documentos mínimos organizados por tipo de caso. Confirme o que levar para sua situação."],
+            ["Defensoria de SP — nova sede em Rio Claro", "https://www.defensoria.sp.def.br/noticias/-/noticia/6485928/defensoria-de-sp-inaugura-nova-sede-em-rio-claro-na-proxima-terca-feira-1-7", "A Defensoria anunciou que desde 01/07/2025 atende na Rua Um, nº 659, bairro Saúde. Confirme local e agendamento antes de ir."],
             ["Como fazer para pedir pensão alimentícia — Senado Federal", "https://www12.senado.leg.br/noticias/especiais/especial-cidadania/pensao-alimenticia-atende-necessidades-basicas-e-padrao-de-vida/como-fazer-para-pedir-pensao-alimenticia", "Onde pedir, quem comparece e quais documentos levar (texto de 2012)."],
             ["Nova lei cria transferência automática da pensão alimentícia — Rádio Senado", "https://www12.senado.leg.br/radio/1/noticia/2026/07/30/nova-lei-cria-transferencia-automatica-da-pensao-alimenticia", "A Lei do Pix Pensão (Lei nº 15.479/2026), que entra em vigor em julho de 2027."]
           ]
@@ -366,10 +442,120 @@
           titulo: "Aposentadoria e dívidas", ancora: "secao-3",
           tipos: [],
           links: [
-            ["Procon de Rio Claro", "https://rioclaro.sp.gov.br/secretaria/secretaria-de-justica/", "A página municipal informa os contatos das unidades do Procon, para orientação sobre dívidas de consumo."],
             ["Procon-SP — Apoio ao Superendividado", "https://www.procon.sp.gov.br/espaco-consumidor/#ApoioSuperendividado", "Programa estadual com inscrição online e triagem para quem não consegue pagar dívidas sem comprometer a subsistência."],
-            ["Meu INSS — Simular aposentadoria", "https://www.gov.br/pt-br/servicos/simular-aposentadoria", "Projeção do tempo que falta, com base nos vínculos registrados. Não garante concessão de benefício."]
+            ["Meu INSS — Simular aposentadoria", "https://www.gov.br/pt-br/servicos/simular-aposentadoria", "Projeção do tempo que falta, com base nos vínculos registrados. Não garante concessão de benefício."],
+            ["Aposentadoria, BPC e a renda da casa (área Assistência Social)", "#assistencia/assistencia-avo", "Se a aposentadoria não cobre as despesas, ou se você cuida de um neto ou de uma pessoa idosa: o Cadastro Único, o BPC e a conta de água mais barata estão explicados na área Assistência Social."],
+            ["INSS — recorrer de benefício negado", "https://www.gov.br/pt-br/servicos/apresentar-recurso-ordinario-inicial", "O recurso administrativo é protocolado pelos canais do INSS. Veja o prazo e os documentos na página oficial."]
           ]
+        },
+        {
+          titulo: "Onde buscar orientação e encaminhamento jurídico?", ancora: "secao-5",
+          tipos: [],
+          descricao: "O caminho depende do assunto e da triagem de cada instituição. Este site organiza portas de entrada; não analisa processos, não escolhe profissional para você e não garante que um serviço assumirá o caso.",
+          canais: [
+            { nome: "Qual porta pode ajudar com cada assunto?", resumo: "Ver os caminhos por necessidade",
+              texto: "Comece pelo assunto que mais se aproxima do que você precisa. Se houver risco ou violência, veja primeiro “Violência e proteção”.",
+              topicos: [
+                ["Violência, ameaça ou medida protetiva", "Se o perigo é agora, ligue 190. O Ligue 180 orienta e encaminha. Para assistência jurídica, a Defensoria faz a própria triagem; veja também a seção “Violência e proteção”."],
+                ["Pensão, guarda, separação, herança, moradia ou bens", "A Defensoria Pública de SP e o convênio de assistência jurídica suplementar OAB-SP/Defensoria podem ser portas de entrada, sujeitas à triagem, à elegibilidade e ao assunto coberto. Pergunte se o caso é atendido antes de reunir documentos ou se deslocar."],
+                ["Salário, demissão, assédio ou discriminação no trabalho", "O Ministério Público do Trabalho recebe denúncias sobre irregularidades e condições de trabalho, incluindo assédio e discriminação. Sua atuação não substitui a orientação de uma advogada ou advogado para pedir valores individuais; para isso, consulte o sindicato da categoria ou uma assistência jurídica que confirme atender a matéria."],
+                ["Dívidas, banco e consumo", "Procure o Procon de Rio Claro. Há unidade no Centro (Rua 5, 821; CEP 13500-040 informado pelo mantenedor) e no Cervezão (Rua M-15, 411; CEP 13505-371 segundo a Fundação Procon-SP). A Prefeitura lista para o Cervezão os telefones (19) 3523-5985 e (19) 3532-1550. A página estadual do Procon-SP, publicada em 2019, informa atendimento de segunda a sexta, 8h–16h, com agendamento por e-mail ou telefone até as 15h. Confirme se o horário e o procedimento continuam iguais antes de ir ou enviar dados. Também é possível usar Consumidor.gov.br quando a empresa participar. O CEJUSC pode receber certos conflitos para tentativa de conciliação; confirme o procedimento e lembre que ele não oferece representação jurídica."],
+                ["INSS, BPC ou outro benefício federal negado", "A APS do INSS em Rio Claro fica na Rua Três, 1026, Centro, CEP 13500-910, conforme publicação oficial do INSS. O atendimento presencial exige agendamento pelo Meu INSS ou 135; ligue para confirmar data, horário local e documentos antes de ir. A Central 135 funciona de segunda a sábado, das 7h às 22h (horário de Brasília). Para contestar uma decisão administrativa, consulte o Meu INSS e a página oficial de recurso. O INSS descreve um acordo com a DPU que permite à Defensoria, em favor de seus assistidos, solicitar serviços e benefícios por canais remotos e pedir reabertura de alguns processos de benefício assistencial quando houve falha de comunicação em exigência ou comparecimento. A página do acordo não é um canal direto de atendimento ao público nem confirma unidade da DPU em Rio Claro; consulte a DPU para avaliar atendimento e elegibilidade."],
+                ["Documentos, discriminação ou outros direitos", "A Defensoria pode verificar se a demanda cabe no atendimento. Para relatar violação de direitos humanos, o Disque 100 é um canal de denúncia e encaminhamento; não é serviço de advocacia."],
+                ["Não sei por onde começar", "Use a triagem oficial da Defensoria ou do convênio OAB-SP. Explique o assunto diretamente ao órgão, sem compartilhar senha gov.br, código de acesso ou detalhes íntimos em canais que você não confirmou como oficiais."]
+              ],
+              aviso: "Os serviços têm atribuições diferentes. Denúncia ao MPT, reclamação ao Procon, mediação no CEJUSC e recurso administrativo do INSS não equivalem a representação por advogada(o) em um processo.",
+              fonte: ["Defensoria Pública de SP; OAB-SP; MPT; INSS; DPU; CNJ", "https://www.defensoria.sp.def.br/", "Páginas institucionais consultadas em 31/10/2026"] },
+            { nome: "Assistência jurídica suplementar — convênio OAB-SP e Defensoria", resumo: "Acessar a triagem oficial",
+              texto: "A OAB-SP e a Defensoria Pública do Estado mantêm convênio para assistência jurídica suplementar. A triagem é feita no portal oficial do convênio; o pedido não assegura atendimento nem define previamente o resultado do caso.",
+              topicos: [
+                ["Como começar", "Abra o formulário oficial de triagem e confira os requisitos e assuntos atendidos. A página solicita dados pessoais e de renda: use somente o domínio oficial da OAB-SP e não forneça senha gov.br ou códigos a intermediários."],
+                ["O que esta página não é", "A OAB não é uma unidade da Defensoria. O convênio é um fluxo específico entre a OAB-SP e a Defensoria; a Subseção local pode orientar sobre canais, mas não presumimos que ela receba todos os pedidos."],
+                ["Rio Claro", "A página oficial da 4ª Subseção publica o telefone (19) 99938-4627 e o e-mail rioclaro@oabsp.org.br. Pergunte à Subseção sobre o canal local e a Comissão da Mulher Advogada. Esse contato geral não é apresentado como triagem jurídica." ]
+              ],
+              aviso: "A inscrição de uma advogada ou advogado na OAB não certifica qualidade, especialidade ou adequação ao seu caso. Este site não ranqueia nem recomenda profissionais individuais.",
+              fonte: ["OAB-SP e Defensoria Pública do Estado de São Paulo", "https://www.oabsp.org.br/comissao/advocacia-dativa", "Páginas oficiais e triagem consultadas em 31/10/2026"] },
+            { nome: "CEJUSC — conciliação e mediação", resumo: "Atendimento gratuito; mediação cível e de família no Fórum",
+              texto: "O TJSP informa que o CEJUSC atende gratuitamente pedidos pré-processuais cíveis e de família para tentativa de conciliação ou mediação. O acordo depende da vontade das partes e não é garantido; a unidade avalia se o caso se enquadra no serviço.",
+              topicos: [
+                ["Antes de procurar", "Fórum de Rio Claro, Avenida 5, nº 535, Centro, sala 104. Telefone: (19) 3531-6137. E-mail: cejusc.rioclaro@tjsp.jus.br. O diretório atual do TJSP informa atendimento das 13h às 17h. Confirme por telefone os documentos necessários."],
+                ["Endereço e contato", "Fórum de Rio Claro, Avenida 5, nº 535, Centro, sala 104; telefone (19) 3531-6137; e-mail cejusc.rioclaro@tjsp.jus.br. Atendimento conforme diretório oficial do TJSP: 13h às 17h."],
+                ["Como iniciar", "O TJSP publicou que demandas pré-processuais podem ser solicitadas por e-mail. Antes de enviar dados pessoais ou relato do conflito, confirme por telefone quais informações e documentos são necessários e se esse canal continua sendo usado."],
+                ["Processos em andamento", "A lista oficial de Rio Claro descreve atuação pré-processual cível e de família. Se já existe processo, pergunte ao CEJUSC ou à unidade judicial como solicitar a tentativa de conciliação no próprio processo."],
+                ["Privacidade", "A notícia do TJSP de 2018 informa pedido pré-processual por e-mail, mas confirme se esse canal continua em uso e quais dados são necessários. Evite enviar documentos ou detalhes íntimos antes de receber essa orientação."],
+                ["Quando não substitui assistência jurídica", "O CEJUSC não representa uma parte nem substitui advogada, advogado ou defensoria. Em situação de violência, ameaça ou coerção, priorize proteção e orientação jurídica antes de qualquer tentativa de acordo."],
+              ],
+              aviso: "A relação oficial lista o serviço como pré-processual. Para processo já em andamento, confirme a forma de encaminhamento com o CEJUSC ou a unidade judicial.",
+              fonte: ["Tribunal de Justiça de São Paulo", "https://portal.tjsp.jus.br/Download/Conciliacao/Nucleo/Enderecos_Cejusc.pdf", "Diretório oficial do TJSP consultado em 31/10/2026; notícia sobre gratuidade e pedidos por e-mail publicada em 22/03/2018"] },
+            { nome: "NPJ/SAJU do Claretiano — possibilidade a confirmar", resumo: "Pergunte à instituição se há triagem aberta",
+              texto: "O Claretiano publicou em outubro de 2025 que estudantes do NPJ e do SAJU trabalhavam com casos reais em prol da população de baixa renda. Isso não confirma que o serviço esteja recebendo casos novos agora.",
+              topicos: [
+                ["Telefones para ligar", "O Claretiano de Rio Claro não publica um contato próprio do NPJ/SAJU, nem na página do curso de Direito. Os contatos que a instituição oferece são o telefone e WhatsApp (19) 2111-6000 e a Central de Atendimento 0800 722 6450. Ao ligar, diga que quer saber do atendimento jurídico gratuito do SAJU. O formulário de atendimento do site do Claretiano é para estudantes, não para o público."],
+                ["Antes de se deslocar", "Pergunte se há atendimento jurídico comunitário ativo em Rio Claro, quais assuntos atende, critérios, agenda, documentos e necessidade de agendamento."],
+                ["Endereço da unidade", "A página institucional da unidade informa Avenida Santo Antônio Maria Claret, 1724, Cidade Claret. O endereço da instituição não confirma que o atendimento jurídico aconteça ali ou esteja disponível."]
+              ],
+              aviso: "O Claretiano divulgou em 15/10/2025 que o NPJ/SAJU atende casos reais, mas não publica contato próprio do serviço. Os números acima são os contatos gerais da instituição, a única forma de contato que o autor deste site encontrou depois de procurar no site da faculdade. Atendimento atual, critérios e agenda não foram confirmados.",
+              fonte: ["Claretiano — Centro Universitário de Rio Claro", "https://blog.claretiano.edu.br/2025/10/15/direito-completa-25-anos-de-historia-e-compromisso-com-a-sociedade-de-rio-claro/", "Notícia institucional de 15/10/2025; unidade consultada em 31/10/2026"] },
+            { nome: "Anhanguera — unidade na Rua 2; atendimento jurídico a confirmar", resumo: "Ver o que o NPJ divulga",
+              texto: "O perfil @npj_anhanguera no Instagram divulga o Núcleo de Práticas Jurídicas da Faculdade Anhanguera de Rio Claro e o atendimento presencial dele. O perfil é uma fonte de informação, não um canal para falar do seu caso. Não foi possível confirmar se o NPJ está recebendo casos da comunidade nem se há atendimento gratuito.",
+              topicos: [
+                                ["Antes de ir", "O Instagram @npj_anhanguera serve para ver o que o NPJ divulga, como o horário. Não use o Instagram para enviar documentos ou contar o seu caso. Para falar com a faculdade, use o endereço abaixo ou o contato institucional da Anhanguera, e pergunte se o NPJ recebe casos novos da comunidade, quais assuntos e critérios atende, se tem custo, como agendar e quais documentos levar."],
+                ["Horário divulgado", "O mantenedor do MISM3 informa que o perfil divulga atendimento presencial de segunda a sexta, das 8h20 às 12h e das 14h às 18h. Confirme o horário atual diretamente no perfil antes de se deslocar."],
+                ["Localização", "Parecer do Conselho Nacional de Educação de 2025 lista a Faculdade Anhanguera de Rio Claro na Rua 2, nº 3117, Vila Operária, CEP 13504-090. Essa fonte confirma o endereço da faculdade, não que o NPJ esteja atendendo visitantes nesse local; confirme com o perfil antes de ir."],
+                ["O que este serviço é", "O NPJ é ligado à formação prática de estudantes de Direito e não é a Defensoria Pública. Para assistência jurídica pública, consulte também a Defensoria, que faz sua própria análise de elegibilidade."]
+              ],
+                            aviso: "O perfil do Instagram e o horário foram informados pelo autor deste site e não são um canal de atendimento. Atendimento comunitário, gratuidade, critérios e agenda não foram confirmados.",
+              fonte: ["Mantenedor do MISM3; Conselho Nacional de Educação", "https://www.gov.br/mec/pt-br/cne/2025/Fevereiro%202025/pces106_25.pdf", "O perfil @npj_anhanguera e os horários foram informados pelo mantenedor. Parecer CNE/CES nº 106/2025 lista o endereço da Faculdade Anhanguera; não confirma intake do NPJ."] }
+          ],
+          links: [
+            ["Triagem de assistência judiciária — OAB-SP/Defensoria", "https://www2.oabsp.org.br/asp/dotnet/AJ/Triagem/WzdCadastroTriagem", "Formulário oficial de triagem do convênio OAB-SP e Defensoria Pública. A triagem verifica dados e elegibilidade; não garante que o caso será aceito."],
+            ["OAB Rio Claro — 4ª Subseção", "https://www.oabsp.org.br/subsecao/rio-claro", "Página oficial com endereço, telefone (19) 99938-4627 e e-mail. Contato institucional; pergunte sobre os canais de assistência jurídica."],
+            ["Ministério Público do Trabalho — denúncias", "https://www.prt15.mpt.mp.br/servicos/denuncias", "Canal para denunciar irregularidades trabalhistas ao MPT da 15ª Região; não substitui a contratação ou o encaminhamento de representação individual."],
+            ["DPU — atendimento e assistência jurídica federal", "https://www.dpu.def.br/contatos-dpu", "Consulte unidades e canais da Defensoria Pública da União. A DPU avalia demandas de competência federal e a elegibilidade; não há unidade local confirmada neste cadastro."],
+            ["INSS — Acordo de Cooperação Técnica com a DPU", "https://www.gov.br/inss/pt-br/canais_atendimento/acts/acordos-de-cooperacao-tecnica-acts-nacionais/dpu-defensoria-publica-da-uniao", "O acordo descreve serviços remotos que a DPU pode solicitar em favor dos próprios assistidos e situações restritas de pedido de reabertura de benefício assistencial; não é canal direto de atendimento ao público."],
+            ["APS Rio Claro — endereço em publicação oficial do INSS", "https://www.gov.br/inss/pt-br/centrais-de-conteudo/publicacoes/contratos-e-licitacoes/superintendencia-regional-sudeste-i-sao-paulo/pregao-eletronico-no90011-2025-contratacao-de-servicos-de-vigilancia-integrada-no-ambito-da-srse-i/anexo_x-20302607.pdf/@@download/file", "Documento do INSS lista a APS Rio Claro na Rua Três, 1026, zona central, CEP 13500-910. Confirme horário e agendamento no Meu INSS ou 135."],
+            ["INSS — Central de Atendimento 135", "https://www.gov.br/inss/pt-br/canais_atendimento/central-135", "Canal oficial para agendar e confirmar local, horário e documentos; teleatendimento humano de segunda a sábado, das 7h às 22h (horário de Brasília)."] ,
+            ["Consumidor.gov.br", "https://www.consumidor.gov.br/", "Plataforma oficial de interlocução com empresas participantes; verifique se a empresa está cadastrada. Não substitui orientação jurídica."],
+            ["Procon Rio Claro — contatos e unidades", "https://rioclaro.sp.gov.br/secretaria/secretaria-de-justica/", "A Secretaria municipal lista os telefones do Procon Cervezão: (19) 3523-5985 e (19) 3532-1550. Para dívidas de consumo, há unidades no Centro e no Cervezão; confirme o procedimento e horário antes de ir."],
+            ["Procon Rio Claro — endereços das unidades", "https://rioclaro.sp.gov.br/justica/procon-de-rio-claro-realiza-mil-atendimentos-mensais/", "Notícia municipal de 2025 confirma as unidades Centro (Rua 5, 821) e Cervezão (Rua M-15, 411)."],
+            ["Procon Cervezão — horário em publicação municipal de 2021", "https://rioclaro.sp.gov.br/justica/exposicao-de-concurso-fotografico-fica-no-museu-ate-19-de-novembro-2/", "Outra publicação municipal registra atendimento de segunda a sexta, 8h–16h. É referência histórica; confirme se o horário continua válido."],
+            ["Procon-SP — unidade de Rio Claro", "https://www.procon.sp.gov.br/rio-claro/", "Página da Fundação Procon-SP (registro de 28/08/2019) lista a unidade Cervezão na Rua M-15, 411, CEP 13505-371, telefones (19) 3523-5985 e 3532-1550, e atendimento de segunda a sexta, 8h–16h, com agendamento até 15h por telefone ou e-mail. Confirme os dados e o procedimento antes de ir."],
+            ["CEJUSC Rio Claro — endereço e contato oficiais", "https://www.tjsp.jus.br/Download/Conciliacao/Nucleo/Enderecos_Cejusc.pdf", "Diretório do TJSP: Avenida 5, 535, sala 104; (19) 3531-6137; atendimento 13h–17h; atuação pré-processual cível e de família. O TJSP também informa atendimento gratuito e solicitação pré-processual por e-mail em notícia de 2018."],
+            ["Claretiano — unidade de Rio Claro", "https://claretiano.edu.br/rioclaro", "Contato institucional para perguntar se o NPJ/SAJU está recebendo casos; a disponibilidade atual não foi confirmada."],
+                        ["NPJ Anhanguera — perfil no Instagram (só para ver o que o NPJ divulga)", "https://www.instagram.com/npj_anhanguera/", "Perfil informado pelo autor deste site, que divulga o atendimento presencial do NPJ. Não é canal de atendimento: não envie documentos nem conte o seu caso por lá."],
+            ["Faculdade Anhanguera de Rio Claro — endereço no parecer do CNE", "https://www.gov.br/mec/pt-br/cne/2025/Fevereiro%202025/pces106_25.pdf", "Parecer CNE/CES nº 106/2025 lista a Faculdade na Rua 2, 3117, Vila Operária, CEP 13504-090. O endereço institucional não confirma que o NPJ esteja atendendo nesse local."],
+            ["Anhanguera — contato institucional", "https://www.anhanguera.com/central-de-atendimento/", "Canal institucional alternativo para confirmar se há atendimento jurídico comunitário ativo em Rio Claro."]
+          ]
+        }
+        ,{
+          titulo: "Mais de um serviço ao mesmo tempo", ancora: "secao-4",
+          descricao: "Quase nenhuma situação se resolve num lugar só. Aqui está quais serviços de Rio Claro costumam se conectar em cada situação e o que perguntar antes de ir.",
+          tipos: [],
+          canais: [
+            { nome: "Quem atende junto: a rede para a sua situação", sem_tel: true, resumo: "Ver a rede por situação",
+              texto: "Em outras cidades e países, o atendimento à mulher foi reunido num só endereço, para ela não ter de descobrir sozinha por onde começar. Este site não encontrou um lugar assim em Rio Claro: cada serviço fica no seu endereço. Esta lista mostra como eles se conectam, para você não começar pelo lugar errado. Você não precisa ir a todos. Em cada um, pergunte para onde encaminham.",
+              topicos: [
+                ["Violência ou medo de alguém", "Perigo agora: 190. Orientação e encaminhamento, 24 horas e de graça: 180. Depois, a Delegacia de Defesa da Mulher e a Patrulha Maria da Penha; a Secretaria Municipal da Mulher; o CREAS, para o acompanhamento social; a Defensoria, para as medidas na Justiça, a pensão e a guarda dos filhos; e a unidade de saúde ou o pronto atendimento, se houver ferimento ou outro cuidado de saúde. Filhos em risco: Conselho Tutelar."],
+                ["Sem trabalho e com filhos pequenos", "1) CRAS: Cadastro Único e orientação sobre benefícios. 2) Secretaria da Educação: creche ou escola dos filhos. 3) Fundo Social, Centro de Qualificação Profissional, SENAI e Senac: cursos. 4) Portal da Empregabilidade, Conecta, PAT e Secretaria de Desenvolvimento Econômico: vagas. Sem creche, o trabalho fica difícil de aceitar: por isso a creche vem antes das vagas."],
+                ["Falta comida ou dinheiro para as contas", "CRAS primeiro. Em paralelo, as tarifas sociais de água e de energia (área Moradia). Se houver dívidas, o Procon (área Direitos)."],
+                ["Falta de casa ou aluguel que não cabe", "CRAS para a orientação e o Cadastro Único; Habitação, para saber das inscrições e dos programas; tarifas sociais de água e de energia enquanto isso (área Moradia)."],
+                ["Pensão, guarda ou separação", "Defensoria Pública, para quem não pode pagar advogado. O CRAS pode ajudar com documentos e com o Cadastro Único. Se há violência, comece pelo primeiro item desta lista."],
+                ["Cuido de um neto, de um pai ou de uma mãe", "CRAS, para a orientação e os benefícios da família; Secretaria da Educação, para a matrícula do neto; Defensoria, para avaliar a guarda; unidade de saúde, para o cuidado de quem precisa."]
+              ],
+              aviso: "A ordem é uma sugestão de por onde começar, não uma regra: cada serviço avalia o seu caso e nenhum garante vaga, benefício ou atendimento. Os serviços citados estão cadastrados nas outras áreas deste site, com endereço, telefone e data de conferência; confirme-os antes de ir. A ideia de mostrar a rede inteira vem dos centros integrados de atendimento à mulher e é uma adaptação para Rio Claro, não um serviço que já exista aqui.",
+              fonte: ["Centros de Justiça da Família de Nova York (ENDGBV): ficha oficial de 2025 sobre os serviços reunidos no mesmo lugar", "https://www.nyc.gov/assets/ocdv/downloads/pdf/ENDGBV-FJC-One-Pager-ENGLISH.pdf", "Ideia de organização, conferida em 31/10/2026. Os serviços de Rio Claro seguem as outras áreas deste site."] },
+            { nome: "Antes de ir: quatro perguntas para o serviço caber na sua rotina", sem_tel: true, resumo: "Ver as quatro perguntas",
+              texto: "Um serviço pode existir e, mesmo assim, não servir: o horário bate com o seu trabalho, a condução custa caro, ou não há com quem deixar as crianças. Faça estas perguntas ao ligar, antes de ir.",
+              topicos: [
+                ["Fica perto?", "Pergunte como chegar e quantas conduções são. No mapa da página inicial, informe o seu bairro ou o CEP: a distância mostrada é em linha reta e não mostra o tempo da viagem."],
+                ["Funciona no meu horário?", "Pergunte os dias e os horários de atendimento e se é preciso agendar. Muitos serviços atendem só em horário comercial: se você trabalha nesse horário, pergunte se há outro dia ou outro canal, como telefone ou WhatsApp."],
+                ["Quanto custa chegar e voltar?", "Some a ida e a volta. Se o serviço é gratuito mas o transporte pesa, pergunte se parte do atendimento pode ser feita por telefone ou por mensagem."],
+                ["Posso levar as crianças?", "Pergunte se pode ir com os filhos e se há um espaço para eles ficarem durante o atendimento. Este site não confirmou, para nenhum serviço de Rio Claro, que haja esse espaço: não suponha que exista. Peça também para anotar o seu pedido, para você não ter de repetir a história a cada serviço."]
+              ],
+              aviso: "Estas são perguntas para você fazer, não promessas do serviço. Nenhum dos serviços cadastrados informa, nas fontes consultadas, que ofereça cuidado para as crianças durante o atendimento.",
+              fonte: ["Centros de Justiça da Família de Nova York (ENDGBV): cuidado de crianças durante o atendimento, a partir de 3 anos", "https://www.nyc.gov/assets/ocdv/downloads/pdf/ENDGBV-FJC-One-Pager-ENGLISH.pdf", "Ideia de organização, conferida em 31/10/2026. Em Rio Claro, vale como pergunta, não como informação."] }
+          ],
+          links: []
         }
       ],
       avisos: ["Nunca compartilhe senhas ou códigos de acesso com intermediários. Simulações de aposentadoria são projeções e não garantem benefício."]
@@ -460,6 +646,7 @@
               fonte: ["Ministério das Cidades (Portarias MCID nº 738/2024 e nº 333/2026) e Lei nº 11.977/2009", "https://rioclaro.sp.gov.br/wp-content/uploads/2025/11/CRITERIOS-DE-ELEGIBILIDADE.pdf", "Portaria 738/2024 (PDF no site da Prefeitura); Portaria 333/2026 (Diário Oficial da União de 01/04/2026); Lei 11.977/2009 (texto compilado enviado pelo mantenedor); página da CAIXA “Minha Casa, Minha Vida – Classe Média” (impressa em 16/10/2026) e folheto da CAIXA “Documentação básica para solicitação de Crédito Imobiliário” (arquivo de maio de 2017); lidos em 16/10/2026"] }
           ],
           links: [
+            ["Como fazer o Cadastro Único (área Assistência Social)", "#assistencia/assistencia-cadunico", "Algumas regras da casa própria pedem a inscrição no Cadastro Único. Quem pode, o que levar e onde fazer estão na área Assistência Social."],
             ["Critérios de elegibilidade (Portaria MCID 738/2024): PDF da Prefeitura", "https://rioclaro.sp.gov.br/wp-content/uploads/2025/11/CRITERIOS-DE-ELEGIBILIDADE.pdf", "O texto completo da Portaria, como a Prefeitura publica. Foi a fonte do cartão acima."],
             ["Portaria MCID nº 333/2026: limites de renda do Minha Casa, Minha Vida", "https://www.in.gov.br/web/dou/-/portaria-mcid-n-333-de-30-de-marco-de-2026-697065554", "Publicação oficial (Diário Oficial da União, 01/04/2026) com os tetos de renda das faixas. Os valores são atualizados todo ano."],
             ["Minha Casa, Minha Vida – Classe Média (CAIXA)", "https://www.caixa.gov.br/voce/habitacao/minha-casa-minha-vida/classe-media/Paginas/default.aspx", "Página da CAIXA sobre o financiamento para renda de até R$ 13 mil, com o passo a passo e os telefones. Não é o programa da fila da Prefeitura: confirme as condições vigentes na CAIXA."],
@@ -577,7 +764,9 @@
               aviso: "Este site não diz se o que aconteceu com você é uma violação nem o que será decidido. Quem avalia é o serviço que você procurar.",
               fonte: ["gov.br: Denunciar violação de direitos humanos (Disque 100)", "https://www.gov.br/pt-br/servicos/denunciar-violacao-de-direitos-humanos", "última modificação 15/12/2025; página impressa em 10/10/2026"] }
           ],
-          links: []
+          links: [
+            ["Simular a aposentadoria no Meu INSS (área Direitos)", "#direitos/secao-3", "Projeção do tempo que falta, com base nos vínculos registrados. Não garante a concessão. A simulação fica na área Direitos, junto com o Procon, para dívidas."]
+          ]
         },
         {
           titulo: "Proteção e denúncia", ancora: "secao-2",
@@ -612,14 +801,19 @@
     }
   ];
 
-  /* Contatos de emergência: canais nacionais oficiais. Mantidos aqui para os testes conferirem. */
+  /* Contatos de emergência: canais nacionais oficiais. FONTE ÚNICA (31/10/2026): o número, o nome e a descrição de cada um moram só aqui.
+     As duas listas de web/index.html (a caixa "Em perigo agora?" e os "Contatos essenciais") ficam entre marcadores EMERGENCIA-INICIO / EMERGENCIA-FIM e
+     são GERADAS daqui: para mudar um telefone, edite esta lista e rode  node web/tests/emergencia.test.js --sincronizar  (a CI reprova se o HTML diferir).
+     A página continua estática de propósito: a lista precisa aparecer mesmo se o JavaScript falhar.
+     Campos: tel, nome, quando (caixa "Em perigo agora?"); rotulo (nome curto lido pelo leitor de tela, se diferente de nome); contato (texto pequeno da lista "Contatos essenciais"; o campo
+     ausente tira o contato dessa lista, o texto vazio o mantém sem texto pequeno). web/tests/emergencia.test.js confere também perigo.js e todas as frases do site que citam um número. */
   var EMERGENCIA = [
-    { tel: "190", nome: "Polícia Militar", quando: "Perigo imediato, agressão em andamento ou ameaça." },
-    { tel: "192", nome: "SAMU", quando: "Urgência médica ou pessoa ferida." },
+    { tel: "190", nome: "Polícia Militar", quando: "Perigo imediato, agressão em andamento ou ameaça.", contato: "" },
+    { tel: "192", nome: "SAMU", quando: "Urgência médica ou pessoa ferida.", contato: "Urgência médica" },
     { tel: "193", nome: "Bombeiros", quando: "Incêndio, resgate ou acidente." },
-    { tel: "180", nome: "Central de Atendimento à Mulher", quando: "Violência contra a mulher: orientação, denúncia e encaminhamento. 24 horas, gratuito." },
-    { tel: "100", nome: "Disque Direitos Humanos", quando: "Violações de direitos humanos, como contra crianças, idosos e pessoas com deficiência. 24 horas, gratuito." },
-    { tel: "188", nome: "CVV — apoio emocional", quando: "Conversa de apoio em momentos de sofrimento. 24 horas, gratuito." }
+    { tel: "180", nome: "Central de Atendimento à Mulher", quando: "Violência contra a mulher: orientação, denúncia e encaminhamento. 24 horas, gratuito.", contato: "Violência contra a mulher. 24 horas, gratuito" },
+    { tel: "100", nome: "Disque Direitos Humanos", quando: "Violações de direitos humanos, como contra crianças, idosos e pessoas com deficiência. 24 horas, gratuito.", contato: "24 horas, gratuito" },
+    { tel: "188", nome: "CVV — apoio emocional", rotulo: "CVV", quando: "Conversa de apoio em momentos de sofrimento. 24 horas, gratuito." }
   ];
 
   /* Página "Entre Mulheres": serviços que mulheres oferecem a outras mulheres.

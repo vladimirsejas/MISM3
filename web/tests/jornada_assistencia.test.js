@@ -26,10 +26,11 @@ assert.strictEqual(ids(plano("apoio")), "cras>outros");
 assert.strictEqual(ids(plano("nao_sei")), "cras>outros", "sem saber por onde começar, a porta de entrada é o CRAS");
 assert.strictEqual(ids(plano("direitos")), "creas>conselho>disque100");
 assert.strictEqual(ids(plano("convivencia")), "convivencia");
+assert.strictEqual(ids(plano("sozinha_trabalho")), "cras>creche>cursos>vagas>pensao", "sozinha com os filhos: a creche vem antes dos cursos e das vagas");
 assert.strictEqual(plano(undefined).passos.length, 0, "sem resposta, sem passos (a tela pergunta primeiro)");
 
 /* ---- 3. Estrutura e honestidade dos passos ---- */
-["apoio", "nao_sei", "direitos", "convivencia"].forEach((r) => {
+["apoio", "nao_sei", "direitos", "convivencia", "sozinha_trabalho"].forEach((r) => {
   const pl = plano(r);
   pl.passos.forEach((p, i) => {
     assert(p.numero === i + 1 && p.titulo && p.porque && p.alternativa && p.acao, "passo incompleto: " + p.id);
@@ -39,7 +40,7 @@ assert.strictEqual(plano(undefined).passos.length, 0, "sem resposta, sem passos 
   assert(/Em perigo agora/.test(pl.avisos[pl.avisos.length - 1]), "o aviso de segurança acompanha todo plano");
 });
 const proibido = /você (tem|terá) direito|vaga garantida|garantimos|você está apta|você não é elegível|benefício garantido|R\$ ?\d|\b\d{1,2}h às \d{1,2}h/i;
-["apoio", "direitos", "convivencia"].forEach((r) => assert(!proibido.test(JSON.stringify(plano(r).passos)), "promete, diz valor ou horário sem fonte: " + r));
+["apoio", "direitos", "convivencia", "sozinha_trabalho"].forEach((r) => assert(!proibido.test(JSON.stringify(plano(r).passos)), "promete, diz valor ou horário sem fonte: " + r));
 /* O CadÚnico pode ser nomeado (tem fonte oficial e aviso na área), mas só no passo do CRAS do caminho "apoio". */
 assert(/Cadastro Único/.test(JSON.stringify(plano("apoio").passos[0])), "o passo do CRAS cita o Cadastro Único");
 
@@ -47,7 +48,7 @@ assert(/Cadastro Único/.test(JSON.stringify(plano("apoio").passos[0])), "o pass
 const permitidos = new Set(servicos.map((s) => s.fonte_url));
 Areas.AREAS.forEach((a) => a.secoes.forEach((s) => (s.links || []).forEach((l) => permitidos.add(l[1]))));
 const emergencia = (Areas.EMERGENCIA || []).map((c) => c.tel);
-["apoio", "direitos", "convivencia"].forEach((r) => plano(r).passos.forEach((p) => {
+["apoio", "direitos", "convivencia", "sozinha_trabalho"].forEach((r) => plano(r).passos.forEach((p) => {
   [p.acao].concat(p.extras.map((l) => ({ tipo: "externo", alvo: l[1] }))).forEach((a) => {
     if (a.tipo === "externo") { assert(/^https:\/\//.test(a.alvo) && permitidos.has(a.alvo), "link externo sem fonte: " + a.alvo); }
     else if (/^#/.test(a.alvo)) assert(Areas.AREAS.some((x) => x.id === /^#([a-z-]+)/.exec(a.alvo)[1]) || /^#mapa(\/cras)?$/.test(a.alvo), "área inexistente: " + a.alvo);

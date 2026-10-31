@@ -62,8 +62,18 @@ assert(/sem garantia de vaga/.test(card.aviso) && /desconfie de quem cobra/.test
 assert(!/você (tem|terá) direito|você vai (ganhar|receber|conseguir)|com certeza|será contemplad|está garantid/i.test(tudo), "sem promessa de contemplação");
 assert(/^https:\/\/rioclaro\.sp\.gov\.br\//.test(card.fonte[1]) && /16\/10\/2026/.test(card.fonte[2]) && /maio de 2017/.test(card.fonte[2]), "fonte oficial da Prefeitura, com a data da leitura e a do folheto antigo");
 
-/* Links: todos https; os oficiais esperados estão lá */
-sec.links.forEach((l) => assert(/^https:\/\//.test(l[1]) && l[2], "link com endereço seguro e descrição: " + l[0]));
+/* Links: os externos são todos https; os internos (apontadores entre áreas, desde 31/10/2026) têm de levar a uma área e a uma seção que existem.
+   Os oficiais esperados estão lá. */
+const Areas2 = require("../areas.js");
+sec.links.forEach((l) => {
+  assert(l[2], "link com descrição: " + l[0]);
+  if (/^#/.test(l[1])) {
+    const [areaId, ancora] = l[1].slice(1).split("/");
+    const destino = Areas2.porId(areaId);
+    assert(destino && (!ancora || destino.secoes.some((s) => s.ancora === ancora)), "link interno leva a uma área e seção que existem: " + l[1]);
+  } else assert(/^https:\/\//.test(l[1]), "link com endereço seguro: " + l[0]);
+});
+assert(sec.links.some((l) => l[1] === "#assistencia/assistencia-cadunico"), "Habitação aponta para o Cadastro Único na área Assistência Social");
 ["CRITERIOS-DE-ELEGIBILIDADE.pdf", "portaria-mcid-n-333-de-30-de-marco-de-2026", "caixa.gov.br/voce/habitacao/minha-casa-minha-vida/classe-media"].forEach((u) =>
   assert(sec.links.some((l) => l[1].includes(u)), "link ausente: " + u));
 

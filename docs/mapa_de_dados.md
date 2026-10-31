@@ -1,4 +1,4 @@
-# Mapa de dados do MISM3 (Mulher em Rede)
+# Mapa de dados do MISM3 (Observatório da Mulher)
 
 Onde está cada fonte de dados, de onde vem e quem a usa. **Todos os caminhos abaixo existem no repositório** (o teste `pipeline/tests/test_mapa_de_dados.py` falha se algum deixar de existir). Linhas marcadas com *(gerado, não versionado)* só existem depois de rodar o pipeline no computador de quem o roda.
 
@@ -25,7 +25,7 @@ Fluxo: **fontes oficiais e catálogos escritos à mão → pipeline Python → a
 | `web/dados/modelo_necessidades.json` | `pipeline/treinar_necessidades.py` | `web/ia.js` (classificador) |
 | `web/dados/modelo_escopo.json` | `pipeline/treinar_escopo.py` | `web/orientar.js` (abstenção: o texto é do assunto do site?) |
 | `web/dados/modelo_perigo.json` | `pipeline/treinar_perigo.py` | `web/perigo.js` (detector aprendido, junto com as regras) |
-| `web/dados/indice_orientacao.json` | `pipeline/indice_orientacao.py` (175 destinos; índice regenerado em 16/10/2026) | `web/orientar.js`, `web/orientacao-ui.js` |
+| `web/dados/indice_orientacao.json` | `pipeline/indice_orientacao.py` (183 destinos; regenerado em 31/10/2026) | `web/orientar.js`, `web/orientacao-ui.js` |
 | `web/dados/oferta_educacao_infantil.json` | `pipeline/oferta_educacao_infantil.py` (Censo Escolar 2025) | `pipeline/servicos.py`; informa a etapa (creche/pré-escola), **não** vaga |
 | `web/dados/horarios_onibus.json` | `pipeline/horarios_onibus.py` | tela de horários, índice do orientador |
 | `web/dados/cep_indice.json` | `pipeline/indice_cep.py` | busca por CEP, mapa |
