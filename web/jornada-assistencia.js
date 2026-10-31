@@ -137,7 +137,7 @@
   function passoPensaoSozinha(achar) {
     return {
       id: "pensao", titulo: "Pergunte à Defensoria sobre a pensão dos filhos",
-      porque: "Se o pai ou a mãe dos seus filhos não ajuda, a Defensoria Pública orienta, de graça, quem não pode pagar advogado. A pensão só vale a partir do pedido na Justiça, então vale perguntar cedo. Isso pode andar junto com os outros passos.",
+      porque: "Se o pai ou a mãe dos seus filhos não ajuda, a Defensoria Pública orienta, de graça, quem não pode pagar advogado. Pergunte cedo como e onde pedir. Isso pode andar junto com os outros passos.",
       acao: interno("#direitos", "Ver pensão e guarda"),
       pergunte: ["Se o seu caso pode ser atendido e o que levar. Pelo telefone ou pelo portal da Defensoria, em dias úteis."],
       contato: contato(achar, "man-defensoria-nudem", "Defensoria Pública"),
