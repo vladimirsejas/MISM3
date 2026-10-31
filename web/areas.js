@@ -421,14 +421,16 @@
               ],
               aviso: "Possibilidade local parcialmente confirmada por notícia institucional de 15/10/2025; disponibilidade e acesso atuais não confirmados.",
               fonte: ["Claretiano — Centro Universitário de Rio Claro", "https://blog.claretiano.edu.br/2025/10/15/direito-completa-25-anos-de-historia-e-compromisso-com-a-sociedade-de-rio-claro/", "Notícia institucional de 15/10/2025; unidade consultada em 31/10/2026"] },
-            { nome: "Anhanguera — unidade na Rua 2; atendimento jurídico a confirmar", resumo: "Pergunte à instituição se há núcleo jurídico em atendimento",
-              texto: "O mantenedor do MISM3 informa que a unidade da Anhanguera fica na Rua 2 de Rio Claro. Não foi confirmada oferta atual de orientação jurídica gratuita nessa unidade.",
+            { nome: "Anhanguera — unidade na Rua 2; atendimento jurídico a confirmar", resumo: "Pergunte pelo Instagram se recebem casos novos",
+              texto: "O mantenedor do MISM3 indicou o perfil @npj_anhanguera como contato do Núcleo de Práticas Jurídicas da Faculdade Anhanguera de Rio Claro. O perfil divulga atendimento presencial, mas não foi possível confirmar de forma independente se o NPJ está recebendo casos da comunidade nem se há atendimento gratuito.",
               topicos: [
-                ["Antes de ir", "Confirme com a instituição se há curso de Direito e Núcleo de Prática Jurídica nesta unidade, se recebe casos novos, quais assuntos atende, critérios, agenda, endereço completo e documentos."],
-                ["Localização", "A referência à Rua 2 foi informada pelo mantenedor; o endereço completo não foi verificado. A existência de uma unidade não confirma atendimento jurídico no local."]
+                ["Antes de ir", "Acesse @npj_anhanguera e pergunte por mensagem se o NPJ recebe casos novos da comunidade, quais assuntos e critérios atende, se o serviço tem custo, como agendar e quais documentos levar. Não envie documentos ou detalhes sensíveis antes de confirmar o canal e a necessidade."],
+                ["Horário divulgado", "O mantenedor do MISM3 informa que o perfil divulga atendimento presencial de segunda a sexta, das 8h20 às 12h e das 14h às 18h. Confirme o horário atual diretamente no perfil antes de se deslocar."],
+                ["Localização", "Parecer do Conselho Nacional de Educação de 2025 lista a Faculdade Anhanguera de Rio Claro na Rua 2, nº 3117, Vila Operária, CEP 13504-090. Essa fonte confirma o endereço da faculdade, não que o NPJ esteja atendendo visitantes nesse local; confirme com o perfil antes de ir."],
+                ["O que este serviço é", "O NPJ é ligado à formação prática de estudantes de Direito e não é a Defensoria Pública. Para assistência jurídica pública, consulte também a Defensoria, que faz sua própria análise de elegibilidade."]
               ],
-              aviso: "A localização na Rua 2 é informação do mantenedor do projeto. O endereço completo e a oferta atual de atendimento jurídico não foram confirmados.",
-              fonte: ["Mantenedor do MISM3; Anhanguera — Central de Atendimento", "https://www.anhanguera.com/central-de-atendimento/", "Localização informada pelo mantenedor; atendimento jurídico local não confirmado em 31/10/2026"] }
+              aviso: "O perfil do Instagram é um contato indicado pelo mantenedor do MISM3. Atendimento comunitário, gratuidade, critérios e agenda locais não foram confirmados.",
+              fonte: ["Mantenedor do MISM3; Conselho Nacional de Educação", "https://www.gov.br/mec/pt-br/cne/2025/Fevereiro%202025/pces106_25.pdf", "O perfil @npj_anhanguera e os horários foram informados pelo mantenedor. Parecer CNE/CES nº 106/2025 lista o endereço da Faculdade Anhanguera; não confirma intake do NPJ."] }
           ],
           links: [
             ["Triagem de assistência judiciária — OAB-SP/Defensoria", "https://www2.oabsp.org.br/asp/dotnet/AJ/Triagem/WzdCadastroTriagem", "Formulário oficial de triagem do convênio OAB-SP e Defensoria Pública. A triagem verifica dados e elegibilidade; não garante que o caso será aceito."],
@@ -445,7 +447,9 @@
             ["Procon-SP — unidade de Rio Claro", "https://www.procon.sp.gov.br/rio-claro/", "Página da Fundação Procon-SP (registro de 28/08/2019) lista a unidade Cervezão na Rua M-15, 411, CEP 13505-371, telefones (19) 3523-5985 e 3532-1550, e atendimento de segunda a sexta, 8h–16h, com agendamento até 15h por telefone ou e-mail. Confirme os dados e o procedimento antes de ir."],
             ["CEJUSC Rio Claro — endereço e contato oficiais", "https://www.tjsp.jus.br/Download/Conciliacao/Nucleo/Enderecos_Cejusc.pdf", "Diretório do TJSP: Avenida 5, 535, sala 104; (19) 3531-6137; atendimento 13h–17h; atuação pré-processual cível e de família. O TJSP também informa atendimento gratuito e solicitação pré-processual por e-mail em notícia de 2018."],
             ["Claretiano — unidade de Rio Claro", "https://claretiano.edu.br/rioclaro", "Contato institucional para perguntar se o NPJ/SAJU está recebendo casos; a disponibilidade atual não foi confirmada."],
-            ["Anhanguera — contato institucional", "https://www.anhanguera.com/central-de-atendimento/", "Canal institucional para confirmar endereço da unidade e se há atendimento jurídico comunitário ativo em Rio Claro."]
+            ["NPJ Anhanguera — Instagram informado pelo mantenedor", "https://www.instagram.com/npj_anhanguera/", "Contato indicado pelo mantenedor do MISM3. Pergunte por mensagem se o NPJ recebe casos da comunidade, se há custo, quais critérios e como agendar; o atendimento local não foi confirmado independentemente."],
+            ["Faculdade Anhanguera de Rio Claro — endereço no parecer do CNE", "https://www.gov.br/mec/pt-br/cne/2025/Fevereiro%202025/pces106_25.pdf", "Parecer CNE/CES nº 106/2025 lista a Faculdade na Rua 2, 3117, Vila Operária, CEP 13504-090. O endereço institucional não confirma que o NPJ esteja atendendo nesse local."],
+            ["Anhanguera — contato institucional", "https://www.anhanguera.com/central-de-atendimento/", "Canal institucional alternativo para confirmar se há atendimento jurídico comunitário ativo em Rio Claro."]
           ]
         }
       ],

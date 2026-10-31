@@ -1137,6 +1137,11 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - A página atual da Secretaria de Justiça lista os telefones (19) 3523-5985 e (19) 3532-1550. Notícia municipal de 2025 confirma endereço Rua M-15, 411. A página da Fundação Procon-SP (registro de 28/08/2019) também lista CEP 13505-371, atendimento de segunda a sexta, 8h–16h, e agendamento por telefone ou e-mail até as 15h.
 - O horário e agendamento são apresentados com a data da fonte, com orientação para confirmação por o registro ser de 2019. A notícia de 2017 enviada pelo mantenedor segue como fonte histórica sobre a gratuidade e ampliação de horário, sem tratá-la como atualização operacional.
 
+## 31/10/2026 — Contato do NPJ Anhanguera
+
+- Incluído o Instagram `@npj_anhanguera` como canal para perguntar sobre intake comunitário, critérios, custo, agenda e documentos. O perfil e seu horário presencial (dias úteis, 8h20–12h e 14h–18h) foram informados pelo mantenedor e não puderam ser verificados independentemente nesta consulta.
+- O endereço da Faculdade Anhanguera (Rua 2, 3117, Vila Operária, CEP 13504-090) foi conferido no Parecer CNE/CES nº 106/2025; a fonte não comprova funcionamento do atendimento do NPJ nesse endereço. A interface mantém o serviço como possibilidade, não como garantia de atendimento jurídico gratuito.
+
 ## 31/10/2026 — Portal e critérios da Defensoria Pública de SP
 
 - O portal oficial da DPESP foi revisado e os links diretos de critérios de atendimento e documentos foram acrescentados ao cartão da Defensoria. O critério público considera renda, patrimônio e despesas; informa limite geral de até 3 salários mínimos, com ampliação em situações específicas, e hipóteses independentes de renda para violência doméstica contra a mulher, defesa criminal e curadoria especial processual.
