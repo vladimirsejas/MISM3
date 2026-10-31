@@ -54,6 +54,10 @@ assert(links.some((l) => /OAB Rio Claro/.test(l[0]) && /\(19\) 99938-4627/.test(
 
 const familia = area.secoes.find((s) => s.ancora === "secao-1");
 const protecao = area.secoes.find((s) => s.ancora === "secao-2");
+const linksFamilia = familia.links || [];
+assert(linksFamilia.some((l) => l[1] === "https://www.defensoria.sp.def.br/atendimento/quem-pode-ser-atendido"), "inclui critérios oficiais da Defensoria");
+assert(linksFamilia.some((l) => l[1] === "https://www.defensoria.sp.def.br/atendimento/documentos-para-atendimento"), "inclui a lista oficial de documentos");
+assert(/egressa do sistema prisional/.test(JSON.stringify(familia)), "inclui hipótese de limite ampliado indicada pela Defensoria");
 assert(familia.canais.some((c) => /^Pensão alimentícia/.test(c.nome)), "cartão de pensão preservado");
 assert(familia.canais.some((c) => /^Defensoria Pública/.test(c.nome)), "cartão existente da Defensoria preservado");
 assert(protecao.urgente && /180/.test(area.guia.itens[0].texto), "rota de violência conserva urgência e Ligue 180");
