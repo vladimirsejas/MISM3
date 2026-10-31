@@ -400,15 +400,18 @@
               ],
               aviso: "A inscrição de uma advogada ou advogado na OAB não certifica qualidade, especialidade ou adequação ao seu caso. Este site não ranqueia nem recomenda profissionais individuais.",
               fonte: ["OAB-SP e Defensoria Pública do Estado de São Paulo", "https://www.oabsp.org.br/comissao/advocacia-dativa", "Páginas oficiais e triagem consultadas em 31/10/2026"] },
-            { nome: "CEJUSC — conciliação e mediação", resumo: "Consultar o TJSP e confirmar o atendimento local",
-              texto: "Os CEJUSCs podem receber pedidos pré-processuais de conciliação e mediação em conflitos cíveis e de família, conforme o serviço local. Um acordo depende da vontade das partes e da adequação do caso.",
+            { nome: "CEJUSC — conciliação e mediação", resumo: "Atendimento gratuito; mediação cível e de família no Fórum",
+              texto: "O TJSP informa que o CEJUSC atende gratuitamente pedidos pré-processuais cíveis e de família para tentativa de conciliação ou mediação. O acordo depende da vontade das partes e não é garantido; a unidade avalia se o caso se enquadra no serviço.",
               topicos: [
-                ["Antes de procurar", "Consulte a relação oficial de endereços do TJSP e confirme com o CEJUSC de Rio Claro o endereço, horário, documentos e forma de iniciar o pedido. Publicações do TJSP consultadas trazem dados de contato diferentes."],
+                ["Antes de procurar", "Fórum de Rio Claro, Avenida 5, nº 535, Centro, sala 104. Telefone: (19) 3531-6137. E-mail: cejusc.rioclaro@tjsp.jus.br. O diretório atual do TJSP informa atendimento das 13h às 17h. Confirme por telefone os documentos necessários."],
+                ["Endereço e contato", "Fórum de Rio Claro, Avenida 5, nº 535, Centro, sala 104; telefone (19) 3531-6137; e-mail cejusc.rioclaro@tjsp.jus.br. Atendimento conforme diretório oficial do TJSP: 13h às 17h."],
+                ["Como iniciar", "O TJSP publicou que demandas pré-processuais podem ser solicitadas por e-mail. Antes de enviar dados pessoais ou relato do conflito, confirme por telefone quais informações e documentos são necessários e se esse canal continua sendo usado."],
+                ["Processos em andamento", "A lista oficial de Rio Claro descreve atuação pré-processual cível e de família. Se já existe processo, pergunte ao CEJUSC ou à unidade judicial como solicitar a tentativa de conciliação no próprio processo."],
+                ["Privacidade", "A notícia do TJSP de 2018 informa pedido pré-processual por e-mail, mas confirme se esse canal continua em uso e quais dados são necessários. Evite enviar documentos ou detalhes íntimos antes de receber essa orientação."],
                 ["Quando não substitui assistência jurídica", "O CEJUSC não representa uma parte nem substitui advogada, advogado ou defensoria. Em situação de violência, ameaça ou coerção, priorize proteção e orientação jurídica antes de qualquer tentativa de acordo."],
-                ["Privacidade", "O TJSP publicou atendimento pré-processual por e-mail. Antes de enviar dados pessoais ou relato do conflito, confirme se esse é o canal atual e o que deve ser enviado."]
               ],
-              aviso: "O cadastro não fixa endereço nem telefone do CEJUSC de Rio Claro porque as páginas oficiais consultadas divergem. Confirme os dados na relação atual do TJSP antes de ir.",
-              fonte: ["Tribunal de Justiça de São Paulo e Conselho Nacional de Justiça", "https://portal.tjsp.jus.br/Download/Conciliacao/Nucleo/Enderecos_Cejusc.pdf", "Relação oficial do TJSP e páginas institucionais consultadas em 31/10/2026"] },
+              aviso: "A relação oficial lista o serviço como pré-processual. Para processo já em andamento, confirme a forma de encaminhamento com o CEJUSC ou a unidade judicial.",
+              fonte: ["Tribunal de Justiça de São Paulo", "https://portal.tjsp.jus.br/Download/Conciliacao/Nucleo/Enderecos_Cejusc.pdf", "Diretório oficial do TJSP consultado em 31/10/2026; notícia sobre gratuidade e pedidos por e-mail publicada em 22/03/2018"] },
             { nome: "NPJ/SAJU do Claretiano — possibilidade a confirmar", resumo: "Pergunte à instituição se há triagem aberta",
               texto: "O Claretiano publicou em outubro de 2025 que estudantes do NPJ e do SAJU trabalhavam com casos reais em prol da população de baixa renda. Isso não confirma que o serviço esteja recebendo casos novos agora.",
               topicos: [
@@ -436,7 +439,7 @@
             ["INSS — Central de Atendimento 135", "https://www.gov.br/inss/pt-br/canais_atendimento/central-135", "Canal oficial para agendar e confirmar local, horário e documentos; teleatendimento humano de segunda a sábado, das 7h às 22h (horário de Brasília)."] ,
             ["Consumidor.gov.br", "https://www.consumidor.gov.br/", "Plataforma oficial de interlocução com empresas participantes; verifique se a empresa está cadastrada. Não substitui orientação jurídica."],
             ["Procon de Rio Claro — unidades e atendimento", "https://rioclaro.sp.gov.br/justica/procon-de-rio-claro-realiza-mil-atendimentos-mensais/", "Notícia municipal de 2025 informa as unidades Centro (Rua 5, 821) e Cervezão (Rua M-15, 411). Confirme horário e canais antes de ir."],
-            ["TJSP — relação dos CEJUSCs", "https://portal.tjsp.jus.br/Download/Conciliacao/Nucleo/Enderecos_Cejusc.pdf", "Consulte os canais atuais e confirme o contato de Rio Claro antes de se deslocar; dados publicados em outras páginas variam."],
+            ["CEJUSC Rio Claro — endereço e contato oficiais", "https://www.tjsp.jus.br/Download/Conciliacao/Nucleo/Enderecos_Cejusc.pdf", "Diretório do TJSP: Avenida 5, 535, sala 104; (19) 3531-6137; atendimento 13h–17h; atuação pré-processual cível e de família. O TJSP também informa atendimento gratuito e solicitação pré-processual por e-mail em notícia de 2018."],
             ["Claretiano — unidade de Rio Claro", "https://claretiano.edu.br/rioclaro", "Contato institucional para perguntar se o NPJ/SAJU está recebendo casos; a disponibilidade atual não foi confirmada."],
             ["Anhanguera — contato institucional", "https://www.anhanguera.com/central-de-atendimento/", "Canal institucional para confirmar endereço da unidade e se há atendimento jurídico comunitário ativo em Rio Claro."]
           ]

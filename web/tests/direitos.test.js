@@ -20,7 +20,8 @@ assert(/Rua Três, 1026, Centro, CEP 13500-910/.test(conteudo), "endereço da AP
 assert(/segunda a sábado, das 7h às 22h/.test(conteudo) && /agendamento pelo Meu INSS ou 135/.test(conteudo), "horário do 135 e agendamento presencial estão explicados");
 assert(!/3524-2212|3534-3166|7h às 17h/.test(conteudo), "não publica telefone e horário local sem confirmação oficial");
 assert(/em favor de seus assistidos/.test(conteudo) && /não é um canal direto de atendimento ao público/.test(conteudo), "explica corretamente o alcance do ACT INSS-DPU");
-assert(/dados de contato diferentes/.test(conteudo) && /não fixa endereço nem telefone/.test(conteudo), "CEJUSC mostra a divergência e não publica contato local incerto");
+assert(/Avenida 5, nº 535, Centro, sala 104/.test(conteudo) && /3531-6137/.test(conteudo) && /13h às 17h/.test(conteudo), "CEJUSC usa o endereço, telefone e horário do diretório oficial atual");
+assert(/atendimento é gratuito/.test(conteudo) && /Antes de enviar dados pessoais/.test(conteudo), "CEJUSC esclarece gratuidade e protege dados ao orientar contato por e-mail");
 assert(/não confirma que o serviço esteja recebendo casos novos agora/.test(conteudo), "NPJ/SAJU não é anunciado como serviço ativo confirmado");
 assert(/Anhanguera — unidade na Rua 2/.test(conteudo) && /atendimento jurídico a confirmar/.test(conteudo), "inclui a unidade indicada pelo mantenedor sem dizer que o serviço está ativo");
 assert(/endereço completo não foi verificado/.test(conteudo) && /oferta atual de orientação jurídica gratuita/.test(conteudo), "distingue localização informada de atendimento jurídico confirmado");
@@ -41,7 +42,7 @@ const links = secao.links;
   "https://www.consumidor.gov.br/",
   "https://rioclaro.sp.gov.br/justica/procon-de-rio-claro-realiza-mil-atendimentos-mensais/",
   "https://www.anhanguera.com/central-de-atendimento/",
-  "https://portal.tjsp.jus.br/Download/Conciliacao/Nucleo/Enderecos_Cejusc.pdf",
+  "https://www.tjsp.jus.br/Download/Conciliacao/Nucleo/Enderecos_Cejusc.pdf",
   "https://claretiano.edu.br/rioclaro"
 ].forEach((href) => assert(links.some((l) => l[1] === href), "falta link oficial: " + href));
 links.forEach((l) => assert(/^https:\/\//.test(l[1]) && l[2], "link seguro com descrição: " + l[0]));
