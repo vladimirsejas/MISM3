@@ -10,7 +10,7 @@ RAIZ = Path(__file__).resolve().parents[2]
 README = (RAIZ / "README.md").read_text(encoding="utf-8")
 STD = set(sys.stdlib_module_names)
 # módulo importado -> nome do pacote no pip
-PACOTE = {"sklearn": "scikit-learn", "shapefile": "pyshp", "pandas": "pandas", "numpy": "numpy", "openpyxl": "openpyxl", "pytest": "pytest"}
+PACOTE = {"sklearn": "scikit-learn", "shapefile": "pyshp", "pandas": "pandas", "numpy": "numpy", "openpyxl": "openpyxl", "pytest": "pytest", "pyarrow": "pyarrow"}
 LOCAIS = {Path(f).stem for f in glob.glob(str(RAIZ / "pipeline" / "*.py"))} | {"conftest"}
 
 
