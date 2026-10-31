@@ -43,6 +43,18 @@ assert(/não impede o exame/.test(T(mama)) && /riscos e os benefícios/.test(T(m
 assert(/prioridade na marcação/.test(T(mama)) && /Isto não é diagnóstico/.test(T(mama)), "sinais de alerta com prioridade e sem diagnóstico");
 assert(/AME/.test(T(mama)) && /Quatro UBS/.test(T(mama)) && /Cadastro não é agenda nem vaga/.test(T(mama)), "onde o exame é feito: próprio x por terceiro, e cadastro não é vaga");
 
+/* Qual unidade procurar (pedido do autor, 31/10/2026): UBS e USF, nunca "unidade de saúde" solta; a equipe da unidade marca o exame; UPA e CAPS não são o caminho e o pedido em UPA não é mencionado. */
+const topico = (c, t) => (c.topicos.find((x) => x[0] === t) || [0, ""])[1];
+const qual = topico(mama, "Qual unidade procurar");
+assert(/UBS \(Unidade Básica de Saúde/.test(qual) && /USF \(Unidade de Saúde da Família\)/.test(qual), "mamografia: diz que são a UBS e a USF, por extenso");
+assert(/A UPA e o CAPS atendem outras necessidades/.test(qual), "mamografia: UPA e CAPS não são o caminho");
+const quem = topico(mama, "Quem marca o exame");
+assert(/os funcionários da própria UBS ou USF marcam o exame para a mulher/.test(quem) && /trabalha na Fundação Municipal de Saúde/.test(quem), "mamografia: a equipe da unidade marca o exame, e a origem é dita");
+assert(/UBS ou na USF/.test(topico(mama, "Como marcar a consulta")), "mamografia: consulta marcada na UBS ou na USF");
+assert(/funcionários da própria UBS ou USF marcam a coleta/.test(topico(colo, "Como conseguir em Rio Claro")), "preventivo: a equipe da UBS ou da USF marca a coleta");
+assert(!/pedid[oa]s? (em|na|numa) UPA/i.test(T(mama) + T(colo)), "não ensina a pedir o exame em UPA");
+assert(!/consulta na (sua )?unidade de saúde/.test(T(mama)), "mamografia: não volta a frase vaga 'unidade de saúde'");
+
 /* Preventivo: Papanicolau em Rio Claro; DNA-HPV só como notícia nacional, sem afirmar que já existe aqui. */
 assert(/Papanicolau/.test(T(colo)) && /25 a 64 anos/.test(T(colo)), "Papanicolau e a faixa de 25 a 64 anos");
 assert(/Este site não encontrou informação de que o DNA-HPV já seja feito em Rio Claro/.test(T(colo)), "DNA-HPV: não afirma que já existe em Rio Claro");
