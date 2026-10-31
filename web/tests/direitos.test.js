@@ -65,3 +65,10 @@ assert(familia.canais.some((c) => /^Defensoria Pública/.test(c.nome)), "cartão
 assert(protecao.urgente && /180/.test(area.guia.itens[0].texto), "rota de violência conserva urgência e Ligue 180");
 
 console.log("direitos.test.js: central por necessidade, assistência OAB/Defensoria, rotas diferenciadas e limites de serviços conferidos");
+
+/* Claretiano (SAJU): os únicos contatos que a instituição oferece, ditos como gerais e sem o formulário de estudantes. */
+const clar = JSON.stringify(secao.canais.find((c) => /Claretiano/.test(c.nome)));
+assert(/\(19\) 2111-6000/.test(clar) && /0800 722 6450/.test(clar), "Claretiano: telefone e 0800 da instituição");
+assert(/não publica um contato próprio do NPJ\/SAJU/.test(clar) && /contatos gerais da instituição/.test(clar), "Claretiano: diz que o contato é geral, não do SAJU");
+assert(/formulário de atendimento do site do Claretiano é para estudantes/.test(clar) && !/atendimento\.claretiano/.test(clar), "Claretiano: não indica o formulário de estudantes");
+
