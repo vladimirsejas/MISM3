@@ -15,7 +15,8 @@ const conteudo = JSON.stringify(secao);
 ["Família", "assédio", "Dívidas", "benefício federal", "Documentos", "OAB-SP", "MPT", "CEJUSC", "NPJ/SAJU"].forEach((t) =>
   assert(new RegExp(t, "i").test(conteudo), "falta rota ou alternativa para: " + t));
 assert(/não substitui a orientação de uma advogada ou advogado/.test(conteudo), "o MPT não é apresentado como representação individual");
-assert(/não há unidade da DPU de Rio Claro confirmada/.test(conteudo), "não inventa unidade local da DPU");
+assert(/não há unidade da DPU de Rio Claro|nem confirma unidade da DPU em Rio Claro/.test(conteudo), "não inventa unidade local da DPU");
+assert(/em favor de seus assistidos/.test(conteudo) && /não é um canal direto de atendimento ao público/.test(conteudo), "explica corretamente o alcance do ACT INSS-DPU");
 assert(/dados de contato diferentes/.test(conteudo) && /não fixa endereço nem telefone/.test(conteudo), "CEJUSC mostra a divergência e não publica contato local incerto");
 assert(/não confirma que o serviço esteja recebendo casos novos agora/.test(conteudo), "NPJ/SAJU não é anunciado como serviço ativo confirmado");
 assert(/Anhanguera — unidade na Rua 2/.test(conteudo) && /atendimento jurídico a confirmar/.test(conteudo), "inclui a unidade indicada pelo mantenedor sem dizer que o serviço está ativo");
@@ -31,6 +32,7 @@ const links = secao.links;
   "https://www.oabsp.org.br/subsecao/rio-claro",
   "https://www.prt15.mpt.mp.br/servicos/denuncias",
   "https://www.dpu.def.br/contatos-dpu",
+  "https://www.gov.br/inss/pt-br/canais_atendimento/acts/acordos-de-cooperacao-tecnica-acts-nacionais/dpu-defensoria-publica-da-uniao",
   "https://www.consumidor.gov.br/",
   "https://rioclaro.sp.gov.br/justica/procon-de-rio-claro-realiza-mil-atendimentos-mensais/",
   "https://www.anhanguera.com/central-de-atendimento/",

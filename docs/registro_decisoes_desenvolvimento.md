@@ -1106,3 +1106,9 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 
 - O mantenedor informou o endereço do Procon Centro: Rua 5, 821, Centro, CEP 13500-040. A Prefeitura confirma Rua 5, 821 e a operação das duas unidades em notícia de 14/03/2025; o CEP permanece identificado como informação do mantenedor. Horários e telefone não foram acrescentados por falta de confirmação recente na fonte consultada.
 - O mantenedor informou que a unidade Anhanguera que conhece fica na Rua 2. A central agora a mostra como possibilidade a confirmar, registrando que o número/endereço completo e a existência de atendimento jurídico ativo não foram confirmados. Linka o canal institucional para consulta.
+
+
+## 31/10/2026 — ACT nacional INSS-DPU
+
+- Acrescentada a página do INSS sobre o Acordo de Cooperação Técnica com a DPU na rota de benefício federal. A página, publicada em 06/09/2022, diz que a DPU pode, em favor de seus assistidos, requerer serviços/benefícios por canais remotos e pedir reabertura de processos de benefício assistencial em situação específica de falha de comunicação.
+- A interface deixa claro que o ACT não é canal direto ao público e não confirma unidade local ou elegibilidade; encaminha a pessoa a consultar a DPU. Fonte completa e limites em `docs/acesso_a_justica.md`.
