@@ -1131,3 +1131,8 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 
 - Atualizado o cartão e o catálogo a partir do diretório oficial atual do TJSP: Fórum, Avenida 5, 535, sala 104; (19) 3531-6137; e-mail `cejusc.rioclaro@tjsp.jus.br`; atendimento das 13h às 17h; atuação pré-processual cível e de família.
 - A notícia do TJSP de 2018 sustenta a informação de gratuidade e o recebimento de solicitações pré-processuais por e-mail, mas seus endereço/telefone/horário são antigos. O produto orienta confirmar documentos e procedimento antes de enviar dados pessoais; processo em andamento requer confirmação do fluxo com a unidade judicial ou o CEJUSC.
+
+## 31/10/2026 — Contato e horário publicados do Procon Cervezão
+
+- A página atual da Secretaria de Justiça lista os telefones (19) 3523-5985 e (19) 3532-1550. Notícia municipal de 2025 confirma endereço Rua M-15, 411; publicação municipal de 2021 informa atendimento de segunda a sexta, das 8h às 16h.
+- O horário foi incluído com data e orientação para confirmação, pois a página atual da Secretaria não o publica. A notícia de 2017 enviada pelo mantenedor é mantida como fonte histórica para a gratuidade e ampliação de horário, sem tratá-la como dado atual.

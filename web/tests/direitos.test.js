@@ -21,11 +21,13 @@ assert(/segunda a sábado, das 7h às 22h/.test(conteudo) && /agendamento pelo M
 assert(!/3524-2212|3534-3166|7h às 17h/.test(conteudo), "não publica telefone e horário local sem confirmação oficial");
 assert(/em favor de seus assistidos/.test(conteudo) && /não é um canal direto de atendimento ao público/.test(conteudo), "explica corretamente o alcance do ACT INSS-DPU");
 assert(/Avenida 5, nº 535, Centro, sala 104/.test(conteudo) && /3531-6137/.test(conteudo) && /13h às 17h/.test(conteudo), "CEJUSC usa o endereço, telefone e horário do diretório oficial atual");
-assert(/atendimento é gratuito/.test(conteudo) && /Antes de enviar dados pessoais/.test(conteudo), "CEJUSC esclarece gratuidade e protege dados ao orientar contato por e-mail");
+assert(/atende gratuitamente/.test(conteudo) && /Antes de enviar dados pessoais/.test(conteudo), "CEJUSC esclarece gratuidade e protege dados ao orientar contato por e-mail");
 assert(/não confirma que o serviço esteja recebendo casos novos agora/.test(conteudo), "NPJ/SAJU não é anunciado como serviço ativo confirmado");
 assert(/Anhanguera — unidade na Rua 2/.test(conteudo) && /atendimento jurídico a confirmar/.test(conteudo), "inclui a unidade indicada pelo mantenedor sem dizer que o serviço está ativo");
 assert(/endereço completo não foi verificado/.test(conteudo) && /oferta atual de orientação jurídica gratuita/.test(conteudo), "distingue localização informada de atendimento jurídico confirmado");
 assert(/Rua 5, 821/.test(conteudo) && /CEP 13500-040/.test(conteudo), "Procon Centro fica identificável pelo endereço informado");
+assert(/Rua M-15, 411/.test(conteudo) && /3523-5985/.test(conteudo) && /3532-1550/.test(conteudo), "Procon Cervezão apresenta endereço e telefones publicados pela Prefeitura");
+assert(/2021 informou atendimento das 8h às 16h/.test(conteudo), "horário antigo do Cervezão fica datado e sujeito a confirmação");
 assert(/não ranqueia nem recomenda profissionais individuais/.test(conteudo), "não cria ranking nem endosso profissional");
 const semAvisosNegativos = conteudo.replace(/não garante[^.]{0,120}/gi, "");
 assert(!/garante (?:atendimento|resultado)|caso será aceito|você tem direito/i.test(semAvisosNegativos), "não promete elegibilidade ou resultado");
@@ -40,6 +42,7 @@ const links = secao.links;
   "https://www.gov.br/inss/pt-br/canais_atendimento/central-135",
   "https://www.gov.br/inss/pt-br/centrais-de-conteudo/publicacoes/contratos-e-licitacoes/superintendencia-regional-sudeste-i-sao-paulo/pregao-eletronico-no90011-2025-contratacao-de-servicos-de-vigilancia-integrada-no-ambito-da-srse-i/anexo_x-20302607.pdf/@@download/file",
   "https://www.consumidor.gov.br/",
+  "https://rioclaro.sp.gov.br/secretaria/secretaria-de-justica/",
   "https://rioclaro.sp.gov.br/justica/procon-de-rio-claro-realiza-mil-atendimentos-mensais/",
   "https://www.anhanguera.com/central-de-atendimento/",
   "https://www.tjsp.jus.br/Download/Conciliacao/Nucleo/Enderecos_Cejusc.pdf",
