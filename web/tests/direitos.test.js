@@ -18,7 +18,9 @@ assert(/não substitui a orientação de uma advogada ou advogado/.test(conteudo
 assert(/não há unidade da DPU de Rio Claro confirmada/.test(conteudo), "não inventa unidade local da DPU");
 assert(/dados de contato diferentes/.test(conteudo) && /não fixa endereço nem telefone/.test(conteudo), "CEJUSC mostra a divergência e não publica contato local incerto");
 assert(/não confirma que o serviço esteja recebendo casos novos agora/.test(conteudo), "NPJ/SAJU não é anunciado como serviço ativo confirmado");
-assert(/Anhanguera não foi incluída como serviço ativo/.test(conteudo), "Anhanguera aparece somente na nota que explica por que não foi cadastrada");
+assert(/Anhanguera — unidade na Rua 2/.test(conteudo) && /atendimento jurídico a confirmar/.test(conteudo), "inclui a unidade indicada pelo mantenedor sem dizer que o serviço está ativo");
+assert(/endereço completo não foi verificado/.test(conteudo) && /oferta atual de orientação jurídica gratuita/.test(conteudo), "distingue localização informada de atendimento jurídico confirmado");
+assert(/Rua 5, 821/.test(conteudo) && /CEP 13500-040/.test(conteudo), "Procon Centro fica identificável pelo endereço informado");
 assert(/não ranqueia nem recomenda profissionais individuais/.test(conteudo), "não cria ranking nem endosso profissional");
 const semAvisosNegativos = conteudo.replace(/não garante[^.]{0,120}/gi, "");
 assert(!/garante (?:atendimento|resultado)|caso será aceito|você tem direito/i.test(semAvisosNegativos), "não promete elegibilidade ou resultado");
@@ -30,6 +32,8 @@ const links = secao.links;
   "https://www.prt15.mpt.mp.br/servicos/denuncias",
   "https://www.dpu.def.br/contatos-dpu",
   "https://www.consumidor.gov.br/",
+  "https://rioclaro.sp.gov.br/justica/procon-de-rio-claro-realiza-mil-atendimentos-mensais/",
+  "https://www.anhanguera.com/central-de-atendimento/",
   "https://portal.tjsp.jus.br/Download/Conciliacao/Nucleo/Enderecos_Cejusc.pdf",
   "https://claretiano.edu.br/rioclaro"
 ].forEach((href) => assert(links.some((l) => l[1] === href), "falta link oficial: " + href));
