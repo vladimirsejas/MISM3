@@ -72,7 +72,7 @@ def ler_tabela_pequena(caminho: Path | None, col_codigo: str, col_texto: str) ->
 
     if not caminho:
         return {}
-    df = ler_tabela(caminho)
+    df = ler_tabela(caminho, [col_codigo, col_texto])
     if col_codigo not in df.columns or col_texto not in df.columns:
         return {}
     return {str(c).strip(): str(t).strip() for c, t in zip(df[col_codigo], df[col_texto])
@@ -88,19 +88,23 @@ def ler_estabelecimentos(caminho: Path, ceps_do_municipio: set[str] | None = Non
     if eh_parquet(caminho):
         import pyarrow.parquet as pq
 
-        cab = pq.read_schema(caminho).names
-        faltam = [c for c in ("CO_UNIDADE", "NO_FANTASIA", "CO_CEP", "CO_MUNICIPIO_GESTOR") if c not in cab]
+        arquivo = pq.ParquetFile(caminho)
+        cab = arquivo.schema_arrow.names
+        obrigatorias = ("CO_UNIDADE", "NO_FANTASIA", "CO_CEP", "CO_MUNICIPIO_GESTOR")
+        faltam = [c for c in obrigatorias if c not in cab]
         if faltam:
             raise ValueError("tbEstabelecimento sem colunas %s. Colunas: %s" % (faltam, list(cab)))
         usar = [c for c in COLUNAS if c in cab]
-        df = ler_tabela(caminho, usar)
-        gestor = df["CO_MUNICIPIO_GESTOR"].fillna("").str.strip().str[:6] == MUNICIPIO_IBGE6
-        if ceps_do_municipio:
-            cep_ok = df["CO_CEP"].map(normalizar_cep).isin(ceps_do_municipio)
-            df = df[gestor | cep_ok]
-        else:
-            df = df[gestor]
-        return df.reset_index(drop=True)
+        partes = []
+        for lote in arquivo.iter_batches(batch_size=BLOCO, columns=usar):
+            bloco = lote.to_pandas().astype("string")
+            gestor = bloco["CO_MUNICIPIO_GESTOR"].fillna("").str.strip().str[:6] == MUNICIPIO_IBGE6
+            if ceps_do_municipio:
+                cep_ok = bloco["CO_CEP"].map(normalizar_cep).isin(ceps_do_municipio)
+                partes.append(bloco[gestor | cep_ok])
+            else:
+                partes.append(bloco[gestor])
+        return pd.concat(partes, ignore_index=True) if partes else pd.DataFrame(columns=usar, dtype="string")
 
     enc = detectar_encoding(caminho)
     cab = pd.read_csv(caminho, sep=";", dtype=str, encoding=enc, nrows=0).columns
