@@ -140,10 +140,12 @@
    "secoes": [
     "Meu filho ou familiar usa álcool ou drogas",
     "Saúde da mulher: mamografia, preventivo e gravidez",
+    "Saúde mental e apoio emocional",
     "Unidades de saúde"
    ],
    "cartoes": [
     "Amor Exigente (Rio Claro)",
+    "CVV: conversar com alguém agora, pelo 188",
     "Comunidade Terapêutica Peniel de Rio Claro (informação não confirmada por ligação)",
     "Grupos de ajuda mútua: para que serve cada um",
     "Mamografia: como conseguir em Rio Claro",
@@ -151,9 +153,14 @@
     "NA – Grupo Viver Limpo (Rio Claro)",
     "Por onde começar",
     "Preventivo do colo do útero: Papanicolau e teste de DNA-HPV",
-    "Pré-natal: quando e onde começar"
+    "Pré-natal: quando e onde começar",
+    "Saúde mental na rede pública de Rio Claro"
    ],
    "topicos": [
+    "CVV: conversar com alguém agora, pelo 188 || Como falar",
+    "CVV: conversar com alguém agora, pelo 188 || Quem atende",
+    "CVV: conversar com alguém agora, pelo 188 || Se a preocupação é com outra pessoa",
+    "CVV: conversar com alguém agora, pelo 188 || Se você pensa em se machucar",
     "Comunidade Terapêutica Peniel de Rio Claro (informação não confirmada por ligação) || Comunidade terapêutica não é hospital nem clínica",
     "Comunidade Terapêutica Peniel de Rio Claro (informação não confirmada por ligação) || Confira se o lugar é regular",
     "Comunidade Terapêutica Peniel de Rio Claro (informação não confirmada por ligação) || Pergunte ao ligar",
@@ -181,10 +188,15 @@
     "Pré-natal: quando e onde começar || Atendimento ginecológico e da gravidez fora de hora",
     "Pré-natal: quando e onde começar || Como é o acompanhamento",
     "Pré-natal: quando e onde começar || Onde ir",
-    "Pré-natal: quando e onde começar || Quando começar"
+    "Pré-natal: quando e onde começar || Quando começar",
+    "Saúde mental na rede pública de Rio Claro || Onde ficam os CAPS",
+    "Saúde mental na rede pública de Rio Claro || Por onde começar",
+    "Saúde mental na rede pública de Rio Claro || Se o problema é álcool ou outras drogas na família",
+    "Saúde mental na rede pública de Rio Claro || Se você está passando muito mal agora"
    ],
    "links": [
     "https://cnes.datasus.gov.br/",
+    "https://cvv.org.br/",
     "https://ninho.inca.gov.br/jspui/bitstream/123456789/17713/1/SEI_0050548355_Nota_Tecnica_626.pdf",
     "https://rioclaro.sp.gov.br/fundacao-de-saude/nova-central-para-agendamento-de-consultas-comeca-a-operar-na-2a-feira-em-rc/",
     "https://rioclaro.sp.gov.br/fundacao-de-saude/outubro-rosa-reforca-importancia-de-exames-preventivos/",
@@ -195,7 +207,7 @@
    ],
    "atalhos": [
     "Meu filho ou familiar usa álcool ou drogas -> #saude-familia-drogas",
-    "Preciso de ajuda para a saúde mental -> #saude-unidades",
+    "Preciso de ajuda para a saúde mental -> #saude-apoio-emocional",
     "Preciso de atendimento urgente -> #saude-unidades",
     "Preciso de remédio -> #saude-unidades",
     "Quero fazer mamografia ou preventivo, ou estou grávida -> #saude-mulher",
@@ -203,6 +215,7 @@
     "Unidades de saúde -> #saude-unidades"
    ],
    "ancoras": [
+    "saude-apoio-emocional",
     "saude-familia-drogas",
     "saude-mulher",
     "saude-unidades"

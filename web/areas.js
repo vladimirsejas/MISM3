@@ -235,7 +235,7 @@
         itens: [
           { titulo: "Preciso de atendimento urgente", texto: "UPAs e hospitais, com endereço e telefone. Em urgência médica, ligue 192 (SAMU).", ancora: "saude-unidades", botao: "Ver UPAs e hospitais" },
           { titulo: "Quero ser atendida no posto de saúde", texto: "Os postos de saúde (UBS e USF) de Rio Claro, com endereço e telefone. Ligue antes para saber como ser atendida.", ancora: "saude-unidades", botao: "Ver os postos de saúde" },
-          { titulo: "Preciso de ajuda para a saúde mental", texto: "O CVV, no 188, conversa 24 horas por dia, de graça. Os CAPS, serviços de saúde mental da rede pública, estão na lista de unidades.", ancora: "saude-unidades", botao: "Ver os CAPS" },
+          { titulo: "Preciso de ajuda para a saúde mental", texto: "O CVV, no 188, conversa 24 horas por dia, de graça. Os CAPS, serviços de saúde mental da rede pública, estão na lista de unidades.", ancora: "saude-apoio-emocional", botao: "Ver apoio emocional e CAPS" },
           { titulo: "Preciso de remédio", texto: "A Farmácia Central e o Dispensário de Medicamentos estão na lista de unidades. Ligue para saber o que é preciso levar.", ancora: "saude-unidades", botao: "Ver as farmácias" },
           { titulo: "Quero fazer mamografia ou preventivo, ou estou grávida", texto: "Como conseguir mamografia e Papanicolau em Rio Claro, o que o Ministério da Saúde orienta e como começar o pré-natal.", ancora: "saude-mulher", botao: "Ver saúde da mulher" },
           { titulo: "Meu filho ou familiar usa álcool ou drogas", texto: "Por onde começar, o que fazer numa crise, onde ligar e como cuidar de você nesse caminho. A culpa não é sua.", ancora: "saude-familia-drogas", botao: "Ver o que fazer" },
@@ -285,6 +285,35 @@
               ],
               aviso: "Este site não traz o número mínimo de consultas nem a lista de exames do pré-natal, porque a página do Ministério que consultamos não os informa. A equipe da unidade explica o que vale para você. Em urgência, ligue 192.",
               fonte: ["Ministério da Saúde: Pré-natal", "https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/g/gravidez/pre-natal", "Página aberta e lida em 31/10/2026; ela não mostra data de atualização. O Pronto Atendimento vem da lista de endereços da Fundação Municipal de Saúde (10/10/2026). As 17 UBS e USF vêm do cadastro do CNES, competência 08/2026, lido em 31/10/2026."] }
+          ]
+        },
+        {
+          titulo: "Saúde mental e apoio emocional", ancora: "saude-apoio-emocional",
+          descricao: "Telefone de apoio emocional e serviços de saúde mental de Rio Claro. Este site não faz diagnóstico: quem avalia o seu caso é a equipe de saúde.",
+          tipos: [], links: [
+            ["Centro de Valorização da Vida (CVV)", "https://cvv.org.br/", "Site oficial: o telefone 188, a conversa por chat e por e-mail e guias sobre como falar de suicídio com segurança e como ajudar alguém em risco."]
+          ],
+          canais: [
+            { nome: "CVV: conversar com alguém agora, pelo 188", tel: "188", resumo: "Ver como funciona",
+              texto: "Quando o peso está grande demais, você não precisa carregar sozinha. O CVV (Centro de Valorização da Vida) oferece apoio emocional e prevenção do suicídio, de graça.",
+              topicos: [
+                ["Quem atende", "Voluntários do CVV, segundo o próprio site. A conversa é sigilosa, sem julgamentos, críticas ou comparações."],
+                ["Como falar", "Ligue 188, de graça, 24 horas por dia. O CVV também oferece conversa por chat e por e-mail pelo site cvv.org.br; o site não informa os horários dessas conversas."],
+                ["Se você pensa em se machucar", "Ligue agora para o 188. Se você estiver passando mal, ligue também para o 192 (SAMU). Você não está sozinha."],
+                ["Se a preocupação é com outra pessoa", "O site do CVV tem um guia sobre como ajudar alguém que pode estar em risco e sobre como falar de suicídio com segurança. Ele está no link desta seção."]
+              ],
+              aviso: "O CVV é um serviço feito por voluntários: este site não sabe se há espera nem como cada conversa é conduzida, e ele não substitui a consulta com a equipe de saúde. Se você está passando mal ou em risco agora, ligue 192 (SAMU).",
+              fonte: ["Centro de Valorização da Vida (CVV): página inicial", "https://cvv.org.br/", "Página aberta e lida em 31/10/2026."] },
+            { nome: "Saúde mental na rede pública de Rio Claro", sem_tel: true, resumo: "Ver por onde começar",
+              texto: "Os serviços de saúde mental da rede pública de Rio Claro estão na lista de unidades desta página.",
+              topicos: [
+                ["Onde ficam os CAPS", "Os CAPS (Centros de Atenção Psicossocial) estão na lista de unidades, mais abaixo, no grupo Saúde mental (CAPS), com endereço e telefone conferidos em 10/10/2026."],
+                ["Por onde começar", "Ligue antes e pergunte como ser atendida: este site não confirma quais serviços recebem quem chega sem encaminhamento, nem os horários de cada um. Você também pode procurar a unidade de saúde do seu bairro, cuja lista está mais abaixo."],
+                ["Se o problema é álcool ou outras drogas na família", "Veja a seção Meu filho ou familiar usa álcool ou drogas, nesta mesma página."],
+                ["Se você está passando muito mal agora", "Ligue 192 (SAMU)."]
+              ],
+              aviso: "Cadastro de serviço não é vaga nem atendimento garantido: confirme por telefone antes de ir.",
+              fonte: ["Fundação Municipal de Saúde de Rio Claro: endereços das unidades", "https://www.saude-rioclaro.org.br/enderecos.htm", "Lista usada nas fichas do grupo Saúde mental (CAPS), conferida em 10/10/2026."] }
           ]
         },
         {
