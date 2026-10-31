@@ -88,7 +88,10 @@ def ler_filtrado(caminho: Path, colunas: list[str], municipio: str = MUNICIPIO_I
             raise ValueError("%s sem as colunas %s. Colunas do arquivo: %s" %
                              (caminho.name, faltando, cabecalho[:30]))
         df = pd.read_parquet(caminho, columns=colunas).astype("string")
-        return df[df["CO_MUNICIPIO"].str.strip() == municipio].reset_index(drop=True)
+        # Parquets originados de CSVs podem inferir códigos numéricos como float (3543907.0).
+        # Remove apenas o sufixo decimal artificial, sem alterar zeros à esquerda.
+        df["CO_MUNICIPIO"] = df["CO_MUNICIPIO"].str.strip().str.replace(r"\\.0$", "", regex=True)
+        return df[df["CO_MUNICIPIO"] == municipio].reset_index(drop=True)
 
     codificacao = detectar_codificacao(caminho)
     cabecalho = pd.read_csv(caminho, sep=";", nrows=0, encoding=codificacao, dtype=str)
