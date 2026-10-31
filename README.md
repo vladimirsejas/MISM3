@@ -124,7 +124,7 @@ Não existe: modelo de linguagem, embeddings neurais, previsão de risco, elegib
 |---|---|---|---|
 | `baixar.py` | URLs do IBGE, INEP, CNES | `dados/bruto/` | stdlib (`urllib`, `zipfile`) |
 | `common.py` | Utilidades compartilhadas (download com retomada, distância) | | pandas, numpy |
-| `cnes.py` | Base completa do CNES | Diagnóstico e estabelecimentos de saúde | pandas |
+| `cnes.py` | Base completa do CNES em CSV ou Parquet | Diagnóstico e estabelecimentos de saúde | pandas, pyarrow |
 | `indice_cep.py` | CNEFE 2022 | `web/dados/cep_indice.json` | pandas, numpy |
 | `ceps_lista.py` | Lista de CEPs com coordenada | Dados para o índice | stdlib |
 | `servicos.py` | `catalogo/servicos_manuais.csv`, CNES, INEP | `web/dados/catalogo_manual.json` e `servicos.json` | pandas |
