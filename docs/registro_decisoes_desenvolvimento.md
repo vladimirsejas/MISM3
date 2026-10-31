@@ -1134,5 +1134,5 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 
 ## 31/10/2026 — Contato e horário publicados do Procon Cervezão
 
-- A página atual da Secretaria de Justiça lista os telefones (19) 3523-5985 e (19) 3532-1550. Notícia municipal de 2025 confirma endereço Rua M-15, 411; publicação municipal de 2021 informa atendimento de segunda a sexta, das 8h às 16h.
-- O horário foi incluído com data e orientação para confirmação, pois a página atual da Secretaria não o publica. A notícia de 2017 enviada pelo mantenedor é mantida como fonte histórica para a gratuidade e ampliação de horário, sem tratá-la como dado atual.
+- A página atual da Secretaria de Justiça lista os telefones (19) 3523-5985 e (19) 3532-1550. Notícia municipal de 2025 confirma endereço Rua M-15, 411. A página da Fundação Procon-SP (registro de 28/08/2019) também lista CEP 13505-371, atendimento de segunda a sexta, 8h–16h, e agendamento por telefone ou e-mail até as 15h.
+- O horário e agendamento são apresentados com a data da fonte, com orientação para confirmação por o registro ser de 2019. A notícia de 2017 enviada pelo mantenedor segue como fonte histórica sobre a gratuidade e ampliação de horário, sem tratá-la como atualização operacional.

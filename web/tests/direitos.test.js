@@ -27,7 +27,7 @@ assert(/Anhanguera — unidade na Rua 2/.test(conteudo) && /atendimento jurídic
 assert(/endereço completo não foi verificado/.test(conteudo) && /oferta atual de orientação jurídica gratuita/.test(conteudo), "distingue localização informada de atendimento jurídico confirmado");
 assert(/Rua 5, 821/.test(conteudo) && /CEP 13500-040/.test(conteudo), "Procon Centro fica identificável pelo endereço informado");
 assert(/Rua M-15, 411/.test(conteudo) && /3523-5985/.test(conteudo) && /3532-1550/.test(conteudo), "Procon Cervezão apresenta endereço e telefones publicados pela Prefeitura");
-assert(/2021 informou atendimento das 8h às 16h/.test(conteudo), "horário antigo do Cervezão fica datado e sujeito a confirmação");
+assert(/CEP 13505-371/.test(conteudo) && /publicada em 2019/.test(conteudo) && /até as 15h/.test(conteudo), "dados da unidade e agendamento da página Procon-SP ficam datados e sujeitos a confirmação");
 assert(/não ranqueia nem recomenda profissionais individuais/.test(conteudo), "não cria ranking nem endosso profissional");
 const semAvisosNegativos = conteudo.replace(/não garante[^.]{0,120}/gi, "");
 assert(!/garante (?:atendimento|resultado)|caso será aceito|você tem direito/i.test(semAvisosNegativos), "não promete elegibilidade ou resultado");
@@ -44,6 +44,7 @@ const links = secao.links;
   "https://www.consumidor.gov.br/",
   "https://rioclaro.sp.gov.br/secretaria/secretaria-de-justica/",
   "https://rioclaro.sp.gov.br/justica/procon-de-rio-claro-realiza-mil-atendimentos-mensais/",
+  "https://www.procon.sp.gov.br/rio-claro/",
   "https://www.anhanguera.com/central-de-atendimento/",
   "https://www.tjsp.jus.br/Download/Conciliacao/Nucleo/Enderecos_Cejusc.pdf",
   "https://claretiano.edu.br/rioclaro"
