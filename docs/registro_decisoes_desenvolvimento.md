@@ -1262,3 +1262,12 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 
 - **Pedido do autor:** colocar o Instagram, mas não como canal de comunicação. O cartão agora o apresenta como perfil que divulga o atendimento do NPJ e manda a mulher falar com a faculdade pelo endereço ou pelo contato institucional; diz para não enviar documentos nem contar o caso pelo Instagram. `direitos.test.js` trava isso (estrago de teste detectado).
 
+## 31/10/2026 — Mapa de serviços: maior, com base cinza clara, serviços do mesmo local agrupados (técnicas do mapa do MISM 1)
+
+- **Queixa do autor:** o mapa era "feio, mal feito, pequeno e difícil de ver", e dizia "81 sem posição no mapa". Ele mandou olhar o mapa do MISM 1 (`MISM 1/gerar_mapa.py`).
+- **O que o mapa do MISM 1 faz e o MISM3 não fazia:** base cinza clara com nomes de ruas ligada desde o início; pontos na mesma coordenada agrupados num marcador com número; zoom no canto; mapa alto. Trouxe as quatro ideias, sem biblioteca nova: `agrupar` e `caixaCentral` em `web/mapa-servicos.js` (testadas), marcador com número, base Esri Light Gray ligada por padrão (a caixa "Mostrar ruas e nomes" continua e desliga), altura `clamp(420px,78vh,820px)` e vista inicial pelo miolo dos pontos (5º ao 95º percentil), para um serviço distante não afastar tudo.
+- **Mudança de decisão que o autor deve saber:** antes a base de ruas vinha DESLIGADA, por privacidade (o servidor de imagens fica sabendo a região vista). Agora vem ligada, como no MISM 1, e a frase ao lado da caixa avisa. Quem desmarca vê só os pontos. A base é a Esri, não mais o OpenStreetMap.
+- **Posições:** apliquei as 12 sugestões de confiança ALTA do geocodificador (mesma rua e mesmo número, um CEP só), conferidas uma a uma na lista; 24 campos gravados em `catalogo/servicos_manuais.csv`. Nenhuma sugestão "baixa" entrou. Resultado: de 45 para 55 serviços com posição pelo endereço; 76 continuam sem posição.
+- **O que continua pendente:** 76 serviços sem posição, quase todos sem CEP no catálogo (29 de saúde, 16 de assistência, 12 de trabalho); o geocodificador não achou o endereço de 98 deles no CNEFE (ruas escritas por extenso, endereços incompletos). A saída é o autor informar CEP ou endereço completo, ou confirmar à mão.
+- **Não verificado:** celular e navegadores reais; o tempo de carga das imagens da Esri em conexão lenta.
+

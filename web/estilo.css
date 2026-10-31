@@ -352,7 +352,7 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:#8a1c1c!im
 .mapa-campo .linha{display:flex;flex-wrap:wrap;gap:.5rem}
 .mapa-campo .linha input{flex:1 1 auto;min-width:9rem;width:auto}
 .mapa-resumo{margin:.8rem 0 .5rem;font-weight:600}
-.mapa-caixa{height:min(62vh,520px);min-height:340px;border:1px solid var(--bor);border-radius:var(--raio);background:#fbf1ec;overflow:hidden;z-index:0}
+.mapa-caixa{height:clamp(420px,78vh,820px);min-height:420px;border:1px solid var(--bor);border-radius:var(--raio);background:#fbf1ec;overflow:hidden;z-index:0}
 .mapa-legenda{font-size:.9rem;color:var(--mut)}
 .mapa-pino{background:none;border:0}
 .mapa-pino svg{display:block;filter:drop-shadow(0 1px 2px rgba(60,20,30,.45))}
@@ -384,7 +384,10 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:#8a1c1c!im
 .mapa-mais-perto h2{font-family:var(--serif);font-weight:500;font-size:1.3rem;color:var(--pri-esc);margin:0 0 .3rem}
 
 .mapa-inicio{margin:0 0 2rem;scroll-margin-top:1rem}
-.mapa-inicio .mapa-caixa{height:min(60vh,420px)}
+.mapa-inicio .mapa-caixa{height:clamp(420px,74vh,760px)}
+.mapa-grupo{max-height:340px;overflow:auto;padding-right:.3rem}
+.mapa-grupo-titulo{margin:0 0 .5rem;font-weight:700;color:var(--pri-esc)}
+.mapa-grupo .mapa-cartao{margin-bottom:.6rem}
 .duvida{margin:0 0 1.4rem}
 .duvida textarea{min-height:3.4rem}
 .duvida-lista{list-style:none;margin:.4rem 0 .8rem;padding:0;display:grid;gap:.6rem}
