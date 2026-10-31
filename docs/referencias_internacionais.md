@@ -10,6 +10,10 @@ Pesquisa de 31/10/2026. **Nenhuma regra, benefício ou número de outro país va
 | Cuidado das crianças enquanto a mulher é atendida | Mesmos centros de Nova York (a partir de 3 anos, segundo a ficha atual; um comunicado de 2013 falava em cuidado sem limite de idade) | A | Pergunta no cartão "Antes de ir". **Nenhum serviço de Rio Claro está registrado como tendo esse espaço**; o texto manda perguntar e não supor. |
 | Serviço existir não basta: perto, no horário, que ela consiga pagar, com quem deixar os filhos | Pesquisa nórdica sobre mães migrantes (horários noturnos e falta de creche fazem recusar emprego); Ciudad Mujer (El Salvador) e o centro de Toronto incluem cuidado infantil | B / C | Quatro perguntas para fazer ao ligar. Não virou campo do catálogo (ver pendências). |
 
+## Também entrou: caminho "sozinha com os filhos" na jornada de Assistência
+
+Nova opção na pergunta que já existia ("Estou sozinha com os filhos e preciso voltar a trabalhar"), sem botão novo. O plano tem cinco passos: CRAS e Cadastro Único, creche ou escola dos filhos, curso que caiba na rotina das crianças, vagas de trabalho, e a Defensoria sobre a pensão (esse último pode andar em paralelo). A **creche vem antes das vagas**, como nos programas de integração de mães (nível B, citados por terceiros e não verificados um a um) e como o ACCESS NYC faz ao reunir creche, emprego e benefícios na mesma triagem. Telefones e links vêm do catálogo; nenhum passo promete vaga ou benefício. Testes: `web/tests/jornada_assistencia.test.js`.
+
 ## Modelos estudados, com o que aprendemos
 
 - **ACCESS NYC (A, página aberta).** Questionário de 5 a 10 minutos que devolve até 30 benefícios; 9 categorias; 11 idiomas. Lição: entrada por perguntas fechadas, para quem não sabe o que escrever. Pendência: a página não diz se os dados são guardados.
@@ -29,7 +33,7 @@ Pesquisa de 31/10/2026. **Nenhuma regra, benefício ou número de outro país va
 
 1. **Perguntar à Secretaria da Mulher** se existe ou está prevista uma Casa da Mulher Brasileira na região e se algum serviço tem espaço para as crianças. Uma ligação responde mais que toda a pesquisa acima.
 2. **Campo "aceita criança junto?" e "atende em horário noturno ou sábado?" no catálogo**, só depois que a resposta for conferida por serviço. Hoje 117 de 164 serviços ainda não têm horário.
-3. **Triagem com perguntas fechadas** (inspirada no ACCESS NYC): 4 ou 5 perguntas que montem a sequência de passos. Exige decisão sobre o desenho para não criar botão novo.
+3. **Triagem com mais perguntas fechadas** (filhos, renda, moradia, trabalho), no estilo ACCESS NYC. A jornada de Assistência já tem uma pergunta e agora um caminho para quem está sozinha com os filhos; ampliar exige decisão do grupo sobre o desenho.
 4. **Mulheres migrantes** (português para estrangeiras, documentos): falta fonte local de Rio Claro. Sem ela não vira texto.
 5. **Iniciativas comunitárias de mulheres** (associações, grupos): levantamento de campo.
 
