@@ -271,7 +271,7 @@
       '<p>Se precisar de alguém para ficar com as crianças, tente combinar com pessoa de confiança e pense numa alternativa caso ela não possa. Pergunte à escola ou à rede municipal quais serviços e regras existem no seu caso; não presuma que haverá vaga imediata.</p>' +
       '<p>Veja as informações disponíveis na <a href="#educacao/educacao-filhos">área Educação: filhos</a>. Para orientação sobre serviços e benefícios sociais, o CRAS pode explicar os caminhos do território.</p></section>' +
       '<section class="apoio-trabalho" aria-labelledby="trabalho-apoio"><h3 id="trabalho-apoio">Se o desânimo apertar</h3>' +
-      '<p>Ficar sem trabalho não define seu valor. Faça um passo possível por vez e peça apoio a alguém de confiança. O <a href="https://cvv.org.br/" target="_blank" rel="noopener noreferrer">CVV</a> atende pelo 188, gratuitamente, 24 horas por dia. Para apoio social, procure o CRAS do seu território.</p>' +
+      '<p>Ficar sem trabalho não define seu valor. Faça um passo possível por vez e peça apoio a alguém de confiança. O <a href="https://cvv.org.br/" target="_blank" rel="noopener noreferrer">CVV</a> atende pelo 188, gratuitamente, 24 horas por dia. Para apoio social, procure o CRAS do seu território. Mais sobre apoio emocional e saúde mental, na <a href="#saude/saude-apoio-emocional">área Saúde</a>.</p>' +
       '</section></section>';
   }
   function campoTexto(id, rotulo, max, valor) {
