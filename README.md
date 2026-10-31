@@ -45,7 +45,7 @@ Python (instalar: `python -m pip install -r requirements.txt`; fonte única das 
 | Biblioteca | Onde é usada | Para que serve |
 |---|---|---|
 | pandas | `pipeline/cnes.py`, `common.py`, `indice_cep.py`, `oferta_educacao_infantil.py`, `servicos.py` e testes | Leitura e tratamento de CSV e Parquet (CNES, CNEFE, Censo Escolar) |
-| pyarrow | `pipeline/cnes.py` | Leitura de arquivos Parquet do CNES |
+| pyarrow | `pipeline/cnes.py`, `pipeline/oferta_educacao_infantil.py` | Leitura de arquivos Parquet do CNES e do Censo Escolar |
 | numpy | `analise_territorial.py`, `common.py`, `indice_cep.py`, `indice_orientacao.py`, `treinar_necessidades.py`, `treinar_perigo.py`, `treinar_escopo.py` | Arrays, cálculo numérico, distâncias |
 | scikit-learn | `treinar_necessidades.py`, `treinar_perigo.py`, `treinar_escopo.py` (TfidfVectorizer, LogisticRegression, OneVsRestClassifier, StratifiedKFold); `indice_orientacao.py` (TfidfVectorizer, TruncatedSVD); `analise_territorial.py` (KMeans) | Treino dos modelos, TF-IDF, redução de dimensão (LSA) e agrupamento. Traz o scipy como dependência |
 | pyshp (módulo `shapefile`) | `pipeline/setores.py` | Ler o shapefile de setores censitários do IBGE |
@@ -133,7 +133,7 @@ Não existe: modelo de linguagem, embeddings neurais, previsão de risco, elegib
 | `setores.py` | Shapefile de setores do IBGE | `web/dados/setores.geojson`, `setor_bairro.json` | pyshp |
 | `territorio.py` | Censo 2022 por setor | `web/dados/territorio.json` | stdlib |
 | `analise_territorial.py` | Setores e serviços | Distâncias e agrupamento | numpy, scikit-learn (KMeans) |
-| `oferta_educacao_infantil.py` | Censo Escolar 2025 | `web/dados/oferta_educacao_infantil.json` | pandas |
+| `oferta_educacao_infantil.py` | Censo Escolar 2025 em CSV ou Parquet | `web/dados/oferta_educacao_infantil.json` | pandas, pyarrow |
 | `ligar_catalogo_inep.py` | Catálogo e Censo | `catalogo/inep_escolas.csv` (sobrescreve; revisar antes) | stdlib |
 | `horarios_onibus.py` | `catalogo/horarios_onibus.txt` | `web/dados/horarios_onibus.json` | stdlib |
 | `treinar_necessidades.py`, `treinar_perigo.py`, `treinar_escopo.py` | Frases em `catalogo/` | Modelos em `web/dados/` | numpy, scikit-learn |
