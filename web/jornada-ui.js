@@ -178,10 +178,10 @@
       '<li><a href="https://www.gov.br/pt-br/servicos/obter-a-carteira-de-trabalho" target="_blank" rel="noopener noreferrer">Carteira de Trabalho Digital</a>.</li>' +
       '<li><a href="https://www.gov.br/pt-br/servicos/solicitar-o-seguro-desemprego" target="_blank" rel="noopener noreferrer">Seguro-desemprego</a> — depende dos requisitos e da situação de desligamento.</li>' +
       '<li><a href="https://www.gov.br/mds/pt-br/acoes-e-programas/bolsa-familia" target="_blank" rel="noopener noreferrer">Bolsa Família</a> — regras e elegibilidade são avaliadas pelo programa.</li>' +
-      '<li><a href="https://www.gov.br/aneel/pt-br/assuntos/tarifa-social" target="_blank" rel="noopener noreferrer">Tarifa Social de Energia Elétrica</a> — consulte os critérios atuais.</li>' +
+      '<li><a href="https://www.gov.br/aneel/pt-br/assuntos/tarifa-social" target="_blank" rel="noopener noreferrer">Tarifa Social de Energia Elétrica</a> — consulte os critérios atuais. Veja também a <a href="#moradia/secao-2">área Moradia</a>, que explica a tarifa social de energia da Elektro.</li>' +
       '<li><a href="https://www.ev.org.br/" target="_blank" rel="noopener noreferrer">Fundação Bradesco</a> — cursos on-line gratuitos.</li>' +
       '<li><a href="https://www.qualificasp.sp.gov.br/" target="_blank" rel="noopener noreferrer">Qualifica SP</a> — confira turmas e inscrições abertas.</li>' +
-      '</ul><p>O CRAS pode orientar sobre CadÚnico e benefícios sociais. Nenhum benefício é automático: confirme os critérios e a documentação.</p>' +
+      '</ul><p>O CRAS pode orientar sobre CadÚnico e benefícios sociais. Nenhum benefício é automático: confirme os critérios e a documentação. O CadÚnico e o CRAS estão explicados na <a href="#assistencia">área Assistência Social</a>.</p>' +
       '<h4>Direitos básicos, em palavras simples</h4><p>Carteira assinada registra o vínculo de emprego. Vale-transporte ajuda no deslocamento conforme as regras. Férias, 13º salário e FGTS têm regras próprias; consulte os canais oficiais para entender cada caso.</p></section>' +
       '<section class="apoio-trabalho" aria-labelledby="trabalho-rede"><h3 id="trabalho-rede">Peça ajuda à sua rede</h3>' +
       '<p>Enviar uma mensagem a pessoas de confiança pode ajudar a encontrar oportunidades. Não existe garantia, mas você não precisa procurar sozinha.</p>' +

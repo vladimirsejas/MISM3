@@ -411,7 +411,8 @@
           links: [
             ["Procon de Rio Claro", "https://rioclaro.sp.gov.br/secretaria/secretaria-de-justica/", "A página municipal informa os contatos das unidades do Procon, para orientação sobre dívidas de consumo."],
             ["Procon-SP — Apoio ao Superendividado", "https://www.procon.sp.gov.br/espaco-consumidor/#ApoioSuperendividado", "Programa estadual com inscrição online e triagem para quem não consegue pagar dívidas sem comprometer a subsistência."],
-            ["Meu INSS — Simular aposentadoria", "https://www.gov.br/pt-br/servicos/simular-aposentadoria", "Projeção do tempo que falta, com base nos vínculos registrados. Não garante concessão de benefício."]
+            ["Meu INSS — Simular aposentadoria", "https://www.gov.br/pt-br/servicos/simular-aposentadoria", "Projeção do tempo que falta, com base nos vínculos registrados. Não garante concessão de benefício."],
+            ["Aposentadoria, BPC e a renda da casa (área Assistência Social)", "#assistencia/assistencia-avo", "Se a aposentadoria não cobre as despesas, ou se você cuida de um neto ou de uma pessoa idosa: o Cadastro Único, o BPC e a conta de água mais barata estão explicados na área Assistência Social."]
           ]
         }
         ,{
@@ -533,6 +534,7 @@
               fonte: ["Ministério das Cidades (Portarias MCID nº 738/2024 e nº 333/2026) e Lei nº 11.977/2009", "https://rioclaro.sp.gov.br/wp-content/uploads/2025/11/CRITERIOS-DE-ELEGIBILIDADE.pdf", "Portaria 738/2024 (PDF no site da Prefeitura); Portaria 333/2026 (Diário Oficial da União de 01/04/2026); Lei 11.977/2009 (texto compilado enviado pelo mantenedor); página da CAIXA “Minha Casa, Minha Vida – Classe Média” (impressa em 16/10/2026) e folheto da CAIXA “Documentação básica para solicitação de Crédito Imobiliário” (arquivo de maio de 2017); lidos em 16/10/2026"] }
           ],
           links: [
+            ["Como fazer o Cadastro Único (área Assistência Social)", "#assistencia/assistencia-cadunico", "Algumas regras da casa própria pedem a inscrição no Cadastro Único. Quem pode, o que levar e onde fazer estão na área Assistência Social."],
             ["Critérios de elegibilidade (Portaria MCID 738/2024): PDF da Prefeitura", "https://rioclaro.sp.gov.br/wp-content/uploads/2025/11/CRITERIOS-DE-ELEGIBILIDADE.pdf", "O texto completo da Portaria, como a Prefeitura publica. Foi a fonte do cartão acima."],
             ["Portaria MCID nº 333/2026: limites de renda do Minha Casa, Minha Vida", "https://www.in.gov.br/web/dou/-/portaria-mcid-n-333-de-30-de-marco-de-2026-697065554", "Publicação oficial (Diário Oficial da União, 01/04/2026) com os tetos de renda das faixas. Os valores são atualizados todo ano."],
             ["Minha Casa, Minha Vida – Classe Média (CAIXA)", "https://www.caixa.gov.br/voce/habitacao/minha-casa-minha-vida/classe-media/Paginas/default.aspx", "Página da CAIXA sobre o financiamento para renda de até R$ 13 mil, com o passo a passo e os telefones. Não é o programa da fila da Prefeitura: confirme as condições vigentes na CAIXA."],
@@ -650,7 +652,9 @@
               aviso: "Este site não diz se o que aconteceu com você é uma violação nem o que será decidido. Quem avalia é o serviço que você procurar.",
               fonte: ["gov.br: Denunciar violação de direitos humanos (Disque 100)", "https://www.gov.br/pt-br/servicos/denunciar-violacao-de-direitos-humanos", "última modificação 15/12/2025; página impressa em 10/10/2026"] }
           ],
-          links: []
+          links: [
+            ["Simular a aposentadoria no Meu INSS (área Direitos)", "#direitos/secao-3", "Projeção do tempo que falta, com base nos vínculos registrados. Não garante a concessão. A simulação fica na área Direitos, junto com o Procon, para dívidas."]
+          ]
         },
         {
           titulo: "Proteção e denúncia", ancora: "secao-2",

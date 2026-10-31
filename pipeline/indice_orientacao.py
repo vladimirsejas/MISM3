@@ -195,7 +195,7 @@ def carregar_areas() -> dict:
     """Exporta o conteúdo das áreas (web/areas.js) pelo Node: a fonte da verdade do texto das áreas continua sendo uma só."""
     js = ("const A=require('./web/areas.js');process.stdout.write(JSON.stringify({AREAS:A.AREAS.map(a=>({id:a.id,nome:a.nome,intro:a.intro,"
           "secoes:(a.secoes||[]).map(s=>({titulo:s.titulo,ancora:s.ancora||null,descricao:s.descricao||'',tipos:s.tipos||[],subtipos:s.subtipos||null,"
-          "links:(s.links||[]).map(l=>l[0]),canais:(s.canais||[]).map(c=>({nome:c.nome,texto:c.texto||'',topicos:c.topicos||[],aviso:c.aviso||'',fonte:c.fonte||null}))}))}))}))")
+          "links:(s.links||[]).filter(l=>!/^#/.test(l[1])).map(l=>l[0]),canais:(s.canais||[]).map(c=>({nome:c.nome,texto:c.texto||'',topicos:c.topicos||[],aviso:c.aviso||'',fonte:c.fonte||null}))}))}))}))")
     r = subprocess.run(["node", "-e", js], cwd=RAIZ, capture_output=True, text=True, encoding="utf-8", check=True)  # utf-8 explícito: no Windows o padrão é cp1252
     return json.loads(r.stdout)
 
