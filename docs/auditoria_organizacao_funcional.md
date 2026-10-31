@@ -24,6 +24,8 @@ Critério: abrir cada porta e cada prateleira e perguntar se o objeto está no l
 ## 2. O que escapou (não estava no texto colado)
 
 ### 2.1 A categoria `emprego_curso` mistura duas prateleiras
+
+> **Resolvido em 31/10/2026 (passo 1).** A causa real era que Trabalho e Educação listavam os mesmos cursos, e não o tipo do catálogo. Os cursos ficam só em Educação; ver `registro_decisoes_desenvolvimento.md`. O texto abaixo descreve o achado original.
 No catálogo, vagas (PAT, Conecta, Secretaria de Desenvolvimento Econômico) e cursos (SENAI, Senac, Centro de Qualificação, Fatec) têm o mesmo tipo `emprego_curso`. O orientador então manda "quero fazer um curso profissionalizante" e "curso de informática grátis" para **Trabalho**, não para Educação (testado agora). É o contrário do princípio de que Educação é a casa dos estudos. **Isso explica por que cursos aparecem nos dois lugares:** a causa está no catálogo, não só no texto das áreas.
 
 ### 2.2 Uma gaveta de Trabalho guarda coisas de quatro prateleiras
