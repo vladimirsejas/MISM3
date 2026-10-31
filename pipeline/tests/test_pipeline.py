@@ -232,3 +232,19 @@ def test_observacao_deixa_de_dizer_que_nao_se_sabe_a_etapa_so_nas_escolas_ligada
     assert "nem se há vaga" not in a["observacao"] and "não diz se há vaga" in a["observacao"]
     assert "A lista de espera pode ser consultada." in a["observacao"]   # o resto da frase continua
     assert b["observacao"] == obs                                           # escola sem ligação: texto de antes
+
+
+def test_arquivo_cnefe_parquet_e_priorizado(tmp_path, monkeypatch):
+    pytest.importorskip("pyarrow")
+    import indice_cep as modulo
+    pasta = tmp_path / "bruto" / "cnefe"
+    pasta.mkdir(parents=True)
+    parquet = tmp_path / "parquet" / "mapa_nacional"
+    parquet.mkdir(parents=True)
+    df = cnefe_falso()
+    df.to_parquet(parquet / "Agregados_por_CEP_CNEFE_Censo_2022.parquet", index=False)
+    monkeypatch.setattr(modulo, "BRUTO", tmp_path / "bruto")
+    monkeypatch.setattr(modulo, "DADOS_PARQUET", tmp_path / "parquet")
+    lido = modulo.ler_cnefe()
+    assert list(lido.columns) == list(df.columns)
+    assert len(lido) == len(df)
