@@ -1101,3 +1101,11 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - **Testes:** `dashboard.test.js` foi atualizado, sem enfraquecer: o nome novo, a ausência do nome antigo, a capa única (uma imagem antes da caixa da IA, com texto alternativo e menos de 120 KB), o significado do MISM3 na abertura e a ausência das frases removidas. **24 de 24 testes do site passam**, como antes da mudança.
 - **Verificado no Chromium** em 1280 px e em um quadro de 390 px: sem rolagem horizontal e a capa cabe inteira.
 
+## 31/10/2026 — Referências internacionais: "Mais de um serviço ao mesmo tempo" (Direitos) e caminho "sozinha com os filhos" (Assistência)
+
+- **Pedido do autor:** olhar sites e programas para mulheres no mundo (Nova York, Canadá, Austrália, países nórdicos, África, Leste Europeu, Katar) e trazer o que serve à realidade de Rio Claro, com atenção às mães solo.
+- **O que mudou:** (1) em Direitos, seção `secao-4` com o cartão "Quem atende junto" (seis situações e os serviços de Rio Claro que se conectam) e o cartão "Antes de ir" (quatro perguntas: perto, horário, custo, filhos); (2) na jornada de Assistência, a opção "Estou sozinha com os filhos e preciso voltar a trabalhar", com cinco passos em que a creche vem antes dos cursos e das vagas; (3) `docs/referencias_internacionais.md`, com cada modelo, o nível de confiança da fonte e as pendências.
+- **O que ficou como está:** nenhum botão novo (o `guias.test.js` trava Direitos em 4 atalhos e foi respeitado); nenhuma regra ou benefício de outro país foi importado; o texto digitado continua sem sair do navegador (os robôs de conversa da África, que enviam a conversa a um servidor, foram descartados).
+- **Atenção:** nenhum serviço de Rio Claro está registrado como tendo espaço para as crianças durante o atendimento; os textos mandam perguntar e não supor. Só a ficha de Nova York, o ACCESS NYC e o botão de saída rápida do GOV.UK tiveram a página aberta; o resto é nível B ou C.
+- **Testes:** `rede_junto.test.js` (novo), `jornada_assistencia.test.js` (5 caminhos), índice do orientador regenerado (178 destinos). `dashboard.test.js` já falhava antes (PDF `CAD.pdf` sem explicação no LEIA-ME) e não foi alterado.
+
