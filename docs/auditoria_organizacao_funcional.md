@@ -32,6 +32,8 @@ No catálogo, vagas (PAT, Conecta, Secretaria de Desenvolvimento Econômico) e c
 O bloco "Serviços públicos e cursos gratuitos" junta Seguro-desemprego, Carteira de Trabalho e SINE (Trabalho), **Bolsa Família e Cadastro Único** (Assistência), **Tarifa Social de Energia** (Moradia), cursos da Fundação Bradesco e Qualifica SP (Educação) e "direitos básicos" trabalhistas (Direitos). Cada item deveria morar na sua porta, com um link aqui.
 
 ### 2.3 Saúde: a página e o orientador discordam
+
+> **Resolvido em 31/10/2026.** A seção "Saúde da mulher" foi criada com fontes abertas e lidas (ver `registro_decisoes_desenvolvimento.md`). O texto abaixo descreve o achado original.
 Perguntando "quero fazer mamografia", "preciso de papanicolau" e "pré-natal", o orientador **acha** serviços (especialidades, Secretaria de Saúde, UBS) a partir do catálogo. Mas a página Saúde não tem uma linha sobre esses assuntos: seus 6 cartões falam todos de álcool e drogas na família, e 5 dos 6 atalhos do topo levam à mesma lista de unidades. O serviço existe no catálogo; falta a prateleira que o explica.
 
 ### 2.4 O teste que está vermelho esconde 145 conferências

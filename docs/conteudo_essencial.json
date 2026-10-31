@@ -10,6 +10,7 @@
    "topicos": [],
    "links": [
     "#educacao",
+    "#educacao/educacao-formacao-longa",
     "https://vagas.rioclaro.sp.gov.br/",
     "https://www.trampolim.sp.gov.br/",
     "https://www2.camara.leg.br/legin/fed/lei/2023/lei-14542-3-abril-2023-793992-publicacaooriginal-167489-pl.html"
@@ -138,15 +139,19 @@
   "saude": {
    "secoes": [
     "Meu filho ou familiar usa álcool ou drogas",
+    "Saúde da mulher: mamografia, preventivo e gravidez",
     "Unidades de saúde"
    ],
    "cartoes": [
     "Amor Exigente (Rio Claro)",
     "Comunidade Terapêutica Peniel de Rio Claro (informação não confirmada por ligação)",
     "Grupos de ajuda mútua: para que serve cada um",
+    "Mamografia: como conseguir em Rio Claro",
     "NA – Grupo Gratidão (Rio Claro)",
     "NA – Grupo Viver Limpo (Rio Claro)",
-    "Por onde começar"
+    "Por onde começar",
+    "Preventivo do colo do útero: Papanicolau e teste de DNA-HPV",
+    "Pré-natal: quando e onde começar"
    ],
    "topicos": [
     "Comunidade Terapêutica Peniel de Rio Claro (informação não confirmada por ligação) || Comunidade terapêutica não é hospital nem clínica",
@@ -159,14 +164,33 @@
     "Grupos de ajuda mútua: para que serve cada um || Amor Exigente",
     "Grupos de ajuda mútua: para que serve cada um || Diferença para o CAPS AD",
     "Grupos de ajuda mútua: para que serve cada um || NA – Narcóticos Anônimos",
+    "Mamografia: como conseguir em Rio Claro || Como marcar a consulta",
+    "Mamografia: como conseguir em Rio Claro || O que a Fundação de Saúde informou em 07/10/2026",
+    "Mamografia: como conseguir em Rio Claro || O que o Ministério da Saúde orienta",
+    "Mamografia: como conseguir em Rio Claro || Onde o exame é feito",
+    "Mamografia: como conseguir em Rio Claro || Quem pede o exame",
+    "Mamografia: como conseguir em Rio Claro || Se você notou uma alteração na mama",
     "Por onde começar || Para você",
     "Por onde começar || Se a pessoa já é adulta",
     "Por onde começar || Se há violência em casa",
     "Por onde começar || Se tem menos de 18 anos",
-    "Por onde começar || Se é uma crise (agitação, risco de vida, overdose)"
+    "Por onde começar || Se é uma crise (agitação, risco de vida, overdose)",
+    "Preventivo do colo do útero: Papanicolau e teste de DNA-HPV || Como conseguir em Rio Claro",
+    "Preventivo do colo do útero: Papanicolau e teste de DNA-HPV || O teste novo: DNA-HPV",
+    "Preventivo do colo do útero: Papanicolau e teste de DNA-HPV || Para quem é o rastreamento",
+    "Pré-natal: quando e onde começar || Atendimento ginecológico e da gravidez fora de hora",
+    "Pré-natal: quando e onde começar || Como é o acompanhamento",
+    "Pré-natal: quando e onde começar || Onde ir",
+    "Pré-natal: quando e onde começar || Quando começar"
    ],
    "links": [
+    "https://cnes.datasus.gov.br/",
+    "https://ninho.inca.gov.br/jspui/bitstream/123456789/17713/1/SEI_0050548355_Nota_Tecnica_626.pdf",
+    "https://rioclaro.sp.gov.br/fundacao-de-saude/nova-central-para-agendamento-de-consultas-comeca-a-operar-na-2a-feira-em-rc/",
+    "https://rioclaro.sp.gov.br/fundacao-de-saude/outubro-rosa-reforca-importancia-de-exames-preventivos/",
     "https://www.gov.br/mds/pt-br/privados/obid/tratamento-e-reinsercao-social",
+    "https://www.gov.br/saude/pt-br/assuntos/noticias/2025/agosto/ministerio-da-saude-oferta-tecnologia-inovadora-100-nacional-para-detectar-cancer-do-colo-do-utero-no-sus",
+    "https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/g/gravidez/pre-natal",
     "https://www.saude-rioclaro.org.br/enderecos.htm"
    ],
    "atalhos": [
@@ -174,25 +198,34 @@
     "Preciso de ajuda para a saúde mental -> #saude-unidades",
     "Preciso de atendimento urgente -> #saude-unidades",
     "Preciso de remédio -> #saude-unidades",
+    "Quero fazer mamografia ou preventivo, ou estou grávida -> #saude-mulher",
     "Quero ser atendida no posto de saúde -> #saude-unidades",
     "Unidades de saúde -> #saude-unidades"
    ],
    "ancoras": [
     "saude-familia-drogas",
+    "saude-mulher",
     "saude-unidades"
    ]
   },
   "direitos": {
    "secoes": [
     "Aposentadoria e dívidas",
+    "Mais de um serviço ao mesmo tempo",
     "Separação, pensão e guarda",
     "Violência e proteção"
    ],
    "cartoes": [
+    "Antes de ir: quatro perguntas para o serviço caber na sua rotina",
     "Defensoria Pública: como pedir ajuda jurídica gratuita (pensão, guarda, reconhecimento do pai)",
-    "Pensão alimentícia: como pedir e o que levar"
+    "Pensão alimentícia: como pedir e o que levar",
+    "Quem atende junto: a rede para a sua situação"
    ],
    "topicos": [
+    "Antes de ir: quatro perguntas para o serviço caber na sua rotina || Fica perto?",
+    "Antes de ir: quatro perguntas para o serviço caber na sua rotina || Funciona no meu horário?",
+    "Antes de ir: quatro perguntas para o serviço caber na sua rotina || Posso levar as crianças?",
+    "Antes de ir: quatro perguntas para o serviço caber na sua rotina || Quanto custa chegar e voltar?",
     "Defensoria Pública: como pedir ajuda jurídica gratuita (pensão, guarda, reconhecimento do pai) || Como agendar",
     "Defensoria Pública: como pedir ajuda jurídica gratuita (pensão, guarda, reconhecimento do pai) || Cuidado com golpes",
     "Defensoria Pública: como pedir ajuda jurídica gratuita (pensão, guarda, reconhecimento do pai) || O que a Defensoria pode fazer",
@@ -207,7 +240,13 @@
     "Pensão alimentícia: como pedir e o que levar || Quem comparece",
     "Pensão alimentícia: como pedir e o que levar || Se o pai não consta na certidão de nascimento",
     "Pensão alimentícia: como pedir e o que levar || Se você cria os netos e não tem a guarda",
-    "Pensão alimentícia: como pedir e o que levar || Uma lei nova, que ainda não vale"
+    "Pensão alimentícia: como pedir e o que levar || Uma lei nova, que ainda não vale",
+    "Quem atende junto: a rede para a sua situação || Cuido de um neto, de um pai ou de uma mãe",
+    "Quem atende junto: a rede para a sua situação || Falta comida ou dinheiro para as contas",
+    "Quem atende junto: a rede para a sua situação || Falta de casa ou aluguel que não cabe",
+    "Quem atende junto: a rede para a sua situação || Pensão, guarda ou separação",
+    "Quem atende junto: a rede para a sua situação || Sem trabalho e com filhos pequenos",
+    "Quem atende junto: a rede para a sua situação || Violência ou medo de alguém"
    ],
    "links": [
     "https://rioclaro.sp.gov.br/secretaria/secretaria-da-mulher/",
@@ -215,6 +254,7 @@
     "https://www.defensoria.sp.def.br/",
     "https://www.gov.br/mulheres/pt-br/ligue180",
     "https://www.gov.br/pt-br/servicos/simular-aposentadoria",
+    "https://www.nyc.gov/assets/ocdv/downloads/pdf/ENDGBV-FJC-One-Pager-ENGLISH.pdf",
     "https://www.procon.sp.gov.br/espaco-consumidor/#ApoioSuperendividado",
     "https://www12.senado.leg.br/noticias/especiais/especial-cidadania/pensao-alimenticia-atende-necessidades-basicas-e-padrao-de-vida/como-fazer-para-pedir-pensao-alimenticia",
     "https://www12.senado.leg.br/radio/1/noticia/2026/07/30/nova-lei-cria-transferencia-automatica-da-pensao-alimenticia"
@@ -228,7 +268,8 @@
    "ancoras": [
     "secao-1",
     "secao-2",
-    "secao-3"
+    "secao-3",
+    "secao-4"
    ]
   },
   "moradia": {
@@ -383,7 +424,11 @@
    "Concurso público",
    "Cuidado com golpes de emprego",
    "Cursos rápidos, para começar já",
+   "Dinheiro rápido",
    "Direitos básicos, em palavras simples",
+   "Encontrar trabalho",
+   "Estudar e o que atrapalha",
+   "Estudar para ganhar mais",
    "Estudar para trabalhar melhor",
    "Falta o básico: comida, passagem ou cuidado dos filhos",
    "Formação mais longa (anos)",
@@ -391,9 +436,11 @@
    "Ideias de renda, da mais fácil de começar à mais difícil",
    "Imprimir o currículo sem pagar",
    "Leituras úteis: como se vestir sem gastar",
+   "Me candidatar",
    "Mensagem pronta para enviar",
    "Montar um currículo",
    "Nunca trabalhei. O que coloco no currículo?",
+   "O que atrapalha",
    "O que levar",
    "O que perguntar",
    "O que posso fazer hoje",
@@ -425,6 +472,11 @@
    "curriculo-saida",
    "cv-sem-experiencia",
    "form-curriculo",
+   "grupo-atrapalha",
+   "grupo-candidatar",
+   "grupo-dinheiro",
+   "grupo-encontrar",
+   "grupo-estudar",
    "jornada-saida",
    "mensagem-renda",
    "montar-curriculo",
@@ -436,6 +488,7 @@
    "renda-imediata",
    "renda-liquida",
    "renda-transporte",
+   "sites-vagas",
    "texto-anuncio",
    "texto-modelo",
    "texto-rede",
