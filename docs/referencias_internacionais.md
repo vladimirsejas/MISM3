@@ -22,7 +22,7 @@ Pesquisa de 31/10/2026. **Nenhuma regra, benefício ou número de outro país va
 - **Canadá (C).** Centros de apoio a mulheres recém-chegadas (Toronto) com emprego, acolhimento e cuidado das crianças de 19 meses a 6 anos. Fonte: diretórios; confirmar antes de citar.
 - **África (B).** Robôs de conversa por WhatsApp para violência de gênero (Chomi, na África do Sul; plataforma nacional do Quênia, 2026). Um ensaio clínico sul-africano mostrou efeitos pequenos. **Não copiar:** envia a conversa a um servidor, o contrário da decisão do MISM3 de o texto não sair do navegador.
 - **Katar, Sheikha Moza (B).** O que a pesquisa trouxe: Education Above All (educação de crianças em áreas de pobreza e conflito), Silatech (emprego de jovens no mundo árabe) e um centro e mesquita para mulheres. Pouco documentado sobre proteção de mulheres e família; não adotamos nada.
-- **Segurança digital (A).** Botão de saída rápida: o design system do governo do Reino Unido e o de Nova Gales do Sul recomendam e avisam que **o botão não apaga o histórico**. O MISM3 já tem saída rápida; falta conferir se o texto do botão diz isso.
+- **Segurança digital (A).** Botão de saída rápida: o design system do governo do Reino Unido e o de Nova Gales do Sul recomendam e avisam que **o botão não apaga o histórico**. O MISM3 já tem saída rápida e a nota ao lado do botão já diz que **não apaga** o histórico e sugere janela anônima (`web/index.html`, conferido em 31/10/2026): nada a mudar.
 - **Alemanha, telefone 116 016 (B).** Aconselhamento em 18 idiomas, linguagem simples e língua de sinais, 24 horas. O número de idiomas varia entre fontes.
 
 ## Pendências, em ordem de valor
@@ -32,7 +32,6 @@ Pesquisa de 31/10/2026. **Nenhuma regra, benefício ou número de outro país va
 3. **Triagem com perguntas fechadas** (inspirada no ACCESS NYC): 4 ou 5 perguntas que montem a sequência de passos. Exige decisão sobre o desenho para não criar botão novo.
 4. **Mulheres migrantes** (português para estrangeiras, documentos): falta fonte local de Rio Claro. Sem ela não vira texto.
 5. **Iniciativas comunitárias de mulheres** (associações, grupos): levantamento de campo.
-6. **Conferir o texto do botão de saída rápida**: dizer que ele não apaga o histórico.
 
 ## O que decidimos não fazer
 
