@@ -68,6 +68,8 @@ def detectar_encoding(caminho: Path) -> str:
 
 
 def ler_tabela_pequena(caminho: Path | None, col_codigo: str, col_texto: str) -> dict[str, str]:
+    import pandas as pd
+
     if not caminho:
         return {}
     df = ler_tabela(caminho)
@@ -84,7 +86,9 @@ def ler_estabelecimentos(caminho: Path, ceps_do_municipio: set[str] | None = Non
     import pandas as pd
 
     if eh_parquet(caminho):
-        cab = pd.read_parquet(caminho).columns
+        import pyarrow.parquet as pq
+
+        cab = pq.read_schema(caminho).names
         faltam = [c for c in ("CO_UNIDADE", "NO_FANTASIA", "CO_CEP", "CO_MUNICIPIO_GESTOR") if c not in cab]
         if faltam:
             raise ValueError("tbEstabelecimento sem colunas %s. Colunas: %s" % (faltam, list(cab)))
