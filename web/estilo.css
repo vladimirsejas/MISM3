@@ -297,17 +297,7 @@ a.tel-grande{display:inline-block;font-weight:800;font-size:1.2rem;color:var(--a
 .ia-servicos li span{display:block}
 .ia-servicos .ia-rotulo{font-size:.9rem;color:var(--mut);font-weight:700}
 
-/* ---------- Questionário do Observatório ---------- */
-.q-objetivos,.q-garantias{padding-left:1.2rem;margin:.6rem 0}
-.q-objetivos li,.q-garantias li{margin:.35rem 0}
-.opcao-check{display:flex;align-items:flex-start;gap:.6rem;min-height:52px;padding:.7rem 1rem;border:2px solid var(--bor);border-radius:14px;background:var(--lilas);cursor:pointer}
-.opcao-check input{width:1.3rem;height:1.3rem;margin-top:.1rem;accent-color:var(--pri-esc);flex:none}
-.opcao-check.marcada{border-color:var(--pri-esc);background:var(--lav);font-weight:700}
-.opcao-check.bloqueada{opacity:.55;cursor:not-allowed}
-.indices{list-style:none;padding:0;margin:.5rem 0;display:grid;grid-template-columns:minmax(0,1fr);gap:.9rem}
-.indice-topo{display:flex;justify-content:space-between;gap:.6rem;flex-wrap:wrap}
-.barra-indice{height:12px;border-radius:999px;background:var(--lav);overflow:hidden;margin:.25rem 0}
-.barra-indice span{display:block;height:100%;background:var(--pri-esc);border-radius:999px}
+/* ---------- Estilos compartilhados (Entre Mulheres e plano do Trabalho) ---------- */
 .registro{white-space:pre-wrap;word-break:break-word;background:var(--bg);border:1px solid var(--bor);border-radius:10px;padding:.7rem;font-size:.85rem;max-height:18rem;overflow:auto}
 .plano-tela h4{margin:1.1rem 0 .3rem}
 
@@ -474,22 +464,13 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:#8a1c1c!im
 .vista-numeros .erro {color: #b3261e; font-weight: 600;}
 .vista-numeros footer {color: var(--ink2); font-size: .85rem; margin: 8px 0 24px;}
 @media (min-width:900px){.vista-numeros .grade{grid-template-columns:1.25fr 1fr;align-items:start}}
-/* ---------- Painel da Secretaria (vista do dashboard; protótipo com dados de teste) ---------- */
-.vista-painel .faixa-teste{background:#fff3cd;color:#3d2f00;border:2px solid #b58900;border-radius:12px;padding:.8rem 1rem;margin:1rem 0;font-weight:700}
+/* ---------- Análise territorial (vista #painel do dashboard) ---------- */
 .vista-painel .painel-sec{margin:1.6rem 0}
 .vista-painel .painel-sec h2{margin-bottom:.2rem}
-.vista-painel .barras{list-style:none;padding:0;margin:.5rem 0;display:grid;gap:.55rem}
-.vista-painel .barras li{display:grid;grid-template-columns:minmax(0,1fr);gap:.15rem}
-.vista-painel .barras .topo{display:flex;justify-content:space-between;gap:.8rem}
-.vista-painel .barras .trilho{height:10px;background:var(--lav);border-radius:0 6px 6px 0;overflow:hidden}
-.vista-painel .barras .trilho span{display:block;height:100%;background:var(--pri-esc);border-radius:0 4px 4px 0}
-.vista-painel .barras .oculto{color:var(--mut);font-style:italic}
 .vista-painel .tabela-rolavel{overflow-x:auto}
 .vista-painel table.dados{border-collapse:collapse;min-width:100%;font-size:.95rem}
 .vista-painel table.dados th,.vista-painel table.dados td{border-bottom:1px solid var(--bor);padding:.4rem .5rem;text-align:left}
 .vista-painel table.dados td.num,.vista-painel table.dados th.num{text-align:right;font-variant-numeric:tabular-nums}
-.vista-painel .cartao-num{display:inline-block;margin:.2rem .6rem .2rem 0;padding:.5rem .9rem;border:1px solid var(--bor);border-radius:12px;background:var(--card)}
-.vista-painel .cartao-num strong{display:block;font-size:1.5rem}
 .para-gestao{margin:0 0 2rem;padding:1rem 1.15rem;border:1px dashed var(--bor);border-radius:var(--raio)}
 .para-gestao h2{font-family:var(--serif);font-weight:500;font-size:1.1rem;margin:0 0 .2rem;color:var(--mut)}
 .orientacao-tels{font-size:1.3rem;margin:.3rem 0 0}

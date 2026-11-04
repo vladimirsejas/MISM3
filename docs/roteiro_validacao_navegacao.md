@@ -1,6 +1,6 @@
 # Roteiro para validar a navegação com mulheres de Rio Claro
 
-**Estado: roteiro pronto, nenhuma sessão realizada.** O roteiro do questionário (`roteiro_validacao_questionario.md`) testa perguntas; este testa se a mulher **consegue chegar ao próximo passo** no site principal.
+**Estado: roteiro pronto, nenhuma sessão realizada.** Este roteiro testa se a mulher **consegue chegar ao próximo passo** no site principal. (O roteiro do questionário foi retirado junto com o questionário, em 04/11/2026.)
 
 Pergunta que a validação responde: *como sabemos que isso funciona?* Cliques não respondem: a pessoa pode clicar num telefone e não conseguir atendimento. Esse obstáculo é um resultado, não uma falha dela.
 
@@ -15,7 +15,7 @@ Pergunta que a validação responde: *como sabemos que isso funciona?* Cliques n
 
 ## Quem convidar (5 a 8 pessoas para a primeira rodada)
 
-Variedade, como no roteiro do questionário: uma idosa, uma jovem de 18 a 24 anos, uma mãe de criança pequena, uma mulher com baixa escolaridade, uma com deficiência, uma moradora de área afastada, uma que raramente usa internet. Cinco pessoas já mostram a maior parte dos tropeços.
+Variedade: uma idosa, uma jovem de 18 a 24 anos, uma mãe de criança pequena, uma mulher com baixa escolaridade, uma com deficiência, uma moradora de área afastada, uma que raramente usa internet. Cinco pessoas já mostram a maior parte dos tropeços.
 
 ## Como conduzir (15 a 20 minutos)
 

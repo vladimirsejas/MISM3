@@ -29,7 +29,7 @@ fontes oficiais (IBGE, INEP, CNES, páginas municipais)      catálogos escritos
 
 | Linguagem | Onde | Para que serve | Versão |
 |---|---|---|---|
-| JavaScript (ES5, módulos IIFE, sem bundler, sem npm) | `web/*.js`, `web/tests/`, `avaliacao/*.js`, `pipeline/gerar_dados_teste_painel.js` | Todo o site e seus testes; scripts de avaliação | Navegador moderno; Node 18+ para testes (CI: 20; testado: 22) |
+| JavaScript (ES5, módulos IIFE, sem bundler, sem npm) | `web/*.js`, `web/tests/`, `avaliacao/*.js` | Todo o site e seus testes; scripts de avaliação | Navegador moderno; Node 18+ para testes (CI: 20; testado: 22) |
 | Python | `pipeline/*.py`, `pipeline/tests/`, `avaliacao/avaliar.py` | Pipeline de dados, treino e exportação dos modelos, avaliação, testes | 3.10+ (CI: 3.12; testado: 3.13 e 3.14) |
 | HTML | `web/index.html` | Dashboard (página única) | HTML5 |
 | CSS | `web/estilo.css`, `web/vendor/leaflet.css` | Visual, contraste, impressão, responsividade | CSS3, sem pré-processador |
@@ -58,7 +58,7 @@ JavaScript:
 | Biblioteca | Onde | Para que serve |
 |---|---|---|
 | Leaflet 1.9.4 (BSD-2), copiada em `web/vendor/` (`leaflet.js`, `leaflet.css`, `images/`, `LEAFLET-LICENSE.txt`) | `web/mapa.js` (mapa de serviços), `web/territorio.js` (mapa por setor) | Mapas interativos; servida localmente |
-| Módulos do Node: `fs`, `path`, `assert`, `vm` | `web/tests/*.test.js`, `avaliacao/*.js`, `pipeline/gerar_dados_teste_painel.js` | Testes e scripts de linha de comando |
+| Módulos do Node: `fs`, `path`, `assert`, `vm` | `web/tests/*.test.js`, `avaliacao/*.js` | Testes e scripts de linha de comando |
 
 Não há pacotes npm, `package.json`, framework, bundler nem CDN. Todo o JavaScript do site é código do projeto, exceto o Leaflet.
 
@@ -111,11 +111,10 @@ Não existe: modelo de linguagem, embeddings neurais, previsão de risco, elegib
 | `orientacao-ui.js` | Tela do orientador (alerta, lista de resultados, saída "não encontrei") |
 | `plano.js` | Meu Plano: ordem de urgência por regra fixa |
 | `jornada.js`, `jornada-educacao.js`, `jornada-assistencia.js`, `jornada-ui.js` | Jornadas guiadas (Trabalho, Educação, Assistência) e currículo |
-| `questionario.js`, `questionario-ui.js` | Questionário do Observatório (20 perguntas); envio desligado em `web/dados/coleta.json` |
 | `mapa.js`, `mapa-servicos.js` | Mapa de serviços (Leaflet) e lógica de CEP, bairro e serviço mais próximo |
 | `territorio.js` | Vista "Rio Claro em números" (setores censitários) |
 | `entre-mulheres.js`, `entre-mulheres-ui.js` | Entre Mulheres: preparo do cadastro e tela |
-| `painel.js`, `painel-ui.js` | Painel da Secretaria (agregação sem identificação; dados de teste) |
+| `painel-ui.js` | Vista "Análise territorial" (`#painel`): lê `dados/analise_territorial.json`, se existir; não usa dado de pessoa |
 
 ## Pipeline (`pipeline/*.py`)
 
@@ -194,14 +193,14 @@ Notas de ambiente:
 ## Testes e CI
 
 - `pipeline/tests/`: pytest. Cobre pipeline, contrato dos dados (coordenada só com fonte, registro não conferido com aviso, ligações INEP), paridade Python e JavaScript dos modelos e da tokenização, integridade dos conjuntos de avaliação, dependências e README.
-- `web/tests/`: Node. Cobre lógica das jornadas, necessidades, perigo, orientador, plano, mapa, questionário, painel, território, dashboard (portas, emergência, links locais, imagens), sintaxe de todos os scripts e comportamento de segurança da tela.
+- `web/tests/`: Node. Cobre lógica das jornadas, necessidades, perigo, orientador, plano, mapa, análise territorial, território, dashboard (portas, emergência, links locais, imagens), sintaxe de todos os scripts e comportamento de segurança da tela.
 - `.github/workflows/testes.yml`: instala `requirements.txt`, roda pytest, os testes em Node, `avaliar.py v2 --conjunto todos` e `avaliar_plano.js` a cada push e pull request.
 - Contagens de testes não são mantidas neste arquivo; a fonte é a saída do pytest e do CI.
 
 ## Privacidade e segurança
 
 - O texto digitado e o CEP não são enviados nem gravados. Não há cookie, `localStorage`, `sessionStorage`, analytics nem chamada a API de IA.
-- Únicas requisições: arquivos locais (GET) em `web/dados/`; tiles do OpenStreetMap, só com opt-in. O envio de respostas do questionário existe em `web/questionario-ui.js` e está desligado (`web/dados/coleta.json`: `ativa: false`).
+- Únicas requisições: arquivos locais (GET) em `web/dados/`; tiles do OpenStreetMap, só com opt-in. O site não tem questionário nem código que envie texto digitado a um servidor. O único caminho de saída é o cadastro do Entre Mulheres, que apenas monta um link de WhatsApp ou e-mail para a própria usuária enviar e hoje está sem canal definido (`web/dados/entre_mulheres_canal.json`).
 - O site é `noindex`. O botão "Em perigo agora?" abre contatos oficiais (190, 192, 193, 180, 100, 188) e um botão de saída; sair não apaga o histórico do navegador.
 - Em falha de rede, o alerta de perigo das regras continua funcionando (`alertaAgora` em `web/app.js`).
 

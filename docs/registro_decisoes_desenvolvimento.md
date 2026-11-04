@@ -1271,3 +1271,12 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - **O que continua pendente:** 76 serviços sem posição, quase todos sem CEP no catálogo (29 de saúde, 16 de assistência, 12 de trabalho); o geocodificador não achou o endereço de 98 deles no CNEFE (ruas escritas por extenso, endereços incompletos). A saída é o autor informar CEP ou endereço completo, ou confirmar à mão.
 - **Não verificado:** celular e navegadores reais; o tempo de carga das imagens da Esri em conexão lenta.
 
+## 04/11/2026 — Questionário e painel de respostas retirados do projeto
+
+- **Pedido do autor:** excluir o questionário.
+- **Por que o painel saiu junto:** o painel da Secretaria só agregava respostas desse questionário, e os 420 registros de teste eram sorteados a partir das alternativas dele. Sem o questionário, o painel de respostas não tem o que mostrar.
+- **O que foi removido:** `web/questionario.js`, `web/questionario-ui.js`, `web/tests/questionario.test.js`, `web/dados/coleta.json`, `web/painel.js`, `web/dados/painel_teste.json`, `pipeline/gerar_dados_teste_painel.js`, `docs/questionario_observatorio.md`, `docs/roteiro_validacao_questionario.md`; o cartão "Questionário" da tela inicial, a rota `#questionario` e o estilo exclusivo dele.
+- **O que foi mantido:** a vista `#painel`, agora chamada "Análise territorial", com a tabela de bairros e serviços (`web/painel-ui.js`, que lê só `dados/analise_territorial.json`). Os estilos `.registro` e `.plano-tela h4` ficaram, porque o Entre Mulheres e o plano do Trabalho os usam. As jornadas guiadas (Trabalho, Educação, Assistência) não foram tocadas: elas rodam no aparelho e não guardam nem enviam nada.
+- **Teste novo:** `web/tests/painel.test.js` foi reescrito para falhar se qualquer arquivo ou referência do questionário voltar.
+- **Verificação:** os 29 testes em Node restantes passam; os passos do CI para avaliação e perfis de reserva dão o mesmo resultado de antes da remoção; o `pytest` precisou apenas de ajuste na documentação (os testes conferem que README e mapa de dados só citam arquivos que existem).
+- **Contexto:** o histórico das entradas anteriores sobre o questionário (por exemplo, 11/10/2026) foi mantido como estava. No código, a coleta estava desligada (`ativa: false`).
