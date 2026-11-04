@@ -1,5 +1,7 @@
 # Observatório da Mulher Rio-Clarense e o Mulher em Rede: como o projeto pode gerar dados sem expor as mulheres
 
+> **Nota de 04/11/2026:** a camada de pesquisa descrita aqui (questionário e painel de respostas) **foi retirada do projeto** e não será implementada nesta fase. O documento fica como registro da proposta original e dos motivos de privacidade, que continuam valendo para qualquer coleta futura.
+
 > **Nota de 18/10/2026:** o site passou a se chamar **Observatório da Mulher (MISM3)**. Neste documento, "Mulher em Rede" é o **site** (nome da época) e "Observatório da Mulher Rio-Clarense" é o **programa da Secretaria Municipal da Mulher**. Não são a mesma coisa.
 
 Documento de **proposta**, escrito em 11/10/2026. Nada aqui está implementado. As decisões que dependem da Secretaria Municipal da Mulher estão na seção 6.

@@ -65,8 +65,7 @@ Não vendemos o sistema como diagnóstico social, nem como prova de que um servi
 |---|---|---|---|
 | Mapa dos 408 setores com população e densidade | Implementado | Soma de pessoas igual ao Censo 2022 (201.418); área a 0,21% da oficial (`test_territorio.py`) | 43 setores (6,4% das pessoas) vêm sem bairro no IBGE |
 | Distância até o serviço mais próximo | **Só creche** (33 de 43 escolas localizadas) | Trava: exige 70% dos serviços localizados | CRAS (2 de 6) e UBS (5 de 22) **não mostram distância**, de propósito |
-| Painel da Secretaria | Protótipo com **420 registros sintéticos** | `painel.test.js` (regra dos 10) | Não há dado real |
-| Questionário | 19 perguntas, **coleta desligada** (`ativa: false`) | `questionario.test.js` | Falta definir controlador de dados, termo e servidor; não validado com mulheres |
+| Análise territorial (vista `#painel`) | Tela pronta; o arquivo `analise_territorial.json` **ainda não foi gerado** | `painel.test.js`: a tela só lê esse arquivo e, sem ele, diz que não foi gerado | O script se recusa a escrever sem coordenadas dos serviços (ver `docs/painel_e_analise_territorial.md`) |
 | População de 0 a 3 anos, renda, mulheres responsáveis por setor | **Não está no projeto** | | Sem isso não existe taxa de cobertura de creche |
 | Pedidos de dados à Prefeitura (fila de creche, RMA, saúde, estatísticas) | Proposta: minutas 6 a 9 em `docs/pedidos_LAI.md` | | Sem protocolo registrado no projeto |
 
@@ -87,7 +86,6 @@ Uma informação pode ter a fonte certa e a data antiga; um endereço pode estar
 - Que faz diagnóstico, ou que a IA "entende" a situação de uma mulher.
 - Que há vaga em creche, emprego ou atendimento. Cadastro não confirma vaga.
 - Que uma área "tem falta" de serviço. Distância em linha reta não é acessibilidade: não considera ruas, ônibus nem horários, e um serviço ainda não localizado não é um serviço ausente.
-- Que o questionário ou o painel funcionam com dados reais. Hoje não funcionam.
 
 ## Ordem de trabalho recomendada
 
@@ -125,3 +123,10 @@ python pipeline/geocodificar_catalogo.py --cnefe <caminho do CNEFE>
 - **Limitação preservada:** a frase “um parente não quer devolver meu cartão e continua fazendo compras” ainda não recebe resposta. Não ajustei o código com base nessa falha para preservar a reserva 17.
 - **Integridade dos testes:** reservas 15 e 16 foram usadas durante o desenvolvimento/diagnóstico e não são independentes. A ajuda autorizada para sacar benefício foi corrigida como pedido de orientação social, não como violação. A reserva 17 é o conjunto independente deste ciclo.
 - **Estado:** PR #58 está em rascunho e depende do PR #57; nenhum PR foi mesclado.
+
+
+## Questionário e painel de respostas retirados — 04/11/2026
+
+- **O que mudou:** o questionário do Observatório (20 itens: 19 de marcar e um campo de texto opcional), o painel que agregava as respostas e os 420 registros sintéticos que o alimentavam foram retirados do projeto. No código entregue, a coleta estava desligada (`ativa: false`).
+- **O que o projeto passa a afirmar:** não coleta respostas de pessoas e nenhum código do site envia texto digitado a um servidor (o cadastro do Entre Mulheres só monta um link de WhatsApp ou e-mail para a própria usuária enviar, e está sem canal definido). Os dados são públicos e agregados (IBGE, INEP, CNES, horários da SOU) e o catálogo de serviços; os conjuntos de treino e de avaliação do orientador são frases escritas pela equipe, não coletadas de mulheres.
+- **Testes:** `web/tests/painel.test.js` foi reescrito para garantir que nada disso volte sem querer. Detalhes em `docs/registro_decisoes_desenvolvimento.md`.

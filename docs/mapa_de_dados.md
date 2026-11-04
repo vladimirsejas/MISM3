@@ -32,8 +32,7 @@ Fluxo: **fontes oficiais e catálogos escritos à mão → pipeline Python → a
 | `web/dados/setor_bairro.json` | `pipeline/setores.py` | CEP → bairro provável (`web/mapa-servicos.js`) |
 | `web/dados/setores.geojson` | `pipeline/setores.py` | mapa e território |
 | `web/dados/territorio.json` | `pipeline/territorio.py` | "Rio Claro em números" (`web/territorio.js`) |
-| `web/dados/painel_teste.json` | `pipeline/gerar_dados_teste_painel.js` | `web/painel.js` — **dados de teste, não são de mulheres reais** |
-| `web/dados/bairros_apelidos.json`, `web/dados/coleta.json`, `web/dados/entre_mulheres_canal.json`, `web/dados/ofertas_mulheres.json` | arquivos mantidos à mão (sem script gerador no pipeline) | busca por bairro, coleta, Entre Mulheres |
+| `web/dados/bairros_apelidos.json`, `web/dados/entre_mulheres_canal.json`, `web/dados/ofertas_mulheres.json` | arquivos mantidos à mão (sem script gerador no pipeline) | busca por bairro, Entre Mulheres |
 | `web/dados/servicos.json` *(gerado, não versionado)* | `pipeline/servicos.py` (catálogo + CNES + INEP) | `web/app.js`, de forma **opcional**: só acrescenta o que não está no catálogo (CNES, Censo Escolar); sem ele o site funciona só com o catálogo manual |
 
 ## 3. Inteligência (três camadas, que não devem ser confundidas)
@@ -48,13 +47,12 @@ Fluxo: **fontes oficiais e catálogos escritos à mão → pipeline Python → a
 
 Avaliação do orientador: `avaliacao/avaliar.py`, `avaliacao/perguntas.json` (5 conjuntos de perguntas com gabarito) e `docs/ia/avaliacao_orientacao.md`. Limites: `docs/ia/limitacoes_conhecidas.md`.
 
-## 4. Jornadas e questionário
+## 4. Jornadas
 
 | Arquivo | Conteúdo |
 |---|---|
 | `web/jornada.js`, `web/jornada-ui.js` | motor das jornadas guiadas |
 | `web/jornada-educacao.js`, `web/jornada-assistencia.js` | jornadas de Educação e de Assistência Social |
-| `web/questionario.js`, `web/questionario-ui.js` | questionário (20 perguntas) do Observatório; o envio de respostas existe no código, mas está desligado (ver `web/dados/coleta.json`) |
 
 ## 5. Regras de dados que não podem se perder
 

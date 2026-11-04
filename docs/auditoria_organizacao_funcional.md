@@ -1,5 +1,7 @@
 # Auditoria de organização funcional do MISM3: a planta do armário
 
+> **Nota de 04/11/2026:** esta auditoria é um retrato de outubro de 2026. O questionário, o painel de respostas, `coleta.json` e `painel_teste.json`, citados abaixo, foram retirados do projeto; as demais constatações continuam como foram escritas.
+
 31/10/2026. Somente leitura: nenhum arquivo do site foi alterado por esta auditoria. Cada achado diz como foi conferido. Complementa `analise_reorganizacao.md` (mesma data). Um texto colado do ChatGPT foi usado como **sugestão**, não como ordem: o que ele traz de bom foi conferido e incorporado; o que não confere está marcado abaixo.
 
 Critério: abrir cada porta e cada prateleira e perguntar se o objeto está no lugar certo, se há dois iguais, se algo está na gaveta errada ou escondido, e se o que parece organizado por fora está por dentro.

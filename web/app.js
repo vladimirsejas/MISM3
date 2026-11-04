@@ -267,7 +267,6 @@
   function htmlArea(area) {
     var html = htmlDuvida(area);
     html += area.jornada && window.JornadaUI ? JornadaUI.html(area.jornada) : "";
-    if (area.questionario && window.QuestionarioUI) html += QuestionarioUI.html();
     if (area.horarios) html += htmlHorarios();
     if (area.guia) html += htmlGuia(area.guia);
     var vistos = Object.create(null);
@@ -491,7 +490,6 @@
   function mostrarInicio() {
     areaAtual = null;
     if (window.JornadaUI) JornadaUI.limpar();
-    if (window.QuestionarioUI) QuestionarioUI.limpar();
     limparIA();
     esconderVistas();
     $("inicio-tela").hidden = false; $("area").hidden = true; $("fontes").hidden = true;
@@ -511,7 +509,6 @@
     $("intro-area").textContent = area.intro;
     $("conteudo-area").innerHTML = htmlArea(area);
     if (area.jornada && window.JornadaUI) JornadaUI.restaurar();
-    if (window.QuestionarioUI) { if (area.questionario) QuestionarioUI.restaurar(); else QuestionarioUI.limpar(); }
     var temServicos = area.secoes.some(function (s) { return s.tipos.length; });
     $("busca-por-cep").hidden = !(dados.indice && temServicos);
     limparResultadoCep();
@@ -519,13 +516,13 @@
   }
 
   /* ---------------------------------------------------------------- vistas do dashboard
-     O que antes eram páginas separadas (Entre Mulheres, Rio Claro em números, Painel) agora mora aqui dentro, como as áreas.
+     O que antes eram páginas separadas (Entre Mulheres, Rio Claro em números, Análise territorial) agora mora aqui dentro, como as áreas.
      Os scripts de cada vista só são baixados quando ela é aberta: a tela inicial não paga por eles. */
   var VISTAS = {
     "entre-mulheres": { el: "vista-entre-mulheres", titulo: "titulo-vista-entre-mulheres", nome: "Entre Mulheres", scripts: ["entre-mulheres.js", "entre-mulheres-ui.js"],
       iniciar: function () { if (window.EntreMulheresUI) EntreMulheresUI.iniciar(AREAS.REDE_OFERTAS.categorias); } },
     "rio-claro-em-numeros": { el: "vista-numeros", titulo: "titulo-vista-numeros", nome: "Rio Claro em números", scripts: ["territorio.js"] },
-    "painel": { el: "vista-painel", titulo: "titulo-vista-painel", nome: "Painel da Secretaria (dados de teste)", scripts: ["painel.js", "painel-ui.js"] }
+    "painel": { el: "vista-painel", titulo: "titulo-vista-painel", nome: "Análise territorial", scripts: ["painel-ui.js"] }
   };
   var vistasProntas = {};
   function carregarScripts(lista, fim) {
@@ -544,7 +541,6 @@
     var v = VISTAS[chave];
     areaAtual = null;
     if (window.JornadaUI) JornadaUI.limpar();
-    if (window.QuestionarioUI) QuestionarioUI.limpar();
     limparIA();
     $("inicio-tela").hidden = true; $("area").hidden = true; $("fontes").hidden = true;
     esconderVistas(); $(v.el).hidden = false;
@@ -595,7 +591,6 @@
   });
   window.addEventListener("popstate", function () { render(true); });
   if (window.JornadaUI) JornadaUI.ligar();
-  if (window.QuestionarioUI) { QuestionarioUI.ligar(); QuestionarioUI.usarModelo(carregarModeloIA); }
 
   /* Voltar: se a usuária chegou aqui clicando dentro do sistema, volta no histórico; senão vai ao início.
      Nunca deixa a pessoa presa nem a leva a outra seção. */
@@ -642,7 +637,6 @@
   $("sair-rapido").addEventListener("click", function () {
     limparResultadoCep();
     limparIA();
-    if (window.QuestionarioUI) QuestionarioUI.limpar();
     window.location.replace("https://www.google.com.br/");
   });
 
@@ -652,10 +646,9 @@
        e só acrescenta o que não está no catálogo (CNES, Censo Escolar). Assim um servicos.json antigo nunca esconde
        cadastros novos, e uma unidade cadastrada à mão com o código CNES não aparece duas vezes. */
     function opcional(url) { return carregar(url).catch(function () { return null; }); }
-    return Promise.all([opcional("dados/catalogo_manual.json"), opcional("dados/servicos.json"), opcional("dados/horarios_onibus.json"), opcional("dados/coleta.json"), opcional("dados/setor_bairro.json")]).then(function (r) {
-      dados.setorBairro = r[4] && r[4].bairros ? r[4].bairros : null;
+    return Promise.all([opcional("dados/catalogo_manual.json"), opcional("dados/servicos.json"), opcional("dados/horarios_onibus.json"), opcional("dados/setor_bairro.json")]).then(function (r) {
+      dados.setorBairro = r[3] && r[3].bairros ? r[3].bairros : null;
       dados.horarios = r[2];
-      if (window.QuestionarioUI) QuestionarioUI.usarConfig(r[3]);
       var manual = (r[0] && r[0].servicos) || [], pipeline = (r[1] && r[1].servicos) || [];
       var idsManuais = Object.create(null), codigosManuais = Object.create(null);
       manual.forEach(function (s) { idsManuais[s.id] = true; if (s.cnes) codigosManuais[String(s.cnes)] = true; });
