@@ -1,0 +1,19 @@
+{
+  "title": "MISM3 — Rede Mulher Rio Claro: orientação a serviços públicos com processamento local",
+  "upload_type": "software",
+  "description": "Software acadêmico para orientação de mulheres a serviços públicos de Rio Claro (SP), com processamento local no navegador e recuperação de informação. O código é licenciado sob MIT; a documentação, os textos autorais, as perguntas de avaliação e as frases de treino são licenciados sob CC BY 4.0, enquanto materiais de terceiros permanecem sujeitos às respectivas licenças e termos de origem.",
+  "creators": [
+    {
+      "name": "Vladimir Queiroz Sejas"
+    }
+  ],
+  "language": "por",
+  "keywords": [
+    "orientação a serviços públicos",
+    "recuperação de informação",
+    "processamento local",
+    "Rio Claro",
+    "violência contra a mulher"
+  ],
+  "license": "MIT"
+}
