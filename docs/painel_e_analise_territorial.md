@@ -9,8 +9,8 @@ Reescrito em 04/11/2026. **Estado: tela pronta; a análise ainda não foi gerada
 
 ## Análise territorial (`pipeline/analise_territorial.py`)
 - **O que faz:** cruza a população dos 408 setores do IBGE (Censo 2022) com a localização dos serviços do catálogo verificado: distância média da população até o CRAS, a UBS e a escola municipal mais próximos, serviços por bairro e um agrupamento exploratório de bairros (k-means).
-- **Não gerada ainda.** O script **se recusa a escrever** sem coordenadas, em vez de inventar números. A tela diz "ainda não foi gerada".
-- **O que falta (dados, não código):** no catálogo, **só as escolas municipais têm CEP** (64 de 68). **CRAS, UBS, UPA, CAPS e PAT têm endereço, mas não CEP.** A lista dos 36 serviços a completar está em `docs/ceps_a_preencher.md`. Depois: `python pipeline/servicos.py --somente-manual` e `python pipeline/analise_territorial.py` (precisa do `web/dados/cep_indice.json`).
+- **Gerada em 04/11/2026** (28 bairros; CRAS 6 de 6, UBS e USF 22 de 22, escolas 59 de 68 no cenário com o centro do CEP). O script **se recusa a escrever** sem coordenadas suficientes, em vez de inventar números.
+- **De onde vêm as coordenadas:** os CRAS e as UBS/USF têm coordenada conferida visualmente no Google Maps (`docs/evidencias_conferencia_visual/` e `docs/registro_conferencia_visual_2026-11-04.md`). UPA, CAPS e PAT continuam com endereço, sem CEP; a lista dos serviços a completar está em `docs/ceps_a_preencher.md`. Depois: `python pipeline/servicos.py --somente-manual` e `python pipeline/analise_territorial.py` (precisa do `web/dados/cep_indice.json`).
 - **Por que não cruzar por nome de bairro:** testado e descartado. Os 28 bairros do IBGE não casam com as listas de bairros dos CRAS (por exemplo, "Bela Vista" casava com 3 CRAS e "Grande Cervezão" não casava com "Jd. Chervezon"). Atribuir população a um CRAS errado enganaria a gestão.
 - **Limites:** distância em linha reta (sem ruas, ônibus nem horários); localização do serviço aproximada pelo centro do CEP; mostra onde a rede cadastrada está longe da população, **não prova falta de serviço**; sem dado pessoal de ninguém.
 
