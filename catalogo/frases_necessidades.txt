@@ -443,29 +443,3 @@ emprego_curso | procuro faxina ou diária perto da minha casa
 emprego_curso | existe curso grátis de costura ou de cabeleireira
 emprego_curso | como abrir um mei para vender meus produtos
 emprego_curso | procuro serviço que eu possa fazer em casa com meus filhos pequenos
-
-# ---------------------------------------------------------------- moradia: casa para alugar, financiamento, reparos, morar de favor, separação
-# Acrescentadas em 05/11/2026, depois de uma avaliação exploratória mostrar que o orientador se calava diante destes pedidos. Frases novas,
-# escritas pela equipe com redação própria; nenhuma é mensagem de conjunto de avaliação (esses conjuntos não devem alimentar o treino).
-moradia | procuro uma casinha pequena pra alugar
-moradia | existe casa barata pra locação pra quem ganha pouco
-moradia | preciso arrumar um lugar de morada com minhas duas filhas
-moradia | tô procurando kitnet que caiba no meu bolso
-moradia | como faço pra conseguir um aluguel ganhando pouco
-moradia | não consigo alugar porque não tenho fiador
-moradia | sem fiador e sem comprovante de renda, como alugo um imóvel
-moradia | tá chovendo dentro do meu quarto e o telhado está podre
-moradia | tem goteira em casa e mancha de umidade nas paredes
-moradia | preciso consertar o encanamento e não tenho dinheiro pra isso
-moradia | a laje da minha casa está rachando e tenho medo que desabe
-moradia | estou morando na casa da minha mãe e não aguento mais, preciso do meu cantinho
-moradia | vivo de favor na casa de uma amiga e ela quer que eu saia
-moradia | como faço pra reformar minha casa com ajuda da prefeitura
-moradia | quero comprar minha casa mas não conheço os passos
-moradia,dividas | atrasei várias parcelas do financiamento da casa e o banco avisou que vai retomar
-moradia,dividas | a parcela do financiamento imobiliário ficou pesada e não consigo mais honrar
-moradia,dividas | perdi o emprego e corro risco de perder a casa financiada
-moradia,dividas | o banco quer leiloar meu imóvel por causa das parcelas atrasadas
-moradia,casamento | me separei e fiquei sem teto
-moradia,casamento | saí de casa depois do divórcio e não tenho lugar pra ficar
-moradia,casamento | meu ex ficou com a casa e eu e as crianças estamos sem abrigo
