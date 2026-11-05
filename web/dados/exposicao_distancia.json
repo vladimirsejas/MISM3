@@ -1,0 +1,276 @@
+{
+ "meta": {
+  "fonte": "IBGE, Censo Demográfico 2022 (setores) e catálogo verificado do Observatório da Mulher",
+  "gerado_em": "2026-11-05",
+  "aviso": "Distâncias em linha reta entre o centro de cada setor do IBGE e o serviço mais próximo; não consideram ruas, ônibus nem horários. Mostram onde a rede cadastrada fica longe da população e não provam falta de serviço. Categoria com cobertura incompleta de coordenadas tem distância superestimada.",
+  "limiares_km": [
+   1.0,
+   2.0
+  ],
+  "pessoas_total": 201418
+ },
+ "cenarios": {
+  "coordenadas_do_catalogo": {
+   "cras": {
+    "cobertura": {
+     "com_coordenada": 6,
+     "cadastrados": 6,
+     "completo": true
+    },
+    "populacao_toda": {
+     "pessoas": 201418,
+     "setores": 408,
+     "mediana_km": 1.22,
+     "p90_km": 2.73,
+     "acima_de": {
+      "1 km": {
+       "pessoas": 121265,
+       "percentual": 60.2,
+       "setores": 271
+      },
+      "2 km": {
+       "pessoas": 42201,
+       "percentual": 21.0,
+       "setores": 115
+      }
+     }
+    },
+    "setores_sem_bairro": {
+     "pessoas": 12846,
+     "setores": 43,
+     "mediana_km": 4.76,
+     "p90_km": 11.03,
+     "acima_de": {
+      "1 km": {
+       "pessoas": 8039,
+       "percentual": 62.6,
+       "setores": 36
+      },
+      "2 km": {
+       "pessoas": 7616,
+       "percentual": 59.3,
+       "setores": 33
+      }
+     }
+    }
+   },
+   "ubs": {
+    "cobertura": {
+     "com_coordenada": 22,
+     "cadastrados": 22,
+     "completo": true
+    },
+    "populacao_toda": {
+     "pessoas": 201418,
+     "setores": 408,
+     "mediana_km": 0.64,
+     "p90_km": 1.37,
+     "acima_de": {
+      "1 km": {
+       "pessoas": 49280,
+       "percentual": 24.5,
+       "setores": 131
+      },
+      "2 km": {
+       "pessoas": 5303,
+       "percentual": 2.6,
+       "setores": 29
+      }
+     }
+    },
+    "setores_sem_bairro": {
+     "pessoas": 12846,
+     "setores": 43,
+     "mediana_km": 0.85,
+     "p90_km": 4.12,
+     "acima_de": {
+      "1 km": {
+       "pessoas": 4202,
+       "percentual": 32.7,
+       "setores": 26
+      },
+      "2 km": {
+       "pessoas": 3155,
+       "percentual": 24.6,
+       "setores": 21
+      }
+     }
+    }
+   },
+   "escola": {
+    "cobertura": {
+     "com_coordenada": 24,
+     "cadastrados": 68,
+     "completo": false
+    },
+    "populacao_toda": {
+     "pessoas": 201418,
+     "setores": 408,
+     "mediana_km": 0.7,
+     "p90_km": 1.79,
+     "acima_de": {
+      "1 km": {
+       "pessoas": 58647,
+       "percentual": 29.1,
+       "setores": 144
+      },
+      "2 km": {
+       "pessoas": 16492,
+       "percentual": 8.2,
+       "setores": 53
+      }
+     }
+    },
+    "setores_sem_bairro": {
+     "pessoas": 12846,
+     "setores": 43,
+     "mediana_km": 4.65,
+     "p90_km": 10.79,
+     "acima_de": {
+      "1 km": {
+       "pessoas": 9632,
+       "percentual": 75.0,
+       "setores": 38
+      },
+      "2 km": {
+       "pessoas": 9368,
+       "percentual": 72.9,
+       "setores": 33
+      }
+     }
+    }
+   }
+  },
+  "com_centro_do_cep": {
+   "cras": {
+    "cobertura": {
+     "com_coordenada": 6,
+     "cadastrados": 6,
+     "completo": true
+    },
+    "populacao_toda": {
+     "pessoas": 201418,
+     "setores": 408,
+     "mediana_km": 1.22,
+     "p90_km": 2.73,
+     "acima_de": {
+      "1 km": {
+       "pessoas": 121265,
+       "percentual": 60.2,
+       "setores": 271
+      },
+      "2 km": {
+       "pessoas": 42201,
+       "percentual": 21.0,
+       "setores": 115
+      }
+     }
+    },
+    "setores_sem_bairro": {
+     "pessoas": 12846,
+     "setores": 43,
+     "mediana_km": 4.76,
+     "p90_km": 11.03,
+     "acima_de": {
+      "1 km": {
+       "pessoas": 8039,
+       "percentual": 62.6,
+       "setores": 36
+      },
+      "2 km": {
+       "pessoas": 7616,
+       "percentual": 59.3,
+       "setores": 33
+      }
+     }
+    }
+   },
+   "ubs": {
+    "cobertura": {
+     "com_coordenada": 22,
+     "cadastrados": 22,
+     "completo": true
+    },
+    "populacao_toda": {
+     "pessoas": 201418,
+     "setores": 408,
+     "mediana_km": 0.64,
+     "p90_km": 1.37,
+     "acima_de": {
+      "1 km": {
+       "pessoas": 49280,
+       "percentual": 24.5,
+       "setores": 131
+      },
+      "2 km": {
+       "pessoas": 5303,
+       "percentual": 2.6,
+       "setores": 29
+      }
+     }
+    },
+    "setores_sem_bairro": {
+     "pessoas": 12846,
+     "setores": 43,
+     "mediana_km": 0.85,
+     "p90_km": 4.12,
+     "acima_de": {
+      "1 km": {
+       "pessoas": 4202,
+       "percentual": 32.7,
+       "setores": 26
+      },
+      "2 km": {
+       "pessoas": 3155,
+       "percentual": 24.6,
+       "setores": 21
+      }
+     }
+    }
+   },
+   "escola": {
+    "cobertura": {
+     "com_coordenada": 59,
+     "cadastrados": 68,
+     "completo": false
+    },
+    "populacao_toda": {
+     "pessoas": 201418,
+     "setores": 408,
+     "mediana_km": 0.41,
+     "p90_km": 0.93,
+     "acima_de": {
+      "1 km": {
+       "pessoas": 17537,
+       "percentual": 8.7,
+       "setores": 65
+      },
+      "2 km": {
+       "pessoas": 5650,
+       "percentual": 2.8,
+       "setores": 30
+      }
+     }
+    },
+    "setores_sem_bairro": {
+     "pessoas": 12846,
+     "setores": 43,
+     "mediana_km": 0.66,
+     "p90_km": 5.35,
+     "acima_de": {
+      "1 km": {
+       "pessoas": 5038,
+       "percentual": 39.2,
+       "setores": 29
+      },
+      "2 km": {
+       "pessoas": 4416,
+       "percentual": 34.4,
+       "setores": 23
+      }
+     }
+    }
+   }
+  }
+ }
+}
