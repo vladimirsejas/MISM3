@@ -53,7 +53,7 @@ Tempo é estimativa de uma noite de trabalho. **[Você]** é o que só você pod
 - [Você] `python pipeline\atualizar_localizacoes.py` (ou duplo clique em `atualizar_localizacoes.bat`), com os caminhos do CNEFE e da lista de CEPs. **Ler a lista inteira.** Se estiver certa, digitar `s`; se alguma estiver errada, Enter, apagar o `aprovar` dessa linha e rodar de novo. Mandar o texto impresso para o Claude.
 - [Claude] Conferir a lista, ajustar a lógica onde errar, atualizar as contagens e a documentação.
 - **Pronto quando:** CRAS e UBS aprovados têm CEP no catálogo e a linha correspondente em `catalogo/localizacao_registro.csv`; nenhum endereço ambíguo ganhou posição.
-- **Meta realista:** 6 de 6 CRAS (hoje 2) e mais de 70% das UBS/USF (hoje 5 de 22), que é o limite que libera a distância no mapa territorial.
+- **Meta realista:** 6 de 6 CRAS e mais de 70% das UBS/USF, que é o limite que libera a distância no mapa territorial. **Atingida em 04/11/2026**, com coordenadas conferidas visualmente: CRAS 6 de 6 e UBS/USF 22 de 22.
 
 ### Bloco C. Contatos de proteção (1 noite, mais uma ou duas ligações)
 - Alvos: **CRAM**, **Delegacia de Defesa da Mulher**, **Patrulha Maria da Penha**. Hoje os dois últimos não têm telefone nem endereço.
