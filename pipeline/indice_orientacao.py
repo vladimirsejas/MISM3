@@ -41,6 +41,8 @@ VOCABULARIO: dict[str, tuple[str, str]] = {
     "mulher/defensoria": ("Defensoria Pública (orientação jurídica gratuita)", "defensoria publica advogado advogada gratuito de graca pensao alimenticia guarda divorcio separacao medida protetiva direito juridico nudem"),
     "mulher/procon": ("Procon: defesa do consumidor", "procon defesa do consumidor consumidor reclamar reclamacao produto com defeito defeito comprei e veio estragado troca devolucao garantia cobranca indevida cobraram a mais conta que nao reconheco cobrado a mais banco tarifa abusiva nome sujo negativado juros abusivos superendividamento empresa golpe compra online loja nao entregou cobrou duas vezes cobranca em duplicidade cartao de credito fatura tarifa que nao contratei reclamar de empresa reclamar de loja loja nao troca garantia do produto"),
     "mulher/secretaria": ("Secretaria Municipal da Mulher", "secretaria da mulher politicas para mulheres atendimento a mulher whatsapp cram centro de referencia de atendimento a mulher"),
+    "assistencia/habitacao": ("Secretaria de Habitação (cadastro habitacional)", "habitacao secretaria de habitacao cadastro habitacional inscricao atualizar cadastro minha casa minha vida casa propria casa popular conjunto habitacional residencial programa habitacional fila da casa moradia popular inscrever para conseguir uma casa"),
+    "assistencia/defesa_civil": ("Defesa Civil", "defesa civil casa em risco risco de desabamento desabar cair a casa rachadura grave parede rachando alagamento alagou enchente inundacao chuva forte area de risco encosta deslizamento temporal telhado caiu arvore caiu desastre calamidade 199"),
     "assistencia/cras": ("CRAS: porta de entrada da assistência social", "cras assistencia social cesta basica comida fome sem renda sem dinheiro beneficio bolsa familia cadunico cadastro unico auxilio bpc ajuda financeira documentos acompanhamento da familia necessidade grana sem grana pra comer sem comida passando fome alimento mantimento nao tenho o que comer"),
     "assistencia/creas": ("CREAS: proteção quando direitos são violados", "creas violacao de direitos violencia abuso abandono negligencia situacao de rua morador de rua maus tratos trabalho infantil"),
     "assistencia/conselho_tutelar": ("Conselho Tutelar", "conselho tutelar crianca adolescente maus tratos abuso negligencia abandono denuncia direitos da crianca menor crianca fora da escola nao vai na escola evasao escolar crianca na rua abandono"),
@@ -75,6 +77,8 @@ VOCABULARIO_SECOES: dict[str, str] = {
     "moradia/secao-1": "agua conta de agua daae tarifa social esgoto desconto conta cara",
     "moradia/secao-2": "luz conta de luz energia eletrica elektro tarifa social desconto cortaram a luz conta alta",
     "moradia/secao-3": "habitacao casa propria moradia popular cadastro habitacional minha casa minha vida aluguel aluguel social despejo despejada morar sem casa sem teto lugar para morar moro de favor achar casa procurar casa encontrar casa conseguir uma casa arrumar casa casa para alugar alugar casa locacao kitnet fiador financiamento da casa prestacao parcela do financiamento atrasada banco retomar leilao do imovel reforma reformar reparo conserto telhado goteira infiltracao umidade mofo rachadura laje encanamento morar na casa da mae separacao divorcio ficou sem casa",
+    "moradia/secao-4": "defesa civil casa em risco risco de desabamento desabar rachadura grave alagamento alagou enchente inundacao chuva forte area de risco encosta deslizamento temporal telhado caiu arvore caiu calamidade 199",
+    "moradia/secao-5": "aluguel atrasado atrasei o aluguel despejo despejada ameaca de despejo notificacao proprietario pediu a casa dono do imovel quer a casa imobiliaria ameacou aluguel social auxilio aluguel sem pagar o aluguel perder a casa prestacao da casa atrasada prestacao atrasada financiamento atrasado parcela da casa atrasada banco quer retomar a casa leilao do imovel nao consigo pagar a prestacao",
     "assistencia/secao-1": "cras assistencia comida fome cesta basica sem renda beneficio bolsa familia cadunico documentos certidao registro civil segunda via ajuda financeira",
     "assistencia/assistencia-cadunico": "cadastro unico cadunico bolsa familia beneficio bpc renda da familia ajuda do governo programa social como me cadastro documentos para o cadastro responsavel pela familia sustentar a familia sustento da casa contas sem renda sem dinheiro passo a passo",
     "assistencia/secao-2": "denuncia violacao de direitos crianca adolescente maus tratos abuso negligencia abandono creas conselho tutelar disque 100",
@@ -95,6 +99,8 @@ def necessidades_do_destino(u: dict) -> list[str]:
     tipo = svc.split("/")[0] if svc else ""
     if svc == "mulher/procon":
         return ["dividas"]
+    if svc in ("assistencia/habitacao", "assistencia/defesa_civil"):
+        return ["moradia"]
     if tipo == "mulher":
         return ["violencia", "casamento"] if svc in ("mulher/defensoria", "mulher/secretaria") else ["violencia"]
     if svc in ("assistencia/creas", "assistencia/conselho_tutelar"):

@@ -569,7 +569,9 @@
         itens: [
           { titulo: "Conta de água e de luz mais barata", texto: "A tarifa social do DAAE (água e esgoto) e o que saber sobre a tarifa social de energia.", ancora: "secao-1", botao: "Ver as tarifas" },
           { titulo: "Sou avó e crio meus netos: casa própria", texto: "O que o texto oficial pede para provar que o neto faz parte da família, e por onde começar.", ancora: "secao-3", botao: "Ver o caminho da avó" },
-          { titulo: "Casa própria: renda, ordem da fila e o que conta a seu favor", texto: "Os tetos de renda de 2026 e os critérios que a Prefeitura publica. Este site não inscreve nem garante vaga.", ancora: "secao-3", botao: "Ver os critérios" }
+          { titulo: "Casa própria: renda, ordem da fila e o que conta a seu favor", texto: "Os tetos de renda de 2026 e os critérios que a Prefeitura publica. Este site não inscreve nem garante vaga.", ancora: "secao-3", botao: "Ver os critérios" },
+          { titulo: "Casa em risco, alagamento ou enchente", texto: "A Defesa Civil: telefones e o que a página oficial informa.", ancora: "secao-4", botao: "Ver a Defesa Civil" },
+          { titulo: "Aluguel ou prestação da casa atrasados, ameaça de despejo", texto: "Defensoria Pública, CRAS e o caminho das dívidas: por onde começar.", ancora: "secao-5", botao: "Ver por onde começar" }
         ]
       },
       secoes: [
@@ -612,7 +614,7 @@
         },
         {
           titulo: "Habitação", ancora: "secao-3",
-          tipos: [],
+          tipos: ["assistencia"], subtipos: ["habitacao"],
           canais: [
             { nome: "Sou avó e crio meus netos: casa própria e moradia", sem_tel: true, resumo: "Ver o passo a passo",
               texto: "Para quem cria neto ou neta e quer entrar na fila da casa própria. O ponto que mais costuma travar é provar que a criança faz parte da sua família. Este cartão mostra o que o texto oficial pede.",
@@ -654,6 +656,25 @@
             ["Aviso da Prefeitura sobre golpe com moradias do programa habitacional", "https://rioclaro.sp.gov.br/planejamento-e-habitacao/criminosos-aplicam-golpe-oferecendo-moradias-do-programa-habitacional-de-rc/", "A Prefeitura alerta que criminosos oferecem moradias do programa. Leia antes de passar documentos ou dinheiro a alguém."],
             ["Secretaria de Habitação de Rio Claro", "https://rioclaro.sp.gov.br/secretaria/secretaria-de-planejamento-e-habitacao/", "A Prefeitura publica os contatos da secretaria e links para cadastro habitacional e critérios."],
             ["CRAS — Centros de Referência de Assistência Social", "https://rioclaro.sp.gov.br/centro-ref-assistencia-social/", "Orientação sobre benefícios e proteção social."]
+          ]
+        },
+        {
+          titulo: "Casa em risco, alagamento ou enchente", ancora: "secao-4",
+          tipos: ["assistencia"], subtipos: ["defesa_civil"],
+          descricao: "Casa com risco de cair, alagamento e enchente são assuntos de Defesa Civil. A página oficial de Rio Claro diz que o órgão atua em prevenção, socorro, assistência e recuperação diante de desastres, mas não lista os tipos de ocorrência nem explica como pedir vistoria: ligue e descreva a situação. Em perigo imediato, use os números de emergência do site.",
+          links: [
+            ["Defesa Civil de Rio Claro — página oficial", "https://www.rioclaro.sp.gov.br/defesa-civil/", "Endereço e telefones (199, 24 horas, e administrativo). A página não traz data, CEP nem e-mail."]
+          ]
+        },
+        {
+          titulo: "Aluguel ou prestação da casa atrasados, ameaça de despejo", ancora: "secao-5",
+          tipos: [],
+          descricao: "Quando o aluguel atrasa ou o proprietário pede a casa, a orientação jurídica gratuita é da Defensoria Pública, sujeita à triagem (o cartão da Defensoria na área Direitos traz o telefone e o agendamento), e o CRAS orienta sobre benefícios e proteção social (veja o CRAS do seu bairro na área Assistência Social). Este site não encontrou, em página oficial, aluguel social nem auxílio-aluguel em Rio Claro: pergunte no CRAS e na Secretaria de Habitação se existe algum apoio. Leve à Defensoria qualquer notificação ou papel que receber. Se o atraso é a prestação do financiamento da casa, o caminho de orientação é o mesmo, e para dívidas com banco veja também o Procon na área Direitos. O site não resolve o caso nem garante que haverá atendimento.",
+          links: [
+            ["Defensoria Pública: como pedir ajuda jurídica gratuita (área Direitos)", "#direitos/secao-1", "Quem a Defensoria atende, como agendar e o que levar, com o telefone e o horário de Rio Claro."],
+            ["Agende atendimento na Defensoria Pública de SP", "https://www.defensoria.sp.def.br/web/guest/atendimento/agende-seu-atendimento", "Agendamento online com a Júlia 24 horas por dia. É preciso agendar antes de comparecer."],
+            ["Qual CRAS atende o meu bairro? (área Assistência Social)", "#assistencia/secao-1", "O CRAS orienta sobre benefícios e proteção social. A lista e a busca por bairro estão na área Assistência Social."],
+            ["Dívidas, banco e consumo: Procon (área Direitos)", "#direitos/secao-3", "Os endereços e telefones do Procon de Rio Claro estão na seção Aposentadoria e dívidas da área Direitos."]
           ]
         }
       ],
@@ -785,7 +806,7 @@
         },
         {
           titulo: "Secretaria e outros canais", ancora: "secao-4",
-          tipos: ["assistencia"], recolhida: true,
+          tipos: ["assistencia"], subtipos: ["sede", "acolhimento"], recolhida: true,
           links: [
             ["Secretaria de Desenvolvimento Social", "https://rioclaro.sp.gov.br/secretaria/secretaria-de-desenvolvimento-social/", "Informações institucionais sobre assistência social."],
             ["Fundo Social de Solidariedade", "https://rioclaro.sp.gov.br/secretaria/fundo-social-de-solidariedade/", "Informações sobre cursos e programas."],
