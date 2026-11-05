@@ -18,18 +18,27 @@ As coordenadas dos quatro CRAS (Mãe Preta, Jardim Brasília, Bom Sucesso e Terr
 - USF Jardim Progresso: -22.377894, -47.574402, confiança média. O Maps lista "USF Progresso" em Av. M 37, 1909 (o catálogo diz Av. M-35, 1909; o endereço do catálogo não foi alterado). Há uma entrada vizinha ("USF Jd Progresso José Carlos da Silva", a cerca de 45 m) e uma entrada "USF Jardim Progresso." em Av. M 31, 1881, marcada como permanentemente fechada, a cerca de 130 m. Não há Street View da fachada atual.
 - USF Brasília: -22.430726, -47.581693, confiança média. O Maps lista "USF Jardim Brasília Neusa Maria Mortari" em Estr. dos Costas, 1281, e o catálogo registra o número 1349 para a mesma estrada; o número não foi alterado. A placa da unidade não aparece no Street View.
 
+## As 9 escolas municipais localizadas em 05/11/2026
+
+Em 05/11/2026 foram localizadas as 9 escolas municipais que ainda não tinham coordenada. Sete foram achadas por busca de nome e endereço no Google Maps, com rua e número iguais aos do catálogo: Antônio Sebastião da Silva, Arlindo Ansanello, Djiliah Camargo de Souza, Dom Pedro I, Gunar Wilhelm Koelle, João Batista Maule e Mora Guimarães. As outras duas, a E.M. Dennizard França Machado e a E.M. Maria Aparecida Polastri Hartung (Dona Birro), foram conferidas visualmente em mapa e em imagem de rua. Todas ficaram com confiança média. As decisões estão em `catalogo/conferencia_visual_escolas_2026-11-05.csv` e cada coordenada aplicada está registrada em `catalogo/localizacao_registro.csv`. O endereço do catálogo não foi alterado em nenhuma delas.
+
+Em quatro escolas o CEP que o Google Maps mostra difere do CEP do catálogo: Antônio Sebastião da Silva, Arlindo Ansanello, Dom Pedro I e Mora Guimarães. Isso entra nas pendências abaixo e deve ser conferido com a Prefeitura antes de qualquer correção.
+
+Com essas coordenadas, a cobertura de escolas é de 68 de 68 no cenário com o centro do CEP e de 33 de 68 usando só as coordenadas do catálogo. Nesse segundo cenário a cobertura continua incompleta, por isso o resultado deve ser lido com cautela. A comparação entre as duas formas de localizar mediu o erro do centro do CEP em 24 escolas que têm as duas informações: mediana de 187 m, percentil 90 de 422 m e máximo de 4,7 km. Com o centro do CEP, 6,2% da população fica a mais de 1 km e 2,1% a mais de 2 km da escola municipal mais próxima; só com o catálogo, os valores são 26,0% e 6,5%.
+
 ## O que ainda falta
 
 Estas pendências não bloqueiam a análise territorial:
 
 - Endereço do CRAS Terra Nova: o catálogo diz Rua Marco Antonio Padula, 1043, e o Google Maps mostra Av. Marginal Jn, 75; deve ser revisado com a Prefeitura.
 - CEP da USF Palmeiras: conferir o CEP 13500210.
+- CEP de quatro escolas (Antônio Sebastião da Silva, Arlindo Ansanello, Dom Pedro I e Mora Guimarães): o CEP do Google Maps difere do do catálogo.
 - Telefones das USF Santa Elisa e Brasília: não foram verificados.
 - Fonte e licença do arquivo `mapaRioClaroUSF.geojson` do MISM 1, de origem e data desconhecidas, que serviu de referência de 21 unidades de saúde.
 - Distâncias em linha reta, não por ruas; os setores sem bairro são tratados à parte.
 - Repositório público: as imagens do Google Maps não vão ao GitHub (termos de uso do Google); só o índice e as coordenadas vão.
 
-As distâncias de `web/dados/exposicao_distancia.json` e `web/dados/analise_territorial.json` já foram recalculadas com todos os serviços (CRAS 6/6, UBS e USF 22/22, escolas 59/68 no cenário com o centro do CEP).
+As distâncias de `web/dados/exposicao_distancia.json` e `web/dados/analise_territorial.json` já foram recalculadas com todos os serviços (CRAS 6/6, UBS e USF 22/22, escolas 68/68 no cenário com o centro do CEP e 33/68 só com o catálogo).
 
 ## Plano para o artigo
 
