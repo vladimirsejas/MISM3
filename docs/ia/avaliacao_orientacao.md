@@ -150,3 +150,31 @@ python pipeline/indice_orientacao.py                   # regera o índice do ori
 - Mais negativos e frases fora do escopo para melhorar a abstenção.
 - Revisão das regras e do detector com CRAM, DDM e CAPS; decidir os textos dos avisos.
 - Tamanho: o índice (540 KB) e os modelos de perigo (520 KB), escopo (310 KB) e necessidades (600 KB) somam cerca de 2 MB sem compressão e só são baixados quando a usuária começa a escrever; em conexões lentas isso demora alguns segundos na primeira vez.
+
+## Nota de 05/11/2026: avaliação exploratória e correções posteriores
+
+Em 05/11/2026 foi feita uma avaliação exploratória com 76 mensagens escritas pelo autor (o conjunto `final` de `avaliacao/perguntas.json`), executadas uma única vez com o sistema do commit `2bf495c`. Ela mostrou duas lacunas reais: o catálogo não tinha o Procon, então perguntas sobre produto com defeito e cobrança indevida não chegavam a um serviço; e o orientador se calava diante de pedidos de moradia como achar uma casa, atraso de prestação e infiltração.
+
+**Diagnóstico da moradia.** O motor não se calava por falta de frases de treino: a área Moradia só tinha tarifa social (DAAE, Elektro) e Habitação, e o catálogo não tinha nenhum serviço de moradia, nem Defesa Civil. Sem destino, a nota da busca ficava abaixo do mínimo (0,3) e o orientador se abstinha. Por isso a correção veio na ordem inversa da sugerida no começo: primeiro os destinos, depois as frases.
+
+**O que foi feito, nesta ordem (todas as correções são posteriores à avaliação e foram escolhidas por causa dela).**
+1. Procon Centro e Procon Cervezão no catálogo (fonte: página do Procon-SP, sem data de atualização; telefones não testados), em Direitos, seção Aposentadoria e dívidas.
+2. Secretaria de Planejamento e Habitação (cadastro habitacional) e Defesa Civil de Rio Claro no catálogo, com fonte, data de leitura (05/11/2026) e telefone literal, ligadas à área Moradia e ao índice do orientador. O que a fonte não traz ficou em branco e está dito na observação: CEP e e-mail da Defesa Civil, tipos de ocorrência atendidos, o procedimento de atualização do cadastro habitacional e qualquer aluguel social ou auxílio-aluguel (nenhuma página oficial lida os cita). O endereço da Secretaria diverge entre duas páginas oficiais (Rua Doutor Elói Chaves, CEP 13504-050, contra Rua 6, CEP 13504-099, ambos com o número 3265): rua e CEP não foram cadastrados e as duas versões estão na observação. Aluguel ou prestação atrasados e ameaça de despejo levam, por texto e link, à Defensoria, ao CRAS e ao Procon; os cartões dos CRAS não foram duplicados na área Moradia, porque isso trocava a área líder em perguntas de assistência (teste `orientar.test.js`).
+3. Vocabulário popular das seções de habitação, casa em risco, aluguel e prestação atrasados, e do Procon, com palavras do assunto.
+4. Só então, 12 frases novas de moradia no classificador de necessidades (`catalogo/frases_necessidades.txt`), com redação própria, e os modelos de necessidades e de escopo foram treinados de novo. Essa etapa é um commit separado e pode ser desfeita sem afetar as anteriores.
+
+Não foi copiada nenhuma mensagem do conjunto `final` para o treino nem para o catálogo, e `avaliacao/perguntas.json` não foi alterado. Mesmo assim, **aquelas 76 mensagens deixam de ser independentes para a versão corrigida**, e qualquer resultado nelas com o sistema novo não deve ser apresentado como estimativa independente. Para um número independente será preciso um conjunto novo, escrito antes de qualquer ajuste.
+
+**Efeito medido** apenas nos conjuntos de desenvolvimento e de teste que já existiam (os conjuntos independente, reserva e final não foram executados para ajustar nada):
+
+| Conjunto | Métrica | Antes (`2bf495c`) | Depois |
+|---|---|---|---|
+| Desenvolvimento | Resposta@3 de área | 97% (66/68) | 97% (66/68) |
+| Desenvolvimento | Resposta@3 específica | 87% (59/68) | 87% (59/68) |
+| Desenvolvimento | Abstenção correta | 8 de 9 | 8 de 9 |
+| Teste | Resposta@3 de área | 95% (79/83) | 94% (78/83) |
+| Teste | Resposta@3 específica | 92% (78/85) | 89% (76/85) |
+| Teste | Taxa de resposta | 96% (82/85) | 96% (82/85) |
+| Teste | Abstenção correta | 10 de 13 | 10 de 13 |
+
+Duas perguntas do teste pioraram, as duas por margem mínima: a q033, por um empate na terceira casa (0,572 contra 0,573) depois que o índice ganhou serviços, e a q068 ("ubs perto do mae preta"), que perdeu o terceiro cartão quando o retreino subiu a confiança do classificador em "filhos" (de 0,61 para 0,74) e, com ela, o corte de relevância (0,333 contra 0,329 da USF). A q003 ("onde fica o PAT"), que tinha caído numa tentativa anterior com 22 frases, voltou a passar (confiança 0,34 contra o limite de 0,3). Nenhum ajuste foi feito sobre essas perguntas. As frases de moradia deixam de ser lidas como emprego ("achar casa": moradia 0,65 contra emprego 0,47, antes o inverso), e as seis frases de moradia usadas para conferir (achar casa, prestação atrasada, infiltração, aluguel atrasado e despejo, alagamento, cadastro da casa popular) passam a ter destino. Limites que continuam: o Procon só cobre cobrança e produto e não substitui orientação jurídica; a Defesa Civil não promete vistoria; reparo e infiltração levam à seção Habitação, que não explica como consertar; e o endereço e o CEP da Secretaria de Habitação precisam ser confirmados com a Prefeitura.
