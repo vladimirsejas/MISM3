@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "Se você utilizar este software, cite-o conforme os metadados deste arquivo."
+title: "MISM3 — Rede Mulher Rio Claro: orientação a serviços públicos com processamento local"
+type: software
+authors:
+  - family-names: Sejas
+    given-names: Vladimir Queiroz
+license: MIT
+repository-code: "https://github.com/vladimirsejas/MISM3"
+# date-released: preencher quando a versão final receber uma etiqueta (tag) de lançamento
+# doi: 10.5281/zenodo.XXXXXXXX
+# affiliation: a definir pelo autor
