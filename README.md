@@ -223,3 +223,11 @@ Notas de ambiente:
 ## Manutenção deste README
 
 Ao adicionar uma biblioteca, uma linguagem ou um arquivo de código em `web/` ou `pipeline/`, atualizar as tabelas acima. `pipeline/tests/test_dependencias.py` falha se uma dependência Python não estiver em `requirements.txt` e neste README, se a versão do Leaflet divergir, ou se um arquivo de `web/*.js` ou `pipeline/*.py` não for citado aqui. Sem emojis; linguagem direta e técnica.
+
+## Licença e citação
+
+O código-fonte é licenciado sob MIT (`LICENSE`). A documentação, os textos autorais, as perguntas de avaliação e as frases de treino listadas em `LICENSE-DADOS-E-DOCUMENTACAO.md` são licenciados sob Creative Commons Atribuição 4.0 Internacional (CC BY 4.0). Materiais de terceiros mantêm suas próprias licenças e termos; consulte `AVISOS-DE-TERCEIROS.md` antes de reutilizá-los. Para citar o software, utilize os metadados de `CITATION.cff`.
+
+## Uso responsável e limites
+
+O MISM3 orienta a busca por serviços públicos e não substitui avaliação, orientação ou atendimento profissional. O sistema não determina diagnósticos, elegibilidade ou decisões individuais. Até esta versão, não foi validado com usuárias reais. As perguntas dos conjuntos de avaliação são fictícias e foram escritas pela equipe do projeto.
