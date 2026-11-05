@@ -39,6 +39,7 @@ VOCABULARIO: dict[str, tuple[str, str]] = {
     "mulher/cram": ("CRAM: atendimento à mulher em situação de violência", "cram centro de referencia de atendimento a mulher violencia psicologa assistente social acolhimento escuta apoio violencia domestica"),
     "mulher/patrulha": ("Patrulha Maria da Penha", "patrulha maria da penha guarda civil acompanhamento medida protetiva visitas protecao"),
     "mulher/defensoria": ("Defensoria Pública (orientação jurídica gratuita)", "defensoria publica advogado advogada gratuito de graca pensao alimenticia guarda divorcio separacao medida protetiva direito juridico nudem"),
+    "mulher/procon": ("Procon: defesa do consumidor", "procon defesa do consumidor consumidor reclamar reclamacao produto com defeito defeito comprei e veio estragado troca devolucao garantia cobranca indevida cobraram a mais conta que nao reconheco cobrado a mais banco tarifa abusiva nome sujo negativado juros abusivos superendividamento empresa golpe compra online loja nao entregou cobrou duas vezes cobranca em duplicidade cartao de credito fatura tarifa que nao contratei reclamar de empresa reclamar de loja loja nao troca garantia do produto"),
     "mulher/secretaria": ("Secretaria Municipal da Mulher", "secretaria da mulher politicas para mulheres atendimento a mulher whatsapp cram centro de referencia de atendimento a mulher"),
     "assistencia/cras": ("CRAS: porta de entrada da assistência social", "cras assistencia social cesta basica comida fome sem renda sem dinheiro beneficio bolsa familia cadunico cadastro unico auxilio bpc ajuda financeira documentos acompanhamento da familia necessidade grana sem grana pra comer sem comida passando fome alimento mantimento nao tenho o que comer"),
     "assistencia/creas": ("CREAS: proteção quando direitos são violados", "creas violacao de direitos violencia abuso abandono negligencia situacao de rua morador de rua maus tratos trabalho infantil"),
@@ -92,6 +93,8 @@ VOCABULARIO_SECOES: dict[str, str] = {
 def necessidades_do_destino(u: dict) -> list[str]:
     svc, area, sec = u.get("svc") or "", u.get("area") or "", u.get("sec") or ""
     tipo = svc.split("/")[0] if svc else ""
+    if svc == "mulher/procon":
+        return ["dividas"]
     if tipo == "mulher":
         return ["violencia", "casamento"] if svc in ("mulher/defensoria", "mulher/secretaria") else ["violencia"]
     if svc in ("assistencia/creas", "assistencia/conselho_tutelar"):

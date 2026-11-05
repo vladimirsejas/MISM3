@@ -32,6 +32,7 @@
     curso_superior_tecnologia: "Curso superior de tecnologia",
     fundo_social: "Fundo Social de Solidariedade",
     sede: "Sede administrativa",
+    procon: "Procon (defesa do consumidor)",
     municipal: "Rede municipal",
     estadual: "Rede estadual",
     federal: "Rede federal",
