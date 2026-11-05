@@ -431,7 +431,7 @@
         },
         {
           titulo: "Violência e proteção", ancora: "secao-2",
-          tipos: ["mulher"],
+          tipos: ["mulher"], subtipos: ["ddm", "cram", "patrulha", "defensoria", "secretaria"],
           urgente: true,
           links: [
             ["Ligue 180 — Central de Atendimento à Mulher", "https://www.gov.br/mulheres/pt-br/ligue180", "Canal nacional de atendimento, orientação e encaminhamento."],
@@ -440,7 +440,7 @@
         },
         {
           titulo: "Aposentadoria e dívidas", ancora: "secao-3",
-          tipos: [],
+          tipos: ["mulher"], subtipos: ["procon"],
           links: [
             ["Procon-SP — Apoio ao Superendividado", "https://www.procon.sp.gov.br/espaco-consumidor/#ApoioSuperendividado", "Programa estadual com inscrição online e triagem para quem não consegue pagar dívidas sem comprometer a subsistência."],
             ["Meu INSS — Simular aposentadoria", "https://www.gov.br/pt-br/servicos/simular-aposentadoria", "Projeção do tempo que falta, com base nos vínculos registrados. Não garante concessão de benefício."],
