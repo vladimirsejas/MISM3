@@ -104,8 +104,8 @@
 
 
   /* ------------------------------------------------------------ serviços do catálogo (recomendação por conteúdo) */
-  /* Quais serviços do catálogo verificado cabem em cada necessidade. Só entram tipos que EXISTEM no catálogo: moradia não
-     tem serviços cadastrados, e o site não finge que tem (mostra só o caminho da área). Dívidas e consumo têm o Procon. */
+  /* Quais serviços do catálogo verificado cabem em cada necessidade. Só entram tipos que EXISTEM no catálogo: o que
+     não tem serviço cadastrado o site não finge que tem (mostra só o caminho da área). Moradia tem a Secretaria de Habitação e a Defesa Civil; dívidas e consumo têm o Procon. */
   var SERVICOS_DA_NECESSIDADE = {
     violencia: [{ tipo: "mulher", subtipos: ["ddm", "cram", "patrulha", "defensoria", "secretaria"] }, { tipo: "assistencia", subtipos: ["creas"] }],
     casamento: [{ tipo: "mulher", subtipos: ["ddm", "cram", "patrulha", "defensoria", "secretaria"] }],
@@ -114,7 +114,7 @@
     estudo: [{ tipo: "emprego_curso", subtipos: ["eja", "escola_sesi", "graduacao", "curso_superior_tecnologia", "curso_tecnico", "curso_profissionalizante"] }],
     saude: [{ tipo: "saude", subtipos: ["urgencia", "caps", "hospital", "especialidades", "secretaria", "cei", "centro_habilitacao"] }],
     familia: [{ tipo: "assistencia", subtipos: ["cras", "sede", "creas"] }],
-    moradia: [],
+    moradia: [{ tipo: "assistencia", subtipos: ["habitacao", "defesa_civil"] }],
     dividas: [{ tipo: "mulher", subtipos: ["procon"] }]
   };
   /* Serviços "porta de entrada" que valem um pequeno empurrão quando o texto não aponta nenhum em especial. */
