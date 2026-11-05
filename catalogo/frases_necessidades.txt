@@ -443,3 +443,19 @@ emprego_curso | procuro faxina ou diária perto da minha casa
 emprego_curso | existe curso grátis de costura ou de cabeleireira
 emprego_curso | como abrir um mei para vender meus produtos
 emprego_curso | procuro serviço que eu possa fazer em casa com meus filhos pequenos
+
+# ---------------------------------------------------------------- moradia: cadastro habitacional, casa em risco, despejo, prestação, reparos
+# Acrescentadas em 05/11/2026, depois de cadastrar a Secretaria de Habitação e a Defesa Civil e de ligá-las à área Moradia. Frases novas,
+# escritas pela equipe com redação própria; nenhuma é mensagem de conjunto de avaliação (esses conjuntos não devem alimentar o treino).
+moradia | preciso fazer o cadastro da casa popular da prefeitura
+moradia | quero atualizar meu cadastro habitacional
+moradia | chove forte e a água invade minha casa toda vez
+moradia | tem rachadura grande na parede e acho que a casa vai cair
+moradia | o dono mandou uma notificação pra eu sair do imóvel
+moradia | procuro casa pequena para alugar com preço baixo
+moradia | o telhado goteja e a parede está com mofo
+moradia | moro na casa de parente e preciso sair, não tenho como alugar
+moradia | a enchente levou meus móveis e minha casa está interditada
+moradia,dividas | estou devendo três meses de aluguel e tenho medo de ser despejada
+moradia,dividas | não dou conta de pagar a parcela da casa financiada
+moradia,casamento | depois do divórcio fiquei sem casa e com as crianças
