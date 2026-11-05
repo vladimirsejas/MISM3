@@ -99,43 +99,43 @@
    },
    "escola": {
     "cobertura": {
-     "com_coordenada": 24,
+     "com_coordenada": 33,
      "cadastrados": 68,
      "completo": false
     },
     "populacao_toda": {
      "pessoas": 201418,
      "setores": 408,
-     "mediana_km": 0.7,
-     "p90_km": 1.79,
+     "mediana_km": 0.63,
+     "p90_km": 1.56,
      "acima_de": {
       "1 km": {
-       "pessoas": 58647,
-       "percentual": 29.1,
-       "setores": 144
+       "pessoas": 52294,
+       "percentual": 26.0,
+       "setores": 129
       },
       "2 km": {
-       "pessoas": 16492,
-       "percentual": 8.2,
-       "setores": 53
+       "pessoas": 13100,
+       "percentual": 6.5,
+       "setores": 44
       }
      }
     },
     "setores_sem_bairro": {
      "pessoas": 12846,
      "setores": 43,
-     "mediana_km": 4.65,
-     "p90_km": 10.79,
+     "mediana_km": 1.73,
+     "p90_km": 10.58,
      "acima_de": {
       "1 km": {
-       "pessoas": 9632,
-       "percentual": 75.0,
-       "setores": 38
+       "pessoas": 7844,
+       "percentual": 61.1,
+       "setores": 32
       },
       "2 km": {
-       "pessoas": 9368,
-       "percentual": 72.9,
-       "setores": 33
+       "pessoas": 5987,
+       "percentual": 46.6,
+       "setores": 25
       }
      }
     }
@@ -230,43 +230,43 @@
    },
    "escola": {
     "cobertura": {
-     "com_coordenada": 59,
+     "com_coordenada": 68,
      "cadastrados": 68,
-     "completo": false
+     "completo": true
     },
     "populacao_toda": {
      "pessoas": 201418,
      "setores": 408,
-     "mediana_km": 0.41,
-     "p90_km": 0.93,
+     "mediana_km": 0.39,
+     "p90_km": 0.85,
      "acima_de": {
       "1 km": {
-       "pessoas": 17537,
-       "percentual": 8.7,
-       "setores": 65
+       "pessoas": 12421,
+       "percentual": 6.2,
+       "setores": 52
       },
       "2 km": {
-       "pessoas": 5650,
-       "percentual": 2.8,
-       "setores": 30
+       "pessoas": 4284,
+       "percentual": 2.1,
+       "setores": 26
       }
      }
     },
     "setores_sem_bairro": {
      "pessoas": 12846,
      "setores": 43,
-     "mediana_km": 0.66,
-     "p90_km": 5.35,
+     "mediana_km": 0.62,
+     "p90_km": 4.27,
      "acima_de": {
       "1 km": {
-       "pessoas": 5038,
-       "percentual": 39.2,
-       "setores": 29
+       "pessoas": 3250,
+       "percentual": 25.3,
+       "setores": 23
       },
       "2 km": {
-       "pessoas": 4416,
-       "percentual": 34.4,
-       "setores": 23
+       "pessoas": 3050,
+       "percentual": 23.7,
+       "setores": 19
       }
      }
     }
