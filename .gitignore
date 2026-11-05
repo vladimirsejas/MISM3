@@ -39,3 +39,15 @@ dados/geocodificacao_*.csv
 docs/educacao/dados/
 # GeoPackage estadual do IBGE é enorme: nunca vai para o Git
 *.gpkg
+
+# Conferencia visual (04/11/2026): capturas do Google Maps e pacotes de trabalho ficam so no computador do autor.
+# O repositorio e publico e as imagens contem conteudo do Google; so o indice e as coordenadas vao ao GitHub.
+google maps/
+cras google maps/
+pacote_cras/
+evidencias_conferencia_visual (1)/
+docs/evidencias_conferencia_visual/capturas/
+MISM3_backup_local_20261010/
+huggingface/
+laboratorio/
+dados/parquet/
