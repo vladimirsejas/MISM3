@@ -11,6 +11,8 @@
 
 **D3.** Nenhum código, dado gerado ou arquivo de `web/` ou `pipeline/` será alterado nesta fase. O código da Fase 2 só começa depois da etiqueta `v1.0-pesquisa` e em branch própria.
 
+**D4 (06/11/2026).** Setores pequenos: nesta versão nenhum setor censitário será suprimido nem agregado. Os 17 setores com menos de 5 pessoas ou menos de 3 domicílios (faixa conservadora de docs/territorial/PROPOSTA_SUPRESSAO_E_AGREGACAO.md) serão marcados no mapa com o aviso 'população muito pequena, interprete com cautela'. Decisão tomada pelo Claude por delegação expressa do autor, que pediu que o Claude decidisse; pode ser revista pelo autor a qualquer momento. Não há, nos documentos consultados, limiar numérico legal obrigatório.
+
 ## 2. Fundamentação documental da decisão D2
 
 A decisão mantém o cenário com centro do CEP porque o CEP empregado é o CEP cadastral do próprio equipamento público, como uma escola, e não o CEP de uma pessoa ou residência. A localização resultante é aproximada e deve permanecer identificada como tal; não equivale a uma coordenada institucional conferida.
