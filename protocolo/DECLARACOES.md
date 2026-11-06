@@ -16,7 +16,7 @@
 
 > O protocolo experimental, as especificações de anotação e, após a execução, o conjunto de mensagens fictícias, o gabarito, os metadados de versão e os scripts de análise poderão ser disponibilizados em repositório público, sujeitos à revisão de licenças, documentação e integridade. O código-fonte do MISM3 está disponível em https://github.com/vladimirsejas/MISM3. Os dados públicos agregados utilizados deverão ser identificados por fonte, versão, data de acesso e condições de reutilização. Materiais de terceiros sujeitos a restrições de redistribuição não serão incluídos no depósito; serão fornecidas referências e instruções de obtenção quando permitido.
 
-**Pendências:** escolher Zenodo ou OSF, emitir identificador persistente, definir licença do conjunto sintético e dos materiais suplementares e confirmar a autorização de redistribuição de cada fonte de terceiros. O conjunto novo ainda não foi escrito, congelado ou publicado.
+**Pendências:** escolher Zenodo ou OSF, emitir identificador persistente, definir licença do conjunto sintético e dos materiais suplementares e confirmar a autorização de redistribuição de cada fonte de terceiros. A revista principal ainda não foi escolhida; será definida em decisão conjunta entre o autor e o assistente, com consulta ao Claude. O conjunto novo ainda não foi escrito, congelado ou publicado.
 
 ## 3. Conflito de interesses
 
@@ -32,7 +32,7 @@
 
 ## 5. Limitações de autoria e validação
 
-> As mensagens experimentais são fictícias e foram elaboradas no contexto de um único município. Se o conjunto for redigido por uma única pessoa, essa condição será declarada como limitação de autoria e possível viés de construção do corpus e do gabarito. A eventual revisão independente por profissional da rede de proteção será descrita somente se efetivamente realizada, com consentimento e atribuição de crédito acordados. A revisão profissional não será apresentada como validação com usuárias reais.
+> As mensagens experimentais são fictícias e foram elaboradas no contexto de um único município. O conjunto será redigido e anotado exclusivamente pelo autor. Não haverá segunda anotadora profissional da rede de proteção nesta etapa; portanto, não será possível estimar concordância interanotadores. Essa condição será declarada como limitação e possível fonte de viés na construção do corpus e do gabarito. Um professor com doutorado poderá eventualmente assumir orientação acadêmica em etapa futura, mas isso ainda não está confirmado e não implica automaticamente coautoria ou anotação independente. Qualquer contribuição futura será descrita com precisão.
 
 ## 6. Lista de conferência
 
@@ -42,5 +42,7 @@
 - [ ] Licenças de redistribuição verificadas.
 - [ ] Declaração de conflito de interesses confirmada.
 - [ ] Ferramentas de IA, versões e usos descritos com precisão.
-- [ ] Segunda anotadora e eventual coautoria confirmadas ou declaradas como não realizadas.
+- [x] Segunda anotadora: não haverá nesta etapa; conjunto e gabarito serão de autoria exclusiva do autor.
+- [ ] Eventual orientação acadêmica por professor com doutorado: possibilidade futura, ainda não confirmada.
+- [ ] Revista principal: decisão conjunta entre autor, assistente e Claude, ainda pendente.
 - [ ] Resultados apresentados como exploratórios para mensagens fictícias, sem alegações de eficácia com usuárias reais.
