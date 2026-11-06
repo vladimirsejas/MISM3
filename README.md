@@ -62,7 +62,7 @@ JavaScript:
 
 Não há pacotes npm, `package.json`, framework, bundler nem CDN. Todo o JavaScript do site é código do projeto, exceto o Leaflet.
 
-Serviços externos: o site só consulta `tile.openstreetmap.org` (ruas do mapa), e apenas se a usuária marcar a opção (`web/mapa.js`). Links para páginas oficiais, WhatsApp e Google Maps abrem por clique. Em tempo de desenvolvimento, `pipeline/baixar.py` baixa dados do IBGE, INEP e DATASUS, e `pipeline/testar_api.py` faz uma chamada mínima à API da Anthropic só para verificar a chave (variável `ANTHROPIC_API_KEY`; o site não usa essa API).
+Serviços externos: o site consulta dois serviços de tiles de mapa: `tile.openstreetmap.org` (OpenStreetMap), em `web/app.js`, só se a usuária marcar "Mostrar ruas"; e `server.arcgisonline.com` (Esri), em `web/mapa.js`, cuja camada vem ligada por padrão no mapa de serviços e pode ser desmarcada. Os termos desses serviços não foram verificados (ver `AVISOS-DE-TERCEIROS.md`). Links para páginas oficiais, WhatsApp e Google Maps abrem por clique. Em tempo de desenvolvimento, `pipeline/baixar.py` baixa dados do IBGE, INEP e DATASUS, e `pipeline/testar_api.py` faz uma chamada mínima à API da Anthropic só para verificar a chave (variável `ANTHROPIC_API_KEY`; o site não usa essa API).
 
 Integração contínua: GitHub Actions (`actions/checkout@v4`, `actions/setup-python@v5`, `actions/setup-node@v4`), Python 3.12, Node 20.
 
@@ -201,7 +201,7 @@ Notas de ambiente:
 ## Privacidade e segurança
 
 - O texto digitado e o CEP não são enviados nem gravados. Não há cookie, `localStorage`, `sessionStorage`, analytics nem chamada a API de IA.
-- Únicas requisições: arquivos locais (GET) em `web/dados/`; tiles do OpenStreetMap, só com opt-in. O site não tem questionário nem código que envie texto digitado a um servidor. O único caminho de saída é o cadastro do Entre Mulheres, que apenas monta um link de WhatsApp ou e-mail para a própria usuária enviar e hoje está sem canal definido (`web/dados/entre_mulheres_canal.json`).
+- Únicas requisições: arquivos locais (GET) em `web/dados/`; tiles do OpenStreetMap (só com opt-in) e da Esri (ligados por padrão no mapa de serviços, com opção de desligar). O site não tem questionário nem código que envie texto digitado a um servidor. O único caminho de saída é o cadastro do Entre Mulheres, que apenas monta um link de WhatsApp ou e-mail para a própria usuária enviar e hoje está sem canal definido (`web/dados/entre_mulheres_canal.json`).
 - O site é `noindex`. O botão "Em perigo agora?" abre contatos oficiais (190, 192, 193, 180, 100, 188) e um botão de saída; sair não apaga o histórico do navegador.
 - Em falha de rede, o alerta de perigo das regras continua funcionando (`alertaAgora` em `web/app.js`).
 
@@ -226,7 +226,13 @@ Ao adicionar uma biblioteca, uma linguagem ou um arquivo de código em `web/` ou
 
 ## Licença e citação
 
-O código-fonte é licenciado sob MIT (`LICENSE`). A documentação, os textos autorais, as perguntas de avaliação e as frases de treino listadas em `LICENSE-DADOS-E-DOCUMENTACAO.md` são licenciados sob Creative Commons Atribuição 4.0 Internacional (CC BY 4.0). Materiais de terceiros mantêm suas próprias licenças e termos; consulte `AVISOS-DE-TERCEIROS.md` antes de reutilizá-los. Para citar o software, utilize os metadados de `CITATION.cff`.
+Licenças diferentes valem para partes diferentes do repositório; elas não se misturam.
+
+- **Código-fonte original (MIT, arquivo `LICENSE`):** `web/*.js`, `web/*.html`, `web/*.css`, `pipeline/`, `avaliacao/*.py`, `avaliacao/*.js`, `docs/avaliacao_perfis/rodar_perfis.js`, os testes e os scripts `.bat`. Não inclui `web/vendor/`.
+- **Documentação e textos autorais (CC BY 4.0, arquivo `LICENSE-DADOS-E-DOCUMENTACAO.md`):** este README, `docs/` (exceto os PDFs de terceiros e o brasão), `avaliacao/perguntas.json` e as frases de treino em `catalogo/`. O arquivo lista os caminhos e as exclusões.
+- **Fora dessas duas licenças:** o Leaflet em `web/vendor/` (BSD 2-Clause, com a licença ao lado), os dados de terceiros e seus derivados (`web/dados/`, `catalogo/*.csv`, `dados/`), as imagens (`web/img/`, `docs/img/`), os PDFs de terceiros (`docs/documetacao/`, `docs/transporte/`), os mapas e os serviços de tiles. Cada um segue os termos de origem, ou está sem licença confirmada em `AVISOS-DE-TERCEIROS.md`. A ausência de confirmação não é autorização de redistribuição.
+- **Cartografia das UBS:** o GeoJSON das áreas de abrangência das UBS não está versionado e não faz parte do pacote público. A origem relatada e a pendência de comprovação estão em `AVISOS-DE-TERCEIROS.md`.
+- **Como citar:** use os metadados de `CITATION.cff` (o GitHub oferece "Cite this repository"). Ainda não há versão publicada com etiqueta nem DOI.
 
 ## Uso responsável e limites
 
