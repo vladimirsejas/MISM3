@@ -54,19 +54,21 @@ As quatro primeiras categorias totalizam 80 mensagens positivas de perigo. As de
 
 ### 4.1 Autoria e anotação nesta etapa
 
-O conjunto e o gabarito serão elaborados e anotados exclusivamente pelo autor. Não haverá segunda anotadora profissional da rede de proteção nesta etapa. Consequentemente, não será calculada concordância interanotadores nem kappa de Cohen. Essa limitação será declarada no artigo, e o gabarito não será descrito como validado por consenso ou por profissional externo.
+O conjunto de mensagens será escrito exclusivamente pelo autor. Não haverá segunda anotadora nem coautora adicional nesta etapa. O professor com doutorado que já acompanha o trabalho aceitou orientar e participar da publicação caso o estudo esteja metodologicamente completo. Sua eventual coautoria dependerá de contribuição intelectual efetiva, incluindo revisão do desenho e do texto e aprovação da versão final; não decorrerá apenas de orientação, assinatura ou participação em anotação.
 
-Um professor com doutorado poderá eventualmente assumir orientação acadêmica em etapa futura, mas essa possibilidade não está confirmada. A eventual orientação não será presumida como segunda anotação, coautoria ou validação independente. Qualquer participação futura deverá ser descrita conforme a contribuição efetivamente realizada e as regras de autoria aplicáveis.
+O autor definirá por escrito as regras do gabarito antes de redigir as mensagens e anotará todo o conjunto em duas passagens completas, com intervalo mínimo de sete dias. Na segunda passagem, não consultará o sistema, a primeira anotação nem os rótulos da primeira passagem. A ordem dos registros será alterada ou aleatorizada entre passagens. Será calculado o kappa de Cohen intra-anotador por campo (área, serviço, perigo, tipo de perigo e abstenção). A concordância será reportada antes da resolução das divergências. Cada divergência será resolvida pelo autor segundo as regras prévias, com registro das duas marcações, decisão final e motivo.
+
+A concordância intra-anotador não substitui concordância interanotadores. A limitação de anotador único permanece, e o gabarito não será descrito como validado por consenso ou por profissional externo.
 
 ## 5. Kappa de Cohen
 
-Para dois anotadores e categorias mutuamente exclusivas:
+Para duas séries independentes de classificações — neste estudo, as duas passagens do mesmo autor — e categorias mutuamente exclusivas:
 
 **κ = (Pₒ − Pₑ) / (1 − Pₑ)**
 
 Pₒ é a proporção de concordância observada. Pₑ é a concordância esperada ao acaso, calculada a partir das proporções marginais de cada anotador.
 
-A fórmula é apresentada como referência metodológica, mas não será aplicada neste estudo, pois haverá um único anotador. Não há segundo conjunto independente de rótulos para estimar concordância. Não calcular ou reportar kappa artificialmente. Uma eventual replicação futura com segundo anotador exigirá protocolo complementar, anotação independente e cálculo por campo.
+A fórmula será aplicada às duas passagens do autor, separadamente para cada campo (área, serviço, perigo, tipo de perigo e abstenção), antes da resolução de divergências. O resultado será denominado kappa intra-anotador. As duas passagens não constituem dois anotadores independentes e, portanto, não permitem estimar concordância interanotadores. A limitação de anotador único permanece e deverá ser explicitada.
 
 **Limiar pré-especificado:**
 - κ ≥ 0,80: concordância aceitável.
@@ -79,8 +81,10 @@ Os limiares acima só se aplicariam a uma replicação futura com dois anotadore
 
 - Mensagens fictícias, sem nomes, endereços, telefones pessoais ou detalhes identificáveis.
 - Não solicitar relatos reais nem copiar registros de atendimento.
-- A anotação será realizada exclusivamente pelo autor, sem consultar o sistema durante a redação do conjunto.
-- Anotação precede execução e permanece congelada.
-- Mudanças pós-execução serão documentadas como correções de anotação e acompanhadas de análise de sensibilidade, sem substituição silenciosa do resultado principal.
-- Não haverá revisão profissional independente nesta etapa; a ausência de dupla anotação limita a avaliação da confiabilidade do gabarito.
-- Eventual orientação acadêmica futura não será apresentada como dupla anotação, salvo se houver efetiva anotação independente.
+- O autor registrará as regras do gabarito antes de escrever as mensagens e realizará duas passagens completas de anotação, separadas por no mínimo sete dias.
+- Na segunda passagem, não consultará o sistema, a primeira anotação nem os rótulos anteriores; a ordem dos registros será alterada ou aleatorizada.
+- O kappa intra-anotador será calculado por campo e reportado antes da resolução das divergências.
+- Cada divergência será resolvida pelo autor com registro das duas marcações, decisão final e motivo.
+- Anotação precede execução e permanece congelada; mudanças posteriores serão documentadas e acompanhadas de análise de sensibilidade.
+- Não haverá segunda anotadora; a concordância intra-anotador não substitui concordância interanotadores e a limitação permanece.
+- O professor com doutorado já acompanha o trabalho e aceitou orientar e participar da publicação se o estudo estiver metodologicamente completo; eventual coautoria dependerá de revisão efetiva do desenho e do texto e aprovação da versão final.
