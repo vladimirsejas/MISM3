@@ -64,10 +64,13 @@ Não vendemos o sistema como diagnóstico social, nem como prova de que um servi
 | Capacidade | Estado | Evidência | Limite ou pendência |
 |---|---|---|---|
 | Mapa dos 408 setores com população e densidade | Implementado | Soma de pessoas igual ao Censo 2022 (201.418); área a 0,21% da oficial (`test_territorio.py`) | 43 setores (6,4% das pessoas) vêm sem bairro no IBGE |
-| Distância até o serviço mais próximo | CRAS 6 de 6, UBS e USF 22 de 22 e escolas 59 de 68 (cenário com o centro do CEP) | Coordenadas conferidas visualmente em 04/11/2026; trava: exige 70% dos serviços localizados | Distância em linha reta; as 9 escolas sem localização ficam fora |
+| Exposição à distância até o serviço mais próximo | CRAS 6/6 e UBS/USF 22/22 nos dois cenários; escolas 33/68 com coordenadas do catálogo e 68/68 com o centro do CEP | `web/dados/exposicao_distancia.json`, gerado em 05/11/2026; conferência das escolas registrada em `docs/registro_conferencia_visual_2026-11-04.md` | Distância em linha reta; os cenários de escola usam localizações diferentes e não representam melhora de atendimento |
 | Análise territorial (vista `#painel`) | Tela pronta; `analise_territorial.json` e `exposicao_distancia.json` gerados com todos os CRAS e UBS/USF | `painel.test.js`: a tela só lê esses arquivos | Mostra onde a rede cadastrada está longe da população; não prova falta de serviço (ver `docs/painel_e_analise_territorial.md`) |
 | População de 0 a 3 anos, renda, mulheres responsáveis por setor | **Não está no projeto** | | Sem isso não existe taxa de cobertura de creche |
 | Pedidos de dados à Prefeitura (fila de creche, RMA, saúde, estatísticas) | Proposta: minutas 6 a 9 em `docs/pedidos_LAI.md` | | Sem protocolo registrado no projeto |
+
+O indicador de **exposição à distância em linha reta (centro do setor censitário até o serviço cadastrado mais próximo)** considera 408 setores e 201.418 pessoas. A proporção da população a mais de 1 km é: CRAS, 60,2% nos dois cenários; UBS/USF, 24,5% nos dois cenários; escolas, 26,0% usando apenas coordenadas do catálogo e 6,2% usando o centro do CEP. Para escolas, a cobertura de localização é 33/68 no primeiro cenário e 68/68 no segundo. A diferença decorre da forma de localizar os equipamentos, não de mudança na oferta ou no atendimento. O indicador não mede tempo de viagem, trajeto pelas ruas, transporte, capacidade dos serviços nem demanda.
+
 
 ## Confiança por informação, não por página
 
