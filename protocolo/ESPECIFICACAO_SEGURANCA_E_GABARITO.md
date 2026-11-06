@@ -2,7 +2,7 @@
 
 **Versão:** 1.0 — pré-execução  
 **Projeto:** MISM3 — orientador de serviços públicos  
-**Estado:** especificação proposta; deve ser congelada antes da anotação final e da execução.
+**Estado:** especificação proposta; deve ser congelada antes da execução.
 
 ## 1. Princípios
 
@@ -29,7 +29,7 @@ A taxonomia operacional do detector distingue quatro tipos: violência contra a 
 2. A área esperada será a área correspondente à necessidade expressa, considerando as áreas cadastradas.
 3. Os destinos esperados serão identificados pelos identificadores oficiais do catálogo, sem criar destinos inexistentes.
 4. A ação do site será registrada conforme o comportamento esperado para a mensagem.
-5. O gabarito foi proposto com apoio de IA e revisado integralmente pelo autor. A saída do sistema não foi usada como autoridade para definir a resposta correta.
+5. As 190 frases foram escritas pelo autor. O gabarito das 160 mensagens da Ficha C (identificadores C-001 a C-160) foi elaborado pelo próprio autor. O gabarito das 30 mensagens da Ficha D (D-001 a D-030) foi proposto com apoio de inteligência artificial e revisado integralmente pelo autor, que marcou a conferência de cada registro. A saída do sistema não foi usada como autoridade para definir a resposta correta.
 
 ## 4. Formulário de anotação
 
@@ -39,13 +39,13 @@ Foram removidos os campos **prioridade de segurança**, **justificativa** e **an
 
 ### 4.1 Autoria e anotação nesta etapa
 
-As frases foram escritas pelo autor. O gabarito foi proposto com apoio de IA e revisado integralmente pelo autor. A anotação foi realizada em uma única passada. Não houve segunda passada, intervalo mínimo de sete dias ou cálculo de kappa intra-anotador.
+As 190 frases foram escritas pelo autor. O gabarito das 160 mensagens da Ficha C (identificadores C-001 a C-160) foi elaborado pelo próprio autor. O gabarito das 30 mensagens da Ficha D (D-001 a D-030) foi proposto com apoio de inteligência artificial e revisado integralmente pelo autor, que marcou a conferência de cada registro. A anotação foi realizada em uma única passada. Não houve segunda passada, intervalo mínimo de sete dias ou cálculo de kappa intra-anotador.
 
 A ausência de repetição da anotação impede estimar estabilidade intra-anotador. Também não haverá segunda anotadora nesta etapa, portanto não será possível estimar concordância interanotadores. A revisão integral do gabarito pelo autor não equivale a validação independente. Essas ausências serão apresentadas explicitamente como limitações, sem atribuir ao estudo medidas de concordância não realizadas.
 
 ### 4.2 Similaridade entre frases
 
-O relatório de similaridade de letras registrou zero pares idênticos, quatro pares com similaridade igual ou superior a 0,80 e inferior a 0,90 (C-123, C-041, C-088 e D-030) e nenhum par com similaridade igual ou superior a 0,90. Os quatro pares foram mantidos. A análise de sensibilidade deverá comparar os resultados com o conjunto integral e sem os quatro registros envolvidos nos pares sinalizados.
+A verificação de similaridade utilizou cosseno de TF-IDF de n-gramas de caracteres (3 a 5, `char_wb`) e razão de sequência (`difflib`), com limiar de 0,80. A comparação foi feita contra 1.397 frases antigas de usuária e 7.099 textos no total do repositório, conforme a etiqueta `v1.0-pesquisa`. O relatório registrou zero pares idênticos, quatro pares com similaridade igual ou superior a 0,80 e inferior a 0,90 (C-123, C-041, C-088 e D-030) e nenhum par com similaridade igual ou superior a 0,90. Os quatro pares foram mantidos. A análise de sensibilidade deverá comparar os resultados com o conjunto integral e sem os quatro registros envolvidos nos pares sinalizados.
 
 ## 5. Concordância e limitações da anotação
 
@@ -55,7 +55,7 @@ Não foi realizada segunda passada de anotação nem cálculo de kappa intra-ano
 
 - Mensagens fictícias, sem nomes, endereços, telefones pessoais ou detalhes identificáveis.
 - Não solicitar relatos reais nem copiar registros de atendimento.
-- As frases foram escritas pelo autor; o gabarito foi proposto com apoio de IA e revisado integralmente pelo autor.
+- As 190 frases foram escritas pelo autor. O gabarito das 160 mensagens da Ficha C (identificadores C-001 a C-160) foi elaborado pelo próprio autor. O gabarito das 30 mensagens da Ficha D (D-001 a D-030) foi proposto com apoio de inteligência artificial e revisado integralmente pelo autor, que marcou a conferência de cada registro.
 - A anotação ocorreu em uma única passada; não houve segunda passada, intervalo de sete dias ou cálculo de kappa.
 - A ausência de repetição e de anotador independente será relatada como limitação metodológica.
 - Anotação precede execução e permanece congelada; mudanças posteriores serão documentadas e acompanhadas de análise de sensibilidade.
