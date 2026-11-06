@@ -52,13 +52,11 @@ As quatro primeiras categorias totalizam 80 mensagens positivas de perigo. As de
 | Anotador | Código pseudonimizado |
 | Data e versão | Data da anotação e versão do gabarito |
 
-### 4.1 Dupla anotação
+### 4.1 Autoria e anotação nesta etapa
 
-Se houver profissional da rede de proteção disponível e de acordo, cada mensagem será anotada independentemente pelo autor e por uma segunda anotadora com experiência pertinente. A segunda anotadora receberá as definições e o catálogo congelado, mas não verá a primeira anotação nem as saídas do sistema.
+O conjunto e o gabarito serão elaborados e anotados exclusivamente pelo autor. Não haverá segunda anotadora profissional da rede de proteção nesta etapa. Consequentemente, não será calculada concordância interanotadores nem kappa de Cohen. Essa limitação será declarada no artigo, e o gabarito não será descrito como validado por consenso ou por profissional externo.
 
-Divergências serão identificadas por campo e resolvidas por discussão documentada ou terceira revisão, se disponível. A versão consensual ficará separada das anotações originais. Participação profissional, eventual coautoria e atribuição de crédito dependerão de concordância expressa e regras institucionais.
-
-Se não houver segunda anotadora, declarar que o gabarito foi produzido por um único autor, que não foi possível calcular concordância interanotadores e que isso reduz a independência da validação do gabarito. Não simular segunda anotação.
+Um professor com doutorado poderá eventualmente assumir orientação acadêmica em etapa futura, mas essa possibilidade não está confirmada. A eventual orientação não será presumida como segunda anotação, coautoria ou validação independente. Qualquer participação futura deverá ser descrita conforme a contribuição efetivamente realizada e as regras de autoria aplicáveis.
 
 ## 5. Kappa de Cohen
 
@@ -68,20 +66,21 @@ Para dois anotadores e categorias mutuamente exclusivas:
 
 Pₒ é a proporção de concordância observada. Pₑ é a concordância esperada ao acaso, calculada a partir das proporções marginais de cada anotador.
 
-Calcular separadamente para área, perigo, tipo de perigo e abstenção. Campos de múltipla escolha serão convertidos em decisões binárias por classe ou avaliados por medida apropriada pré-especificada; não serão forçados a categoria única sem justificativa. Em classes raras ou distribuição desequilibrada, apresentar também concordância bruta e tabela de contingência.
+A fórmula é apresentada como referência metodológica, mas não será aplicada neste estudo, pois haverá um único anotador. Não há segundo conjunto independente de rótulos para estimar concordância. Não calcular ou reportar kappa artificialmente. Uma eventual replicação futura com segundo anotador exigirá protocolo complementar, anotação independente e cálculo por campo.
 
 **Limiar pré-especificado:**
 - κ ≥ 0,80: concordância aceitável.
 - 0,67 ≤ κ < 0,80: concordância provisória; revisar definições, documentar divergências e repetir anotação independente dos registros afetados antes do congelamento.
 - κ < 0,67: concordância insuficiente; não congelar o gabarito até revisar a especificação e repetir a anotação.
 
-O limiar não substitui análise qualitativa de divergências de segurança. Divergência em cenário de risco será examinada mesmo com kappa global elevado.
+Os limiares acima só se aplicariam a uma replicação futura com dois anotadores independentes; não são resultados nem critérios atingidos neste estudo.
 
 ## 6. Segurança do processo
 
 - Mensagens fictícias, sem nomes, endereços, telefones pessoais ou detalhes identificáveis.
 - Não solicitar relatos reais nem copiar registros de atendimento.
-- A segunda anotadora, se houver, não consultará o sistema durante a anotação.
+- A anotação será realizada exclusivamente pelo autor, sem consultar o sistema durante a redação do conjunto.
 - Anotação precede execução e permanece congelada.
 - Mudanças pós-execução serão documentadas como correções de anotação e acompanhadas de análise de sensibilidade, sem substituição silenciosa do resultado principal.
-- Revisão profissional não constitui validação com usuárias reais nem comprova efetividade de proteção.
+- Não haverá revisão profissional independente nesta etapa; a ausência de dupla anotação limita a avaliação da confiabilidade do gabarito.
+- Eventual orientação acadêmica futura não será apresentada como dupla anotação, salvo se houver efetiva anotação independente.
