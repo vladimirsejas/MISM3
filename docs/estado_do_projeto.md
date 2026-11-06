@@ -1,6 +1,6 @@
 # Estado do projeto: o que existe, o que foi testado e o que ainda é proposta
 
-Última verificação: 05/11/2026. Data sustentada por docs/mapa_de_dados.md (índice regenerado em 05/11/2026) e docs/ia/avaliacao_modelo_necessidades.md (avaliação gerada em 05/11/2026). Cada afirmação aqui tem um arquivo, um teste ou um número que a sustenta. Se algo mudar, atualize esta página junto com o código.
+Última verificação: 05/11/2026. Data sustentada por docs/mapa_de_dados.md (índice regenerado em 05/11/2026), docs/ia/avaliacao_modelo_necessidades.md (avaliação gerada em 05/11/2026) e web/dados/exposicao_distancia.json (gerado em 05/11/2026). Cada afirmação aqui tem um arquivo, um teste ou um número que a sustenta. Se algo mudar, atualize esta página junto com o código.
 
 ## O princípio
 
