@@ -4,7 +4,7 @@
 
 ## 1. Declaração de ética
 
-> Este estudo, na etapa descrita no protocolo, utiliza mensagens fictícias redigidas pelo autor para avaliar um sistema de recuperação e orientação a serviços públicos. Não houve recrutamento ou participação de pessoas, aplicação de questionários, entrevistas, observação de usuárias, acesso a prontuários ou conversas privadas, nem coleta ou tratamento de dados pessoais. As informações territoriais utilizadas pelo projeto são dados públicos agregados. O conjunto experimental será composto por mensagens artificiais e seus rótulos, sem identificação individual. Não serão incorporados relatos reais.
+> Este estudo, na etapa descrita no protocolo, utiliza mensagens fictícias redigidas pelo autor para avaliar um sistema de recuperação e orientação a serviços públicos. Não houve recrutamento ou participação de pessoas, aplicação de questionários, entrevistas, observação de usuárias, acesso a prontuários ou conversas privadas, nem coleta ou tratamento de dados pessoais. As informações territoriais utilizadas pelo projeto são dados públicos agregados. O conjunto experimental será composto por mensagens artificiais e seus rótulos, sem identificação individual. Não serão incorporados relatos reais. O estudo não utiliza dados coletados de pessoas em nenhum projeto anterior; o MISM2 é um projeto distinto e nenhum dado dele integra esta avaliação.
 >
 > A Resolução CNS nº 510, de 7 de abril de 2016, em seu art. 1º, parágrafo único, enumera hipóteses que não serão registradas nem avaliadas pelo sistema CEP/CONEP, incluindo pesquisas que utilizem informações de acesso público, informações de domínio público e bancos de dados agregados sem possibilidade de identificação individual. A correspondência entre o desenho efetivo deste estudo e as hipóteses normativas deverá ser examinada pela instituição. Este texto não declara dispensa institucional formal, aprovação ética ou enquadramento definitivo. A determinação formal de enquadramento deverá ser confirmada com a instituição antes de qualquer submissão ou ampliação metodológica.
 
@@ -16,7 +16,7 @@
 
 > O protocolo experimental, as especificações de anotação e, após a execução, o conjunto de mensagens fictícias, o gabarito, os metadados de versão e os scripts de análise poderão ser disponibilizados em repositório público, sujeitos à revisão de licenças, documentação e integridade. O código-fonte do MISM3 está disponível em https://github.com/vladimirsejas/MISM3. Os dados públicos agregados utilizados deverão ser identificados por fonte, versão, data de acesso e condições de reutilização. Materiais de terceiros sujeitos a restrições de redistribuição não serão incluídos no depósito; serão fornecidas referências e instruções de obtenção quando permitido.
 
-**Pendências:** escolher Zenodo ou OSF, emitir identificador persistente, definir licença do conjunto sintético e dos materiais suplementares e confirmar a autorização de redistribuição de cada fonte de terceiros. A revista principal ainda não foi escolhida; será definida em decisão conjunta entre o autor e o assistente, com consulta ao Claude. O conjunto novo ainda não foi escrito, congelado ou publicado.
+**Pendências:** escolher Zenodo ou OSF, emitir identificador persistente, definir licença do conjunto sintético e dos materiais suplementares e confirmar a autorização de redistribuição de cada fonte de terceiros. A revista principal definida é PeerJ Computer Science, com PLOS ONE como alternativa e uma revista brasileira ainda a selecionar como terceira opção. Taxas, políticas editoriais e condições de submissão permanecem **não verificadas** e deverão ser conferidas nas páginas oficiais. O conjunto novo ainda não foi escrito, congelado ou publicado.
 
 ## 3. Conflito de interesses
 
@@ -32,7 +32,7 @@
 
 ## 5. Limitações de autoria e validação
 
-> As mensagens experimentais são fictícias e foram elaboradas no contexto de um único município. O conjunto será redigido e anotado exclusivamente pelo autor. Não haverá segunda anotadora profissional da rede de proteção nesta etapa; portanto, não será possível estimar concordância interanotadores. Essa condição será declarada como limitação e possível fonte de viés na construção do corpus e do gabarito. Um professor com doutorado poderá eventualmente assumir orientação acadêmica em etapa futura, mas isso ainda não está confirmado e não implica automaticamente coautoria ou anotação independente. Qualquer contribuição futura será descrita com precisão.
+> As mensagens experimentais são fictícias e foram elaboradas no contexto de um único município. O conjunto será redigido e anotado exclusivamente pelo autor. Não haverá segunda anotadora profissional da rede de proteção nesta etapa; portanto, não será possível estimar concordância interanotadores. Essa condição será declarada como limitação e possível fonte de viés na construção do corpus e do gabarito. O professor com doutorado já acompanha o trabalho e aceitou orientar e participar da publicação caso o estudo esteja metodologicamente completo. Sua eventual coautoria dependerá de contribuição intelectual efetiva, incluindo revisão do desenho e do texto e aprovação da versão final; não decorrerá apenas de orientação ou assinatura. Não haverá segunda anotadora nem coautora adicional nesta etapa. O conjunto será escrito exclusivamente pelo autor e anotado em duas passagens, com intervalo mínimo de sete dias e cálculo de kappa intra-anotador por campo, antes da resolução documentada das divergências. Esse procedimento não substitui concordância interanotadores.
 
 ## 6. Lista de conferência
 
@@ -42,7 +42,7 @@
 - [ ] Licenças de redistribuição verificadas.
 - [ ] Declaração de conflito de interesses confirmada.
 - [ ] Ferramentas de IA, versões e usos descritos com precisão.
-- [x] Segunda anotadora: não haverá nesta etapa; conjunto e gabarito serão de autoria exclusiva do autor.
-- [ ] Eventual orientação acadêmica por professor com doutorado: possibilidade futura, ainda não confirmada.
-- [ ] Revista principal: decisão conjunta entre autor, assistente e Claude, ainda pendente.
+- [x] Segunda anotadora e coautora adicional: não haverá nesta etapa; conjunto será escrito exclusivamente pelo autor.
+- [x] Professor com doutorado já acompanha o trabalho e aceitou orientar e participar da publicação se o estudo estiver metodologicamente completo; eventual coautoria depende de contribuição efetiva na revisão do desenho e do texto e aprovação da versão final.
+- [x] Revista principal: PeerJ Computer Science; alternativa: PLOS ONE; terceira opção brasileira ainda a selecionar. Taxas e políticas oficiais: **não verificadas**.
 - [ ] Resultados apresentados como exploratórios para mensagens fictícias, sem alegações de eficácia com usuárias reais.
