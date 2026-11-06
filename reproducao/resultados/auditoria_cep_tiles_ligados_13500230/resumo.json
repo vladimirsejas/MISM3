@@ -3,7 +3,7 @@
  "cep_lat": -22.4052,
  "cep_lon": -47.5691,
  "cep_raio_m": 1500,
- "commit": "0755520d6ca18e0744801f585fec415396af965e",
+ "commit": "95a5416d6e020829ea5ace2eede3aa34238fb96c",
  "cenarios": {
   "A": {
    "fases": {
@@ -27,8 +27,8 @@
      "por_dominio": {
       "Esri": 30
      },
-     "concluidas": 0,
-     "canceladas": 30,
+     "concluidas": 30,
+     "canceladas": 0,
      "com_texto": 0,
      "com_cep": 0,
      "com_coordenadas": 0,
@@ -63,8 +63,8 @@
      "por_dominio": {
       "Esri": 66
      },
-     "concluidas": 0,
-     "canceladas": 66,
+     "concluidas": 66,
+     "canceladas": 0,
      "com_texto": 0,
      "com_cep": 0,
      "com_coordenadas": 0,
@@ -94,26 +94,25 @@
      }
     },
     "zoom": {
-     "requisicoes": 132,
+     "requisicoes": 84,
      "locais": 0,
-     "externas": 132,
+     "externas": 84,
      "por_dominio": {
-      "Esri": 132
+      "Esri": 84
      },
-     "concluidas": 0,
-     "canceladas": 132,
+     "concluidas": 84,
+     "canceladas": 0,
      "com_texto": 0,
      "com_cep": 0,
      "com_coordenadas": 0,
      "metodo_ou_corpo": 0,
      "retangulos": {
       "Esri": {
-       "tiles": 132,
+       "tiles": 84,
        "zoom_min": 12,
        "zoom_max": 14,
        "por_zoom": {
         "12": 48,
-        "13": 48,
         "14": 36
        },
        "noroeste": [
@@ -138,8 +137,8 @@
      "por_dominio": {
       "Esri": 12
      },
-     "concluidas": 0,
-     "canceladas": 12,
+     "concluidas": 12,
+     "canceladas": 0,
      "com_texto": 0,
      "com_cep": 0,
      "com_coordenadas": 0,
@@ -245,8 +244,8 @@
      "por_dominio": {
       "Esri": 48
      },
-     "concluidas": 0,
-     "canceladas": 48,
+     "concluidas": 48,
+     "canceladas": 0,
      "com_texto": 0,
      "com_cep": 0,
      "com_coordenadas": 0,
@@ -281,8 +280,8 @@
      "por_dominio": {
       "Esri": 132
      },
-     "concluidas": 0,
-     "canceladas": 132,
+     "concluidas": 132,
+     "canceladas": 0,
      "com_texto": 0,
      "com_cep": 0,
      "com_coordenadas": 0,
@@ -319,8 +318,8 @@
      "por_dominio": {
       "Esri": 12
      },
-     "concluidas": 0,
-     "canceladas": 12,
+     "concluidas": 12,
+     "canceladas": 0,
      "com_texto": 0,
      "com_cep": 0,
      "com_coordenadas": 0,
@@ -426,8 +425,8 @@
      "por_dominio": {
       "OpenStreetMap": 15
      },
-     "concluidas": 0,
-     "canceladas": 15,
+     "concluidas": 15,
+     "canceladas": 0,
      "com_texto": 0,
      "com_cep": 0,
      "com_coordenadas": 0,
@@ -462,8 +461,8 @@
      "por_dominio": {
       "OpenStreetMap": 34
      },
-     "concluidas": 0,
-     "canceladas": 34,
+     "concluidas": 34,
+     "canceladas": 0,
      "com_texto": 0,
      "com_cep": 0,
      "com_coordenadas": 0,
@@ -494,38 +493,38 @@
      }
     },
     "mover": {
-     "requisicoes": 8,
+     "requisicoes": 2,
      "locais": 0,
-     "externas": 8,
+     "externas": 2,
      "por_dominio": {
-      "OpenStreetMap": 8
+      "OpenStreetMap": 2
      },
-     "concluidas": 0,
-     "canceladas": 8,
+     "concluidas": 2,
+     "canceladas": 0,
      "com_texto": 0,
      "com_cep": 0,
      "com_coordenadas": 0,
      "metodo_ou_corpo": 0,
      "retangulos": {
       "OpenStreetMap": {
-       "tiles": 8,
+       "tiles": 2,
        "zoom_min": 15,
        "zoom_max": 15,
        "por_zoom": {
-        "15": 8
+        "15": 2
        },
        "noroeste": [
         -22.3806,
-        -47.6257
+        -47.5708
        ],
        "sudeste": [
-        -22.411,
+        -22.4009,
         -47.5598
        ],
-       "largura_km": 6.78,
-       "altura_km": 3.39,
-       "cep_dentro_do_retangulo": true,
-       "cep_a_km_do_centro": 2.65
+       "largura_km": 1.13,
+       "altura_km": 2.26,
+       "cep_dentro_do_retangulo": false,
+       "cep_a_km_do_centro": 1.66
       }
      }
     },

@@ -3,7 +3,7 @@
  "cep_lat": -22.2605,
  "cep_lon": -47.5873,
  "cep_raio_m": 170,
- "commit": "0755520d6ca18e0744801f585fec415396af965e",
+ "commit": "95a5416d6e020829ea5ace2eede3aa34238fb96c",
  "cenarios": {
   "A": {
    "fases": {
@@ -63,8 +63,8 @@
      "por_dominio": {
       "Esri": 66
      },
-     "concluidas": 63,
-     "canceladas": 3,
+     "concluidas": 64,
+     "canceladas": 2,
      "com_texto": 0,
      "com_cep": 0,
      "com_coordenadas": 0,
@@ -94,13 +94,13 @@
      }
     },
     "zoom": {
-     "requisicoes": 87,
+     "requisicoes": 86,
      "locais": 0,
-     "externas": 87,
+     "externas": 86,
      "por_dominio": {
-      "Esri": 87
+      "Esri": 86
      },
-     "concluidas": 87,
+     "concluidas": 86,
      "canceladas": 0,
      "com_texto": 0,
      "com_cep": 0,
@@ -108,12 +108,12 @@
      "metodo_ou_corpo": 0,
      "retangulos": {
       "Esri": {
-       "tiles": 87,
+       "tiles": 86,
        "zoom_min": 12,
        "zoom_max": 14,
        "por_zoom": {
         "12": 48,
-        "13": 3,
+        "13": 2,
         "14": 36
        },
        "noroeste": [
@@ -245,8 +245,8 @@
      "por_dominio": {
       "Esri": 48
      },
-     "concluidas": 0,
-     "canceladas": 48,
+     "concluidas": 48,
+     "canceladas": 0,
      "com_texto": 0,
      "com_cep": 0,
      "com_coordenadas": 0,
@@ -281,8 +281,8 @@
      "por_dominio": {
       "Esri": 132
      },
-     "concluidas": 0,
-     "canceladas": 132,
+     "concluidas": 132,
+     "canceladas": 0,
      "com_texto": 0,
      "com_cep": 0,
      "com_coordenadas": 0,
@@ -319,8 +319,8 @@
      "por_dominio": {
       "Esri": 12
      },
-     "concluidas": 0,
-     "canceladas": 12,
+     "concluidas": 12,
+     "canceladas": 0,
      "com_texto": 0,
      "com_cep": 0,
      "com_coordenadas": 0,
@@ -426,8 +426,8 @@
      "por_dominio": {
       "OpenStreetMap": 18
      },
-     "concluidas": 0,
-     "canceladas": 18,
+     "concluidas": 18,
+     "canceladas": 0,
      "com_texto": 0,
      "com_cep": 0,
      "com_coordenadas": 0,
@@ -462,8 +462,8 @@
      "por_dominio": {
       "OpenStreetMap": 40
      },
-     "concluidas": 0,
-     "canceladas": 40,
+     "concluidas": 40,
+     "canceladas": 0,
      "com_texto": 0,
      "com_cep": 0,
      "com_coordenadas": 0,
