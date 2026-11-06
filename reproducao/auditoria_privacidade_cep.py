@@ -41,7 +41,6 @@ except ImportError:  # pragma: no cover
 
 RAIZ = comum.RAIZ
 WEB = RAIZ / "web"
-SAIDA = RAIZ / "reproducao" / "resultados" / f"auditoria_cep_{CEP_DIGITOS}"
 MENSAGEM = "Preciso de ajuda fictícia para a vaga de creche da pequena Zorzalina Quimérica"
 CEP = os.environ.get("MISM3_AUDIT_CEP", "13504-090").strip()
 CEP_DIGITOS = re.sub(r"\D", "", CEP)
@@ -49,6 +48,7 @@ if not re.fullmatch(r"\d{8}", CEP_DIGITOS):
     sys.exit("CEP inválido. Informe oito dígitos em MISM3_AUDIT_CEP.")
 CEP = CEP_DIGITOS[:5] + "-" + CEP_DIGITOS[5:]
 CEP_PREFIXO = CEP_DIGITOS[:5]
+SAIDA = RAIZ / "reproducao" / "resultados" / f"auditoria_cep_{CEP_DIGITOS}"
 
 
 # ---------------------------------------------------------------- servidor estático local
