@@ -64,7 +64,7 @@ Não vendemos o sistema como diagnóstico social, nem como prova de que um servi
 | Capacidade | Estado | Evidência | Limite ou pendência |
 |---|---|---|---|
 | Mapa dos 408 setores com população e densidade | Implementado | Soma de pessoas igual ao Censo 2022 (201.418); área a 0,21% da oficial (`test_territorio.py`) | 43 setores (6,4% das pessoas) vêm sem bairro no IBGE |
-| Distância até o serviço mais próximo | CRAS 6 de 6, UBS e USF 22 de 22 e escolas 59 de 68 (cenário com o centro do CEP) | Coordenadas conferidas visualmente em 04/11/2026; trava: exige 70% dos serviços localizados | Distância em linha reta; as 9 escolas sem localização ficam fora |
+| Distância até o serviço mais próximo | CRAS 6/6 e UBS/USF 22/22 nos dois cenários; escolas 33/68 em `coordenadas_do_catalogo` e 68/68 em `com_centro_do_cep` (análise de sensibilidade com CEP institucional) | `web/dados/exposicao_distancia.json` (gerado em 05/11/2026) | Distância em linha reta; a localização pelo centro do CEP é aproximada e deve permanecer identificada como análise de sensibilidade |
 | Análise territorial (vista `#painel`) | Tela pronta; `analise_territorial.json` e `exposicao_distancia.json` gerados com todos os CRAS e UBS/USF | `painel.test.js`: a tela só lê esses arquivos | Mostra onde a rede cadastrada está longe da população; não prova falta de serviço (ver `docs/painel_e_analise_territorial.md`) |
 | População de 0 a 3 anos, renda, mulheres responsáveis por setor | **Não está no projeto** | | Sem isso não existe taxa de cobertura de creche |
 | Pedidos de dados à Prefeitura (fila de creche, RMA, saúde, estatísticas) | Proposta: minutas 6 a 9 em `docs/pedidos_LAI.md` | | Sem protocolo registrado no projeto |
