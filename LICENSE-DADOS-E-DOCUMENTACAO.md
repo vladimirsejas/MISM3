@@ -10,12 +10,25 @@ A documentação, os textos escritos pela equipe, os conjuntos de avaliação e 
 
 ## Arquivos e diretórios abrangidos
 
-- `docs/`
 - `README.md`
+- `docs/`, com as exclusões listadas abaixo (inclui os textos autorais `docs/documetacao/LEIA-ME.md` e `docs/transporte/README.md`)
 - `avaliacao/perguntas.json`
 - `catalogo/frases_necessidades.txt`
 - `catalogo/frases_perigo.txt`
 - `catalogo/frases_fora_do_escopo.txt`
+
+## Exclusões dentro de `docs/`
+
+Os itens abaixo estão dentro de `docs/`, mas **não são abrangidos** por esta licença, porque não são materiais autorais do projeto:
+
+- `docs/documetacao/*.pdf`: impressões de páginas e documentos de terceiros, arquivadas como prova das fontes;
+- `docs/transporte/*.pdf`: páginas impressas do site da SOU Transportes;
+- `docs/img/`: brasão oficial do município;
+- `docs/avaliacao_perfis/rodar_perfis.js`: é código-fonte e segue a licença MIT, conforme o arquivo [LICENSE](LICENSE).
+
+## Materiais que não recebem esta licença
+
+Também **não** são licenciados por esta declaração os catálogos e arquivos de dados do repositório (`catalogo/*.csv`, `catalogo/horarios_onibus.txt`, `web/dados/`), que reúnem informações de fontes oficiais e de terceiros, nem as imagens de `web/img/`, nem os mapas e a cartografia. A situação de cada um está em [AVISOS-DE-TERCEIROS.md](AVISOS-DE-TERCEIROS.md).
 
 ## Limites desta declaração
 
