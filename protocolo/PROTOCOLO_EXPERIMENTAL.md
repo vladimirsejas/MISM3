@@ -43,58 +43,49 @@ Uma ablação só será considerada válida se a desativação de um componente 
 
 ## 4. Conjunto novo
 
-### 4.1 Tamanho
+### 4.1 Composição final proposta
 
-O desfecho principal exige ao menos 137 mensagens válidas. Cálculo de referência:
+O conjunto recebido contém **190 mensagens fictícias**, todas escritas pelo autor:
 
-n = 1,96² × 0,85 × 0,15 / 0,06² = 136,06...; arredondamento para cima: **137**.
-
-A conferência por intervalo de Wilson de 95%, com proporção esperada de 0,85 e n=137, resulta em largura aproximada de 12 pontos percentuais, coerente com precisão aproximada de ±6 pontos. Essa aproximação não garante precisão por subgrupo.
-
-Para segurança, serão incluídas **pelo menos 80 mensagens positivas de perigo**. Com revocação esperada de 90%, n=80 produz intervalo de Wilson de 95% com largura aproximada de 13 pontos percentuais. A estimativa por subtipo será exploratória, pois o tamanho não garante precisão individual.
-
-### 4.2 Distribuição mínima por categoria primária
-
-As categorias abaixo são mutuamente exclusivas para a contagem primária. Etiquetas secundárias são permitidas, sem dupla contagem.
-
-| Categoria | Mínimo |
+| Classe de perigo | Quantidade |
 |---|---:|
-| Violência contra a mulher, sem risco imediato explicitado | 25 |
-| Risco imediato ou ameaça iminente | 20 |
-| Violência contra criança | 15 |
-| Sofrimento psicológico grave e/ou ideação suicida | 20 |
-| Necessidades que não devem ser confundidas com violência | 20 |
-| Mensagens ambíguas ou insuficientemente determinadas | 20 |
-| Mensagens fora do escopo | 30 |
-| Duas ou mais necessidades na mesma mensagem | 10 |
-| **Total** | **160** |
+| Perigo — violência | 55 |
+| Perigo — sofrimento psicológico e ideação suicida | 20 |
+| Perigo — violência contra criança | 15 |
+| **Total de mensagens com perigo** | **90** |
+| **Mensagens sem perigo** | **100** |
+| **Total geral** | **190** |
 
-As primeiras quatro categorias totalizam 80 mensagens positivas de perigo. As demais compõem casos negativos, ambíguos, fora do escopo ou com múltiplas necessidades. Mensagens com rótulo secundário de perigo não serão contadas novamente na categoria primária.
+A categoria de violência reúne situações de violência e ameaça, incluindo casos de risco imediato. O detector mantém quatro tipos operacionais: violência contra a mulher, risco imediato, violência contra criança e sofrimento psicológico grave/ideação suicida. Os 55 registros de violência não foram subdivididos em contagens adicionais neste quadro; não inferir quantitativos por subtipo sem apuração específica.
 
-Haverá também **pelo menos 10 mensagens por área de orientação**. Essa quota pode se sobrepor às categorias primárias. O conjunto será ampliado se necessário para cobrir todas as áreas do catálogo congelado; a quota por área é requisito de cobertura, não substitui os mínimos por categoria.
+### 4.2 Autoria, campos e gabarito
 
-### 4.3 Autoria e prevenção de contaminação
+As 190 frases foram escritas pelo autor. O gabarito das 160 mensagens da Ficha C (identificadores C-001 a C-160) foi elaborado pelo próprio autor. O gabarito das 30 mensagens da Ficha D (D-001 a D-030) foi proposto com apoio de inteligência artificial e revisado integralmente pelo autor, que marcou a conferência de cada registro.
 
-- O conjunto será escrito em lote único antes de executar qualquer condição.
-- O autor escreverá sem consultar o sistema, suas saídas, conjuntos antigos ou frases de treino.
-- É proibido copiar ou parafrasear mensagens de conjuntos antigos, arquivos de avaliação, frases de desenvolvimento, reserva ou arquivos de treino.
-- Será feita comparação com os conjuntos antigos e frases de treino usando similaridade de letras/caracteres, TF-IDF e revisão manual dos pares suspeitos.
-- Limiares computacionais serão definidos antes da revisão final e registrados no manifesto.
-- Exclusões por sobreposição terão identificador, motivo e decisão documentados; cada exclusão será substituída por mensagem nova, escrita sem consulta ao sistema.
-- Correções de ortografia e digitação ocorrerão antes do congelamento. Não haverá edição após observar respostas do sistema.
-- Não serão coletados relatos reais, conversas privadas, prontuários ou dados pessoais.
+O arquivo registra identificador e frase, área, códigos associados, classificação de perigo, ação do site e destinos esperados por identificadores oficiais do catálogo. Para a avaliação, os campos centrais são área esperada, destinos esperados (identificadores oficiais), perigo (sim/não e tipo conforme os quatro tipos do detector) e ação esperada do site.
 
-### 4.4 Gabarito
+Foram retirados do formulário de anotação os campos **prioridade de segurança**, **justificativa** e **anotador**. Não serão reintroduzidos como campos do conjunto.
 
-Antes de redigir as mensagens, o autor registrará por escrito as regras de decisão do gabarito e os critérios de cada campo. Depois de concluir o conjunto, fará duas passagens completas de anotação, separadas por intervalo mínimo de sete dias. Na segunda passagem, não consultará o sistema, a primeira anotação nem os rótulos atribuídos na primeira passagem. Os registros serão apresentados em ordem aleatória ou diferente entre as passagens, sem indicação da anotação anterior.
+A anotação foi realizada em **uma única passada** pelo autor. Não houve segunda passada, intervalo de sete dias ou cálculo de kappa intra-anotador. A ausência de uma medida de estabilidade intra-anotador e de concordância interanotadores será declarada como limitação metodológica. A revisão integral do gabarito pelo autor não equivale a validação independente por outro anotador.
 
-Será calculado o kappa de Cohen intra-anotador separadamente para cada campo: área, serviço, perigo, tipo de perigo e abstenção. As categorias e o tratamento de valores ausentes serão fixados antes do cálculo. A concordância será reportada antes de qualquer resolução de divergências. Divergências serão então resolvidas pelo autor com base nas regras pré-especificadas, registrando para cada caso o campo, as duas marcações, a decisão final e o motivo. O gabarito resolvido será versionado; a concordância pré-resolução não será substituída pelo resultado conciliado.
+### 4.3 Relatório de similaridade e sobreposição
 
-Este procedimento estima estabilidade intra-anotador, não concordância interanotadores. Não substitui avaliação independente por uma segunda pessoa; a limitação de anotador único permanece.
+A verificação de similaridade utilizou cosseno de TF-IDF de n-gramas de caracteres (3 a 5, `char_wb`) e razão de sequência (`difflib`), com limiar de 0,80. A comparação foi feita contra 1.397 frases antigas de usuária e 7.099 textos no total do repositório, conforme a etiqueta `v1.0-pesquisa`.
 
-Cada registro conterá: identificador aleatório; área esperada; seção esperada; serviço esperado; serviços proibidos; rótulo binário de perigo; tipo de perigo; decisão de abstenção (sim, não ou pedir esclarecimento); justificativa; código pseudonimizado do anotador; versão do gabarito.
+A comparação reportada para o conjunto encontrou:
+- **0 pares idênticos**;
+- **4 pares** com similaridade de letras igual ou superior a 0,80 e inferior a 0,90: **C-123, C-041, C-088 e D-030**;
+- **nenhum par** com similaridade igual ou superior a 0,90.
 
-O gabarito será construído a partir do catálogo congelado e destas regras, nunca a partir da saída do sistema. Destino inexistente no catálogo não poderá ser resposta esperada. Quando a informação não permitir escolher um destino sem suposição, marcar abstenção ou necessidade de esclarecimento.
+Os quatro pares foram mantidos no conjunto. A análise de sensibilidade deverá apresentar os resultados principais em duas condições: com os 190 registros e sem os quatro registros envolvidos nos pares sinalizados. A análise sem esses registros é complementar e não substitui o resultado principal com o conjunto integral.
+
+### 4.4 Integridade e estado do congelamento
+
+O arquivo proposto para inclusão é `protocolo/conjunto_congelado_v1.json`. O SHA-256 esperado dos bytes do arquivo é:
+
+`abbae38d3cc39a8428130c09ac59d65c96cff497112481a9eadcf3ac9227ae00`
+
+O manifesto de hash será versionado junto ao arquivo. **A inclusão em uma branch ou em uma pull request não significa que o conjunto esteja congelado.** O conjunto somente poderá ser declarado congelado após a aprovação e mesclagem da pull request, com conferência do hash no arquivo integrado à branch principal. Até esse momento, seu estado é proposta de inclusão/congelamento.
 
 ## 5. Métricas
 
@@ -172,7 +163,7 @@ Logs integrais e saídas brutas serão preservados. Resultados ausentes não ser
 
 ## 9. Limitações
 
-As mensagens serão fictícias e escritas exclusivamente pelo autor; não representam a diversidade linguística, social, regional ou emocional de mulheres reais. O cenário corresponde a um município, Rio Claro (SP), e depende do catálogo local congelado. A autoria e anotação por uma única pessoa podem introduzir viés no corpus e no gabarito. Não haverá segunda anotadora nem coautora adicional nesta etapa. O professor com doutorado que já acompanha o trabalho aceitou orientar e participar da publicação caso o estudo esteja metodologicamente completo. Sua eventual coautoria dependerá de contribuição intelectual efetiva, incluindo revisão do desenho e do texto e aprovação da versão final; orientação ou assinatura não serão presumidas como anotação independente. O procedimento de duas passagens permitirá estimar concordância intra-anotador, mas não substitui concordância interanotadores, e a limitação de anotador único permanece. As quotas de segurança não garantem precisão adequada por subtipo. O estudo mede recuperação e comportamento de segurança em mensagens artificiais; não mede redução de violência, acesso efetivo, qualidade do atendimento, diagnóstico, elegibilidade ou desfechos sociais. A atualidade e a cobertura do catálogo limitam os destinos recuperáveis. Não haverá validação multicêntrica ou prospectiva com participantes nesta etapa.
+As mensagens serão fictícias e escritas exclusivamente pelo autor; não representam a diversidade linguística, social, regional ou emocional de mulheres reais. O cenário corresponde a um município, Rio Claro (SP), e depende do catálogo local congelado. A autoria e anotação por uma única pessoa podem introduzir viés no corpus e no gabarito. Não haverá segunda anotadora nem coautora adicional nesta etapa. O professor com doutorado que já acompanha o trabalho aceitou orientar e participar da publicação caso o estudo esteja metodologicamente completo. Sua eventual coautoria dependerá de contribuição intelectual efetiva, incluindo revisão do desenho e do texto e aprovação da versão final; orientação ou assinatura não serão presumidas como anotação independente. A anotação em uma única passada não permite estimar estabilidade intra-anotador. Também não haverá concordância interanotadores; ambas as ausências constituem limitações metodológicas, e a limitação de anotador único permanece. As quotas de segurança não garantem precisão adequada por subtipo. O estudo mede recuperação e comportamento de segurança em mensagens artificiais; não mede redução de violência, acesso efetivo, qualidade do atendimento, diagnóstico, elegibilidade ou desfechos sociais. A atualidade e a cobertura do catálogo limitam os destinos recuperáveis. Não haverá validação multicêntrica ou prospectiva com participantes nesta etapa.
 
 ## 10. Pendências
 
@@ -181,7 +172,7 @@ As mensagens serão fictícias e escritas exclusivamente pelo autor; não repres
 - [ ] Verificar se cada ablação é implementável e isolável na versão congelada; não verificado sem execução/inspeção técnica.
 - [ ] Escolher BM25 ou TF-IDF simples antes do congelamento.
 - [x] Revista principal definida: PeerJ Computer Science; alternativa: PLOS ONE; terceira opção: revista brasileira ainda a selecionar. Taxas, políticas editoriais e condições de submissão permanecem **não verificadas** e deverão ser conferidas nas páginas oficiais antes da submissão.
-- [ ] Escrever e revisar conjunto e gabarito sem consultar o sistema.
-- [ ] Registrar manifesto, hashes, versões e comandos.
+- [x] As 190 frases foram escritas pelo autor. O gabarito das 160 mensagens da Ficha C (identificadores C-001 a C-160) foi elaborado pelo próprio autor. O gabarito das 30 mensagens da Ficha D (D-001 a D-030) foi proposto com apoio de inteligência artificial e revisado integralmente pelo autor, que marcou a conferência de cada registro.
+- [ ] Após mesclagem da pull request, confirmar o SHA-256 na branch principal e então declarar o conjunto congelado; registrar os demais itens do manifesto antes da execução.
 - [ ] Confirmar enquadramento ético institucional antes de qualquer atividade com participantes ou dados identificáveis.
 - [ ] Executar uma única vez e publicar resultados completos, inclusive resultados negativos.
