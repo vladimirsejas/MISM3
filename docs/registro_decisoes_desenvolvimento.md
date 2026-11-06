@@ -1280,3 +1280,12 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - **Teste novo:** `web/tests/painel.test.js` foi reescrito para falhar se qualquer arquivo ou referência do questionário voltar.
 - **Verificação:** os 29 testes em Node restantes passam; os passos do CI para avaliação e perfis de reserva dão o mesmo resultado de antes da remoção; o `pytest` precisou apenas de ajuste na documentação (os testes conferem que README e mapa de dados só citam arquivos que existem).
 - **Contexto:** o histórico das entradas anteriores sobre o questionário (por exemplo, 11/10/2026) foi mantido como estava. No código, a coleta estava desligada (`ativa: false`).
+
+ 05/11/2026 — Imagens do mapa de serviços passam a vir desligadas
+
+- **Decisão do autor:** a caixa "Mostrar ruas e nomes" do mapa de serviços (`#usar-tiles-mapa`) passa a vir **desmarcada**. A decisão anterior (registrada quando o mapa-base da Esri foi adotado) era deixá-la ligada, como no MISM 1.
+- **Por quê:** uma auditoria com Playwright (Chromium) mostrou que, com a caixa marcada, abrir a página inicial sem nenhuma interação já enviava 72 pedidos de tiles a `server.arcgisonline.com`, que passa a saber o endereço IP e a região do mapa vista. O texto digitado e o CEP não saíram do aparelho em nenhum cenário medido; o `Referer` e os cookies não foram enviados.
+- **O que mudou:** a caixa em `web/index.html` perde o atributo `checked`; o texto ao lado diz que, sem marcar, o mapa mostra só os pontos e o contorno da cidade; `web/mapa.js` só carrega a camada quando a caixa é marcada (o código já lia o estado da caixa); README e `AVISOS-DE-TERCEIROS.md` foram corrigidos; teste novo `web/tests/mapa_privacidade.test.js`.
+- **Efeito para a usuária:** o mapa abre sem ruas nem nomes; quem quiser vê-los marca a caixa. O OpenStreetMap, no mapa "perto de mim", já vinha desmarcado.
+- **Verificação:** com Chromium, 0 pedidos a outros domínios ao abrir a página inicial e a área Educação; ao marcar a caixa, os pedidos de tiles à Esri começam.
+
