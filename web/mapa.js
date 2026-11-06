@@ -135,7 +135,8 @@
     setTimeout(function () { mapa.invalidateSize(); }, 50);
   }
 
-  /* Base cinza clara com nomes de ruas (a mesma do mapa do MISM 1): fica ligada desde o início para os pontos se destacarem. */
+  /* Base cinza clara com nomes de ruas (a mesma do mapa do MISM 1). Só é carregada quando a usuária marca "Mostrar ruas e nomes":
+     ao ligá-la, o servidor de imagens (Esri) passa a saber a região do mapa que ela está vendo. */
   function ligarBase(ligar) {
     if (!mapa) return;
     if (ligar && !tiles) {
