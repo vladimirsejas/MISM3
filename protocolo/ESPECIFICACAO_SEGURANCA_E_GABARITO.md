@@ -2,7 +2,7 @@
 
 **Versão:** 1.0 — pré-execução  
 **Projeto:** MISM3 — orientador de serviços públicos  
-**Estado:** especificação proposta; deve ser congelada antes da execução.
+**Estado:** conjunto congelado em 06/11/2026 (commit de merge `22bdc74`); execução ainda não realizada.
 
 ## 1. Princípios
 
@@ -58,6 +58,6 @@ Não foi realizada segunda passada de anotação nem cálculo de kappa intra-ano
 - As 190 frases foram escritas pelo autor. O gabarito das 160 mensagens da Ficha C (identificadores C-001 a C-160) foi elaborado pelo próprio autor. O gabarito das 30 mensagens da Ficha D (D-001 a D-030) foi proposto com apoio de inteligência artificial e revisado integralmente pelo autor, que marcou a conferência de cada registro.
 - A anotação ocorreu em uma única passada; não houve segunda passada, intervalo de sete dias ou cálculo de kappa.
 - A ausência de repetição e de anotador independente será relatada como limitação metodológica.
-- Anotação precede execução e permanece congelada; mudanças posteriores serão documentadas e acompanhadas de análise de sensibilidade.
+- Anotação e conjunto permanecem congelados na versão 1, incorporada à `main` pela PR #79 (commit `22bdc74`), com SHA-256 conferido em 06/11/2026. A execução principal será única, sobre a etiqueta `v1.0-pesquisa`, e ainda não foi realizada. Qualquer mudança no conjunto exigirá nova versão, novo hash e análise de sensibilidade.
 - Não haverá segunda anotadora; a concordância intra-anotador não substitui concordância interanotadores e a limitação permanece.
 - O professor com doutorado já acompanha o trabalho e aceitou orientar e participar da publicação se o estudo estiver metodologicamente completo; eventual coautoria dependerá de revisão efetiva do desenho e do texto e aprovação da versão final.
