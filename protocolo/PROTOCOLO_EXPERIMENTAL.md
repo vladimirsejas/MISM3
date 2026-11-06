@@ -60,7 +60,7 @@ A categoria de violência reúne situações de violência e ameaça, incluindo 
 
 ### 4.2 Autoria, campos e gabarito
 
-As 190 frases foram escritas pelo autor. O gabarito foi proposto com apoio de inteligência artificial e revisado integralmente pelo autor, que permanece responsável pelas decisões finais e pela conferência de cada registro.
+As 190 frases foram escritas pelo autor. O gabarito das 160 mensagens da Ficha C (identificadores C-001 a C-160) foi elaborado pelo próprio autor. O gabarito das 30 mensagens da Ficha D (D-001 a D-030) foi proposto com apoio de inteligência artificial e revisado integralmente pelo autor, que marcou a conferência de cada registro.
 
 O arquivo registra identificador e frase, área, códigos associados, classificação de perigo, ação do site e destinos esperados por identificadores oficiais do catálogo. Para a avaliação, os campos centrais são área esperada, destinos esperados (identificadores oficiais), perigo (sim/não e tipo conforme os quatro tipos do detector) e ação esperada do site.
 
@@ -70,7 +70,9 @@ A anotação foi realizada em **uma única passada** pelo autor. Não houve segu
 
 ### 4.3 Relatório de similaridade e sobreposição
 
-A comparação de similaridade de letras reportada para o conjunto encontrou:
+A verificação de similaridade utilizou cosseno de TF-IDF de n-gramas de caracteres (3 a 5, `char_wb`) e razão de sequência (`difflib`), com limiar de 0,80. A comparação foi feita contra 1.397 frases antigas de usuária e 7.099 textos no total do repositório, conforme a etiqueta `v1.0-pesquisa`.
+
+A comparação reportada para o conjunto encontrou:
 - **0 pares idênticos**;
 - **4 pares** com similaridade de letras igual ou superior a 0,80 e inferior a 0,90: **C-123, C-041, C-088 e D-030**;
 - **nenhum par** com similaridade igual ou superior a 0,90.
@@ -170,7 +172,7 @@ As mensagens serão fictícias e escritas exclusivamente pelo autor; não repres
 - [ ] Verificar se cada ablação é implementável e isolável na versão congelada; não verificado sem execução/inspeção técnica.
 - [ ] Escolher BM25 ou TF-IDF simples antes do congelamento.
 - [x] Revista principal definida: PeerJ Computer Science; alternativa: PLOS ONE; terceira opção: revista brasileira ainda a selecionar. Taxas, políticas editoriais e condições de submissão permanecem **não verificadas** e deverão ser conferidas nas páginas oficiais antes da submissão.
-- [x] Conjunto de 190 mensagens escrito pelo autor; gabarito proposto com apoio de IA e revisado integralmente pelo autor.
+- [x] As 190 frases foram escritas pelo autor. O gabarito das 160 mensagens da Ficha C (identificadores C-001 a C-160) foi elaborado pelo próprio autor. O gabarito das 30 mensagens da Ficha D (D-001 a D-030) foi proposto com apoio de inteligência artificial e revisado integralmente pelo autor, que marcou a conferência de cada registro.
 - [ ] Após mesclagem da pull request, confirmar o SHA-256 na branch principal e então declarar o conjunto congelado; registrar os demais itens do manifesto antes da execução.
 - [ ] Confirmar enquadramento ético institucional antes de qualquer atividade com participantes ou dados identificáveis.
 - [ ] Executar uma única vez e publicar resultados completos, inclusive resultados negativos.
