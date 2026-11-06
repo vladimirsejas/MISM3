@@ -86,6 +86,12 @@ Haverá também **pelo menos 10 mensagens por área de orientação**. Essa quot
 
 ### 4.4 Gabarito
 
+Antes de redigir as mensagens, o autor registrará por escrito as regras de decisão do gabarito e os critérios de cada campo. Depois de concluir o conjunto, fará duas passagens completas de anotação, separadas por intervalo mínimo de sete dias. Na segunda passagem, não consultará o sistema, a primeira anotação nem os rótulos atribuídos na primeira passagem. Os registros serão apresentados em ordem aleatória ou diferente entre as passagens, sem indicação da anotação anterior.
+
+Será calculado o kappa de Cohen intra-anotador separadamente para cada campo: área, serviço, perigo, tipo de perigo e abstenção. As categorias e o tratamento de valores ausentes serão fixados antes do cálculo. A concordância será reportada antes de qualquer resolução de divergências. Divergências serão então resolvidas pelo autor com base nas regras pré-especificadas, registrando para cada caso o campo, as duas marcações, a decisão final e o motivo. O gabarito resolvido será versionado; a concordância pré-resolução não será substituída pelo resultado conciliado.
+
+Este procedimento estima estabilidade intra-anotador, não concordância interanotadores. Não substitui avaliação independente por uma segunda pessoa; a limitação de anotador único permanece.
+
 Cada registro conterá: identificador aleatório; área esperada; seção esperada; serviço esperado; serviços proibidos; rótulo binário de perigo; tipo de perigo; decisão de abstenção (sim, não ou pedir esclarecimento); justificativa; código pseudonimizado do anotador; versão do gabarito.
 
 O gabarito será construído a partir do catálogo congelado e destas regras, nunca a partir da saída do sistema. Destino inexistente no catálogo não poderá ser resposta esperada. Quando a informação não permitir escolher um destino sem suposição, marcar abstenção ou necessidade de esclarecimento.
@@ -166,16 +172,15 @@ Logs integrais e saídas brutas serão preservados. Resultados ausentes não ser
 
 ## 9. Limitações
 
-As mensagens serão fictícias e escritas exclusivamente pelo autor; não representam a diversidade linguística, social, regional ou emocional de mulheres reais. O cenário corresponde a um município, Rio Claro (SP), e depende do catálogo local congelado. A autoria única pode introduzir viés no corpus e no gabarito. Não haverá segunda anotadora nesta etapa; portanto, não será possível estimar concordância interanotadores ou kappa de Cohen. Um professor com doutorado poderá eventualmente assumir orientação em etapa futura, mas essa possibilidade ainda não está confirmada e não altera a autoria individual do conjunto. As quotas de segurança não garantem precisão adequada por subtipo. O estudo mede recuperação e comportamento de segurança em mensagens artificiais; não mede redução de violência, acesso efetivo, qualidade do atendimento, diagnóstico, elegibilidade ou desfechos sociais. A atualidade e a cobertura do catálogo limitam os destinos recuperáveis. Não haverá validação multicêntrica ou prospectiva com participantes nesta etapa.
+As mensagens serão fictícias e escritas exclusivamente pelo autor; não representam a diversidade linguística, social, regional ou emocional de mulheres reais. O cenário corresponde a um município, Rio Claro (SP), e depende do catálogo local congelado. A autoria e anotação por uma única pessoa podem introduzir viés no corpus e no gabarito. Não haverá segunda anotadora nem coautora adicional nesta etapa. O professor com doutorado que já acompanha o trabalho aceitou orientar e participar da publicação caso o estudo esteja metodologicamente completo. Sua eventual coautoria dependerá de contribuição intelectual efetiva, incluindo revisão do desenho e do texto e aprovação da versão final; orientação ou assinatura não serão presumidas como anotação independente. O procedimento de duas passagens permitirá estimar concordância intra-anotador, mas não substitui concordância interanotadores, e a limitação de anotador único permanece. As quotas de segurança não garantem precisão adequada por subtipo. O estudo mede recuperação e comportamento de segurança em mensagens artificiais; não mede redução de violência, acesso efetivo, qualidade do atendimento, diagnóstico, elegibilidade ou desfechos sociais. A atualidade e a cobertura do catálogo limitam os destinos recuperáveis. Não haverá validação multicêntrica ou prospectiva com participantes nesta etapa.
 
 ## 10. Pendências
 
-- [x] Segunda anotadora profissional: não haverá nesta etapa.
-- [x] Conjunto novo: será escrito exclusivamente pelo autor.
-- [ ] Eventual orientação acadêmica por professor com doutorado: possibilidade futura, ainda não confirmada.
+- [x] Segunda anotadora e coautora adicional: não haverá nesta etapa; o conjunto será escrito exclusivamente pelo autor.
+- [x] Professor com doutorado já acompanha o trabalho e aceitou orientar e participar da publicação se o estudo estiver metodologicamente completo; eventual coautoria dependerá de contribuição efetiva na revisão do desenho e do texto e aprovação da versão final.
 - [ ] Verificar se cada ablação é implementável e isolável na versão congelada; não verificado sem execução/inspeção técnica.
 - [ ] Escolher BM25 ou TF-IDF simples antes do congelamento.
-- [ ] Definir a revista principal em decisão conjunta entre o autor e o assistente, com consulta ao Claude; decisão ainda pendente.
+- [x] Revista principal definida: PeerJ Computer Science; alternativa: PLOS ONE; terceira opção: revista brasileira ainda a selecionar. Taxas, políticas editoriais e condições de submissão permanecem **não verificadas** e deverão ser conferidas nas páginas oficiais antes da submissão.
 - [ ] Escrever e revisar conjunto e gabarito sem consultar o sistema.
 - [ ] Registrar manifesto, hashes, versões e comandos.
 - [ ] Confirmar enquadramento ético institucional antes de qualquer atividade com participantes ou dados identificáveis.
