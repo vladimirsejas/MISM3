@@ -275,7 +275,7 @@ def cen6(page, base, s):
 CENARIOS = [
     ("1", "Página inicial, sem interação", cen1, ""),
     ("2", "Mensagem fictícia no orientador", cen2, MENSAGEM),
-    ("3", "CEP fictício no mapa de serviços da página inicial", cen3, CEP),
+    ("3", "CEP de teste no mapa de serviços da página inicial", cen3, CEP),
     ("4", "Mapa de serviços com a caixa de imagens do mapa marcada (padrão)", cen4, ""),
     ("5", "Mapa de serviços com a caixa desmarcada antes de o mapa iniciar (simulado por script de inicialização)", cen5, ""),
     ("5b", "Mapa de serviços: caixa desmarcada depois de carregar, com zoom", cen5b, ""),
@@ -458,15 +458,15 @@ def main() -> None:
            "    L -.->|\"texto digitado e CEP: 0 ocorrências em URL, cabeçalho ou corpo\"| N",
            "```", "",
            "## A frase mais forte que as evidências sustentam", "",
-           f"> Nos cenários testados, com mensagem e CEP fictícios, em um Chromium {versao_chromium} e com o site servido localmente, o texto digitado e o CEP não apareceram em nenhuma URL, cabeçalho ou corpo de requisição ({total_req} requisições, 0 ocorrências), e nada foi gravado no aparelho; a única comunicação com outro domínio foi o pedido de imagens de mapa à Esri, que ocorre por padrão ao abrir qualquer página (caixa marcada) e revela o IP do aparelho, o navegador e a região do mapa exibida, sem Referer nem cookie.",
-           "", "**O que a frase não afirma:** que \"nada sai do aparelho\" (saem pedidos de tiles e o IP); que isso vale para outros navegadores, extensões ou redes; o que acontece com um CEP válido (não medido); o comportamento do servidor de hospedagem de produção; nem o uso do OpenStreetMap (verificado só por leitura de código).",
+           f"> Nos cenários testados, com mensagem fictícia e CEP {CEP}, em Chromium {versao_chromium} e com o site servido localmente, o detector encontrou {n_vaz} requisições com ocorrência do texto ou CEP em URL, cabeçalho ou corpo, entre {total_req} requisições. Houve algum dado persistido ao fim de um cenário: {armazenou}. As comunicações externas, domínios e tiles observados estão discriminados nas tabelas acima.",
+           "", "**O que a frase não afirma:** que \"nada sai do aparelho\" (saem pedidos de tiles e o IP); que isso vale para outros navegadores, extensões ou redes; o comportamento com outros CEPs; o comportamento do servidor de hospedagem de produção; nem o uso do OpenStreetMap (verificado só por leitura de código).",
            "", "## Limites desta auditoria", "",
            "- Ambiente: um Chromium em modo sem interface, servidor local em `127.0.0.1`, uma única passagem por cenário (sem repetições). Em produção, o domínio e o HTTPS são outros.",
            "- A busca por vazamento procura as formas exatas e trechos de três palavras do texto fictício, e as formas do CEP; transformações (por exemplo, hash ou codificação própria) não seriam detectadas.",
            "- Os cabeçalhos de pedidos cancelados não têm versão final capturada; o `Referer` e o `Cookie` foram conferidos nos pedidos concluídos, que são a mesma chamada de tiles.",
            "- O README diz que as únicas requisições são arquivos locais e tiles do OpenStreetMap só com opt-in; esta auditoria mostra tiles da Esri por padrão. Essa divergência é o motivo da pergunta ao autor ao fim do relatório da tarefa.", ""]
     (RAIZ / "reproducao" / f"auditoria_privacidade_cep_{CEP_DIGITOS}.md").write_text("\n".join(md) + "\n", encoding="utf-8", newline="\n")
-    print("ok: reproducao/auditoria_privacidade.md |", {k: v for k, v in resumo_ext.items()})
+    print(f"ok: reproducao/auditoria_privacidade_cep_{CEP_DIGITOS}.md |", {k: v for k, v in resumo_ext.items()})
 
 
 if __name__ == "__main__":
