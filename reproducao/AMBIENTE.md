@@ -99,3 +99,21 @@ Há semente fixa para a embaralhada e a validação cruzada dos três treinos (`
 
 **Como verificar depois (fora desta tarefa):** treinar duas vezes no mesmo dia, com as mesmas versões e `PYTHONHASHSEED=0`, e comparar `sha256sum` dos arquivos em `web/dados/`. Para tornar o resultado reproduzível sem depender do dia, a data teria de ser configurável, o que exigiria alterar `pipeline/` e por isso não foi feito.
 
+
+## Ambiente de treino da versão de pesquisa
+
+Treino determinístico executado no ramo `treino-deterministico` (commit dos modelos: `127036e`), com `PYTHONHASHSEED=0`, duas vezes (A e B) a partir do mesmo estado do repositório.
+
+- Python: `3.12.10` (o mesmo da integração contínua)
+- Node: `v24.14.0` (a integração contínua usa Node 20)
+- Sistema operacional: `Windows-11-10.0.26200-SP0`
+- Bibliotecas, instaladas exatamente como em `requirements.txt`: `pandas==3.0.1`, `numpy==2.4.3`, `scikit-learn==1.9.1`, `scipy==1.18.1`, `pyshp==3.1.6`, `openpyxl==3.1.5`, `pytest==9.0.3`
+
+| Arquivo | SHA-256 (execução A) | SHA-256 (execução B) | Resultado |
+|---|---|---|---|
+| `web/dados/modelo_necessidades.json` | `e6bdc03df223f7d5a1cca1f172905800c9ed2dc881ec478247a833e61352395a` | igual | idêntico |
+| `web/dados/modelo_perigo.json` | `64fffc31e8c07ee1d6bc23937b1d70ff00fb2346d6361fe1eff8217870bd9da6` | igual | idêntico |
+| `web/dados/modelo_escopo.json` | `667baaa520a9613831a666a1f28bd0522d74101d7aed5dfcb30464234d7daba3` | igual | idêntico |
+| `web/dados/indice_orientacao.json` | `f4417e85d598d6e25fc943b1c7e4b73865edfc738fded35527bcad60ac923afb` | igual | idêntico |
+
+`pipeline/treinar_necessidades.py` também grava `docs/ia/avaliacao_modelo_necessidades.md` (idêntico entre A e B); esse arquivo não foi incluído no commit, por estar fora do escopo desta tarefa.

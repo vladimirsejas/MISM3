@@ -16,6 +16,7 @@ de palavras-chave (web/necessidades.js) para comparação. O modelo exportado é
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import math
 import random
@@ -40,6 +41,7 @@ CLASSES = ["violencia", "casamento", "filhos", "emprego_curso", "saude", "estudo
 LIMIAR_PADRAO = 0.50
 LIMIARES = {"violencia": 0.25}  # em violência, errar por falta de alerta custa mais: aceita-se mais alarmes falsos
 SEMENTE = 20261011
+VERSAO_TREINO = "1"
 N_MIN, N_MAX = 3, 5
 
 
@@ -123,7 +125,7 @@ def matriz(rotulos_lista: list[frozenset]) -> np.ndarray:
 def treinar(frases: list[str], rotulos: list[frozenset]):
     vet = TfidfVectorizer(analyzer=atributos, sublinear_tf=True, min_df=2, norm="l2")
     X = vet.fit_transform(frases)
-    clf = OneVsRestClassifier(LogisticRegression(C=12.0, class_weight="balanced", solver="liblinear", max_iter=1000))
+    clf = OneVsRestClassifier(LogisticRegression(C=12.0, class_weight="balanced", solver="liblinear", max_iter=1000, random_state=42))
     clf.fit(X, matriz(rotulos))
     return vet, clf
 
@@ -277,7 +279,7 @@ def main() -> int:
         p = probabilidades(vet, clf, [t])[0]
         vetores.append(dict(frase=t, prob={c: round(float(v), 6) for c, v in zip(CLASSES, p)}))
     modelo = dict(
-        meta=dict(versao=1, treinado_em=date.today().isoformat(), tipo="regressão logística (um contra todos) sobre n-gramas de caracteres e palavras, TF-IDF",
+        meta=dict(versao=1, treinado_em=f"sha256:{hashlib.sha256(FRASES.read_bytes()).hexdigest()}:versao={VERSAO_TREINO}", tipo="regressão logística (um contra todos) sobre n-gramas de caracteres e palavras, TF-IDF",
                   exemplos_de_treino=len(itens), origem_das_frases="escritas pela equipe do projeto; nenhuma vem de usuárias",
                   aviso="Sugere áreas do site. Não decide direitos nem faz diagnóstico.", n_min=N_MIN, n_max=N_MAX,
                   limiar_padrao=LIMIAR_PADRAO, limiares=LIMIARES, maximo_sugestoes=3),
