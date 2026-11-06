@@ -62,7 +62,7 @@ JavaScript:
 
 Não há pacotes npm, `package.json`, framework, bundler nem CDN. Todo o JavaScript do site é código do projeto, exceto o Leaflet.
 
-Serviços externos: o site consulta dois serviços de tiles de mapa: `tile.openstreetmap.org` (OpenStreetMap), em `web/app.js`, só se a usuária marcar "Mostrar ruas"; e `server.arcgisonline.com` (Esri), em `web/mapa.js`, cuja camada vem ligada por padrão no mapa de serviços e pode ser desmarcada. Os termos desses serviços não foram verificados (ver `AVISOS-DE-TERCEIROS.md`). Links para páginas oficiais, WhatsApp e Google Maps abrem por clique. Em tempo de desenvolvimento, `pipeline/baixar.py` baixa dados do IBGE, INEP e DATASUS, e `pipeline/testar_api.py` faz uma chamada mínima à API da Anthropic só para verificar a chave (variável `ANTHROPIC_API_KEY`; o site não usa essa API).
+Serviços externos: o site consulta dois serviços de tiles de mapa: `tile.openstreetmap.org` (OpenStreetMap), em `web/app.js`, só se a usuária marcar "Mostrar ruas"; e `server.arcgisonline.com` (Esri), em `web/mapa.js`, só se a usuária marcar "Mostrar ruas e nomes" no mapa de serviços (a caixa vem desmarcada). Ao abrir o site, nenhuma imagem de mapa é pedida a outro domínio. Os termos desses serviços não foram verificados (ver `AVISOS-DE-TERCEIROS.md`). Links para páginas oficiais, WhatsApp e Google Maps abrem por clique. Em tempo de desenvolvimento, `pipeline/baixar.py` baixa dados do IBGE, INEP e DATASUS, e `pipeline/testar_api.py` faz uma chamada mínima à API da Anthropic só para verificar a chave (variável `ANTHROPIC_API_KEY`; o site não usa essa API).
 
 Integração contínua: GitHub Actions (`actions/checkout@v4`, `actions/setup-python@v5`, `actions/setup-node@v4`), Python 3.12, Node 20.
 
@@ -201,7 +201,7 @@ Notas de ambiente:
 ## Privacidade e segurança
 
 - O texto digitado e o CEP não são enviados nem gravados. Não há cookie, `localStorage`, `sessionStorage`, analytics nem chamada a API de IA.
-- Únicas requisições: arquivos locais (GET) em `web/dados/`; tiles do OpenStreetMap (só com opt-in) e da Esri (ligados por padrão no mapa de serviços, com opção de desligar). O site não tem questionário nem código que envie texto digitado a um servidor. O único caminho de saída é o cadastro do Entre Mulheres, que apenas monta um link de WhatsApp ou e-mail para a própria usuária enviar e hoje está sem canal definido (`web/dados/entre_mulheres_canal.json`).
+- Únicas requisições: arquivos locais (GET) em `web/dados/`; tiles do OpenStreetMap e da Esri, só quando a usuária marca a caixa de ruas de cada mapa (ambas vêm desmarcadas). Nesses pedidos saem o endereço IP, o navegador e a região do mapa vista, sem Referer nem cookie (auditoria em `reproducao/auditoria_privacidade.md`, no ramo `reproducao-e-auditoria`). O site não tem questionário nem código que envie texto digitado a um servidor. O único caminho de saída é o cadastro do Entre Mulheres, que apenas monta um link de WhatsApp ou e-mail para a própria usuária enviar e hoje está sem canal definido (`web/dados/entre_mulheres_canal.json`).
 - O site é `noindex`. O botão "Em perigo agora?" abre contatos oficiais (190, 192, 193, 180, 100, 188) e um botão de saída; sair não apaga o histórico do navegador.
 - Em falha de rede, o alerta de perigo das regras continua funcionando (`alertaAgora` em `web/app.js`).
 
