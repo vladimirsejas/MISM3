@@ -1,10 +1,10 @@
 {
-  "title": "MISM3 — Rede Mulher Rio Claro: orientação a serviços públicos com processamento local",
+  "title": "Observatório da Mulher (MISM3): orientação a serviços públicos para mulheres de Rio Claro (SP), com processamento local",
   "upload_type": "software",
-  "description": "Software acadêmico para orientação de mulheres a serviços públicos de Rio Claro (SP), com processamento local no navegador e recuperação de informação. O código é licenciado sob MIT; a documentação, os textos autorais, as perguntas de avaliação e as frases de treino são licenciados sob CC BY 4.0, enquanto materiais de terceiros permanecem sujeitos às respectivas licenças e termos de origem.",
+  "description": "Site estático de orientação para mulheres de Rio Claro (SP) que reúne serviços públicos com fonte e data e recomenda para onde ir a partir do que a usuária escreve, com recuperação de informação e processamento local no navegador. O código é licenciado sob MIT. A documentação, os textos autorais, as perguntas de avaliação e as frases de treino são licenciados sob CC BY 4.0 (ver LICENSE-DADOS-E-DOCUMENTACAO.md). Dados, imagens, mapas, serviços e documentos de terceiros não são cobertos por essas licenças e seguem seus próprios termos ou estão sem licença confirmada (ver AVISOS-DE-TERCEIROS.md).",
   "creators": [
     {
-      "name": "Vladimir Queiroz Sejas"
+      "name": "Sejas, Vladimir Queiroz"
     }
   ],
   "language": "por",
@@ -15,5 +15,6 @@
     "Rio Claro",
     "violência contra a mulher"
   ],
-  "license": "MIT"
+  "license": "mit",
+  "notes": "O campo de licença refere-se ao código-fonte. A documentação e os textos autorais seguem a CC BY 4.0 (LICENSE-DADOS-E-DOCUMENTACAO.md). Materiais de terceiros e a cartografia das áreas de abrangência das UBS não fazem parte do pacote público; ver AVISOS-DE-TERCEIROS.md."
 }
