@@ -1,5 +1,7 @@
 # Avaliação do orientador (busca + segurança) do Observatório da Mulher
 
+> **Nota de integridade histórica (05/11/2026):** as tabelas deste documento reúnem medições produzidas em versões e datas diferentes do sistema; não devem ser lidas como uma única comparação contemporânea. O conjunto de teste e os conjuntos denominados independente, reserva e final deixaram de ser independentes, pois mensagens, falhas ou resultados desses conjuntos foram consultados durante ajustes posteriores. A tabela de ablação é histórica e não dispõe de um comando versionado que permita reproduzi-la integralmente a partir de uma configuração congelada. O item de próximos passos que propunha uma API de LLM foi descartado por decisão do projeto; não representa uma direção vigente. Os resultados abaixo são preservados como registro histórico e não devem ser reinterpretados como estimativas independentes da versão atual.
+
 Este documento mostra **como o orientador foi medido**, o que deu certo e **o que não deu**. Os números vêm de `avaliacao/` e podem ser repetidos por qualquer pessoa:
 
 ```
