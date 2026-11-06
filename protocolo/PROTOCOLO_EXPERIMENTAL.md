@@ -2,7 +2,7 @@
 
 **Versão:** 1.0 — pré-execução  
 **Data:** 05/11/2026  
-**Estado:** proposta; conjunto novo, congelamento e execução ainda não realizados.
+**Estado:** conjunto congelado em 06/11/2026 (commit de merge `22bdc74`); execução ainda não realizada.
 
 ## 1. Perguntas de pesquisa
 
@@ -85,7 +85,7 @@ O arquivo proposto para inclusão é `protocolo/conjunto_congelado_v1.json`. O S
 
 `abbae38d3cc39a8428130c09ac59d65c96cff497112481a9eadcf3ac9227ae00`
 
-O manifesto de hash será versionado junto ao arquivo. **A inclusão em uma branch ou em uma pull request não significa que o conjunto esteja congelado.** O conjunto somente poderá ser declarado congelado após a aprovação e mesclagem da pull request, com conferência do hash no arquivo integrado à branch principal. Até esse momento, seu estado é proposta de inclusão/congelamento.
+O manifesto de hash foi integrado à `main` na PR #79 (commit de merge `22bdc74`). Em 06/11/2026, o SHA-256 do arquivo `protocolo/conjunto_congelado_v1.json` foi conferido diretamente na `main` e corresponde ao manifesto e ao anexo original: `abbae38d3cc39a8428130c09ac59d65c96cff497112481a9eadcf3ac9227ae00`. O conjunto contém 190 mensagens e está congelado como versão 1. A execução experimental ainda não foi realizada.
 
 ## 5. Métricas
 
@@ -148,7 +148,7 @@ Antes da primeira execução, registrar em manifesto:
 - versões do catálogo, índice e modelos;
 - data/hora e responsável pelo congelamento.
 
-A execução principal será **única** após congelamento. Não será permitido ajustar regra, limiar, vocabulário, catálogo, modelo, parâmetro ou gabarito com base nos resultados. Falha técnica poderá justificar repetição somente se logs demonstrarem que nenhuma saída parcial foi inspecionada para orientar mudanças; incidente e justificativa serão publicados. Mudança metodológica posterior exige novo conjunto e protocolo versionado.
+A execução principal será **única**, sobre a versão de referência identificada pela etiqueta `v1.0-pesquisa`, após o registro dos demais itens do manifesto. Não será permitido ajustar regra, limiar, vocabulário, catálogo, modelo, parâmetro ou gabarito com base nos resultados. Qualquer alteração no conjunto congelado exigirá nova versão, novo SHA-256, documentação da mudança e análise de sensibilidade; a versão v1 permanecerá preservada para rastreabilidade. Falha técnica poderá justificar repetição somente se logs demonstrarem que nenhuma saída parcial foi inspecionada para orientar mudanças; incidente e justificativa serão publicados. Mudança metodológica posterior exige novo conjunto e protocolo versionado.
 
 Logs integrais e saídas brutas serão preservados. Resultados ausentes não serão substituídos por estimativas ou resultados históricos.
 
@@ -173,6 +173,7 @@ As mensagens serão fictícias e escritas exclusivamente pelo autor; não repres
 - [ ] Escolher BM25 ou TF-IDF simples antes do congelamento.
 - [x] Revista principal definida: PeerJ Computer Science; alternativa: PLOS ONE; terceira opção: revista brasileira ainda a selecionar. Taxas, políticas editoriais e condições de submissão permanecem **não verificadas** e deverão ser conferidas nas páginas oficiais antes da submissão.
 - [x] As 190 frases foram escritas pelo autor. O gabarito das 160 mensagens da Ficha C (identificadores C-001 a C-160) foi elaborado pelo próprio autor. O gabarito das 30 mensagens da Ficha D (D-001 a D-030) foi proposto com apoio de inteligência artificial e revisado integralmente pelo autor, que marcou a conferência de cada registro.
-- [ ] Após mesclagem da pull request, confirmar o SHA-256 na branch principal e então declarar o conjunto congelado; registrar os demais itens do manifesto antes da execução.
+- [x] PR #79 mesclada em 06/11/2026 (commit `22bdc74`); SHA-256 conferido na `main` e idêntico ao manifesto e ao anexo original. Conjunto v1 congelado com 190 mensagens.
+- [ ] Antes da execução, registrar os demais itens do manifesto (versões de ambiente e bibliotecas, comandos, parâmetros, sementes, catálogo, índice e modelos).
 - [ ] Confirmar enquadramento ético institucional antes de qualquer atividade com participantes ou dados identificáveis.
 - [ ] Executar uma única vez e publicar resultados completos, inclusive resultados negativos.
