@@ -166,14 +166,16 @@ Logs integrais e saídas brutas serão preservados. Resultados ausentes não ser
 
 ## 9. Limitações
 
-As mensagens serão fictícias e escritas por um único autor; não representam a diversidade linguística, social, regional ou emocional de mulheres reais. O cenário corresponde a um município, Rio Claro (SP), e depende do catálogo local congelado. A autoria única pode introduzir viés no corpus e no gabarito. Revisão profissional, se ocorrer, não transforma mensagens fictícias em relatos reais nem equivale a validação com usuárias. As quotas de segurança não garantem precisão adequada por subtipo. O estudo mede recuperação e comportamento de segurança em mensagens artificiais; não mede redução de violência, acesso efetivo, qualidade do atendimento, diagnóstico, elegibilidade ou desfechos sociais. A atualidade e a cobertura do catálogo limitam os destinos recuperáveis. Não haverá validação multicêntrica ou prospectiva com participantes nesta etapa.
+As mensagens serão fictícias e escritas exclusivamente pelo autor; não representam a diversidade linguística, social, regional ou emocional de mulheres reais. O cenário corresponde a um município, Rio Claro (SP), e depende do catálogo local congelado. A autoria única pode introduzir viés no corpus e no gabarito. Não haverá segunda anotadora nesta etapa; portanto, não será possível estimar concordância interanotadores ou kappa de Cohen. Um professor com doutorado poderá eventualmente assumir orientação em etapa futura, mas essa possibilidade ainda não está confirmada e não altera a autoria individual do conjunto. As quotas de segurança não garantem precisão adequada por subtipo. O estudo mede recuperação e comportamento de segurança em mensagens artificiais; não mede redução de violência, acesso efetivo, qualidade do atendimento, diagnóstico, elegibilidade ou desfechos sociais. A atualidade e a cobertura do catálogo limitam os destinos recuperáveis. Não haverá validação multicêntrica ou prospectiva com participantes nesta etapa.
 
 ## 10. Pendências
 
-- [ ] Confirmar segunda anotadora profissional e eventual coautoria.
-- [ ] Confirmar se o conjunto será escrito exclusivamente pelo autor.
+- [x] Segunda anotadora profissional: não haverá nesta etapa.
+- [x] Conjunto novo: será escrito exclusivamente pelo autor.
+- [ ] Eventual orientação acadêmica por professor com doutorado: possibilidade futura, ainda não confirmada.
 - [ ] Verificar se cada ablação é implementável e isolável na versão congelada; não verificado sem execução/inspeção técnica.
 - [ ] Escolher BM25 ou TF-IDF simples antes do congelamento.
+- [ ] Definir a revista principal em decisão conjunta entre o autor e o assistente, com consulta ao Claude; decisão ainda pendente.
 - [ ] Escrever e revisar conjunto e gabarito sem consultar o sistema.
 - [ ] Registrar manifesto, hashes, versões e comandos.
 - [ ] Confirmar enquadramento ético institucional antes de qualquer atividade com participantes ou dados identificáveis.
