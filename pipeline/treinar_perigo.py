@@ -80,7 +80,7 @@ def treinar(frases: list[str], rotulos: list[str], aumentar_dados: bool = True):
     clfs = {}
     for t in TIPOS:
         y = np.array([1 if r == t else 0 for r in Y])
-        clfs[t] = LogisticRegression(C=12.0, class_weight="balanced", solver="liblinear", max_iter=2000).fit(M, y)
+        clfs[t] = LogisticRegression(C=12.0, class_weight="balanced", solver="liblinear", max_iter=2000, random_state=42).fit(M, y)
     return vet, clfs
 
 

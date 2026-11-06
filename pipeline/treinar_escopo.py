@@ -71,7 +71,7 @@ def treinar(X, Y):
         for v in aumentar(f, rng):
             XA.append(v); YA.append(y)
     vet = TfidfVectorizer(analyzer=atributos, sublinear_tf=True, min_df=2, norm="l2")
-    clf = LogisticRegression(C=12.0, class_weight="balanced", solver="liblinear", max_iter=2000).fit(vet.fit_transform(XA), YA)
+    clf = LogisticRegression(C=12.0, class_weight="balanced", solver="liblinear", max_iter=2000, random_state=42).fit(vet.fit_transform(XA), YA)
     return vet, clf
 
 
