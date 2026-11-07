@@ -12,10 +12,15 @@
     if (!t) return '<p class="status">A análise territorial <strong>ainda não foi gerada</strong>. Ela precisa da localização dos serviços (CEP) e roda com <code>python pipeline/analise_territorial.py</code>. Enquanto isso, nenhum número territorial é mostrado.</p>';
     var cob = t.meta.cobertura_dos_servicos || {}, nomes = { cras: "CRAS", ubs: "UBS", escola: "Escola municipal" };
     var cols = Object.keys(nomes).filter(function (c) { return cob[c] && cob[c].com_coordenada > 0; });
-    var cabecalho = cols.map(function (c) { return '<th class="num" scope="col">Distância média até a ' + (c === "cras" ? "CRAS" : c === "ubs" ? "UBS" : "escola municipal") + " mais próxima</th>"; }).join("");
+    var cabecalho = cols.map(function (c) { return '<th class="num" scope="col">Distância média até a ' + (c === "cras" ? "CRAS" : c === "ubs" ? "UBS" : "escola municipal") + " mais próxima (estimativa e faixa)</th>"; }).join("");
     var ordem = cols.length ? "distancia_media_" + cols[0] + "_km" : null;
     var linhas = t.bairros.slice().sort(function (a, b) { return ordem ? (b[ordem] || 0) - (a[ordem] || 0) : b.pessoas - a.pessoas; }).map(function (b) {
-      return '<tr><th scope="row">' + esc(b.bairro) + '</th><td class="num">' + b.pessoas.toLocaleString("pt-BR") + "</td>" + cols.map(function (c) { var v = b["distancia_media_" + c + "_km"]; return '<td class="num">' + (v == null ? "—" : v.toLocaleString("pt-BR") + " km") + "</td>"; }).join("") + '<td class="num">' + b.servicos_no_bairro + "</td></tr>";
+      return '<tr><th scope="row">' + esc(b.bairro) + '</th><td class="num">' + b.pessoas.toLocaleString("pt-BR") + "</td>" + cols.map(function (c) {
+        var v = b["distancia_media_" + c + "_km"], minimo = b["distancia_media_" + c + "_min_km"], maximo = b["distancia_media_" + c + "_max_km"];
+        var valor = v == null ? "—" : v.toLocaleString("pt-BR") + " km";
+        if (minimo != null && maximo != null && (minimo !== maximo)) valor += " (" + minimo.toLocaleString("pt-BR") + "–" + maximo.toLocaleString("pt-BR") + " km)";
+        return '<td class="num">' + valor + "</td>";
+      }).join("") + '<td class="num">' + b.servicos_no_bairro + "</td></tr>";
     }).join("");
     var cobertura = Object.keys(nomes).map(function (c) { return nomes[c] + ": " + (cob[c] ? cob[c].com_coordenada + " de " + cob[c].cadastrados + " localizados" : "—"); }).join("; ");
     return '<p class="meta"><strong>Cobertura:</strong> ' + esc(cobertura) + ". Só entram as categorias com serviços localizados.</p>" +
@@ -25,7 +30,7 @@
 
   function comoLer() {
     return secao("Como ler esta tela", "", "<ul><li><strong>Origem:</strong> população por setor censitário (IBGE, Censo 2022) e localização dos serviços do catálogo verificado. Nenhum dado de pessoa entra nesta tela.</li>" +
-      "<li><strong>Limites:</strong> as distâncias são aproximações e <strong>não provam falta de serviço</strong>; ausência de dado não é ausência de serviço.</li>" +
+      "<li><strong>Limites:</strong> quando há raio de referência, a distância aparece com uma faixa geométrica (mínimo–máximo). Ela não é intervalo de confiança; faixas sobrepostas não permitem afirmar qual serviço é mais próximo. As distâncias não provam falta de serviço; ausência de dado não é ausência de serviço.</li>" +
       "<li><strong>Uso:</strong> apoiar o planejamento. Não deve ser usado para negar serviços nem para classificar mulheres.</li></ul>");
   }
 
