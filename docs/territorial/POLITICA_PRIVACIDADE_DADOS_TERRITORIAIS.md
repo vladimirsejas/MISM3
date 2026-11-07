@@ -51,7 +51,7 @@ O CEP institucional de um equipamento público, quando usado exclusivamente para
 
 ## 5. Setores pequenos e risco de identificação
 
-A agregação por setor censitário reduz granularidade, mas não garante anonimato em qualquer circunstância. Setores com população muito pequena, categorias raras ou combinações de atributos muito específicas podem permitir inferências sobre indivíduos ou domicílios.
+A agregação por setor censitário reduz granularidade, mas não garante anonimato em qualquer circunstância. Setores com população muito pequena, categorias raras ou combinações de atributos muito específicas podem permitir inferências sobre indivíduos ou domicílios. No mapa atual, os 17 setores abaixo do critério de cautela são apenas sinalizados; isso não equivale à supressão estatística nem demonstra que o risco de reidentificação foi eliminado.
 
 Antes de publicar tabelas, mapas temáticos ou indicadores:
 
@@ -63,7 +63,7 @@ Antes de publicar tabelas, mapas temáticos ou indicadores:
 - Evitar cruzamentos muito detalhados entre idade, sexo, condição de saúde, serviço e território.
 - Registrar a regra de supressão aplicada e sua justificativa.
 
-**Parâmetros numéricos de supressão:** não estão definidos nesta fase. Devem ser propostos, justificados e aprovados antes da publicação de indicadores sensíveis. Não se estabelece aqui um limiar arbitrário.
+**Parâmetros numéricos de supressão:** não estão definidos nesta fase. Devem ser propostos, justificados e aprovados antes da publicação de indicadores sensíveis. Não se estabelece aqui um limiar arbitrário. Até essa decisão, a visualização deve permanecer identificada como protótipo de pesquisa e não deve ser usada para divulgar cruzamentos sensíveis ou contagens raras por setor.
 
 ## 6. Verificações automáticas obrigatórias
 

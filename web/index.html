@@ -66,7 +66,7 @@
         <div class="heroi-acoes">
           <button type="button" class="btn-heroi" data-rolar="areas-inicio">Escolha uma área <span aria-hidden="true">↓</span></button>
           <button type="button" class="btn-heroi-2" data-rolar="ia-caixa">Prefiro escrever o que preciso</button>
-          <button type="button" class="btn-heroi-2" data-rolar="mapa-inicio">Ver o mapa de serviços</button>
+          <a class="btn-heroi-2" href="mapa-territorial.html">Abrir o mapa territorial</a>
         </div>
       </div>
       <div class="heroi-arte">
@@ -104,59 +104,9 @@
     </ul>
 
     <section class="mapa-inicio" id="mapa-inicio" aria-labelledby="titulo-mapa-inicio">
-      <h2 id="titulo-mapa-inicio" class="titulo-bloco" tabindex="-1">Mapa de serviços</h2>
-      <p class="meta">Veja onde ficam os serviços de Rio Claro. Informe seu bairro ou seu CEP para ver o que fica mais perto.</p>
-
-      <section class="mapa-cras" aria-labelledby="titulo-cras">
-        <h3 id="titulo-cras">Qual CRAS atende o meu bairro?</h3>
-        <p class="meta">Pela lista oficial de bairros que a Prefeitura publica para cada CRAS. Escreva o nome do bairro.</p>
-        <form id="form-cras" autocomplete="off">
-          <label for="bairro-cras" class="sr-only">Nome do bairro</label>
-          <div class="linha">
-            <input id="bairro-cras" type="search" autocomplete="off" spellcheck="false" placeholder="Ex.: Jardim Brasília, Mãe Preta, Bom Sucesso">
-            <button type="submit" class="btn">Ver o CRAS</button>
-          </div>
-        </form>
-        <div id="resultado-cras" aria-live="polite"></div>
-      </section>
-
-      <form class="mapa-campo" id="form-cep-mapa" autocomplete="off">
-        <label for="cep-mapa">Seu CEP: mostra o serviço mais perto de cada tipo</label>
-        <div class="linha">
-          <input id="cep-mapa" inputmode="numeric" maxlength="9" placeholder="00000-000" autocomplete="off" autocapitalize="off" spellcheck="false">
-          <button type="submit" class="btn">Ver o que está perto</button>
-          <button type="button" class="btn secundario" id="limpar-cep" hidden>Limpar</button>
-        </div>
-      </form>
-      <p class="privacidade">O CEP serve só para marcar uma região aproximada e fica neste aparelho: nada é enviado, gravado ou guardado na barra de endereço.</p>
-      <p id="mensagem-mapa" role="status" class="mensagem" hidden></p>
-      <div id="bairro-do-cep" class="status" role="status" hidden><span id="bairro-do-cep-texto"></span> <button type="button" class="btn secundario" id="bairro-do-cep-cras">Ver o CRAS deste bairro</button></div>
-
-      <section class="mapa-controles" aria-label="Filtros do mapa">
-        <div class="mapa-filtros" id="filtros" role="group" aria-label="Tipos de serviço"></div>
-        <div class="mapa-campo">
-          <label for="busca-texto">Procurar por nome, endereço ou bairro</label>
-          <input id="busca-texto" type="search" autocomplete="off" spellcheck="false" placeholder="Ex.: creche, Jardim Brasília, CRAS">
-        </div>
-      </section>
-
-      <p id="resumo-mapa" class="mapa-resumo" aria-live="polite"></p>
-      <div id="mapa-servicos" class="mapa-caixa" aria-label="Mapa dos serviços cadastrados"></div>
-      <p class="mapa-legenda">Ponto <strong>cheio</strong>: posição pelo endereço. Ponto <strong>vazado</strong>: posição aproximada pelo CEP do serviço. Círculo com <strong>número</strong>: vários serviços no mesmo local (toque para ver todos). Distâncias são em linha reta, não o caminho a pé.</p>
-      <label class="tiles"><input type="checkbox" id="usar-tiles-mapa"> Mostrar ruas e nomes (carrega imagens da Esri; o servidor do mapa saberá a região que você está vendo e o endereço de rede do seu aparelho. Sem marcar, o mapa mostra só os pontos e o contorno da cidade)</label>
-      <section id="mais-perto" class="mapa-mais-perto" aria-labelledby="titulo-mais-perto" hidden>
-        <h3 id="titulo-mais-perto">O que fica mais perto de você</h3>
-        <p class="meta" id="nota-mais-perto"></p>
-        <ul class="mapa-lista" id="lista-mais-perto"></ul>
-      </section>
-
-      <details class="mapa-lista-detalhes" id="lista-detalhes">
-        <summary>Ver a lista de todos os serviços</summary>
-        <p class="meta" id="nota-lista"></p>
-        <ul class="mapa-lista" id="lista-servicos"></ul>
-        <p><button type="button" class="btn secundario" id="mais-servicos" hidden>Mostrar mais</button></p>
-        <p class="meta">Um serviço cadastrado não garante vaga nem horário: confirme sempre com o órgão. O link "Ver no Google Maps" abre outra aba e leva só o endereço do serviço, não o seu.</p>
-      </details>
+      <h2 id="titulo-mapa-inicio" class="titulo-bloco">Mapa territorial de Rio Claro</h2>
+      <p class="meta">Explore os 408 setores censitários e os indicadores territoriais do MISM3: população, densidade, domicílios, equipamentos públicos e distâncias em linha reta. O mapa usa dados agregados e posições institucionais; não utiliza dados de mulheres ou endereços residenciais.</p>
+      <p><a class="btn" href="mapa-territorial.html">Abrir o mapa territorial</a></p>
     </section>
 
     <div class="blocos-inicio">
@@ -175,7 +125,7 @@
       <section class="bloco" aria-labelledby="titulo-acesso">
         <h2 id="titulo-acesso">Acesso rápido</h2>
         <ul class="lista-acesso">
-          <li><button type="button" class="btn-rolar" data-rolar="mapa-inicio">Mapa de serviços</button></li>
+          <li><a href="mapa-territorial.html">Mapa territorial de Rio Claro</a></li>
           <li><a href="#educacao/educacao-escolas">Escolas municipais, com endereço e telefone</a></li>
           <li><a href="#educacao/educacao-filhos">Matrícula e vaga para o meu filho</a></li>
           <li><a href="#educacao/educacao-voce">Cursos e estudos para mim</a></li>
@@ -192,7 +142,7 @@
       <p class="meta">Dados para quem planeja serviços públicos, não para quem procura ajuda.</p>
       <ul class="lista-acesso">
         <li><a href="#rio-claro-em-numeros">Rio Claro em números (população e serviços por setor)</a></li>
-        <li><a href="#painel">Análise territorial (distância dos bairros aos serviços)</a></li>
+        <li><a href="mapa-territorial.html">Mapa territorial (indicadores por setor censitário)</a></li>
       </ul>
     </section>
   </section>
@@ -363,6 +313,5 @@
 <script src="orientacao-ui.js"></script>
 <script src="app.js"></script>
 <script src="mapa-servicos.js"></script>
-<script src="mapa.js"></script>
 </body>
 </html>
