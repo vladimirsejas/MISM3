@@ -2,14 +2,14 @@
 
   python pipeline/analise_territorial.py
 
-Cruza a população de cada setor censitário (IBGE, Censo 2022: web/dados/setores.geojson) com a LOCALIZAÇÃO dos serviços do
-catálogo verificado (catalogo_manual.json). Para cada bairro calcula a distância média (em linha reta) da população até o CRAS,
-a UBS e a escola municipal mais próximos, e agrupa os bairros por semelhança (agrupamento k-means, exploratório).
+Cruza a população agregada dos setores censitários (IBGE, Censo 2022) com a localização dos CRAS e UBS do catálogo verificado e com
+a base consolidada de escolas municipais (web/dados/escolas_municipais.json). Para escolas, utiliza localizacao_mapa e preserva
+método, precisão, fonte e raio informado. Para cada bairro calcula distâncias médias em linha reta até os serviços mais próximos.
 
 NÃO usa dado pessoal de ninguém. É descritivo: mostra onde a rede cadastrada está longe da população, e não prova que falta serviço.
 
-Precisa de COORDENADAS dos serviços. O catálogo manual não as traz: elas vêm do índice de CEP (web/dados/cep_indice.json, que fica
-no computador do autor). Sem coordenadas o script NÃO escreve nada e explica o que falta: números sem base seriam enganosos.
+CRAS e UBS usam coordenadas do catálogo ou referência do índice de CEP. As escolas usam a base consolidada. Sem coordenadas utilizáveis,
+o script NÃO escreve nada e explica o que falta: números sem base seriam enganosos.
 Saída: web/dados/analise_territorial.json (lido pelo painel da Secretaria).
 """
 from __future__ import annotations
