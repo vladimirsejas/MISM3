@@ -100,6 +100,8 @@ O conjunto foi integrado à branch principal pela PR #79 (commit `22bdc74`), e o
 - **Acurácia balanceada:** média das revocações por classe.
 - **Matriz de confusão:** por área, com abstenção separada e regra explícita para rótulos múltiplos.
 
+Nota de pré-execução (07/11/2026): Nesta execução, Precision@3, Recall@3, Macro-F1 e acurácia balanceada não serão calculadas, porque a convenção de denominador não foi definida antes da execução; a decisão está pré-registrada na decisão 9 do manifesto. As demais métricas desta seção permanecem.
+
 ### 5.2 Segurança e abstenção
 
 - **Revocação de perigo:** VP/(VP+FN), global e por subtipo.
@@ -169,10 +171,10 @@ As mensagens serão fictícias e escritas exclusivamente pelo autor; não repres
 
 - [x] Segunda anotadora e coautora adicional: não haverá nesta etapa; o conjunto será escrito exclusivamente pelo autor.
 - [x] Professor com doutorado já acompanha o trabalho e aceitou orientar e participar da publicação se o estudo estiver metodologicamente completo; eventual coautoria dependerá de contribuição efetiva na revisão do desenho e do texto e aprovação da versão final.
-- [ ] Verificar se cada ablação é implementável e isolável na versão congelada; não verificado sem execução/inspeção técnica.
-- [ ] Escolher BM25 ou TF-IDF simples antes do congelamento.
-- [x] Revista principal definida: PeerJ Computer Science; alternativa: PLOS ONE; terceira opção: revista brasileira ainda a selecionar. Taxas, políticas editoriais e condições de submissão permanecem **não verificadas** e deverão ser conferidas nas páginas oficiais antes da submissão.
+- [ ] Verificação parcial das ablações: as condições 1, 3, 4, 6, 7 e 10 do protocolo estão mapeadas para condições do código. As condições 2, 5, 8 e 9 permanecem NÃO VERIFICADAS quanto ao isolamento exato (ver seção 5 do manifesto). A condição `sem_palavras` existe no código como exploratória e está fora do protocolo.
+- [x] Linha de base escolhida: TF-IDF simples, pois não há implementação versionada de BM25 no repositório. Decisão registrada no item 10 do manifesto (`reproducao/MANIFESTO_EXECUCAO_v1.md`).
+- [ ] Revista a definir após os resultados. Candidatas em avaliação: PeerJ Computer Science, PLOS ONE e periódico brasileiro (a selecionar). Taxas, políticas editoriais e condições de submissão permanecem não verificadas e deverão ser conferidas nas páginas oficiais antes da submissão.
 - [x] As 190 frases foram escritas pelo autor. O gabarito das 160 mensagens da Ficha C (identificadores C-001 a C-160) foi elaborado pelo próprio autor. O gabarito das 30 mensagens da Ficha D (D-001 a D-030) foi proposto com apoio de inteligência artificial e revisado integralmente pelo autor, que marcou a conferência de cada registro.
-- [ ] Após mesclagem da pull request, confirmar o SHA-256 na branch principal e então declarar o conjunto congelado; registrar os demais itens do manifesto antes da execução.
+- [x] SHA-256 confirmado na branch principal: conjunto congelado v1 integrado pela PR #79 (commit `22bdc74`), hash `abbae38d3cc39a8428130c09ac59d65c96cff497112481a9eadcf3ac9227ae00`. Manifesto de execução registrado na Etapa A (`reproducao/MANIFESTO_EXECUCAO_v1.md`, PR #84). A execução do experimento ainda não foi realizada.
 - [ ] Confirmar enquadramento ético institucional antes de qualquer atividade com participantes ou dados identificáveis.
 - [ ] Executar uma única vez e publicar resultados completos, inclusive resultados negativos.
