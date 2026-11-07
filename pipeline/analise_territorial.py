@@ -117,20 +117,27 @@ def analisar(geojson, servicos, indice_cep, k_grupos=3, hoje=None, escolas=None)
 
     metodos_escola = {}
     precissoes_escola = {}
+    raios_escola = []
     escolas_com_raio = 0
+    escolas_sem_localizacao = 0
     if escolas is not None:
         totais["escola"] = len(escolas)
         for escola in escolas:
             local = escola.get("localizacao_mapa") or {}
             lat, lon = local.get("latitude"), local.get("longitude")
             if lat is None or lon is None:
+                escolas_sem_localizacao += 1
                 continue
             metodo = str(local.get("metodo") or "nao_informado")
             precisao = str(local.get("precisao") or "nao_informada")
             metodos_escola[metodo] = metodos_escola.get(metodo, 0) + 1
             precissoes_escola[precisao] = precissoes_escola.get(precisao, 0) + 1
             if local.get("raio_m") is not None:
+                raio = float(local["raio_m"])
+                if raio < 0:
+                    raise ValueError("raio_m negativo na localização da escola %s" % (escola.get("id") or "sem ID"))
                 escolas_com_raio += 1
+                raios_escola.append(raio)
             registro = {
                 "id": escola.get("id"),
                 "nome": escola.get("nome"),
@@ -201,6 +208,13 @@ def analisar(geojson, servicos, indice_cep, k_grupos=3, hoje=None, escolas=None)
             "precisao": precissoes_escola,
             "com_raio_informado": escolas_com_raio,
             "fonte_localizacao": "web/dados/escolas_municipais.json: localizacao_mapa",
+            "sem_localizacao_mapa": escolas_sem_localizacao,
+            "raio_m": ({
+                "quantidade": len(raios_escola),
+                "minimo": min(raios_escola),
+                "mediana": sorted(raios_escola)[len(raios_escola) // 2] if len(raios_escola) % 2 else (sorted(raios_escola)[len(raios_escola) // 2 - 1] + sorted(raios_escola)[len(raios_escola) // 2]) / 2,
+                "maximo": max(raios_escola),
+            } if raios_escola else {"quantidade": 0, "minimo": None, "mediana": None, "maximo": None}),
         })
     return saida
 
