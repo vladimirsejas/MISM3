@@ -183,5 +183,11 @@ def test_base_real_tem_33_coordenadas_individuais_e_35_por_cep_sem_duplicidade()
     }
     assert cobertura["sem_localizacao_mapa"] == 0
     assert cobertura["raio_m"]["quantidade"] == 35
+    # A faixa da média ponderada deve preservar a estimativa central.
+    for bairro in resultado["bairros"]:
+        central = bairro["distancia_media_escola_km"]
+        minimo = bairro["distancia_media_escola_min_km"]
+        maximo = bairro["distancia_media_escola_max_km"]
+        assert minimo <= central <= maximo
     # 1 CRAS + 68 escolas: a escola não pode ser contada duas vezes pelo catálogo.
     assert sum(b["servicos_no_bairro"] for b in resultado["bairros"]) <= 69
