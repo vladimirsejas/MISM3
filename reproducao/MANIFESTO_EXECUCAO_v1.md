@@ -5,7 +5,7 @@ Execução principal única; nenhuma saída parcial será inspecionada para orie
 Este manifesto foi preenchido na Etapa A (preparação), **antes** de qualquer execução do sistema sobre o conjunto congelado. As decisões de método abaixo são PRÉ-REGISTRO: foram tomadas antes de qualquer execução e não serão alteradas com base nos resultados.
 
 - Data e hora (UTC) da geração: 2026-11-07 03:25:09
-- Responsável pelo congelamento: a preencher pelo autor (não informado na preparação deste manifesto).
+- Responsável pelo congelamento: Vladimir Queiroz Sejas (autor).
 
 ## 1. Integridade
 
