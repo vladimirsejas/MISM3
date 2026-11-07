@@ -240,25 +240,60 @@
     }
   }
 
+  /* Centroide geométrico (ponderado pela área) dos anéis projetados do polígono.
+     O anel externo soma área; anéis internos (buracos) subtraem área. */
+  function centroideAnel(anel, proj) {
+    var area2 = 0, somaX = 0, somaY = 0, i, a, b, cruz;
+    for (i = 0; i < anel.length - 1; i++) {
+      a = proj.xy(anel[i][0], anel[i][1]);
+      b = proj.xy(anel[i + 1][0], anel[i + 1][1]);
+      cruz = a[0] * b[1] - b[0] * a[1];
+      area2 += cruz;
+      somaX += (a[0] + b[0]) * cruz;
+      somaY += (a[1] + b[1]) * cruz;
+    }
+    if (Math.abs(area2) < 1e-9) return null;
+    return { area: Math.abs(area2) / 2, x: somaX / (3 * area2), y: somaY / (3 * area2) };
+  }
+
+  function centroideGeometria(geom, proj) {
+    var polys = geom.type === "Polygon" ? [geom.coordinates] : geom.coordinates;
+    var areaTotal = 0, somaX = 0, somaY = 0, j, k, r, peso;
+    for (j = 0; j < polys.length; j++) {
+      for (k = 0; k < polys[j].length; k++) {
+        r = centroideAnel(polys[j][k], proj);
+        if (!r) continue;
+        peso = k === 0 ? r.area : -r.area;
+        areaTotal += peso;
+        somaX += r.x * peso;
+        somaY += r.y * peso;
+      }
+    }
+    if (Math.abs(areaTotal) < 1e-9) return null;
+    return [somaX / areaTotal, somaY / areaTotal];
+  }
+
   function centroides() {
-    var c = {}, k, b;
-    for (k in estado.caminhos) if (Object.prototype.hasOwnProperty.call(estado.caminhos, k)) {
-      b = estado.caminhos[k].getBBox();
-      c[k] = [b.x + b.width / 2, b.y + b.height / 2];
+    var c = {}, i, f, id;
+    for (i = 0; i < estado.geo.features.length; i++) {
+      f = estado.geo.features[i];
+      id = f.properties.setor;
+      c[id] = centroideGeometria(f.geometry, estado.proj);
     }
     return c;
   }
 
-  /* Vizinho na direção da seta: menor "distância ao longo da direção + 2 x desvio lateral" entre os setores que estão naquele lado do centro do setor. */
+  /* Escolhe o centroide mais próximo entre os setores no semiplano indicado pela seta. */
   function vizinho(origem, dx, dy, cent) {
-    var o = cent[origem], k, melhor = null, nota, par, per, v;
-    for (k in cent) if (Object.prototype.hasOwnProperty.call(cent, k) && k !== origem) {
+    var o = cent[origem], k, melhor = null, distancia2, v;
+    for (k in cent) if (Object.prototype.hasOwnProperty.call(cent, k) && k !== origem && cent[k]) {
       v = [cent[k][0] - o[0], cent[k][1] - o[1]];
-      par = v[0] * dx + v[1] * dy;
-      if (par <= 0) continue;
-      per = Math.abs(v[0] * dy - v[1] * dx);
-      nota = par + 2 * per;
-      if (melhor === null || nota < melhor.nota) melhor = { id: k, nota: nota };
+      if (v[0] * dx + v[1] * dy <= 0) continue;
+      distancia2 = v[0] * v[0] + v[1] * v[1];
+      if (melhor === null || distancia2 < melhor.distancia2 ||
+          (distancia2 === melhor.distancia2 && k < melhor.id)) {
+        melhor = { id: k, distancia2: distancia2 };
+      }
     }
     return melhor ? melhor.id : null;
   }
@@ -479,5 +514,5 @@
 
   if (typeof document !== "undefined" && document.getElementById("mt-svg")) iniciar();
 
-  return { classeDe: classeDe, rotulosClasses: rotulosClasses, valorDoSetor: valorDoSetor, descreverValor: descreverValor, criarProjecao: criarProjecao, caminhoDe: caminhoDe, milhar: milhar, decimal: decimal, coresDe: coresDe, setorPequeno: setorPequeno, vizinho: vizinho };
+  return { classeDe: classeDe, rotulosClasses: rotulosClasses, valorDoSetor: valorDoSetor, descreverValor: descreverValor, criarProjecao: criarProjecao, caminhoDe: caminhoDe, centroideGeometria: centroideGeometria, milhar: milhar, decimal: decimal, coresDe: coresDe, setorPequeno: setorPequeno, vizinho: vizinho };
 });
