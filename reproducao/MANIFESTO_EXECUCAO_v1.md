@@ -4,7 +4,7 @@ Execução principal única; nenhuma saída parcial será inspecionada para orie
 
 Este manifesto foi preenchido na Etapa A (preparação), **antes** de qualquer execução do sistema sobre o conjunto congelado. As decisões de método abaixo são PRÉ-REGISTRO: foram tomadas antes de qualquer execução e não serão alteradas com base nos resultados.
 
-- Data e hora (UTC) da geração: 2026-11-07 03:20:11
+- Data e hora (UTC) da geração: 2026-11-07 03:25:09
 - Responsável pelo congelamento: a preencher pelo autor (não informado na preparação deste manifesto).
 
 ## 1. Integridade
@@ -13,7 +13,7 @@ Este manifesto foi preenchido na Etapa A (preparação), **antes** de qualquer e
 - SHA-256 do arquivo de hash `protocolo/CONJUNTO_CONGELADO_v1.sha256`: `377a7f5c1de637a509e0f5b547d76991f6e6e42737a69af93a393e077f7a3ee3`
 - Gabarito: está no próprio arquivo do conjunto (mesmo SHA-256). n = 190.
 - Commit da etiqueta `v1.0-pesquisa`: `2d8a836cdc8e700500b67c2b6433bc26c4fd9fdd`
-- Commit de `origin/main` usado: `44520b8d5d07f9a2ba275fcea3dba44ffec32d05`; commit-base do ramo `execucao/conjunto-v1-preparacao` na geração: `b42f412c39afb32f5d2454bdcfc46aa7f7451d67` (o commit que traz o adaptador e este manifesto vem logo depois)
+- Commit de `origin/main` usado: `44520b8d5d07f9a2ba275fcea3dba44ffec32d05`; commit-base do ramo `execucao/conjunto-v1-preparacao` na geração: `c7d89d4f083c978be50b11826e18f4671f34dee5` (o commit que traz o adaptador e este manifesto vem logo depois)
 - O código do sistema avaliado é o da etiqueta; `web/dados/` (modelos e índice), `pipeline/`, `catalogo/` e `avaliacao/` da `main` são idênticos aos da etiqueta, exceto arquivos novos do mapa territorial (fora do sistema avaliado): `web/dados/indicadores_territoriais.json`, `pipeline/territorial_*.py` e seus testes. Os scripts de `reproducao/` vêm da `main`. Observação: `web/escopo.js` não existe no repositório (o detector de escopo é `criarClassificador` em `web/ia.js`, com o modelo `web/dados/modelo_escopo.json`).
 
 ## 2. Ambiente
@@ -243,16 +243,40 @@ Cada condição é executada por `reproducao/rodar_variantes.js --condicao <nome
 11. **Sensibilidade:** todas as métricas repetidas sem C-123, C-041, C-088 e D-030; o resultado com os 190 registros é o principal.
 12. **Critérios de sucesso (protocolo, seção 6), aplicados mecanicamente:** (1) diferença de Resposta@3 específica ≥ 5 pontos percentuais a favor de `completo` sobre `linha_de_base_tfidf`; (2) limite inferior do IC bootstrap pareado de 95% da diferença > 0; (3) revocação global de perigo ≥ 90% e sem piora superior a 5 pontos em relação à melhor condição de segurança; (4) falso alarme ≤ 5% (todas as negativas); (5) abstenção indevida ≤ 15%. Os textos pré-definidos do protocolo são anexados ao relatório quando se aplicam.
 
-## 5. Composição real das condições (não verificado onde indicado)
+13. **Campo `ids_oficiais`:** se vier como texto no formato de lista do Python, é convertido com `ast.literal_eval` (nunca `eval`). Verificado em 07/11/2026 no arquivo congelado (mesmo SHA-256): as 190 entradas trazem `ids_oficiais` como lista JSON (e não como texto), então a conversão por `ast.literal_eval` está implementada e testada, mas não é exercida neste arquivo.
+
+## 5. Mapeamento das condições do protocolo para as do código
+
+As 10 condições do protocolo (seção 3) e as 10 de `reproducao/ablacao.py` NÃO coincidem uma a uma. Regras fixas, definidas antes de qualquer execução:
+
+| Protocolo | Condição do protocolo | Condição do código | Situação |
+|---|---|---|---|
+| 1 | Completo | `completo` | implementada |
+| 2 | Sem regras lexicais | `sem_regras_lexicais_necessidade` | mapeada por regra fixa |
+| 3 | Sem n-gramas de caracteres | `sem_ngramas_letras` | implementada |
+| 4 | Sem LSA | `sem_lsa` | implementada |
+| 5 | Sem classificador de necessidades | `apenas_regras` | mapeada por regra fixa |
+| 6 | Sem detector de perigo aprendido | `sem_perigo_aprendido` | implementada |
+| 7 | Sem detector de escopo | `sem_escopo` | implementada |
+| 8 | Apenas regras (só regras, sem busca estatística, LSA ou classificadores) | (nenhuma) | NÃO VERIFICADO: não implementada como o protocolo define |
+| 9 | Apenas modelo (só componentes aprendidos) | (nenhuma) | NÃO VERIFICADO: não implementada como o protocolo define |
+| 10 | Busca simples (BM25 ou TF-IDF) | `linha_de_base_tfidf` | implementada (TF-IDF; não há BM25 versionado) |
+| (só no código) | `apenas_modelo_necessidades` | `apenas_modelo_necessidades` | complementar: é a mais próxima do protocolo 9, mas NÃO a implementa |
+| (só no código) | `sem_palavras` | `sem_palavras` | exploratória, fora do protocolo; não entra nos critérios de sucesso |
+
+Regras: (a) protocolo 1, 3, 4, 6, 7 e 10 = `completo`, `sem_ngramas_letras`, `sem_lsa`, `sem_perigo_aprendido`, `sem_escopo` e `linha_de_base_tfidf`; (b) protocolo 5 (sem classificador de necessidades) = `apenas_regras`; (c) protocolo 2 (sem regras lexicais) = `sem_regras_lexicais_necessidade`; (d) protocolo 8 e 9 NÃO estão implementados como o protocolo os define: NÃO VERIFICADO, e nenhuma variante nova foi criada; (e) `sem_palavras` existe só no código e é exploratória. Os critérios de sucesso usam apenas `completo` e `linha_de_base_tfidf`.
+
+### Composição real de cada condição do código
 
 - `completo`: orientador v2 como em `avaliacao/sistema_v2.js` (regras e modelo de necessidades, detector de perigo aprendido, detector de escopo, índice com palavras, letras e LSA).
-- `apenas_regras`: só o **sinal de intenção** vem das regras lexicais de necessidade (sem o modelo de necessidades). A busca estatística (palavras, letras, LSA), o detector de perigo aprendido e o detector de escopo continuam ativos. **Não equivale** à condição 8 do protocolo ("somente regras ... sem busca estatística, LSA ou classificadores aprendidos"); equivale, no máximo, à condição 5 ("sem classificador de necessidades"): NÃO VERIFICADO como isolamento exato.
-- `apenas_modelo_necessidades`: só o sinal de intenção vem do modelo de necessidades; o restante do sistema continua ativo. **Não equivale** à condição 9 do protocolo ("somente componentes aprendidos selecionados"): composição real registrada aqui; isolamento exato NÃO VERIFICADO.
-- `sem_regras_lexicais_necessidade`: idêntica à configuração de `apenas_modelo_necessidades` neste motor (as regras só entram pelo sinal de intenção); portanto as "regras e pontes lexicais de orientação" de `web/orientar.js` que não passam por esse sinal NÃO são desligadas: a condição 2 do protocolo NÃO VERIFICADA como isolada.
-- `sem_ngramas_letras`, `sem_lsa`, `sem_palavras`: o peso do sinal correspondente no índice vale 0 (o cálculo continua; só a contribuição na nota é anulada). Desativação isolada plausível; a ausência de efeitos colaterais em outros sinais não foi confirmada por teste dedicado.
-- `sem_perigo_aprendido`: não carrega `modelo_perigo.json`; permanecem as regras de segurança de `web/perigo.js`.
-- `sem_escopo`: não carrega o detector de escopo; só a nota da busca decide a abstenção.
-- `linha_de_base_tfidf` (Busca simples): TF-IDF de palavras sobre o campo `texto` dos destinos do índice; normalização NFD sem acentos, minúsculas, tokens com 2 ou mais caracteres; tf = 1 + log(contagem); idf = log((1 + N)/(1 + df)) + 1; vetores normalizados; similaridade do cosseno; até 6 itens com nota > 0; abstém só se nenhuma palavra casar; sem detector de perigo (revocação 0 por construção).
+- `apenas_regras` (protocolo 5): só o **sinal de intenção** vem das regras lexicais de necessidade, sem o modelo de necessidades. A busca estatística (palavras, letras, LSA), o detector de perigo aprendido e o detector de escopo continuam ativos. Por isso NÃO é a condição 8 do protocolo (só regras, sem busca estatística, LSA ou classificadores aprendidos).
+- `apenas_modelo_necessidades` (complementar; a mais próxima do protocolo 9): só o sinal de intenção vem do modelo de necessidades (regressão logística), sem as regras lexicais de necessidade. O restante do sistema (busca por palavras, letras e LSA, detector de perigo aprendido e regras de perigo, detector de escopo) continua ativo. Por isso NÃO é a condição 9 do protocolo (só componentes aprendidos, sem pontes lexicais manuais): protocolo 9 NÃO VERIFICADO.
+- `sem_regras_lexicais_necessidade` (protocolo 2): configuração idêntica à de `apenas_modelo_necessidades` neste motor, porque as regras lexicais de necessidade só entram pelo sinal de intenção. As "regras e pontes lexicais de orientação" de `web/orientar.js` que não passam por esse sinal continuam ativas; o isolamento exato da condição 2 não foi confirmado por teste dedicado.
+- `sem_ngramas_letras` (protocolo 3) e `sem_lsa` (protocolo 4): o peso do sinal correspondente no índice vale 0 (o cálculo continua; só a contribuição na nota é anulada). A ausência de efeitos colaterais em outros sinais não foi confirmada por teste dedicado.
+- `sem_palavras` (exploratória, fora do protocolo): peso do sinal de palavras do índice = 0.
+- `sem_perigo_aprendido` (protocolo 6): não carrega `modelo_perigo.json`; permanecem as regras de segurança de `web/perigo.js`.
+- `sem_escopo` (protocolo 7): não carrega o detector de escopo; só a nota da busca decide a abstenção.
+- `linha_de_base_tfidf` (protocolo 10, Busca simples): TF-IDF de palavras sobre o campo `texto` dos destinos do índice; normalização NFD sem acentos, minúsculas, tokens com 2 ou mais caracteres; tf = 1 + log(contagem); idf = log((1 + N)/(1 + df)) + 1; vetores normalizados; similaridade do cosseno; até 6 itens com nota > 0; abstém só se nenhuma palavra casar; sem detector de perigo (revocação 0 por construção).
 
 ## 6. Parâmetros e limiares
 
@@ -306,8 +330,8 @@ Scripts de `reproducao/` usados:
 | `reproducao/auditoria_privacidade.py` | `c9a76ea0545ea483e2df80eadc19553f61911dce35ccb881b51bd4dcb6f69449` |
 | `reproducao/auditoria_privacidade_cep.py` | `e164df108e12a0b07ae78b9d1a349593bc4c54f8e7b88d3f27345f5d86e8ed67` |
 | `reproducao/comum.py` | `3469f86c15515dd6a4f591a44ab08232b4af1ce1222115ab295fca0b7476aa45` |
-| `reproducao/conjunto_v1.py` | `72dfaf5029d8308987225036939da78ccddb00704248c212c8788ddf2f39db27` |
+| `reproducao/conjunto_v1.py` | `f7c2553a9ef0ff5b013b3b075aa749c21e8ae6de1f4e43abc12919ea84e5dec7` |
 | `reproducao/gerar_ambiente.py` | `6f0c014b6ac920dba4252d23c94b9f3714bea8557e7ef99bd880d9681aa08f85` |
 | `reproducao/metricas_por_necessidade.py` | `7a356866f7d93cf37ca111d180aa52a310f90c0c67316a42b246c8d52136f471` |
-| `reproducao/teste_conjunto_v1.py` | `b16b702dbcc1651a0c2ed7eb9df6ae78e221ff8b93bda35f8b3c6ad3a374a10d` |
+| `reproducao/teste_conjunto_v1.py` | `769a6118b3d12eda0a222ac8aca172a0f944132facf7680f49d9c2987baf5ed0` |
 | `reproducao/rodar_variantes.js` | `54f5a45ba70287c06789cca35712887c9be5f673374f938e6cf1ad620a8d4f34` |

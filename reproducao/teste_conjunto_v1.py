@@ -142,3 +142,35 @@ def test_etapa_b_recusa_sem_confirmacao_e_nao_cria_resultados():
 def test_script_nao_importa_nada_que_execute_o_conjunto_ao_importar():
     r = subprocess.run([sys.executable, "-c", "import sys; sys.path.insert(0, 'reproducao'); import conjunto_v1"], capture_output=True, text=True, cwd=cv.RAIZ)
     assert r.returncode == 0 and r.stdout == ""
+
+
+def test_ids_oficiais_como_texto_de_lista_python_e_como_lista_json(ind):
+    assert cv.lista_de_ids("['man-secretaria-mulher', 'classe-saude-ubs']") == ["man-secretaria-mulher", "classe-saude-ubs"]
+    assert cv.lista_de_ids("[]") == [] and cv.lista_de_ids(["a", "b"]) == ["a", "b"]
+    with pytest.raises(ValueError):
+        cv.lista_de_ids("[1, 2]")
+    with pytest.raises(ValueError):
+        cv.lista_de_ids("__import__('os').getcwd()")  # literal_eval recusa expressões
+    texto = dict(item("T-9", ids=["man-secretaria-mulher"]), ids_oficiais="['man-secretaria-mulher']")
+    assert cv.converter_item(texto, ind)["especificos"] == ["id:man-secretaria-mulher"]
+
+
+def test_arquivo_congelado_traz_ids_oficiais_como_lista_json():
+    assert all(isinstance(i["ids_oficiais"], list) for i in cv.carregar_conjunto())
+
+
+def test_mapeamento_das_condicoes_do_protocolo():
+    por_n = {n: cod for n, _, cod, _ in cv.MAPEAMENTO}
+    assert por_n == {1: "completo", 2: "sem_regras_lexicais_necessidade", 3: "sem_ngramas_letras", 4: "sem_lsa", 5: "apenas_regras",
+                     6: "sem_perigo_aprendido", 7: "sem_escopo", 8: None, 9: None, 10: "linha_de_base_tfidf"}
+    sit = {n: s for n, _, _, s in cv.MAPEAMENTO}
+    assert sit[8].startswith("NÃO VERIFICADO") and sit[9].startswith("NÃO VERIFICADO")
+    assert set(cv.ROTULO_PROTOCOLO) == set(cv.CONDICOES)
+    assert cv.ROTULO_PROTOCOLO["sem_palavras"] == "exploratória, fora do protocolo"
+    assert "sem_palavras" not in por_n.values()  # fora dos critérios de sucesso: estes só usam completo e a linha de base
+
+
+def test_criterios_usam_so_completo_e_linha_de_base():
+    import inspect
+    fonte = inspect.getsource(cv.avaliar_criterios) + inspect.getsource(cv.analisar)
+    assert "sem_palavras" not in fonte and "BASE_LEXICAL" in fonte
