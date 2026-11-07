@@ -32,6 +32,7 @@ Uso, da raiz do repositório:
 """
 from __future__ import annotations
 
+import ast
 import csv
 import hashlib
 import json
@@ -80,9 +81,39 @@ class Indice:
         return self.por_chave.get((item.get("area"), item.get("sec"), item.get("svc"), item.get("titulo")))
 
 
+def lista_de_ids(valor) -> list[str]:
+    """ids_oficiais pode vir como lista JSON (é o caso do arquivo atual: as 190 entradas) ou como texto no formato de lista do Python;
+    neste último caso é convertido com ast.literal_eval (nunca eval)."""
+    if isinstance(valor, str):
+        valor = ast.literal_eval(valor)
+    if not isinstance(valor, (list, tuple)) or not all(isinstance(i, str) for i in valor):
+        raise ValueError(f"ids_oficiais inesperado: {valor!r}")
+    return list(valor)
+
+
+# Mapeamento FIXO (pré-registro) entre as 10 condições do protocolo (seção 3) e as 10 de ablacao.py; não coincidem uma a uma.
+# (número no protocolo, nome no protocolo, condição do código ou None, situação)
+MAPEAMENTO = [
+    (1, "Completo", "completo", "implementada"),
+    (2, "Sem regras lexicais", "sem_regras_lexicais_necessidade", "mapeada por regra fixa"),
+    (3, "Sem n-gramas de caracteres", "sem_ngramas_letras", "implementada"),
+    (4, "Sem LSA", "sem_lsa", "implementada"),
+    (5, "Sem classificador de necessidades", "apenas_regras", "mapeada por regra fixa"),
+    (6, "Sem detector de perigo aprendido", "sem_perigo_aprendido", "implementada"),
+    (7, "Sem detector de escopo", "sem_escopo", "implementada"),
+    (8, "Apenas regras (só regras, sem busca estatística, LSA ou classificadores)", None, "NÃO VERIFICADO: não implementada como o protocolo define"),
+    (9, "Apenas modelo (só componentes aprendidos)", None, "NÃO VERIFICADO: não implementada como o protocolo define"),
+    (10, "Busca simples (BM25 ou TF-IDF)", "linha_de_base_tfidf", "implementada (TF-IDF; não há BM25 versionado)"),
+]
+ROTULO_PROTOCOLO = {cod: f"protocolo {n}" for n, _, cod, _ in MAPEAMENTO if cod}
+ROTULO_PROTOCOLO["apenas_modelo_necessidades"] = "complementar; a mais próxima da 9, que NÃO está implementada"
+ROTULO_PROTOCOLO["sem_palavras"] = "exploratória, fora do protocolo"
+assert set(ROTULO_PROTOCOLO) == set(CONDICOES), "toda condição do código tem um rótulo no mapeamento"
+
+
 def converter_item(item: dict, ind: Indice) -> dict:
     """Converte um registro do conjunto congelado para o esquema de comum.py, só com as regras fixas do pré-registro."""
-    ids = list(item["ids_oficiais"])
+    ids = lista_de_ids(item["ids_oficiais"])
     desconhecidos = [i for i in ids if i not in ind.unidades]
     if desconhecidos:
         raise ValueError(f"{item['id']}: ids esperados fora do índice: {desconhecidos}")
@@ -314,7 +345,7 @@ def relatorio_md(titulo: str, analise: dict) -> list[str]:
         espec_sv = _fmt(m["nao_perigo_sem_vagas_total"] - m["falso_alarme_sem_vagas"], m["nao_perigo_sem_vagas_total"])
         espec_t = _fmt(m["nao_perigo_total"] - m["falso_alarme"], m["nao_perigo_total"])
         b, mm = bs.get(c), bm.get(c)
-        md.append(f"| {c} | {_fmt(m.get('area_hit', 0), m.get('area_total', 0))} | {_fmt(m.get('spec_hit', 0), m.get('spec_total', 0))} | "
+        md.append(f"| {c} ({ROTULO_PROTOCOLO[c]}) | {_fmt(m.get('area_hit', 0), m.get('area_total', 0))} | {_fmt(m.get('spec_hit', 0), m.get('spec_total', 0))} | "
                   f"{(mm['media'] if mm else float('nan')):.3f} [{(mm['ic'][0] if mm else float('nan')):.3f}–{(mm['ic'][1] if mm else float('nan')):.3f}] | "
                   f"{(100 * b['dif_vs_ref'] if b else float('nan')):+.1f} pp [{(100 * b['dif_ic'][0] if b else float('nan')):+.1f}; {(100 * b['dif_ic'][1] if b else float('nan')):+.1f}] | "
                   f"{_fmt(m.get('perigo_ok', 0), m.get('perigo_total', 0))} | {espec_sv} | {espec_t} | "
@@ -379,7 +410,9 @@ def conferir_conjunto() -> None:
     """Só lê o gabarito e mostra os denominadores. NÃO executa o sistema."""
     sha = sha256_do_conjunto()
     ind = Indice()
-    qs = [converter_item(i, ind) for i in carregar_conjunto()]
+    brutos = carregar_conjunto()
+    qs = [converter_item(i, ind) for i in brutos]
+    print("tipo de ids_oficiais no arquivo:", dict(Counter(type(i["ids_oficiais"]).__name__ for i in brutos)), "(texto seria convertido com ast.literal_eval)")
     print("SHA-256 (bytes do Git, fim de linha LF):", sha, "(confere)" if sha == SHA256_ESPERADO else "(DIFERENTE do esperado)")
     print("SHA-256 do arquivo no disco, sem normalizar:", hashlib.sha256(CONJUNTO.read_bytes()).hexdigest(), "(difere do anterior só se o checkout converteu LF em CRLF)")
     print("n =", len(qs))
@@ -532,20 +565,30 @@ def gerar_manifesto() -> None:
            "12. **Critérios de sucesso (protocolo, seção 6), aplicados mecanicamente:** (1) diferença de Resposta@3 específica ≥ 5 pontos percentuais a favor de `completo` sobre `linha_de_base_tfidf`; "
            "(2) limite inferior do IC bootstrap pareado de 95% da diferença > 0; (3) revocação global de perigo ≥ 90% e sem piora superior a 5 pontos em relação à melhor condição de segurança; "
            "(4) falso alarme ≤ 5% (todas as negativas); (5) abstenção indevida ≤ 15%. Os textos pré-definidos do protocolo são anexados ao relatório quando se aplicam.", "",
-           "## 5. Composição real das condições (não verificado onde indicado)", "",
+           "13. **Campo `ids_oficiais`:** se vier como texto no formato de lista do Python, é convertido com `ast.literal_eval` (nunca `eval`). Verificado em 07/11/2026 no arquivo congelado (mesmo SHA-256): "
+           "as 190 entradas trazem `ids_oficiais` como lista JSON (e não como texto), então a conversão por `ast.literal_eval` está implementada e testada, mas não é exercida neste arquivo.", "",
+           "## 5. Mapeamento das condições do protocolo para as do código", "",
+           "As 10 condições do protocolo (seção 3) e as 10 de `reproducao/ablacao.py` NÃO coincidem uma a uma. Regras fixas, definidas antes de qualquer execução:", "",
+           "| Protocolo | Condição do protocolo | Condição do código | Situação |", "|---|---|---|---|"] + [
+           f"| {n} | {nome} | {('`' + cod + '`') if cod else '(nenhuma)'} | {sit} |" for n, nome, cod, sit in MAPEAMENTO] + [
+           "| (só no código) | `apenas_modelo_necessidades` | `apenas_modelo_necessidades` | complementar: é a mais próxima do protocolo 9, mas NÃO a implementa |",
+           "| (só no código) | `sem_palavras` | `sem_palavras` | exploratória, fora do protocolo; não entra nos critérios de sucesso |", "",
+           "Regras: (a) protocolo 1, 3, 4, 6, 7 e 10 = `completo`, `sem_ngramas_letras`, `sem_lsa`, `sem_perigo_aprendido`, `sem_escopo` e `linha_de_base_tfidf`; (b) protocolo 5 (sem classificador de necessidades) = `apenas_regras`; "
+           "(c) protocolo 2 (sem regras lexicais) = `sem_regras_lexicais_necessidade`; (d) protocolo 8 e 9 NÃO estão implementados como o protocolo os define: NÃO VERIFICADO, e nenhuma variante nova foi criada; "
+           "(e) `sem_palavras` existe só no código e é exploratória. Os critérios de sucesso usam apenas `completo` e `linha_de_base_tfidf`.", "",
+           "### Composição real de cada condição do código", "",
            "- `completo`: orientador v2 como em `avaliacao/sistema_v2.js` (regras e modelo de necessidades, detector de perigo aprendido, detector de escopo, índice com palavras, letras e LSA).",
-           "- `apenas_regras`: só o **sinal de intenção** vem das regras lexicais de necessidade (sem o modelo de necessidades). A busca estatística (palavras, letras, LSA), o detector de perigo aprendido e o detector de escopo "
-           "continuam ativos. **Não equivale** à condição 8 do protocolo (\"somente regras ... sem busca estatística, LSA ou classificadores aprendidos\"); equivale, no máximo, à condição 5 (\"sem classificador de necessidades\"): "
-           "NÃO VERIFICADO como isolamento exato.",
-           "- `apenas_modelo_necessidades`: só o sinal de intenção vem do modelo de necessidades; o restante do sistema continua ativo. **Não equivale** à condição 9 do protocolo (\"somente componentes aprendidos selecionados\"): "
-           "composição real registrada aqui; isolamento exato NÃO VERIFICADO.",
-           "- `sem_regras_lexicais_necessidade`: idêntica à configuração de `apenas_modelo_necessidades` neste motor (as regras só entram pelo sinal de intenção); portanto as \"regras e pontes lexicais de orientação\" de `web/orientar.js` "
-           "que não passam por esse sinal NÃO são desligadas: a condição 2 do protocolo NÃO VERIFICADA como isolada.",
-           "- `sem_ngramas_letras`, `sem_lsa`, `sem_palavras`: o peso do sinal correspondente no índice vale 0 (o cálculo continua; só a contribuição na nota é anulada). Desativação isolada plausível; a ausência de efeitos colaterais "
-           "em outros sinais não foi confirmada por teste dedicado.",
-           "- `sem_perigo_aprendido`: não carrega `modelo_perigo.json`; permanecem as regras de segurança de `web/perigo.js`.",
-           "- `sem_escopo`: não carrega o detector de escopo; só a nota da busca decide a abstenção.",
-           "- `linha_de_base_tfidf` (Busca simples): TF-IDF de palavras sobre o campo `texto` dos destinos do índice; normalização NFD sem acentos, minúsculas, tokens com 2 ou mais caracteres; tf = 1 + log(contagem); "
+           "- `apenas_regras` (protocolo 5): só o **sinal de intenção** vem das regras lexicais de necessidade, sem o modelo de necessidades. A busca estatística (palavras, letras, LSA), o detector de perigo aprendido e o detector de escopo continuam ativos. "
+           "Por isso NÃO é a condição 8 do protocolo (só regras, sem busca estatística, LSA ou classificadores aprendidos).",
+           "- `apenas_modelo_necessidades` (complementar; a mais próxima do protocolo 9): só o sinal de intenção vem do modelo de necessidades (regressão logística), sem as regras lexicais de necessidade. O restante do sistema (busca por palavras, letras e LSA, "
+           "detector de perigo aprendido e regras de perigo, detector de escopo) continua ativo. Por isso NÃO é a condição 9 do protocolo (só componentes aprendidos, sem pontes lexicais manuais): protocolo 9 NÃO VERIFICADO.",
+           "- `sem_regras_lexicais_necessidade` (protocolo 2): configuração idêntica à de `apenas_modelo_necessidades` neste motor, porque as regras lexicais de necessidade só entram pelo sinal de intenção. "
+           "As \"regras e pontes lexicais de orientação\" de `web/orientar.js` que não passam por esse sinal continuam ativas; o isolamento exato da condição 2 não foi confirmado por teste dedicado.",
+           "- `sem_ngramas_letras` (protocolo 3) e `sem_lsa` (protocolo 4): o peso do sinal correspondente no índice vale 0 (o cálculo continua; só a contribuição na nota é anulada). A ausência de efeitos colaterais em outros sinais não foi confirmada por teste dedicado.",
+           "- `sem_palavras` (exploratória, fora do protocolo): peso do sinal de palavras do índice = 0.",
+           "- `sem_perigo_aprendido` (protocolo 6): não carrega `modelo_perigo.json`; permanecem as regras de segurança de `web/perigo.js`.",
+           "- `sem_escopo` (protocolo 7): não carrega o detector de escopo; só a nota da busca decide a abstenção.",
+           "- `linha_de_base_tfidf` (protocolo 10, Busca simples): TF-IDF de palavras sobre o campo `texto` dos destinos do índice; normalização NFD sem acentos, minúsculas, tokens com 2 ou mais caracteres; tf = 1 + log(contagem); "
            "idf = log((1 + N)/(1 + df)) + 1; vetores normalizados; similaridade do cosseno; até 6 itens com nota > 0; abstém só se nenhuma palavra casar; sem detector de perigo (revocação 0 por construção).", "",
            "## 6. Parâmetros e limiares", "",
            "- Sementes: bootstrap 20261106 (dez mil reamostragens); `PYTHONHASHSEED=0`. A validação do adaptador com desenvolvimento e teste usa a semente e as 2.000 reamostragens de `ablacao.py` (20261105) para reproduzir `ablacao_depois.csv`.",
