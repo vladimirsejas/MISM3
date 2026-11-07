@@ -26,6 +26,16 @@ def test_haversine_um_grau_de_latitude():
     assert abs(at.haversine_km(0, 0, 1, 0) - 111.19) < 0.1
 
 
+def test_faixa_geometrica_de_distancia_preserva_raio_e_limita_zero():
+    assert at.faixa_distancia_km(2.0, 1500) == (0.5, 3.5)
+    assert at.faixa_distancia_km(0.7, 1500) == (0.0, 2.2)
+
+
+def test_faixas_sobrepostas_nao_permitem_ordenar_proximidade():
+    assert at.faixas_se_sobrepoem((0.5, 2.0), (1.5, 2.5))
+    assert not at.faixas_se_sobrepoem((0.2, 0.8), (1.0, 1.5))
+
+
 def test_ponto_em_poligono_e_buraco():
     g = {"type": "Polygon", "coordinates": [[[0, 0], [10, 0], [10, 10], [0, 10], [0, 0]], [[4, 4], [6, 4], [6, 6], [4, 6], [4, 4]]]}
     assert at.contem(g, 1, 1) and not at.contem(g, 5, 5) and not at.contem(g, 20, 20)
@@ -65,7 +75,14 @@ def test_so_catalogo_verificado_a_mao():
 def test_aviso_e_sem_dado_pessoal():
     r = at.analisar(geo(), [cras("man-cras-a", -22.395, -47.595)], {})
     assert "não provam" in r["meta"]["aviso"] and "exploratório" in r["meta"]["aviso"]
-    assert set(r["bairros"][0]) <= {"bairro", "setores", "pessoas", "servicos_no_bairro", "grupo", "distancia_media_cras_km", "distancia_media_ubs_km", "distancia_media_escola_km"}
+    campos = {"bairro", "setores", "pessoas", "servicos_no_bairro", "grupo"}
+    for categoria in ("cras", "ubs", "escola"):
+        campos.update({
+            "distancia_media_%s_km" % categoria,
+            "distancia_media_%s_min_km" % categoria,
+            "distancia_media_%s_max_km" % categoria,
+        })
+    assert set(r["bairros"][0]) <= campos
 
 
 def test_agrupamento_so_com_bairros_suficientes():
