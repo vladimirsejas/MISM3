@@ -139,7 +139,7 @@ def carregar() -> dict:
 
 def main() -> None:
     dados = carregar()
-    SAIDA.write_text(json.dumps(dados, ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+    SAIDA.write_text(json.dumps(dados, ensure_ascii=False, indent=2), encoding="utf-8")
     print("Base escolar gravada em %s" % SAIDA)
     print(json.dumps(dados["meta"]["contagens"], ensure_ascii=False, indent=2))
 
