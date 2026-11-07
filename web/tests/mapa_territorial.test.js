@@ -91,4 +91,11 @@ assert.strictEqual(M.descreverValor("pessoas", 201418), "201.418 pessoas");
 assert.strictEqual(M.decimal(2.175, 2), "2,18");
 assert.strictEqual(dados.setores.reduce((a, s) => a + s.pessoas, 0), 201418);
 
+/* ---- decisão D4: setores pequenos são marcados, nenhum é suprimido ---- */
+const pequenos = dados.setores.filter((s) => M.setorPequeno(s));
+assert.strictEqual(pequenos.length, 17, "17 setores com menos de 5 pessoas ou menos de 3 domicílios");
+assert(pequenos.every((s) => s.pessoas < 5 || s.domicilios < 3) && dados.setores.filter((s) => !M.setorPequeno(s)).every((s) => s.pessoas >= 5 && s.domicilios >= 3));
+assert(js.indexOf("população muito pequena, interprete com cautela") !== -1 && /17 setores/.test(JSON.stringify(dados.meta.ressalvas)), "o aviso e a contagem aparecem na página");
+assert(/@media \(max-width:40rem\)[\s\S]*data-label/.test(css) && /data-label/.test(js), "tabelas viram lista no celular (sem rolagem horizontal)");
+
 console.log("mapa_territorial.test.js: sem requisição externa, CSP restritiva, textContent, ES5, linguagem permitida, 408 setores e funções coerentes com os indicadores");
