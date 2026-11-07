@@ -35,6 +35,7 @@ assert.deepStrictEqual(buscas, ['carregar("dados/analise_territorial.json")'], "
 /* ---- honestidade: sem a análise gerada, a tela diz isso e não inventa números ---- */
 ["Como ler esta tela", "não provam falta de serviço", "Nenhum dado de pessoa entra nesta tela"].forEach((t) => assert((vista + ui).includes(t), "a tela deve dizer: " + t));
 assert(/ainda não foi gerada/.test(ui), "sem a análise territorial, a tela diz que não foi gerada e não inventa números");
+assert(/faixa geométrica/.test(ui) && /distancia_media_.*_min_km/.test(ui) && /distancia_media_.*_max_km/.test(ui), "a tela explica e exibe os limites da faixa geométrica");
 assert(!existe("dados/analise_territorial.json") || JSON.parse(ler("dados/analise_territorial.json")).meta.aviso, "se a análise existir, tem de trazer o aviso de método");
 
 console.log("painel.test.js: a vista mostra só a análise territorial, nada do questionário voltou, a tela só lê e não inventa números");

@@ -29,9 +29,11 @@ CATEGORIAS = {  # nome da coluna -> (tipo, subtipo) no catálogo
     "escola": ("creche", "escola_municipal"),
 }
 SEM_BAIRRO = "Sem bairro identificado"
-AVISO = ("Distâncias em linha reta entre o centro de cada setor do IBGE e a localização cadastrada do serviço. As escolas usam a base "
-         "consolidada, que distingue coordenadas individuais de referências aproximadas por CEP; CRAS e UBS usam o catálogo e, quando necessário, "
-         "o índice de CEP. Não consideram ruas, ônibus nem horários; não provam que exista ou não exista falta de serviço. O agrupamento de bairros é exploratório.")
+AVISO = ("Distâncias em linha reta entre o centro de cada setor do IBGE e a referência geográfica cadastrada do serviço. Para referências com raio informado, "
+         "a análise apresenta uma faixa geométrica, não um intervalo de confiança. O raio do índice CEP é uma estimativa operacional da dispersão dos endereços "
+         "agrupados, com limites definidos pelo projeto; não é margem de erro oficial do IBGE nem garante conter a escola. Coordenadas sem raio explícito não recebem "
+         "incerteza artificial. Faixas sobrepostas não permitem ordenar com segurança qual referência é mais próxima. Não considera ruas, ônibus nem horários; "
+         "não provam que exista ou não exista falta de serviço. O agrupamento de bairros é exploratório.")
 
 
 def haversine_km(lat1, lon1, lat2, lon2) -> float:
@@ -96,6 +98,24 @@ def coordenada_do_servico(s, indice_cep):
     return None
 
 
+def raio_incerteza_m(servico):
+    """Raio operacional explícito em metros; ausência significa que não há faixa calculável."""
+    local = servico.get("localizacao") or {}
+    valor = local.get("raio_m", servico.get("_raio_incerteza_m"))
+    return max(0.0, float(valor)) if valor is not None else 0.0
+
+
+def faixa_distancia_km(distancia_km, raio_m):
+    """Envelope geométrico da distância, não intervalo de confiança estatístico."""
+    raio_km = max(0.0, float(raio_m or 0)) / 1000.0
+    return max(0.0, distancia_km - raio_km), distancia_km + raio_km
+
+
+def faixas_se_sobrepoem(faixa_a, faixa_b):
+    """Faixas que se tocam ou cruzam não permitem ordenar qual serviço é mais próximo."""
+    return max(faixa_a[0], faixa_b[0]) <= min(faixa_a[1], faixa_b[1])
+
+
 def analisar(geojson, servicos, indice_cep, k_grupos=3, hoje=None, escolas=None) -> dict:
     """Devolve o dicionário de saída. Levanta ValueError quando falta base para calcular."""
     # serviços por categoria, com coordenada
@@ -113,7 +133,14 @@ def analisar(geojson, servicos, indice_cep, k_grupos=3, hoje=None, escolas=None)
                 totais[c] += 1
                 xy = coordenada_do_servico(s, indice_cep)
                 if xy:
-                    por_cat[c].append((s, xy))
+                    registro = dict(s)
+                    if s.get("lat") is not None and s.get("lon") is not None:
+                        registro["_raio_incerteza_m"] = 0
+                    else:
+                        cep = re.sub(r"\D", "", str(s.get("cep") or ""))
+                        v = indice_cep.get(cep) if cep else None
+                        registro["_raio_incerteza_m"] = v[2] if v and len(v) > 2 else 0
+                    por_cat[c].append((registro, xy))
 
     metodos_escola = {}
     precissoes_escola = {}
@@ -164,13 +191,21 @@ def analisar(geojson, servicos, indice_cep, k_grupos=3, hoje=None, escolas=None)
 
     bairros: dict[str, dict] = {}
     for st in setores:
-        b = bairros.setdefault(st["bairro"], {"bairro": st["bairro"], "setores": 0, "pessoas": 0, "soma": {c: 0.0 for c in CATEGORIAS}, "servicos_no_bairro": 0})
+        b = bairros.setdefault(st["bairro"], {"bairro": st["bairro"], "setores": 0, "pessoas": 0, "soma": {c: 0.0 for c in CATEGORIAS}, "soma_min": {c: 0.0 for c in CATEGORIAS}, "soma_max": {c: 0.0 for c in CATEGORIAS}, "servicos_no_bairro": 0})
         b["setores"] += 1
         b["pessoas"] += st["pessoas"]
         for c, lista in por_cat.items():
             if lista:
-                d = min(haversine_km(st["lat"], st["lon"], xy[0], xy[1]) for _, xy in lista)
+                distancias = []
+                for servico, xy in lista:
+                    d_servico = haversine_km(st["lat"], st["lon"], xy[0], xy[1])
+                    distancias.append((d_servico, raio_incerteza_m(servico)))
+                d = min(item[0] for item in distancias)
+                d_min = min(faixa_distancia_km(dist, raio)[0] for dist, raio in distancias)
+                d_max = min(faixa_distancia_km(dist, raio)[1] for dist, raio in distancias)
                 b["soma"][c] += d * st["pessoas"]
+                b["soma_min"][c] += d_min * st["pessoas"]
+                b["soma_max"][c] += d_max * st["pessoas"]
     # serviços dentro de cada bairro (qualquer categoria cadastrada com coordenada)
     todos = [(s, xy) for lista in por_cat.values() for s, xy in lista]
     for s, xy in todos:
@@ -184,6 +219,8 @@ def analisar(geojson, servicos, indice_cep, k_grupos=3, hoje=None, escolas=None)
         item = {"bairro": b["bairro"], "setores": b["setores"], "pessoas": b["pessoas"], "servicos_no_bairro": b["servicos_no_bairro"]}
         for c in CATEGORIAS:
             item["distancia_media_%s_km" % c] = round(b["soma"][c] / b["pessoas"], 2) if por_cat[c] and b["pessoas"] else None
+            item["distancia_media_%s_min_km" % c] = round(b["soma_min"][c] / b["pessoas"], 2) if por_cat[c] and b["pessoas"] else None
+            item["distancia_media_%s_max_km" % c] = round(b["soma_max"][c] / b["pessoas"], 2) if por_cat[c] and b["pessoas"] else None
         saida_b.append(item)
     saida_b.sort(key=lambda x: x["bairro"])
 
@@ -193,6 +230,15 @@ def analisar(geojson, servicos, indice_cep, k_grupos=3, hoje=None, escolas=None)
             "fonte": "IBGE, Censo Demográfico 2022 (setores), catálogo verificado e base integrada de escolas municipais",
             "gerado_em": (hoje or date.today()).isoformat(),
             "aviso": AVISO,
+            "metodologia_raio_incerteza": {
+                "unidade": "metros",
+                "formula": "d_min=max(0,d-r); d_max=d+r",
+                "interpretacao": "Envelope geométrico operacional, não intervalo de confiança estatístico.",
+                "origem_raio_cnefe": "O raio não é um campo oficial do CNEFE. É calculado pelo pipeline a partir do percentil 90 das distâncias dos endereços do CEP à mediana das coordenadas, arredondado para dezenas e limitado por pisos e teto do projeto.",
+                "limites_raio_cnefe": "Piso de 150 m; piso de 300 m quando há menos de 5 endereços; teto de 1.500 m. CEPs completados apenas pela lista externa recebem 500 m fixos e n_enderecos=0.",
+                "limite": "O raio aproxima a dispersão dos endereços associados ao CEP; não garante conter o equipamento nem é margem de erro validada pelo IBGE.",
+                "comparacao": "Faixas sobrepostas não permitem afirmar qual serviço é mais próximo."
+            },
             "cobertura_dos_servicos": {
                 c: {"com_coordenada": len(por_cat[c]), "cadastrados": totais[c]}
                 for c in CATEGORIAS

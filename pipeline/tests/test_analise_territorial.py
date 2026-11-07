@@ -26,6 +26,16 @@ def test_haversine_um_grau_de_latitude():
     assert abs(at.haversine_km(0, 0, 1, 0) - 111.19) < 0.1
 
 
+def test_faixa_geometrica_de_distancia_preserva_raio_e_limita_zero():
+    assert at.faixa_distancia_km(2.0, 1500) == (0.5, 3.5)
+    assert at.faixa_distancia_km(0.7, 1500) == (0.0, 2.2)
+
+
+def test_faixas_sobrepostas_nao_permitem_ordenar_proximidade():
+    assert at.faixas_se_sobrepoem((0.5, 2.0), (1.5, 2.5))
+    assert not at.faixas_se_sobrepoem((0.2, 0.8), (1.0, 1.5))
+
+
 def test_ponto_em_poligono_e_buraco():
     g = {"type": "Polygon", "coordinates": [[[0, 0], [10, 0], [10, 10], [0, 10], [0, 0]], [[4, 4], [6, 4], [6, 6], [4, 6], [4, 4]]]}
     assert at.contem(g, 1, 1) and not at.contem(g, 5, 5) and not at.contem(g, 20, 20)
@@ -56,6 +66,15 @@ def test_coordenada_pelo_indice_de_cep():
     assert r["meta"]["cobertura_dos_servicos"]["cras"]["com_coordenada"] == 1
 
 
+def test_raio_do_indice_cep_gera_faixa_para_cras():
+    servicos = [{"id": "man-cras-cep", "tipo": "assistencia", "subtipo": "cras", "nome": "CRAS", "cep": "13500-000"}]
+    indice = {"13500000": [-22.395, -47.595, 500, "setor", 12]}
+    resultado = at.analisar(geo(), servicos, indice)
+    beta = next(b for b in resultado["bairros"] if b["bairro"] == "Beta")
+    assert beta["distancia_media_cras_min_km"] < beta["distancia_media_cras_km"]
+    assert beta["distancia_media_cras_max_km"] > beta["distancia_media_cras_km"]
+
+
 def test_so_catalogo_verificado_a_mao():
     sv = [dict(cras("cnes-123", -22.395, -47.595))]  # id de pipeline, não "man-"
     with pytest.raises(ValueError):
@@ -65,7 +84,14 @@ def test_so_catalogo_verificado_a_mao():
 def test_aviso_e_sem_dado_pessoal():
     r = at.analisar(geo(), [cras("man-cras-a", -22.395, -47.595)], {})
     assert "não provam" in r["meta"]["aviso"] and "exploratório" in r["meta"]["aviso"]
-    assert set(r["bairros"][0]) <= {"bairro", "setores", "pessoas", "servicos_no_bairro", "grupo", "distancia_media_cras_km", "distancia_media_ubs_km", "distancia_media_escola_km"}
+    campos = {"bairro", "setores", "pessoas", "servicos_no_bairro", "grupo"}
+    for categoria in ("cras", "ubs", "escola"):
+        campos.update({
+            "distancia_media_%s_km" % categoria,
+            "distancia_media_%s_min_km" % categoria,
+            "distancia_media_%s_max_km" % categoria,
+        })
+    assert set(r["bairros"][0]) <= campos
 
 
 def test_agrupamento_so_com_bairros_suficientes():
@@ -166,5 +192,11 @@ def test_base_real_tem_33_coordenadas_individuais_e_35_por_cep_sem_duplicidade()
     }
     assert cobertura["sem_localizacao_mapa"] == 0
     assert cobertura["raio_m"]["quantidade"] == 35
+    # A faixa da média ponderada deve preservar a estimativa central.
+    for bairro in resultado["bairros"]:
+        central = bairro["distancia_media_escola_km"]
+        minimo = bairro["distancia_media_escola_min_km"]
+        maximo = bairro["distancia_media_escola_max_km"]
+        assert minimo <= central <= maximo
     # 1 CRAS + 68 escolas: a escola não pode ser contada duas vezes pelo catálogo.
     assert sum(b["servicos_no_bairro"] for b in resultado["bairros"]) <= 69

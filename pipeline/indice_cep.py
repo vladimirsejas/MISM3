@@ -26,11 +26,14 @@ from common import (BRUTO, DADOS as DADOS_RAIZ, MUNICIPIO_IBGE7, MUNICIPIO_NOME,
 
 DADOS_PARQUET = DADOS_RAIZ / "parquet"
 
+# Estes raios são parâmetros operacionais do MISM3, não campos nem margens de erro
+# publicados pelo IBGE. São usados como envelope geométrico conservador da dispersão
+# dos endereços agrupados por CEP; não garantem conter a localização de um equipamento.
 RAIO_MIN_M = 150
-RAIO_MIN_POUCOS_M = 300  # CEPs com poucos enderecos: borra mais
-RAIO_MAX_M = 1500
+RAIO_MIN_POUCOS_M = 300  # piso ampliado para CEPs com poucos endereços
+RAIO_MAX_M = 1500         # teto operacional; valores maiores são truncados
 POUCOS = 5
-RAIO_LISTA_M = 500  # CEP que só existe na lista de CEPs: um único ponto, então a área é larga
+RAIO_LISTA_M = 500  # CEP sem CNEFE: valor fixo da lista externa, não derivado de endereços IBGE
 
 
 def construir_indice(df, municipio: str = MUNICIPIO_IBGE7) -> dict:
@@ -150,6 +153,7 @@ def main() -> None:
             "municipio": "%s/%s (IBGE %s)" % (MUNICIPIO_NOME, UF, MUNICIPIO_IBGE7),
             "gerado_em": agora_iso(),
             "formato": "cep -> [latitude, longitude, raio_m, setor_censitario, n_enderecos]",
+            "metodologia_raio_m": "Parâmetro operacional do MISM3: percentil 90 das distâncias dos endereços do CEP à mediana das coordenadas, arredondado para dezenas e limitado a piso de 150 m (300 m quando n<5) e teto de 1.500 m. Não é raio oficial do IBGE nem intervalo de confiança. CEPs completados pela lista externa recebem 500 m fixos e n=0.",
             "ceps_so_da_lista": sorted(novos),
             "observacao_lista": "CEPs em 'ceps_so_da_lista' vêm de um ponto único da lista de CEPs (n_enderecos = 0, setor vazio, raio %d m)." % RAIO_LISTA_M,
         },
