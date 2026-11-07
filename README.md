@@ -218,6 +218,7 @@ Notas de ambiente:
 - [docs/arquitetura_ia.md](docs/arquitetura_ia.md) e [docs/ia/avaliacao_orientacao.md](docs/ia/avaliacao_orientacao.md): arquitetura de IA, métricas e limites.
 - [docs/mapa_de_dados.md](docs/mapa_de_dados.md), [docs/inventario_de_fontes.md](docs/inventario_de_fontes.md), [docs/documetacao/LEIA-ME.md](docs/documetacao/LEIA-ME.md): dados e fontes arquivadas.
 - [docs/roteiro_teste_orientador.md](docs/roteiro_teste_orientador.md): roteiro de teste manual do orientador.
+- [docs/territorial/PLANO_IMPLEMENTACAO_MAPA_TERRITORIAL.md](docs/territorial/PLANO_IMPLEMENTACAO_MAPA_TERRITORIAL.md): plano de implementação do mapa territorial (recuperação, auditoria, qualidade dos dados, usabilidade, navegação e validação para publicação).
 - [docs/plano_proximo_ciclo.md](docs/plano_proximo_ciclo.md), [docs/plano_fontes_externas_e_expansao.md](docs/plano_fontes_externas_e_expansao.md), [docs/analise_competitiva_mism3.md](docs/analise_competitiva_mism3.md), [docs/benchmark_externo_ideias_funcionais.md](docs/benchmark_externo_ideias_funcionais.md): planejamento e pesquisa.
 
 ## Manutenção deste README
