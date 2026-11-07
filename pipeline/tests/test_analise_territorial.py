@@ -70,9 +70,9 @@ def test_raio_do_indice_cep_gera_faixa_para_cras():
     servicos = [{"id": "man-cras-cep", "tipo": "assistencia", "subtipo": "cras", "nome": "CRAS", "cep": "13500-000"}]
     indice = {"13500000": [-22.395, -47.595, 500, "setor", 12]}
     resultado = at.analisar(geo(), servicos, indice)
-    alfa = next(b for b in resultado["bairros"] if b["bairro"] == "Alfa")
-    assert alfa["distancia_media_cras_min_km"] < alfa["distancia_media_cras_km"]
-    assert alfa["distancia_media_cras_max_km"] > alfa["distancia_media_cras_km"]
+    beta = next(b for b in resultado["bairros"] if b["bairro"] == "Beta")
+    assert beta["distancia_media_cras_min_km"] < beta["distancia_media_cras_km"]
+    assert beta["distancia_media_cras_max_km"] > beta["distancia_media_cras_km"]
 
 
 def test_so_catalogo_verificado_a_mao():
