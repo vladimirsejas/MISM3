@@ -113,5 +113,8 @@ assert.strictEqual(M.vizinho("a", 1, 0, cent), "b");
 assert.strictEqual(M.vizinho("a", 0, 1, cent), "c");
 assert.strictEqual(M.vizinho("a", -1, 0, cent), "d");
 assert.strictEqual(M.vizinho("a", 0, -1, cent), null, "sem vizinho naquele lado");
+const quadrado = { type: "Polygon", coordinates: [[[0, 0], [4, 0], [4, 4], [0, 4], [0, 0]]] };
+assert.deepStrictEqual(M.centroideGeometria(quadrado, { xy: function (x, y) { return [x, y]; } }), [2, 2],
+  "navegação usa o centro geométrico do polígono, não o centro da caixa delimitadora");
 
 console.log("mapa_territorial.test.js: sem requisição externa, CSP restritiva, textContent, ES5, linguagem permitida, 408 setores e funções coerentes com os indicadores");
