@@ -75,3 +75,96 @@ def test_agrupamento_so_com_bairros_suficientes():
         assert len(g["resumo"]) == 3 and sum(r["bairros"] for r in g["resumo"]) == 12
         assert g["resumo"][0]["media_distancia_media_cras_km"] <= g["resumo"][-1]["media_distancia_media_cras_km"]
     assert at.agrupar(bairros[:4], 3) is None
+
+
+def test_base_escolar_consolidada_e_fonte_da_localizacao():
+    catalogo = [
+        cras("man-cras-a", -22.395, -47.595),
+        {
+            "id": "man-em-teste",
+            "tipo": "creche",
+            "subtipo": "escola_municipal",
+            "nome": "Escola do catálogo",
+            "lat": -22.385,
+            "lon": -47.585,
+        },
+    ]
+    escolas = [{
+        "id": "man-em-teste",
+        "nome": "Escola consolidada",
+        "localizacao_mapa": {
+            "latitude": -22.394,
+            "longitude": -47.596,
+            "metodo": "centroide_cep",
+            "precisao": "aproximada",
+            "fonte": "CNEFE",
+            "raio_m": 500,
+        },
+    }]
+
+    resultado = at.analisar(geo(), catalogo, {}, escolas=escolas)
+    cobertura = resultado["meta"]["cobertura_dos_servicos"]["escola"]
+
+    # A coordenada consolidada deve prevalecer sobre a cópia do catálogo.
+    assert cobertura["com_coordenada"] == 1
+    assert cobertura["cadastrados"] == 1
+    assert cobertura["localizacao_por_metodo"] == {"centroide_cep": 1}
+    assert cobertura["precisao"] == {"aproximada": 1}
+    assert cobertura["com_raio_informado"] == 1
+    assert cobertura["raio_m"] == {"quantidade": 1, "minimo": 500.0, "mediana": 500.0, "maximo": 500.0}
+    assert cobertura["sem_localizacao_mapa"] == 0
+
+    # A escola aparece uma única vez na contagem de serviços do bairro.
+    assert sum(b["servicos_no_bairro"] for b in resultado["bairros"]) == 2
+
+
+def test_escola_sem_localizacao_na_base_consolidada_nao_usa_catalogo_antigo():
+    catalogo = [{
+        "id": "man-em-sem-localizacao",
+        "tipo": "creche",
+        "subtipo": "escola_municipal",
+        "nome": "Escola sem localização consolidada",
+        "lat": -22.395,
+        "lon": -47.595,
+    }]
+    escolas = [{
+        "id": "man-em-sem-localizacao",
+        "nome": "Escola sem localização consolidada",
+        "localizacao_mapa": None,
+    }]
+
+    with pytest.raises(ValueError):
+        at.analisar(geo(), catalogo, {}, escolas=escolas)
+
+
+def test_base_real_tem_33_coordenadas_individuais_e_35_por_cep_sem_duplicidade():
+    import json
+
+    caminho = at.DADOS / "escolas_municipais.json"
+    if not caminho.exists():
+        pytest.skip("base escolar consolidada não disponível neste ambiente")
+    escolas = json.loads(caminho.read_text(encoding="utf-8"))["escolas"]
+    assert len(escolas) == 68
+    assert len({e["id"] for e in escolas}) == 68
+
+    resultado = at.analisar(
+        geo(),
+        [cras("man-cras-a", -22.395, -47.595)],
+        {},
+        escolas=escolas,
+    )
+    cobertura = resultado["meta"]["cobertura_dos_servicos"]["escola"]
+    assert cobertura["cadastrados"] == 68
+    assert cobertura["com_coordenada"] == 68
+    assert cobertura["localizacao_por_metodo"] == {
+        "coordenada_individual": 33,
+        "centroide_cep": 35,
+    }
+    assert cobertura["precisao"] == {
+        "individual": 33,
+        "aproximada": 35,
+    }
+    assert cobertura["sem_localizacao_mapa"] == 0
+    assert cobertura["raio_m"]["quantidade"] == 35
+    # 1 CRAS + 68 escolas: a escola não pode ser contada duas vezes pelo catálogo.
+    assert sum(b["servicos_no_bairro"] for b in resultado["bairros"]) <= 69

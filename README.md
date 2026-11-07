@@ -135,6 +135,7 @@ Não existe: modelo de linguagem, embeddings neurais, previsão de risco, elegib
 | `exposicao_distancia.py` | Setores e serviços | `web/dados/exposicao_distancia.json` (parcela da população a mais de 1 km e 2 km do serviço mais próximo) | stdlib |
 | `territorial_indicadores.py`, `territorial_auditoria.py` | `web/dados/` (setores, território, distâncias) e catálogo | `web/dados/indicadores_territoriais.json` (mapa territorial v1, conferido contra `exposicao_distancia.json`) e relatório de auditoria de privacidade | stdlib |
 | `oferta_educacao_infantil.py` | Censo Escolar 2025 | `web/dados/oferta_educacao_infantil.json` | pandas |
+| `escolas_municipais.py` | Catálogo municipal, vínculos INEP e Censo Escolar | `web/dados/escolas_municipais.json` | pandas e stdlib |
 | `ligar_catalogo_inep.py` | Catálogo e Censo | `catalogo/inep_escolas.csv` (sobrescreve; revisar antes) | stdlib |
 | `horarios_onibus.py` | `catalogo/horarios_onibus.txt` | `web/dados/horarios_onibus.json` | stdlib |
 | `treinar_necessidades.py`, `treinar_perigo.py`, `treinar_escopo.py` | Frases em `catalogo/` | Modelos em `web/dados/` | numpy, scikit-learn |
@@ -211,6 +212,7 @@ Notas de ambiente:
 
 - `catalogo/servicos_manuais.csv` é a fonte de verdade dos serviços (campos obrigatórios: `tipo`, `nome`, `fonte_url`, `verificado_em`; `conferido` e `aviso` para itens sem confirmação). Depois de editar, rodar `python pipeline/servicos.py --somente-manual`.
 - Coordenada só existe com fonte (`geo = coordenada_fonte`); localização por CEP é aproximada e nunca vira coordenada de fonte.
+- `pipeline/escolas_municipais.py` consolida o cadastro municipal, os vínculos INEP e os dados do Censo Escolar; gera `web/dados/escolas_municipais.json`, preservando a origem e a precisão da localização individual ou aproximada por CEP.
 - Mapa completo de arquivos de dados, geradores e consumidores: [docs/mapa_de_dados.md](docs/mapa_de_dados.md).
 - Verificar o catálogo contra as páginas oficiais (com internet): `python pipeline/verificar_catalogo.py`.
 
