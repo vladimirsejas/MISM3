@@ -190,7 +190,7 @@
       f = estado.geo.features[i];
       p = svg("path", { d: caminhoDe(f.geometry, estado.proj), "class": "mt-setor", "fill-rule": "evenodd", fill: COR_SEM_VALOR });
       p.setAttribute("data-setor", f.properties.setor);
-      p.setAttribute("tabindex", "0");
+      p.setAttribute("tabindex", "-1");
       p.setAttribute("role", "button");
       p.setAttribute("aria-label", "Selecionar setor censitário " + f.properties.setor + ". Use Enter ou Espaço para abrir o detalhe.");
       p.setAttribute("aria-pressed", "false");
@@ -200,15 +200,82 @@
       estado.caminhos[f.properties.setor] = p;
       (function (id) {
         p.addEventListener("click", function () { escolherSetor(id); });
-        p.addEventListener("keydown", function (e) {
-          var tecla = e.key || e.keyCode;
-          if (tecla === "Enter" || tecla === " " || tecla === "Spacebar" || tecla === 13 || tecla === 32) {
-            if (e.preventDefault) e.preventDefault();
-            escolherSetor(id);
-          }
-        });
+        p.addEventListener("focus", function () { definirFoco(id, false); });
+        p.addEventListener("blur", function () { estado.focado = null; atualizarAnel(); });
       })(f.properties.setor);
     }
+    camada.addEventListener("keydown", teclado);
+    criarAnel();
+    definirFoco(estado.dados.setores[0].id, false);
+    estado.focado = null;
+    atualizarAnel();
+  }
+
+  /* Foco do teclado em "roving tabindex": só o setor atual tem tabindex 0, então o mapa é um único ponto de Tab. */
+  function definirFoco(id, mover) {
+    var k;
+    if (estado.atual !== undefined && estado.atual !== null && estado.caminhos[estado.atual]) estado.caminhos[estado.atual].setAttribute("tabindex", "-1");
+    estado.atual = id;
+    estado.caminhos[id].setAttribute("tabindex", "0");
+    estado.focado = id;
+    if (mover) estado.caminhos[id].focus();
+    atualizarAnel();
+  }
+
+  /* Anel duplo (branco por fora, escuro por dentro) sobre o setor em foco ou escolhido: visível em qualquer cor de preenchimento. */
+  function criarAnel() {
+    var camada = $("mt-camada-foco");
+    limpar(camada);
+    estado.anel = [svg("path", { "class": "mt-anel-halo", visibility: "hidden" }), svg("path", { "class": "mt-anel-nucleo", visibility: "hidden" })];
+    camada.appendChild(estado.anel[0]);
+    camada.appendChild(estado.anel[1]);
+  }
+
+  function atualizarAnel() {
+    var id = estado.focado || estado.escolhido, i;
+    if (!estado.anel) return;
+    for (i = 0; i < 2; i++) {
+      if (id) estado.anel[i].setAttribute("d", estado.caminhos[id].getAttribute("d"));
+      estado.anel[i].setAttribute("visibility", id ? "visible" : "hidden");
+    }
+  }
+
+  function centroides() {
+    var c = {}, k, b;
+    for (k in estado.caminhos) if (Object.prototype.hasOwnProperty.call(estado.caminhos, k)) {
+      b = estado.caminhos[k].getBBox();
+      c[k] = [b.x + b.width / 2, b.y + b.height / 2];
+    }
+    return c;
+  }
+
+  /* Vizinho na direção da seta: menor "distância ao longo da direção + 2 x desvio lateral" entre os setores que estão naquele lado do centro do setor. */
+  function vizinho(origem, dx, dy, cent) {
+    var o = cent[origem], k, melhor = null, nota, par, per, v;
+    for (k in cent) if (Object.prototype.hasOwnProperty.call(cent, k) && k !== origem) {
+      v = [cent[k][0] - o[0], cent[k][1] - o[1]];
+      par = v[0] * dx + v[1] * dy;
+      if (par <= 0) continue;
+      per = Math.abs(v[0] * dy - v[1] * dx);
+      nota = par + 2 * per;
+      if (melhor === null || nota < melhor.nota) melhor = { id: k, nota: nota };
+    }
+    return melhor ? melhor.id : null;
+  }
+
+  function teclado(e) {
+    var tecla = e.key, id = e.target && e.target.getAttribute ? e.target.getAttribute("data-setor") : null, dir = null, alvo, ids = estado.dados.setores;
+    if (!id) return;
+    if (tecla === "ArrowLeft") dir = [-1, 0]; else if (tecla === "ArrowRight") dir = [1, 0];
+    else if (tecla === "ArrowUp") dir = [0, -1]; else if (tecla === "ArrowDown") dir = [0, 1];
+    if (dir) {
+      e.preventDefault();
+      if (!estado.centroides) estado.centroides = centroides();
+      alvo = vizinho(id, dir[0], dir[1], estado.centroides);
+      if (alvo) definirFoco(alvo, true);
+    } else if (tecla === "Home") { e.preventDefault(); definirFoco(ids[0].id, true); }
+    else if (tecla === "End") { e.preventDefault(); definirFoco(ids[ids.length - 1].id, true); }
+    else if (tecla === "Enter" || tecla === " " || tecla === "Spacebar") { e.preventDefault(); escolherSetor(id); }
   }
 
   function marcarPequenos() {
@@ -298,6 +365,7 @@
       estado.caminhos[k].setAttribute("aria-pressed", "false");
     }
     estado.escolhido = st ? st.id : null;
+    atualizarAnel();
     $("mt-setor").value = st ? st.id : "";
     var corpo = $("mt-detalhe-corpo");
     limpar(corpo);
@@ -411,5 +479,5 @@
 
   if (typeof document !== "undefined" && document.getElementById("mt-svg")) iniciar();
 
-  return { classeDe: classeDe, rotulosClasses: rotulosClasses, valorDoSetor: valorDoSetor, descreverValor: descreverValor, criarProjecao: criarProjecao, caminhoDe: caminhoDe, milhar: milhar, decimal: decimal, coresDe: coresDe, setorPequeno: setorPequeno };
+  return { classeDe: classeDe, rotulosClasses: rotulosClasses, valorDoSetor: valorDoSetor, descreverValor: descreverValor, criarProjecao: criarProjecao, caminhoDe: caminhoDe, milhar: milhar, decimal: decimal, coresDe: coresDe, setorPequeno: setorPequeno, vizinho: vizinho };
 });
