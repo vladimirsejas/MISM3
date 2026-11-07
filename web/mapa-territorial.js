@@ -11,6 +11,9 @@
   var NS_SVG = "http://www.w3.org/2000/svg"; /* identificador de namespace do SVG, não é um endereço acessado */
   var CORES = { 4: ["#fbe9e6", "#e8a8a2", "#b9556a", "#7a2b37"], 5: ["#fbe9e6", "#f2c4bd", "#e08e8e", "#b9556a", "#7a2b37"] };
   var COR_SEM_VALOR = "#d9d9d9";
+  /* Decisão D4: nenhum setor é suprimido nem agregado; setores com menos de 5 pessoas ou menos de 3 domicílios (faixa conservadora da proposta de supressão e agregação) levam aviso. */
+  var LIMITE_PEQUENO = { pessoas: 5, domicilios: 3 };
+  var AVISO_PEQUENO = "população muito pequena, interprete com cautela";
   var COR_PONTO = "#12343b";
   var CATEGORIAS = ["cras", "ubs", "escola"];
   var CENARIOS = ["coordenadas_do_catalogo", "com_centro_do_cep"];
@@ -23,6 +26,7 @@
   ];
 
   /* ------------------------------------------------------------------ funções puras (testáveis em Node) */
+  function setorPequeno(s) { return s.pessoas < LIMITE_PEQUENO.pessoas || s.domicilios < LIMITE_PEQUENO.domicilios; }
   function milhar(n) { return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
   /* O pequeno acréscimo evita que 2,175 apareça como 2,17 por causa da representação em ponto flutuante. */
   function decimal(n, casas) { return (Number(n) + (n >= 0 ? 1e-9 : -1e-9)).toFixed(casas).replace(".", ","); }
@@ -126,6 +130,7 @@
     if (texto !== undefined && texto !== null) e.textContent = texto;
     return e;
   }
+  function cel(tag, classe, texto, rotulo) { var e = el(tag, classe, texto); if (rotulo) e.setAttribute("data-label", rotulo); return e; }
   function svg(tag, atributos) {
     var e = document.createElementNS(NS_SVG, tag), k;
     for (k in atributos) if (Object.prototype.hasOwnProperty.call(atributos, k)) e.setAttribute(k, atributos[k]);
@@ -193,6 +198,14 @@
     }
   }
 
+  function marcarPequenos() {
+    var d = estado.dados, i, n = 0;
+    for (i = 0; i < d.setores.length; i++) {
+      if (setorPequeno(d.setores[i])) { estado.caminhos[d.setores[i].id].setAttribute("data-pequeno", "1"); n++; }
+    }
+    estado.qtdPequenos = n;
+  }
+
   function pintar() {
     var s = selecao(), d = estado.dados, cl = d.classes[s.indicador], cores = coresDe(cl.limites.length + 1), i, st, v, c, p;
     for (i = 0; i < d.setores.length; i++) {
@@ -226,6 +239,11 @@
     am.style.backgroundColor = COR_SEM_VALOR;
     li.appendChild(am);
     li.appendChild(el("span", "", s.indicador === "distancia" ? "localização pendente (sem coordenada na categoria)" : "sem valor"));
+    ul.appendChild(li);
+    li = el("li");
+    am = el("span", "mt-amostra mt-amostra-pequeno");
+    li.appendChild(am);
+    li.appendChild(el("span", "", "contorno tracejado: setor com " + AVISO_PEQUENO + " (" + estado.qtdPequenos + " setores)"));
     ul.appendChild(li);
     box.appendChild(ul);
     var pts = el("ul");
@@ -276,6 +294,7 @@
     ];
     linhas.forEach(function (l) { dl.appendChild(el("dt", "", l[0])); dl.appendChild(el("dd", "", l[1])); });
     corpo.appendChild(dl);
+    if (setorPequeno(st)) corpo.appendChild(el("p", "mt-cautela", "Aviso: " + AVISO_PEQUENO + "."));
     var tab = el("table", "mt-tabela"), cab = el("tr"), r;
     cab.appendChild(el("th", "", "Categoria"));
     cab.appendChild(el("th", "mt-num", "Serviços localizados no setor"));
@@ -283,11 +302,11 @@
     tab.appendChild(cab);
     CATEGORIAS.forEach(function (c) {
       r = el("tr");
-      r.appendChild(el("td", "", rotuloCategoria(c)));
-      r.appendChild(el("td", "mt-num", String(st.equipamentos[c])));
+      r.appendChild(cel("td", "", rotuloCategoria(c), "Categoria"));
+      r.appendChild(cel("td", "mt-num", String(st.equipamentos[c]), "Serviços localizados no setor"));
       CENARIOS.forEach(function (cen) {
         var v = st.distancia_km[cen][c];
-        r.appendChild(el("td", "mt-num", v === null ? "localização pendente" : decimal(v, 2)));
+        r.appendChild(cel("td", "mt-num", v === null ? "localização pendente" : decimal(v, 2), "Distância em linha reta (km): " + d.meta.rotulos_cenario[cen]));
       });
       tab.appendChild(r);
     });
@@ -328,11 +347,11 @@
     tab.appendChild(cab);
     CATEGORIAS.forEach(function (c) {
       var a = d.cobertura.coordenadas_do_catalogo[c], b = d.cobertura.com_centro_do_cep[c], r = el("tr");
-      r.appendChild(el("td", "", rotuloCategoria(c)));
-      r.appendChild(el("td", "mt-num", String(a.cadastrados)));
-      r.appendChild(el("td", "mt-num", String(a.com_coordenada)));
-      r.appendChild(el("td", "mt-num", String(b.com_coordenada)));
-      r.appendChild(el("td", "mt-num", String(a.cadastrados - a.com_coordenada)));
+      r.appendChild(cel("td", "", rotuloCategoria(c), "Categoria"));
+      r.appendChild(cel("td", "mt-num", String(a.cadastrados), "Cadastrados"));
+      r.appendChild(cel("td", "mt-num", String(a.com_coordenada), "Com coordenada do catálogo"));
+      r.appendChild(cel("td", "mt-num", String(b.com_coordenada), "Com posição pelo centro do CEP cadastral"));
+      r.appendChild(cel("td", "mt-num", String(a.cadastrados - a.com_coordenada), "Localização pendente (só catálogo)"));
       tab.appendChild(r);
     });
     box.appendChild(tab);
@@ -354,6 +373,7 @@
         estado.geo = geo;
         montarSelects();
         desenharSetores();
+        marcarPequenos();
         desenharPontos();
         aviso();
         cobertura();
@@ -374,5 +394,5 @@
 
   if (typeof document !== "undefined" && document.getElementById("mt-svg")) iniciar();
 
-  return { classeDe: classeDe, rotulosClasses: rotulosClasses, valorDoSetor: valorDoSetor, descreverValor: descreverValor, criarProjecao: criarProjecao, caminhoDe: caminhoDe, milhar: milhar, decimal: decimal, coresDe: coresDe };
+  return { classeDe: classeDe, rotulosClasses: rotulosClasses, valorDoSetor: valorDoSetor, descreverValor: descreverValor, criarProjecao: criarProjecao, caminhoDe: caminhoDe, milhar: milhar, decimal: decimal, coresDe: coresDe, setorPequeno: setorPequeno };
 });
