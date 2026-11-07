@@ -212,6 +212,7 @@ Notas de ambiente:
 
 - `catalogo/servicos_manuais.csv` é a fonte de verdade dos serviços (campos obrigatórios: `tipo`, `nome`, `fonte_url`, `verificado_em`; `conferido` e `aviso` para itens sem confirmação). Depois de editar, rodar `python pipeline/servicos.py --somente-manual`.
 - Coordenada só existe com fonte (`geo = coordenada_fonte`); localização por CEP é aproximada e nunca vira coordenada de fonte.
+- `pipeline/escolas_municipais.py` consolida o cadastro municipal, os vínculos INEP e os dados do Censo Escolar; gera `web/dados/escolas_municipais.json`, preservando a origem e a precisão da localização individual ou aproximada por CEP.
 - Mapa completo de arquivos de dados, geradores e consumidores: [docs/mapa_de_dados.md](docs/mapa_de_dados.md).
 - Verificar o catálogo contra as páginas oficiais (com internet): `python pipeline/verificar_catalogo.py`.
 
