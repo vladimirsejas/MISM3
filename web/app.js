@@ -522,7 +522,6 @@
     "entre-mulheres": { el: "vista-entre-mulheres", titulo: "titulo-vista-entre-mulheres", nome: "Entre Mulheres", scripts: ["entre-mulheres.js", "entre-mulheres-ui.js"],
       iniciar: function () { if (window.EntreMulheresUI) EntreMulheresUI.iniciar(AREAS.REDE_OFERTAS.categorias); } },
     "rio-claro-em-numeros": { el: "vista-numeros", titulo: "titulo-vista-numeros", nome: "Rio Claro em números", scripts: ["territorio.js"] },
-    "painel": { el: "vista-painel", titulo: "titulo-vista-painel", nome: "Análise territorial", scripts: ["painel-ui.js"] }
   };
   var vistasProntas = {};
   function carregarScripts(lista, fim) {
@@ -564,11 +563,9 @@
       if (foco) $(VISTAS[id].titulo).focus({ preventScroll: true });
       return;
     }
-    /* #mapa e #mapa/cras: o mapa fica na tela inicial; o endereço só leva até ele. */
-    if (id === "mapa") {
-      mostrarInicio();
-      window.scrollTo(0, 0);
-      rolarPara(secao === "cras" ? "titulo-cras" : "mapa-inicio");
+    /* Endereços antigos do mapa de serviços e do painel tabular passam ao mapa territorial atual. */
+    if (id === "mapa" || id === "painel") {
+      window.location.replace("mapa-territorial.html");
       return;
     }
     var area = id ? AREAS.porId(id) : null;
