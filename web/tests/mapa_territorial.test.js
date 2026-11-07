@@ -98,11 +98,20 @@ assert(pequenos.every((s) => s.pessoas < 5 || s.domicilios < 3) && dados.setores
 assert(js.indexOf("população muito pequena, interprete com cautela") !== -1 && /17 setores/.test(JSON.stringify(dados.meta.ressalvas)), "o aviso e a contagem aparecem na página");
 assert(/@media \(max-width:40rem\)[\s\S]*data-label/.test(css) && /data-label/.test(js), "tabelas viram lista no celular (sem rolagem horizontal)");
 
-assert(/setAttribute\("tabindex", "0"\)/.test(js), "os 408 setores são focalizáveis por teclado");
+assert(/setAttribute\("tabindex", "-1"\)/.test(js) && /setAttribute\("tabindex", "0"\)/.test(js) && /function definirFoco/.test(js), "roving tabindex: só o setor atual tem tabindex 0 (um único ponto de Tab)");
+assert((js.match(/setAttribute\("tabindex", "0"\)/g) || []).length === 1, "tabindex 0 só aparece em definirFoco: os setores não nascem todos focalizáveis");
 assert(/setAttribute\("role", "button"\)/.test(js) && /setAttribute\("aria-label"/.test(js), "setores têm semântica e nome acessíveis");
-assert(/addEventListener\("keydown"/.test(js) && /tecla === "Enter"/.test(js) && /tecla === " "/.test(js), "setores são ativados por Enter e Espaço");
 assert(/aria-pressed/.test(js), "o setor selecionado expõe estado acessível");
+assert(/addEventListener\("keydown", teclado\)/.test(js) && ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End", "Enter"].every((k) => js.indexOf('"' + k + '"') !== -1), "setas, Home, End e Enter tratados");
+assert(!/Escape|"Esc"/.test(js), "Esc não faz nada");
+assert(/<svg id="mt-svg"[^>]*role="group"/.test(html) && !/<svg id="mt-svg"[^>]*tabindex/.test(html), "o SVG não é um ponto de Tab; os setores filhos são os alvos");
+assert(/id="mt-ajuda-teclado"[^>]*>Use Tab para chegar ao mapa e as setas para mudar de setor\. Enter abre o detalhe\.</.test(html), "instrução visível acima do mapa");
+assert(/id="mt-camada-foco"/.test(html) && /mt-anel-halo\{stroke:#fff/.test(css) && /mt-anel-nucleo\{stroke:#111/.test(css), "anel de foco duplo, branco por fora e escuro por dentro");
 assert(/stroke:#51413f;stroke-width:1\.15/.test(css), "contorno escuro consistente melhora separação dos polígonos");
-assert(/:focus/.test(css) && /stroke-width:2\.4/.test(css), "foco de teclado tem destaque visual reforçado");
+const cent = { a: [0, 0], b: [10, 1], c: [0, 10], d: [-10, 0] };
+assert.strictEqual(M.vizinho("a", 1, 0, cent), "b");
+assert.strictEqual(M.vizinho("a", 0, 1, cent), "c");
+assert.strictEqual(M.vizinho("a", -1, 0, cent), "d");
+assert.strictEqual(M.vizinho("a", 0, -1, cent), null, "sem vizinho naquele lado");
 
 console.log("mapa_territorial.test.js: sem requisição externa, CSP restritiva, textContent, ES5, linguagem permitida, 408 setores e funções coerentes com os indicadores");
