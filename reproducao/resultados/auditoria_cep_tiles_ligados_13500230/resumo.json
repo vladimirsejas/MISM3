@@ -1,0 +1,577 @@
+{
+ "cep": "13500-230",
+ "cep_lat": -22.4052,
+ "cep_lon": -47.5691,
+ "cep_raio_m": 1500,
+ "commit": "95a5416d6e020829ea5ace2eede3aa34238fb96c",
+ "cenarios": {
+  "A": {
+   "fases": {
+    "carga": {
+     "requisicoes": 31,
+     "locais": 31,
+     "externas": 0,
+     "por_dominio": {},
+     "concluidas": 0,
+     "canceladas": 0,
+     "com_texto": 0,
+     "com_cep": 0,
+     "com_coordenadas": 0,
+     "metodo_ou_corpo": 0,
+     "retangulos": {}
+    },
+    "marcar_caixa": {
+     "requisicoes": 30,
+     "locais": 0,
+     "externas": 30,
+     "por_dominio": {
+      "Esri": 30
+     },
+     "concluidas": 30,
+     "canceladas": 0,
+     "com_texto": 0,
+     "com_cep": 0,
+     "com_coordenadas": 0,
+     "metodo_ou_corpo": 0,
+     "retangulos": {
+      "Esri": {
+       "tiles": 30,
+       "zoom_min": 13,
+       "zoom_max": 13,
+       "por_zoom": {
+        "13": 30
+       },
+       "noroeste": [
+        -22.3501,
+        -47.6807
+       ],
+       "sudeste": [
+        -22.472,
+        -47.4609
+       ],
+       "largura_km": 22.59,
+       "altura_km": 13.55,
+       "cep_dentro_do_retangulo": true,
+       "cep_a_km_do_centro": 0.67
+      }
+     }
+    },
+    "digitar_cep": {
+     "requisicoes": 66,
+     "locais": 0,
+     "externas": 66,
+     "por_dominio": {
+      "Esri": 66
+     },
+     "concluidas": 66,
+     "canceladas": 0,
+     "com_texto": 0,
+     "com_cep": 0,
+     "com_coordenadas": 0,
+     "metodo_ou_corpo": 0,
+     "retangulos": {
+      "Esri": {
+       "tiles": 66,
+       "zoom_min": 11,
+       "zoom_max": 13,
+       "por_zoom": {
+        "11": 48,
+        "13": 18
+       },
+       "noroeste": [
+        -22.3094,
+        -47.7246
+       ],
+       "sudeste": [
+        -22.472,
+        -47.4609
+       ],
+       "largura_km": 27.11,
+       "altura_km": 18.07,
+       "cep_dentro_do_retangulo": true,
+       "cep_a_km_do_centro": 2.92
+      }
+     }
+    },
+    "zoom": {
+     "requisicoes": 84,
+     "locais": 0,
+     "externas": 84,
+     "por_dominio": {
+      "Esri": 84
+     },
+     "concluidas": 84,
+     "canceladas": 0,
+     "com_texto": 0,
+     "com_cep": 0,
+     "com_coordenadas": 0,
+     "metodo_ou_corpo": 0,
+     "retangulos": {
+      "Esri": {
+       "tiles": 84,
+       "zoom_min": 12,
+       "zoom_max": 14,
+       "por_zoom": {
+        "12": 48,
+        "14": 36
+       },
+       "noroeste": [
+        -22.3501,
+        -47.6367
+       ],
+       "sudeste": [
+        -22.411,
+        -47.5049
+       ],
+       "largura_km": 13.56,
+       "altura_km": 6.78,
+       "cep_dentro_do_retangulo": true,
+       "cep_a_km_do_centro": 2.75
+      }
+     }
+    },
+    "mover": {
+     "requisicoes": 12,
+     "locais": 0,
+     "externas": 12,
+     "por_dominio": {
+      "Esri": 12
+     },
+     "concluidas": 12,
+     "canceladas": 0,
+     "com_texto": 0,
+     "com_cep": 0,
+     "com_coordenadas": 0,
+     "metodo_ou_corpo": 0,
+     "retangulos": {
+      "Esri": {
+       "tiles": 12,
+       "zoom_min": 14,
+       "zoom_max": 14,
+       "por_zoom": {
+        "14": 12
+       },
+       "noroeste": [
+        -22.411,
+        -47.6367
+       ],
+       "sudeste": [
+        -22.4313,
+        -47.5049
+       ],
+       "largura_km": 13.55,
+       "altura_km": 2.26,
+       "cep_dentro_do_retangulo": false,
+       "cep_a_km_do_centro": 1.79
+      }
+     }
+    },
+    "recarga": {
+     "requisicoes": 31,
+     "locais": 31,
+     "externas": 0,
+     "por_dominio": {},
+     "concluidas": 0,
+     "canceladas": 0,
+     "com_texto": 0,
+     "com_cep": 0,
+     "com_coordenadas": 0,
+     "metodo_ou_corpo": 0,
+     "retangulos": {}
+    }
+   },
+   "titulo": "Caixa da Esri marcada primeiro; depois o CEP (página inicial)",
+   "extra": {
+    "caixa_esri_marcada_ao_abrir": false,
+    "mensagem_do_site": "Região aproximada pelo CEP 13500-230 (raio de cerca de 1500 m). Não é o seu endereço. Este CEP cobre uma área grande: a ordem por distância é só uma ideia.",
+    "cliques_de_zoom": 3,
+    "mapa_movido": true,
+    "erro": null
+   },
+   "armazenamento": {
+    "antes_da_recarga": {
+     "localStorage": {},
+     "sessionStorage": {},
+     "indexedDB": [],
+     "cacheStorage": [],
+     "serviceWorkers": [],
+     "documentCookie": "",
+     "cookies_do_contexto": []
+    },
+    "depois_da_recarga": {
+     "localStorage": {},
+     "sessionStorage": {},
+     "indexedDB": [],
+     "cacheStorage": [],
+     "serviceWorkers": [],
+     "documentCookie": "",
+     "cookies_do_contexto": []
+    }
+   }
+  },
+  "B": {
+   "fases": {
+    "carga": {
+     "requisicoes": 31,
+     "locais": 31,
+     "externas": 0,
+     "por_dominio": {},
+     "concluidas": 0,
+     "canceladas": 0,
+     "com_texto": 0,
+     "com_cep": 0,
+     "com_coordenadas": 0,
+     "metodo_ou_corpo": 0,
+     "retangulos": {}
+    },
+    "digitar_cep": {
+     "requisicoes": 0,
+     "locais": 0,
+     "externas": 0,
+     "por_dominio": {},
+     "concluidas": 0,
+     "canceladas": 0,
+     "com_texto": 0,
+     "com_cep": 0,
+     "com_coordenadas": 0,
+     "metodo_ou_corpo": 0,
+     "retangulos": {}
+    },
+    "marcar_caixa": {
+     "requisicoes": 48,
+     "locais": 0,
+     "externas": 48,
+     "por_dominio": {
+      "Esri": 48
+     },
+     "concluidas": 48,
+     "canceladas": 0,
+     "com_texto": 0,
+     "com_cep": 0,
+     "com_coordenadas": 0,
+     "metodo_ou_corpo": 0,
+     "retangulos": {
+      "Esri": {
+       "tiles": 48,
+       "zoom_min": 11,
+       "zoom_max": 11,
+       "por_zoom": {
+        "11": 48
+       },
+       "noroeste": [
+        -22.106,
+        -48.1641
+       ],
+       "sudeste": [
+        -22.7559,
+        -47.1094
+       ],
+       "largura_km": 108.4,
+       "altura_km": 72.27,
+       "cep_dentro_do_retangulo": true,
+       "cep_a_km_do_centro": 7.52
+      }
+     }
+    },
+    "zoom": {
+     "requisicoes": 132,
+     "locais": 0,
+     "externas": 132,
+     "por_dominio": {
+      "Esri": 132
+     },
+     "concluidas": 132,
+     "canceladas": 0,
+     "com_texto": 0,
+     "com_cep": 0,
+     "com_coordenadas": 0,
+     "metodo_ou_corpo": 0,
+     "retangulos": {
+      "Esri": {
+       "tiles": 132,
+       "zoom_min": 12,
+       "zoom_max": 14,
+       "por_zoom": {
+        "12": 48,
+        "13": 48,
+        "14": 36
+       },
+       "noroeste": [
+        -22.3501,
+        -47.6367
+       ],
+       "sudeste": [
+        -22.411,
+        -47.5049
+       ],
+       "largura_km": 13.56,
+       "altura_km": 6.78,
+       "cep_dentro_do_retangulo": true,
+       "cep_a_km_do_centro": 2.75
+      }
+     }
+    },
+    "mover": {
+     "requisicoes": 12,
+     "locais": 0,
+     "externas": 12,
+     "por_dominio": {
+      "Esri": 12
+     },
+     "concluidas": 12,
+     "canceladas": 0,
+     "com_texto": 0,
+     "com_cep": 0,
+     "com_coordenadas": 0,
+     "metodo_ou_corpo": 0,
+     "retangulos": {
+      "Esri": {
+       "tiles": 12,
+       "zoom_min": 14,
+       "zoom_max": 14,
+       "por_zoom": {
+        "14": 12
+       },
+       "noroeste": [
+        -22.411,
+        -47.6367
+       ],
+       "sudeste": [
+        -22.4313,
+        -47.5049
+       ],
+       "largura_km": 13.55,
+       "altura_km": 2.26,
+       "cep_dentro_do_retangulo": false,
+       "cep_a_km_do_centro": 1.79
+      }
+     }
+    },
+    "recarga": {
+     "requisicoes": 31,
+     "locais": 31,
+     "externas": 0,
+     "por_dominio": {},
+     "concluidas": 0,
+     "canceladas": 0,
+     "com_texto": 0,
+     "com_cep": 0,
+     "com_coordenadas": 0,
+     "metodo_ou_corpo": 0,
+     "retangulos": {}
+    }
+   },
+   "titulo": "CEP primeiro; caixa da Esri marcada depois (página inicial)",
+   "extra": {
+    "caixa_esri_marcada_ao_abrir": false,
+    "mensagem_do_site": "Região aproximada pelo CEP 13500-230 (raio de cerca de 1500 m). Não é o seu endereço. Este CEP cobre uma área grande: a ordem por distância é só uma ideia.",
+    "cliques_de_zoom": 3,
+    "mapa_movido": true,
+    "erro": null
+   },
+   "armazenamento": {
+    "antes_da_recarga": {
+     "localStorage": {},
+     "sessionStorage": {},
+     "indexedDB": [],
+     "cacheStorage": [],
+     "serviceWorkers": [],
+     "documentCookie": "",
+     "cookies_do_contexto": []
+    },
+    "depois_da_recarga": {
+     "localStorage": {},
+     "sessionStorage": {},
+     "indexedDB": [],
+     "cacheStorage": [],
+     "serviceWorkers": [],
+     "documentCookie": "",
+     "cookies_do_contexto": []
+    }
+   }
+  },
+  "C": {
+   "fases": {
+    "carga": {
+     "requisicoes": 31,
+     "locais": 31,
+     "externas": 0,
+     "por_dominio": {},
+     "concluidas": 0,
+     "canceladas": 0,
+     "com_texto": 0,
+     "com_cep": 0,
+     "com_coordenadas": 0,
+     "metodo_ou_corpo": 0,
+     "retangulos": {}
+    },
+    "digitar_cep": {
+     "requisicoes": 0,
+     "locais": 0,
+     "externas": 0,
+     "por_dominio": {},
+     "concluidas": 0,
+     "canceladas": 0,
+     "com_texto": 0,
+     "com_cep": 0,
+     "com_coordenadas": 0,
+     "metodo_ou_corpo": 0,
+     "retangulos": {}
+    },
+    "marcar_caixa": {
+     "requisicoes": 15,
+     "locais": 0,
+     "externas": 15,
+     "por_dominio": {
+      "OpenStreetMap": 15
+     },
+     "concluidas": 15,
+     "canceladas": 0,
+     "com_texto": 0,
+     "com_cep": 0,
+     "com_coordenadas": 0,
+     "metodo_ou_corpo": 0,
+     "retangulos": {
+      "OpenStreetMap": {
+       "tiles": 15,
+       "zoom_min": 12,
+       "zoom_max": 12,
+       "por_zoom": {
+        "12": 15
+       },
+       "noroeste": [
+        -22.2688,
+        -47.8125
+       ],
+       "sudeste": [
+        -22.5126,
+        -47.373
+       ],
+       "largura_km": 45.18,
+       "altura_km": 27.11,
+       "cep_dentro_do_retangulo": true,
+       "cep_a_km_do_centro": 2.92
+      }
+     }
+    },
+    "zoom": {
+     "requisicoes": 34,
+     "locais": 0,
+     "externas": 34,
+     "por_dominio": {
+      "OpenStreetMap": 34
+     },
+     "concluidas": 34,
+     "canceladas": 0,
+     "com_texto": 0,
+     "com_cep": 0,
+     "com_coordenadas": 0,
+     "metodo_ou_corpo": 0,
+     "retangulos": {
+      "OpenStreetMap": {
+       "tiles": 34,
+       "zoom_min": 13,
+       "zoom_max": 15,
+       "por_zoom": {
+        "13": 12,
+        "14": 10,
+        "15": 12
+       },
+       "noroeste": [
+        -22.3806,
+        -47.6367
+       ],
+       "sudeste": [
+        -22.4009,
+        -47.5708
+       ],
+       "largura_km": 6.78,
+       "altura_km": 2.26,
+       "cep_dentro_do_retangulo": false,
+       "cep_a_km_do_centro": 3.91
+      }
+     }
+    },
+    "mover": {
+     "requisicoes": 2,
+     "locais": 0,
+     "externas": 2,
+     "por_dominio": {
+      "OpenStreetMap": 2
+     },
+     "concluidas": 2,
+     "canceladas": 0,
+     "com_texto": 0,
+     "com_cep": 0,
+     "com_coordenadas": 0,
+     "metodo_ou_corpo": 0,
+     "retangulos": {
+      "OpenStreetMap": {
+       "tiles": 2,
+       "zoom_min": 15,
+       "zoom_max": 15,
+       "por_zoom": {
+        "15": 2
+       },
+       "noroeste": [
+        -22.3806,
+        -47.5708
+       ],
+       "sudeste": [
+        -22.4009,
+        -47.5598
+       ],
+       "largura_km": 1.13,
+       "altura_km": 2.26,
+       "cep_dentro_do_retangulo": false,
+       "cep_a_km_do_centro": 1.66
+      }
+     }
+    },
+    "recarga": {
+     "requisicoes": 31,
+     "locais": 31,
+     "externas": 0,
+     "por_dominio": {},
+     "concluidas": 0,
+     "canceladas": 0,
+     "com_texto": 0,
+     "com_cep": 0,
+     "com_coordenadas": 0,
+     "metodo_ou_corpo": 0,
+     "retangulos": {}
+    }
+   },
+   "titulo": "Mapa 'perto de mim' (OpenStreetMap): CEP, depois caixa de ruas marcada",
+   "extra": {
+    "busca_por_cep_visivel": true,
+    "resultado_com_mapa_visivel": true,
+    "mensagem_do_site": "(sem mensagem)",
+    "caixa_osm_marcada_antes": false,
+    "cliques_de_zoom": 3,
+    "mapa_movido": true,
+    "erro": null
+   },
+   "armazenamento": {
+    "antes_da_recarga": {
+     "localStorage": {},
+     "sessionStorage": {},
+     "indexedDB": [],
+     "cacheStorage": [],
+     "serviceWorkers": [],
+     "documentCookie": "",
+     "cookies_do_contexto": []
+    },
+    "depois_da_recarga": {
+     "localStorage": {},
+     "sessionStorage": {},
+     "indexedDB": [],
+     "cacheStorage": [],
+     "serviceWorkers": [],
+     "documentCookie": "",
+     "cookies_do_contexto": []
+    }
+   }
+  }
+ }
+}
