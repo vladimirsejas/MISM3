@@ -214,7 +214,7 @@ def gerar(dados: dict) -> dict:
             "entradas_sha256": {k: hashes[k] for k in sorted(hashes)},
             "entradas_geradas_em": {"setores.geojson": geo["meta"]["gerado_em"], "territorio.json": meta_terr["gerado_em"],
                                     "exposicao_distancia.json": meta_expo["gerado_em"], "analise_territorial.json": ent["analise_territorial.json"]["meta"]["gerado_em"]},
-            "auditoria_centros": {"metodo_atual": "centroide geométrico do maior componente do MultiPolygon, selecionado pelo número de vértices do anel externo; cálculo usa somente o anel externo", "setores_auditados": len(setores), "centroides_fora_do_poligono": centroides_fora, "substituicao_automatica": False},
+            "auditoria_centros": {"metodo_atual": "centroide geométrico do maior componente do MultiPolygon, selecionado pelo número de vértices do anel externo; cálculo usa somente o anel externo", "setores_auditados": len(setores), "centroides_fora_do_poligono": centroides_fora, "substituicao_automatica": False, "observacao": "A comparação com ponto interno representativo e a avaliação do impacto nas distâncias permanecem pendentes. Nenhum centro foi substituído."},
             "metodo": ("Setor censitário como unidade. Pessoas e domicílios: campos agregados da malha do IBGE (v0001 = total de pessoas e v0002 = total de domicílios, inclusive coletivos e não ocupados, conforme o dicionário de dados dos agregados preliminares do IBGE; falta confirmar que a malha usada é da mesma divulgação). "
                        "Densidade e área: valores de territorio.json. Equipamentos no setor: ponto no polígono com a coordenada do catálogo; ponto na fronteira conta no primeiro setor em ordem de código. "
                        "Distância: Haversine (raio 6371,0088 km) do ponto representativo calculado por at.centro (centroide do maior componente, escolhido pelo número de vértices; anel externo), ao equipamento mais próximo da categoria, no mesmo cálculo de pipeline/exposicao_distancia.py, "
@@ -287,8 +287,11 @@ def main(argv: list[str]) -> int:
         print("ERRO:", e)
         return 1
     if "--conferir" in argv:
-        atual = SAIDA.read_text(encoding="utf-8").replace("\r\n", "\n") if SAIDA.exists() else ""
-        if atual != texto:
+        try:
+            atual = json.loads(SAIDA.read_text(encoding="utf-8")) if SAIDA.exists() else None
+        except json.JSONDecodeError:
+            atual = None
+        if atual != json.loads(texto):
             print("web/dados/indicadores_territoriais.json está desatualizado: rode python pipeline/territorial_indicadores.py")
             return 1
         print("indicadores_territoriais.json confere com as entradas atuais")
