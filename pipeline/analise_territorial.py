@@ -96,7 +96,7 @@ def coordenada_do_servico(s, indice_cep):
     return None
 
 
-def analisar(geojson, servicos, indice_cep, k_grupos=3, hoje=None) -> dict:
+def analisar(geojson, servicos, indice_cep, k_grupos=3, hoje=None, escolas=None) -> dict:
     """Devolve o dicionário de saída. Levanta ValueError quando falta base para calcular."""
     # serviços por categoria, com coordenada
     por_cat = {c: [] for c in CATEGORIAS}
@@ -105,11 +105,47 @@ def analisar(geojson, servicos, indice_cep, k_grupos=3, hoje=None) -> dict:
         if not str(s.get("id", "")).startswith("man-"):
             continue
         for c, (tipo, sub) in CATEGORIAS.items():
+            # A base consolidada passa a ser a fonte oficial das escolas.
+            # Ignora a categoria escolar do catálogo para evitar duplicidade.
+            if escolas is not None and c == "escola":
+                continue
             if s.get("tipo") == tipo and s.get("subtipo") == sub:
                 totais[c] += 1
                 xy = coordenada_do_servico(s, indice_cep)
                 if xy:
                     por_cat[c].append((s, xy))
+
+    metodos_escola = {}
+    precissoes_escola = {}
+    escolas_com_raio = 0
+    if escolas is not None:
+        totais["escola"] = len(escolas)
+        for escola in escolas:
+            local = escola.get("localizacao_mapa") or {}
+            lat, lon = local.get("latitude"), local.get("longitude")
+            if lat is None or lon is None:
+                continue
+            metodo = str(local.get("metodo") or "nao_informado")
+            precisao = str(local.get("precisao") or "nao_informada")
+            metodos_escola[metodo] = metodos_escola.get(metodo, 0) + 1
+            precissoes_escola[precisao] = precissoes_escola.get(precisao, 0) + 1
+            if local.get("raio_m") is not None:
+                escolas_com_raio += 1
+            registro = {
+                "id": escola.get("id"),
+                "nome": escola.get("nome"),
+                "tipo": "creche",
+                "subtipo": "escola_municipal",
+                "lat": float(lat),
+                "lon": float(lon),
+                "localizacao": {
+                    "metodo": metodo,
+                    "precisao": precisao,
+                    "fonte": local.get("fonte"),
+                    "raio_m": local.get("raio_m"),
+                },
+            }
+            por_cat["escola"].append((registro, (float(lat), float(lon))))
     if not any(por_cat.values()):
         raise ValueError("nenhum serviço tem coordenada. Falta o índice de CEP (web/dados/cep_indice.json) ou latitude e longitude no catálogo.")
 
@@ -145,17 +181,28 @@ def analisar(geojson, servicos, indice_cep, k_grupos=3, hoje=None) -> dict:
     saida_b.sort(key=lambda x: x["bairro"])
 
     grupos = agrupar(saida_b, k_grupos)
-    return {
+    saida = {
         "meta": {
-            "fonte": "IBGE, Censo Demográfico 2022 (setores) e catálogo verificado do Observatório da Mulher",
+            "fonte": "IBGE, Censo Demográfico 2022 (setores), catálogo verificado e base integrada de escolas municipais",
             "gerado_em": (hoje or date.today()).isoformat(),
             "aviso": AVISO,
-            "cobertura_dos_servicos": {c: {"com_coordenada": len(por_cat[c]), "cadastrados": totais[c]} for c in CATEGORIAS},
+            "cobertura_dos_servicos": {
+                c: {"com_coordenada": len(por_cat[c]), "cadastrados": totais[c]}
+                for c in CATEGORIAS
+            },
             "pessoas_total": sum(b["pessoas"] for b in saida_b),
         },
         "bairros": saida_b,
         "grupos": grupos,
     }
+    if escolas is not None:
+        saida["meta"]["cobertura_dos_servicos"]["escola"].update({
+            "localizacao_por_metodo": metodos_escola,
+            "precisao": precissoes_escola,
+            "com_raio_informado": escolas_com_raio,
+            "fonte_localizacao": "web/dados/escolas_municipais.json: localizacao_mapa",
+        })
+    return saida
 
 
 def agrupar(bairros, k):
@@ -192,8 +239,13 @@ def main() -> int:
     cat = json.loads((DADOS / "catalogo_manual.json").read_text(encoding="utf-8"))["servicos"]
     arq = DADOS / "cep_indice.json"
     indice = json.loads(arq.read_text(encoding="utf-8")).get("ceps", {}) if arq.exists() else {}
+    arq_escolas = DADOS / "escolas_municipais.json"
+    if not arq_escolas.exists():
+        print("NÃO GERADO: falta web/dados/escolas_municipais.json. Gere a base escolar antes da análise territorial.")
+        return 1
+    escolas = json.loads(arq_escolas.read_text(encoding="utf-8")).get("escolas", [])
     try:
-        saida = analisar(geo, cat, indice)
+        saida = analisar(geo, cat, indice, escolas=escolas)
     except ValueError as e:
         print("NÃO GERADO:", e)
         print("Nada foi escrito. Coloque web/dados/cep_indice.json (gerado por pipeline/indice_cep.py) e rode de novo.")
