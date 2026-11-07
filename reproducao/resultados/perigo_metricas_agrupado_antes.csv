@@ -1,0 +1,6 @@
+metrica,k,n,valor,ic95_inferior,ic95_superior
+Revocação (qualquer alerta),26,26,1.0,0.8713,1.0
+Revocação (só alerta completo),21,26,0.8077,0.6212,0.9149
+Especificidade (sem alerta entre os sem perigo),148,150,0.9867,0.9527,0.9963
+Falso alarme (qualquer alerta),2,150,0.0133,0.0037,0.0473
+Falso alarme (só alerta completo),1,150,0.0067,0.0012,0.0368
