@@ -190,11 +190,24 @@
       f = estado.geo.features[i];
       p = svg("path", { d: caminhoDe(f.geometry, estado.proj), "class": "mt-setor", "fill-rule": "evenodd", fill: COR_SEM_VALOR });
       p.setAttribute("data-setor", f.properties.setor);
+      p.setAttribute("tabindex", "0");
+      p.setAttribute("role", "button");
+      p.setAttribute("aria-label", "Selecionar setor censitário " + f.properties.setor + ". Use Enter ou Espaço para abrir o detalhe.");
+      p.setAttribute("aria-pressed", "false");
       t = svg("title", {});
       p.appendChild(t);
       camada.appendChild(p);
       estado.caminhos[f.properties.setor] = p;
-      (function (id) { p.addEventListener("click", function () { escolherSetor(id); }); })(f.properties.setor);
+      (function (id) {
+        p.addEventListener("click", function () { escolherSetor(id); });
+        p.addEventListener("keydown", function (e) {
+          var tecla = e.key || e.keyCode;
+          if (tecla === "Enter" || tecla === " " || tecla === "Spacebar" || tecla === 13 || tecla === 32) {
+            if (e.preventDefault) e.preventDefault();
+            escolherSetor(id);
+          }
+        });
+      })(f.properties.setor);
     }
   }
 
@@ -280,7 +293,10 @@
   function escolherSetor(id) {
     var d = estado.dados, st = null, i, k;
     for (i = 0; i < d.setores.length; i++) if (d.setores[i].id === id) { st = d.setores[i]; break; }
-    for (k in estado.caminhos) if (Object.prototype.hasOwnProperty.call(estado.caminhos, k)) estado.caminhos[k].setAttribute("class", "mt-setor");
+    for (k in estado.caminhos) if (Object.prototype.hasOwnProperty.call(estado.caminhos, k)) {
+      estado.caminhos[k].setAttribute("class", "mt-setor");
+      estado.caminhos[k].setAttribute("aria-pressed", "false");
+    }
     estado.escolhido = st ? st.id : null;
     $("mt-setor").value = st ? st.id : "";
     var corpo = $("mt-detalhe-corpo");
@@ -288,6 +304,7 @@
     $("mt-detalhe-vazio").hidden = !!st;
     if (!st) return;
     estado.caminhos[st.id].setAttribute("class", "mt-setor mt-escolhido");
+    estado.caminhos[st.id].setAttribute("aria-pressed", "true");
     var dl = el("dl"), linhas = [
       ["Setor censitário", st.id], ["Bairro", st.bairro || "Sem bairro definido pelo IBGE"], ["Pessoas", milhar(st.pessoas)],
       ["Domicílios", milhar(st.domicilios)], ["Área", decimal(st.area_km2, 3) + " km²"], ["Densidade", milhar(st.densidade) + " pessoas por km²"]
