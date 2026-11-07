@@ -75,3 +75,61 @@ def test_agrupamento_so_com_bairros_suficientes():
         assert len(g["resumo"]) == 3 and sum(r["bairros"] for r in g["resumo"]) == 12
         assert g["resumo"][0]["media_distancia_media_cras_km"] <= g["resumo"][-1]["media_distancia_media_cras_km"]
     assert at.agrupar(bairros[:4], 3) is None
+
+
+def test_base_escolar_consolidada_e_fonte_da_localizacao():
+    catalogo = [
+        cras("man-cras-a", -22.395, -47.595),
+        {
+            "id": "man-em-teste",
+            "tipo": "creche",
+            "subtipo": "escola_municipal",
+            "nome": "Escola do catálogo",
+            "lat": -22.395,
+            "lon": -47.595,
+        },
+    ]
+    escolas = [{
+        "id": "man-em-teste",
+        "nome": "Escola consolidada",
+        "localizacao_mapa": {
+            "latitude": -22.385,
+            "longitude": -47.585,
+            "metodo": "centroide_cep",
+            "precisao": "aproximada",
+            "fonte": "CNEFE",
+            "raio_m": 500,
+        },
+    }]
+
+    resultado = at.analisar(geo(), catalogo, {}, escolas=escolas)
+    cobertura = resultado["meta"]["cobertura_dos_servicos"]["escola"]
+
+    # A coordenada consolidada deve prevalecer sobre a cópia do catálogo.
+    assert cobertura["com_coordenada"] == 1
+    assert cobertura["cadastrados"] == 1
+    assert cobertura["localizacao_por_metodo"] == {"centroide_cep": 1}
+    assert cobertura["precisao"] == {"aproximada": 1}
+    assert cobertura["com_raio_informado"] == 1
+
+    # A escola aparece uma única vez na contagem de serviços do bairro.
+    assert sum(b["servicos_no_bairro"] for b in resultado["bairros"]) == 1
+
+
+def test_escola_sem_localizacao_na_base_consolidada_nao_usa_catalogo_antigo():
+    catalogo = [{
+        "id": "man-em-sem-localizacao",
+        "tipo": "creche",
+        "subtipo": "escola_municipal",
+        "nome": "Escola sem localização consolidada",
+        "lat": -22.395,
+        "lon": -47.595,
+    }]
+    escolas = [{
+        "id": "man-em-sem-localizacao",
+        "nome": "Escola sem localização consolidada",
+        "localizacao_mapa": None,
+    }]
+
+    with pytest.raises(ValueError):
+        at.analisar(geo(), catalogo, {}, escolas=escolas)
