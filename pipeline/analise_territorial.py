@@ -137,7 +137,7 @@ def analisar(geojson, servicos, indice_cep, k_grupos=3, hoje=None, escolas=None)
                     if s.get("lat") is not None and s.get("lon") is not None:
                         registro["_raio_incerteza_m"] = 0
                     else:
-                        cep = re.sub(r"\\D", "", str(s.get("cep") or ""))
+                        cep = re.sub(r"\D", "", str(s.get("cep") or ""))
                         v = indice_cep.get(cep) if cep else None
                         registro["_raio_incerteza_m"] = v[2] if v and len(v) > 2 else 0
                     por_cat[c].append((registro, xy))
