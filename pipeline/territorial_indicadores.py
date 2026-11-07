@@ -145,9 +145,12 @@ def gerar(dados: dict) -> dict:
 
     # Posição representativa de cada setor: a mesma de pipeline/analise_territorial.py (centroide geométrico).
     setores = []
+    centroides_fora = 0
     for f in feicoes:
         pr = f["properties"]
         lat, lon = at.centro(f["geometry"])
+        if not at.contem(f["geometry"], lon, lat):
+            centroides_fora += 1
         setores.append({"id": pr["setor"], "bairro": pr.get("bairro") or None, "pessoas": int(pr.get("pessoas") or 0),
                         "domicilios": int(pr.get("domicilios") or 0), "lat": lat, "lon": lon, "caixa": _caixa(f["geometry"]), "geom": f["geometry"]})
 
@@ -211,16 +214,18 @@ def gerar(dados: dict) -> dict:
             "entradas_sha256": {k: hashes[k] for k in sorted(hashes)},
             "entradas_geradas_em": {"setores.geojson": geo["meta"]["gerado_em"], "territorio.json": meta_terr["gerado_em"],
                                     "exposicao_distancia.json": meta_expo["gerado_em"], "analise_territorial.json": ent["analise_territorial.json"]["meta"]["gerado_em"]},
+            "auditoria_centros": {"metodo_atual": "centroide geométrico do maior componente do MultiPolygon, selecionado pelo número de vértices do anel externo; cálculo usa somente o anel externo", "setores_auditados": len(setores), "centroides_fora_do_poligono": centroides_fora, "substituicao_automatica": False},
             "metodo": ("Setor censitário como unidade. Pessoas e domicílios: campos agregados da malha do IBGE (v0001 = total de pessoas e v0002 = total de domicílios, inclusive coletivos e não ocupados, conforme o dicionário de dados dos agregados preliminares do IBGE; falta confirmar que a malha usada é da mesma divulgação). "
                        "Densidade e área: valores de territorio.json. Equipamentos no setor: ponto no polígono com a coordenada do catálogo; ponto na fronteira conta no primeiro setor em ordem de código. "
-                       "Distância: Haversine (raio 6371,0088 km) do centroide do setor ao equipamento mais próximo da categoria, no mesmo cálculo de pipeline/exposicao_distancia.py, "
+                       "Distância: Haversine (raio 6371,0088 km) do ponto representativo calculado por at.centro (centroide do maior componente, escolhido pelo número de vértices; anel externo), ao equipamento mais próximo da categoria, no mesmo cálculo de pipeline/exposicao_distancia.py, "
                        "conferido contra web/dados/exposicao_distancia.json. Cobertura: equipamentos com coordenada sobre equipamentos cadastrados."),
             "aviso_metodologico": AVISO_METODOLOGICO,
             "rotulos_cenario": ROTULOS_CENARIO,
             "rotulos_categoria": ROTULOS_CATEGORIA,
             "ressalvas": [
                 "Nesta versão nenhum setor censitário é suprimido nem agregado. Os %d setores com menos de 5 pessoas ou menos de 3 domicílios (faixa conservadora da proposta de supressão e agregação) são marcados no mapa com o aviso 'população muito pequena, interprete com cautela' (decisão D4 em docs/territorial/DECISOES_DO_AUTOR.md; pode ser revista pelo autor)." % sum(1 for s in setores if s["pessoas"] < 5 or s["domicilios"] < 3),
-                "O cenário com centro do CEP cadastral do equipamento é uma análise de sensibilidade: a posição é aproximada e não equivale à coordenada do catálogo.",
+                "O cenário com centro do CEP cadastral do equipamento é uma análise de sensibilidade: a posição é aproximada e não equivale à coordenada individual do catálogo.",
+                "A auditoria geométrica encontrou %d centroides fora dos respectivos polígonos em %d setores. O centroide atual não foi substituído: a alternativa interna e o impacto nas distâncias ainda precisam ser comparados antes de qualquer mudança." % (centroides_fora, len(setores)),
                 "O método e a confiança de cada coordenada ficam em catalogo/localizacao_registro.csv e não são lidos por este script.",
                 "Categorias com cobertura incompleta de coordenadas têm distância superestimada.",
             ],
