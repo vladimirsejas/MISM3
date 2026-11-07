@@ -126,31 +126,66 @@ No arquivo atual, as coberturas são:
 
 Esses valores são lidos do arquivo existente e não foram recalculados nesta fase. A escolha de manter o cenário com CEP institucional como análise de sensibilidade ou retirá-lo é decisão do autor. Ver opções e consequências em `INVENTARIO_TERRITORIAL.md`.
 
-## 5. Análise de sensibilidade proposta: centroide versus ponto interno representativo
+## 5. Auditoria geométrica do ponto representativo
 
-**Status: proposta; não executada.**
+**Auditoria inicial executada em 07/11/2026 sobre as 408 geometrias versionadas. A substituição do método permanece pendente.**
 
-Os cálculos atuais utilizam o centroide geométrico do setor. Para setores irregulares, o centroide pode ficar fora do polígono ou não representar adequadamente sua ocupação espacial.
+O método atual em pipeline/analise_territorial.py, função centro, escolhe em cada geometria MultiPolygon o componente cujo anel externo tem mais vértices e calcula o centroide desse anel. A seleção por quantidade de vértices não equivale à seleção por área; o cálculo não considera os anéis internos (buracos) nem combina todos os componentes pela área.
 
-Propõe-se comparar:
+**Resultado da verificação espacial:** 9 dos 408 centroides calculados pelo método atual caem fora do respectivo polígono. Os códigos identificados são:
 
-1. **Centroide geométrico:** ponto calculado a partir da geometria do polígono.
-2. **Ponto interno representativo:** ponto garantidamente localizado dentro do polígono, por exemplo, um ponto sobre a superfície produzido por método geoespacial apropriado.
+- 354390705000026
+- 354390705000165
+- 354390705000339
+- 354390705000432
+- 354390705000460
+- 354390705000524
+- 354390705000529
+- 354390705000530
+- 354390705000541
 
-Procedimento proposto:
+Uma checagem exploratória adicional calculou o centroide ponderado pela área dos componentes e dos anéis. Ela também encontrou 9 centroides fora; nos nove casos, o deslocamento em relação ao método atual foi inferior a 0,14 metro. Portanto, simplesmente ponderar componentes pela área não resolve esses casos.
 
-- Usar exatamente a mesma malha de setores e o mesmo conjunto aprovado de pontos institucionais nos dois cenários.
-- Não usar endereços, CEPs ou coordenadas de pessoas.
-- Calcular a distância de cada setor aos mesmos equipamentos em cada cenário.
-- Comparar diferenças por setor, categoria e estatísticas agregadas.
-- Relatar quantos setores têm centroide fora do polígono.
-- Registrar método de geração do ponto interno, sistema de coordenadas e versão das bibliotecas.
-- Não escolher o cenário que produza resultado mais favorável; justificar a escolha pela adequação geométrica.
-- Identificar o efeito da mudança sobre mediana, percentil 90 e proporções acima dos limiares, quando esses resumos forem utilizados.
+**Decisão nesta rodada:** não substituir automaticamente o centroide nem recalcular as distâncias. O ponto representativo alternativo deve ser interno ao polígono e precisa ser comparado antes da adoção.
 
-A comparação não mede acesso efetivo e não corrige a ausência de coordenadas de equipamentos.
+Próxima comparação necessária:
 
-## 6. Linguagem de interpretação
+1. Gerar um ponto interno representativo para cada um dos 408 setores, inclusive geometrias multipartes e setores com buracos.
+2. Confirmar por teste ponto-no-polígono que todos os pontos alternativos pertencem à geometria correspondente.
+3. Calcular as distâncias com o mesmo conjunto de equipamentos e nos mesmos cenários de localização.
+4. Comparar deslocamento entre pontos, diferenças de distância por setor e categoria, mediana, percentil 90 e proporções acima dos limiares.
+5. Registrar algoritmo, sistema de coordenadas, versão da biblioteca e resultados.
+6. Adotar o método somente após avaliar o impacto e documentar a decisão.
+
+A auditoria não mede ocupação interna do setor nem acessibilidade efetiva.
+
+## 6. Contrato metodológico comum aos indicadores
+
+| Regra | Aplicação |
+|---|---|
+| Unidade de análise | População e domicílios agregados; nunca pessoas individualizadas |
+| Unidade geográfica | Setor censitário, bairro ou município, com escala explicitada |
+| Localização de equipamentos | Coordenada individual do catálogo ou referência aproximada identificada pela origem |
+| Distância | Em linha reta, quando essa for a métrica disponível; informar ponto de origem e destino |
+| Incerteza | Preservada e divulgada; não converter aproximação em precisão aparente |
+| Matrículas | Não representam vagas disponíveis |
+| Proximidade | Não comprova acessibilidade, atendimento ou elegibilidade |
+| Vulnerabilidade | Não pode ser presumida apenas pela distância ou densidade |
+| Privacidade | Não identificar nem inferir informações sobre indivíduos ou domicílios |
+
+A agregação por setor não garante anonimato por si só. Antes de publicar, avaliar setores pequenos, categorias raras, cruzamentos específicos e a possibilidade de deduzir valores por diferenças entre totais e subtotais. A regra de supressão ou agregação precisa ser definida e aprovada antes de divulgar indicadores sensíveis; o aviso atual de cautela não equivale a uma proteção estatística.
+
+## 7. Arquitetura em três camadas
+
+1. **Dados territoriais e populacionais:** malha oficial, geometrias dos setores, população agregada, domicílios e correspondências territoriais.
+2. **Equipamentos e qualidade geográfica:** escolas, UBS/USF e CRAS; coordenadas; método de localização; fonte; data; precisão; raio ou incerteza quando existente.
+3. **Indicadores territoriais:** distâncias estimadas, distribuição de equipamentos e indicadores agregados por setor, bairro e município.
+
+As camadas devem manter proveniência explícita. Alterações na localização de um equipamento devem permitir reconstruir a camada de indicadores sem alterar a fonte populacional; alterações na malha ou nos dados populacionais devem ser rastreáveis separadamente.
+
+## 8. Linguagem de interpretação
+
+
 
 ### Expressões permitidas
 - “distância em linha reta”;
@@ -172,7 +207,7 @@ A comparação não mede acesso efetivo e não corrige a ausência de coordenada
 
 A presença ou ausência de pontos dentro de um setor não determina a área de atendimento de um equipamento.
 
-## 7. Regras de qualidade e publicação
+## 9. Regras de qualidade e publicação
 
 - Todo indicador deve registrar fonte, ano, data de geração, unidade, fórmula e limitações.
 - Toda coordenada institucional deve possuir método, confiança e data de verificação.
@@ -182,6 +217,6 @@ A presença ou ausência de pontos dentro de um setor não determina a área de 
 - Não publicar dados individuais ou cruzamentos que permitam reidentificação.
 - Valores de setores pequenos devem passar pelas regras de supressão da política de privacidade.
 
-## 8. Situação nesta fase
+## 10. Situação nesta fase
 
-Esta fase é exclusivamente documental. Nenhum indicador foi recalculado, nenhuma análise de sensibilidade foi executada, nenhum script foi alterado e nenhum teste foi rodado. Os números de cobertura apresentados são transcrições dos arquivos atuais do repositório.
+Nesta rodada foi executada a auditoria geométrica inicial das 408 feições e registrada a ocorrência de 9 centroides fora dos polígonos. O gerador e o JSON do mapa passaram a registrar essa auditoria e a distinguir a proveniência das localizações. Nenhum centro foi substituído e as distâncias existentes não foram recalculadas. A comparação completa com pontos internos representativos, o impacto nos indicadores e a definição formal de supressão estatística continuam pendentes. Os números de cobertura apresentados são transcrições dos arquivos atuais do repositório.
