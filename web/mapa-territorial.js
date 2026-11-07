@@ -283,16 +283,25 @@
     return c;
   }
 
-  /* Escolhe o centroide mais próximo entre os setores no semiplano indicado pela seta. */
+  /* Escolhe o setor no semiplano da seta pela nota projeção + 2 × desvio lateral.
+     A medição Chromium/Node do critério anterior (408 setores, 1.632 movimentos) encontrou
+     548 desvios acima de 60°, 18 saltos acima de 3× o vizinho mais próximo, 4 movimentos
+     sem destino e 4 setores inalcançáveis só pelas setas: 354390705000163, 354390705000409,
+     354390705000501 e 354390710000012. Com a penalidade lateral, a medição Node encontrou
+     336 desvios acima de 60° e alcançabilidade dos 408 setores. Permanecem 546 casos em que
+     a seta de volta não retorna à origem; esta regra não resolve essa limitação.
+     Os pontos continuam sendo centroides geométricos dos polígonos. */
   function vizinho(origem, dx, dy, cent) {
-    var o = cent[origem], k, melhor = null, distancia2, v;
+    var o = cent[origem], k, melhor = null, projecao, desvioLateral, nota, v;
     for (k in cent) if (Object.prototype.hasOwnProperty.call(cent, k) && k !== origem && cent[k]) {
       v = [cent[k][0] - o[0], cent[k][1] - o[1]];
-      if (v[0] * dx + v[1] * dy <= 0) continue;
-      distancia2 = v[0] * v[0] + v[1] * v[1];
-      if (melhor === null || distancia2 < melhor.distancia2 ||
-          (distancia2 === melhor.distancia2 && k < melhor.id)) {
-        melhor = { id: k, distancia2: distancia2 };
+      projecao = v[0] * dx + v[1] * dy;
+      if (projecao <= 0) continue;
+      desvioLateral = Math.abs(v[0] * dy - v[1] * dx);
+      nota = projecao + 2 * desvioLateral;
+      if (melhor === null || nota < melhor.nota ||
+          (nota === melhor.nota && k < melhor.id)) {
+        melhor = { id: k, nota: nota };
       }
     }
     return melhor ? melhor.id : null;
