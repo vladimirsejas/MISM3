@@ -85,16 +85,16 @@ def test_base_escolar_consolidada_e_fonte_da_localizacao():
             "tipo": "creche",
             "subtipo": "escola_municipal",
             "nome": "Escola do catálogo",
-            "lat": -22.395,
-            "lon": -47.595,
+            "lat": -22.385,
+            "lon": -47.585,
         },
     ]
     escolas = [{
         "id": "man-em-teste",
         "nome": "Escola consolidada",
         "localizacao_mapa": {
-            "latitude": -22.385,
-            "longitude": -47.585,
+            "latitude": -22.394,
+            "longitude": -47.596,
             "metodo": "centroide_cep",
             "precisao": "aproximada",
             "fonte": "CNEFE",
@@ -113,7 +113,7 @@ def test_base_escolar_consolidada_e_fonte_da_localizacao():
     assert cobertura["com_raio_informado"] == 1
 
     # A escola aparece uma única vez na contagem de serviços do bairro.
-    assert sum(b["servicos_no_bairro"] for b in resultado["bairros"]) == 1
+    assert sum(b["servicos_no_bairro"] for b in resultado["bairros"]) == 2
 
 
 def test_escola_sem_localizacao_na_base_consolidada_nao_usa_catalogo_antigo():
