@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="theme-color" content="#7a2b37">
+<title>Mapa territorial (versão 1) – Observatório da Mulher</title>
+<link rel="stylesheet" href="estilo.css">
+<link rel="stylesheet" href="mapa-territorial.css">
+</head>
+<body class="mt-pagina">
+<a class="pular" href="#mt-principal">Pular para o conteúdo</a>
+
+<header class="mt-topo">
+  <a class="mt-voltar" href="index.html">‹ Voltar ao Observatório da Mulher</a>
+  <h1>Mapa territorial de Rio Claro</h1>
+  <p class="mt-versao">Versão 1, de pesquisa. Usa somente dados públicos e agregados por setor censitário e a localização de equipamentos públicos. Não há dado de pessoa, CEP residencial nem endereço residencial.</p>
+</header>
+
+<main id="mt-principal" class="mt-principal">
+  <noscript><p class="mt-erro">Esta página precisa de JavaScript para desenhar o mapa. Nenhum dado é enviado a outros endereços.</p></noscript>
+  <p id="mt-mensagem" class="mt-mensagem" role="status">Carregando os dados locais…</p>
+
+  <section class="mt-controles" aria-labelledby="mt-titulo-controles">
+    <h2 id="mt-titulo-controles">O que mostrar</h2>
+    <div class="mt-campo">
+      <label for="mt-indicador">Indicador</label>
+      <select id="mt-indicador"></select>
+    </div>
+    <div class="mt-campo" id="mt-grupo-categoria" hidden>
+      <label for="mt-categoria">Categoria de equipamento</label>
+      <select id="mt-categoria"></select>
+    </div>
+    <div class="mt-campo" id="mt-grupo-cenario" hidden>
+      <label for="mt-cenario">Cenário de localização</label>
+      <select id="mt-cenario"></select>
+    </div>
+    <fieldset class="mt-campo">
+      <legend>Pontos dos equipamentos</legend>
+      <label class="mt-opcao"><input type="checkbox" id="mt-ponto-catalogo" checked> Coordenada do catálogo (conferida)</label>
+      <label class="mt-opcao"><input type="checkbox" id="mt-ponto-cep" checked> Posição aproximada pelo centro do CEP cadastral do equipamento (análise de sensibilidade)</label>
+    </fieldset>
+    <div class="mt-campo">
+      <label for="mt-setor">Detalhar um setor (alternativa ao clique no mapa)</label>
+      <select id="mt-setor"></select>
+    </div>
+  </section>
+
+  <section class="mt-area-mapa" aria-labelledby="mt-titulo-mapa">
+    <h2 id="mt-titulo-mapa">Mapa dos setores censitários</h2>
+    <p id="mt-ajuda-teclado" class="mt-ajuda">Use Tab para chegar ao mapa e as setas para mudar de setor. Enter abre o detalhe.</p>
+    <svg id="mt-svg" class="mt-svg" role="group" aria-labelledby="mt-svg-titulo mt-svg-desc" aria-describedby="mt-ajuda-teclado" viewBox="0 0 1000 1000">
+      <title id="mt-svg-titulo">Setores censitários de Rio Claro coloridos pelo indicador escolhido</title>
+      <desc id="mt-svg-desc">Cada polígono é um setor censitário do IBGE. Os pontos marcam equipamentos públicos cadastrados. Não há mapa de fundo.</desc>
+      <g id="mt-camada-setores"></g>
+      <g id="mt-camada-pontos"></g>
+      <g id="mt-camada-foco"></g>
+    </svg>
+    <div id="mt-legenda" class="mt-legenda" aria-live="polite"></div>
+  </section>
+
+  <section id="mt-detalhe" class="mt-detalhe" aria-live="polite" aria-labelledby="mt-titulo-detalhe">
+    <h2 id="mt-titulo-detalhe">Detalhe do setor</h2>
+    <p id="mt-detalhe-vazio">Escolha um setor no mapa ou na lista acima.</p>
+    <div id="mt-detalhe-corpo"></div>
+  </section>
+
+  <section id="mt-resumo" class="mt-resumo" aria-live="polite" aria-labelledby="mt-titulo-resumo">
+    <h2 id="mt-titulo-resumo">Resumo da distância em linha reta</h2>
+    <div id="mt-resumo-corpo"></div>
+  </section>
+
+  <section class="mt-aviso" role="note" aria-labelledby="mt-titulo-aviso">
+    <h2 id="mt-titulo-aviso">Como ler este mapa</h2>
+    <p id="mt-aviso-texto"></p>
+    <ul id="mt-ressalvas"></ul>
+  </section>
+
+  <section class="mt-cobertura" aria-labelledby="mt-titulo-cobertura">
+    <h2 id="mt-titulo-cobertura">Cobertura das coordenadas dos equipamentos</h2>
+    <div id="mt-cobertura-corpo"></div>
+  </section>
+
+  <footer class="mt-fonte" id="mt-fonte" aria-label="Fonte e data"></footer>
+</main>
+
+<script src="mapa-territorial.js"></script>
+</body>
+</html>
