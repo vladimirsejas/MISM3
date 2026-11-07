@@ -4,7 +4,7 @@ Execução principal única; nenhuma saída parcial será inspecionada para orie
 
 Este manifesto foi preenchido na Etapa A (preparação), **antes** de qualquer execução do sistema sobre o conjunto congelado. As decisões de método abaixo são PRÉ-REGISTRO: foram tomadas antes de qualquer execução e não serão alteradas com base nos resultados.
 
-- Data e hora (UTC) da geração: 2026-11-07 02:13:08
+- Data e hora (UTC) da geração: 2026-11-07 03:20:11
 - Responsável pelo congelamento: a preencher pelo autor (não informado na preparação deste manifesto).
 
 ## 1. Integridade
@@ -13,7 +13,7 @@ Este manifesto foi preenchido na Etapa A (preparação), **antes** de qualquer e
 - SHA-256 do arquivo de hash `protocolo/CONJUNTO_CONGELADO_v1.sha256`: `377a7f5c1de637a509e0f5b547d76991f6e6e42737a69af93a393e077f7a3ee3`
 - Gabarito: está no próprio arquivo do conjunto (mesmo SHA-256). n = 190.
 - Commit da etiqueta `v1.0-pesquisa`: `2d8a836cdc8e700500b67c2b6433bc26c4fd9fdd`
-- Commit de `origin/main` usado: `ea99a1359aa9a7af64341072336030810be4e39e`; commit-base do ramo `execucao/conjunto-v1-preparacao` na geração: `ea99a1359aa9a7af64341072336030810be4e39e` (o commit que traz o adaptador e este manifesto vem logo depois)
+- Commit de `origin/main` usado: `44520b8d5d07f9a2ba275fcea3dba44ffec32d05`; commit-base do ramo `execucao/conjunto-v1-preparacao` na geração: `b42f412c39afb32f5d2454bdcfc46aa7f7451d67` (o commit que traz o adaptador e este manifesto vem logo depois)
 - O código do sistema avaliado é o da etiqueta; `web/dados/` (modelos e índice), `pipeline/`, `catalogo/` e `avaliacao/` da `main` são idênticos aos da etiqueta, exceto arquivos novos do mapa territorial (fora do sistema avaliado): `web/dados/indicadores_territoriais.json`, `pipeline/territorial_*.py` e seus testes. Os scripts de `reproducao/` vêm da `main`. Observação: `web/escopo.js` não existe no repositório (o detector de escopo é `criarClassificador` em `web/ia.js`, com o modelo `web/dados/modelo_escopo.json`).
 
 ## 2. Ambiente
@@ -239,7 +239,7 @@ Cada condição é executada por `reproducao/rodar_variantes.js --condicao <nome
 7. **Matriz de confusão por área:** previsão = área do 1º item ou "abstenção"; se a previsão está entre as áreas esperadas, vai à diagonal dessa área; senão, à linha da primeira área esperada em ordem alfabética.
 8. **Incerteza:** Wilson de 95% para proporções; bootstrap pareado por mensagem, 10.000 reamostragens, semente 20261106, percentil de 95% (posições 2,5% e 97,5% das médias ordenadas), as mesmas reamostragens para todas as condições, para MRR, Resposta@3 específica e diferenças.
 9. **MRR:** recíproco da posição do primeiro item esperado em toda a lista devolvida, como em `comum.metricas`; zero se nenhum aparece. Precision@3, Recall@3, Macro-F1 e acurácia balanceada NÃO são calculadas nesta execução (a convenção de denominador não foi pré-definida no protocolo).
-10. **Linha de base lexical dos critérios:** `linha_de_base_tfidf` (TF-IDF simples; BM25 não foi usado porque não há implementação versionada). Comparações com as demais condições são publicadas como complementares.
+10. **Escolha da linha de base (protocolo, seção 3, condição 10):** TF-IDF simples, condição `linha_de_base_tfidf`. O protocolo permite BM25 apenas se houver implementação versionada disponível; a busca por "bm25" nos arquivos de código do repositório (`.py`, `.js`, `.json`; fora de `docs/` e `protocolo/`) em 07/11/2026 não encontrou nenhuma, por isso a escolha é TF-IDF. Ela é também a melhor linha de base lexical dos critérios de sucesso; comparações com as demais condições são publicadas como complementares.
 11. **Sensibilidade:** todas as métricas repetidas sem C-123, C-041, C-088 e D-030; o resultado com os 190 registros é o principal.
 12. **Critérios de sucesso (protocolo, seção 6), aplicados mecanicamente:** (1) diferença de Resposta@3 específica ≥ 5 pontos percentuais a favor de `completo` sobre `linha_de_base_tfidf`; (2) limite inferior do IC bootstrap pareado de 95% da diferença > 0; (3) revocação global de perigo ≥ 90% e sem piora superior a 5 pontos em relação à melhor condição de segurança; (4) falso alarme ≤ 5% (todas as negativas); (5) abstenção indevida ≤ 15%. Os textos pré-definidos do protocolo são anexados ao relatório quando se aplicam.
 
@@ -306,7 +306,7 @@ Scripts de `reproducao/` usados:
 | `reproducao/auditoria_privacidade.py` | `c9a76ea0545ea483e2df80eadc19553f61911dce35ccb881b51bd4dcb6f69449` |
 | `reproducao/auditoria_privacidade_cep.py` | `e164df108e12a0b07ae78b9d1a349593bc4c54f8e7b88d3f27345f5d86e8ed67` |
 | `reproducao/comum.py` | `3469f86c15515dd6a4f591a44ab08232b4af1ce1222115ab295fca0b7476aa45` |
-| `reproducao/conjunto_v1.py` | `dbea28168d8e480dafb182c2c792d765731846884d935066d0b793b7b2eca347` |
+| `reproducao/conjunto_v1.py` | `72dfaf5029d8308987225036939da78ccddb00704248c212c8788ddf2f39db27` |
 | `reproducao/gerar_ambiente.py` | `6f0c014b6ac920dba4252d23c94b9f3714bea8557e7ef99bd880d9681aa08f85` |
 | `reproducao/metricas_por_necessidade.py` | `7a356866f7d93cf37ca111d180aa52a310f90c0c67316a42b246c8d52136f471` |
 | `reproducao/teste_conjunto_v1.py` | `b16b702dbcc1651a0c2ed7eb9df6ae78e221ff8b93bda35f8b3c6ad3a374a10d` |

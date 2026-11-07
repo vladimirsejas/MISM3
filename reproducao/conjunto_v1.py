@@ -527,7 +527,7 @@ def gerar_manifesto() -> None:
            "as mesmas reamostragens para todas as condições, para MRR, Resposta@3 específica e diferenças.",
            "9. **MRR:** recíproco da posição do primeiro item esperado em toda a lista devolvida, como em `comum.metricas`; zero se nenhum aparece. Precision@3, Recall@3, Macro-F1 e acurácia balanceada "
            "NÃO são calculadas nesta execução (a convenção de denominador não foi pré-definida no protocolo).",
-           "10. **Linha de base lexical dos critérios:** `linha_de_base_tfidf` (TF-IDF simples; BM25 não foi usado porque não há implementação versionada). Comparações com as demais condições são publicadas como complementares.",
+           "10. **Escolha da linha de base (protocolo, seção 3, condição 10):** TF-IDF simples, condição `linha_de_base_tfidf`. O protocolo permite BM25 apenas se houver implementação versionada disponível; a busca por \"bm25\" nos arquivos de código do repositório (`.py`, `.js`, `.json`; fora de `docs/` e `protocolo/`) em 07/11/2026 não encontrou nenhuma, por isso a escolha é TF-IDF. Ela é também a melhor linha de base lexical dos critérios de sucesso; comparações com as demais condições são publicadas como complementares.",
            "11. **Sensibilidade:** todas as métricas repetidas sem C-123, C-041, C-088 e D-030; o resultado com os 190 registros é o principal.",
            "12. **Critérios de sucesso (protocolo, seção 6), aplicados mecanicamente:** (1) diferença de Resposta@3 específica ≥ 5 pontos percentuais a favor de `completo` sobre `linha_de_base_tfidf`; "
            "(2) limite inferior do IC bootstrap pareado de 95% da diferença > 0; (3) revocação global de perigo ≥ 90% e sem piora superior a 5 pontos em relação à melhor condição de segurança; "
