@@ -7,7 +7,8 @@
       "cadastro": "catalogo/servicos_manuais.csv — cadastro municipal já mantido no MISM3",
       "vinculos_inep": "catalogo/inep_escolas.csv — correspondência entre ID do catálogo e código INEP",
       "censo_escolar": "web/dados/oferta_educacao_infantil.json — INEP, Censo Escolar da Educação Básica 2025",
-      "referencia_cep": "web/dados/cep_indice.json — CNEFE, Censo Demográfico 2022"
+      "referencia_cep": "web/dados/cep_indice.json — CNEFE, Censo Demográfico 2022",
+      "proveniencia_coordenadas": "catalogo/localizacao_registro.csv (consultar por ID; não há registro individual para todas as coordenadas)"
     },
     "contagens": {
       "escolas_catalogadas": 68,
@@ -24,7 +25,8 @@
       "A coordenada individual é mantida separada do centroide de CEP.",
       "A referência de CEP representa distribuição agregada de endereços CNEFE e não comprova a localização física da escola.",
       "Registros sem vínculo INEP permanecem sem indicadores escolares associados.",
-      "A ausência de coordenada individual não significa ausência de endereço cadastrado."
+      "A ausência de coordenada individual não significa ausência de endereço cadastrado.",
+      "A proveniência detalhada das coordenadas deve ser consultada no registro de localização; nem todas as coordenadas têm ficha individual nesse arquivo."
     ],
     "inep_municipais_sem_vinculo": [
       {
@@ -142,8 +144,7 @@
       "coordenada_equipamento": {
         "latitude": -22.38045,
         "longitude": -47.571369,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": null,
       "vinculo_inep": null,
@@ -201,8 +202,7 @@
       "coordenada_equipamento": {
         "latitude": -22.398846,
         "longitude": -47.572946,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": null,
       "vinculo_inep": {
@@ -397,8 +397,7 @@
       "coordenada_equipamento": {
         "latitude": -22.388769,
         "longitude": -47.586775,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": {
         "latitude": -22.3884,
@@ -440,8 +439,7 @@
       "coordenada_equipamento": {
         "latitude": -22.39065,
         "longitude": -47.553681,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": {
         "latitude": -22.3914,
@@ -506,8 +504,7 @@
       "coordenada_equipamento": {
         "latitude": -22.405628,
         "longitude": -47.565938,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": {
         "latitude": -22.4032,
@@ -534,8 +531,7 @@
       "coordenada_equipamento": {
         "latitude": -22.390297,
         "longitude": -47.616586,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": null,
       "vinculo_inep": {
@@ -570,8 +566,7 @@
       "coordenada_equipamento": {
         "latitude": -22.420385,
         "longitude": -47.563312,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": {
         "latitude": -22.4203,
@@ -636,8 +631,7 @@
       "coordenada_equipamento": {
         "latitude": -22.389188,
         "longitude": -47.55636,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": null,
       "vinculo_inep": null,
@@ -657,8 +651,7 @@
       "coordenada_equipamento": {
         "latitude": -22.391908,
         "longitude": -47.558942,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": null,
       "vinculo_inep": {
@@ -693,8 +686,7 @@
       "coordenada_equipamento": {
         "latitude": -22.419681,
         "longitude": -47.550627,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": {
         "latitude": -22.42,
@@ -835,8 +827,7 @@
       "coordenada_equipamento": {
         "latitude": -22.381159,
         "longitude": -47.576927,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": {
         "latitude": -22.3804,
@@ -878,8 +869,7 @@
       "coordenada_equipamento": {
         "latitude": -22.383916,
         "longitude": -47.557535,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": {
         "latitude": -22.3802,
@@ -921,8 +911,7 @@
       "coordenada_equipamento": {
         "latitude": -22.448788,
         "longitude": -47.586035,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": null,
       "vinculo_inep": {
@@ -957,8 +946,7 @@
       "coordenada_equipamento": {
         "latitude": -22.38959,
         "longitude": -47.579692,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": {
         "latitude": -22.3886,
@@ -985,8 +973,7 @@
       "coordenada_equipamento": {
         "latitude": -22.409734,
         "longitude": -47.562417,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": {
         "latitude": -22.446,
@@ -1028,8 +1015,7 @@
       "coordenada_equipamento": {
         "latitude": -22.433664,
         "longitude": -47.581746,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": {
         "latitude": -22.4332,
@@ -1071,8 +1057,7 @@
       "coordenada_equipamento": {
         "latitude": -22.433664,
         "longitude": -47.581746,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": {
         "latitude": -22.4332,
@@ -1099,8 +1084,7 @@
       "coordenada_equipamento": {
         "latitude": -22.497618,
         "longitude": -47.583409,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": null,
       "vinculo_inep": {
@@ -1173,8 +1157,7 @@
       "coordenada_equipamento": {
         "latitude": -22.406218,
         "longitude": -47.565671,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": {
         "latitude": -22.4032,
@@ -1216,8 +1199,7 @@
       "coordenada_equipamento": {
         "latitude": -22.42949,
         "longitude": -47.584115,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": {
         "latitude": -22.4296,
@@ -1259,8 +1241,7 @@
       "coordenada_equipamento": {
         "latitude": -22.373473,
         "longitude": -47.539436,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": {
         "latitude": -22.3729,
@@ -1401,8 +1382,7 @@
       "coordenada_equipamento": {
         "latitude": -22.381488,
         "longitude": -47.589572,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": {
         "latitude": -22.3815,
@@ -1513,8 +1493,7 @@
       "coordenada_equipamento": {
         "latitude": -22.41168,
         "longitude": -47.566513,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": {
         "latitude": -22.4052,
@@ -1541,8 +1520,7 @@
       "coordenada_equipamento": {
         "latitude": -22.377219,
         "longitude": -47.57698,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": null,
       "vinculo_inep": {
@@ -1577,8 +1555,7 @@
       "coordenada_equipamento": {
         "latitude": -22.382808,
         "longitude": -47.584518,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": {
         "latitude": -22.3828,
@@ -1734,8 +1711,7 @@
       "coordenada_equipamento": {
         "latitude": -22.381238,
         "longitude": -47.577222,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": {
         "latitude": -22.3804,
@@ -1777,8 +1753,7 @@
       "coordenada_equipamento": {
         "latitude": -22.395257,
         "longitude": -47.567524,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": {
         "latitude": -22.3959,
@@ -1843,8 +1818,7 @@
       "coordenada_equipamento": {
         "latitude": -22.381315,
         "longitude": -47.58953,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": null,
       "vinculo_inep": {
@@ -1879,8 +1853,7 @@
       "coordenada_equipamento": {
         "latitude": -22.390073,
         "longitude": -47.570945,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": {
         "latitude": -22.3896,
@@ -1945,8 +1918,7 @@
       "coordenada_equipamento": {
         "latitude": -22.414343,
         "longitude": -47.56745,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": {
         "latitude": -22.4166,
@@ -2049,8 +2021,7 @@
       "coordenada_equipamento": {
         "latitude": -22.450212,
         "longitude": -47.583778,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": {
         "latitude": -22.4498,
@@ -2153,8 +2124,7 @@
       "coordenada_equipamento": {
         "latitude": -22.409734,
         "longitude": -47.562417,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": {
         "latitude": -22.4488,
@@ -2219,8 +2189,7 @@
       "coordenada_equipamento": {
         "latitude": -22.381284,
         "longitude": -47.577386,
-        "fonte": "catalogo_manual",
-        "metodo": "catalogo_existente"
+        "fonte": "catalogo_manual"
       },
       "referencia_cep": {
         "latitude": -22.3804,
