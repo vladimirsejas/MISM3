@@ -113,8 +113,36 @@ assert.strictEqual(M.vizinho("a", 1, 0, cent), "b");
 assert.strictEqual(M.vizinho("a", 0, 1, cent), "c");
 assert.strictEqual(M.vizinho("a", -1, 0, cent), "d");
 assert.strictEqual(M.vizinho("a", 0, -1, cent), null, "sem vizinho naquele lado");
+
+/* Um candidato diagonal é mais perto em linha reta, mas o alinhado vence pela nota lateral. */
+const centSinteticos = { origem: [0, 0], diagonal: [1, 1], alinhado: [2, 0] };
+assert(Math.sqrt(2) < 2, "o candidato diagonal é mais próximo em distância euclidiana");
+assert.strictEqual(M.vizinho("origem", 1, 0, centSinteticos), "alinhado",
+  "a penalidade lateral prefere o vizinho alinhado à direção da seta");
+
 const quadrado = { type: "Polygon", coordinates: [[[0, 0], [4, 0], [4, 4], [0, 4], [0, 0]]] };
 assert.deepStrictEqual(M.centroideGeometria(quadrado, { xy: function (x, y) { return [x, y]; } }), [2, 2],
   "navegação usa o centro geométrico do polígono, não o centro da caixa delimitadora");
+
+/* O GeoJSON real é carregado do disco local, sem rede; os 408 setores devem ser alcançáveis por setas. */
+const centroidesReais = {};
+geo.features.forEach((f) => {
+  centroidesReais[f.properties.setor] = M.centroideGeometria(f.geometry, proj);
+});
+const idsReais = Object.keys(centroidesReais);
+const alcancados = new Set([idsReais[0]]);
+const filaSetores = [idsReais[0]];
+while (filaSetores.length) {
+  const origem = filaSetores.shift();
+  [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(([dx, dy]) => {
+    const destino = M.vizinho(origem, dx, dy, centroidesReais);
+    if (destino && !alcancados.has(destino)) {
+      alcancados.add(destino);
+      filaSetores.push(destino);
+    }
+  });
+}
+assert.strictEqual(alcancados.size, 408,
+  "a navegação por setas alcança os 408 setores do GeoJSON real a partir do primeiro setor");
 
 console.log("mapa_territorial.test.js: sem requisição externa, CSP restritiva, textContent, ES5, linguagem permitida, 408 setores e funções coerentes com os indicadores");
