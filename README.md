@@ -115,6 +115,7 @@ Não existe: modelo de linguagem, embeddings neurais, previsão de risco, elegib
 | `territorio.js` | Vista "Rio Claro em números" (setores censitários) |
 | `entre-mulheres.js`, `entre-mulheres-ui.js` | Entre Mulheres: preparo do cadastro e tela |
 | `painel-ui.js` | Vista "Análise territorial" (`#painel`): lê `dados/analise_territorial.json`, se existir; não usa dado de pessoa |
+| `mapa-territorial.js` | Página `mapa-territorial.html` (versão de pesquisa, ainda não ligada ao menu): setores em SVG coloridos por indicador, lê só `dados/indicadores_territoriais.json` e `dados/setores.geojson`, sem mapa de fundo e sem requisição externa |
 
 ## Pipeline (`pipeline/*.py`)
 
@@ -132,6 +133,7 @@ Não existe: modelo de linguagem, embeddings neurais, previsão de risco, elegib
 | `territorio.py` | Censo 2022 por setor | `web/dados/territorio.json` | stdlib |
 | `analise_territorial.py` | Setores e serviços | Distâncias e agrupamento | numpy, scikit-learn (KMeans) |
 | `exposicao_distancia.py` | Setores e serviços | `web/dados/exposicao_distancia.json` (parcela da população a mais de 1 km e 2 km do serviço mais próximo) | stdlib |
+| `territorial_indicadores.py`, `territorial_auditoria.py` | `web/dados/` (setores, território, distâncias) e catálogo | `web/dados/indicadores_territoriais.json` (mapa territorial v1, conferido contra `exposicao_distancia.json`) e relatório de auditoria de privacidade | stdlib |
 | `oferta_educacao_infantil.py` | Censo Escolar 2025 | `web/dados/oferta_educacao_infantil.json` | pandas |
 | `ligar_catalogo_inep.py` | Catálogo e Censo | `catalogo/inep_escolas.csv` (sobrescreve; revisar antes) | stdlib |
 | `horarios_onibus.py` | `catalogo/horarios_onibus.txt` | `web/dados/horarios_onibus.json` | stdlib |
