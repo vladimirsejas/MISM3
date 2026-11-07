@@ -1,0 +1,2329 @@
+{
+  "meta": {
+    "titulo": "Base integrada de escolas municipais de Rio Claro",
+    "gerado_em": "2026-11-07",
+    "municipio": "Rio Claro/SP",
+    "fontes": {
+      "cadastro": "catalogo/servicos_manuais.csv — cadastro municipal já mantido no MISM3",
+      "vinculos_inep": "catalogo/inep_escolas.csv — correspondência entre ID do catálogo e código INEP",
+      "censo_escolar": "web/dados/oferta_educacao_infantil.json — INEP, Censo Escolar da Educação Básica 2025",
+      "referencia_cep": "web/dados/cep_indice.json — CNEFE, Censo Demográfico 2022",
+      "proveniencia_coordenadas": "catalogo/localizacao_registro.csv (consultar por ID; não há registro individual para todas as coordenadas)"
+    },
+    "contagens": {
+      "escolas_catalogadas": 68,
+      "com_coordenada_individual": 33,
+      "com_referencia_cep": 59,
+      "vinculadas_inep": 43,
+      "sem_vinculo_inep": 25,
+      "municipais_no_censo_infantil": 46,
+      "registros_inep_municipais_sem_vinculo": 3
+    },
+    "interpretacao": "O conjunto consolida cadastro, georreferenciamento disponível e indicadores do Censo Escolar sem confundir as naturezas das fontes.",
+    "limites": [
+      "Matrículas e turmas não representam vagas disponíveis, demanda reprimida ou fila de espera.",
+      "A coordenada individual é mantida separada do centroide de CEP.",
+      "A referência de CEP representa distribuição agregada de endereços CNEFE e não comprova a localização física da escola.",
+      "Registros sem vínculo INEP permanecem sem indicadores escolares associados.",
+      "A ausência de coordenada individual não significa ausência de endereço cadastrado.",
+      "A proveniência detalhada das coordenadas deve ser consultada no registro de localização; nem todas as coordenadas têm ficha individual nesse arquivo."
+    ],
+    "inep_municipais_sem_vinculo": [
+      {
+        "codigo": "35204973",
+        "nome_censo": "LUCIDIA THEREZINHA CASSAVIA ESCRIVAO SOARES EM",
+        "observacao": "Sem vínculo com registro do catálogo; não associar automaticamente."
+      },
+      {
+        "codigo": "35083914",
+        "nome_censo": "LYGIA CARMO POLASTRI VENDRAMEL PROFA ESCOLA MUNICIPAL",
+        "observacao": "Sem vínculo com registro do catálogo; não associar automaticamente."
+      },
+      {
+        "codigo": "35236354",
+        "nome_censo": "SANTO ANTONIO ESCOLA MUNICIPAL",
+        "observacao": "Sem vínculo com registro do catálogo; não associar automaticamente."
+      }
+    ]
+  },
+  "escolas": [
+    {
+      "id": "man-em-aldo-zottarelli-junior",
+      "nome": "E.M. Aldo Zottarelli Junior",
+      "endereco": "Av 10, 589 - Benjamin de Castro",
+      "cep": "13503504",
+      "telefone": "(19) 3532-1006",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.4135,
+        "longitude": -47.5845,
+        "raio_m": 360,
+        "setor_censitario": "354390705000426P",
+        "quantidade_enderecos": 91,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": null,
+      "censo_escolar_2025": null,
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-angela-monaco-perin-aily",
+      "nome": "E.M. Ângela Mônaco Perin Aily",
+      "endereco": "Rua 8, 450 - Jardim Novo I",
+      "cep": "13502480",
+      "telefone": "(19) 3523-2133",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.4396,
+        "longitude": -47.5764,
+        "raio_m": 490,
+        "setor_censitario": "354390705000260P",
+        "quantidade_enderecos": 116,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": null,
+      "censo_escolar_2025": null,
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-antonio-maria-marrote",
+      "nome": "E.M. Antônio Maria Marrote",
+      "endereco": "Rua 17, 315 - Bairro do Estádio",
+      "cep": "13501340",
+      "telefone": "(19) 3533-3037 / (19) 3523-7604",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.4256,
+        "longitude": -47.5679,
+        "raio_m": 150,
+        "setor_censitario": "354390705000033P",
+        "quantidade_enderecos": 35,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35083926",
+        "nome_censo": "ANTONIO MARIA MARROTE ESCOLA MUNICIPAL",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": true,
+        "matriculas_creche": 52,
+        "matriculas_0_a_3_anos": 45,
+        "matriculas_creche_tempo_integral": 2,
+        "matriculas_pre_escola": 120,
+        "turmas_creche": 3,
+        "turmas_pre_escola": 6
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-antonio-sebastiao-da-silva",
+      "nome": "E.M. Antônio Sebastião da Silva",
+      "endereco": "Rua M-17, 721 - Parque das Indústrias",
+      "cep": "13505293",
+      "telefone": "(19) 3524-2592",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.38045,
+        "longitude": -47.571369,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": null,
+      "vinculo_inep": null,
+      "censo_escolar_2025": null,
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-aparecida-jose-carlini-bonilha",
+      "nome": "E.M. Aparecida José Carlini Bonilha",
+      "endereco": "Rua 3, 529 - Residencial dos Bosques",
+      "cep": "13503532",
+      "telefone": "(19) 3533-6633",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.4166,
+        "longitude": -47.5837,
+        "raio_m": 230,
+        "setor_censitario": "354390705000426P",
+        "quantidade_enderecos": 31,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35010574",
+        "nome_censo": "ESCOLA MUNICIPAL PROFESSORA APARECIDA JOSE CARLINI BONILHA",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": true,
+        "matriculas_creche": 142,
+        "matriculas_0_a_3_anos": 132,
+        "matriculas_creche_tempo_integral": 142,
+        "matriculas_pre_escola": 24,
+        "turmas_creche": 8,
+        "turmas_pre_escola": 1
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-arlindo-ansanello",
+      "nome": "E.M. Arlindo Ansanello",
+      "endereco": "Rua 11, com Av. 32, 2611 - Santana",
+      "cep": "13504240",
+      "telefone": "(19) 3533-4811",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.398846,
+        "longitude": -47.572946,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": null,
+      "vinculo_inep": {
+        "codigo": "35236412",
+        "nome_censo": "ARLINDO ANSANELLO ESCOLA MUNICIPAL",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": false,
+        "matriculas_creche": 114,
+        "matriculas_0_a_3_anos": 106,
+        "matriculas_creche_tempo_integral": 114,
+        "matriculas_pre_escola": 0,
+        "turmas_creche": 8,
+        "turmas_pre_escola": 0
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-armando-grisi",
+      "nome": "E.M. Armando Grisi",
+      "endereco": "Avenida 56, 2540 - Jardim Paulista II",
+      "cep": "13504420",
+      "telefone": "(19) 3523-8385 / (19) 3523-8030",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.3908,
+        "longitude": -47.5842,
+        "raio_m": 530,
+        "setor_censitario": "354390705000215P",
+        "quantidade_enderecos": 93,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": null,
+      "censo_escolar_2025": null,
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-benedicto-jose-zaine",
+      "nome": "E.M. Benedicto José Zaine",
+      "endereco": "Avenida 4, 415 - Ferraz",
+      "cep": "13508971",
+      "telefone": "(19) 3539-1244",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.2813,
+        "longitude": -47.5475,
+        "raio_m": 1500,
+        "setor_censitario": "354390710000012P",
+        "quantidade_enderecos": 29,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35267363",
+        "nome_censo": "BENEDICTO JOSE ZAINE PROFESSOR ESCOLA MUNICIPAL",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": true,
+        "matriculas_creche": 3,
+        "matriculas_0_a_3_anos": 2,
+        "matriculas_creche_tempo_integral": 0,
+        "matriculas_pre_escola": 7,
+        "turmas_creche": 0,
+        "turmas_pre_escola": 1
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-benjamin-ferreira",
+      "nome": "E.M. Benjamin Ferreira",
+      "endereco": "Rua 4-B, 70 - Cidade Nova",
+      "cep": "13506808",
+      "telefone": "(19) 3533-3646",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.4074,
+        "longitude": -47.5547,
+        "raio_m": 230,
+        "setor_censitario": "354390705000051P",
+        "quantidade_enderecos": 75,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35061402",
+        "nome_censo": "BENJAMIN FERREIRA ESCOLA MUNICIPAL",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": true,
+        "matriculas_creche": 14,
+        "matriculas_0_a_3_anos": 10,
+        "matriculas_creche_tempo_integral": 0,
+        "matriculas_pre_escola": 85,
+        "turmas_creche": 1,
+        "turmas_pre_escola": 5
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-caminho-da-vida-profa-margarida-penteado",
+      "nome": "E.M. Caminho da Vida Profª Margarida Penteado",
+      "endereco": "Rua 2 JW - Av. 7 JW, 784 - Jardim Novo Wenzel",
+      "cep": "13503661",
+      "telefone": "(19) 3535-4374",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.4037,
+        "longitude": -47.6053,
+        "raio_m": 310,
+        "setor_censitario": "354390705000285P",
+        "quantidade_enderecos": 194,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35583844",
+        "nome_censo": "ESCOLA MUNICIPAL CAMINHO DA VIDA PROFA MARGARIDA PENTEADO",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": true,
+        "matriculas_creche": 97,
+        "matriculas_0_a_3_anos": 88,
+        "matriculas_creche_tempo_integral": 97,
+        "matriculas_pre_escola": 40,
+        "turmas_creche": 7,
+        "turmas_pre_escola": 2
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-celeste-calil",
+      "nome": "E.M. Celeste Calil",
+      "endereco": "Rua 6 JW, 756 - Jardim Novo Wenzel",
+      "cep": "13503665",
+      "telefone": "(19) 3524-1479 / (19) 3534-1909",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.4083,
+        "longitude": -47.6017,
+        "raio_m": 280,
+        "setor_censitario": "354390705000459P",
+        "quantidade_enderecos": 144,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": null,
+      "censo_escolar_2025": null,
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-clara-freire-castellano",
+      "nome": "E.M. Clara Freire Castellano",
+      "endereco": "Avenida 62, 1134 - Recanto Paraíso",
+      "cep": "13504450",
+      "telefone": "(19) 3534-2265",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.388769,
+        "longitude": -47.586775,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": {
+        "latitude": -22.3884,
+        "longitude": -47.5849,
+        "raio_m": 150,
+        "setor_censitario": "354390705000373P",
+        "quantidade_enderecos": 58,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35093524",
+        "nome_censo": "CLARA FREIRE CASTELLANO ESCOLA MUNICIPAL",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": true,
+        "matriculas_creche": 129,
+        "matriculas_0_a_3_anos": 111,
+        "matriculas_creche_tempo_integral": 22,
+        "matriculas_pre_escola": 294,
+        "turmas_creche": 6,
+        "turmas_pre_escola": 14
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar. O CEP informado na página (16504-450) não é de Rio Claro e foi deixado de fora: provável erro da fonte."
+    },
+    {
+      "id": "man-em-comecinho-de-vida-professora-diva-cabral-de-oliveira",
+      "nome": "E.M. Comecinho de Vida Professora Diva Cabral de Oliveira",
+      "endereco": "Av. 42 A, 425 - Vila Alemã",
+      "cep": "13506621",
+      "telefone": "(19) 3533-1929",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.39065,
+        "longitude": -47.553681,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": {
+        "latitude": -22.3914,
+        "longitude": -47.5499,
+        "raio_m": 670,
+        "setor_censitario": "354390705000380P",
+        "quantidade_enderecos": 178,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35236408",
+        "nome_censo": "COMECINHO DE VIDA DIVA CABRAL DE OLIVEIRA PROFA CRECHE",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": false,
+        "matriculas_creche": 45,
+        "matriculas_0_a_3_anos": 45,
+        "matriculas_creche_tempo_integral": 45,
+        "matriculas_pre_escola": 0,
+        "turmas_creche": 3,
+        "turmas_pre_escola": 0
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-dante-egreggio",
+      "nome": "E.M. Dante Egreggio",
+      "endereco": "Rua P-4, S/N - Vila Paulista",
+      "cep": "13506855",
+      "telefone": "(19) 3533-2627 / (19) 3525-3444",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.4219,
+        "longitude": -47.5505,
+        "raio_m": 800,
+        "setor_censitario": "354390705000080P",
+        "quantidade_enderecos": 274,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": null,
+      "censo_escolar_2025": null,
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-darci-reginatto",
+      "nome": "E.M. Darci Reginatto",
+      "endereco": "Rua 07, 1700 - Santa Cruz",
+      "cep": "13500200",
+      "telefone": "(19) 3533-3644 / (19) 3523-5605",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.405628,
+        "longitude": -47.565938,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": {
+        "latitude": -22.4032,
+        "longitude": -47.5669,
+        "raio_m": 830,
+        "setor_censitario": "354390705000021P",
+        "quantidade_enderecos": 234,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": null,
+      "censo_escolar_2025": null,
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-dennizard-franca-machado",
+      "nome": "E.M. Dennizard França Machado",
+      "endereco": "Rua 2, 196 - Distrito de Batovi",
+      "cep": "13504763",
+      "telefone": "(19) 99698-5339 / (19) 97156-5029",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.390297,
+        "longitude": -47.616586,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": null,
+      "vinculo_inep": {
+        "codigo": "35267351",
+        "nome_censo": "DENNIZARD FRANCA MACHADO PROFESSOR ESCOLA MUNICIPAL",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": true,
+        "matriculas_creche": 16,
+        "matriculas_0_a_3_anos": 11,
+        "matriculas_creche_tempo_integral": 0,
+        "matriculas_pre_escola": 30,
+        "turmas_creche": 1,
+        "turmas_pre_escola": 2
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-diva-marques-gouvea",
+      "nome": "E.M. Diva Marques Gouvêa",
+      "endereco": "Avenida da Saudade, 399 - Consolação",
+      "cep": "13500300",
+      "telefone": "(19) 3524-4535",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.420385,
+        "longitude": -47.563312,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": {
+        "latitude": -22.4203,
+        "longitude": -47.5661,
+        "raio_m": 630,
+        "setor_censitario": "354390705000295P",
+        "quantidade_enderecos": 20,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": null,
+      "censo_escolar_2025": null,
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-djalma-camargo-outeiro-pinto-dr",
+      "nome": "E.M. Djalma Camargo Outeiro Pinto Dr.",
+      "endereco": "Rua 8 com Avenida 50 e 52, 3609 - Alto do Santana",
+      "cep": "13505450",
+      "telefone": "(19) 3532-1259",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.3791,
+        "longitude": -47.5777,
+        "raio_m": 590,
+        "setor_censitario": "354390705000152P",
+        "quantidade_enderecos": 63,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35007338",
+        "nome_censo": "ESCOLA MUNICIPAL DR DJALMA CAMARGO OUTEIRO PINTO",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": false,
+        "matriculas_creche": 42,
+        "matriculas_0_a_3_anos": 42,
+        "matriculas_creche_tempo_integral": 42,
+        "matriculas_pre_escola": 0,
+        "turmas_creche": 3,
+        "turmas_pre_escola": 0
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-djiliah-camargo-de-souza",
+      "nome": "E.M. Djiliah Camargo de Souza",
+      "endereco": "Rua 4-A, 1098 - Jardim Ipê",
+      "cep": "13506541",
+      "telefone": "(19) 3524-4348 / (19) 3523-1058",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.389188,
+        "longitude": -47.55636,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": null,
+      "vinculo_inep": null,
+      "censo_escolar_2025": null,
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-dom-pedro-i",
+      "nome": "E.M. Dom Pedro I",
+      "endereco": "Rua 3-A, 775 - Vila Alemã",
+      "cep": "13506540",
+      "telefone": "(19) 3533-6909 / (19) 3534-1432",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.391908,
+        "longitude": -47.558942,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": null,
+      "vinculo_inep": {
+        "codigo": "35061396",
+        "nome_censo": "PEDRO DOM I ESCOLA MUNICIPAL",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": true,
+        "matriculas_creche": 144,
+        "matriculas_0_a_3_anos": 125,
+        "matriculas_creche_tempo_integral": 1,
+        "matriculas_pre_escola": 273,
+        "turmas_creche": 8,
+        "turmas_pre_escola": 14
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-edna-cristina-fardim-fernandes",
+      "nome": "E.M. Edna Cristina Fardim Fernandes",
+      "endereco": "Avenida P27, 123 - Vila Paulista",
+      "cep": "13506832",
+      "telefone": "(19) 3532-2320",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.419681,
+        "longitude": -47.550627,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": {
+        "latitude": -22.42,
+        "longitude": -47.5513,
+        "raio_m": 150,
+        "setor_censitario": "354390705000053P",
+        "quantidade_enderecos": 12,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35009863",
+        "nome_censo": "ESCOLA MUNICIPAL PROFESSORA EDNA CRISTINA FARDIM FERNANDES",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": false,
+        "matriculas_creche": 78,
+        "matriculas_0_a_3_anos": 74,
+        "matriculas_creche_tempo_integral": 78,
+        "matriculas_pre_escola": 0,
+        "turmas_creche": 6,
+        "turmas_pre_escola": 0
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-elpidio-mina",
+      "nome": "E.M. Elpídio Mina",
+      "endereco": "Rua 14-A, 121 - Bela Vista",
+      "cep": "13506744",
+      "telefone": "(19) 3533-2744 / (19) 3533-2340",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.3907,
+        "longitude": -47.5467,
+        "raio_m": 950,
+        "setor_censitario": "354390705000170P",
+        "quantidade_enderecos": 14,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35086356",
+        "nome_censo": "ELPIDIO MINA PROF ESCOLA MUNICIPAL",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": true,
+        "matriculas_creche": 58,
+        "matriculas_0_a_3_anos": 48,
+        "matriculas_creche_tempo_integral": 1,
+        "matriculas_pre_escola": 123,
+        "turmas_creche": 4,
+        "turmas_pre_escola": 7
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-ephraim-ribeiro-dos-santos",
+      "nome": "E.M. Ephraim Ribeiro dos Santos",
+      "endereco": "Avenida José Felício Castellano, 1660 - Vila Cristina",
+      "cep": "13506040",
+      "telefone": "(19) 3535-4568 / (19) 3535-4432",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.3831,
+        "longitude": -47.5499,
+        "raio_m": 150,
+        "setor_censitario": "354390705000404P",
+        "quantidade_enderecos": 11,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": null,
+      "censo_escolar_2025": null,
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-francesco-paoli",
+      "nome": "E.M. Francesco Paoli",
+      "endereco": "Rua P-7, 000 - Vila Paulista",
+      "cep": "13506871",
+      "telefone": "(19) 3533-7300",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.4153,
+        "longitude": -47.5491,
+        "raio_m": 160,
+        "setor_censitario": "354390705000079P",
+        "quantidade_enderecos": 55,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35121903",
+        "nome_censo": "FRANCESCO PAOLI ESCOLA MUNICIPAL",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": false,
+        "matriculas_creche": 56,
+        "matriculas_0_a_3_anos": 52,
+        "matriculas_creche_tempo_integral": 56,
+        "matriculas_pre_escola": 0,
+        "turmas_creche": 5,
+        "turmas_pre_escola": 0
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-francisca-coan",
+      "nome": "E.M. Francisca Coan",
+      "endereco": "Avenida M-31, 2236 - Jardim São João",
+      "cep": "13505420",
+      "telefone": "(19) 3533-3446",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.381159,
+        "longitude": -47.576927,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": {
+        "latitude": -22.3804,
+        "longitude": -47.576,
+        "raio_m": 230,
+        "setor_censitario": "354390705000153P",
+        "quantidade_enderecos": 76,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35236342",
+        "nome_censo": "FRANCISCA COAN ESCOLA MUNICIPAL",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": false,
+        "matriculas_creche": 195,
+        "matriculas_0_a_3_anos": 195,
+        "matriculas_creche_tempo_integral": 195,
+        "matriculas_pre_escola": 0,
+        "turmas_creche": 12,
+        "turmas_pre_escola": 0
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-gisele-brizotti-ferraz-ferreira",
+      "nome": "E.M. Gisele Brizotti Ferraz Ferreira",
+      "endereco": "Av. Brasil, 1233 - Jardim Floridiana",
+      "cep": "13505018",
+      "telefone": "(19) 3532-2745",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.383916,
+        "longitude": -47.557535,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": {
+        "latitude": -22.3802,
+        "longitude": -47.5567,
+        "raio_m": 260,
+        "setor_censitario": "354390705000401P",
+        "quantidade_enderecos": 28,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35006329",
+        "nome_censo": "ESCOLA MUNICIPAL PROFESSORA GISELE BRIZOTTI FERRAZ FERREIRA",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": false,
+        "matriculas_creche": 75,
+        "matriculas_0_a_3_anos": 75,
+        "matriculas_creche_tempo_integral": 75,
+        "matriculas_pre_escola": 0,
+        "turmas_creche": 6,
+        "turmas_pre_escola": 0
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-gunar-wilhelm-koelle",
+      "nome": "E.M. Gunar Wilhelm Koelle",
+      "endereco": "Rua 18 JN, S/N - Jardim Novo",
+      "cep": null,
+      "telefone": "(19) 3532-1004",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.448788,
+        "longitude": -47.586035,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": null,
+      "vinculo_inep": {
+        "codigo": "35007533",
+        "nome_censo": "ESCOLA MUNICIPAL PROFESSOR GUNAR WILHELM KOELLE",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": true,
+        "matriculas_creche": 127,
+        "matriculas_0_a_3_anos": 118,
+        "matriculas_creche_tempo_integral": 83,
+        "matriculas_pre_escola": 160,
+        "turmas_creche": 7,
+        "turmas_pre_escola": 8
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar. A página informa só o CEP geral da cidade (13500-000), por isso a escola não entra na busca por CEP."
+    },
+    {
+      "id": "man-em-hamilton-prado",
+      "nome": "E.M. Hamilton Prado",
+      "endereco": "Rua 14, 3896 - Vila Olinda",
+      "cep": "13504164",
+      "telefone": "(19) 3534-5922",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.38959,
+        "longitude": -47.579692,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": {
+        "latitude": -22.3886,
+        "longitude": -47.5802,
+        "raio_m": 560,
+        "setor_censitario": "354390705000151P",
+        "quantidade_enderecos": 55,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": null,
+      "censo_escolar_2025": null,
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-helio-jorge-dos-santos",
+      "nome": "E.M. Hélio Jorge dos Santos",
+      "endereco": "Avenida 2, 428 - Jardim Novo I",
+      "cep": "13502590",
+      "telefone": "(19) 3524-6629",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.409734,
+        "longitude": -47.562417,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": {
+        "latitude": -22.446,
+        "longitude": -47.5758,
+        "raio_m": 150,
+        "setor_censitario": "354390705000428P",
+        "quantidade_enderecos": 52,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35286722",
+        "nome_censo": "HELIO JORGE DOS SANTOS ESCOLA MUNICIPAL",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": true,
+        "matriculas_creche": 75,
+        "matriculas_0_a_3_anos": 63,
+        "matriculas_creche_tempo_integral": 26,
+        "matriculas_pre_escola": 169,
+        "turmas_creche": 4,
+        "turmas_pre_escola": 9
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar. A página informa o mesmo endereço para a E.M. Sebastião Ambrózio: confirme por telefone."
+    },
+    {
+      "id": "man-em-isolina-huppert-cassavia",
+      "nome": "E.M. Isolina Huppert Cassavia",
+      "endereco": "Avenida 18 BR, 401 - Jardim Brasília",
+      "cep": "13502290",
+      "telefone": "(19) 3533-2833 / (19) 3533-8436",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.433664,
+        "longitude": -47.581746,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": {
+        "latitude": -22.4332,
+        "longitude": -47.5801,
+        "raio_m": 170,
+        "setor_censitario": "354390705000090P",
+        "quantidade_enderecos": 88,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35204985",
+        "nome_censo": "ISOLINA HUPPERT CASSAVIA ESCOLA MUNICIPAL",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": true,
+        "matriculas_creche": 126,
+        "matriculas_0_a_3_anos": 115,
+        "matriculas_creche_tempo_integral": 76,
+        "matriculas_pre_escola": 145,
+        "turmas_creche": 7,
+        "turmas_pre_escola": 7
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar. A página informa o mesmo endereço para a E.M. Jardim das Palmeiras: confirme por telefone."
+    },
+    {
+      "id": "man-em-jardim-das-palmeiras",
+      "nome": "E.M. Jardim das Palmeiras",
+      "endereco": "Avenida 18 BR, 401 - Jardim Brasília",
+      "cep": "13502290",
+      "telefone": "(19) 3534-9138 / (19) 3524-6007",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.433664,
+        "longitude": -47.581746,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": {
+        "latitude": -22.4332,
+        "longitude": -47.5801,
+        "raio_m": 170,
+        "setor_censitario": "354390705000090P",
+        "quantidade_enderecos": 88,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": null,
+      "censo_escolar_2025": null,
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar. A página informa o mesmo endereço para a E.M. Isolina Huppert Cassavia: confirme por telefone."
+    },
+    {
+      "id": "man-em-joao-batista-maule",
+      "nome": "E.M. João Batista Maule",
+      "endereco": "Avenida 7, 833 - Distrito de Assistência",
+      "cep": "13509000",
+      "telefone": "(19) 3525-5271",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.497618,
+        "longitude": -47.583409,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": null,
+      "vinculo_inep": {
+        "codigo": "35285959",
+        "nome_censo": "JOAO BATISTA MAULE ESCOLA MUNICIPAL",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": true,
+        "matriculas_creche": 34,
+        "matriculas_0_a_3_anos": 30,
+        "matriculas_creche_tempo_integral": 2,
+        "matriculas_pre_escola": 37,
+        "turmas_creche": 2,
+        "turmas_pre_escola": 2
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-joao-rehder-netto",
+      "nome": "E.M. João Rehder Netto",
+      "endereco": "Rua 11, 3008 - Santana",
+      "cep": "13504099",
+      "telefone": "(19) 3533-9533",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.3896,
+        "longitude": -47.5716,
+        "raio_m": 180,
+        "setor_censitario": "354390705000214P",
+        "quantidade_enderecos": 117,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35083215",
+        "nome_censo": "JOAO REHDER NETO ESCOLA MUNICIPAL",
+        "metodo": "grafia quase igual"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": true,
+        "matriculas_creche": 89,
+        "matriculas_0_a_3_anos": 72,
+        "matriculas_creche_tempo_integral": 21,
+        "matriculas_pre_escola": 210,
+        "turmas_creche": 5,
+        "turmas_pre_escola": 11
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-jose-de-campos-chagas",
+      "nome": "E.M. José de Campos Chagas",
+      "endereco": "Rua 7, 1635 - Santana",
+      "cep": "13500200",
+      "telefone": "(19) 3523-1742",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.406218,
+        "longitude": -47.565671,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": {
+        "latitude": -22.4032,
+        "longitude": -47.5669,
+        "raio_m": 830,
+        "setor_censitario": "354390705000021P",
+        "quantidade_enderecos": 234,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35236421",
+        "nome_censo": "JOSE DE CAMPOS CHAGAS PROF DR ESCOLA MUNICIPAL",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": false,
+        "matriculas_creche": 96,
+        "matriculas_0_a_3_anos": 94,
+        "matriculas_creche_tempo_integral": 96,
+        "matriculas_pre_escola": 0,
+        "turmas_creche": 9,
+        "turmas_pre_escola": 0
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-jose-martins-da-silva",
+      "nome": "E.M. José Martins da Silva",
+      "endereco": "Rua 7 JP, 1055 - Jardim das Palmeiras",
+      "cep": "13502120",
+      "telefone": "(19) 3533-3833 / (19) 3532-1204",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.42949,
+        "longitude": -47.584115,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": {
+        "latitude": -22.4296,
+        "longitude": -47.584,
+        "raio_m": 220,
+        "setor_censitario": "354390705000097P",
+        "quantidade_enderecos": 88,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35067398",
+        "nome_censo": "JOSE MARTINS DA SILVA PROF ESCOLA MUNICIPAL",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": true,
+        "matriculas_creche": 65,
+        "matriculas_0_a_3_anos": 48,
+        "matriculas_creche_tempo_integral": 25,
+        "matriculas_pre_escola": 218,
+        "turmas_creche": 4,
+        "turmas_pre_escola": 11
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-jovelina-morateli",
+      "nome": "E.M. Jovelina Morateli",
+      "endereco": "Rua 9 MP, 70 - Parque Mãe Preta",
+      "cep": "13506179",
+      "telefone": "(19) 3536-4044",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.373473,
+        "longitude": -47.539436,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": {
+        "latitude": -22.3729,
+        "longitude": -47.5406,
+        "raio_m": 230,
+        "setor_censitario": "354390705000417P",
+        "quantidade_enderecos": 118,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": null,
+      "censo_escolar_2025": null,
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-laura-penna-joly",
+      "nome": "E.M. Laura Penna Joly",
+      "endereco": "Rua 10, 188 - Distrito de Ajapi",
+      "cep": "13508970",
+      "telefone": "(19) 3539-1285",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.2795,
+        "longitude": -47.5487,
+        "raio_m": 170,
+        "setor_censitario": "354390710000005P",
+        "quantidade_enderecos": 121,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35078694",
+        "nome_censo": "LAURA PENNA JOLY PROFA ESCOLA MUNICIPAL",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": true,
+        "matriculas_creche": 85,
+        "matriculas_0_a_3_anos": 76,
+        "matriculas_creche_tempo_integral": 61,
+        "matriculas_pre_escola": 98,
+        "turmas_creche": 5,
+        "turmas_pre_escola": 6
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-lucia-aparecida-buschinelli-carneiro",
+      "nome": "E.M. Lúcia Aparecida Buschinelli Carneiro",
+      "endereco": "Rua 23, 3850 - Jardim Paulista II",
+      "cep": "13504305",
+      "telefone": "(19) 3533-4540",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.3922,
+        "longitude": -47.587,
+        "raio_m": 150,
+        "setor_censitario": "354390705000371P",
+        "quantidade_enderecos": 7,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35236330",
+        "nome_censo": "LUCIA APARECIDA BUSCHINELLI CARNEIRO EM",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": false,
+        "matriculas_creche": 94,
+        "matriculas_0_a_3_anos": 94,
+        "matriculas_creche_tempo_integral": 94,
+        "matriculas_pre_escola": 0,
+        "turmas_creche": 6,
+        "turmas_pre_escola": 0
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-lucia-helena-ferreira-camargo",
+      "nome": "E.M. Lúcia Helena Ferreira Camargo",
+      "endereco": "Rua 5 Com Avenida 70, 360 - Jd. Araucária",
+      "cep": "13504824",
+      "telefone": "(19) 3532-1129",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.3866,
+        "longitude": -47.5825,
+        "raio_m": 150,
+        "setor_censitario": "354390705000392P",
+        "quantidade_enderecos": 28,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35007339",
+        "nome_censo": "ESCOLA MUNICIPAL PROFESSORA LUCIA HELENA FERREIRA CAMARGO",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": false,
+        "matriculas_creche": 112,
+        "matriculas_0_a_3_anos": 104,
+        "matriculas_creche_tempo_integral": 84,
+        "matriculas_pre_escola": 0,
+        "turmas_creche": 7,
+        "turmas_pre_escola": 0
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-lucidia-t-cassavia-escrivao-soares",
+      "nome": "E.M. Lucidia T. Cassavia Escrivão Soares",
+      "endereco": "Rua 20, 5784 - Jardim Boa Vista",
+      "cep": "13504717",
+      "telefone": "(19) 3533-5404",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.381488,
+        "longitude": -47.589572,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": {
+        "latitude": -22.3815,
+        "longitude": -47.5896,
+        "raio_m": 320,
+        "setor_censitario": "354390705000467P",
+        "quantidade_enderecos": 11,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": null,
+      "censo_escolar_2025": null,
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar. A página informa o mesmo endereço para a E.M. Mora Guimarães: confirme por telefone."
+    },
+    {
+      "id": "man-em-luiz-martins-rodrigues-filho",
+      "nome": "E.M. Luiz Martins Rodrigues Filho",
+      "endereco": "Avenida 13 JW, 140 - Novo Jardim Wenzel",
+      "cep": "13503710",
+      "telefone": "(19) 3523-5161 / (19) 3525-3431",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.4183,
+        "longitude": -47.5837,
+        "raio_m": 150,
+        "setor_censitario": "354390705000425P",
+        "quantidade_enderecos": 11,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35246037",
+        "nome_censo": "LUIZ MARTINS RODRIGUES FILHO PROF ESCOLA MUNICIPAL",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": true,
+        "matriculas_creche": 61,
+        "matriculas_0_a_3_anos": 49,
+        "matriculas_creche_tempo_integral": 3,
+        "matriculas_pre_escola": 167,
+        "turmas_creche": 4,
+        "turmas_pre_escola": 8
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-lygia-do-carmo-p-vendramel",
+      "nome": "E.M. Lygia do Carmo P. Vendramel",
+      "endereco": "Rua 11, 13 - Arco-Íris",
+      "cep": "13506079",
+      "telefone": "(19) 3527-2277",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.3782,
+        "longitude": -47.5511,
+        "raio_m": 150,
+        "setor_censitario": "354390705000185P",
+        "quantidade_enderecos": 32,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": null,
+      "censo_escolar_2025": null,
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-marcello-schmidt",
+      "nome": "E.M. Marcello Schmidt",
+      "endereco": "Avenida 25, 148 - Cidade Jardim",
+      "cep": "13500401",
+      "telefone": "(19) 3523-3341",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.4109,
+        "longitude": -47.5623,
+        "raio_m": 160,
+        "setor_censitario": "354390705000292P",
+        "quantidade_enderecos": 136,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": null,
+      "censo_escolar_2025": null,
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-marcello-schmidt-unidade-2",
+      "nome": "E.M. Marcello Schmidt Unidade 2",
+      "endereco": "Rua 10, 1123 - Centro",
+      "cep": "13500230",
+      "telefone": "(19) 3524-7300 / (19) 3523-3341 / (19) 3525-0768",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.41168,
+        "longitude": -47.566513,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": {
+        "latitude": -22.4052,
+        "longitude": -47.5691,
+        "raio_m": 1500,
+        "setor_censitario": "354390705000043P",
+        "quantidade_enderecos": 233,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": null,
+      "censo_escolar_2025": null,
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar. A Unidade 2 divide o telefone 3523-3341 com a E.M. Marcello Schmidt."
+    },
+    {
+      "id": "man-em-maria-aparecida-polastri-hartung-dona-birro",
+      "nome": "E.M. Maria Aparecida Polastri Hartung - Dona Birro",
+      "endereco": "anel viário com rua 6 e rua M22, S/N - Jardim Progresso",
+      "cep": null,
+      "telefone": "(19) 3524-3317",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.377219,
+        "longitude": -47.57698,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": null,
+      "vinculo_inep": {
+        "codigo": "35530955",
+        "nome_censo": "MARIA APARECIDA POLASTRI HARTUNG DONA BIRRO EM",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": true,
+        "matriculas_creche": 81,
+        "matriculas_0_a_3_anos": 74,
+        "matriculas_creche_tempo_integral": 81,
+        "matriculas_pre_escola": 42,
+        "turmas_creche": 6,
+        "turmas_pre_escola": 2
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar. A página informa só o CEP geral da cidade (13500-000), por isso a escola não entra na busca por CEP."
+    },
+    {
+      "id": "man-em-maria-isabel-soares",
+      "nome": "E.M. Maria Isabel Soares",
+      "endereco": "Rua 17, 135 - Bairro do Estádio",
+      "cep": "13504713",
+      "telefone": "(19) 3532-3916",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.382808,
+        "longitude": -47.584518,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": {
+        "latitude": -22.3828,
+        "longitude": -47.5847,
+        "raio_m": 150,
+        "setor_censitario": "354390705000408P",
+        "quantidade_enderecos": 39,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35464284",
+        "nome_censo": "MARIA ISABEL SOARES PROFESSORA EM",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": false,
+        "matriculas_creche": 55,
+        "matriculas_0_a_3_anos": 55,
+        "matriculas_creche_tempo_integral": 55,
+        "matriculas_pre_escola": 0,
+        "turmas_creche": 4,
+        "turmas_pre_escola": 0
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar. A página informa só o CEP geral da cidade (13500-000), por isso a escola não entra na busca por CEP."
+    },
+    {
+      "id": "man-em-maria-teixeira-fittipaldi",
+      "nome": "E.M. Maria Teixeira Fittipaldi",
+      "endereco": "Rua 8, 1050 - Jardim das Palmeiras",
+      "cep": "13502130",
+      "telefone": "(19) 3533-4060",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.4309,
+        "longitude": -47.5839,
+        "raio_m": 300,
+        "setor_censitario": "354390705000092P",
+        "quantidade_enderecos": 127,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35236391",
+        "nome_censo": "MARIA TEIXEIRA FITTIPALDI PROFA ESCOLA MUNICIPAL",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": false,
+        "matriculas_creche": 131,
+        "matriculas_0_a_3_anos": 131,
+        "matriculas_creche_tempo_integral": 131,
+        "matriculas_pre_escola": 0,
+        "turmas_creche": 8,
+        "turmas_pre_escola": 0
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-marilda-dos-santos-souza",
+      "nome": "E.M. Marilda dos Santos Souza",
+      "endereco": "Estr. dos Costas, 744 - Jardim Inocoop",
+      "cep": "13502100",
+      "telefone": "(19) 3524-9193 / (19) 3521-9193",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.425,
+        "longitude": -47.5796,
+        "raio_m": 880,
+        "setor_censitario": "354390705000319P",
+        "quantidade_enderecos": 622,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35005006",
+        "nome_censo": "ESCOLA MUNICIPAL PROFESSORA MARILDA DOS SANTOS SOUZA",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": true,
+        "matriculas_creche": 121,
+        "matriculas_0_a_3_anos": 115,
+        "matriculas_creche_tempo_integral": 121,
+        "matriculas_pre_escola": 42,
+        "turmas_creche": 7,
+        "turmas_pre_escola": 2
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-marina-fredine-dainese-cyrino",
+      "nome": "E.M. Marina Fredine Dainese Cyrino",
+      "endereco": "Rua 8 CJ, 50 - Cidade Jardim",
+      "cep": "13504188",
+      "telefone": "(19) 3523-1907",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.3893,
+        "longitude": -47.5737,
+        "raio_m": 300,
+        "setor_censitario": "354390705000377P",
+        "quantidade_enderecos": 127,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35454624",
+        "nome_censo": "MARINA FREDINE DAINESE CYRINO PROFA ESCOLA MUNICIPAL",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": true,
+        "matriculas_creche": 24,
+        "matriculas_0_a_3_anos": 21,
+        "matriculas_creche_tempo_integral": 24,
+        "matriculas_pre_escola": 18,
+        "turmas_creche": 3,
+        "turmas_pre_escola": 2
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-mitiko-matsushita-nevoeiro",
+      "nome": "E.M. Mitiko Matsushita Nevoeiro",
+      "endereco": "Avenida M-31, 2260 - Jardim São João",
+      "cep": "13505420",
+      "telefone": "(19) 3533-1838",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.381238,
+        "longitude": -47.577222,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": {
+        "latitude": -22.3804,
+        "longitude": -47.576,
+        "raio_m": 230,
+        "setor_censitario": "354390705000153P",
+        "quantidade_enderecos": 76,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35204997",
+        "nome_censo": "MITIKO MATSUSHITA NEVOEIRO ESCOLA MUNICIPAL",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": true,
+        "matriculas_creche": 90,
+        "matriculas_0_a_3_anos": 72,
+        "matriculas_creche_tempo_integral": 27,
+        "matriculas_pre_escola": 221,
+        "turmas_creche": 5,
+        "turmas_pre_escola": 11
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-monsenhor-martins",
+      "nome": "E.M. Monsenhor Martins",
+      "endereco": "Avenida 36, 717 - Vila Operária",
+      "cep": "13504120",
+      "telefone": "(19) 3524-2400",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.395257,
+        "longitude": -47.567524,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": {
+        "latitude": -22.3959,
+        "longitude": -47.5697,
+        "raio_m": 430,
+        "setor_censitario": "354390705000069P",
+        "quantidade_enderecos": 111,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": null,
+      "censo_escolar_2025": null,
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-monteiro-lobato",
+      "nome": "E.M. Monteiro Lobato",
+      "endereco": "Avenida 1, 56 - Parque Mãe Preta",
+      "cep": "13506171",
+      "telefone": "(19) 3527-4157",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.374,
+        "longitude": -47.542,
+        "raio_m": 300,
+        "setor_censitario": "354390705000418P",
+        "quantidade_enderecos": 2,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35236378",
+        "nome_censo": "MONTEIRO LOBATO ESCOLA MUNICIPAL",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": false,
+        "matriculas_creche": 184,
+        "matriculas_0_a_3_anos": 184,
+        "matriculas_creche_tempo_integral": 184,
+        "matriculas_pre_escola": 0,
+        "turmas_creche": 11,
+        "turmas_pre_escola": 0
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-mora-guimaraes",
+      "nome": "E.M. Mora Guimarães",
+      "endereco": "Rua 20, 5784 - Jardim Boa Vista",
+      "cep": "13504672",
+      "telefone": "(19) 3533-4955",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.381315,
+        "longitude": -47.58953,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": null,
+      "vinculo_inep": {
+        "codigo": "35236385",
+        "nome_censo": "MORA GUIMARAES ESCOLA MUNICIPAL",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": false,
+        "matriculas_creche": 65,
+        "matriculas_0_a_3_anos": 65,
+        "matriculas_creche_tempo_integral": 65,
+        "matriculas_pre_escola": 0,
+        "turmas_creche": 4,
+        "turmas_pre_escola": 0
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar. A página informa o mesmo endereço para a E.M. Lucidia T. Cassavia Escrivão Soares: confirme por telefone."
+    },
+    {
+      "id": "man-em-nephtali-vieira-junior-pastor",
+      "nome": "E.M. Nephtali Vieira Junior Pastor",
+      "endereco": "Rua 6, 3461 - Alto do Santana",
+      "cep": "13504099",
+      "telefone": "(19) 3533-1072",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.390073,
+        "longitude": -47.570945,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": {
+        "latitude": -22.3896,
+        "longitude": -47.5716,
+        "raio_m": 180,
+        "setor_censitario": "354390705000214P",
+        "quantidade_enderecos": 117,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35283812",
+        "nome_censo": "NEPHTALI VIEIRA JUNIOR PASTOR ESCOLA MUNICIPAL",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": true,
+        "matriculas_creche": 88,
+        "matriculas_0_a_3_anos": 81,
+        "matriculas_creche_tempo_integral": 88,
+        "matriculas_pre_escola": 40,
+        "turmas_creche": 5,
+        "turmas_pre_escola": 2
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-octavio-jose-chiossi",
+      "nome": "E.M. Octávio José Chiossi",
+      "endereco": "Avenida 5, 1129 - Jardim Novo I",
+      "cep": "13504186",
+      "telefone": "(19) 3524-2582 / (19) 3532-1244",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.3926,
+        "longitude": -47.5695,
+        "raio_m": 150,
+        "setor_censitario": "354390705000361P",
+        "quantidade_enderecos": 17,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": null,
+      "censo_escolar_2025": null,
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-paulo-koelle-dr",
+      "nome": "E.M. Paulo Koelle Dr.",
+      "endereco": "Rua 12, 867 - Centro",
+      "cep": "13500110",
+      "telefone": "(19) 3525-1164 / (19) 3532-1595",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.414343,
+        "longitude": -47.56745,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": {
+        "latitude": -22.4166,
+        "longitude": -47.5665,
+        "raio_m": 440,
+        "setor_censitario": "354390705000003P",
+        "quantidade_enderecos": 168,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35061426",
+        "nome_censo": "PAULO KOELLE DR ESCOLA MUNICIPAL",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": true,
+        "matriculas_creche": 114,
+        "matriculas_0_a_3_anos": 100,
+        "matriculas_creche_tempo_integral": 52,
+        "matriculas_pre_escola": 230,
+        "turmas_creche": 8,
+        "turmas_pre_escola": 13
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-rosa-maria-castellano-pieroni",
+      "nome": "E.M. Rosa Maria Castellano Pieroni",
+      "endereco": "Avenida M-15, 580 - Cervezão",
+      "cep": "13505320",
+      "telefone": "(19) 3532-6387 / (19) 3524-1361",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.3867,
+        "longitude": -47.5687,
+        "raio_m": 300,
+        "setor_censitario": "354390705000133P",
+        "quantidade_enderecos": 93,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35236366",
+        "nome_censo": "ROSA MARIA CASTELLANO PIERONI ESCOLA MUNICIPAL",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": false,
+        "matriculas_creche": 135,
+        "matriculas_0_a_3_anos": 134,
+        "matriculas_creche_tempo_integral": 120,
+        "matriculas_pre_escola": 0,
+        "turmas_creche": 8,
+        "turmas_pre_escola": 0
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar. A página também lista (19) 3522-1950, que é a linha da Secretaria da Educação, e por isso ela não foi cadastrada como telefone da escola."
+    },
+    {
+      "id": "man-em-rubens-foot-guimaraes-escola-agricola",
+      "nome": "E.M. Rubens Foot Guimarães - Escola Agrícola",
+      "endereco": "Estrada Rio Claro/Ajapi - Km 07, 000 - Distrito de Ajapi",
+      "cep": "13508970",
+      "telefone": "(19) 3527-0670 / (19) 3536-3022 / (19) 99891-6843",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.2795,
+        "longitude": -47.5487,
+        "raio_m": 170,
+        "setor_censitario": "354390710000005P",
+        "quantidade_enderecos": 121,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": null,
+      "censo_escolar_2025": null,
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-rutineia-paulino-de-souza-ferreira-da-silva",
+      "nome": "E.M. Rutinéia Paulino de Souza Ferreira da Silva",
+      "endereco": "Avenida 01 JN, 1056 - Jardim Novo I",
+      "cep": "13502740",
+      "telefone": "(19) 3525-1008",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.450212,
+        "longitude": -47.583778,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": {
+        "latitude": -22.4498,
+        "longitude": -47.5858,
+        "raio_m": 780,
+        "setor_censitario": "354390705000451P",
+        "quantidade_enderecos": 66,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35005440",
+        "nome_censo": "ESCOLA MUNICIPAL PROFESSORA RUTINEIA PAULINO DE SOUSA FERREIRA DA SILVA",
+        "metodo": "grafia quase igual"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": false,
+        "matriculas_creche": 114,
+        "matriculas_0_a_3_anos": 105,
+        "matriculas_creche_tempo_integral": 114,
+        "matriculas_pre_escola": 0,
+        "turmas_creche": 7,
+        "turmas_pre_escola": 0
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-samira-assencio-savoldi",
+      "nome": "E.M. Samira Assêncio Savoldi",
+      "endereco": "Avenida 40 SE, 140 - Jardim Santa Eliza",
+      "cep": "13504616",
+      "telefone": "(19) 3523-4687",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.399,
+        "longitude": -47.588,
+        "raio_m": 150,
+        "setor_censitario": "354390705000355P",
+        "quantidade_enderecos": 12,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35285985",
+        "nome_censo": "SAMIRA ASSENCIO SAVOLDI PROFESSORA ESCOLA MUNICIPAL",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": true,
+        "matriculas_creche": 62,
+        "matriculas_0_a_3_anos": 51,
+        "matriculas_creche_tempo_integral": 7,
+        "matriculas_pre_escola": 88,
+        "turmas_creche": 3,
+        "turmas_pre_escola": 4
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-santo-antonio-de-padua",
+      "nome": "E.M. Santo Antônio de Pádua",
+      "endereco": "Avenida 38, Entre Ruas 4 e 5, 625 - Vila Operária",
+      "cep": "13504195",
+      "telefone": "(19) 3524-7339",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.3886,
+        "longitude": -47.5757,
+        "raio_m": 800,
+        "setor_censitario": "354390705000377P",
+        "quantidade_enderecos": 151,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": null,
+      "censo_escolar_2025": null,
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-sebastiao-ambrozio",
+      "nome": "E.M. Sebastião Ambrózio",
+      "endereco": "Avenida 2, 428 - Jardim Novo I",
+      "cep": "13502768",
+      "telefone": "(19) 3525-1472",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.409734,
+        "longitude": -47.562417,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": {
+        "latitude": -22.4488,
+        "longitude": -47.5811,
+        "raio_m": 390,
+        "setor_censitario": "354390705000209P",
+        "quantidade_enderecos": 99,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35282182",
+        "nome_censo": "SEBASTIAO AMBROZIO PROF ESCOLA MUNICIPAL",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": false,
+        "matriculas_creche": 103,
+        "matriculas_0_a_3_anos": 103,
+        "matriculas_creche_tempo_integral": 103,
+        "matriculas_pre_escola": 0,
+        "turmas_creche": 7,
+        "turmas_pre_escola": 0
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar. A página informa o mesmo endereço para a E.M. Hélio Jorge dos Santos: confirme por telefone."
+    },
+    {
+      "id": "man-em-sergio-hernani-fittipaldi",
+      "nome": "E.M. Sérgio Hernani Fittipaldi",
+      "endereco": "Avenida M-51, S/N - Jardim das Flores",
+      "cep": "13505495",
+      "telefone": "(19) 3524-9397",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.3766,
+        "longitude": -47.5814,
+        "raio_m": 290,
+        "setor_censitario": "354390705000412P",
+        "quantidade_enderecos": 122,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": null,
+      "censo_escolar_2025": null,
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-sueli-aparecida-marin",
+      "nome": "E.M. Sueli Aparecida Marin",
+      "endereco": "Avenida M-31, 2288 - Jardim São João",
+      "cep": "13505420",
+      "telefone": "(19) 3523-5683 / (19) 3525-1114 / (19) 97802-1960",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": {
+        "latitude": -22.381284,
+        "longitude": -47.577386,
+        "fonte": "catalogo_manual"
+      },
+      "referencia_cep": {
+        "latitude": -22.3804,
+        "longitude": -47.576,
+        "raio_m": 230,
+        "setor_censitario": "354390705000153P",
+        "quantidade_enderecos": 76,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": null,
+      "censo_escolar_2025": null,
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-sueli-maria-proni-cerri",
+      "nome": "E.M. Sueli Maria Proni Cerri",
+      "endereco": "Avenida 54-A, 523 - Vila Cristina",
+      "cep": "13506052",
+      "telefone": "(19) 3527-3370",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.3847,
+        "longitude": -47.5544,
+        "raio_m": 210,
+        "setor_censitario": "354390705000163P",
+        "quantidade_enderecos": 46,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35285961",
+        "nome_censo": "SUELI MARIA PRONI CERRI PROFESSORA ESCOLA MUNICIPAL",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": true,
+        "matriculas_creche": 51,
+        "matriculas_0_a_3_anos": 45,
+        "matriculas_creche_tempo_integral": 2,
+        "matriculas_pre_escola": 135,
+        "turmas_creche": 3,
+        "turmas_pre_escola": 8
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-sylvio-de-araujo",
+      "nome": "E.M. Sylvio de Araújo",
+      "endereco": "Rua 9-A, 2486 - Vila São Miguel",
+      "cep": "13506495",
+      "telefone": "(19) 3527-1460",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.3819,
+        "longitude": -47.5459,
+        "raio_m": 370,
+        "setor_censitario": "354390705000167P",
+        "quantidade_enderecos": 234,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": null,
+      "censo_escolar_2025": null,
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-theodoro-paulo-koelle",
+      "nome": "E.M. Theodoro Paulo Koelle",
+      "endereco": "Rua 17 JN, 1433 - Jardim Novo",
+      "cep": "13502761",
+      "telefone": "(19) 3532-2924",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.4507,
+        "longitude": -47.5849,
+        "raio_m": 520,
+        "setor_censitario": "354390705000273P",
+        "quantidade_enderecos": 117,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": null,
+      "censo_escolar_2025": null,
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    },
+    {
+      "id": "man-em-victorino-machado",
+      "nome": "E.M. Victorino Machado",
+      "endereco": "Avenida M-27, 1132 - Jd. Hipódromo",
+      "cep": "13501060",
+      "telefone": "(19) 3527-0241 / (19) 3527-3037",
+      "horario": null,
+      "fonte_cadastro": "Prefeitura de Rio Claro — portal da Educação, página Unidades de ensino",
+      "fonte_url": "https://www.educacaorc.com.br/?r=secretaria/unidadeEnsino",
+      "verificado_em": "2026-10-11",
+      "coordenada_equipamento": null,
+      "referencia_cep": {
+        "latitude": -22.426,
+        "longitude": -47.556,
+        "raio_m": 610,
+        "setor_censitario": "354390705000055P",
+        "quantidade_enderecos": 169,
+        "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
+      },
+      "vinculo_inep": {
+        "codigo": "35061414",
+        "nome_censo": "VICTORINO MACHADO PROF ESCOLA MUNICIPAL",
+        "metodo": "mesmas palavras"
+      },
+      "censo_escolar_2025": {
+        "rede": "municipal",
+        "localizacao": "urbana",
+        "oferece_creche": true,
+        "oferece_pre_escola": true,
+        "matriculas_creche": 92,
+        "matriculas_0_a_3_anos": 78,
+        "matriculas_creche_tempo_integral": 20,
+        "matriculas_pre_escola": 279,
+        "turmas_creche": 4,
+        "turmas_pre_escola": 12
+      },
+      "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar."
+    }
+  ]
+}
