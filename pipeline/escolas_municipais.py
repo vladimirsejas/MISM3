@@ -68,6 +68,27 @@ def carregar() -> dict:
                 "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola",
             }
 
+        # Localização operacional única: prioriza coordenada individual; na ausência,
+        # usa o centro do CEP do CNEFE, sempre identificando que é uma referência aproximada.
+        localizacao_mapa = None
+        if coordenada:
+            localizacao_mapa = {
+                "latitude": coordenada["latitude"],
+                "longitude": coordenada["longitude"],
+                "metodo": "coordenada_individual",
+                "precisao": "individual",
+                "fonte": "catalogo_manual",
+            }
+        elif referencia_cep:
+            localizacao_mapa = {
+                "latitude": referencia_cep["latitude"],
+                "longitude": referencia_cep["longitude"],
+                "metodo": "centroide_cep",
+                "precisao": "aproximada",
+                "raio_m": referencia_cep["raio_m"],
+                "fonte": "CNEFE - Censo Demografico 2022",
+            }
+
         escolas.append({
             "id": r["id"],
             "nome": r["nome"],
@@ -80,6 +101,7 @@ def carregar() -> dict:
             "verificado_em": r.get("verificado_em") or None,
             "coordenada_equipamento": coordenada,
             "referencia_cep": referencia_cep,
+            "localizacao_mapa": localizacao_mapa,
             "vinculo_inep": ({
                 "codigo": vinculo["inep"],
                 "nome_censo": vinculo["nome_censo"],
@@ -118,6 +140,9 @@ def carregar() -> dict:
                 "escolas_catalogadas": len(escolas),
                 "com_coordenada_individual": sum(bool(e["coordenada_equipamento"]) for e in escolas),
                 "com_referencia_cep": sum(bool(e["referencia_cep"]) for e in escolas),
+                "localizadas_por_coordenada_individual": sum(bool(e["localizacao_mapa"] and e["localizacao_mapa"]["metodo"] == "coordenada_individual") for e in escolas),
+                "localizadas_por_cep": sum(bool(e["localizacao_mapa"] and e["localizacao_mapa"]["metodo"] == "centroide_cep") for e in escolas),
+                "sem_localizacao_mapa": sum(not e["localizacao_mapa"] for e in escolas),
                 "vinculadas_inep": sum(bool(e["vinculo_inep"]) for e in escolas),
                 "sem_vinculo_inep": sum(not e["vinculo_inep"] for e in escolas),
                 "municipais_no_censo_infantil": sum(e.get("rede") == "municipal" for e in oferta.get("escolas", [])),
@@ -126,7 +151,8 @@ def carregar() -> dict:
             "interpretacao": "O conjunto consolida cadastro, georreferenciamento disponível e indicadores do Censo Escolar sem confundir as naturezas das fontes.",
             "limites": [
                 "Matrículas e turmas não representam vagas disponíveis, demanda reprimida ou fila de espera.",
-                "A coordenada individual é mantida separada do centroide de CEP.",
+                "A localização operacional prioriza coordenada individual; na ausência, usa referência do centro de CEP com método e raio explicitados.",
+                "O centro de CEP é uma aproximação territorial agregada, não a coordenada comprovada do prédio escolar.",
                 "A referência de CEP representa distribuição agregada de endereços CNEFE e não comprova a localização física da escola.",
                 "Registros sem vínculo INEP permanecem sem indicadores escolares associados.",
                 "A ausência de coordenada individual não significa ausência de endereço cadastrado.",
