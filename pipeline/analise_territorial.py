@@ -33,7 +33,7 @@ AVISO = ("Distâncias em linha reta entre o centro de cada setor do IBGE e a ref
          "a análise apresenta uma faixa geométrica, não um intervalo de confiança. O raio do índice CEP é uma estimativa operacional da dispersão dos endereços "
          "agrupados, com limites definidos pelo projeto; não é margem de erro oficial do IBGE nem garante conter a escola. Coordenadas sem raio explícito não recebem "
          "incerteza artificial. Faixas sobrepostas não permitem ordenar com segurança qual referência é mais próxima. Não considera ruas, ônibus nem horários; "
-         "não prova que exista ou não exista falta de serviço. O agrupamento de bairros é exploratório.")
+         "não provam que exista ou não exista falta de serviço. O agrupamento de bairros é exploratório.")
 
 
 def haversine_km(lat1, lon1, lat2, lon2) -> float:
@@ -137,7 +137,7 @@ def analisar(geojson, servicos, indice_cep, k_grupos=3, hoje=None, escolas=None)
                     if s.get("lat") is not None and s.get("lon") is not None:
                         registro["_raio_incerteza_m"] = 0
                     else:
-                        cep = re.sub(r"D", "", str(s.get("cep") or ""))
+                        cep = re.sub(r"\\D", "", str(s.get("cep") or ""))
                         v = indice_cep.get(cep) if cep else None
                         registro["_raio_incerteza_m"] = v[2] if v and len(v) > 2 else 0
                     por_cat[c].append((registro, xy))
