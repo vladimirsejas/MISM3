@@ -2,7 +2,7 @@
 
 **Versão:** 1.0 — pré-execução  
 **Data:** 05/11/2026  
-**Estado:** proposta; conjunto novo, congelamento e execução ainda não realizados.
+**Estado:** conjunto experimental congelado v1 (PR #79, commit `22bdc74`, SHA-256 `abbae38d3cc39a8428130c09ac59d65c96cff497112481a9eadcf3ac9227ae00`); execução do experimento ainda não realizada.
 
 ## 1. Perguntas de pesquisa
 
@@ -43,9 +43,9 @@ Uma ablação só será considerada válida se a desativação de um componente 
 
 ## 4. Conjunto novo
 
-### 4.1 Composição final proposta
+### 4.1 Composição do conjunto congelado v1
 
-O conjunto recebido contém **190 mensagens fictícias**, todas escritas pelo autor:
+O conjunto congelado v1 contém **190 mensagens fictícias**, todas escritas pelo autor:
 
 | Classe de perigo | Quantidade |
 |---|---:|
@@ -81,11 +81,11 @@ Os quatro pares foram mantidos no conjunto. A análise de sensibilidade deverá 
 
 ### 4.4 Integridade e estado do congelamento
 
-O arquivo proposto para inclusão é `protocolo/conjunto_congelado_v1.json`. O SHA-256 esperado dos bytes do arquivo é:
+O arquivo congelado v1 é `protocolo/conjunto_congelado_v1.json`. Seu SHA-256 é:
 
 `abbae38d3cc39a8428130c09ac59d65c96cff497112481a9eadcf3ac9227ae00`
 
-O manifesto de hash será versionado junto ao arquivo. **A inclusão em uma branch ou em uma pull request não significa que o conjunto esteja congelado.** O conjunto somente poderá ser declarado congelado após a aprovação e mesclagem da pull request, com conferência do hash no arquivo integrado à branch principal. Até esse momento, seu estado é proposta de inclusão/congelamento.
+O conjunto foi integrado à branch principal pela PR #79 (commit `22bdc74`), e o SHA-256 acima corresponde ao arquivo congelado v1. Portanto, o conjunto experimental está congelado. **A execução do experimento ainda não foi realizada.**
 
 ## 5. Métricas
 
