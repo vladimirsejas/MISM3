@@ -29,9 +29,9 @@ CATEGORIAS = {  # nome da coluna -> (tipo, subtipo) no catálogo
     "escola": ("creche", "escola_municipal"),
 }
 SEM_BAIRRO = "Sem bairro identificado"
-AVISO = ("Distâncias em linha reta entre o centro de cada setor do IBGE e o serviço mais próximo, com a localização do serviço aproximada "
-         "pelo centro do CEP. Não consideram ruas, ônibus nem horários. Mostram onde a rede cadastrada está longe da população; não provam "
-         "falta de serviço. O agrupamento de bairros é exploratório.")
+AVISO = ("Distâncias em linha reta entre o centro de cada setor do IBGE e a localização cadastrada do serviço. As escolas usam a base "
+         "consolidada, que distingue coordenadas individuais de referências aproximadas por CEP; CRAS e UBS usam o catálogo e, quando necessário, "
+         "o índice de CEP. Não consideram ruas, ônibus nem horários e não comprovam falta de serviço. O agrupamento de bairros é exploratório.")
 
 
 def haversine_km(lat1, lon1, lat2, lon2) -> float:
