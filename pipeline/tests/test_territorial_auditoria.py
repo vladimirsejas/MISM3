@@ -108,16 +108,17 @@ def test_hash_so_e_dispensado_quando_o_valor_inteiro_e_hash_e_no_campo_de_hash(r
     assert "conteúdo" in tipos(aud.auditar(real))
 
 
-def test_setores_pequenos_sao_listados_sem_suprimir_nada(real):
+def test_setores_pequenos_estao_suprimidos_e_nao_sao_listados(real):
     peq = aud.setores_pequenos(real)
-    assert set(peq) == {"conservadora", "intermediária", "ampliada"}
-    assert set(peq["conservadora"]) <= set(peq["intermediária"]) <= set(peq["ampliada"])
-    assert all(len(v) == len(set(v)) for v in peq.values()) and all(v == sorted(v) for v in peq.values())
-    pessoas = {s["id"]: s for s in real["setores"]}
-    assert all(pessoas[i]["pessoas"] < 20 or pessoas[i]["domicilios"] < 10 for i in peq["ampliada"])
-    assert len(real["setores"]) == 408, "nenhum setor foi suprimido ou agregado"
+    assert len(peq["suprimidos"]) == 17
+    assert peq["inconsistentes"] == []
     texto = aud.relatorio(real, [])
-    assert "decisão do autor" in texto and "não suprime nem agrega nenhum setor" in texto
+    assert "D4" in texto and "Setores protegidos: 17" in texto
+    assert "identificadores dos setores protegidos não são listados" in texto
+
+
+def test_auditoria_de_todos_os_arquivos_publicos_confirma_d4():
+    assert aud.auditar_publicacao() == []
 
 def test_nao_aceita_raio_zero_quando_a_proveniencia_nao_esta_registrada(real):
     equipamento = next(e for e in real["equipamentos"] if e["categoria"] in {"cras", "ubs"} and e["confianca_localizacao"] == "nao_registrada")
