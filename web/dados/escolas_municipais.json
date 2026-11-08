@@ -6,9 +6,9 @@
     "fontes": {
       "cadastro": "catalogo/servicos_manuais.csv — cadastro municipal já mantido no MISM3",
       "vinculos_inep": "catalogo/inep_escolas.csv — correspondência entre ID do catálogo e código INEP",
-      "censo_escolar": "web/dados/oferta_educacao_infantil.json — INEP, Censo Escolar da Educação Básica 2025",
       "referencia_cep": "web/dados/cep_indice.json — CNEFE, Censo Demográfico 2022",
-      "proveniencia_coordenadas": "catalogo/localizacao_registro.csv (consultar por ID; não há registro individual para todas as coordenadas)"
+      "proveniencia_coordenadas": "catalogo/localizacao_registro.csv (consultar por ID; não há registro individual para todas as coordenadas)",
+      "censo_escolar_agregado_por_rede": "web/dados/oferta_educacao_infantil.json — INEP, Censo Escolar da Educação Básica 2025"
     },
     "contagens": {
       "escolas_catalogadas": 68,
@@ -16,13 +16,11 @@
       "com_referencia_cep": 59,
       "vinculadas_inep": 43,
       "sem_vinculo_inep": 25,
-      "municipais_no_censo_infantil": 46,
-      "registros_inep_municipais_sem_vinculo": 3,
       "localizadas_por_coordenada_individual": 33,
       "localizadas_por_cep": 35,
       "sem_localizacao_mapa": 0
     },
-    "interpretacao": "Cada escola recebe uma localização operacional: coordenada individual quando disponível; na ausência, centroide do CEP como aproximação explicitamente identificada.",
+    "interpretacao": "O conjunto consolida cadastro e georreferenciamento. O Censo Escolar é publicado apenas em totais por rede, sem associar matrículas a escolas individuais.",
     "limites": [
       "Matrículas e turmas não representam vagas disponíveis, demanda reprimida ou fila de espera.",
       "A referência de CEP representa distribuição agregada de endereços CNEFE e não comprova a localização física da escola.",
@@ -30,24 +28,8 @@
       "A ausência de coordenada individual não significa ausência de endereço cadastrado.",
       "A proveniência detalhada das coordenadas deve ser consultada no registro de localização; nem todas as coordenadas têm ficha individual nesse arquivo.",
       "A localização operacional prioriza coordenada individual; na ausência, usa referência do centro de CEP com método e raio explicitados.",
-      "O centro de CEP é uma aproximação territorial agregada, não a coordenada comprovada do prédio escolar."
-    ],
-    "inep_municipais_sem_vinculo": [
-      {
-        "codigo": "35204973",
-        "nome_censo": "LUCIDIA THEREZINHA CASSAVIA ESCRIVAO SOARES EM",
-        "observacao": "Sem vínculo com registro do catálogo; não associar automaticamente."
-      },
-      {
-        "codigo": "35083914",
-        "nome_censo": "LYGIA CARMO POLASTRI VENDRAMEL PROFA ESCOLA MUNICIPAL",
-        "observacao": "Sem vínculo com registro do catálogo; não associar automaticamente."
-      },
-      {
-        "codigo": "35236354",
-        "nome_censo": "SANTO ANTONIO ESCOLA MUNICIPAL",
-        "observacao": "Sem vínculo com registro do catálogo; não associar automaticamente."
-      }
+      "O centro de CEP é uma aproximação territorial agregada, não a coordenada comprovada do prédio escolar.",
+      "A base pública de escolas não contém contagens de matrículas ou turmas por unidade; esses dados aparecem somente em totais por rede."
     ]
   },
   "escolas": [
@@ -71,7 +53,6 @@
         "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
       },
       "vinculo_inep": null,
-      "censo_escolar_2025": null,
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.4135,
@@ -102,7 +83,6 @@
         "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
       },
       "vinculo_inep": null,
-      "censo_escolar_2025": null,
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.4396,
@@ -137,18 +117,6 @@
         "nome_censo": "ANTONIO MARIA MARROTE ESCOLA MUNICIPAL",
         "metodo": "mesmas palavras"
       },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": true,
-        "matriculas_creche": 52,
-        "matriculas_0_a_3_anos": 45,
-        "matriculas_creche_tempo_integral": 2,
-        "matriculas_pre_escola": 120,
-        "turmas_creche": 3,
-        "turmas_pre_escola": 6
-      },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.4256,
@@ -176,7 +144,6 @@
       },
       "referencia_cep": null,
       "vinculo_inep": null,
-      "censo_escolar_2025": null,
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.38045,
@@ -210,18 +177,6 @@
         "nome_censo": "ESCOLA MUNICIPAL PROFESSORA APARECIDA JOSE CARLINI BONILHA",
         "metodo": "mesmas palavras"
       },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": true,
-        "matriculas_creche": 142,
-        "matriculas_0_a_3_anos": 132,
-        "matriculas_creche_tempo_integral": 142,
-        "matriculas_pre_escola": 24,
-        "turmas_creche": 8,
-        "turmas_pre_escola": 1
-      },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.4166,
@@ -253,18 +208,6 @@
         "nome_censo": "ARLINDO ANSANELLO ESCOLA MUNICIPAL",
         "metodo": "mesmas palavras"
       },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": false,
-        "matriculas_creche": 114,
-        "matriculas_0_a_3_anos": 106,
-        "matriculas_creche_tempo_integral": 114,
-        "matriculas_pre_escola": 0,
-        "turmas_creche": 8,
-        "turmas_pre_escola": 0
-      },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.398846,
@@ -294,7 +237,6 @@
         "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
       },
       "vinculo_inep": null,
-      "censo_escolar_2025": null,
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.3908,
@@ -328,18 +270,6 @@
         "codigo": "35267363",
         "nome_censo": "BENEDICTO JOSE ZAINE PROFESSOR ESCOLA MUNICIPAL",
         "metodo": "mesmas palavras"
-      },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": true,
-        "matriculas_creche": 3,
-        "matriculas_0_a_3_anos": 2,
-        "matriculas_creche_tempo_integral": 0,
-        "matriculas_pre_escola": 7,
-        "turmas_creche": 0,
-        "turmas_pre_escola": 1
       },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
@@ -375,18 +305,6 @@
         "nome_censo": "BENJAMIN FERREIRA ESCOLA MUNICIPAL",
         "metodo": "mesmas palavras"
       },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": true,
-        "matriculas_creche": 14,
-        "matriculas_0_a_3_anos": 10,
-        "matriculas_creche_tempo_integral": 0,
-        "matriculas_pre_escola": 85,
-        "turmas_creche": 1,
-        "turmas_pre_escola": 5
-      },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.4074,
@@ -421,18 +339,6 @@
         "nome_censo": "ESCOLA MUNICIPAL CAMINHO DA VIDA PROFA MARGARIDA PENTEADO",
         "metodo": "mesmas palavras"
       },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": true,
-        "matriculas_creche": 97,
-        "matriculas_0_a_3_anos": 88,
-        "matriculas_creche_tempo_integral": 97,
-        "matriculas_pre_escola": 40,
-        "turmas_creche": 7,
-        "turmas_pre_escola": 2
-      },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.4037,
@@ -463,7 +369,6 @@
         "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
       },
       "vinculo_inep": null,
-      "censo_escolar_2025": null,
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.4083,
@@ -502,18 +407,6 @@
         "nome_censo": "CLARA FREIRE CASTELLANO ESCOLA MUNICIPAL",
         "metodo": "mesmas palavras"
       },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": true,
-        "matriculas_creche": 129,
-        "matriculas_0_a_3_anos": 111,
-        "matriculas_creche_tempo_integral": 22,
-        "matriculas_pre_escola": 294,
-        "turmas_creche": 6,
-        "turmas_pre_escola": 14
-      },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar. O CEP informado na página (16504-450) não é de Rio Claro e foi deixado de fora: provável erro da fonte.",
       "localizacao_mapa": {
         "latitude": -22.388769,
@@ -551,18 +444,6 @@
         "nome_censo": "COMECINHO DE VIDA DIVA CABRAL DE OLIVEIRA PROFA CRECHE",
         "metodo": "mesmas palavras"
       },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": false,
-        "matriculas_creche": 45,
-        "matriculas_0_a_3_anos": 45,
-        "matriculas_creche_tempo_integral": 45,
-        "matriculas_pre_escola": 0,
-        "turmas_creche": 3,
-        "turmas_pre_escola": 0
-      },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.39065,
@@ -592,7 +473,6 @@
         "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
       },
       "vinculo_inep": null,
-      "censo_escolar_2025": null,
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.4219,
@@ -627,7 +507,6 @@
         "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
       },
       "vinculo_inep": null,
-      "censo_escolar_2025": null,
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.405628,
@@ -657,18 +536,6 @@
         "codigo": "35267351",
         "nome_censo": "DENNIZARD FRANCA MACHADO PROFESSOR ESCOLA MUNICIPAL",
         "metodo": "mesmas palavras"
-      },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": true,
-        "matriculas_creche": 16,
-        "matriculas_0_a_3_anos": 11,
-        "matriculas_creche_tempo_integral": 0,
-        "matriculas_pre_escola": 30,
-        "turmas_creche": 1,
-        "turmas_pre_escola": 2
       },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
@@ -703,7 +570,6 @@
         "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
       },
       "vinculo_inep": null,
-      "censo_escolar_2025": null,
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.420385,
@@ -737,18 +603,6 @@
         "nome_censo": "ESCOLA MUNICIPAL DR DJALMA CAMARGO OUTEIRO PINTO",
         "metodo": "mesmas palavras"
       },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": false,
-        "matriculas_creche": 42,
-        "matriculas_0_a_3_anos": 42,
-        "matriculas_creche_tempo_integral": 42,
-        "matriculas_pre_escola": 0,
-        "turmas_creche": 3,
-        "turmas_pre_escola": 0
-      },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.3791,
@@ -776,7 +630,6 @@
       },
       "referencia_cep": null,
       "vinculo_inep": null,
-      "censo_escolar_2025": null,
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.389188,
@@ -806,18 +659,6 @@
         "codigo": "35061396",
         "nome_censo": "PEDRO DOM I ESCOLA MUNICIPAL",
         "metodo": "mesmas palavras"
-      },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": true,
-        "matriculas_creche": 144,
-        "matriculas_0_a_3_anos": 125,
-        "matriculas_creche_tempo_integral": 1,
-        "matriculas_pre_escola": 273,
-        "turmas_creche": 8,
-        "turmas_pre_escola": 14
       },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
@@ -856,18 +697,6 @@
         "nome_censo": "ESCOLA MUNICIPAL PROFESSORA EDNA CRISTINA FARDIM FERNANDES",
         "metodo": "mesmas palavras"
       },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": false,
-        "matriculas_creche": 78,
-        "matriculas_0_a_3_anos": 74,
-        "matriculas_creche_tempo_integral": 78,
-        "matriculas_pre_escola": 0,
-        "turmas_creche": 6,
-        "turmas_pre_escola": 0
-      },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.419681,
@@ -901,18 +730,6 @@
         "nome_censo": "ELPIDIO MINA PROF ESCOLA MUNICIPAL",
         "metodo": "mesmas palavras"
       },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": true,
-        "matriculas_creche": 58,
-        "matriculas_0_a_3_anos": 48,
-        "matriculas_creche_tempo_integral": 1,
-        "matriculas_pre_escola": 123,
-        "turmas_creche": 4,
-        "turmas_pre_escola": 7
-      },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.3907,
@@ -943,7 +760,6 @@
         "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
       },
       "vinculo_inep": null,
-      "censo_escolar_2025": null,
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.3831,
@@ -977,18 +793,6 @@
         "codigo": "35121903",
         "nome_censo": "FRANCESCO PAOLI ESCOLA MUNICIPAL",
         "metodo": "mesmas palavras"
-      },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": false,
-        "matriculas_creche": 56,
-        "matriculas_0_a_3_anos": 52,
-        "matriculas_creche_tempo_integral": 56,
-        "matriculas_pre_escola": 0,
-        "turmas_creche": 5,
-        "turmas_pre_escola": 0
       },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
@@ -1028,18 +832,6 @@
         "nome_censo": "FRANCISCA COAN ESCOLA MUNICIPAL",
         "metodo": "mesmas palavras"
       },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": false,
-        "matriculas_creche": 195,
-        "matriculas_0_a_3_anos": 195,
-        "matriculas_creche_tempo_integral": 195,
-        "matriculas_pre_escola": 0,
-        "turmas_creche": 12,
-        "turmas_pre_escola": 0
-      },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.381159,
@@ -1077,18 +869,6 @@
         "nome_censo": "ESCOLA MUNICIPAL PROFESSORA GISELE BRIZOTTI FERRAZ FERREIRA",
         "metodo": "mesmas palavras"
       },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": false,
-        "matriculas_creche": 75,
-        "matriculas_0_a_3_anos": 75,
-        "matriculas_creche_tempo_integral": 75,
-        "matriculas_pre_escola": 0,
-        "turmas_creche": 6,
-        "turmas_pre_escola": 0
-      },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.383916,
@@ -1118,18 +898,6 @@
         "codigo": "35007533",
         "nome_censo": "ESCOLA MUNICIPAL PROFESSOR GUNAR WILHELM KOELLE",
         "metodo": "mesmas palavras"
-      },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": true,
-        "matriculas_creche": 127,
-        "matriculas_0_a_3_anos": 118,
-        "matriculas_creche_tempo_integral": 83,
-        "matriculas_pre_escola": 160,
-        "turmas_creche": 7,
-        "turmas_pre_escola": 8
       },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar. A página informa só o CEP geral da cidade (13500-000), por isso a escola não entra na busca por CEP.",
       "localizacao_mapa": {
@@ -1164,7 +932,6 @@
         "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
       },
       "vinculo_inep": null,
-      "censo_escolar_2025": null,
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.38959,
@@ -1201,18 +968,6 @@
         "codigo": "35286722",
         "nome_censo": "HELIO JORGE DOS SANTOS ESCOLA MUNICIPAL",
         "metodo": "mesmas palavras"
-      },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": true,
-        "matriculas_creche": 75,
-        "matriculas_0_a_3_anos": 63,
-        "matriculas_creche_tempo_integral": 26,
-        "matriculas_pre_escola": 169,
-        "turmas_creche": 4,
-        "turmas_pre_escola": 9
       },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar. A página informa o mesmo endereço para a E.M. Sebastião Ambrózio: confirme por telefone.",
       "localizacao_mapa": {
@@ -1251,18 +1006,6 @@
         "nome_censo": "ISOLINA HUPPERT CASSAVIA ESCOLA MUNICIPAL",
         "metodo": "mesmas palavras"
       },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": true,
-        "matriculas_creche": 126,
-        "matriculas_0_a_3_anos": 115,
-        "matriculas_creche_tempo_integral": 76,
-        "matriculas_pre_escola": 145,
-        "turmas_creche": 7,
-        "turmas_pre_escola": 7
-      },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar. A página informa o mesmo endereço para a E.M. Jardim das Palmeiras: confirme por telefone.",
       "localizacao_mapa": {
         "latitude": -22.433664,
@@ -1296,7 +1039,6 @@
         "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
       },
       "vinculo_inep": null,
-      "censo_escolar_2025": null,
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar. A página informa o mesmo endereço para a E.M. Isolina Huppert Cassavia: confirme por telefone.",
       "localizacao_mapa": {
         "latitude": -22.433664,
@@ -1326,18 +1068,6 @@
         "codigo": "35285959",
         "nome_censo": "JOAO BATISTA MAULE ESCOLA MUNICIPAL",
         "metodo": "mesmas palavras"
-      },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": true,
-        "matriculas_creche": 34,
-        "matriculas_0_a_3_anos": 30,
-        "matriculas_creche_tempo_integral": 2,
-        "matriculas_pre_escola": 37,
-        "turmas_creche": 2,
-        "turmas_pre_escola": 2
       },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
@@ -1371,18 +1101,6 @@
         "codigo": "35083215",
         "nome_censo": "JOAO REHDER NETO ESCOLA MUNICIPAL",
         "metodo": "grafia quase igual"
-      },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": true,
-        "matriculas_creche": 89,
-        "matriculas_0_a_3_anos": 72,
-        "matriculas_creche_tempo_integral": 21,
-        "matriculas_pre_escola": 210,
-        "turmas_creche": 5,
-        "turmas_pre_escola": 11
       },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
@@ -1422,18 +1140,6 @@
         "nome_censo": "JOSE DE CAMPOS CHAGAS PROF DR ESCOLA MUNICIPAL",
         "metodo": "mesmas palavras"
       },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": false,
-        "matriculas_creche": 96,
-        "matriculas_0_a_3_anos": 94,
-        "matriculas_creche_tempo_integral": 96,
-        "matriculas_pre_escola": 0,
-        "turmas_creche": 9,
-        "turmas_pre_escola": 0
-      },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.406218,
@@ -1471,18 +1177,6 @@
         "nome_censo": "JOSE MARTINS DA SILVA PROF ESCOLA MUNICIPAL",
         "metodo": "mesmas palavras"
       },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": true,
-        "matriculas_creche": 65,
-        "matriculas_0_a_3_anos": 48,
-        "matriculas_creche_tempo_integral": 25,
-        "matriculas_pre_escola": 218,
-        "turmas_creche": 4,
-        "turmas_pre_escola": 11
-      },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.42949,
@@ -1516,7 +1210,6 @@
         "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
       },
       "vinculo_inep": null,
-      "censo_escolar_2025": null,
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.373473,
@@ -1549,18 +1242,6 @@
         "codigo": "35078694",
         "nome_censo": "LAURA PENNA JOLY PROFA ESCOLA MUNICIPAL",
         "metodo": "mesmas palavras"
-      },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": true,
-        "matriculas_creche": 85,
-        "matriculas_0_a_3_anos": 76,
-        "matriculas_creche_tempo_integral": 61,
-        "matriculas_pre_escola": 98,
-        "turmas_creche": 5,
-        "turmas_pre_escola": 6
       },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
@@ -1596,18 +1277,6 @@
         "nome_censo": "LUCIA APARECIDA BUSCHINELLI CARNEIRO EM",
         "metodo": "mesmas palavras"
       },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": false,
-        "matriculas_creche": 94,
-        "matriculas_0_a_3_anos": 94,
-        "matriculas_creche_tempo_integral": 94,
-        "matriculas_pre_escola": 0,
-        "turmas_creche": 6,
-        "turmas_pre_escola": 0
-      },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.3922,
@@ -1641,18 +1310,6 @@
         "codigo": "35007339",
         "nome_censo": "ESCOLA MUNICIPAL PROFESSORA LUCIA HELENA FERREIRA CAMARGO",
         "metodo": "mesmas palavras"
-      },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": false,
-        "matriculas_creche": 112,
-        "matriculas_0_a_3_anos": 104,
-        "matriculas_creche_tempo_integral": 84,
-        "matriculas_pre_escola": 0,
-        "turmas_creche": 7,
-        "turmas_pre_escola": 0
       },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
@@ -1688,7 +1345,6 @@
         "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
       },
       "vinculo_inep": null,
-      "censo_escolar_2025": null,
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar. A página informa o mesmo endereço para a E.M. Mora Guimarães: confirme por telefone.",
       "localizacao_mapa": {
         "latitude": -22.381488,
@@ -1722,18 +1378,6 @@
         "nome_censo": "LUIZ MARTINS RODRIGUES FILHO PROF ESCOLA MUNICIPAL",
         "metodo": "mesmas palavras"
       },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": true,
-        "matriculas_creche": 61,
-        "matriculas_0_a_3_anos": 49,
-        "matriculas_creche_tempo_integral": 3,
-        "matriculas_pre_escola": 167,
-        "turmas_creche": 4,
-        "turmas_pre_escola": 8
-      },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.4183,
@@ -1764,7 +1408,6 @@
         "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
       },
       "vinculo_inep": null,
-      "censo_escolar_2025": null,
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.3782,
@@ -1795,7 +1438,6 @@
         "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
       },
       "vinculo_inep": null,
-      "censo_escolar_2025": null,
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.4109,
@@ -1830,7 +1472,6 @@
         "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
       },
       "vinculo_inep": null,
-      "censo_escolar_2025": null,
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar. A Unidade 2 divide o telefone 3523-3341 com a E.M. Marcello Schmidt.",
       "localizacao_mapa": {
         "latitude": -22.41168,
@@ -1860,18 +1501,6 @@
         "codigo": "35530955",
         "nome_censo": "MARIA APARECIDA POLASTRI HARTUNG DONA BIRRO EM",
         "metodo": "mesmas palavras"
-      },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": true,
-        "matriculas_creche": 81,
-        "matriculas_0_a_3_anos": 74,
-        "matriculas_creche_tempo_integral": 81,
-        "matriculas_pre_escola": 42,
-        "turmas_creche": 6,
-        "turmas_pre_escola": 2
       },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar. A página informa só o CEP geral da cidade (13500-000), por isso a escola não entra na busca por CEP.",
       "localizacao_mapa": {
@@ -1910,18 +1539,6 @@
         "nome_censo": "MARIA ISABEL SOARES PROFESSORA EM",
         "metodo": "mesmas palavras"
       },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": false,
-        "matriculas_creche": 55,
-        "matriculas_0_a_3_anos": 55,
-        "matriculas_creche_tempo_integral": 55,
-        "matriculas_pre_escola": 0,
-        "turmas_creche": 4,
-        "turmas_pre_escola": 0
-      },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar. A página informa só o CEP geral da cidade (13500-000), por isso a escola não entra na busca por CEP.",
       "localizacao_mapa": {
         "latitude": -22.382808,
@@ -1954,18 +1571,6 @@
         "codigo": "35236391",
         "nome_censo": "MARIA TEIXEIRA FITTIPALDI PROFA ESCOLA MUNICIPAL",
         "metodo": "mesmas palavras"
-      },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": false,
-        "matriculas_creche": 131,
-        "matriculas_0_a_3_anos": 131,
-        "matriculas_creche_tempo_integral": 131,
-        "matriculas_pre_escola": 0,
-        "turmas_creche": 8,
-        "turmas_pre_escola": 0
       },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
@@ -2001,18 +1606,6 @@
         "nome_censo": "ESCOLA MUNICIPAL PROFESSORA MARILDA DOS SANTOS SOUZA",
         "metodo": "mesmas palavras"
       },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": true,
-        "matriculas_creche": 121,
-        "matriculas_0_a_3_anos": 115,
-        "matriculas_creche_tempo_integral": 121,
-        "matriculas_pre_escola": 42,
-        "turmas_creche": 7,
-        "turmas_pre_escola": 2
-      },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.425,
@@ -2046,18 +1639,6 @@
         "codigo": "35454624",
         "nome_censo": "MARINA FREDINE DAINESE CYRINO PROFA ESCOLA MUNICIPAL",
         "metodo": "mesmas palavras"
-      },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": true,
-        "matriculas_creche": 24,
-        "matriculas_0_a_3_anos": 21,
-        "matriculas_creche_tempo_integral": 24,
-        "matriculas_pre_escola": 18,
-        "turmas_creche": 3,
-        "turmas_pre_escola": 2
       },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
@@ -2097,18 +1678,6 @@
         "nome_censo": "MITIKO MATSUSHITA NEVOEIRO ESCOLA MUNICIPAL",
         "metodo": "mesmas palavras"
       },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": true,
-        "matriculas_creche": 90,
-        "matriculas_0_a_3_anos": 72,
-        "matriculas_creche_tempo_integral": 27,
-        "matriculas_pre_escola": 221,
-        "turmas_creche": 5,
-        "turmas_pre_escola": 11
-      },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.381238,
@@ -2142,7 +1711,6 @@
         "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
       },
       "vinculo_inep": null,
-      "censo_escolar_2025": null,
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.395257,
@@ -2176,18 +1744,6 @@
         "nome_censo": "MONTEIRO LOBATO ESCOLA MUNICIPAL",
         "metodo": "mesmas palavras"
       },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": false,
-        "matriculas_creche": 184,
-        "matriculas_0_a_3_anos": 184,
-        "matriculas_creche_tempo_integral": 184,
-        "matriculas_pre_escola": 0,
-        "turmas_creche": 11,
-        "turmas_pre_escola": 0
-      },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.374,
@@ -2218,18 +1774,6 @@
         "codigo": "35236385",
         "nome_censo": "MORA GUIMARAES ESCOLA MUNICIPAL",
         "metodo": "mesmas palavras"
-      },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": false,
-        "matriculas_creche": 65,
-        "matriculas_0_a_3_anos": 65,
-        "matriculas_creche_tempo_integral": 65,
-        "matriculas_pre_escola": 0,
-        "turmas_creche": 4,
-        "turmas_pre_escola": 0
       },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar. A página informa o mesmo endereço para a E.M. Lucidia T. Cassavia Escrivão Soares: confirme por telefone.",
       "localizacao_mapa": {
@@ -2268,18 +1812,6 @@
         "nome_censo": "NEPHTALI VIEIRA JUNIOR PASTOR ESCOLA MUNICIPAL",
         "metodo": "mesmas palavras"
       },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": true,
-        "matriculas_creche": 88,
-        "matriculas_0_a_3_anos": 81,
-        "matriculas_creche_tempo_integral": 88,
-        "matriculas_pre_escola": 40,
-        "turmas_creche": 5,
-        "turmas_pre_escola": 2
-      },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.390073,
@@ -2309,7 +1841,6 @@
         "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
       },
       "vinculo_inep": null,
-      "censo_escolar_2025": null,
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.3926,
@@ -2348,18 +1879,6 @@
         "nome_censo": "PAULO KOELLE DR ESCOLA MUNICIPAL",
         "metodo": "mesmas palavras"
       },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": true,
-        "matriculas_creche": 114,
-        "matriculas_0_a_3_anos": 100,
-        "matriculas_creche_tempo_integral": 52,
-        "matriculas_pre_escola": 230,
-        "turmas_creche": 8,
-        "turmas_pre_escola": 13
-      },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.414343,
@@ -2393,18 +1912,6 @@
         "nome_censo": "ROSA MARIA CASTELLANO PIERONI ESCOLA MUNICIPAL",
         "metodo": "mesmas palavras"
       },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": false,
-        "matriculas_creche": 135,
-        "matriculas_0_a_3_anos": 134,
-        "matriculas_creche_tempo_integral": 120,
-        "matriculas_pre_escola": 0,
-        "turmas_creche": 8,
-        "turmas_pre_escola": 0
-      },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar. A página também lista (19) 3522-1950, que é a linha da Secretaria da Educação, e por isso ela não foi cadastrada como telefone da escola.",
       "localizacao_mapa": {
         "latitude": -22.3867,
@@ -2435,7 +1942,6 @@
         "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
       },
       "vinculo_inep": null,
-      "censo_escolar_2025": null,
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.2795,
@@ -2474,18 +1980,6 @@
         "nome_censo": "ESCOLA MUNICIPAL PROFESSORA RUTINEIA PAULINO DE SOUSA FERREIRA DA SILVA",
         "metodo": "grafia quase igual"
       },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": false,
-        "matriculas_creche": 114,
-        "matriculas_0_a_3_anos": 105,
-        "matriculas_creche_tempo_integral": 114,
-        "matriculas_pre_escola": 0,
-        "turmas_creche": 7,
-        "turmas_pre_escola": 0
-      },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.450212,
@@ -2519,18 +2013,6 @@
         "nome_censo": "SAMIRA ASSENCIO SAVOLDI PROFESSORA ESCOLA MUNICIPAL",
         "metodo": "mesmas palavras"
       },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": true,
-        "matriculas_creche": 62,
-        "matriculas_0_a_3_anos": 51,
-        "matriculas_creche_tempo_integral": 7,
-        "matriculas_pre_escola": 88,
-        "turmas_creche": 3,
-        "turmas_pre_escola": 4
-      },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.399,
@@ -2561,7 +2043,6 @@
         "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
       },
       "vinculo_inep": null,
-      "censo_escolar_2025": null,
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.3886,
@@ -2600,18 +2081,6 @@
         "nome_censo": "SEBASTIAO AMBROZIO PROF ESCOLA MUNICIPAL",
         "metodo": "mesmas palavras"
       },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": false,
-        "matriculas_creche": 103,
-        "matriculas_0_a_3_anos": 103,
-        "matriculas_creche_tempo_integral": 103,
-        "matriculas_pre_escola": 0,
-        "turmas_creche": 7,
-        "turmas_pre_escola": 0
-      },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar. A página informa o mesmo endereço para a E.M. Hélio Jorge dos Santos: confirme por telefone.",
       "localizacao_mapa": {
         "latitude": -22.409734,
@@ -2641,7 +2110,6 @@
         "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
       },
       "vinculo_inep": null,
-      "censo_escolar_2025": null,
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.3766,
@@ -2676,7 +2144,6 @@
         "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
       },
       "vinculo_inep": null,
-      "censo_escolar_2025": null,
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.381284,
@@ -2710,18 +2177,6 @@
         "nome_censo": "SUELI MARIA PRONI CERRI PROFESSORA ESCOLA MUNICIPAL",
         "metodo": "mesmas palavras"
       },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": true,
-        "matriculas_creche": 51,
-        "matriculas_0_a_3_anos": 45,
-        "matriculas_creche_tempo_integral": 2,
-        "matriculas_pre_escola": 135,
-        "turmas_creche": 3,
-        "turmas_pre_escola": 8
-      },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.3847,
@@ -2752,7 +2207,6 @@
         "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
       },
       "vinculo_inep": null,
-      "censo_escolar_2025": null,
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.3819,
@@ -2783,7 +2237,6 @@
         "natureza": "centroide_agregado_do_CNEFE_nao_e_coordenada_da_escola"
       },
       "vinculo_inep": null,
-      "censo_escolar_2025": null,
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
         "latitude": -22.4507,
@@ -2817,18 +2270,6 @@
         "codigo": "35061414",
         "nome_censo": "VICTORINO MACHADO PROF ESCOLA MUNICIPAL",
         "metodo": "mesmas palavras"
-      },
-      "censo_escolar_2025": {
-        "rede": "municipal",
-        "localizacao": "urbana",
-        "oferece_creche": true,
-        "oferece_pre_escola": true,
-        "matriculas_creche": 92,
-        "matriculas_0_a_3_anos": 78,
-        "matriculas_creche_tempo_integral": 20,
-        "matriculas_pre_escola": 279,
-        "turmas_creche": 4,
-        "turmas_pre_escola": 12
       },
       "observacao_catalogo": "Escola municipal de Rio Claro. A página oficial \"Unidades de ensino\" do portal da Educação lista a escola, mas não diz quais etapas ela atende (berçário, maternal, pré-escola ou ensino fundamental) nem se há vaga: ligue para confirmar a etapa e perguntar sobre vaga. A lista de espera pode ser consultada na página de demanda escolar.",
       "localizacao_mapa": {
