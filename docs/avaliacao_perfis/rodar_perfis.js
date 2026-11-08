@@ -15,13 +15,14 @@ frases.forEach((q) => {
   const areas3 = itens.slice(0, 3).map((i) => i.area), areas5 = itens.slice(0, 5).map((i) => i.area);
   const ok = new Set([q.principal].concat(q.aceita || []).filter(Boolean));
   let res;
-  if (q.fora) res = { acerto: !!(r.abstem || !itens.length), tipo: "abstencao" };
+  if (q.fora) res = { acerto: !!(r.abstem || !itens.length) && !r.perigo, tipo: "abstencao", falsoAlarme: !!r.perigo };
   else {
     const hit3 = areas3.some((a) => ok.has(a)), top1 = itens.length && itens[0].area === q.principal;
     const cob = (q.precisa || []).length ? (q.precisa.filter((a) => areas5.includes(a)).length / q.precisa.length) : 1;
     res = { acerto: hit3, top1: !!top1, cobertura5: cob, tipo: "area" };
     if (q.perigo) res.perigoOk = !!r.perigo;
     if (!q.perigo && r.perigo) res.falsoAlarme = true;
+    res.acerto = !!res.acerto && res.perigoOk !== false && !res.falsoAlarme;
   }
   const p = perfis[q.perfil] = perfis[q.perfil] || { n: 0, acerto: 0, top1: 0, cob: 0, cobN: 0, abst: 0, falsoAlarme: 0, vazio: 0 };
   p.n++; if (res.acerto) p.acerto++; if (res.top1) p.top1++; if (res.tipo === "area") { p.cob += res.cobertura5; p.cobN++; }
@@ -41,3 +42,8 @@ linhas.forEach((l) => {
     console.log("   respondeu: " + (l.itens.slice(0, 4).map((i) => i.area + (i.sec ? "/" + i.sec : "") + (i.svc ? "(" + i.svc + ")" : "")).join(", ") || "(nada)"));
   }
 });
+const falhas = linhas.filter((l) => !l.res.acerto || l.res.perigoOk === false || l.res.falsoAlarme);
+if (falhas.length) {
+  console.error("\\nCI bloqueada: " + falhas.length + " falha(s) no conjunto " + arquivo + ".");
+  process.exitCode = 1;
+}
