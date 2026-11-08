@@ -145,6 +145,25 @@ def auditar(dado: dict, nomes_instituicoes: set | None = None, bairros: set | No
             falhas.append(Falha(f"equipamentos/{i}/precisao", "proveniência", "a posição do equipamento precisa vir rotulada como catalogo, centro_do_cep ou pendente"))
         if p == "pendente" and (e.get("lat") is not None or e.get("lon") is not None):
             falhas.append(Falha(f"equipamentos/{i}", "proveniência", "equipamento com localização pendente não pode ter coordenada"))
+        if e.get("categoria") in {"cras", "ubs"}:
+            confianca = e.get("confianca_localizacao")
+            if confianca not in {"alta", "media", "nao_registrada", "aproximada_operacional"}:
+                falhas.append(Falha(f"equipamentos/{i}/confianca_localizacao", "proveniência", "confiança de localização ausente ou fora dos valores permitidos"))
+            if confianca == "nao_registrada" and e.get("raio_incerteza_m") is not None:
+                falhas.append(Falha(f"equipamentos/{i}/raio_incerteza_m", "proveniência", "sem método/proveniência, o raio deve ser desconhecido, não zero"))
+            if confianca in {"alta", "media"} and not e.get("data_aplicacao_localizacao"):
+                falhas.append(Falha(f"equipamentos/{i}/data_aplicacao_localizacao", "proveniência", "registro de confiança exige data de aplicação"))
+    categorias_raio_desconhecido = {
+        e.get("categoria") for e in dado.get("equipamentos", [])
+        if isinstance(e, dict) and e.get("precisao") != "pendente" and e.get("raio_incerteza_m") is None
+    }
+    for i, setor in enumerate(dado.get("setores", [])):
+        for cenario in ("coordenadas_do_catalogo", "com_centro_do_cep"):
+            for categoria in categorias_raio_desconhecido:
+                limites = setor.get("distancia_min_km", {}).get(cenario, {})
+                superiores = setor.get("distancia_max_km", {}).get(cenario, {})
+                if limites.get(categoria) is not None or superiores.get(categoria) is not None:
+                    falhas.append(Falha(f"setores/{i}/distancia_min_km/{cenario}/{categoria}", "proveniência", "não publicar envelope quando existe equipamento elegível sem raio conhecido"))
     return falhas
 
 
