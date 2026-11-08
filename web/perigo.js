@@ -106,10 +106,20 @@
 
   function achou(lista, texto) { return lista.some(function (r) { return r.test(texto); }); }
 
+  /* Necessidade material familiar não é, por si só, evidência de violência ou perigo infantil.
+     Regras explícitas de dano continuam prevalecendo; este filtro evita falso positivo do classificador aprendido. */
+  function necessidadeMaterialSemDano(t) {
+    var familiar = /\b(?:criancas?|filh[oa]s?|netos?|netas?|netinhos?|netinhas?)\b/.test(t);
+    var material = /\b(?:aposentadoria|pensao|renda|dinheiro|beneficio|contas?|despesas?|necessidades?|mercado|alimentacao|comida|recursos?)\b/.test(t);
+    var dano = /\b(?:apanh\w*|agred\w*|bat(?:e|eu|endo)|abus\w*|maltrat\w*|machuc\w*|ameac\w*|violenc\w*|tranc\w*|abandon\w*|negligenc\w*|fome|passando fome|sem comer|sem comida|perigo|socorro|ferid\w*|queimad\w*|sangr\w*)\b/.test(t);
+    return familiar && material && !dano;
+  }
+
+
   /* Âncoras: um alerta que vem SÓ do detector aprendido precisa de ao menos uma palavra do campo do assunto. Modelos pequenos confundem
      "vou tirar férias" com "vou tirar a minha vida"; a âncora barra esse tipo de erro sem atrapalhar as regras. */
   var ANCORAS = {
-    suicidio: /(?:^| )(?:morr\w*|mort\w*|mat(?:ar|o|ei|ou|ando)|vida|viver|vivo|acab\w*|sum(?:ir|o|ido)|desapare\w*|suicid\w*|despedid\w*|despedi|enforc\w*|corda|veneno|remedios?|comprimidos?|machuc\w*|cort(?:ar|ei|es)|pulsos?|ponte|saida|sentido|existir|existo|nascer|nasci|acord\w*|dormir|dorm\w+|ferir|jogar|pular|afog\w*|sem mim|falta|peso|cansad\w+|desist\w*|ninguem|sozinh\w+)(?: |$)/,
+    suicidio: /(?:^| )(?:morr\w*|mort\w*|mat(?:ar|o|ei|ou|ando)|vida|acab\w*|sum(?:ir|o|ido)|desapare\w*|suicid\w*|despedid\w*|despedi|enforc\w*|corda|veneno|remedios?|comprimidos?|machuc\w*|cort(?:ar|ei|es)|pulsos?|ponte|saida|sentido|existir|existo|nascer|nasci|acord\w*|dormir|dorm\w+|ferir|jogar|pular|afog\w*|sem mim|falta|peso|cansad\w+|desist\w*|ninguem|sozinh\w+)(?: |$)/,
     violencia: /(?:^| )(?:bat\w*|agred\w*|ameac\w*|mat(?:ar|a|ou)|soco|socos|tapa|surra|pancada|empurr\w*|estrangul\w*|sufoc\w*|enforc\w*|forc\w*|abus\w*|violen\w*|medo|pavor|persegu\w*|segu\w+|vigi\w*|tranc\w*|preso|presa|machuc\w*|quebr\w*|arma|faca|socorro|marido|namorad\w*|companheir\w*|ex|ele|ela|padrasto|pai|chefe|patrao|apanh\w*|xing\w*|humilh\w*|control\w*|proib\w*|fugi\w*|fugir|escond\w*|sair de casa|perigo|esfaque\w*|cinto|estupr\w*|assedi\w*)(?: |$)/,
     crianca: /(?:^| )(?:crianca\w*|filh[oa]s?|menin[oa]s?|neto|neta|bebe|bebes|sobrinh[oa]|entead[oa]|adolescente|aluno|aluna|baba|pequen[oa]|infantil|menor)(?: |$)/,
     saude: /(?:^| )(?:desmai\w*|respir\w*|sangu\w*|sangr\w*|convuls\w*|infart\w*|derrame|engasg\w*|roxo|roxa|azul|queda|caiu|caido|caida|inconsciente|veneno|queimad\w*|queimou|overdose|dor|febre|parto|acidente|choque|afog\w*|passando mal|passou mal|responde|acorda|tontura|desacord\w*|pulso|vomit\w*|ferido|ferida|machuc\w*|corte|corpo|cinza|palid\w*|suando|frio|remedios?|engoliu|tomou|ingeriu|mole|duro|torto|torta|boca|falar|enxerg\w*)(?: |$)/
@@ -136,6 +146,7 @@
       var regra = versoes.some(function (v) { return achou(COMPILADO[tp].forte, v); }), p = probs ? probs[tp] : undefined, lim = detector ? detector.limiares[tp] : undefined;
       var alto = detector && detector.altos[tp] !== undefined ? detector.altos[tp] : lim;
       if (!regra && ANCORAS[tp] && !emAlguma(ANCORAS[tp])) p = undefined; /* o detector sozinho não vale sem uma palavra do assunto */
+      if (!regra && tp === "crianca" && necessidadeMaterialSemDano(t)) p = undefined; /* pobreza e responsabilidade familiar não são alerta de abuso sem sinal de dano */
       if (p !== undefined && lim !== undefined && p >= lim) doModelo[tp] = Math.round(p * 1000) / 1000;
       if (regra || (p !== undefined && alto !== undefined && p >= alto)) { tipos.push(tp); nivel = 2; }
       else if (p !== undefined && lim !== undefined && p >= lim) fracos.push(tp); /* detector com confiança moderada: só aviso discreto */

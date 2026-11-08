@@ -41,6 +41,12 @@ assert.deepStrictEqual(tipos("quero me matar e meu marido me bate"), ["suicidio"
 const fs = require("fs"), path = require("path");
 const modelo = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "dados", "modelo_perigo.json"), "utf8"));
 Perigo.usarModelo(modelo);
+/* Necessidade econômica e cuidado familiar não devem gerar alerta de perigo infantil sem sinal de dano. */
+[
+  "minha filha deixou as crianças comigo e eu vivo só da aposentadoria",
+  "minha pensão não cobre o que os netinhos precisam para viver"
+].forEach((frase) => assert.strictEqual(Perigo.avaliar(frase), null, "não deve alarmar apenas por necessidade material: " + frase));
+assert(Perigo.avaliar("meu padrasto bate nas crianças").nivel === 2, "sinal explícito de agressão infantil continua acionando alerta");
 const alto = ["meu companheiro me empurrou da escada e eu tenho medo de voltar", "comprei corda pra me matar", "meu irmao esta com o corpo duro e olhos revirados"];
 alto.forEach((t) => assert(Perigo.avaliar(t) && Perigo.avaliar(t).nivel >= 1, `o detector deveria reagir a "${t}"`));
 /* aviso discreto (nível 1) não fixa serviços: não deve sequestrar a lista de resultados */
