@@ -12,6 +12,7 @@ A unidade estatística principal é o setor censitário do IBGE. Os equipamentos
 - `web/dados/territorio.json`: indicadores territoriais já calculados.
 - `web/dados/exposicao_distancia.json`: resultados existentes de distância em dois cenários de localização.
 - `catalogo/servicos_manuais.csv`: catálogo de serviços institucionais.
+- `web/dados/escolas_municipais.json`: fonte consolidada das 68 escolas, com método, precisão, fonte e raio da localização operacional.
 - `catalogo/inep_escolas.csv`: correspondência de escolas com registros do INEP.
 - `catalogo/localizacao_registro.csv`: proveniência de coordenadas e outros campos de localização.
 - `pipeline/territorio.py`, `pipeline/analise_territorial.py` e `pipeline/exposicao_distancia.py`: procedimentos de cálculo existentes.
@@ -92,6 +93,8 @@ Em que `φ` representa latitude em radianos, `λ` representa longitude em radian
 
 **Ponto representativo:** os cálculos atuais utilizam o centroide geométrico calculado pelo código. A análise de sensibilidade entre centroide geométrico e ponto interno representativo é proposta na seção 5 e ainda não foi executada.
 
+**Incerteza espacial:** quando o equipamento tem raio operacional `r`, publicar também o envelope geométrico `d_min = max(0, d-r)` e `d_max = d+r`. Para várias referências, o limite inferior é o menor `d_min` e o superior é o menor `d_max`; a estimativa central continua sendo a menor distância central. O raio do CEP é parâmetro operacional derivado da dispersão dos endereços CNEFE, não campo oficial do IBGE nem intervalo de confiança. Coordenadas individuais não recebem margem artificial. Faixas sobrepostas não permitem ordenar com segurança qual equipamento é mais próximo.
+
 **Limitações:** não representa percurso por ruas, tempo de viagem, transporte, barreiras físicas, capacidade, horário, elegibilidade ou atendimento efetivo. Se faltarem coordenadas de equipamentos, a distância até o ponto conhecido mais próximo pode ficar superestimada. A cobertura de localização deve acompanhar todo resultado.
 
 **Linguagem permitida:** “distância em linha reta”.
@@ -146,7 +149,7 @@ O método atual em pipeline/analise_territorial.py, função centro, escolhe em 
 
 Uma checagem exploratória adicional calculou o centroide ponderado pela área dos componentes e dos anéis. Ela também encontrou 9 centroides fora; nos nove casos, o deslocamento em relação ao método atual foi inferior a 0,14 metro. Portanto, simplesmente ponderar componentes pela área não resolve esses casos.
 
-**Decisão nesta rodada:** não substituir automaticamente o centroide nem recalcular as distâncias. O ponto representativo alternativo deve ser interno ao polígono e precisa ser comparado antes da adoção.
+**Decisão nesta rodada:** não substituir automaticamente o centroide. A integração da incerteza espacial dos equipamentos foi autorizada em 08/11/2026, mas é independente da escolha do ponto representativo do setor. O ponto alternativo deve ser interno ao polígono e comparado antes da adoção.
 
 Próxima comparação necessária:
 
