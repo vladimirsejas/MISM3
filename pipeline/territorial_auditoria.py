@@ -214,6 +214,54 @@ def relatorio(dado: dict, falhas: list[Falha]) -> str:
     return "\n".join(linhas)
 
 
+def auditar_publicacao() -> list[Falha]:
+    """Confere D4 em todos os arquivos territoriais servidos publicamente."""
+    falhas: list[Falha] = []
+    geo = json.loads((DADOS / "setores.geojson").read_text(encoding="utf-8"))
+    terr = json.loads((DADOS / "territorio.json").read_text(encoding="utf-8"))
+    expo = json.loads((DADOS / "exposicao_distancia.json").read_text(encoding="utf-8"))
+    analise = json.loads((DADOS / "analise_territorial.json").read_text(encoding="utf-8"))
+    features = geo.get("features", [])
+    protegidos = [f for f in features if f.get("properties", {}).get("suprimido_privacidade") is True]
+    ids = {f["properties"]["setor"] for f in protegidos}
+    bairros = {(f["properties"].get("bairro") or "Sem bairro definido pelo IBGE") for f in protegidos}
+    if len(protegidos) != 17:
+        falhas.append(Falha("setores.geojson", "privacidade", "a quantidade de setores protegidos difere da decisão D4"))
+    for i, feature in enumerate(protegidos):
+        p = feature.get("properties", {})
+        if p.get("pessoas") is not None or p.get("domicilios") is not None:
+            falhas.append(Falha(f"setores.geojson/features/{i}/properties", "privacidade", "GeoJSON ainda expõe contagem demográfica de setor protegido"))
+    for codigo in ids:
+        setor = terr.get("setores", {}).get(codigo)
+        if not isinstance(setor, dict) or setor.get("suprimido_privacidade") is not True:
+            falhas.append(Falha("territorio.json/setores", "privacidade", "setor protegido não está marcado no painel territorial"))
+            continue
+        if any(v is not None for k, v in setor.items() if k != "a" and k != "suprimido_privacidade"):
+            falhas.append(Falha(f"territorio.json/setores/{codigo}", "privacidade", "painel territorial ainda expõe indicador derivado de setor protegido"))
+    if terr.get("totais", {}).get("pessoas") is not None or terr.get("totais", {}).get("domicilios") is not None:
+        falhas.append(Falha("territorio.json/totais", "privacidade", "totais municipais demográficos devem permanecer omitidos"))
+    if terr.get("meta", {}).get("conferencia", {}).get("pessoas_somadas") is not None:
+        falhas.append(Falha("territorio.json/meta/conferencia", "privacidade", "conferência municipal ainda expõe total populacional"))
+    for b in terr.get("bairros", []):
+        if b.get("nome") in bairros and (b.get("dados_suprimidos") is not True or any(b.get(k) is not None for k in ("pessoas", "domicilios", "densidade", "pessoas_por_domicilio"))):
+            falhas.append(Falha("territorio.json/bairros", "privacidade", "agregado de bairro afetado não recebeu supressão complementar"))
+    for categoria, resumo in terr.get("distancia_ate_servico", {}).items():
+        if any("pessoas" in k for k in resumo):
+            falhas.append(Falha(f"territorio.json/distancia_ate_servico/{categoria}", "privacidade", "resumo de distância ainda publica contagens populacionais"))
+    if expo.get("meta", {}).get("pessoas_total") is not None:
+        falhas.append(Falha("exposicao_distancia.json/meta", "privacidade", "exposição ainda publica total populacional"))
+    for cenario, categorias in expo.get("cenarios", {}).items():
+        for categoria, resumo in categorias.items():
+            if "populacao_toda" in resumo or any("pessoas" in k for k in resumo):
+                falhas.append(Falha(f"exposicao_distancia.json/cenarios/{cenario}/{categoria}", "privacidade", "resumo ainda publica métricas ponderadas por população"))
+    if analise.get("meta", {}).get("pessoas_total") is not None or analise.get("grupos") is not None:
+        falhas.append(Falha("analise_territorial.json", "privacidade", "análise ainda publica total populacional ou agrupamento derivado"))
+    for b in analise.get("bairros", []):
+        if b.get("bairro") in bairros and (b.get("dados_suprimidos") is not True or b.get("pessoas") is not None or any(v is not None for k, v in b.items() if k.startswith("distancia_media_"))):
+            falhas.append(Falha("analise_territorial.json/bairros", "privacidade", "bairro afetado ainda expõe agregado ou média derivada"))
+    return falhas
+
+
 def main(argv: list[str]) -> int:
     try:
         sys.stdout.reconfigure(encoding="utf-8")
@@ -224,6 +272,8 @@ def main(argv: list[str]) -> int:
     arquivo = Path(args[0]) if args else ALVO
     dado = json.loads(arquivo.read_text(encoding="utf-8"))
     falhas = auditar(dado)
+    if arquivo.resolve() == ALVO.resolve():
+        falhas.extend(auditar_publicacao())
     texto = relatorio(dado, falhas)
     if destino_relatorio:
         destino = Path(destino_relatorio)
