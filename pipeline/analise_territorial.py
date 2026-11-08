@@ -15,6 +15,7 @@ Saída: web/dados/analise_territorial.json (lido pelo painel da Secretaria).
 from __future__ import annotations
 
 import json
+from privacidade_territorial import setor_suprimido
 import math
 import re
 import sys
@@ -160,17 +161,22 @@ def analisar(geojson, servicos, indice_cep, k_grupos=3, hoje=None, escolas=None)
     for f in geojson["features"]:
         pr = f["properties"]
         lat, lon = centro(f["geometry"])
-        setores.append({"bairro": pr.get("bairro") or SEM_BAIRRO, "pessoas": int(pr.get("pessoas") or 0), "geom": f["geometry"], "lat": lat, "lon": lon})
+        suprimido = setor_suprimido(pr)
+        setores.append({"bairro": pr.get("bairro") or SEM_BAIRRO, "pessoas": None if suprimido else int(pr["pessoas"]),
+                        "suprimido_privacidade": suprimido, "geom": f["geometry"], "lat": lat, "lon": lon})
 
     bairros: dict[str, dict] = {}
     for st in setores:
-        b = bairros.setdefault(st["bairro"], {"bairro": st["bairro"], "setores": 0, "pessoas": 0, "soma": {c: 0.0 for c in CATEGORIAS}, "servicos_no_bairro": 0})
+        b = bairros.setdefault(st["bairro"], {"bairro": st["bairro"], "setores": 0, "pessoas": 0,
+            "suprimido": False, "soma": {c: 0.0 for c in CATEGORIAS}, "servicos_no_bairro": 0})
         b["setores"] += 1
-        b["pessoas"] += st["pessoas"]
-        for c, lista in por_cat.items():
-            if lista:
-                d = min(haversine_km(st["lat"], st["lon"], xy[0], xy[1]) for _, xy in lista)
-                b["soma"][c] += d * st["pessoas"]
+        b["suprimido"] = b["suprimido"] or st["suprimido_privacidade"]
+        if st["pessoas"] is not None:
+            b["pessoas"] += st["pessoas"]
+            for c, lista in por_cat.items():
+                if lista:
+                    d = min(haversine_km(st["lat"], st["lon"], xy[0], xy[1]) for _, xy in lista)
+                    b["soma"][c] += d * st["pessoas"]
     # serviços dentro de cada bairro (qualquer categoria cadastrada com coordenada)
     todos = [(s, xy) for lista in por_cat.values() for s, xy in lista]
     for s, xy in todos:
@@ -181,9 +187,11 @@ def analisar(geojson, servicos, indice_cep, k_grupos=3, hoje=None, escolas=None)
 
     saida_b = []
     for b in bairros.values():
-        item = {"bairro": b["bairro"], "setores": b["setores"], "pessoas": b["pessoas"], "servicos_no_bairro": b["servicos_no_bairro"]}
+        item = {"bairro": b["bairro"], "setores": b["setores"],
+                "pessoas": None if b["suprimido"] else b["pessoas"],
+                "dados_suprimidos": b["suprimido"], "servicos_no_bairro": b["servicos_no_bairro"]}
         for c in CATEGORIAS:
-            item["distancia_media_%s_km" % c] = round(b["soma"][c] / b["pessoas"], 2) if por_cat[c] and b["pessoas"] else None
+            item["distancia_media_%s_km" % c] = None if b["suprimido"] else (round(b["soma"][c] / b["pessoas"], 2) if por_cat[c] and b["pessoas"] else None)
         saida_b.append(item)
     saida_b.sort(key=lambda x: x["bairro"])
 
@@ -197,7 +205,7 @@ def analisar(geojson, servicos, indice_cep, k_grupos=3, hoje=None, escolas=None)
                 c: {"com_coordenada": len(por_cat[c]), "cadastrados": totais[c]}
                 for c in CATEGORIAS
             },
-            "pessoas_total": sum(b["pessoas"] for b in saida_b),
+            "pessoas_total": None,\n            "setores_suprimidos": sum(1 for st in setores if st["suprimido_privacidade"]),
         },
         "bairros": saida_b,
         "grupos": grupos,
