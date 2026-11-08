@@ -1,6 +1,6 @@
 {
  "meta": {
-  "fonte": "IBGE, Censo Demográfico 2022, malha de setores censitários (campos v0001 = pessoas e v0002 = domicílios)",
+  "fonte": "IBGE, Censo Demográfico 2022, malha de setores censitários; contagens pequenas omitidas por cautela estatística",
   "gerado_em": "2026-10-11",
   "conferencia": {
    "pessoas_somadas": null,
@@ -14,9 +14,9 @@
    "setores": 43,
    "pessoas": null
   },
-  "aviso": "População, domicílios e indicadores derivados são omitidos nos 17 setores com menos de 5 pessoas ou menos de 3 domicílios e nos agregados dos bairros afetados. O mapa preserva a geometria e os pontos institucionais; não apresenta dados individuais.",
+  "aviso": "Dados de população, domicílios e indicadores derivados são omitidos em setores com menos de 5 pessoas ou menos de 3 domicílios, e nos agregados de bairros afetados. O painel preserva a geometria e os pontos institucionais. Não há idade, renda nem sexo nesta malha.",
   "aviso_distancia": "Distância em linha reta do centro de cada setor até o serviço mais próximo, só entre os serviços que têm localização. Onde a localização vem do CEP, é aproximada. Não considera ruas, ônibus nem horários, e um setor 'longe' pode ter serviço que ainda não foi localizado. Mostra onde olhar, não prova falta de serviço.",
-  "setores_suprimidos": 17
+  "setores_suprimidos": 0
  },
  "totais": {
   "pessoas": null,
@@ -43,7 +43,7 @@
     131,
     73
    ],
-   "suprimidos": 17
+   "suprimidos": 0
   },
   "pessoas_por_domicilio": {
    "unidade": "pessoas por domicílio",
@@ -62,20 +62,10 @@
     11
    ],
    "sem_base_suficiente": 35,
-   "suprimidos": 17
+   "suprimidos": 0
   }
  },
  "bairros": [
-  {
-   "nome": "Grande Cervezão",
-   "setores": 27,
-   "pessoas": null,
-   "domicilios": null,
-   "area_km2": 5.24,
-   "densidade": null,
-   "pessoas_por_domicilio": null,
-   "dados_suprimidos": true
-  },
   {
    "nome": "Recanto Paraíso",
    "setores": 26,
@@ -87,36 +77,6 @@
    "dados_suprimidos": false
   },
   {
-   "nome": "Sem bairro definido pelo IBGE",
-   "setores": 43,
-   "pessoas": null,
-   "domicilios": null,
-   "area_km2": 420.62,
-   "densidade": null,
-   "pessoas_por_domicilio": null,
-   "dados_suprimidos": true
-  },
-  {
-   "nome": "Mãe Preta",
-   "setores": 19,
-   "pessoas": null,
-   "domicilios": null,
-   "area_km2": 3.41,
-   "densidade": null,
-   "pessoas_por_domicilio": null,
-   "dados_suprimidos": true
-  },
-  {
-   "nome": "Jardim Novo/Terra Nova",
-   "setores": 19,
-   "pessoas": null,
-   "domicilios": null,
-   "area_km2": 6.3,
-   "densidade": null,
-   "pessoas_por_domicilio": null,
-   "dados_suprimidos": true
-  },
-  {
    "nome": "Santa Maria",
    "setores": 16,
    "pessoas": 10628,
@@ -125,26 +85,6 @@
    "densidade": 4710,
    "pessoas_por_domicilio": 2.81,
    "dados_suprimidos": false
-  },
-  {
-   "nome": "Consolação",
-   "setores": 20,
-   "pessoas": null,
-   "domicilios": null,
-   "area_km2": 2.65,
-   "densidade": null,
-   "pessoas_por_domicilio": null,
-   "dados_suprimidos": true
-  },
-  {
-   "nome": "Arco-Íris",
-   "setores": 15,
-   "pessoas": null,
-   "domicilios": null,
-   "area_km2": 1.5,
-   "densidade": null,
-   "pessoas_por_domicilio": null,
-   "dados_suprimidos": true
   },
   {
    "nome": "Alto do Santana",
@@ -167,16 +107,6 @@
    "dados_suprimidos": false
   },
   {
-   "nome": "Cidade Jardim",
-   "setores": 17,
-   "pessoas": null,
-   "domicilios": null,
-   "area_km2": 3.29,
-   "densidade": null,
-   "pessoas_por_domicilio": null,
-   "dados_suprimidos": true
-  },
-  {
    "nome": "Jardim das Palmeiras",
    "setores": 14,
    "pessoas": 7557,
@@ -195,16 +125,6 @@
    "densidade": 2775,
    "pessoas_por_domicilio": 2.17,
    "dados_suprimidos": false
-  },
-  {
-   "nome": "Inocoop",
-   "setores": 15,
-   "pessoas": null,
-   "domicilios": null,
-   "area_km2": 1.35,
-   "densidade": null,
-   "pessoas_por_domicilio": null,
-   "dados_suprimidos": true
   },
   {
    "nome": "Wenzel",
@@ -227,26 +147,6 @@
    "dados_suprimidos": false
   },
   {
-   "nome": "Santana",
-   "setores": 15,
-   "pessoas": null,
-   "domicilios": null,
-   "area_km2": 1.69,
-   "densidade": null,
-   "pessoas_por_domicilio": null,
-   "dados_suprimidos": true
-  },
-  {
-   "nome": "Vila Paulista",
-   "setores": 11,
-   "pessoas": null,
-   "domicilios": null,
-   "area_km2": 4.73,
-   "densidade": null,
-   "pessoas_por_domicilio": null,
-   "dados_suprimidos": true
-  },
-  {
    "nome": "Jardim América",
    "setores": 8,
    "pessoas": 5287,
@@ -267,16 +167,6 @@
    "dados_suprimidos": false
   },
   {
-   "nome": "Bela Vista",
-   "setores": 13,
-   "pessoas": null,
-   "domicilios": null,
-   "area_km2": 1.87,
-   "densidade": null,
-   "pessoas_por_domicilio": null,
-   "dados_suprimidos": true
-  },
-  {
    "nome": "Jardim Guanabara",
    "setores": 8,
    "pessoas": 5172,
@@ -295,16 +185,6 @@
    "densidade": 4377,
    "pessoas_por_domicilio": 2.56,
    "dados_suprimidos": false
-  },
-  {
-   "nome": "Centenário",
-   "setores": 10,
-   "pessoas": null,
-   "domicilios": null,
-   "area_km2": 4.9,
-   "densidade": null,
-   "pessoas_por_domicilio": null,
-   "dados_suprimidos": true
   },
   {
    "nome": "Cidade Nova",
@@ -337,6 +217,56 @@
    "dados_suprimidos": false
   },
   {
+   "nome": "Arco-Íris",
+   "setores": 15,
+   "pessoas": null,
+   "domicilios": null,
+   "area_km2": 1.5,
+   "densidade": null,
+   "pessoas_por_domicilio": null,
+   "dados_suprimidos": false
+  },
+  {
+   "nome": "Bela Vista",
+   "setores": 13,
+   "pessoas": null,
+   "domicilios": null,
+   "area_km2": 1.87,
+   "densidade": null,
+   "pessoas_por_domicilio": null,
+   "dados_suprimidos": false
+  },
+  {
+   "nome": "Centenário",
+   "setores": 10,
+   "pessoas": null,
+   "domicilios": null,
+   "area_km2": 4.9,
+   "densidade": null,
+   "pessoas_por_domicilio": null,
+   "dados_suprimidos": false
+  },
+  {
+   "nome": "Cidade Jardim",
+   "setores": 17,
+   "pessoas": null,
+   "domicilios": null,
+   "area_km2": 3.29,
+   "densidade": null,
+   "pessoas_por_domicilio": null,
+   "dados_suprimidos": false
+  },
+  {
+   "nome": "Consolação",
+   "setores": 20,
+   "pessoas": null,
+   "domicilios": null,
+   "area_km2": 2.65,
+   "densidade": null,
+   "pessoas_por_domicilio": null,
+   "dados_suprimidos": false
+  },
+  {
    "nome": "Distrito Industrial",
    "setores": 7,
    "pessoas": null,
@@ -344,7 +274,77 @@
    "area_km2": 14.36,
    "densidade": null,
    "pessoas_por_domicilio": null,
-   "dados_suprimidos": true
+   "dados_suprimidos": false
+  },
+  {
+   "nome": "Grande Cervezão",
+   "setores": 27,
+   "pessoas": null,
+   "domicilios": null,
+   "area_km2": 5.24,
+   "densidade": null,
+   "pessoas_por_domicilio": null,
+   "dados_suprimidos": false
+  },
+  {
+   "nome": "Inocoop",
+   "setores": 15,
+   "pessoas": null,
+   "domicilios": null,
+   "area_km2": 1.35,
+   "densidade": null,
+   "pessoas_por_domicilio": null,
+   "dados_suprimidos": false
+  },
+  {
+   "nome": "Jardim Novo/Terra Nova",
+   "setores": 19,
+   "pessoas": null,
+   "domicilios": null,
+   "area_km2": 6.3,
+   "densidade": null,
+   "pessoas_por_domicilio": null,
+   "dados_suprimidos": false
+  },
+  {
+   "nome": "Mãe Preta",
+   "setores": 19,
+   "pessoas": null,
+   "domicilios": null,
+   "area_km2": 3.41,
+   "densidade": null,
+   "pessoas_por_domicilio": null,
+   "dados_suprimidos": false
+  },
+  {
+   "nome": "Santana",
+   "setores": 15,
+   "pessoas": null,
+   "domicilios": null,
+   "area_km2": 1.69,
+   "densidade": null,
+   "pessoas_por_domicilio": null,
+   "dados_suprimidos": false
+  },
+  {
+   "nome": "Sem bairro definido pelo IBGE",
+   "setores": 43,
+   "pessoas": null,
+   "domicilios": null,
+   "area_km2": 420.62,
+   "densidade": null,
+   "pessoas_por_domicilio": null,
+   "dados_suprimidos": false
+  },
+  {
+   "nome": "Vila Paulista",
+   "setores": 11,
+   "pessoas": null,
+   "domicilios": null,
+   "area_km2": 4.73,
+   "densidade": null,
+   "pessoas_por_domicilio": null,
+   "dados_suprimidos": false
   }
  ],
  "setores": {
@@ -3081,12 +3081,12 @@
     10,
     22
    ],
-   "mediana_km": 0.57,
+   "mediana_km": 0.58,
    "setores_total": 408,
-   "setores_suprimidos": 17,
-   "setores_validos": 391,
-   "setores_ate_1_km": 326,
-   "setores_3_km_ou_mais": 20
+   "setores_suprimidos": 0,
+   "setores_validos": 408,
+   "setores_ate_1_km": 331,
+   "setores_3_km_ou_mais": 22
   }
  },
  "educacao_infantil": {
