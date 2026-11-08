@@ -31,9 +31,7 @@ CENARIOS = {
     "coordenadas_do_catalogo": False,
     "com_centro_do_cep": True,
 }
-AVISO = ("Distâncias em linha reta entre o centro dos setores não suprimidos e o serviço mais próximo; não consideram ruas, ônibus nem "
-         "horários. Os resumos contam setores, não pessoas. Setores pequenos têm suas distâncias omitidas por cautela estatística. "
-         "Categoria com cobertura incompleta de coordenadas tem distância superestimada.")
+AVISO = "Os resumos contam somente setores não suprimidos, sem ponderação por população. Dados demográficos e distâncias por setor são omitidos nos setores pequenos. Distâncias em linha reta não consideram ruas, ônibus nem horários."
 
 
 def quantil_ponderado(pares, q):
