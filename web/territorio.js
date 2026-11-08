@@ -141,17 +141,17 @@
      Tudo sai dos dados: nada de número fixo no texto. */
   function calcularAreaUrbana() {
     var limite = estado.dados.classes.densidade.limites[1];
-    var x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9, pessoas = 0, n = 0;
+    var x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9, n = 0;
     estado.geo.features.forEach(function (f) {
       var s = estado.dados.setores[f.properties.setor];
       if (s.d == null || s.d < limite) return;
       var c = estado.caixas[f.properties.setor];
       x0 = Math.min(x0, c[0]); y0 = Math.min(y0, c[1]); x1 = Math.max(x1, c[2]); y1 = Math.max(y1, c[3]);
-      pessoas += f.properties.pessoas; n++;
+      n++;
     });
     var w = x1 - x0, h = y1 - y0, folga = 0.03;
     estado.vista.densa = [x0 - w * folga, y0 - h * folga, w * (1 + 2 * folga), h * (1 + 2 * folga)];
-    estado.densa = { limite: limite, setores: n, pessoas: pessoas };
+    estado.densa = { limite: limite, setores: n };
   }
 
   /* ---------- serviços no mapa ---------- */
@@ -171,11 +171,9 @@
       camada.appendChild(c);
       lista.appendChild(el("li", null, p.nome + (p.precisao === "cep" ? " (localização aproximada pelo CEP, raio de cerca de " + inteiro(p.raio_m) + " m)" : " (localização pelo endereço)")));
     });
-    var pct = 100 * b.pessoas_3_km_ou_mais / b.pessoas_total;
-    resumo.appendChild(el("p", null, "Serviços localizados no mapa (" + b.rotulo + "): " + inteiro(b.localizados) + " de " + inteiro(b.cadastrados) +
+        resumo.appendChild(el("p", null, "Serviços localizados no mapa (" + b.rotulo + "): " + inteiro(b.localizados) + " de " + inteiro(b.cadastrados) +
       " cadastrados no catálogo (" + inteiro(b.localizados_pelo_endereco) + " pelo endereço). Círculo cheio = localização pelo endereço; círculo vazado = aproximada pelo CEP."));
-    resumo.appendChild(el("p", null, inteiro(b.pessoas_3_km_ou_mais) + " pessoas (" + decimal(pct, 1) + "%) moram a 3 km ou mais do serviço localizado mais próximo, em linha reta. Metade das pessoas está a " +
-      decimal(b.mediana_km, 1) + " km ou menos."));
+    resumo.appendChild(el("p", null, inteiro(b.setores_3_km_ou_mais) + " de " + inteiro(b.setores_total - b.setores_suprimidos) + " setores sem supressão estatística estão a 3 km ou mais do serviço localizado mais próximo, em linha reta. A mediana entre esses setores é " + (b.mediana_km == null ? "indisponível" : decimal(b.mediana_km, 1) + " km") + "."));
     if (b.nota) resumo.appendChild(el("p", "nota", b.nota));
     resumo.appendChild(el("p", "nota", estado.dados.meta.aviso_distancia));
   }
@@ -187,9 +185,8 @@
     var nota = document.getElementById("nota-area");
     nota.hidden = estado.area !== "densa";
     if (!nota.hidden) {
-      var d = estado.densa, total = estado.dados.totais.pessoas;
-      nota.textContent = "Recorte nos " + inteiro(d.setores) + " setores com " + inteiro(d.limite) + " ou mais pessoas por km², onde moram " +
-        decimal(100 * d.pessoas / total, 1) + "% da população. Partes mais afastadas ficam de fora da imagem, não do cálculo.";
+      var d = estado.densa;
+      nota.textContent = "Recorte nos " + inteiro(d.setores) + " setores não suprimidos com densidade de " + inteiro(d.limite) + " pessoas por km² ou mais. Setores com dados omitidos por cautela estatística permanecem no mapa, sem classificação demográfica.";
     }
   }
 
@@ -214,13 +211,17 @@
       var cod = alvo.getAttribute("data-setor"), pr = propriedades[cod], s = estado.dados.setores[cod];
       dica.appendChild(el("strong", null, nomeDoBairro(pr)));
       dica.appendChild(el("div", "sec", "Setor " + cod + " · " + pr.situacao));
-      dica.appendChild(el("div", null, inteiro(pr.pessoas) + " pessoas · " + inteiro(pr.domicilios) + " domicílios"));
-      dica.appendChild(el("div", null, s.d == null ? "Densidade: sem área" : inteiro(s.d) + " pessoas por km²"));
-      dica.appendChild(el("div", null, s.p == null ? "Pessoas por domicílio: sem base suficiente (menos de " + estado.dados.classes.pessoas_por_domicilio.min_domicilios + " domicílios)"
-                                                   : decimal(s.p, 2) + " pessoas por domicílio"));
-      Object.keys(estado.dados.distancia_ate_servico || {}).forEach(function (k) {
-        if (s["dist_" + k] != null) dica.appendChild(el("div", "sec", "Serviço mais próximo (" + estado.dados.distancia_ate_servico[k].rotulo + "): " + decimal(s["dist_" + k], 1) + " km, em linha reta"));
-      });
+      if (s.suprimido_privacidade || pr.suprimido_privacidade) {
+        dica.appendChild(el("div", "sec", "Dados de população, domicílios, densidade e distâncias omitidos por cautela estatística."));
+      } else {
+        dica.appendChild(el("div", null, inteiro(pr.pessoas) + " pessoas · " + inteiro(pr.domicilios) + " domicílios"));
+        dica.appendChild(el("div", null, s.d == null ? "Densidade: sem área" : inteiro(s.d) + " pessoas por km²"));
+        dica.appendChild(el("div", null, s.p == null ? "Pessoas por domicílio: sem base suficiente (menos de " + estado.dados.classes.pessoas_por_domicilio.min_domicilios + " domicílios)"
+                                                     : decimal(s.p, 2) + " pessoas por domicílio"));
+        Object.keys(estado.dados.distancia_ate_servico || {}).forEach(function (k) {
+          if (s["dist_" + k] != null) dica.appendChild(el("div", "sec", "Serviço mais próximo (" + estado.dados.distancia_ate_servico[k].rotulo + "): " + decimal(s["dist_" + k], 1) + " km, em linha reta"));
+        });
+      }
       posicionar(e);
     }
     function posicionar(e) {
