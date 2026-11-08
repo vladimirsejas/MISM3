@@ -17,7 +17,7 @@ assert(/<html lang="pt-BR">/.test(privacidade), "a página pública declara port
 assert(/name="robots" content="noindex, nofollow"/.test(privacidade), "a página permanece fora dos buscadores enquanto o lançamento não for autorizado");
 assert(/default-src 'none'/.test(privacidade) && /style-src 'self'/.test(privacidade), "a política de conteúdo bloqueia recursos não necessários");
 assert(!/<script\b/i.test(privacidade), "a página de privacidade não executa JavaScript");
-assert(/não é um serviço oficial da Prefeitura/.test(privacidade), "a página esclarece que o projeto não é serviço oficial");
+assert(/não é um serviço oficial da Prefeitura/i.test(privacidade), "a página esclarece que o projeto não é serviço oficial");
 assert(/funciona no navegador, no próprio aparelho/.test(privacidade), "a página explica o processamento local do orientador");
 assert(/não envia esse valor ao servidor do MISM3/.test(privacidade), "a página explica o tratamento local do CEP");
 assert(/OpenStreetMap ou Esri/.test(privacidade), "a página identifica os provedores cartográficos externos");
