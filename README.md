@@ -6,7 +6,7 @@ Estado técnico detalhado: [docs/estado_do_projeto.md](docs/estado_do_projeto.md
 
 ## Preparação para publicação pública — 08/11/2026
 
-A diretriz do autor é publicar o site, o mapa territorial e o painel de gestão, com dados agregados e ressalvas metodológicas. A preparação ainda está em andamento: as páginas permanecem com `noindex, nofollow`, e a publicação oficial depende da revisão de privacidade dos setores pequenos, dos termos de redistribuição dos dados e imagens, da confirmação dos serviços e da validação final. Consulte o [plano de publicação pública](docs/territorial/PLANO_PUBLICACAO_PUBLICA.md) e a [página de privacidade e dados](web/privacidade.html).
+A diretriz do autor é publicar o site, o mapa territorial e o painel de gestão, com dados agregados e ressalvas metodológicas. A supressão D4 já foi aplicada aos 17 setores pequenos e aos agregados dos 13 bairros afetados; as páginas permanecem com `noindex, nofollow` até a liberação oficial. Ainda dependem de confirmação os termos de redistribuição de dados e imagens, a conferência dos serviços e a validação final. Consulte o [plano de publicação pública](docs/territorial/PLANO_PUBLICACAO_PUBLICA.md) e a [página de privacidade e dados](web/privacidade.html).
 
 Restrições de projeto: não usa modelo de linguagem; o texto digitado nunca sai do navegador; não prevê risco individual; não decide elegibilidade a benefício; não promete vaga. Cada dado mostra fonte e data de conferência.
 
