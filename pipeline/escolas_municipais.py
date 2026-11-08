@@ -35,17 +35,12 @@ def carregar() -> dict:
         if r.get("tipo") == "creche" and r.get("subtipo") == "escola_municipal"
     ]
     vinculos = {r["id"]: r for r in ler_csv(CATALOGO / "inep_escolas.csv")}
-    oferta = json.loads((DADOS / "oferta_educacao_infantil.json").read_text(encoding="utf-8"))
+    # O Censo Escolar é publicado apenas em totais por rede. Não se associa matrícula a escola individual.
     indice_cep = json.loads((DADOS / "cep_indice.json").read_text(encoding="utf-8")).get("ceps", {})
-    por_inep = {e["inep"]: e for e in oferta.get("escolas", [])}
 
     escolas = []
-    codigos_vinculados = set()
     for r in cadastro:
         vinculo = vinculos.get(r["id"])
-        censo = por_inep.get(vinculo["inep"]) if vinculo else None
-        if vinculo:
-            codigos_vinculados.add(vinculo["inep"])
 
         coordenada = None
         if r.get("lat") and r.get("lon"):
@@ -107,23 +102,8 @@ def carregar() -> dict:
                 "nome_censo": vinculo["nome_censo"],
                 "metodo": vinculo["metodo"],
             } if vinculo else None),
-            "censo_escolar_2025": ({
-                campo: censo[campo] for campo in (
-                    "rede", "localizacao", "oferece_creche", "oferece_pre_escola",
-                    "matriculas_creche", "matriculas_0_a_3_anos",
-                    "matriculas_creche_tempo_integral", "matriculas_pre_escola",
-                    "turmas_creche", "turmas_pre_escola",
-                )
-            } if censo else None),
             "observacao_catalogo": r.get("observacao") or None,
         })
-
-    sem_vinculo = [
-        {"codigo": e["inep"], "nome_censo": e["nome"],
-         "observacao": "Sem vínculo com registro do catálogo; não associar automaticamente."}
-        for e in oferta.get("escolas", [])
-        if e.get("rede") == "municipal" and e["inep"] not in codigos_vinculados
-    ]
 
     return {
         "meta": {
@@ -133,7 +113,7 @@ def carregar() -> dict:
             "fontes": {
                 "cadastro": "catalogo/servicos_manuais.csv",
                 "vinculos_inep": "catalogo/inep_escolas.csv",
-                "censo_escolar": "web/dados/oferta_educacao_infantil.json",
+                "censo_escolar_agregado_por_rede": "web/dados/oferta_educacao_infantil.json",
                 "referencia_cep": "web/dados/cep_indice.json",
             },
             "contagens": {
@@ -145,19 +125,17 @@ def carregar() -> dict:
                 "sem_localizacao_mapa": sum(not e["localizacao_mapa"] for e in escolas),
                 "vinculadas_inep": sum(bool(e["vinculo_inep"]) for e in escolas),
                 "sem_vinculo_inep": sum(not e["vinculo_inep"] for e in escolas),
-                "municipais_no_censo_infantil": sum(e.get("rede") == "municipal" for e in oferta.get("escolas", [])),
-                "registros_inep_municipais_sem_vinculo": len(sem_vinculo),
             },
-            "interpretacao": "O conjunto consolida cadastro, georreferenciamento disponível e indicadores do Censo Escolar sem confundir as naturezas das fontes.",
+            "interpretacao": "O conjunto consolida cadastro e georreferenciamento. O Censo Escolar é publicado apenas em totais por rede, sem associar matrículas a escolas individuais.",
             "limites": [
                 "Matrículas e turmas não representam vagas disponíveis, demanda reprimida ou fila de espera.",
+                "A base pública de escolas não contém contagens de matrículas ou turmas por unidade; esses dados aparecem somente em totais por rede.",
                 "A localização operacional prioriza coordenada individual; na ausência, usa referência do centro de CEP com método e raio explicitados.",
                 "O centro de CEP é uma aproximação territorial agregada, não a coordenada comprovada do prédio escolar.",
                 "A referência de CEP representa distribuição agregada de endereços CNEFE e não comprova a localização física da escola.",
                 "Registros sem vínculo INEP permanecem sem indicadores escolares associados.",
                 "A ausência de coordenada individual não significa ausência de endereço cadastrado.",
             ],
-            "inep_municipais_sem_vinculo": sem_vinculo,
         },
         "escolas": escolas,
     }
