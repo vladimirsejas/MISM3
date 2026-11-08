@@ -46,9 +46,12 @@ assert(/distância em linha reta/i.test(dados.meta.aviso_metodologico), "o aviso
 ["Como ler este mapa", "mt-aviso-texto", "Fonte e data", "Detalhe do setor"].forEach((t) => assert(html.indexOf(t) !== -1, "a página tem: " + t));
 assert(/localização pendente/.test(js) && /serviço localizado no setor|serviços localizados no setor/.test(js + html), "usa a linguagem permitida");
 
-/* ---- a página nova não está ligada nos arquivos existentes ---- */
-fs.readdirSync(web).filter((f) => /\.(html|js|css)$/.test(f) && !/^mapa-territorial\./.test(f)).forEach((f) => {
-  assert(!/mapa-territorial/.test(ler(f)), "link para a página nova em " + f + " (a decisão de ligar o mapa é do autor)");
+/* ---- ligação aprovada pela PR #92: mapa territorial na entrada e redirecionamento dos atalhos antigos ---- */
+const index = ler("index.html"), app = ler("app.js");
+assert(/href="mapa-territorial\.html"/.test(index), "a tela inicial oferece acesso ao mapa territorial");
+assert(/window\.location\.replace\("mapa-territorial\.html"\)/.test(app), "os atalhos antigos do mapa e do painel levam ao mapa territorial");
+fs.readdirSync(web).filter((f) => /\.(html|js|css)$/.test(f) && !/^mapa-territorial\./.test(f) && !["index.html", "app.js"].includes(f)).forEach((f) => {
+  assert(!/mapa-territorial/.test(ler(f)), "referência não prevista à página nova em " + f);
 });
 
 /* ---- funções puras ---- */
