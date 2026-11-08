@@ -46,8 +46,8 @@ ROTULOS_CENARIO = {
     "com_centro_do_cep": "Análise de sensibilidade: centro do CEP cadastral do equipamento",
 }
 AVISO_METODOLOGICO = ("A distância em linha reta não representa tempo de deslocamento ou acesso efetivo: não considera ruas, transporte, horários, "
-                      "capacidade nem área de atendimento. Quando a localização é aproximada, a faixa mínima–máxima é um envelope geométrico operacional, "
-                      "não intervalo de confiança. A presença ou a ausência de um equipamento em um setor não define quem ele atende.")
+                      "capacidade nem área de atendimento. Quando há raio documentado, a faixa mínima–máxima é um envelope geométrico operacional, "
+                      "não intervalo de confiança; quando o raio é desconhecido, a faixa não é calculada. A presença ou a ausência de um equipamento em um setor não define quem ele atende.")
 # Faixas de leitura das distâncias (km). 1 e 2 km são os limiares de web/dados/exposicao_distancia.json; 0,5 e 3 km só organizam a legenda.
 FAIXAS_DISTANCIA_KM = [0.5, 1.0, 2.0, 3.0]
 LIMITES_DENSIDADE = [500, 2000, 5000, 10000]  # os mesmos de territorio.json (classes.densidade.limites)
@@ -126,7 +126,7 @@ def equipamentos(linhas: list, indice_cep: dict, escolas: list[dict], localizaca
             fonte = ("servicos_manuais.csv + localizacao_registro.csv" if registro.get("metodo") else
                      ("servicos_manuais.csv (proveniência não registrada)" if xy_catalogo else ("CNEFE/índice CEP" if xy_cep else None)))
             saida.append({"id": r["id"], "nome": r["nome"], "categoria": cat, "xy_catalogo": xy_catalogo,
-                          "xy_cep": xy_cep, "raio_catalogo_m": 0.0, "raio_cep_m": raio_cep,
+                          "xy_cep": xy_cep, "raio_catalogo_m": 0.0 if registro.get("metodo") and registro.get("confianca") else None, "raio_cep_m": raio_cep,
                           "metodo_localizacao": metodo, "confianca_localizacao": confianca,
                           "data_aplicacao_localizacao": registro.get("aplicado_em"), "fonte_localizacao": fonte})
 
@@ -161,7 +161,8 @@ def posicoes(equip: list[dict], cenario: str, cat: str) -> list[tuple]:
             continue
         if e["xy_catalogo"]:
             lat, lon = e["xy_catalogo"]
-            pts.append((lat, lon, float(e.get("raio_catalogo_m") or 0)))
+            raio = e.get("raio_catalogo_m")
+            pts.append((lat, lon, None if raio is None else float(raio)))
         elif usar_cep and e["xy_cep"]:
             lat, lon = e["xy_cep"]
             pts.append((lat, lon, float(e.get("raio_cep_m") or 0)))
@@ -252,9 +253,14 @@ def gerar(dados: dict) -> dict:
             for s in setores:
                 medidas = [(at.haversine_km(s["lat"], s["lon"], la, lo), raio) for la, lo, raio in pts]
                 centrais.append(min(d for d, _ in medidas))
-                faixas = [faixa_distancia_km(d, raio) for d, raio in medidas]
-                inferiores.append(min(f[0] for f in faixas))
-                superiores.append(min(f[1] for f in faixas))
+                if any(raio is None for _, raio in medidas):
+                    # Sem raio documentado em qualquer referência elegível, não há envelope defensável para o conjunto.
+                    inferiores.append(None)
+                    superiores.append(None)
+                else:
+                    faixas = [faixa_distancia_km(d, raio) for d, raio in medidas]
+                    inferiores.append(min(f[0] for f in faixas))
+                    superiores.append(min(f[1] for f in faixas))
             dist[cen][cat], dist_min[cen][cat], dist_max[cen][cat] = centrais, inferiores, superiores
             pares = [(d, s["pessoas"]) for d, s in zip(centrais, setores)]
             sem = [(d, s["pessoas"]) for d, s in zip(centrais, setores) if not s["bairro"]]
@@ -288,8 +294,8 @@ def gerar(dados: dict) -> dict:
                        "O envelope é geométrico, não intervalo de confiança. Os resumos centrais continuam conferidos contra web/dados/exposicao_distancia.json."),
             "metodologia_incerteza": {"unidade_raio": "metros", "formula": "d_min=max(0,d-r); d_max=d+r",
                                      "interpretacao": "Envelope geométrico operacional, não intervalo de confiança estatístico.",
-                                     "origem_raio": "Escolas: localizacao_mapa.raio_m em escolas_municipais.json. CRAS/UBS sem coordenada individual: terceiro elemento do índice CEP. Coordenadas individuais não recebem raio artificial.",
-                                     "limite": "O raio aproxima a dispersão dos endereços associados ao CEP; não garante conter o equipamento nem é margem de erro validada pelo IBGE.",
+                                     "origem_raio": "Escolas: localizacao_mapa.raio_m em escolas_municipais.json. CRAS/UBS sem coordenada individual: terceiro elemento do índice CEP. Coordenadas individuais com método documentado não recebem raio artificial. Sem método/proveniência suficiente, o raio é desconhecido e o envelope não é publicado.",
+                                     "limite": "O raio aproxima a dispersão dos endereços associados ao CEP; não garante conter o equipamento nem é margem de erro validada pelo IBGE. Quando o raio não está documentado, o intervalo é omitido e a distância central permanece identificada como estimativa.",
                                      "comparacao": "Faixas sobrepostas não permitem afirmar qual equipamento é mais próximo."},
             "aviso_metodologico": AVISO_METODOLOGICO,
             "rotulos_cenario": ROTULOS_CENARIO,
@@ -298,7 +304,7 @@ def gerar(dados: dict) -> dict:
                 "Nesta versão nenhum setor censitário é suprimido nem agregado. Os %d setores com menos de 5 pessoas ou menos de 3 domicílios (faixa conservadora da proposta de supressão e agregação) são marcados no mapa com o aviso 'população muito pequena, interprete com cautela' (decisão D4 em docs/territorial/DECISOES_DO_AUTOR.md; pode ser revista pelo autor)." % sum(1 for s in setores if s["pessoas"] < 5 or s["domicilios"] < 3),
                 "O cenário com centro do CEP cadastral do equipamento é uma análise de sensibilidade: a posição é aproximada e não equivale à coordenada individual do catálogo.",
                 "A auditoria geométrica encontrou %d centroides fora dos respectivos polígonos em %d setores. O centroide atual não foi substituído: a alternativa interna e o impacto nas distâncias ainda precisam ser comparados antes de qualquer mudança." % (centroides_fora, len(setores)),
-                "A localização escolar é lida da base consolidada, com método, precisão, fonte e raio. Para CRAS/UBS, 22 dos 28 registros têm método e confiança documentados em localizacao_registro.csv; os outros 6 têm coordenadas no catálogo, mas sem registro explícito de proveniência.",
+                "A localização escolar é lida da base consolidada, com método, precisão, fonte e raio. Para CRAS/UBS, 22 dos 28 registros têm método e confiança documentados em localizacao_registro.csv; os outros 6 têm coordenadas no catálogo, mas sem registro explícito de proveniência ou raio conhecido.",
                 "Categorias com cobertura incompleta de coordenadas têm distância superestimada.",
             ],
             "conferencia": {"coincide_com_exposicao_distancia": True, "setores": len(setores), "pessoas": sum(s["pessoas"] for s in setores)},
@@ -314,7 +320,7 @@ def gerar(dados: dict) -> dict:
              "precisao": "catalogo" if e["xy_catalogo"] else ("centro_do_cep" if e["xy_cep"] else "pendente"),
              "metodo_localizacao": e.get("metodo_localizacao"), "confianca_localizacao": e.get("confianca_localizacao"),
              "data_aplicacao_localizacao": e.get("data_aplicacao_localizacao"), "fonte_localizacao": e.get("fonte_localizacao"),
-             "raio_incerteza_m": round(float(e.get("raio_catalogo_m") or 0) if e["xy_catalogo"] else float(e.get("raio_cep_m") or 0), 1),
+             "raio_incerteza_m": (None if (e["xy_catalogo"] and e.get("raio_catalogo_m") is None) else round(float(e.get("raio_catalogo_m") or 0) if e["xy_catalogo"] else float(e.get("raio_cep_m") or 0), 1)),
              "lat": round((e["xy_catalogo"] or e["xy_cep"] or (None, None))[0], 6) if (e["xy_catalogo"] or e["xy_cep"]) else None,
              "lon": round((e["xy_catalogo"] or e["xy_cep"] or (None, None))[1], 6) if (e["xy_catalogo"] or e["xy_cep"]) else None,
              "setor": e["setor"]}
