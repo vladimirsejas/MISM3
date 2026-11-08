@@ -2,6 +2,7 @@ const assert = require("assert");
 const fs = require("fs");
 const path = require("path");
 const qd = require("../qualidade-dados.js");
+const html = fs.readFileSync(path.join(path.resolve(__dirname, ".."), "qualidade-dados.html"), "utf8");
 
 const quadrado = {
   type: "Polygon",
@@ -78,5 +79,6 @@ function testeBaseReal() {
 testeEstrutura();
 testeBuracos();
 testeResumo();
+assert(/catálogo de serviços contém endereço, fonte institucional e data de verificação/.test(html));
 testeBaseReal();
 console.log("qualidade-dados.test.js: painel territorial, procedência, áreas, geometria e cautela D4 validados");
