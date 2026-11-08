@@ -13,6 +13,7 @@ A unidade estatística principal é o setor censitário do IBGE. Os equipamentos
 - `web/dados/exposicao_distancia.json`: resultados existentes de distância em dois cenários de localização.
 - `catalogo/servicos_manuais.csv`: catálogo de serviços institucionais.
 - `web/dados/escolas_municipais.json`: fonte consolidada das 68 escolas, com método, precisão, fonte e raio da localização operacional.
+- IBGE, *Censo Demográfico 2022 — Agregados por Setores Censitários*, Nota metodológica n. 06: V0001 (total de pessoas) e V0002 (total de domicílios, incluindo particulares e coletivos). https://biblioteca.ibge.gov.br/visualizacao/livros/liv102136.pdf
 - `catalogo/inep_escolas.csv`: correspondência de escolas com registros do INEP.
 - `catalogo/localizacao_registro.csv`: proveniência de coordenadas e outros campos de localização.
 - `pipeline/territorio.py`, `pipeline/analise_territorial.py` e `pipeline/exposicao_distancia.py`: procedimentos de cálculo existentes.
