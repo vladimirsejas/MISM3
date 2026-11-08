@@ -131,5 +131,37 @@ def test_sem_cep_endereco_ou_telefone_na_saida(publicado):
 
 def test_entradas_declaradas_incluem_o_indice_de_cep_so_para_localizar_equipamentos(publicado):
     assert "cep_indice.json" in publicado["meta"]["entradas_sha256"]
+    assert "escolas_municipais.json" in publicado["meta"]["entradas_sha256"]
     assert all(len(v) == 64 for v in publicado["meta"]["entradas_sha256"].values())
     assert ed.CENARIOS.keys() == set(ti.CENARIOS)
+
+def test_faixas_de_incerteza_sao_publicadas_e_contem_a_estimativa_central(publicado):
+    """A faixa é envelope geométrico para referências aproximadas, não intervalo de confiança."""
+    assert publicado["meta"]["metodologia_incerteza"]["formula"] == "d_min=max(0,d-r); d_max=d+r"
+    assert "não intervalo de confiança" in publicado["meta"]["metodologia_incerteza"]["interpretacao"].lower()
+    intervalos = []
+    for setor in publicado["setores"]:
+        for cen in ti.CENARIOS:
+            for cat in ti.CATEGORIAS:
+                central = setor["distancia_km"][cen][cat]
+                minimo = setor["distancia_min_km"][cen][cat]
+                maximo = setor["distancia_max_km"][cen][cat]
+                if central is None:
+                    assert minimo is None and maximo is None
+                else:
+                    assert minimo <= central <= maximo
+                    intervalos.append((minimo, central, maximo))
+    assert any(minimo < central or central < maximo for minimo, central, maximo in intervalos)
+
+
+def test_base_escolar_consolidada_preserva_raios_e_proveniencia(publicado):
+    escolas = [e for e in publicado["equipamentos"] if e["categoria"] == "escola"]
+    assert len(escolas) == 68
+    assert sum(e["metodo_localizacao"] == "coordenada_individual" for e in escolas) == 33
+    assert sum(e["metodo_localizacao"] == "centroide_cep" for e in escolas) == 35
+    aproximadas = [e for e in escolas if e["precisao"] == "centro_do_cep"]
+    assert len(aproximadas) == 35
+    assert all(e["raio_incerteza_m"] > 0 for e in aproximadas)
+    individuais = [e for e in escolas if e["precisao"] == "catalogo"]
+    assert all(e["raio_incerteza_m"] == 0 for e in individuais)
+
