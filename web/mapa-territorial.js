@@ -543,7 +543,13 @@
       }, falha);
     }, falha);
   }
-  function falha() { mensagem("Não foi possível carregar os dados locais do mapa. Nenhum dado foi enviado a outros endereços."); }
+  function falha() {
+    if (typeof window !== "undefined" && window.location && window.location.protocol === "file:") {
+      mensagem("O mapa foi aberto diretamente como arquivo (file://), e o navegador bloqueou a leitura dos dados locais. Para visualizar: abra o PowerShell na pasta web do projeto, execute `py -m http.server 8000 --bind 127.0.0.1` e acesse http://127.0.0.1:8000/mapa-territorial.html. O servidor fica restrito ao próprio computador.");
+      return;
+    }
+    mensagem("Não foi possível carregar os dados locais do mapa. Confira se a pasta dados contém indicadores_territoriais.json e setores.geojson e abra a página pelo servidor local. Nenhum dado foi enviado a outros endereços.");
+  }
 
   if (typeof document !== "undefined" && document.getElementById("mt-svg")) iniciar();
 
