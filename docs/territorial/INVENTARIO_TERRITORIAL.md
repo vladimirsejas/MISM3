@@ -29,7 +29,7 @@ A página territorial é uma nova entrada de gestão. O mapa de serviços anteri
 ### Limites que permanecem abertos
 
 - Nove centroides atuais caem fora dos respectivos polígonos. A troca por ponto interno ainda depende de comparação de impacto nas distâncias.
-- A correspondência dos campos `v0001` e `v0002` com o dicionário oficial da divulgação IBGE usada precisa de confirmação documental.
+- A definição de `V0001` e `V0002` foi confirmada na Nota metodológica n. 06 do IBGE. Permanece pendente explicar a diferença de área: soma setorial de 497,3 km² frente à referência municipal de 498,403 km² (diferença aproximada de 0,21%).
 - A regra de supressão/agregação de setores pequenos não foi aprovada. A decisão D4 mantém o aviso de cautela, sem supressão nesta versão.
 - A execução integral dos testes e auditorias deve ser confirmada pelo workflow da versão final da branch.
 - A PR #91 não é mergeada: sua lógica de incerteza foi portada para a PR #92, sem integrar a branch separada.
