@@ -54,6 +54,31 @@
     return contexto && necessidade;
   }
 
+  /* Mudança na composição familiar e CadÚnico: o CRAS é o caminho, mesmo sem relato de aperto financeiro. */
+  function cadastroComposicaoFamiliar(t) {
+    var parente = /\\b(?:netos?|netas?|netinhas?|netinhos?)\\b/.test(t);
+    var cadastro = /\\b(?:cadunico|cadastro unico|cadastro da familia|atualizar cadastro|atualizacao cadastral|composicao familiar)\\b/.test(t);
+    var acao = /\\b(?:atualizar|atualizacao|incluir|colocar|adicionar|informar|cadastrar|chegou|vem morar|veio morar|vai morar|morar aqui|mora comigo|passou a morar)\\b/.test(t);
+    return parente && cadastro && acao;
+  }
+
+  /* Pergunta de saúde envolvendo neto/neta ou criança deve manter Saúde no topo. */
+  function cuidadoFamiliarSaude(t) {
+    var familiar = /\\b(?:netos?|netas?|netinhas?|netinhos?|filhos?|criancas?|bebe|bebê)\\b/.test(t);
+    var saude = /\\b(?:posto|ubs|usf|consulta|medic[oa]|vacina|exame|hospital|saude|atendimento)\\b/.test(t);
+    return familiar && saude;
+  }
+
+  /* Limites explícitos do produto: receitas e operações bancárias pessoais não são serviços do Observatório. */
+  function foraDoEscopoExplicito(t) {
+    var culinaria = /\\b(?:bolo|bolos|pao(?: de queijo)?|panqueca|panquecas|fuba)\\b/.test(t) &&
+      /\\b(?:receita|ensina|ensinar|fazer|fac[o]|preparar|cozinhar)\\b/.test(t);
+    var operacaoBancaria = /\\b(?:cartao|senha|extrato|conta bancaria|aplicativo do banco)\\b/.test(t) &&
+      /\\b(?:perdi|perdeu|bloquear|bloqueio|cancelar|desbloquear|trocar|mudar|alterar|consultar|senha)\\b/.test(t);
+    var investimento = /\\b(?:investir|investimento|bitcoin|criptomoeda|acoes|bolsa de valores)\\b/.test(t);
+    return culinaria || operacaoBancaria || investimento;
+  }
+
   /* Uso explícito de cartão/dinheiro sem consentimento: encaminha para Direitos e Assistência, sem classificar como perigo. */
   function usoFinanceiroSemAutorizacao(t) {
     var objeto = /\b(?:cartao|conta|dinheiro|beneficio|aposentadoria|pix|saque|saca|transferencia|compras?|senha)\b/.test(t);
@@ -92,6 +117,12 @@
     var t = Regras.normalizar(texto), extra = [];
     if (usoFinanceiroSemAutorizacao(t)) {
       extra.push("direitos violacao de direitos pessoa idosa creas disque 100 assistencia social protecao financeira cartao dinheiro beneficio");
+    }
+    if (cadastroComposicaoFamiliar(t)) {
+      extra.push("assistencia social cras cadastro unico atualizar cadastro composicao familiar incluir neto neta membro da familia");
+    }
+    if (cuidadoFamiliarSaude(t)) {
+      extra.push("saude posto de saude ubs usf consulta atendimento acompanhante de crianca");
     }
     /* "sustento" e "sustentabilidade" têm a mesma raiz de 5 letras ("suste") e a busca levava quem sustenta a casa ao curso de
        Sustentabilidade da Fatec. A palavra é trocada só na consulta (o índice e o Python não mudam). */
@@ -253,6 +284,10 @@
         if (qL) { var z = lsa.docs[d], t = 0; for (var j = 0; j < K; j++) t += z[j] / 1000 * qL[j]; sl = Math.max(0, t); }
         var s = pesos.palavras * sw + pesos.letras * sc + pesos.significado * sl;
         if (dica && u.needs && u.needs.length) s += pesos.intencao * Math.max.apply(null, u.needs.map(function (n) { return dica[n] || 0; }));
+        if (familiaComNecessidade(tn) || cadastroComposicaoFamiliar(tn)) {
+          if (u.area === "assistencia") s += 0.45;
+        }
+        if (cuidadoFamiliarSaude(tn) && u.area === "saude") s += 0.45;
         if (ctx && ctx.area && u.area === ctx.area) s += pesos.area;
         if (CONDICOES[u.id] && !CONDICOES[u.id].test(tn)) s -= 1; /* serviço especializado só aparece quando o assunto é dele */
         if (EXCLUSOES[u.id] && EXCLUSOES[u.id].test(tn)) s -= 1; /* e há serviços que não servem a certos assuntos */
@@ -307,9 +342,12 @@
       var minimo = opcoes.minimo !== undefined ? opcoes.minimo : 0.3;
       /* Detector de escopo (aprendido): se achar que o assunto é de fora E a busca não achou correspondência forte, é fora do assunto. */
       var pEsc = opcoes.escopo ? opcoes.escopo(texto) : null, limEsc = opcoes.limiarEscopo !== undefined ? opcoes.limiarEscopo : 0.5;
-      var contextoAssistenciaFamilia = familiaComNecessidade(t);
+      var contextoAssistenciaFamilia = familiaComNecessidade(t) || cadastroComposicaoFamiliar(t);
       var contextoFinanceiroSemAutorizacao = usoFinanceiroSemAutorizacao(t);
-      var foraDeEscopo = !urgente && !contextoAssistenciaFamilia && !contextoFinanceiroSemAutorizacao && (melhor < minimo || (dicaT && melhor < minimo + 0.1 && confianca < 0.3) ||
+      var contextoSaudeFamiliar = cuidadoFamiliarSaude(t);
+      var limiteExplicito = foraDoEscopoExplicito(t);
+      var foraDeEscopo = !urgente && !contextoAssistenciaFamilia && !contextoFinanceiroSemAutorizacao && !contextoSaudeFamiliar &&
+        (limiteExplicito || melhor < minimo || (dicaT && melhor < minimo + 0.1 && confianca < 0.3) ||
         (pEsc !== null && pEsc < limEsc && melhor < (opcoes.fortaCorrespondencia !== undefined ? opcoes.fortaCorrespondencia : 0.5)));
       var fix = perigo ? fixados(perigo.pins, pont) : [];
       var acrescentados = 0;
