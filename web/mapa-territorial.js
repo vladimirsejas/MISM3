@@ -11,9 +11,9 @@
   var NS_SVG = "http://www.w3.org/2000/svg"; /* identificador de namespace do SVG, não é um endereço acessado */
   var CORES = { 4: ["#fbe9e6", "#e8a8a2", "#b9556a", "#7a2b37"], 5: ["#fbe9e6", "#f2c4bd", "#e08e8e", "#b9556a", "#7a2b37"] };
   var COR_SEM_VALOR = "#d9d9d9";
-  /* Decisão D4: nenhum setor é suprimido nem agregado; setores com menos de 5 pessoas ou menos de 3 domicílios (faixa conservadora da proposta de supressão e agregação) levam aviso. */
+  /* Decisão D4: dados demográficos e derivados são omitidos nos setores pequenos; geometria e pontos institucionais permanecem. */
   var LIMITE_PEQUENO = { pessoas: 5, domicilios: 3 };
-  var AVISO_PEQUENO = "menos de 5 pessoas ou menos de 3 domicílios; interprete com cautela";
+  var AVISO_PEQUENO = "dados demográficos e indicadores derivados omitidos por cautela estatística";
   var COR_PONTO = "#12343b";
   var CATEGORIAS = ["cras", "ubs", "escola"];
   var CENARIOS = ["coordenadas_do_catalogo", "com_centro_do_cep"];
@@ -26,7 +26,7 @@
   ];
 
   /* ------------------------------------------------------------------ funções puras (testáveis em Node) */
-  function setorPequeno(s) { return s.pessoas < LIMITE_PEQUENO.pessoas || s.domicilios < LIMITE_PEQUENO.domicilios; }
+  function setorPequeno(s) { return s.suprimido_privacidade === true || s.pessoas < LIMITE_PEQUENO.pessoas || s.domicilios < LIMITE_PEQUENO.domicilios; }
   function milhar(n) { return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
   /* O pequeno acréscimo evita que 2,175 apareça como 2,17 por causa da representação em ponto flutuante. */
   function decimal(n, casas) { return (Number(n) + (n >= 0 ? 1e-9 : -1e-9)).toFixed(casas).replace(".", ","); }
@@ -354,7 +354,8 @@
       c = classeDe(v, cl.limites);
       p = estado.caminhos[st.id];
       p.setAttribute("fill", c < 0 ? COR_SEM_VALOR : cores[Math.min(c, cores.length - 1)]);
-      p.firstChild.textContent = "Setor " + st.id + (st.bairro ? " (" + st.bairro + ")" : "") + ": " + descreverValor(s.indicador, v) + (s.indicador === "distancia" ? textoFaixaDistancia(st, s.cenario, s.categoria) : "");
+      var descricao = st.suprimido_privacidade && s.indicador !== "equipamentos" ? AVISO_PEQUENO : descreverValor(s.indicador, v);
+      p.firstChild.textContent = "Setor " + st.id + (st.bairro ? " (" + st.bairro + ")" : "") + ": " + descricao + (s.indicador === "distancia" && !st.suprimido_privacidade ? textoFaixaDistancia(st, s.cenario, s.categoria) : "");
     }
     legenda(s, cl, cores);
     resumo(s);
@@ -383,7 +384,7 @@
     li = el("li");
     am = el("span", "mt-amostra mt-amostra-pequeno");
     li.appendChild(am);
-    li.appendChild(el("span", "", "contorno tracejado: setor com " + AVISO_PEQUENO + " (" + estado.qtdPequenos + " setores)"));
+    li.appendChild(el("span", "", "contorno tracejado: setor com dados omitidos por cautela estatística (" + estado.qtdPequenos + " setores)"));
     ul.appendChild(li);
     box.appendChild(ul);
     var pts = el("ul");
@@ -439,13 +440,14 @@
     if (!st) return;
     estado.caminhos[st.id].setAttribute("class", "mt-setor mt-escolhido");
     estado.caminhos[st.id].setAttribute("aria-pressed", "true");
-    var dl = el("dl"), linhas = [
-      ["Setor censitário", st.id], ["Bairro", st.bairro || "Sem bairro definido pelo IBGE"], ["Pessoas", milhar(st.pessoas)],
-      ["Domicílios", milhar(st.domicilios)], ["Área", decimal(st.area_km2, 3) + " km²"], ["Densidade", milhar(st.densidade) + " pessoas por km²"]
-    ];
+    var dl = el("dl"), linhas = [["Setor censitário", st.id], ["Bairro", st.bairro || "Sem bairro definido pelo IBGE"]];
+    if (!st.suprimido_privacidade) {
+      linhas.push(["Pessoas", milhar(st.pessoas)], ["Domicílios", milhar(st.domicilios)], ["Densidade", milhar(st.densidade) + " pessoas por km²"]);
+    }
+    linhas.push(["Área", decimal(st.area_km2, 3) + " km²"]);
     linhas.forEach(function (l) { dl.appendChild(el("dt", "", l[0])); dl.appendChild(el("dd", "", l[1])); });
     corpo.appendChild(dl);
-    if (setorPequeno(st)) corpo.appendChild(el("p", "mt-cautela", "Aviso: " + AVISO_PEQUENO + "."));
+    if (setorPequeno(st)) corpo.appendChild(el("p", "mt-cautela", "Dados de população, domicílios, densidade e distâncias foram omitidos por cautela estatística. A geometria do setor e os pontos de equipamentos institucionais permanecem visíveis."));
     var tab = el("table", "mt-tabela"), cab = el("tr"), r;
     cab.appendChild(el("th", "", "Categoria"));
     cab.appendChild(el("th", "mt-num", "Serviços localizados no setor"));
@@ -457,7 +459,7 @@
       r.appendChild(cel("td", "mt-num", String(st.equipamentos[c]), "Serviços localizados no setor"));
       CENARIOS.forEach(function (cen) {
         var v = st.distancia_km[cen][c], faixa = faixaDistancia(st, cen, c);
-        var texto = v === null ? "localização pendente" : decimal(v, 2) + (faixa ? (faixa.minimo !== faixa.maximo ? " (" + decimal(faixa.minimo, 2) + "–" + decimal(faixa.maximo, 2) + ")" : "") : " (faixa indisponível: raio não documentado)");
+        var texto = st.suprimido_privacidade ? "omitida por cautela estatística" : (v === null ? "localização pendente" : decimal(v, 2) + (faixa ? (faixa.minimo !== faixa.maximo ? " (" + decimal(faixa.minimo, 2) + "–" + decimal(faixa.maximo, 2) + ")" : "") : " (faixa indisponível: raio não documentado)"));
         r.appendChild(cel("td", "mt-num", texto, "Distância central e envelope geométrico em km: " + d.meta.rotulos_cenario[cen]));
       });
       tab.appendChild(r);
@@ -477,13 +479,13 @@
     box.appendChild(el("p", "", rotuloCategoria(s.categoria) + ", " + d.meta.rotulos_cenario[s.cenario] + ". Cobertura das coordenadas: " + cob.com_coordenada + " de " + cob.cadastrados + " equipamentos cadastrados."));
     if (!cob.completo) box.appendChild(el("p", "", "Há localização pendente: a distância pode estar superestimada nesta categoria."));
     if (!r) { box.appendChild(el("p", "", "Nenhum equipamento desta categoria tem coordenada neste cenário.")); return; }
-    var t = r.populacao_toda, a1 = t.acima_de["1 km"], a2 = t.acima_de["2 km"], ul = el("ul");
-    [["Mediana", decimal(t.mediana_km, 2) + " km"], ["Percentil 90", decimal(t.p90_km, 2) + " km"],
-     ["Pessoas a mais de 1 km em linha reta", milhar(a1.pessoas) + " (" + limpo(a1.percentual) + "% de " + milhar(t.pessoas) + "), em " + a1.setores + " setores"],
-     ["Pessoas a mais de 2 km em linha reta", milhar(a2.pessoas) + " (" + limpo(a2.percentual) + "% de " + milhar(t.pessoas) + "), em " + a2.setores + " setores"]
+    var t = r.setores_validos, a1 = t.acima_de["1 km"], a2 = t.acima_de["2 km"], ul = el("ul");
+    [["Mediana entre setores não suprimidos", decimal(t.mediana_km, 2) + " km"], ["Percentil 90 entre setores não suprimidos", decimal(t.p90_km, 2) + " km"],
+     ["Setores a mais de 1 km em linha reta", a1.setores + " (" + limpo(a1.percentual) + "% dos setores considerados)"],
+     ["Setores a mais de 2 km em linha reta", a2.setores + " (" + limpo(a2.percentual) + "% dos setores considerados)"]
     ].forEach(function (x) { ul.appendChild(el("li", "", x[0] + ": " + x[1])); });
     box.appendChild(ul);
-    box.appendChild(el("p", "", "As faixas exibidas são envelopes geométricos operacionais derivados dos raios documentados; não são intervalos de confiança estatísticos. Quando o raio não está documentado, a faixa não é calculada e a distância central permanece identificada como estimativa. Faixas sobrepostas não permitem ordenar com segurança qual equipamento é mais próximo."));
+    box.appendChild(el("p", "", "O resumo considera apenas setores sem supressão estatística e conta setores, não pessoas. As faixas exibidas são envelopes geométricos operacionais derivados dos raios documentados; não são intervalos de confiança estatísticos. Quando o raio não está documentado, a faixa não é calculada. Faixas sobrepostas não permitem ordenar com segurança qual equipamento é mais próximo."));
   }
 
   function aviso() {
