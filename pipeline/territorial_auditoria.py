@@ -37,7 +37,8 @@ CAMPOS_PERMITIDOS = {
     "area_km2", "bairros", "domicilios", "pessoas", "rotulo", "unidade", "limites",
     "com_coordenada", "cadastrados", "completo",
     "populacao_toda", "setores_sem_bairro", "mediana_km", "p90_km", "acima_de", "percentual", "1 km", "2 km",
-    "id", "nome", "categoria", "precisao", "lat", "lon", "setor", "bairro", "densidade", "distancia_km",
+    "id", "nome", "categoria", "precisao", "metodo_localizacao", "fonte_localizacao", "raio_incerteza_m", "lat", "lon", "setor", "bairro", "densidade", "distancia_km", "distancia_min_km", "distancia_max_km",
+    "metodologia_incerteza", "unidade_raio", "formula", "interpretacao", "origem_raio", "limite", "comparacao",
     "coordenadas_do_catalogo", "com_centro_do_cep", "cras", "ubs", "escola", "creche", "distancia",
 }
 # Hashes (SHA-256 das entradas e carimbo) podem conter, por acaso, 8 dígitos seguidos. Só estes campos, e só quando o valor INTEIRO é um hash
