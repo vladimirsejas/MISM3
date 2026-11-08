@@ -31,8 +31,8 @@ def test_quantil_ponderado():
 def test_percentual_acima_do_limiar_e_sem_bairro():
     # UBS no centro de Alfa: Alfa fica a ~0 km, Beta (a ~3 km a leste) fica a mais de 2 km
     r = ex.calcular(geo(), [ubs("man-ubs-a", -22.395, -47.595)], {}, usar_cep=False)["ubs"]
-    ac = r["populacao_toda"]["acima_de"]
-    assert ac["2 km"]["pessoas"] == 3000 and ac["2 km"]["percentual"] == 75.0
+    ac = r["setores_validos"]["acima_de"]
+    assert ac["2 km"]["setores"] == 1 and ac["2 km"]["percentual"] == 50.0
     assert r["setores_sem_bairro"]["acima_de"]["2 km"]["percentual"] == 100.0
     assert r["cobertura"]["completo"] is True
 
@@ -44,15 +44,15 @@ def test_cobertura_incompleta_sem_cep_e_completa_com_cep():
     com = ex.calcular(geo(), servicos, indice, usar_cep=True)["ubs"]
     assert sem["cobertura"] == {"com_coordenada": 1, "cadastrados": 2, "completo": False}
     assert com["cobertura"]["completo"] is True
-    assert com["populacao_toda"]["acima_de"]["2 km"]["pessoas"] == 0     # a segunda UBS aproxima o setor Beta
+    assert com["setores_validos"]["acima_de"]["2 km"]["setores"] == 0     # a segunda UBS aproxima o setor Beta
 
 
 def test_categoria_sem_nenhuma_coordenada():
     r = ex.calcular(geo(), [ubs("man-ubs-a")], {}, usar_cep=False)["ubs"]
-    assert r["populacao_toda"] is None
+    assert r["setores_validos"] is None
 
 
 def test_gerar_traz_dois_cenarios():
     out = ex.gerar(geo(), [ubs("man-ubs-a", -22.395, -47.595)], {})
     assert set(out["cenarios"]) == {"coordenadas_do_catalogo", "com_centro_do_cep"}
-    assert out["meta"]["pessoas_total"] == 4000
+    assert out["meta"]["pessoas_total"] is None and out["meta"]["setores_suprimidos"] == 0
