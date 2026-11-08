@@ -25,17 +25,18 @@ O painel não será tratado como área administrativa privada. Como o projeto é
 
 ### 3.1 Privacidade e setores pequenos — decisão D4
 
-A base territorial contém 408 setores. Dezessete atendem ao critério D4: menos de 5 pessoas **ou** menos de 3 domicílios.
+<badge color="success">Supressão aplicada</badge>
 
-A auditoria confirmou que:
-- `web/dados/setores.geojson` contém os campos exatos de pessoas e domicílios desses setores;
-- `web/dados/indicadores_territoriais.json` repete os valores por setor;
-- `web/dados/territorio.json` mantém densidade setorial, mesmo quando a razão pessoas/domicílios está nula para setores pequenos;
-- a interface atual sinaliza os setores, mas não suprime os valores.
+A regra D4 aprovada pelo autor foi aplicada aos 17 setores com menos de 5 pessoas ou menos de 3 domicílios:
+- população e domicílios foram removidos dos campos públicos do GeoJSON;
+- densidade, pessoas por domicílio e distâncias/indicadores derivados por setor foram suprimidos;
+- os agregados demográficos e médias dos 13 bairros afetados foram omitidos como supressão complementar;
+- totais municipais de população e domicílios foram retirados do painel territorial para reduzir risco de reconstrução por subtração;
+- polígonos e pontos de equipamentos institucionais foram preservados.
 
-A política de privacidade registra que sinalização não equivale a proteção estatística e que os parâmetros de supressão ainda não foram definidos. A publicação pública exige uma decisão explícita sobre a revisão de D4: manter os valores com ressalva, suprimir os campos de baixa contagem em todos os arquivos públicos, ou agregar os setores afetados. Se houver supressão, ela precisa alcançar também os indicadores derivados e os arquivos brutos servidos ao navegador; esconder somente o número na tela não basta.
+A regra está centralizada em `pipeline/privacidade_territorial.py`. Os testes devem garantir que a geração dos dados não reintroduza os valores. A supressão reduz o risco, mas não representa garantia absoluta de anonimato: novas variáveis, filtros, períodos e fontes devem passar por nova análise de combinação e inferência.
 
-**Ponto adicional de qualidade corrigido nesta preparação:** a mensagem do mapa e a ressalva gerada agora informam o critério exato — “menos de 5 pessoas ou menos de 3 domicílios; interprete com cautela”. Isso evita chamar de população pequena um setor que tem dezenas de pessoas, mas menos de três domicílios.
+**Ponto de qualidade corrigido:** a redação da interface agora distingue o critério completo — menos de 5 pessoas ou menos de 3 domicílios — e não chama todos os setores afetados de “população muito pequena”.
 
 ### 3.2 CEP e dados de endereço
 
