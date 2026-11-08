@@ -49,8 +49,8 @@ def mini():
     return {"features": [
         feature("1", "Centro", 1000, 400, p(-47.60)),     # ~1,14 km²
         feature("2", "Centro", 3000, 1200, p(-47.58)),
-        feature("3", "Vila", 5, 2, p(-47.56)),            # poucos domicílios: sem pessoas/domicílio
-        feature("4", "Vila", 0, 0, p(-47.54)),            # setor vazio: densidade 0, não nula
+        feature("3", "Vila", 5, 3, p(-47.56)),            # abaixo de 20 domicílios, mas fora do limite D4
+        feature("4", "Vila", 5, 3, p(-47.54)),            # abaixo de 20 domicílios, mas fora do limite D4
         feature("5", None, 100, 40, p(-47.52)),           # a malha do IBGE traz bairro vazio para parte dos setores
         feature("6", "  ", 50, 20, p(-47.50)),
     ]}
@@ -58,7 +58,7 @@ def mini():
 
 def test_montar_totais_bairros_e_regras():
     d = t.montar(mini(), hoje="2026-10-11")
-    assert d["totais"]["pessoas"] == 4155 and d["totais"]["domicilios"] == 1662 and d["totais"]["setores"] == 6
+    assert d["totais"]["pessoas"] == 4160 and d["totais"]["domicilios"] == 1666 and d["totais"]["setores"] == 6
     assert [b["nome"] for b in d["bairros"]] == ["Centro", t.SEM_BAIRRO, "Vila"]  # por população; "sem bairro" não some nem vira nome vazio
     assert d["meta"]["sem_bairro"] == {"rotulo": t.SEM_BAIRRO, "setores": 2, "pessoas": 150}
     centro = d["bairros"][0]
@@ -66,8 +66,8 @@ def test_montar_totais_bairros_e_regras():
     vila = next(b for b in d["bairros"] if b["nome"] == "Vila")
     assert vila["pessoas_por_domicilio"] is None                               # 2 domicílios: sem base
     assert d["setores"]["3"]["p"] is None and d["setores"]["1"]["p"] == 2.5
-    assert d["setores"]["4"]["d"] == 0                                         # zero pessoas é 0, não "sem dado"
-    # sem base: os setores "3" (2 domicílios) e "4" (0); os outros quatro têm 20 domicílios ou mais
+    assert d["setores"]["4"]["p"] is None
+    # sem base: os setores "3" e "4" têm 3 domicílios; os outros quatro têm 20 domicílios ou mais
     assert d["classes"]["pessoas_por_domicilio"]["sem_base_suficiente"] == 2
     assert sum(d["classes"]["densidade"]["contagem"]) == 6
     assert sum(d["classes"]["pessoas_por_domicilio"]["contagem"]) == 4
@@ -92,25 +92,30 @@ def real():
 def test_dados_reais_batem_com_o_ibge(real):
     c = real["meta"]["conferencia"]
     assert real["totais"]["setores"] == 408 and real["totais"]["bairros"] == 28
-    assert c["pessoas_somadas"] == c["pessoas_publicadas_ibge"] == 201418
+    assert real["totais"]["pessoas"] is None and real["totais"]["domicilios"] is None and real["totais"]["densidade"] is None
+    assert c["pessoas_somadas"] is None and c["pessoas_publicadas_ibge"] is None
+    assert real["meta"]["setores_suprimidos"] == 17
     assert abs(c["diferenca_area_pct"]) < 1.0, "a soma das áreas dos polígonos deve ficar a menos de 1% da área oficial"
-    assert 400 <= real["totais"]["densidade"] <= 410                      # IBGE: 404,11 hab/km²
 
 
 def test_dados_reais_cada_setor_aparece_uma_vez_nas_classes(real):
     d = real["classes"]["densidade"]
-    assert sum(d["contagem"]) == 408
+    assert sum(d["contagem"]) == 391 and d["suprimidos"] == 17
     p = real["classes"]["pessoas_por_domicilio"]
-    assert sum(p["contagem"]) + p["sem_base_suficiente"] == 408
-    assert sum(b["pessoas"] for b in real["bairros"]) == 201418
+    assert sum(p["contagem"]) + p["sem_base_suficiente"] == 408 and p["suprimidos"] == 17
+    afetados = [b for b in real["bairros"] if b["dados_suprimidos"]]
+    assert len(afetados) == 13 and all(b["pessoas"] is None and b["domicilios"] is None for b in afetados)
 
 
 def test_dados_reais_indicador_instavel_nao_vira_valor(real):
     # nenhum setor com menos de 20 domicílios pode ter pessoas por domicílio
     geo = json.loads((RAIZ / "web" / "dados" / "setores.geojson").read_text(encoding="utf-8"))
     for f in geo["features"]:
-        if f["properties"]["domicilios"] < t.MIN_DOMICILIOS:
-            assert real["setores"][f["properties"]["setor"]]["p"] is None
+        props = f["properties"]
+        if props.get("suprimido_privacidade") or (props.get("domicilios") is not None and props["domicilios"] < t.MIN_DOMICILIOS):
+            assert real["setores"][props["setor"]]["p"] is None
+        if props.get("suprimido_privacidade"):
+            assert real["setores"][props["setor"]]["d"] is None and real["setores"][props["setor"]]["dist_creche"] is None
     valores = [s["p"] for s in real["setores"].values() if s["p"] is not None]
     assert max(valores) < 15, "um setor com base suficiente não deve ter dezenas de pessoas por domicílio"
 
@@ -118,8 +123,8 @@ def test_dados_reais_indicador_instavel_nao_vira_valor(real):
 def test_dados_reais_nenhum_bairro_com_nome_vazio(real):
     assert all((b["nome"] or "").strip() for b in real["bairros"])
     sem = real["meta"]["sem_bairro"]
-    assert sem["setores"] > 0 and sem["rotulo"] == t.SEM_BAIRRO
-    assert next(b for b in real["bairros"] if b["nome"] == t.SEM_BAIRRO)["pessoas"] == sem["pessoas"]
+    assert sem["setores"] > 0 and sem["rotulo"] == t.SEM_BAIRRO and sem["pessoas"] is None
+    assert next(b for b in real["bairros"] if b["nome"] == t.SEM_BAIRRO)["pessoas"] is None
 
 
 # ---------------------------------------------------------- distância até o serviço mais próximo
@@ -150,9 +155,9 @@ def test_distancia_ate_o_servico_mais_proximo_e_resumo():
     a, b, c = (d["por_setor"][k] for k in "abc")
     assert a < 0.05 and 1.0 < b < 1.07 and 3.0 < c < 3.15
     assert d["contagem"] == [1, 0, 1, 0, 1] and sum(d["contagem"]) == 3                    # <0,5 | 0,5-1 | 1-2 | 2-3 | >=3
-    assert d["pessoas_por_classe"] == [100, 0, 200, 0, 400] and d["pessoas_total"] == 700
-    assert d["pessoas_ate_1_km"] == 100 and d["pessoas_3_km_ou_mais"] == 400                # "b" está a 1,03 km: fora do "até 1 km"
-    assert d["mediana_km"] == pytest.approx(3.08, abs=0.1)                                  # 400 das 700 pessoas (mais da metade) estão a ~3 km
+    assert d["setores_total"] == 3 and d["setores_suprimidos"] == 0 and d["setores_validos"] == 3
+    assert d["setores_ate_1_km"] == 1 and d["setores_3_km_ou_mais"] == 1
+    assert d["mediana_km"] == pytest.approx(1.03, abs=0.1)
     assert (d["cadastrados"], d["localizados"], d["localizados_pelo_endereco"]) == (1, 1, 1)
 
 
