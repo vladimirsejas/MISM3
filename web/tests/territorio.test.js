@@ -72,14 +72,25 @@ assert(!/\d+(?:[.,]\d+)?% da população/.test(html + js.replace(/decimal\(100 \
 /* ---- dados: conferem com o IBGE e entre si ---- */
 assert.strictEqual(dados.totais.setores, 408);
 assert.strictEqual(geo.features.length, 408);
-assert.strictEqual(dados.meta.conferencia.pessoas_somadas, dados.meta.conferencia.pessoas_publicadas_ibge, "a soma das pessoas deve bater com o IBGE");
+assert.strictEqual(dados.meta.conferencia.pessoas_somadas, null, "totais populacionais não são publicados com supressão D4");
+assert.strictEqual(dados.meta.conferencia.pessoas_publicadas_ibge, null);
 assert(Math.abs(dados.meta.conferencia.diferenca_area_pct) < 1, "a área somada deve ficar a menos de 1% da oficial");
-assert.strictEqual(dados.bairros.reduce((s, b) => s + b.pessoas, 0), dados.totais.pessoas);
+assert.strictEqual(dados.totais.pessoas, null);
+assert.strictEqual(dados.totais.domicilios, null);
 assert(dados.bairros.every((b) => typeof b.nome === "string" && b.nome.trim()), "nenhum bairro com nome vazio");
-assert.strictEqual(dados.meta.sem_bairro.pessoas, dados.bairros.find((b) => b.nome === dados.meta.sem_bairro.rotulo).pessoas);
-assert.strictEqual(dados.classes.densidade.contagem.reduce((s, n) => s + n, 0), 408);
+const afetados = dados.bairros.filter((b) => b.dados_suprimidos);
+assert.strictEqual(afetados.length, 13);
+assert(afetados.every((b) => b.pessoas === null && b.domicilios === null && b.densidade === null && b.pessoas_por_domicilio === null));
+assert.strictEqual(dados.meta.sem_bairro.pessoas, null);
+assert.strictEqual(dados.bairros.find((b) => b.nome === dados.meta.sem_bairro.rotulo).pessoas, null);
+assert.strictEqual(dados.classes.densidade.contagem.reduce((s, n) => s + n, 0), 391);
+assert.strictEqual(dados.classes.densidade.suprimidos, 17);
 const ppd = dados.classes.pessoas_por_domicilio;
 assert.strictEqual(ppd.contagem.reduce((s, n) => s + n, 0) + ppd.sem_base_suficiente, 408);
+assert.strictEqual(ppd.suprimidos, 17);
+const protegidos = geo.features.filter((f) => f.properties.suprimido_privacidade);
+assert.strictEqual(protegidos.length, 17);
+assert(protegidos.every((f) => f.properties.pessoas === null && f.properties.domicilios === null));
 assert.strictEqual(dados.classes.densidade.limites.length, 4, "5 classes");
 geo.features.forEach((f) => assert(dados.setores[f.properties.setor], "setor do mapa sem indicador: " + f.properties.setor));
 
