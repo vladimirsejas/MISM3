@@ -13,8 +13,8 @@ def quadrado(x0, y0, lado=0.01):
 def geo():
     # dois setores lado a lado; o da esquerda tem 1000 pessoas, o da direita 3000
     return {"features": [
-        {"properties": {"bairro": "Alfa", "pessoas": 1000}, "geometry": quadrado(-47.60, -22.40)},
-        {"properties": {"bairro": "Beta", "pessoas": 3000}, "geometry": quadrado(-47.59, -22.40)},
+        {"properties": {"bairro": "Alfa", "pessoas": 1000, "domicilios": 400}, "geometry": quadrado(-47.60, -22.40)},
+        {"properties": {"bairro": "Beta", "pessoas": 3000, "domicilios": 1200}, "geometry": quadrado(-47.59, -22.40)},
     ]}
 
 
