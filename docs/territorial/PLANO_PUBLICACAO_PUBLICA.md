@@ -77,13 +77,27 @@ O catálogo publicado contém 168 registros. A documentação ainda registra ite
 - revisar especialmente os serviços de proteção à mulher e os contatos locais;
 - atualizar a data de verificação e as fontes de cada item.
 
-### 3.6 Documentação e avaliação com usuárias
+### 3.6 Dados escolares e granularidade de publicação
+
+O arquivo `web/dados/oferta_educacao_infantil.json` continha 69 registros de matrículas por escola, incluindo uma contagem de apenas duas matrículas na faixa de 0 a 3 anos. A interface consumia somente os totais por rede; a lista escola a escola não era necessária ao navegador.
+
+A preparação removeu a lista individualizada do arquivo público. O gerador mantém os registros em memória durante o cálculo e grava apenas `meta` e `totais_por_rede`. A localização e a identificação institucional das escolas continuam nos cadastros próprios, sem publicar a contagem de matrícula por unidade. O teste integrado `web/tests/privacidade_territorial.test.js` impede que a lista seja reintroduzida.
+
+### 3.7 Documentação e avaliação com usuárias
 
 - `README.md` e `docs/estado_do_projeto.md` precisam refletir o estado real de 08/11/2026 e a decisão de publicação pública.
 - Testes automatizados não equivalem a validação com mulheres usuárias. A documentação deve continuar dizendo isso até que exista avaliação real, consentida e documentada.
 - O painel de qualidade avalia integridade estrutural, mas não comprova validação topológica completa nem correção de todas as coordenadas.
 
 ## 4. Infraestrutura e lançamento
+
+### 4.1 Repositório público e histórico anterior
+
+O repositório GitHub `vladimirsejas/MISM3` está público. A auditoria confirmou que a branch `main` ainda contém os valores originais de população e domicílios dos 17 setores D4 em `web/dados/setores.geojson` e `web/dados/territorio.json`. O histórico público também conserva versões anteriores desses arquivos.
+
+A branch de publicação possui os arquivos sanitizados, mas isso não remove os dados das versões públicas da `main` nem do histórico Git. A mitigação exige decisão separada do autor: tornar temporariamente o repositório privado e planejar a limpeza do histórico, ou autorizar uma estratégia de sanitização do repositório. Não fazer alteração na `main`, mudança de visibilidade ou reescrita de histórico sem autorização expressa.
+
+### 4.2 Estado da PR e infraestrutura
 
 - A PR #92 permanece aberta, em draft e sem merge. A branch de trabalho é `feat/mapa-territorial-como-mapa-principal`; não alterar `main` sem autorização expressa.
 - O Cloudflare Pages confirmou deploy bem-sucedido da prévia no commit `92cfb5f`. URL da branch: https://feat-mapa-territorial-como-m.mism3-observatorio.pages.dev. O deploy foi confirmado, mas a inspeção visual e os testes manuais em desktop e celular ainda precisam ser feitos.
@@ -96,11 +110,11 @@ O catálogo publicado contém 168 registros. A documentação ainda registra ite
 
 A publicação só deve avançar quando todos estiverem atendidos:
 
-- [ ] Decisão D4 formalizada e aplicada de modo consistente a todos os arquivos públicos.
+- [ ] D4 validada em todos os arquivos da branch de publicação e mitigada na `main` pública e no histórico do repositório.
 - [ ] Índice de CEP revisado quanto à necessidade, privacidade e termos de redistribuição.
 - [ ] Licenças, autorizações e atribuições dos recursos de terceiros confirmadas ou recursos substituídos.
 - [ ] Serviços e telefones prioritários conferidos; contagens recalculadas.
-- [ ] README, estado do projeto, política pública e metadados atualizados.
+- [ ] README, estado do projeto, política pública e metadados atualizados; a lista de matrículas por escola foi removida do arquivo público.
 - [x] CI automatizada aprovada no commit funcional `92cfb5f` (nova execução obrigatória se houver alterações de código).
 - [ ] Prévia do Pages validada em desktop e celular.
 - [ ] Dependência do Worker esclarecida.
@@ -108,4 +122,4 @@ A publicação só deve avançar quando todos estiverem atendidos:
 
 ## 6. Regra de segurança para esta fase
 
-A preparação continua somente na branch `feat/mapa-territorial-como-mapa-principal`. Não fazer merge, não alterar `main`, não retirar `noindex` e não declarar o MISM3 oficialmente publicado sem autorização expressa do autor.
+A preparação de código continua somente na branch `feat/mapa-territorial-como-mapa-principal`. Não fazer merge, não alterar `main`, não mudar a visibilidade do repositório, não reescrever histórico, não retirar `noindex` e não declarar o MISM3 oficialmente publicado sem autorização expressa do autor.
