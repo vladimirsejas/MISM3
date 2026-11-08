@@ -196,7 +196,7 @@ def montar(geojson: dict, oferta: dict | None = None, hoje: str | None = None, s
             cont_dens[classe(dens, LIMITES_DENSIDADE)] += 1
         if ppd is not None:
             cont_ppd[classe(ppd, LIMITES_PESSOAS_POR_DOMICILIO)] += 1
-        else:
+        elif not suprimido:
             sem_base += 1
         b = por_bairro[(p["bairro"] or "").strip() or SEM_BAIRRO]
         b["setores"] += 1
