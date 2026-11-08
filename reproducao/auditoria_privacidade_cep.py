@@ -10,10 +10,10 @@ Só mensagens e CEP de testes são usados. Nenhum arquivo do projeto é alterado
 Preparação (uma vez), em um ambiente virtual qualquer:
     python -m pip install playwright
     python -m playwright install chromium
-Uso (da raiz do repositório; para outro local de navegadores, defina PLAYWRIGHT_BROWSERS_PATH):
-    MISM3_AUDIT_CEP=13504-090 python reproducao/auditoria_privacidade_cep.py
+Uso local (informe um CEP de teste explicitamente; para outro local de navegadores, defina PLAYWRIGHT_BROWSERS_PATH):
+    MISM3_AUDIT_CEP=<CEP_DE_TESTE> python reproducao/auditoria_privacidade_cep.py
 
-Saídas: reproducao/auditoria_privacidade_cep_<CEP>.md e reproducao/resultados/auditoria_cep_<CEP>/auditoria_requisicoes.json.
+As saídas detalhadas ficam no diretório temporário do sistema (ou em MISM3_AUDIT_OUTPUT_DIR), nunca no repositório público.
 """
 from __future__ import annotations
 
@@ -27,6 +27,7 @@ import socketserver
 import sys
 import threading
 import time
+import tempfile
 from collections import Counter, defaultdict
 from pathlib import Path
 from urllib.parse import unquote_plus, urlparse
@@ -42,13 +43,15 @@ except ImportError:  # pragma: no cover
 RAIZ = comum.RAIZ
 WEB = RAIZ / "web"
 MENSAGEM = "Preciso de ajuda fictícia para a vaga de creche da pequena Zorzalina Quimérica"
-CEP = os.environ.get("MISM3_AUDIT_CEP", "13504-090").strip()
+CEP = os.environ.get("MISM3_AUDIT_CEP", "").strip()
+if not CEP:
+    sys.exit("Defina MISM3_AUDIT_CEP com um CEP de teste em ambiente local; nenhum CEP padrão é embutido no repositório.")
 CEP_DIGITOS = re.sub(r"\D", "", CEP)
 if not re.fullmatch(r"\d{8}", CEP_DIGITOS):
     sys.exit("CEP inválido. Informe oito dígitos em MISM3_AUDIT_CEP.")
 CEP = CEP_DIGITOS[:5] + "-" + CEP_DIGITOS[5:]
 CEP_PREFIXO = CEP_DIGITOS[:5]
-SAIDA = RAIZ / "reproducao" / "resultados" / f"auditoria_cep_{CEP_DIGITOS}"
+SAIDA = Path(os.environ.get("MISM3_AUDIT_OUTPUT_DIR", tempfile.gettempdir())) / "mism3_auditoria_privacidade" / "resultados" / "auditoria_cep_local"
 
 
 # ---------------------------------------------------------------- servidor estático local
@@ -326,6 +329,7 @@ def main() -> None:
             r2["externa"] = externo(r["url"], base)
             r2["vazamento"] = procurar(r)["achados"]
             todos.append(r2)
+    SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / "auditoria_requisicoes.json").write_text(json.dumps({"meta": meta, "navegador": f"Chromium {versao_chromium} (Playwright)", "requisicoes": todos},
                                                                ensure_ascii=False, indent=1) + "\n", encoding="utf-8", newline="\n")
 
@@ -465,8 +469,9 @@ def main() -> None:
            "- A busca por vazamento procura as formas exatas e trechos de três palavras do texto fictício, e as formas do CEP; transformações (por exemplo, hash ou codificação própria) não seriam detectadas.",
            "- Os cabeçalhos de pedidos cancelados não têm versão final capturada; o `Referer` e o `Cookie` foram conferidos nos pedidos concluídos, que são a mesma chamada de tiles.",
            "- O README diz que as únicas requisições são arquivos locais e tiles do OpenStreetMap só com opt-in; esta auditoria mostra tiles da Esri por padrão. Essa divergência é o motivo da pergunta ao autor ao fim do relatório da tarefa.", ""]
-    (RAIZ / "reproducao" / f"auditoria_privacidade_cep_{CEP_DIGITOS}.md").write_text("\n".join(md) + "\n", encoding="utf-8", newline="\n")
-    print(f"ok: reproducao/auditoria_privacidade_cep_{CEP_DIGITOS}.md |", {k: v for k, v in resumo_ext.items()})
+    caminho_md = SAIDA.parent / "auditoria_privacidade_cep_local.md"
+    caminho_md.write_text("\n".join(md) + "\n", encoding="utf-8", newline="\n")
+    print(f"ok: {caminho_md} |", {k: v for k, v in resumo_ext.items()})
 
 
 if __name__ == "__main__":
