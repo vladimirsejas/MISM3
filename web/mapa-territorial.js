@@ -74,6 +74,19 @@
     return decimal(v, 2) + " km em linha reta";
   }
 
+  function faixaDistancia(s, cenario, categoria) {
+    var minimo = s.distancia_min_km && s.distancia_min_km[cenario] ? s.distancia_min_km[cenario][categoria] : null;
+    var maximo = s.distancia_max_km && s.distancia_max_km[cenario] ? s.distancia_max_km[cenario][categoria] : null;
+    if (minimo === null || minimo === undefined || maximo === null || maximo === undefined) return null;
+    return { minimo: minimo, maximo: maximo };
+  }
+
+  function textoFaixaDistancia(s, cenario, categoria) {
+    var faixa = faixaDistancia(s, cenario, categoria);
+    if (!faixa || (faixa.minimo === faixa.maximo)) return "";
+    return " (envelope geométrico: " + decimal(faixa.minimo, 2) + "–" + decimal(faixa.maximo, 2) + " km)";
+  }
+
   /* Projeção equirretangular local (sem biblioteca): x cresce para leste, y para o sul. */
   function criarProjecao(geo, largura) {
     var minLon = 1e9, maxLon = -1e9, minLat = 1e9, maxLat = -1e9;
@@ -338,7 +351,7 @@
       c = classeDe(v, cl.limites);
       p = estado.caminhos[st.id];
       p.setAttribute("fill", c < 0 ? COR_SEM_VALOR : cores[Math.min(c, cores.length - 1)]);
-      p.firstChild.textContent = "Setor " + st.id + (st.bairro ? " (" + st.bairro + ")" : "") + ": " + descreverValor(s.indicador, v);
+      p.firstChild.textContent = "Setor " + st.id + (st.bairro ? " (" + st.bairro + ")" : "") + ": " + descreverValor(s.indicador, v) + (s.indicador === "distancia" ? textoFaixaDistancia(st, s.cenario, s.categoria) : "");
     }
     legenda(s, cl, cores);
     resumo(s);
@@ -427,20 +440,21 @@
     var tab = el("table", "mt-tabela"), cab = el("tr"), r;
     cab.appendChild(el("th", "", "Categoria"));
     cab.appendChild(el("th", "mt-num", "Serviços localizados no setor"));
-    CENARIOS.forEach(function (c) { cab.appendChild(el("th", "mt-num", "Distância em linha reta (km): " + d.meta.rotulos_cenario[c])); });
+    CENARIOS.forEach(function (c) { cab.appendChild(el("th", "mt-num", "Distância central (km) e envelope geométrico: " + d.meta.rotulos_cenario[c])); });
     tab.appendChild(cab);
     CATEGORIAS.forEach(function (c) {
       r = el("tr");
       r.appendChild(cel("td", "", rotuloCategoria(c), "Categoria"));
       r.appendChild(cel("td", "mt-num", String(st.equipamentos[c]), "Serviços localizados no setor"));
       CENARIOS.forEach(function (cen) {
-        var v = st.distancia_km[cen][c];
-        r.appendChild(cel("td", "mt-num", v === null ? "localização pendente" : decimal(v, 2), "Distância em linha reta (km): " + d.meta.rotulos_cenario[cen]));
+        var v = st.distancia_km[cen][c], faixa = faixaDistancia(st, cen, c);
+        var texto = v === null ? "localização pendente" : decimal(v, 2) + (faixa && faixa.minimo !== faixa.maximo ? " (" + decimal(faixa.minimo, 2) + "–" + decimal(faixa.maximo, 2) + ")" : "");
+        r.appendChild(cel("td", "mt-num", texto, "Distância central e envelope geométrico em km: " + d.meta.rotulos_cenario[cen]));
       });
       tab.appendChild(r);
     });
     corpo.appendChild(tab);
-    corpo.appendChild(el("p", "", "A distância é medida do centro do setor até o equipamento cadastrado mais próximo da categoria. Serviço localizado no setor indica onde o equipamento está, não quem ele atende."));
+    corpo.appendChild(el("p", "", "A estimativa central mede a distância em linha reta do centroide atual do setor ao equipamento mais próximo. Quando a localização tem raio operacional, a faixa entre mínimo e máximo é um envelope geométrico, não um intervalo de confiança. Serviço localizado no setor indica onde o equipamento está, não quem ele atende."));
   }
 
   function resumo(s) {
@@ -460,6 +474,7 @@
      ["Pessoas a mais de 2 km em linha reta", milhar(a2.pessoas) + " (" + limpo(a2.percentual) + "% de " + milhar(t.pessoas) + "), em " + a2.setores + " setores"]
     ].forEach(function (x) { ul.appendChild(el("li", "", x[0] + ": " + x[1])); });
     box.appendChild(ul);
+    box.appendChild(el("p", "", "As faixas exibidas são envelopes geométricos operacionais derivados dos raios das localizações aproximadas; não são intervalos de confiança estatísticos. Faixas sobrepostas não permitem ordenar com segurança qual equipamento é mais próximo."));
   }
 
   function aviso() {
@@ -492,7 +507,7 @@
     limpar(box);
     box.appendChild(el("p", "", "Fonte: " + m.fonte + "."));
     box.appendChild(el("p", "", "Método: " + m.metodo));
-    box.appendChild(el("p", "", "Versão " + m.versao + " dos indicadores. Carimbo dos dados (derivado do conteúdo das entradas): " + m.carimbo + ". Entradas geradas em: malha de setores " + g["setores.geojson"] + "; território " + g["territorio.json"] + "; distâncias " + g["exposicao_distancia.json"] + "."));
+    box.appendChild(el("p", "", "Versão " + m.versao + " dos indicadores. Carimbo dos dados (derivado do conteúdo das entradas): " + m.carimbo + ". Entradas geradas em: malha de setores " + g["setores.geojson"] + "; território " + g["territorio.json"] + "; distâncias " + g["exposicao_distancia.json"] + "; escolas " + (g["escolas_municipais.json"] || "data não informada") + "."));
   }
 
   function iniciar() {
@@ -523,5 +538,5 @@
 
   if (typeof document !== "undefined" && document.getElementById("mt-svg")) iniciar();
 
-  return { classeDe: classeDe, rotulosClasses: rotulosClasses, valorDoSetor: valorDoSetor, descreverValor: descreverValor, criarProjecao: criarProjecao, caminhoDe: caminhoDe, centroideGeometria: centroideGeometria, milhar: milhar, decimal: decimal, coresDe: coresDe, setorPequeno: setorPequeno, vizinho: vizinho };
+  return { classeDe: classeDe, rotulosClasses: rotulosClasses, valorDoSetor: valorDoSetor, descreverValor: descreverValor, faixaDistancia: faixaDistancia, textoFaixaDistancia: textoFaixaDistancia, criarProjecao: criarProjecao, caminhoDe: caminhoDe, centroideGeometria: centroideGeometria, milhar: milhar, decimal: decimal, coresDe: coresDe, setorPequeno: setorPequeno, vizinho: vizinho };
 });
