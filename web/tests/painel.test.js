@@ -36,7 +36,7 @@ assert(/mapa-territorial\.js/.test(territorial) && /id="mt-svg"/.test(territoria
 assert(/carregar\("dados\/indicadores_territoriais\.json"/.test(ui) && /carregar\("dados\/setores\.geojson"/.test(ui), "o mapa lê os indicadores e a malha locais");
 assert(!/localStorage|sessionStorage|indexedDB|document\.cookie|sendBeacon/.test(ui), "a tela territorial não grava dados de usuárias");
 assert(!/method\s*:\s*["']POST/i.test(ui) && !/WebSocket/.test(ui), "a tela territorial não envia dados");
-assert(/\.open\("GET"/.test(ui) && !/https?:\/\//i.test(ui), "a tela só consulta arquivos locais por GET");
+assert(/\.open\("GET"/.test(ui) && !/https?:\/\/(?!www\.w3\.org\/2000\/svg)/i.test(ui), "a tela só consulta arquivos locais por GET; a URI do namespace SVG não é uma requisição");
 ["Como ler este mapa", "envelope geométrico", "não intervalo de confiança"].forEach((t) => assert((territorial + ui).toLowerCase().includes(t.toLowerCase()), "o mapa deve explicar: " + t));
 
 console.log("painel.test.js: página territorial própria, painel legado removido e sem coleta ou envio de dados pessoais");
