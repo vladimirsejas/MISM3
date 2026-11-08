@@ -2,7 +2,11 @@
 .mt-pagina{background:var(--lilas,#fbe9e6)}
 .mt-topo{max-width:72rem;margin:0 auto;padding:1rem 1rem .4rem}
 .mt-topo h1{margin:.3rem 0;font-size:1.7rem;color:var(--pri-esc,#7a2b37)}
-.mt-voltar{display:inline-block;min-height:44px;padding:.6rem 0;color:var(--pri-esc,#7a2b37);font-weight:700}
+.mt-navegacao{display:flex;flex-wrap:wrap;align-items:center;gap:.55rem 1rem;margin-bottom:.35rem}
+.mt-voltar{display:inline-flex;align-items:center;min-height:44px;padding:.55rem 0;color:var(--pri-esc,#7a2b37);font-weight:700}
+.mt-acesso-painel{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:.65rem 1rem;border:2px solid var(--pri-esc,#7a2b37);border-radius:10px;background:var(--pri-esc,#7a2b37);color:#fff;text-decoration:none;font-weight:700}
+.mt-acesso-painel:hover,.mt-acesso-painel:focus{background:#5e202b;border-color:#5e202b;color:#fff;text-decoration:underline}
+.mt-qualidade{display:inline-flex;align-items:center;min-height:44px;color:var(--pri-esc,#7a2b37);font-weight:700}
 .mt-versao{margin:.2rem 0 0;max-width:60rem;line-height:1.5}
 .mt-principal{max-width:72rem;margin:0 auto;padding:.6rem 1rem 2.5rem;display:grid;gap:1rem;grid-template-columns:minmax(0,1fr);align-items:start}
 .mt-principal>*{min-width:0}
