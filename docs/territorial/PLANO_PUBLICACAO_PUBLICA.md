@@ -81,7 +81,7 @@ O catálogo publicado contém 168 registros. A documentação ainda registra ite
 
 O arquivo `web/dados/oferta_educacao_infantil.json` continha 69 registros de matrículas por escola, incluindo uma contagem de apenas duas matrículas na faixa de 0 a 3 anos. A interface consumia somente os totais por rede; a lista escola a escola não era necessária ao navegador.
 
-A preparação removeu a lista individualizada do arquivo público. O gerador mantém os registros em memória durante o cálculo e grava apenas `meta` e `totais_por_rede`. A localização e a identificação institucional das escolas continuam nos cadastros próprios, sem publicar a contagem de matrícula por unidade. O teste integrado `web/tests/privacidade_territorial.test.js` impede que a lista seja reintroduzida.
+A preparação removeu os registros por escola de `oferta_educacao_infantil.json`, que agora contém apenas `meta` e `totais_por_rede`. A auditoria encontrou também o objeto `censo_escolar_2025` em 43 registros de `escolas_municipais.json`; esse campo foi removido do arquivo público e do gerador `pipeline/escolas_municipais.py`. A localização e a identificação institucional das escolas continuam nos cadastros próprios, sem publicar matrículas ou turmas por unidade. Os testes `pipeline/tests/test_escolas_municipais_publicacao.py` e `web/tests/privacidade_territorial.test.js` impedem a reintrodução desses dados.
 
 ### 3.7 Documentação e avaliação com usuárias
 
