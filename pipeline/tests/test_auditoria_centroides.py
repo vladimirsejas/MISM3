@@ -89,3 +89,24 @@ def test_malha_real_audita_408_setores_e_identifica_nove_centroides_externos():
     assert all(s["ponto_interno_alternativo"]["metodo"] == ac.METODO_ALTERNATIVO
                for s in resultado["setores"])
     assert resultado["resumo"]["distancias"]["coordenadas_do_catalogo"]["ubs"]["setores_com_distancia"] == 408
+
+
+def test_correcao_minima_preserva_os_399_centroides_validos_e_altera_so_nove():
+    import json
+
+    raiz = Path(__file__).resolve().parents[2]
+    geo = json.loads((raiz / "web/dados/setores.geojson").read_text(encoding="utf-8"))
+    indicadores = json.loads((raiz / "web/dados/indicadores_territoriais.json").read_text(encoding="utf-8"))
+    resultado = ac.comparar(geo, indicadores)
+
+    movidos = [s for s in resultado["setores"] if s["deslocamento_m"] > 0]
+    preservados = [s for s in resultado["setores"] if s["centroide_atual"]["dentro_do_poligono"]]
+    assert len(movidos) == 9
+    assert len(preservados) == 399
+    assert max(s["deslocamento_m"] for s in movidos) < 62
+    for setor in preservados:
+        assert setor["deslocamento_m"] == 0
+        for cenario in setor["distancias"].values():
+            for distancia in cenario.values():
+                if distancia["delta_km"] is not None:
+                    assert distancia["delta_km"] == 0
