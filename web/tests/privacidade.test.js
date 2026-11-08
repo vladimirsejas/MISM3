@@ -21,7 +21,7 @@ assert(/não é um serviço oficial da Prefeitura/i.test(privacidade), "a págin
 assert(/funciona no navegador, no próprio aparelho/.test(privacidade), "a página explica o processamento local do orientador");
 assert(/não envia esse valor ao servidor do MISM3/.test(privacidade), "a página explica o tratamento local do CEP");
 assert(/OpenStreetMap ou Esri/.test(privacidade), "a página identifica os provedores cartográficos externos");
-assert(/17 setores/.test(privacidade) && /não há supressão ou agregação automática/.test(privacidade), "a página informa a cautela dos setores pequenos sem prometer proteção inexistente");
+assert(/17 setores/.test(privacidade) && /são omitidos/.test(privacidade) && /13 bairros afetados/.test(privacidade), "a página explica a supressão primária e complementar D4");
 assert(/privacidade.html/.test(inicio) && /privacidade.html/.test(mapa) && /privacidade.html/.test(qualidade), "site, mapa e painel de qualidade dão acesso à página de privacidade");
 
 assert(/id="usar-tiles-mapa"/.test(inicio) && !/<input[^>]*id="usar-tiles-mapa"[^>]*checked/.test(inicio), "camada Esri começa desativada");
