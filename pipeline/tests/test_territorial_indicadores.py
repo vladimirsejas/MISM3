@@ -195,3 +195,8 @@ def test_dicionario_ibge_de_v0001_e_v0002_esta_registrado(publicado):
     metodo = publicado["meta"]["metodo"]
     assert "V0001 = total de pessoas" in metodo
     assert "V0002 = total de domicílios (DPPO + DPPV + DPPUO + DPIO + DCCM + DCSM)" in metodo
+
+def test_metadados_da_malha_identificam_v0001_e_v0002(publicado):
+    malha = json.loads((DADOS / "setores.geojson").read_text(encoding="utf-8"))
+    assert "V0001" in malha["meta"]["pessoas"] and "total de pessoas" in malha["meta"]["pessoas"]
+    assert "V0002" in malha["meta"]["domicilios"] and "particulares e coletivos" in malha["meta"]["domicilios"]
