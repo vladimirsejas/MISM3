@@ -19,6 +19,7 @@ A branch `feat/mapa-territorial-como-mapa-principal` transforma o mapa territori
 - Para cada equipamento aproximado, o raio operacional é aplicado por `d_min=max(0,d-r)` e `d_max=d+r`. Para a referência mais próxima entre vários equipamentos, são usados o menor limite inferior e o menor limite superior.
 - A faixa é envelope geométrico operacional, não intervalo de confiança. Faixas sobrepostas não permitem ordenar com segurança qual equipamento é mais próximo.
 - A saída inclui método, fonte e raio da localização institucional, sem copiar endereço, telefone ou CEP para o JSON público.
+- Para os seis CRAS/UBS sem proveniência ou raio documentado, a distância central permanece, mas os limites mínimo/máximo são nulos. O sistema não converte ausência de evidência em raio zero.
 - A base escolar consolidada e o índice de CEP entram no hash de reprodução do gerador.
 
 ### Preservação de funcionalidades
