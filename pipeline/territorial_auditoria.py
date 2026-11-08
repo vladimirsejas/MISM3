@@ -33,11 +33,11 @@ CAMPOS_PERMITIDOS = {
     "versao", "carimbo", "fonte", "entradas_sha256", "entradas_geradas_em", "metodo", "aviso_metodologico", "rotulos_cenario",
     "auditoria_centros", "metodo_atual", "setores_auditados", "centroides_fora_do_poligono", "substituicao_automatica", "observacao",
     "rotulos_categoria", "ressalvas", "conferencia", "equipamentos_fora_da_malha", "coincide_com_exposicao_distancia",
-    "setores.geojson", "territorio.json", "exposicao_distancia.json", "analise_territorial.json", "escolas_municipais.json", "servicos_manuais.csv", "cep_indice.json",
+    "setores.geojson", "territorio.json", "exposicao_distancia.json", "analise_territorial.json", "escolas_municipais.json", "localizacao_registro.csv", "servicos_manuais.csv", "cep_indice.json",
     "area_km2", "bairros", "domicilios", "pessoas", "rotulo", "unidade", "limites",
     "com_coordenada", "cadastrados", "completo",
     "populacao_toda", "setores_sem_bairro", "mediana_km", "p90_km", "acima_de", "percentual", "1 km", "2 km",
-    "id", "nome", "categoria", "precisao", "metodo_localizacao", "fonte_localizacao", "raio_incerteza_m", "lat", "lon", "setor", "bairro", "densidade", "distancia_km", "distancia_min_km", "distancia_max_km",
+    "id", "nome", "categoria", "precisao", "metodo_localizacao", "confianca_localizacao", "data_aplicacao_localizacao", "fonte_localizacao", "raio_incerteza_m", "lat", "lon", "setor", "bairro", "densidade", "distancia_km", "distancia_min_km", "distancia_max_km",
     "metodologia_incerteza", "unidade_raio", "formula", "interpretacao", "origem_raio", "limite", "comparacao",
     "coordenadas_do_catalogo", "com_centro_do_cep", "cras", "ubs", "escola", "creche", "distancia",
 }
