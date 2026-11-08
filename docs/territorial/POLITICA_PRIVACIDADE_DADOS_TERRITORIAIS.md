@@ -19,6 +19,8 @@ Podem ser considerados, quando necessários à finalidade territorial e acompanh
 - Indicadores calculados exclusivamente sobre unidades territoriais agregadas.
 - Metadados de qualidade, cobertura, incerteza e proveniência.
 
+Dados de matrículas e turmas do Censo Escolar são publicados somente em totais por rede de ensino. O cadastro público de escolas não contém contagens por unidade, nem vincula matrículas individuais ou pequenas contagens a uma escola específica.
+
 A disponibilidade pública de uma base não elimina a obrigação de avaliar finalidade, necessidade, granularidade e risco de associação.
 
 ## 3. Dados proibidos no mapa e no pipeline territorial
