@@ -38,10 +38,11 @@ def test_resumo_contabiliza_proveniencia_e_area():
         {"id": "cras2", "categoria": "cras", "confianca_localizacao": "nao_registrada", "metodo_localizacao": "catalogo_sem_registro_de_proveniencia", "lat": 0.5, "lon": 0.5},
         {"id": "escola1", "categoria": "escola", "metodo_localizacao": "coordenada_individual", "lat": 0.5, "lon": 0.5},
     ]}
-    r = qg.resumir(geo, territorio, indicadores, {"cras1", "cras2"})
+    r = qg.resumir(geo, territorio, indicadores, {"cras1", "cras2"}, {"cras2": {"endereco": "Rua 2, 100", "fonte_url": "https://exemplo.gov.br", "fonte": "Secretaria Municipal", "verificado_em": "2026-10-10"}})
     assert r["areas"]["diferenca_km2"] == -1.103
     assert r["equipamentos"]["cras_ubs"]["proveniencia_documentada"] == 1
     assert len(r["equipamentos"]["cras_ubs"]["proveniencia_ausente"]) == 1
+    assert r["equipamentos"]["cras_ubs"]["endereco_fonte_documentada"][0]["verificado_em"] == "2026-10-10"
     assert r["privacidade"]["setores_abaixo_da_faixa_de_cautela_D4"] == 1
 
 
@@ -59,6 +60,14 @@ def test_base_real_confere_contagens_de_proveniencia_e_privacidade():
     assert r["equipamentos"]["cras_ubs"]["total"] == 28
     assert r["equipamentos"]["cras_ubs"]["proveniencia_documentada"] == 22
     assert len(r["equipamentos"]["cras_ubs"]["proveniencia_ausente"]) == 6
+    pendentes = {item["id"] for item in r["equipamentos"]["cras_ubs"]["proveniencia_ausente"]}
+    registros_com_fonte = {item["id"]: item for item in r["equipamentos"]["cras_ubs"]["endereco_fonte_documentada"]}
+    assert pendentes == {
+        "man-cras-jardim-independencia", "man-cras-panorama", "man-saude-ubs-29",
+        "man-saude-ubs-wenzel", "man-saude-usf-ferraz", "man-saude-usf-sao-miguel"
+    }
+    assert pendentes.issubset(registros_com_fonte)
+    assert all(registros_com_fonte[i]["verificado_em"] == "2026-10-10" for i in pendentes)
     assert r["equipamentos"]["escolas"] == {
         "total": 68, "coordenada_individual": 33, "referencia_cep": 35, "sem_metodo_reconhecido": 0
     }
