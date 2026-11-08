@@ -130,19 +130,19 @@ def main() -> int:
     saida = gerar(geo, cat, indice)
     destino = DADOS / "exposicao_distancia.json"
     destino.write_text(json.dumps(saida, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
-    print("Gravado %s (população %d)" % (destino.relative_to(RAIZ), saida["meta"]["pessoas_total"]))
+    print("Gravado %s; contagens populacionais não são publicadas." % destino.relative_to(RAIZ))
     for nome, cats in saida["cenarios"].items():
         print("\n[%s]" % nome)
         for c, r in cats.items():
             cob = r["cobertura"]
-            t = r.get("populacao_toda")
+            t = r.get("setores_validos")
             if not t:
                 print("  %-6s sem coordenada" % c)
                 continue
             ac = t["acima_de"]
-            print("  %-6s cobertura %d/%d%s | mediana %.2f km, p90 %.2f km | >1 km: %.1f%% (%d pessoas) | >2 km: %.1f%% (%d pessoas)" % (
+            print("  %-6s cobertura %d/%d%s | mediana %.2f km, p90 %.2f km | >1 km: %.1f%% (%d setores) | >2 km: %.1f%% (%d setores)" % (
                 c, cob["com_coordenada"], cob["cadastrados"], "" if cob["completo"] else " (INCOMPLETA)", t["mediana_km"], t["p90_km"],
-                ac["1 km"]["percentual"], ac["1 km"]["pessoas"], ac["2 km"]["percentual"], ac["2 km"]["pessoas"]))
+                ac["1 km"]["percentual"], ac["1 km"]["setores"], ac["2 km"]["percentual"], ac["2 km"]["setores"]))
     return 0
 
 
