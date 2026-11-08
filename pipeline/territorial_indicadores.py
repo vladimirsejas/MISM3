@@ -273,10 +273,11 @@ def gerar(dados: dict) -> dict:
                     inferiores.append(min(f[0] for f in faixas))
                     superiores.append(min(f[1] for f in faixas))
             dist[cen][cat], dist_min[cen][cat], dist_max[cen][cat] = centrais, inferiores, superiores
-            pares = [d for d, s in zip(centrais, setores) if d is not None]
-            sem = [d for d, s in zip(centrais, setores) if d is not None and not s["bairro"]]
-            resumo[cen][cat] = {"setores_validos": ed.resumir_setores(pares, ed.LIMIARES_KM),
-                                "setores_sem_bairro": ed.resumir_setores(sem, ed.LIMIARES_KM)}
+            # O arquivo de exposição é a fonte de verdade dos resumos; os valores por setor continuam sendo calculados aqui.
+            resumo[cen][cat] = {
+                "setores_validos": expo["cenarios"][cen][cat].get("setores_validos"),
+                "setores_sem_bairro": expo["cenarios"][cen][cat].get("setores_sem_bairro"),
+            }
 
     divergencias = conferir(expo, resumo, cobertura)
     if divergencias:
