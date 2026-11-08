@@ -57,14 +57,14 @@
   /* Mudança na composição familiar e CadÚnico: o CRAS é o caminho, mesmo sem relato de aperto financeiro. */
   function cadastroComposicaoFamiliar(t) {
     var parente = /\b(?:netos?|netas?|netinhas?|netinhos?)\b/.test(t);
-    var cadastro = /\b(?:cadunico|cadastro unico|cadastro da familia|atualizar cadastro|atualizacao cadastral|composicao familiar)\b/.test(t);
+    var cadastro = /\b(?:cadunico|cadastro unico|cadastro|atualizacao cadastral|composicao familiar)\b/.test(t);
     var acao = /\b(?:atualizar|atualizacao|incluir|colocar|adicionar|informar|cadastrar|chegou|vem morar|veio morar|vai morar|morar aqui|mora comigo|passou a morar)\b/.test(t);
     return parente && cadastro && acao;
   }
 
   /* Pergunta de saúde envolvendo neto/neta ou criança deve manter Saúde no topo. */
   function cuidadoFamiliarSaude(t) {
-    var familiar = /\b(?:netos?|netas?|netinhas?|netinhos?|filhos?|criancas?|bebe|bebe)\b/.test(t);
+    var familiar = /\b(?:netos?|netas?|netinhas?|netinhos?|filhos?|criancas?|bebe)\b/.test(t);
     var saude = /\b(?:posto|ubs|usf|consulta|medic[oa]|vacina|exame|hospital|saude|atendimento)\b/.test(t);
     return familiar && saude;
   }
