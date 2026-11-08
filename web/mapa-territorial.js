@@ -83,7 +83,10 @@
 
   function textoFaixaDistancia(s, cenario, categoria) {
     var faixa = faixaDistancia(s, cenario, categoria);
-    if (!faixa || (faixa.minimo === faixa.maximo)) return "";
+    var central = s.distancia_km && s.distancia_km[cenario] ? s.distancia_km[cenario][categoria] : null;
+    if (central === null || central === undefined) return "";
+    if (!faixa) return " (faixa indisponível: raio não documentado)";
+    if (faixa.minimo === faixa.maximo) return "";
     return " (envelope geométrico: " + decimal(faixa.minimo, 2) + "–" + decimal(faixa.maximo, 2) + " km)";
   }
 
@@ -454,7 +457,7 @@
       r.appendChild(cel("td", "mt-num", String(st.equipamentos[c]), "Serviços localizados no setor"));
       CENARIOS.forEach(function (cen) {
         var v = st.distancia_km[cen][c], faixa = faixaDistancia(st, cen, c);
-        var texto = v === null ? "localização pendente" : decimal(v, 2) + (faixa && faixa.minimo !== faixa.maximo ? " (" + decimal(faixa.minimo, 2) + "–" + decimal(faixa.maximo, 2) + ")" : "");
+        var texto = v === null ? "localização pendente" : decimal(v, 2) + (faixa ? (faixa.minimo !== faixa.maximo ? " (" + decimal(faixa.minimo, 2) + "–" + decimal(faixa.maximo, 2) + ")" : "") : " (faixa indisponível: raio não documentado)");
         r.appendChild(cel("td", "mt-num", texto, "Distância central e envelope geométrico em km: " + d.meta.rotulos_cenario[cen]));
       });
       tab.appendChild(r);
@@ -480,7 +483,7 @@
      ["Pessoas a mais de 2 km em linha reta", milhar(a2.pessoas) + " (" + limpo(a2.percentual) + "% de " + milhar(t.pessoas) + "), em " + a2.setores + " setores"]
     ].forEach(function (x) { ul.appendChild(el("li", "", x[0] + ": " + x[1])); });
     box.appendChild(ul);
-    box.appendChild(el("p", "", "As faixas exibidas são envelopes geométricos operacionais derivados dos raios das localizações aproximadas; não são intervalos de confiança estatísticos. Faixas sobrepostas não permitem ordenar com segurança qual equipamento é mais próximo."));
+    box.appendChild(el("p", "", "As faixas exibidas são envelopes geométricos operacionais derivados dos raios documentados; não são intervalos de confiança estatísticos. Quando o raio não está documentado, a faixa não é calculada e a distância central permanece identificada como estimativa. Faixas sobrepostas não permitem ordenar com segurança qual equipamento é mais próximo."));
   }
 
   function aviso() {
