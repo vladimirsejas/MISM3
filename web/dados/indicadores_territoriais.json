@@ -17,7 +17,7 @@
       "exposicao_distancia.json": "2026-11-05",
       "analise_territorial.json": "2026-11-05"
     },
-    "metodo": "Setor censitário como unidade. Pessoas e domicílios: campos agregados da malha do IBGE (v0001 = total de pessoas e v0002 = total de domicílios, inclusive coletivos e não ocupados, conforme o dicionário de dados dos agregados preliminares do IBGE; falta confirmar que a malha usada é da mesma divulgação). Densidade e área: valores de territorio.json. Equipamentos no setor: ponto no polígono com a coordenada individual do catálogo; ponto na fronteira conta no primeiro setor em ordem de código. Distância: Haversine (raio 6371,0088 km) do ponto representativo calculado por at.centro (centroide do maior componente, escolhido pelo número de vértices; considera o anel externo) ao equipamento mais próximo da categoria, no mesmo cálculo de pipeline/exposicao_distancia.py, conferido contra web/dados/exposicao_distancia.json. Cobertura: equipamentos com coordenada sobre equipamentos cadastrados.",
+    "metodo": "Setor censitário como unidade. Pessoas e domicílios: campos agregados da malha do IBGE (v0001 = total de pessoas e v0002 = total de domicílios, inclusive coletivos e não ocupados, conforme o dicionário de dados dos agregados preliminares do IBGE; falta confirmar que a malha usada é da mesma divulgação). Densidade e área: valores de territorio.json. Equipamentos no setor: ponto no polígono com a coordenada do catálogo; ponto na fronteira conta no primeiro setor em ordem de código. Distância: Haversine (raio 6371,0088 km) do ponto representativo calculado por at.centro (centroide do maior componente, escolhido pelo número de vértices; anel externo), ao equipamento mais próximo da categoria, no mesmo cálculo de pipeline/exposicao_distancia.py, conferido contra web/dados/exposicao_distancia.json. Cobertura: equipamentos com coordenada sobre equipamentos cadastrados.",
     "aviso_metodologico": "A distância em linha reta não representa tempo de deslocamento ou acesso efetivo: não considera ruas, transporte, horários, capacidade nem área de atendimento. A presença ou a ausência de um equipamento em um setor não define quem ele atende.",
     "rotulos_cenario": {
       "coordenadas_do_catalogo": "Coordenadas do catálogo (conferidas)",
@@ -31,7 +31,7 @@
     "ressalvas": [
       "Nesta versão nenhum setor censitário é suprimido nem agregado. Os 17 setores com menos de 5 pessoas ou menos de 3 domicílios (faixa conservadora da proposta de supressão e agregação) são marcados no mapa com o aviso 'população muito pequena, interprete com cautela' (decisão D4 em docs/territorial/DECISOES_DO_AUTOR.md; pode ser revista pelo autor).",
       "O cenário com centro do CEP cadastral do equipamento é uma análise de sensibilidade: a posição é aproximada e não equivale à coordenada individual do catálogo.",
-      "A auditoria geométrica encontrou 9 centroides fora dos respectivos polígonos em 408 setores. O centroide atual foi mantido; a alternativa interna e seu impacto nas distâncias precisam ser comparados antes de qualquer mudança.",
+      "A auditoria geométrica encontrou 9 centroides fora dos respectivos polígonos em 408 setores. O centroide atual não foi substituído: a alternativa interna e o impacto nas distâncias ainda precisam ser comparados antes de qualquer mudança.",
       "O método e a confiança de cada coordenada ficam em catalogo/localizacao_registro.csv e não são lidos por este script.",
       "Categorias com cobertura incompleta de coordenadas têm distância superestimada."
     ],
