@@ -280,7 +280,7 @@
       var qL = Object.keys(qW).length ? projetar(qWn) : null;
       var dica = opcoes.dica ? opcoes.dica(texto) : null;
       var contextoAssistencia = familiaComNecessidade(tn) || cadastroComposicaoFamiliar(tn);
-      var buscaTrabalho = /\\b(?:emprego|trabalho|trabalhar|vaga|bico|procuro|procurando|voltar a trabalhar)\\b/.test(tn);
+      var buscaTrabalho = /\b(?:emprego|trabalho|trabalhar|vaga|bico|procuro|procurando|voltar a trabalhar)\b/.test(tn);
       var contextoSaude = cuidadoFamiliarSaude(tn);
       return U.map(function (u, d) {
         var sw = pontoEscalar(docsW[d], qWn), sc = pontoEscalar(docsC[d], qC), sl = 0;
