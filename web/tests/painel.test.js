@@ -23,7 +23,7 @@ const vista = vistaDe(index, "vista-painel");
 assert(/name="robots" content="noindex, nofollow"/.test(index), "o site não deve ser indexado");
 assert(/Análise territorial/.test(vista) && /não usa respostas nem dados de nenhuma pessoa/.test(vista), "a página deve dizer que não usa dados de pessoas");
 const gestao = (/<section class="para-gestao"[\s\S]*?<\/section>/.exec(index) || [""])[0];
-assert(/href="#painel"/.test(gestao) && /Análise territorial/.test(gestao), "a análise é aberta pelo bloco 'Para a gestão'");
+assert(/href="mapa-territorial\.html"/.test(gestao) && /Mapa territorial/.test(gestao), "o mapa territorial é aberto pelo bloco 'Para a gestão'");
 assert(!/href="#painel"/.test(index.replace(gestao, "")), "a análise só é aberta pelo bloco 'Para a gestão': nunca pelas portas, pelo acesso rápido ou pelo assistente");
 assert(!/painel/i.test(areas), "a análise territorial não entra nas áreas das mulheres");
 assert(/nome: "Análise territorial", scripts: \["painel-ui\.js"\]/.test(app), "a vista carrega só painel-ui.js");
