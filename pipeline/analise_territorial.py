@@ -205,7 +205,8 @@ def analisar(geojson, servicos, indice_cep, k_grupos=3, hoje=None, escolas=None)
                 c: {"com_coordenada": len(por_cat[c]), "cadastrados": totais[c]}
                 for c in CATEGORIAS
             },
-            "pessoas_total": None,\n            "setores_suprimidos": sum(1 for st in setores if st["suprimido_privacidade"]),
+            "pessoas_total": None,
+            "setores_suprimidos": sum(1 for st in setores if st["suprimido_privacidade"]),
         },
         "bairros": saida_b,
         "grupos": grupos,
