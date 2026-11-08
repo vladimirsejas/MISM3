@@ -220,6 +220,7 @@ def auditar_publicacao() -> list[Falha]:
     geo = json.loads((DADOS / "setores.geojson").read_text(encoding="utf-8"))
     terr = json.loads((DADOS / "territorio.json").read_text(encoding="utf-8"))
     expo = json.loads((DADOS / "exposicao_distancia.json").read_text(encoding="utf-8"))
+    cep_indice = json.loads((DADOS / "cep_indice.json").read_text(encoding="utf-8"))
     analise = json.loads((DADOS / "analise_territorial.json").read_text(encoding="utf-8"))
     features = geo.get("features", [])
     protegidos = [f for f in features if f.get("properties", {}).get("suprimido_privacidade") is True]
@@ -227,6 +228,8 @@ def auditar_publicacao() -> list[Falha]:
     bairros = {(f["properties"].get("bairro") or "Sem bairro definido pelo IBGE") for f in protegidos}
     if len(protegidos) != 17:
         falhas.append(Falha("setores.geojson", "privacidade", "a quantidade de setores protegidos difere da decisão D4"))
+    if any(len(valor) > 3 and valor[3] in ids for valor in cep_indice.get("ceps", {}).values()):
+        falhas.append(Falha("cep_indice.json", "privacidade", "o índice CEP ainda referencia setor protegido pela decisão D4"))
     for i, feature in enumerate(protegidos):
         p = feature.get("properties", {})
         if p.get("pessoas") is not None or p.get("domicilios") is not None:
