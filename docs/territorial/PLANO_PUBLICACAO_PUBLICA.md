@@ -25,8 +25,6 @@ O painel não será tratado como área administrativa privada. Como o projeto é
 
 ### 3.1 Privacidade e setores pequenos — decisão D4
 
-<badge color="success">Supressão aplicada</badge>
-
 A regra D4 aprovada pelo autor foi aplicada aos 17 setores com menos de 5 pessoas ou menos de 3 domicílios:
 - população e domicílios foram removidos dos campos públicos do GeoJSON;
 - densidade, pessoas por domicílio e distâncias/indicadores derivados por setor foram suprimidos;
