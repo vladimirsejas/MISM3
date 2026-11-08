@@ -69,6 +69,11 @@
     return familiar && saude;
   }
 
+  function vendaComoRenda(t) {
+    return /\b(?:bolo|bolos|pao(?: de queijo)?|panqueca|panquecas|fuba|alimento|comida)\b/.test(t) &&
+      /\b(?:vender|venda|comercializar|empreender|renda|negocio)\b/.test(t);
+  }
+
   /* Limites explícitos do produto: receitas e operações bancárias pessoais não são serviços do Observatório. */
   function foraDoEscopoExplicito(t) {
     var culinaria = /\b(?:bolo|bolos|pao(?: de queijo)?|panqueca|panquecas|fuba)\b/.test(t) &&
@@ -76,7 +81,7 @@
     var operacaoBancaria = /\b(?:cartao|senha|extrato|conta bancaria|aplicativo do banco)\b/.test(t) &&
       /\b(?:perdi|perdeu|bloquear|bloqueio|cancelar|desbloquear|trocar|mudar|alterar|consultar|senha)\b/.test(t);
     var investimento = /\b(?:investir|investimento|bitcoin|criptomoeda|acoes|bolsa de valores)\b/.test(t);
-    return culinaria || operacaoBancaria || investimento;
+    return (culinaria && !vendaComoRenda(t)) || operacaoBancaria || investimento;
   }
 
   /* Uso explícito de cartão/dinheiro sem consentimento: encaminha para Direitos e Assistência, sem classificar como perigo. */
@@ -123,6 +128,9 @@
     }
     if (cuidadoFamiliarSaude(t)) {
       extra.push("saude posto de saude ubs usf consulta atendimento acompanhante de crianca");
+    }
+    if (vendaComoRenda(t)) {
+      extra.push("trabalho renda empreendedorismo venda de alimentos pequeno negocio cursos qualificacao formalizacao");
     }
     /* "sustento" e "sustentabilidade" têm a mesma raiz de 5 letras ("suste") e a busca levava quem sustenta a casa ao curso de
        Sustentabilidade da Fatec. A palavra é trocada só na consulta (o índice e o Python não mudam). */
@@ -281,6 +289,7 @@
       var dica = opcoes.dica ? opcoes.dica(texto) : null;
       var contextoAssistencia = familiaComNecessidade(tn) || cadastroComposicaoFamiliar(tn);
       var buscaTrabalho = /\b(?:emprego|trabalho|trabalhar|vaga|bico|procuro|procurando|voltar a trabalhar)\b/.test(tn);
+      var vendaRenda = vendaComoRenda(tn);
       var contextoSaude = cuidadoFamiliarSaude(tn);
       return U.map(function (u, d) {
         var sw = pontoEscalar(docsW[d], qWn), sc = pontoEscalar(docsC[d], qC), sl = 0;
@@ -292,6 +301,7 @@
           if (buscaTrabalho && u.area === "trabalho") s += 0.35;
         }
         if (contextoSaude && u.area === "saude") s += 0.45;
+        if (vendaRenda && u.area === "trabalho") s += 0.45;
         if (ctx && ctx.area && u.area === ctx.area) s += pesos.area;
         if (CONDICOES[u.id] && !CONDICOES[u.id].test(tn)) s -= 1; /* serviço especializado só aparece quando o assunto é dele */
         if (EXCLUSOES[u.id] && EXCLUSOES[u.id].test(tn)) s -= 1; /* e há serviços que não servem a certos assuntos */
