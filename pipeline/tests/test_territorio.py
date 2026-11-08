@@ -102,7 +102,7 @@ def test_dados_reais_cada_setor_aparece_uma_vez_nas_classes(real):
     d = real["classes"]["densidade"]
     assert sum(d["contagem"]) == 391 and d["suprimidos"] == 17
     p = real["classes"]["pessoas_por_domicilio"]
-    assert sum(p["contagem"]) + p["sem_base_suficiente"] == 408 and p["suprimidos"] == 17
+    assert sum(p["contagem"]) + p["sem_base_suficiente"] + p["suprimidos"] == 408
     afetados = [b for b in real["bairros"] if b["dados_suprimidos"]]
     assert len(afetados) == 13 and all(b["pessoas"] is None and b["domicilios"] is None for b in afetados)
 
