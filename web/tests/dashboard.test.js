@@ -390,11 +390,12 @@ idsLocais.forEach((id) => { const x = lista.find((y) => y.id === id); assert(x &
 const links = Array.from(inicio.matchAll(/<a href="#([a-z-]+)(?:\/([a-z-]+))?">/g), (m) => ({ area: m[1], secao: m[2] }));
 assert(links.length >= 5, "acesso rápido deve ter atalhos");
 /* As vistas moram dentro do <main>, junto com as áreas (e não no rodapé): senão o texto institucional do rodapé aparece acima delas. */
-const vistas0 = ["vista-entre-mulheres", "vista-numeros", "vista-painel"];
+const vistas0 = ["vista-entre-mulheres", "vista-numeros"];
 vistas0.forEach((v) => { const k = index.indexOf('id="' + v + '"'); assert(k > index.indexOf("<main") && k < index.indexOf("</main>"), "a vista deve estar dentro do <main>: " + v); });
-/* Além das áreas, o dashboard tem "vistas" (o que antes eram páginas separadas): Entre Mulheres, Rio Claro em números e Painel. */
+/* Além das áreas, o dashboard mantém duas vistas internas. O antigo Painel tabular foi substituído pelo mapa territorial em página própria. */
 const vistas = Array.from(app.matchAll(/^    "([a-z-]+)": \{ el: "vista-/gm), (m) => m[1]);
-assert.deepStrictEqual(vistas.sort(), ["entre-mulheres", "painel", "rio-claro-em-numeros"], "o app conhece as três vistas do dashboard");
+assert.deepStrictEqual(vistas.sort(), ["entre-mulheres", "rio-claro-em-numeros"], "o app conhece as duas vistas internas do dashboard");
+assert(/id === "mapa" \|\| id === "painel"/.test(app) && /window\.location\.replace\("mapa-territorial\.html"\)/.test(app), "os atalhos antigos do mapa e do painel devem abrir o mapa territorial");
 vistas.forEach((v) => assert(new RegExp('<section id="vista-[a-z-]+"').test(index) && /scripts: \[/.test(app), "cada vista tem a sua seção no index.html e os seus scripts: " + v));
 links.filter((l) => vistas.indexOf(l.area) === -1).forEach((l) => {
   const area = Areas.AREAS.concat(Areas.EXTRAS).find((a) => a.id === l.area);
