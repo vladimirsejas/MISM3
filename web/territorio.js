@@ -68,10 +68,10 @@
       ul.appendChild(li);
     });
     var semBase = estado.metrica === "pessoas_por_domicilio" ? c.sem_base_suficiente : 0;
-    if (c.suprimidos) {
+    if (c.suprimidos || c.setores_suprimidos) {
       var liSuprimido = el("li");
       liSuprimido.appendChild(el("span", "amostra cn"));
-      liSuprimido.appendChild(el("span", null, "Dados omitidos por cautela estatística: " + inteiro(c.suprimidos) + " setores"));
+      liSuprimido.appendChild(el("span", null, "Dados omitidos por cautela estatística: " + inteiro(c.suprimidos || c.setores_suprimidos) + " setores"));
       ul.appendChild(liSuprimido);
     }
     if (semBase) {
