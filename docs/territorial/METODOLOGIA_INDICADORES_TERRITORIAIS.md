@@ -18,7 +18,7 @@ A unidade estatística principal é o setor censitário do IBGE. Os equipamentos
 - `catalogo/localizacao_registro.csv`: proveniência de coordenadas e outros campos de localização.
 - `pipeline/territorio.py`, `pipeline/analise_territorial.py` e `pipeline/exposicao_distancia.py`: procedimentos de cálculo existentes.
 
-A leitura de `web/dados/setores.geojson` confirmou 408 feições. Seus metadados registram `v0001` como pessoas e `v0002` como domicílios, mas `pipeline/setores.py` ressalva que os significados devem ser confirmados no dicionário oficial do IBGE.
+A leitura de `web/dados/setores.geojson` confirmou 408 feições. A Nota metodológica n. 06 do IBGE confirma `V0001` como total de pessoas e `V0002` como total de domicílios, incluindo particulares e coletivos.
 
 ## 3. Indicadores da versão 1
 
@@ -32,7 +32,7 @@ A leitura de `web/dados/setores.geojson` confirmou 408 feições. Seus metadados
 
 **Fonte:** malha de setores censitários do IBGE, Censo 2022, representada em `web/dados/setores.geojson`.
 
-**Situação:** já existe atributo `pessoas` no GeoJSON. A definição oficial da variável de origem deve ser confirmada no dicionário do IBGE antes de ampliar a interpretação.
+**Situação:** já existe atributo `pessoas` no GeoJSON. A definição oficial está confirmada: `V0001` corresponde ao total de pessoas.
 
 **Limitações:** valor agregado, não localização individual; não informa necessidade, renda, saúde ou utilização de serviços.
 
@@ -60,7 +60,7 @@ A leitura de `web/dados/setores.geojson` confirmou 408 feições. Seus metadados
 
 **Fonte:** atributo `domicilios` de `web/dados/setores.geojson`; origem indicada como campo `v0002` em `pipeline/setores.py).
 
-**Limitações:** não identifica endereços nem moradores. O significado exato de `v0002` deve ser confirmado no dicionário oficial do IBGE.
+**Limitações:** não identifica endereços nem moradores. `V0002` soma domicílios particulares permanentes ocupados, vagos e de uso ocasional, particulares improvisados e coletivos, com ou sem morador; não representa somente domicílios ocupados nem famílias.
 
 ### Indicador 4 — Equipamentos por categoria e setor
 
