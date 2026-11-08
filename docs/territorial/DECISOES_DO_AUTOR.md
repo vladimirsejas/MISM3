@@ -13,7 +13,7 @@
 
 **D5 (08/11/2026).** O autor autorizou expressamente a consolidação técnica da PR #92 na branch `feat/mapa-territorial-como-mapa-principal`, incluindo a integração da incerteza espacial e da proveniência escolar da PR #91, correções de código, dados gerados, testes e documentação. Esta autorização específica prevalece sobre a restrição operacional de D3 apenas para essa branch e esse escopo. Não autoriza merge, alteração da `main` ou mudança de outras branches.
 
-**D4 (06/11/2026).** Setores pequenos: nesta versão nenhum setor censitário será suprimido nem agregado. Os 17 setores com menos de 5 pessoas ou menos de 3 domicílios (faixa conservadora de docs/territorial/PROPOSTA_SUPRESSAO_E_AGREGACAO.md) serão marcados no mapa com o aviso 'população muito pequena, interprete com cautela'. Decisão tomada pelo Claude por delegação expressa do autor, que pediu que o Claude decidisse; pode ser revista pelo autor a qualquer momento. Não há, nos documentos consultados, limiar numérico legal obrigatório.
+**D4 (06/11/2026).** Setores pequenos: nesta versão nenhum setor censitário será suprimido nem agregado. Os 17 setores com menos de 5 pessoas ou menos de 3 domicílios (faixa conservadora de docs/territorial/PROPOSTA_SUPRESSAO_E_AGREGACAO.md) serão marcados no mapa com o aviso 'menos de 5 pessoas ou menos de 3 domicílios; interprete com cautela'. Decisão tomada pelo Claude por delegação expressa do autor, que pediu que o Claude decidisse; pode ser revista pelo autor a qualquer momento. Não há, nos documentos consultados, limiar numérico legal obrigatório.
 
 ## 2. Fundamentação documental da decisão D2
 
