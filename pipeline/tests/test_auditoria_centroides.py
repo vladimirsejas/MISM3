@@ -19,10 +19,11 @@ def quadrado_com_buraco():
     ]}
 
 
-def test_ponto_interno_fica_dentro_de_poligono_simples():
+def test_ponto_interno_preserva_centroide_quando_ele_ja_esta_dentro():
     geom = quadrado()
     lat, lon = ac.ponto_interno(geom)
     assert ac._contem(geom, lon, lat)
+    assert (lat, lon) == ac._centro_atual(geom)
 
 
 def test_ponto_interno_nao_cai_no_buraco():
