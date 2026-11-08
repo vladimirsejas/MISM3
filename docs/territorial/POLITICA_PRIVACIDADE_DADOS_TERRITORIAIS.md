@@ -36,7 +36,7 @@ Não devem ser coletados, importados, cruzados, armazenados, enviados a serviço
 - Listas individualizadas que permitam relacionar uma pessoa a um setor, serviço, condição ou evento.
 - Cruzamentos que, mesmo sem nome ou documento, permitam reidentificação razoável de indivíduos ou domicílios.
 
-O CEP institucional de um equipamento público, quando usado exclusivamente para localizar o próprio equipamento, é conceitualmente distinto de um CEP residencial. A decisão de utilizar esse mecanismo nos indicadores territoriais atuais permanece pendente do autor, conforme o inventário. Esta política não autoriza a inclusão de CEP de pessoas.
+O CEP institucional de um equipamento público, quando usado exclusivamente para localizar o próprio equipamento, é conceitualmente distinto de um CEP residencial. Pela decisão D2, o cenário com centro do CEP cadastral do equipamento permanece como análise de sensibilidade, sempre identificado como aproximado. Esta política não autoriza a inclusão de CEP de pessoas.
 
 ## 4. Minimização e separação
 
