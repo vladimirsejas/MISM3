@@ -13,7 +13,7 @@
   var COR_SEM_VALOR = "#d9d9d9";
   /* Decisão D4: nenhum setor é suprimido nem agregado; setores com menos de 5 pessoas ou menos de 3 domicílios (faixa conservadora da proposta de supressão e agregação) levam aviso. */
   var LIMITE_PEQUENO = { pessoas: 5, domicilios: 3 };
-  var AVISO_PEQUENO = "população muito pequena, interprete com cautela";
+  var AVISO_PEQUENO = "menos de 5 pessoas ou menos de 3 domicílios; interprete com cautela";
   var COR_PONTO = "#12343b";
   var CATEGORIAS = ["cras", "ubs", "escola"];
   var CENARIOS = ["coordenadas_do_catalogo", "com_centro_do_cep"];
