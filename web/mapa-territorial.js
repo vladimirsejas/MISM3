@@ -479,7 +479,9 @@
     box.appendChild(el("p", "", rotuloCategoria(s.categoria) + ", " + d.meta.rotulos_cenario[s.cenario] + ". Cobertura das coordenadas: " + cob.com_coordenada + " de " + cob.cadastrados + " equipamentos cadastrados."));
     if (!cob.completo) box.appendChild(el("p", "", "Há localização pendente: a distância pode estar superestimada nesta categoria."));
     if (!r) { box.appendChild(el("p", "", "Nenhum equipamento desta categoria tem coordenada neste cenário.")); return; }
-    var t = r.setores_validos, a1 = t.acima_de["1 km"], a2 = t.acima_de["2 km"], ul = el("ul");
+    var t = r.setores_validos;
+    if (!t) { box.appendChild(el("p", "", "Não há setores com dados suficientes para calcular este resumo.")); return; }
+    var a1 = t.acima_de["1 km"], a2 = t.acima_de["2 km"], ul = el("ul");
     [["Mediana entre setores não suprimidos", decimal(t.mediana_km, 2) + " km"], ["Percentil 90 entre setores não suprimidos", decimal(t.p90_km, 2) + " km"],
      ["Setores a mais de 1 km em linha reta", a1.setores + " (" + limpo(a1.percentual) + "% dos setores considerados)"],
      ["Setores a mais de 2 km em linha reta", a2.setores + " (" + limpo(a2.percentual) + "% dos setores considerados)"]
