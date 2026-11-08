@@ -92,7 +92,7 @@ comb.forEach(([ind, cat, cen]) => {
 assert.strictEqual(M.descreverValor("distancia", null), "localização pendente");
 assert.strictEqual(M.descreverValor("pessoas", 201418), "201.418 pessoas");
 assert(/distancia_min_km/.test(js) && /distancia_max_km/.test(js), "a interface consome os limites inferior e superior");
-assert(/confianca_localizacao/.test(js) && /data_aplicacao_localizacao/.test(js), "o título dos pontos informa confiança e data quando documentadas");
+assert(/confianca_localizacao/.test(js) && /data_aplicacao_localizacao/.test(js) && /raio_incerteza_m/.test(js), "o título dos pontos informa confiança, data e raio quando documentados");
 dados.setores.forEach((s) => ["coordenadas_do_catalogo", "com_centro_do_cep"].forEach((cen) => ["cras", "ubs", "escola"].forEach((cat) => {
   const faixa = M.faixaDistancia(s, cen, cat), central = s.distancia_km[cen][cat];
   if (central === null) assert.strictEqual(faixa, null);
