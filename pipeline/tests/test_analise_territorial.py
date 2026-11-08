@@ -39,7 +39,7 @@ def test_distancia_ponderada_pela_populacao_e_servico_no_bairro():
     assert b["Alfa"]["distancia_media_cras_km"] < 0.1
     assert b["Beta"]["distancia_media_cras_km"] > 0.8        # um centésimo de grau de longitude, ~1 km
     assert b["Alfa"]["servicos_no_bairro"] == 1 and b["Beta"]["servicos_no_bairro"] == 0
-    assert r["meta"]["pessoas_total"] == 4000
+    assert r["meta"]["pessoas_total"] is None and r["meta"]["setores_suprimidos"] == 0
     assert r["meta"]["cobertura_dos_servicos"]["cras"] == {"com_coordenada": 1, "cadastrados": 1}
     assert b["Alfa"]["distancia_media_ubs_km"] is None, "categoria sem nenhum serviço com coordenada fica vazia, não zero"
 
@@ -65,7 +65,7 @@ def test_so_catalogo_verificado_a_mao():
 def test_aviso_e_sem_dado_pessoal():
     r = at.analisar(geo(), [cras("man-cras-a", -22.395, -47.595)], {})
     assert "não provam" in r["meta"]["aviso"] and "exploratório" in r["meta"]["aviso"]
-    assert set(r["bairros"][0]) <= {"bairro", "setores", "pessoas", "servicos_no_bairro", "grupo", "distancia_media_cras_km", "distancia_media_ubs_km", "distancia_media_escola_km"}
+    assert set(r["bairros"][0]) <= {"bairro", "setores", "pessoas", "dados_suprimidos", "servicos_no_bairro", "grupo", "distancia_media_cras_km", "distancia_media_ubs_km", "distancia_media_escola_km"}
 
 
 def test_agrupamento_so_com_bairros_suficientes():
