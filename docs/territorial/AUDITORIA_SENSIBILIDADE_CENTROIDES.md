@@ -6,9 +6,9 @@ Comparar o centroide atualmente calculado por pipeline/analise_territorial.py co
 
 ## Método alternativo
 
-pipeline/auditoria_centroides.py calcula um ponto interno pela varredura determinística das faixas horizontais entre as coordenadas Y dos vértices. Em cada faixa, identifica os intervalos internos do anel externo, desconta os buracos e escolhe o maior intervalo horizontal encontrado. O ponto médio desse intervalo é verificado contra a geometria completa.
+pipeline/auditoria_centroides.py preserva o centroide atual quando ele já está dentro do polígono. Quando o centroide está fora, examina faixas horizontais entre os vértices, desconta os buracos e procura o ponto interno de menor distância geodésica ao centroide atual. O candidato é validado contra a geometria completa.
 
-O método é uma alternativa de análise de sensibilidade; não é denominado centroide, não pretende representar a distribuição populacional interna e não deve ser adotado automaticamente como método oficial.
+O método é uma correção mínima para análise de sensibilidade, não um novo centroide geométrico nem uma medida da distribuição populacional interna. Não deve ser adotado automaticamente como método oficial.
 
 ## Comparação
 
