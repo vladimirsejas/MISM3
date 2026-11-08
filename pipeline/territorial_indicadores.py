@@ -45,7 +45,8 @@ ROTULOS_CENARIO = {
     "com_centro_do_cep": "Análise de sensibilidade: centro do CEP cadastral do equipamento",
 }
 AVISO_METODOLOGICO = ("A distância em linha reta não representa tempo de deslocamento ou acesso efetivo: não considera ruas, transporte, horários, "
-                      "capacidade nem área de atendimento. A presença ou a ausência de um equipamento em um setor não define quem ele atende.")
+                      "capacidade nem área de atendimento. Quando a localização é aproximada, a faixa mínima–máxima é um envelope geométrico operacional, "
+                      "não intervalo de confiança. A presença ou a ausência de um equipamento em um setor não define quem ele atende.")
 # Faixas de leitura das distâncias (km). 1 e 2 km são os limiares de web/dados/exposicao_distancia.json; 0,5 e 3 km só organizam a legenda.
 FAIXAS_DISTANCIA_KM = [0.5, 1.0, 2.0, 3.0]
 LIMITES_DENSIDADE = [500, 2000, 5000, 10000]  # os mesmos de territorio.json (classes.densidade.limites)
@@ -119,7 +120,7 @@ def equipamentos(linhas: list, indice_cep: dict, escolas: list[dict]) -> list[di
             lat = lon = None
         metodo = str(local.get("metodo") or "pendente")
         xy = (lat, lon) if lat is not None and lon is not None and CAIXA_RIO_CLARO[0] <= lat <= CAIXA_RIO_CLARO[1] and CAIXA_RIO_CLARO[2] <= lon <= CAIXA_RIO_CLARO[3] else None
-        individual = xy if metodo == "coordenada_individual" else None
+        individual = (round(xy[0], 5), round(xy[1], 5)) if xy and metodo == "coordenada_individual" else None
         aproximada = xy if metodo == "centroide_cep" else None
         raio = float(local.get("raio_m") or 0) if aproximada else 0.0
         if raio < 0:
@@ -255,7 +256,7 @@ def gerar(dados: dict) -> dict:
         "meta": {
             "versao": VERSAO,
             "carimbo": carimbo(hashes),
-            "fonte": "IBGE, Censo Demográfico 2022 (malha de setores censitários) e catálogo institucional do Observatório da Mulher (catalogo/servicos_manuais.csv)",
+            "fonte": "IBGE, Censo Demográfico 2022 (malha de setores censitários), catálogo institucional e base consolidada das escolas municipais",
             "entradas_sha256": {k: hashes[k] for k in sorted(hashes)},
             "entradas_geradas_em": {"setores.geojson": geo["meta"]["gerado_em"], "territorio.json": meta_terr["gerado_em"],
                                     "exposicao_distancia.json": meta_expo["gerado_em"], "analise_territorial.json": ent["analise_territorial.json"]["meta"]["gerado_em"],
