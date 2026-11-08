@@ -68,6 +68,12 @@
       ul.appendChild(li);
     });
     var semBase = estado.metrica === "pessoas_por_domicilio" ? c.sem_base_suficiente : 0;
+    if (c.suprimidos) {
+      var liSuprimido = el("li");
+      liSuprimido.appendChild(el("span", "amostra cn"));
+      liSuprimido.appendChild(el("span", null, "Dados omitidos por cautela estatística: " + inteiro(c.suprimidos) + " setores"));
+      ul.appendChild(liSuprimido);
+    }
     if (semBase) {
       var li = el("li");
       li.appendChild(el("span", "amostra cn"));
@@ -301,10 +307,11 @@
 
   function resumo() {
     var t = estado.dados.totais;
-    document.getElementById("heroi").textContent = inteiro(t.pessoas);
+    document.getElementById("heroi").textContent = "—";
     var caixa = document.getElementById("indicadores");
-    [[inteiro(t.domicilios), "domicílios"], [inteiro(t.setores) + " em " + inteiro(t.bairros), "setores censitários e bairros"],
-     [inteiro(t.densidade), "pessoas por km² (média do município)"], [decimal(t.pessoas_por_domicilio, 2), "pessoas por domicílio (média)"]
+    [["Omitidos", "população municipal por cautela estatística"], ["Omitidos", "domicílios por cautela estatística"],
+     [inteiro(t.setores) + " em " + inteiro(t.bairros), "setores censitários e bairros"],
+     [decimal(t.area_km2, 1) + " km²", "área total da malha"]
     ].forEach(function (p) {
       var d = el("div", "indicador");
       d.appendChild(el("p", "valor", p[0]));
@@ -335,9 +342,7 @@
   function rodape() {
     var m = estado.dados.meta, c = m.conferencia;
     document.getElementById("rodape-numeros").textContent =
-      "Fonte: " + m.fonte + ". Gerado em " + m.gerado_em + ". Conferência com o IBGE: soma das pessoas " + inteiro(c.pessoas_somadas) +
-      " (publicado: " + inteiro(c.pessoas_publicadas_ibge) + "); área " + decimal(c.area_somada_km2, 1) + " km² (publicado: " +
-      decimal(c.area_publicada_ibge_km2, 1) + " km²).";
+      "Fonte: " + m.fonte + ". Gerado em " + m.gerado_em + ". As contagens populacionais e domiciliares por setor e os agregados que poderiam permitir inferência foram omitidos por cautela estatística. Conferência de área: " + decimal(c.area_somada_km2, 1) + " km² (referência IBGE: " + decimal(c.area_publicada_ibge_km2, 1) + " km²).";
   }
 
   function iniciar(resultado) {
@@ -348,18 +353,18 @@
     desenharMapa();
     ligarDica();
     colorir();
-    desenharBarras(document.getElementById("barras"), estado.dados.bairros.map(function (b) { return { nome: b.nome, valor: b.pessoas }; }),
+    desenharBarras(document.getElementById("barras"), estado.dados.bairros.filter(function (b) { return b.pessoas !== null; }).map(function (b) { return { nome: b.nome, valor: b.pessoas }; }),
       escolherBairro, function (i) { return i.nome + ": " + inteiro(i.valor) + " pessoas. Destacar no mapa."; });
     tabela(document.getElementById("tabela"),
       ["Bairro", "Pessoas", "Domicílios", "Setores", "Pessoas por km²", "Pessoas por domicílio"],
       estado.dados.bairros.map(function (b) {
-        return [b.nome, inteiro(b.pessoas), inteiro(b.domicilios), inteiro(b.setores),
-                b.densidade == null ? "–" : inteiro(b.densidade), b.pessoas_por_domicilio == null ? "–" : decimal(b.pessoas_por_domicilio, 2)];
+        var omitido = b.dados_suprimidos ? "Omitido por cautela estatística" : null;
+        return [b.nome, omitido || inteiro(b.pessoas), omitido || inteiro(b.domicilios), inteiro(b.setores),
+                omitido || (b.densidade == null ? "–" : inteiro(b.densidade)), omitido || (b.pessoas_por_domicilio == null ? "–" : decimal(b.pessoas_por_domicilio, 2))];
       }), "População, domicílios e densidade por bairro (Censo 2022)");
     var sem = estado.dados.meta.sem_bairro;
     if (sem.setores) {
-      document.getElementById("nota-bairros").textContent = "O IBGE não definiu bairro para " + inteiro(sem.setores) + " setores (" +
-        inteiro(sem.pessoas) + " pessoas); eles aparecem como \"" + sem.rotulo + "\".";
+      document.getElementById("nota-bairros").textContent = "O IBGE não definiu bairro para " + inteiro(sem.setores) + " setores; eles aparecem como \"" + sem.rotulo + "\". A contagem populacional desse conjunto não é exibida porque inclui setores com dados suprimidos.";
     }
     educacao();
     rodape();
