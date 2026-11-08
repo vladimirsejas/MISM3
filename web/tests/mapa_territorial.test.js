@@ -99,6 +99,8 @@ dados.setores.forEach((s) => ["coordenadas_do_catalogo", "com_centro_do_cep"].fo
   else { assert(faixa && faixa.minimo <= central && central <= faixa.maximo); }
 })));
 const setorComFaixa = dados.setores.find((s) => M.textoFaixaDistancia(s, "com_centro_do_cep", "escola"));
+const setorSemRaio = dados.setores.find((s) => s.distancia_km.com_centro_do_cep.cras !== null && s.distancia_min_km.com_centro_do_cep.cras === null);
+assert(setorSemRaio && /faixa indisponível: raio não documentado/.test(M.textoFaixaDistancia(setorSemRaio, "com_centro_do_cep", "cras")));
 assert(setorComFaixa && /envelope geométrico/.test(M.textoFaixaDistancia(setorComFaixa, "com_centro_do_cep", "escola")));
 
 assert.strictEqual(M.decimal(2.175, 2), "2,18");
