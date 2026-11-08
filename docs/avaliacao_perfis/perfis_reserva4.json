@@ -228,10 +228,12 @@
       "id": "r4av19",
       "perfil": "limite",
       "texto": "como faço um bolo de fubá para vender",
-      "principal": null,
+      "principal": "trabalho",
       "aceita": [],
-      "precisa": [],
-      "fora": true
+      "precisa": [
+        "trabalho"
+      ],
+      "nota": "Rótulo harmonizado com o mesmo texto em perfis_reserva6: intenção explícita de vender e gerar renda deve levar a Trabalho; o sistema não fornece receita culinária."
     },
     {
       "id": "r4av20",
