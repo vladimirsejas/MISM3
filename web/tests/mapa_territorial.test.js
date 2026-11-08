@@ -112,7 +112,7 @@ assert.strictEqual(dados.setores.reduce((a, s) => a + s.pessoas, 0), 201418);
 const pequenos = dados.setores.filter((s) => M.setorPequeno(s));
 assert.strictEqual(pequenos.length, 17, "17 setores com menos de 5 pessoas ou menos de 3 domicílios");
 assert(pequenos.every((s) => s.pessoas < 5 || s.domicilios < 3) && dados.setores.filter((s) => !M.setorPequeno(s)).every((s) => s.pessoas >= 5 && s.domicilios >= 3));
-assert(js.indexOf("população muito pequena, interprete com cautela") !== -1 && /17 setores/.test(JSON.stringify(dados.meta.ressalvas)), "o aviso e a contagem aparecem na página");
+assert(js.indexOf("menos de 5 pessoas ou menos de 3 domicílios; interprete com cautela") !== -1 && /17 setores/.test(JSON.stringify(dados.meta.ressalvas)), "o aviso e a contagem aparecem na página");
 assert(/@media \(max-width:40rem\)[\s\S]*data-label/.test(css) && /data-label/.test(js), "tabelas viram lista no celular (sem rolagem horizontal)");
 
 assert(/setAttribute\("tabindex", "-1"\)/.test(js) && /setAttribute\("tabindex", "0"\)/.test(js) && /function definirFoco/.test(js), "roving tabindex: só o setor atual tem tabindex 0 (um único ponto de Tab)");
