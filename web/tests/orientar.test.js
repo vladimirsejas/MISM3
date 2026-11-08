@@ -28,6 +28,8 @@ assert.strictEqual(areas(R("minha pensão não cobre o que os netinhos precisam 
 assert.strictEqual(areas(R("quero atualizar o cadastro porque chegou um neto para morar aqui"))[0], "assistencia", "mudança na composição familiar e atualização cadastral levam ao CRAS");
 assert.strictEqual(areas(R("quero saber se preciso atualizar o cadastro quando um neto vem morar aqui"))[0], "assistencia", "variação de atualização do CadÚnico mantém Assistência");
 assert.strictEqual(areas(R("preciso levar minha neta ao posto mas não sei se posso acompanhar"))[0], "saude", "dúvida de acompanhamento de neta em unidade de saúde prioriza Saúde");
+const boloParaVenda = R("como faço um bolo de fubá para vender");
+assert(!boloParaVenda.abstem && areas(boloParaVenda).slice(0, 3).includes("trabalho"), "pedido para vender alimento é orientado a Trabalho, sem ensinar receita");
 
 assert(areas(R("minha filha deixou os pequenos aqui em casa e preciso de apoio social")).slice(0, 3).includes("assistencia"), "crianças deixadas com a avó e pedido de apoio social devem mostrar assistência");
 assert(areas(R("o INSS recusou meu pedido de aposentadoria e quero recorrer")).slice(0, 3).includes("direitos"), "contestação de aposentadoria negada continua em Direitos");
@@ -73,8 +75,8 @@ assert(R("oi").saudacao);
   "vendo moto barata",
   "kkkkkkk",
   "preciso da senha do wifi",
-  "como faço um bolo de fubá para vender",
   "me ensina a fazer pão de queijo",
+  "me ensina a fazer panqueca",
   "me ensina a fazer panqueca",
   "como cancelar meu cartão de crédito",
   "perdi meu cartão e quero bloquear",
