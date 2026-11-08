@@ -1,11 +1,38 @@
 # Inventário territorial do MISM3
 
-**Escopo:** leitura documental da branch `main`. Este inventário descreve o que foi possível confirmar nos arquivos indicados. Não executa scripts, testes, recálculos ou alterações nos dados.
+**Escopo original:** leitura documental da branch `main`. **Atualização técnica:** em 08/11/2026, os itens abaixo foram complementados pela inspeção e consolidação da branch `feat/mapa-territorial-como-mapa-principal` (PR #92). Os resultados de CI são registrados separadamente; não se afirma aprovação antes da execução.
 
 ## Estado da inspeção
 
 A branch `main` consultada contém `protocolo/` e `reproducao/`. As PRs #68 e #70 estão fechadas e mescladas. O topo da `main` é o commit `86c7ada7ba35c5002f62d057a8b6e529740dc2f8`, cujo commit de merge corresponde à PR #70; seu primeiro pai é o merge da PR #68 (`52ded74d291516c830764dddaafe00f6acddd725`). A sequência foi confirmada pelos metadados dos merges.
 
+## Atualização técnica da PR #92 — 08/11/2026
+
+A branch `feat/mapa-territorial-como-mapa-principal` transforma o mapa territorial em uma página própria e preserva o mapa de serviços para consulta por bairro/CEP. A consolidação técnica nesta branch também integra a incerteza espacial antes exibida no painel legado.
+
+### Gerador e dados publicados
+
+- `pipeline/territorial_indicadores.py` passa a usar `web/dados/escolas_municipais.json` como fonte consolidada das 68 escolas, preservando `localizacao_mapa.metodo`, `precisao`, `fonte` e `raio_m`.
+- O catálogo manual continua sendo a fonte de CRAS e UBS/USF; coordenadas individuais não recebem raio artificial.
+- O arquivo `web/dados/indicadores_territoriais.json` registra os campos `distancia_min_km` e `distancia_max_km` para cada setor, cenário e categoria.
+- Para cada equipamento aproximado, o raio operacional é aplicado por `d_min=max(0,d-r)` e `d_max=d+r`. Para a referência mais próxima entre vários equipamentos, são usados o menor limite inferior e o menor limite superior.
+- A faixa é envelope geométrico operacional, não intervalo de confiança. Faixas sobrepostas não permitem ordenar com segurança qual equipamento é mais próximo.
+- A saída inclui método, fonte e raio da localização institucional, sem copiar endereço, telefone ou CEP para o JSON público.
+- A base escolar consolidada e o índice de CEP entram no hash de reprodução do gerador.
+
+### Preservação de funcionalidades
+
+A página territorial é uma nova entrada de gestão. O mapa de serviços anterior permanece disponível, incluindo busca por bairro/CEP e CRAS; os dois mapas têm finalidades distintas e não devem ser fundidos em uma única visualização.
+
+### Limites que permanecem abertos
+
+- Nove centroides atuais caem fora dos respectivos polígonos. A troca por ponto interno ainda depende de comparação de impacto nas distâncias.
+- A correspondência dos campos `v0001` e `v0002` com o dicionário oficial da divulgação IBGE usada precisa de confirmação documental.
+- A regra de supressão/agregação de setores pequenos não foi aprovada. A decisão D4 mantém o aviso de cautela, sem supressão nesta versão.
+- A execução integral dos testes e auditorias deve ser confirmada pelo workflow da versão final da branch.
+- A PR #91 não é mergeada: sua lógica de incerteza foi portada para a PR #92, sem integrar a branch separada.
+
+A `main` permanece inalterada. A autorização D5, registrada em `DECISOES_DO_AUTOR.md`, limita as alterações à branch da PR #92 e não autoriza merge.
 ## Arquivos de processamento
 
 ### `pipeline/setores.py`
@@ -78,19 +105,9 @@ O uso do CEP observado nos arquivos é o CEP cadastral do equipamento público, 
 
 No arquivo existente `web/dados/exposicao_distancia.json`, retirar o fallback pelo centro do CEP corresponde a utilizar o cenário `coordenadas_do_catalogo`: escolas passam de 68/68 localizadas no cenário com CEP para 33/68 com coordenadas no catálogo. CRAS permanecem 6/6 e UBS permanecem 22/22 nos dois cenários. Esses números descrevem os arquivos atuais e não foram recalculados nesta fase.
 
-### Opções para decisão do autor
+### Decisão registrada do autor
 
-**Opção A — Manter o cenário com centro do CEP, explicitamente rotulado como análise de sensibilidade.**
-
-- Vantagens: preserva uma comparação de sensibilidade à forma de localização e aumenta a quantidade de escolas com posição aproximada.
-- Desvantagens: a coordenada é aproximada; o raio de incerteza varia; resultados de distância dependem de uma representação menos precisa. O cenário não deve ser confundido com coordenada institucional verificada.
-
-**Opção B — Retirar o cenário com CEP dos indicadores territoriais.**
-
-- Vantagens: mantém apenas coordenadas presentes no catálogo e reduz a dependência de localização aproximada por CEP.
-- Desvantagens: a cobertura de escolas cai de 68/68 para 33/68 no arquivo atual, tornando incompleta a base espacial escolar. Isso pode impedir ou limitar a apresentação de distâncias para essa categoria.
-
-**A decisão entre as opções não é tomada por este inventário.** Cabe ao autor escolher, considerando a finalidade do mapa e a transparência sobre a precisão das coordenadas.
+**D2 — Opção A aprovada:** manter o cenário `com_centro_do_cep` como análise de sensibilidade, rotulado como aproximado, ao lado de `coordenadas_do_catalogo`. A opção B permanece registrada como alternativa histórica, mas não está adotada. A integração de `raio_m` e dos envelopes mínimo–máximo reduz a falsa precisão, sem transformar a localização aproximada em coordenada verificada. Consulte `DECISOES_DO_AUTOR.md`.
 
 ## Itens não verificados nesta leitura
 
