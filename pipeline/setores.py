@@ -7,11 +7,7 @@ Saida   : web/dados/setores.geojson  (so Rio Claro, poligonos simplificados)
 
 Usa so a biblioteca pura-Python "pyshp" (pip install pyshp): funciona no Windows sem GDAL.
 
-Sobre as variaveis v0001..v0007: a malha traz contagens basicas do Censo 2022. Pelos totais de
-Rio Claro, v0001 = total de pessoas (soma 201.418) e v0002 = total de domicilios. O significado
-exato DEVE ser conferido no dicionario de dados do IBGE; por isso o resumo registra o nome
-original ("v0001") ao lado do nome amigavel. Nao ha idade nesta malha: criancas de 0 a 4 anos
-virao dos "Agregados por Setores Censitarios".
+Sobre as variaveis v0001..v0007: a malha traz contagens basicas do Censo 2022. A Nota metodologica n. 06 do IBGE confirma v0001 = total de pessoas e v0002 = total de domicilios (DPPO + DPPV + DPPUO + DPIO + DCCM + DCSM). O campo v0002 inclui domicilios vagos, de uso ocasional e coletivos; nao deve ser interpretado como domicilios ocupados ou familias. Nao ha idade nesta malha: criancas de 0 a 4 anos virao dos "Agregados por Setores Censitarios".
 
 Privacidade: so agregados por setor (nao ha pessoas nem enderecos aqui).
 """
@@ -153,8 +149,8 @@ def main() -> None:
     colecao["meta"] = {
         "fonte": "IBGE - Malha de setores censitarios, Censo Demografico 2022",
         "gerado_em": agora_iso(),
-        "pessoas": "campo v0001 da malha (a confirmar no dicionario do IBGE)",
-        "domicilios": "campo v0002 da malha (a confirmar no dicionario do IBGE)",
+        "pessoas": "campo V0001 da malha: total de pessoas (IBGE, Nota metodológica n. 06)",
+        "domicilios": "campo V0002 da malha: total de domicílios, inclusive particulares e coletivos (IBGE, Nota metodológica n. 06)",
     }
     salvar_json(colecao, WEB_DADOS / "setores.geojson")
     bairros = {k: v["bairro"] for k, v in sorted(resumo.items()) if v.get("bairro")}
