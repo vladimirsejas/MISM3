@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="theme-color" content="#7a2b37">
+<title>Qualidade dos dados territoriais – MISM3</title>
+<link rel="stylesheet" href="estilo.css">
+<link rel="stylesheet" href="qualidade-dados.css">
+</head>
+<body class="qd-pagina">
+<a class="pular" href="#qd-principal">Pular para o conteúdo</a>
+<header class="qd-topo">
+  <a href="index.html">‹ Voltar ao Observatório da Mulher</a>
+  <h1>Qualidade dos dados territoriais</h1>
+  <p>Indicadores calculados a partir da malha censitária e dos cadastros institucionais versionados no MISM3.</p>
+  <nav aria-label="Navegação de gestão">
+    <a href="mapa-territorial.html">Abrir mapa territorial</a>
+  </nav>
+</header>
+<main id="qd-principal" class="qd-principal">
+  <p id="qd-status" class="qd-status" role="status">Calculando qualidade dos arquivos locais…</p>
+  <section aria-labelledby="qd-titulo-geometrias">
+    <h2 id="qd-titulo-geometrias">Malha e integridade estrutural</h2>
+    <div id="qd-geometrias" class="qd-grade"></div>
+  </section>
+  <section aria-labelledby="qd-titulo-areas">
+    <h2 id="qd-titulo-areas">Consistência das áreas</h2>
+    <div id="qd-areas" class="qd-grade"></div>
+    <p class="qd-nota">Os métodos de cálculo produzem resultados diferentes. O painel registra a divergência; não escolhe automaticamente um método nem ajusta os valores para coincidir com a referência municipal.</p>
+  </section>
+  <section aria-labelledby="qd-titulo-equipamentos">
+    <h2 id="qd-titulo-equipamentos">Equipamentos e procedência</h2>
+    <div id="qd-equipamentos" class="qd-grade"></div>
+  </section>
+  <section aria-labelledby="qd-titulo-privacidade">
+    <h2 id="qd-titulo-privacidade">Privacidade e cautela territorial</h2>
+    <div id="qd-privacidade" class="qd-grade"></div>
+    <p class="qd-nota">Setores pequenos permanecem sinalizados conforme a decisão D4. Este painel não suprime nem agrega registros automaticamente.</p>
+  </section>
+  <section aria-labelledby="qd-titulo-fontes">
+    <h2 id="qd-titulo-fontes">Fontes e atualização</h2>
+    <p id="qd-fontes" class="qd-fontes">Aguardando carregamento dos metadados locais…</p>
+  </section>
+  <section class="qd-limites" aria-labelledby="qd-titulo-limites">
+    <h2 id="qd-titulo-limites">O que esta auditoria não comprova</h2>
+    <ul>
+      <li>Integridade estrutural não equivale a validação topológica completa: auto-interseções, sobreposições e lacunas ainda exigem análise específica.</li>
+      <li>Uma coordenada dentro da malha não comprova que o equipamento esteja fisicamente naquele local.</li>
+      <li>Distância em linha reta não representa percurso, tempo de viagem nem acesso efetivo.</li>
+      <li>Ausência de procedência registrada não significa que o serviço não exista.</li>
+    </ul>
+  </section>
+</main>
+<script src="qualidade-dados.js"></script>
+</body>
+</html>

@@ -116,6 +116,7 @@ Não existe: modelo de linguagem, embeddings neurais, previsão de risco, elegib
 | `entre-mulheres.js`, `entre-mulheres-ui.js` | Entre Mulheres: preparo do cadastro e tela |
 | `painel-ui.js` | Vista "Análise territorial" (`#painel`): lê `dados/analise_territorial.json`, se existir; não usa dado de pessoa |
 | `mapa-territorial.js` | Página `mapa-territorial.html` (versão de pesquisa, ainda não ligada ao menu): setores em SVG coloridos por indicador, lê só `dados/indicadores_territoriais.json` e `dados/setores.geojson`, sem mapa de fundo e sem requisição externa |
+| `qualidade-dados.js` | Painel de qualidade territorial: integridade estrutural, áreas, procedência dos equipamentos e cautela D4; lê somente arquivos locais |
 
 ## Pipeline (`pipeline/*.py`)
 
@@ -228,6 +229,7 @@ Notas de ambiente:
 - [docs/territorial/AUDITORIA_SENSIBILIDADE_CENTROIDES.md](docs/territorial/AUDITORIA_SENSIBILIDADE_CENTROIDES.md): método e execução da comparação dos pontos representativos.
 - [docs/territorial/RESULTADO_AUDITORIA_CENTROIDES_2026-11-08.md](docs/territorial/RESULTADO_AUDITORIA_CENTROIDES_2026-11-08.md): resultados calculados para os 408 setores e impacto nos nove centroides externos.
 - [docs/territorial/QUALIDADE_GEOGRAFICA.md](docs/territorial/QUALIDADE_GEOGRAFICA.md): execução e limites da auditoria automatizada de qualidade geográfica.
+- [docs/territorial/PAINEL_QUALIDADE_DADOS.md](docs/territorial/PAINEL_QUALIDADE_DADOS.md): uso, fontes e limites do painel web de qualidade territorial.
 - [docs/plano_proximo_ciclo.md](docs/plano_proximo_ciclo.md), [docs/plano_fontes_externas_e_expansao.md](docs/plano_fontes_externas_e_expansao.md), [docs/analise_competitiva_mism3.md](docs/analise_competitiva_mism3.md), [docs/benchmark_externo_ideias_funcionais.md](docs/benchmark_externo_ideias_funcionais.md): planejamento e pesquisa.
 
 ## Manutenção deste README
