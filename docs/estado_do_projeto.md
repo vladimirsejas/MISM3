@@ -1,6 +1,6 @@
 # Estado do projeto: o que existe, o que foi testado e o que ainda é proposta
 
-Última verificação: 05/11/2026. Data sustentada por docs/mapa_de_dados.md (índice regenerado em 05/11/2026), docs/ia/avaliacao_modelo_necessidades.md (avaliação gerada em 05/11/2026) e web/dados/exposicao_distancia.json (gerado em 05/11/2026). Cada afirmação aqui tem um arquivo, um teste ou um número que a sustenta. Se algo mudar, atualize esta página junto com o código.
+Última verificação: 08/11/2026. Esta revisão incorpora a decisão D4 de supressão estatística e a validação automatizada da branch de publicação. As datas de geração de cada base permanecem registradas nos metadados dos respectivos arquivos. Cada afirmação deve ter um arquivo, teste ou fonte que a sustente; ao alterar dados ou código, atualize esta página.
 
 ## O princípio
 
@@ -63,13 +63,13 @@ Não vendemos o sistema como diagnóstico social, nem como prova de que um servi
 
 | Capacidade | Estado | Evidência | Limite ou pendência |
 |---|---|---|---|
-| Mapa dos 408 setores com população e densidade | Implementado | Soma de pessoas igual ao Censo 2022 (201.418); área a 0,21% da oficial (`test_territorio.py`) | 43 setores (6,4% das pessoas) vêm sem bairro no IBGE |
+| Mapa dos 408 setores censitários | Implementado com supressão D4 | 391 setores exibem indicadores demográficos; 17 setores têm população, domicílios, densidade e distâncias omitidos; agregados dos 13 bairros afetados também são suprimidos | 43 setores vêm sem bairro no IBGE; a contagem populacional desse conjunto não é publicada |
 | Exposição à distância até o serviço mais próximo | CRAS 6/6 e UBS/USF 22/22 nos dois cenários; escolas 33/68 com coordenadas do catálogo e 68/68 com o centro do CEP | `web/dados/exposicao_distancia.json`, gerado em 05/11/2026; conferência das escolas registrada em `docs/registro_conferencia_visual_2026-11-04.md` | Distância em linha reta; os cenários de escola usam localizações diferentes e não representam melhora de atendimento |
-| Análise territorial (vista `#painel`) | Tela pronta; `analise_territorial.json` e `exposicao_distancia.json` gerados com todos os CRAS e UBS/USF | `painel.test.js`: a tela só lê esses arquivos | Mostra onde a rede cadastrada está longe da população; não prova falta de serviço (ver `docs/painel_e_analise_territorial.md`) |
+| Análise territorial (vista `#painel`) | Tela pronta; resumos de distância por setor, sem ponderação populacional | `painel.test.js` e testes do pipeline | Os resumos contam setores não suprimidos; médias e agrupamentos de bairros afetados são omitidos; distância em linha reta não prova falta de serviço |
 | População de 0 a 3 anos, renda, mulheres responsáveis por setor | **Não está no projeto** | | Sem isso não existe taxa de cobertura de creche |
 | Pedidos de dados à Prefeitura (fila de creche, RMA, saúde, estatísticas) | Proposta: minutas 6 a 9 em `docs/pedidos_LAI.md` | | Sem protocolo registrado no projeto |
 
-O indicador de **exposição à distância em linha reta (centro do setor censitário até o serviço cadastrado mais próximo)** considera 408 setores e 201.418 pessoas. A proporção da população a mais de 1 km é: CRAS, 60,2% nos dois cenários; UBS/USF, 24,5% nos dois cenários; escolas, 26,0% usando apenas coordenadas do catálogo e 6,2% usando o centro do CEP. Para escolas, a cobertura de localização é 33/68 no primeiro cenário e 68/68 no segundo. A diferença decorre da forma de localizar os equipamentos, não de mudança na oferta ou no atendimento. O indicador não mede tempo de viagem, trajeto pelas ruas, transporte, capacidade dos serviços nem demanda.
+O indicador de **exposição à distância em linha reta (centro do setor censitário até o serviço cadastrado mais próximo)** considera apenas setores não suprimidos e apresenta contagens e proporções de setores, nunca de pessoas. Para escolas, a cobertura de localização é 33/68 no cenário de coordenadas do catálogo e 68/68 no cenário com centro do CEP. A diferença decorre da forma de localizar os equipamentos, não de mudança na oferta ou no atendimento. O indicador não mede tempo de viagem, trajeto pelas ruas, transporte, capacidade dos serviços nem demanda.
 
 
 ## Confiança por informação, não por página
