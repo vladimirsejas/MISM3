@@ -33,6 +33,7 @@ import exposicao_distancia as ed  # noqa: E402
 RAIZ = Path(__file__).resolve().parents[1]
 DADOS = RAIZ / "web" / "dados"
 CATALOGO = RAIZ / "catalogo" / "servicos_manuais.csv"
+CATALOGO_LOCALIZACAO = RAIZ / "catalogo" / "localizacao_registro.csv"
 SAIDA = DADOS / "indicadores_territoriais.json"
 VERSAO = "1"
 ENTRADAS = ("setores.geojson", "territorio.json", "exposicao_distancia.json", "analise_territorial.json", "escolas_municipais.json")
@@ -57,17 +58,27 @@ def hash_conteudo(caminho: Path) -> str:
     return hashlib.sha256(caminho.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
 
 
-def carregar(dados: Path = DADOS, catalogo: Path = CATALOGO) -> dict:
+def carregar(dados: Path = DADOS, catalogo: Path = CATALOGO, catalogo_localizacao: Path = CATALOGO_LOCALIZACAO) -> dict:
     ent = {nome: json.loads((dados / nome).read_text(encoding="utf-8")) for nome in ENTRADAS}
     with catalogo.open(encoding="utf-8-sig", newline="") as f:
         linhas = list(csv.DictReader(f))
+    localizacao = {}
+    with catalogo_localizacao.open(encoding="utf-8-sig", newline="") as f:
+        for r in csv.DictReader(f):
+            item = localizacao.setdefault(r["id"], {})
+            if r.get("campo") in {"lat", "lon", "cep"} and r.get("valor"):
+                item[r["campo"]] = r["valor"]
+            for campo in ("metodo", "confianca", "aplicado_em"):
+                if r.get(campo):
+                    item[campo] = r[campo]
     arq_cep = dados / ENTRADA_CEP
     indice = json.loads(arq_cep.read_text(encoding="utf-8")).get("ceps", {}) if arq_cep.exists() else {}
     hashes = {nome: hash_conteudo(dados / nome) for nome in ENTRADAS}
     hashes["servicos_manuais.csv"] = hash_conteudo(catalogo)
+    hashes["localizacao_registro.csv"] = hash_conteudo(catalogo_localizacao)
     if arq_cep.exists():
         hashes[ENTRADA_CEP] = hash_conteudo(arq_cep)
-    return {"json": ent, "catalogo": linhas, "indice_cep": indice, "hashes": hashes}
+    return {"json": ent, "catalogo": linhas, "indice_cep": indice, "localizacao_registro": localizacao, "hashes": hashes}
 
 
 def carimbo(hashes: dict) -> str:
@@ -90,8 +101,8 @@ def coord_do_catalogo(lat, lon):
     return None
 
 
-def equipamentos(linhas: list, indice_cep: dict, escolas: list[dict]) -> list[dict]:
-    """CRAS/UBS vêm do catálogo; escolas vêm da base consolidada, que preserva método, fonte e raio."""
+def equipamentos(linhas: list, indice_cep: dict, escolas: list[dict], localizacao_registro: dict) -> list[dict]:
+    """CRAS/UBS preservam proveniência registrada; escolas vêm da base consolidada com método, fonte e raio."""
     saida = []
     for r in linhas:
         if not str(r.get("id", "")).startswith("man-"):
@@ -105,10 +116,19 @@ def equipamentos(linhas: list, indice_cep: dict, escolas: list[dict]) -> list[di
             cep = "".join(ch for ch in str(r.get("cep") or "") if ch.isdigit())
             item_cep = indice_cep.get(cep) if cep else None
             raio_cep = float(item_cep[2]) if xy_cep and item_cep and len(item_cep) > 2 else 0.0
+            registro = localizacao_registro.get(r["id"], {})
+            if registro.get("lat") and registro.get("lon") and xy_catalogo:
+                coord_registro = coord_do_catalogo(registro["lat"], registro["lon"])
+                if coord_registro != xy_catalogo:
+                    raise ValueError("proveniência de localização diverge do catálogo para %s" % r["id"])
+            metodo = registro.get("metodo") or ("catalogo_sem_registro_de_proveniencia" if xy_catalogo else ("centroide_cep" if xy_cep else "pendente"))
+            confianca = registro.get("confianca") or ("nao_registrada" if xy_catalogo else ("aproximada_operacional" if xy_cep else "nao_registrada"))
+            fonte = ("servicos_manuais.csv + localizacao_registro.csv" if registro.get("metodo") else
+                     ("servicos_manuais.csv (proveniência não registrada)" if xy_catalogo else ("CNEFE/índice CEP" if xy_cep else None)))
             saida.append({"id": r["id"], "nome": r["nome"], "categoria": cat, "xy_catalogo": xy_catalogo,
                           "xy_cep": xy_cep, "raio_catalogo_m": 0.0, "raio_cep_m": raio_cep,
-                          "metodo_localizacao": "coordenada_individual" if xy_catalogo else ("centroide_cep" if xy_cep else "pendente"),
-                          "fonte_localizacao": "catalogo_manual.csv" if xy_catalogo else ("CNEFE/índice CEP" if xy_cep else None)})
+                          "metodo_localizacao": metodo, "confianca_localizacao": confianca,
+                          "data_aplicacao_localizacao": registro.get("aplicado_em"), "fonte_localizacao": fonte})
 
     # A base consolidada é a fonte de localização escolar. Não reutilizar a cópia escolar do catálogo:
     # isso evita divergência de coordenadas e preserva os raios operacionais já calculados.
@@ -128,8 +148,8 @@ def equipamentos(linhas: list, indice_cep: dict, escolas: list[dict]) -> list[di
         saida.append({"id": escola["id"], "nome": escola["nome"], "categoria": "escola",
                       "xy_catalogo": individual, "xy_cep": aproximada,
                       "raio_catalogo_m": 0.0, "raio_cep_m": raio,
-                      "metodo_localizacao": metodo if xy else "pendente",
-                      "fonte_localizacao": local.get("fonte") if xy else None})
+                      "metodo_localizacao": metodo if xy else "pendente", "confianca_localizacao": None,
+                      "data_aplicacao_localizacao": None, "fonte_localizacao": local.get("fonte") if xy else None})
     return sorted(saida, key=lambda e: (e["categoria"], e["id"]))
 
 
@@ -179,7 +199,7 @@ def gerar(dados: dict) -> dict:
     ent, hashes = dados["json"], dados["hashes"]
     geo, terr, expo = ent["setores.geojson"], ent["territorio.json"], ent["exposicao_distancia.json"]
     feicoes = sorted(geo["features"], key=lambda f: f["properties"]["setor"])
-    equip = equipamentos(dados["catalogo"], dados["indice_cep"], ent["escolas_municipais.json"].get("escolas", []))
+    equip = equipamentos(dados["catalogo"], dados["indice_cep"], ent["escolas_municipais.json"].get("escolas", []), dados["localizacao_registro"])
 
     # Posição representativa de cada setor: a mesma de pipeline/analise_territorial.py (centroide geométrico).
     setores = []
@@ -256,14 +276,14 @@ def gerar(dados: dict) -> dict:
         "meta": {
             "versao": VERSAO,
             "carimbo": carimbo(hashes),
-            "fonte": "IBGE, Censo Demográfico 2022 (malha de setores censitários), catálogo institucional e base consolidada das escolas municipais",
+            "fonte": "IBGE, Censo Demográfico 2022 (malha de setores censitários), catálogo institucional, registro de proveniência e base consolidada das escolas municipais",
             "entradas_sha256": {k: hashes[k] for k in sorted(hashes)},
             "entradas_geradas_em": {"setores.geojson": geo["meta"]["gerado_em"], "territorio.json": meta_terr["gerado_em"],
                                     "exposicao_distancia.json": meta_expo["gerado_em"], "analise_territorial.json": ent["analise_territorial.json"]["meta"]["gerado_em"],
                                     "escolas_municipais.json": ent["escolas_municipais.json"]["meta"]["gerado_em"]},
             "auditoria_centros": {"metodo_atual": "centroide geométrico do maior componente do MultiPolygon, selecionado pelo número de vértices do anel externo; cálculo usa somente o anel externo", "setores_auditados": len(setores), "centroides_fora_do_poligono": centroides_fora, "substituicao_automatica": False, "observacao": "A comparação com ponto interno representativo e a avaliação do impacto nas distâncias permanecem pendentes. Nenhum centro foi substituído."},
             "metodo": ("Setor censitário como unidade. Pessoas e domicílios: campos agregados da malha do IBGE; a correspondência de v0001/v0002 com o dicionário da divulgação usada ainda exige conferência documental. "
-                       "Densidade e área: valores de territorio.json. CRAS/UBS: catálogo institucional. Escolas: web/dados/escolas_municipais.json, campo localizacao_mapa, preservando método, precisão, fonte e raio. "
+                       "Densidade e área: valores de territorio.json. CRAS/UBS: coordenadas em servicos_manuais.csv e método, confiança e data em localizacao_registro.csv quando registrados; ausência de registro não equivale a confiança alta. Escolas: web/dados/escolas_municipais.json, campo localizacao_mapa, preservando método, precisão, fonte e raio. "
                        "Distância central: Haversine (raio 6371,0088 km) do centroide atual do setor ao equipamento elegível mais próximo. Para localizações com raio operacional r, o envelope é d_min=max(0,d-r) e d_max=d+r; para várias referências, usa-se o menor limite inferior e o menor limite superior. "
                        "O envelope é geométrico, não intervalo de confiança. Os resumos centrais continuam conferidos contra web/dados/exposicao_distancia.json."),
             "metodologia_incerteza": {"unidade_raio": "metros", "formula": "d_min=max(0,d-r); d_max=d+r",
@@ -278,7 +298,7 @@ def gerar(dados: dict) -> dict:
                 "Nesta versão nenhum setor censitário é suprimido nem agregado. Os %d setores com menos de 5 pessoas ou menos de 3 domicílios (faixa conservadora da proposta de supressão e agregação) são marcados no mapa com o aviso 'população muito pequena, interprete com cautela' (decisão D4 em docs/territorial/DECISOES_DO_AUTOR.md; pode ser revista pelo autor)." % sum(1 for s in setores if s["pessoas"] < 5 or s["domicilios"] < 3),
                 "O cenário com centro do CEP cadastral do equipamento é uma análise de sensibilidade: a posição é aproximada e não equivale à coordenada individual do catálogo.",
                 "A auditoria geométrica encontrou %d centroides fora dos respectivos polígonos em %d setores. O centroide atual não foi substituído: a alternativa interna e o impacto nas distâncias ainda precisam ser comparados antes de qualquer mudança." % (centroides_fora, len(setores)),
-                "A localização escolar é lida da base consolidada, com método, precisão, fonte e raio. Para CRAS/UBS, coordenadas individuais vêm do catálogo; referências pelo índice CEP permanecem aproximadas.",
+                "A localização escolar é lida da base consolidada, com método, precisão, fonte e raio. Para CRAS/UBS, 22 dos 28 registros têm método e confiança documentados em localizacao_registro.csv; os outros 6 têm coordenadas no catálogo, mas sem registro explícito de proveniência.",
                 "Categorias com cobertura incompleta de coordenadas têm distância superestimada.",
             ],
             "conferencia": {"coincide_com_exposicao_distancia": True, "setores": len(setores), "pessoas": sum(s["pessoas"] for s in setores)},
@@ -292,7 +312,8 @@ def gerar(dados: dict) -> dict:
         "equipamentos": [
             {"id": e["id"], "nome": e["nome"], "categoria": e["categoria"],
              "precisao": "catalogo" if e["xy_catalogo"] else ("centro_do_cep" if e["xy_cep"] else "pendente"),
-             "metodo_localizacao": e.get("metodo_localizacao"), "fonte_localizacao": e.get("fonte_localizacao"),
+             "metodo_localizacao": e.get("metodo_localizacao"), "confianca_localizacao": e.get("confianca_localizacao"),
+             "data_aplicacao_localizacao": e.get("data_aplicacao_localizacao"), "fonte_localizacao": e.get("fonte_localizacao"),
              "raio_incerteza_m": round(float(e.get("raio_catalogo_m") or 0) if e["xy_catalogo"] else float(e.get("raio_cep_m") or 0), 1),
              "lat": round((e["xy_catalogo"] or e["xy_cep"] or (None, None))[0], 6) if (e["xy_catalogo"] or e["xy_cep"]) else None,
              "lon": round((e["xy_catalogo"] or e["xy_cep"] or (None, None))[1], 6) if (e["xy_catalogo"] or e["xy_cep"]) else None,
