@@ -129,7 +129,7 @@ Não existe: modelo de linguagem, embeddings neurais, previsão de risco, elegib
 | `baixar.py` | URLs do IBGE, INEP, CNES | `dados/bruto/` | stdlib (`urllib`, `zipfile`) |
 | `common.py` | Utilidades compartilhadas (download com retomada, distância) | | pandas, numpy |
 | `cnes.py` | Base completa do CNES | Diagnóstico e estabelecimentos de saúde | pandas |
-| `indice_cep.py` | CNEFE 2022 | `web/dados/cep_indice.json` | pandas, numpy |
+| `indice_cep.py` | CNEFE 2022; filtra CEPs associados a setores protegidos pela D4 | `web/dados/cep_indice.json` | pandas, numpy |
 | `ceps_lista.py` | Lista de CEPs com coordenada | Dados para o índice | stdlib |
 | `servicos.py` | `catalogo/servicos_manuais.csv`, CNES, INEP | `web/dados/catalogo_manual.json` e `servicos.json` | pandas |
 | `geocodificar_catalogo.py` | Catálogo | Planilha de sugestões de CEP e coordenada | stdlib |
@@ -143,7 +143,7 @@ Não existe: modelo de linguagem, embeddings neurais, previsão de risco, elegib
 | `pipeline/privacidade_territorial.py` | Regra central de supressão estatística D4 | Suprime contagens pequenas antes da publicação do GeoJSON e orienta os demais pipelines | stdlib |
 | `auditoria_centroides.py` | `setores.geojson` e `indicadores_territoriais.json` | Relatórios JSON e Markdown de sensibilidade dos centroides e distâncias, sem alterar a produção | stdlib |
 | `oferta_educacao_infantil.py` | Censo Escolar 2025; calcula totais por rede em memória e publica somente agregados, sem matrículas por escola | `web/dados/oferta_educacao_infantil.json` | pandas |
-| `escolas_municipais.py` | Catálogo municipal, vínculos INEP e Censo Escolar | `web/dados/escolas_municipais.json` | stdlib |
+| `escolas_municipais.py` | Catálogo municipal e vínculos INEP; sem matrículas ou turmas por escola | `web/dados/escolas_municipais.json` | stdlib |
 | `ligar_catalogo_inep.py` | Catálogo e Censo | `catalogo/inep_escolas.csv` (sobrescreve; revisar antes) | stdlib |
 | `horarios_onibus.py` | `catalogo/horarios_onibus.txt` | `web/dados/horarios_onibus.json` | stdlib |
 | `treinar_necessidades.py`, `treinar_perigo.py`, `treinar_escopo.py` | Frases em `catalogo/` | Modelos em `web/dados/` | numpy, scikit-learn |
@@ -195,7 +195,7 @@ python pipeline/treinar_escopo.py
 python pipeline/horarios_onibus.py
 ```
 
-Pipeline com dados reais (internet, `dados/bruto/`): `baixar.py cnefe`, `baixar.py escolas`, `indice_cep.py`, `cnes.py docs/cnes`, `oferta_educacao_infantil.py`, `territorio.py`, `setores.py <zip>`, `geocodificar_catalogo.py`. Cada script documenta argumentos em `--help` e no cabeçalho.
+Pipeline com dados reais (internet, `dados/bruto/`): `baixar.py cnefe`, `baixar.py escolas`, `setores.py <zip>` (gera primeiro a malha sanitizada D4), `indice_cep.py` (filtra CEPs de setores protegidos), `cnes.py docs/cnes`, `oferta_educacao_infantil.py` (totais por rede), `escolas_municipais.py` (cadastro sem matrículas por unidade), `territorio.py`, `geocodificar_catalogo.py`. Cada script documenta argumentos em `--help` e no cabeçalho.
 
 Notas de ambiente:
 - Windows: o padrão de texto do Python é cp1252. Chamadas a `subprocess` e leituras de arquivo usam `encoding="utf-8"` explícito.
@@ -220,7 +220,7 @@ Notas de ambiente:
 
 - `catalogo/servicos_manuais.csv` é a fonte de verdade dos serviços (campos obrigatórios: `tipo`, `nome`, `fonte_url`, `verificado_em`; `conferido` e `aviso` para itens sem confirmação). Depois de editar, rodar `python pipeline/servicos.py --somente-manual`.
 - Coordenada só existe com fonte (`geo = coordenada_fonte`); localização por CEP é aproximada e nunca vira coordenada de fonte.
-- `pipeline/escolas_municipais.py` consolida o cadastro municipal, os vínculos INEP e os dados do Censo Escolar; gera `web/dados/escolas_municipais.json`, preservando a origem e a precisão da localização individual ou aproximada por CEP.
+- `pipeline/escolas_municipais.py` consolida o cadastro municipal e os vínculos INEP; gera `web/dados/escolas_municipais.json` sem matrículas ou turmas por unidade. O Censo Escolar é publicado separadamente em totais por rede por `pipeline/oferta_educacao_infantil.py`.
 - Mapa completo de arquivos de dados, geradores e consumidores: [docs/mapa_de_dados.md](docs/mapa_de_dados.md).
 - Verificar o catálogo contra as páginas oficiais (com internet): `python pipeline/verificar_catalogo.py`.
 
