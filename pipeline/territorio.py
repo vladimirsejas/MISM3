@@ -162,7 +162,7 @@ def distancias_ate_servicos(geojson: dict, servicos: list[dict], indice_cep: dic
             "localizados_pelo_endereco": sum(p["precisao"] == "endereco" for p in pontos),
             "pontos": pontos, "por_setor": por_setor,
             "limites": LIMITES_DISTANCIA_KM, "contagem": contagem,
-            "setores_total": len(centros), "setores_suprimidos": len(centros) - len(distancias),
+            "setores_total": len(centros), "setores_suprimidos": len(centros) - len(distancias), "setores_validos": len(distancias),
             "setores_ate_1_km": sum(d <= 1.0 for d in distancias),
             "setores_3_km_ou_mais": sum(d >= 3.0 for d in distancias),
             "mediana_km": mediana,
