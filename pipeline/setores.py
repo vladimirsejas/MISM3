@@ -152,7 +152,8 @@ def main() -> None:
         "pessoas": "campo V0001 da malha: total de pessoas (IBGE, Nota metodológica n. 06)",
         "domicilios": "campo V0002 da malha: total de domicílios, inclusive particulares e coletivos (IBGE, Nota metodológica n. 06)",
     }
-    salvar_json(colecao, WEB_DADOS / "setores.geojson")
+    from privacidade_territorial import sanitizar_geojson
+    salvar_json(sanitizar_geojson(colecao), WEB_DADOS / "setores.geojson")
     bairros = {k: v["bairro"] for k, v in sorted(resumo.items()) if v.get("bairro")}
     salvar_json({"meta": {"fonte": colecao["meta"]["fonte"], "gerado_em": colecao["meta"]["gerado_em"],
                           "nota": "Nome de bairro da malha do IBGE (agrupado). Serve para dizer o bairro PROVAVEL de um CEP; "
