@@ -58,8 +58,13 @@ def gerar(pasta, tmp_path, monkeypatch):
     return json.loads(saida.read_text(encoding="utf-8"))
 
 
+def gerar_detalhado(pasta):
+    dados = {k: o.ler_filtrado(pasta / nome, o.COLUNAS[k]) for k, nome in o.ARQUIVOS.items() if (pasta / nome).exists()}
+    return o.montar(dados["escola"], dados.get("matricula"), dados.get("turma"), hoje="2026-11-08")
+
+
 def test_so_rio_claro_e_so_escolas_em_atividade_com_educacao_infantil(pasta, tmp_path, monkeypatch):
-    d = gerar(pasta, tmp_path, monkeypatch)
+    d = gerar_detalhado(pasta)
     ids = [e["inep"] for e in d["escolas"]]
     assert sorted(ids) == ["35000001", "35000002", "35000005"]  # sem outra cidade, sem paralisada, sem só-fundamental
     assert d["meta"]["escolas_fora_de_atividade_ignoradas"] == 1
@@ -67,7 +72,7 @@ def test_so_rio_claro_e_so_escolas_em_atividade_com_educacao_infantil(pasta, tmp
 
 
 def test_numeros_por_escola_e_em_branco_nao_e_zero(pasta, tmp_path, monkeypatch):
-    d = gerar(pasta, tmp_path, monkeypatch)
+    d = gerar_detalhado(pasta)
     por_id = {e["inep"]: e for e in d["escolas"]}
     a = por_id["35000001"]
     assert (a["rede"], a["localizacao"], a["oferece_creche"], a["oferece_pre_escola"]) == ("municipal", "urbana", True, True)
@@ -81,6 +86,7 @@ def test_numeros_por_escola_e_em_branco_nao_e_zero(pasta, tmp_path, monkeypatch)
 
 def test_totais_por_rede_e_aviso(pasta, tmp_path, monkeypatch):
     d = gerar(pasta, tmp_path, monkeypatch)
+    assert "escolas" not in d
     mun = d["totais_por_rede"]["municipal"]
     assert mun["escolas_com_educacao_infantil"] == 2 and mun["escolas_com_creche"] == 2
     assert mun["matriculas_creche"] == 80 and mun["turmas_creche"] == 4 and mun["matriculas_pre_escola"] == 120
@@ -93,9 +99,12 @@ def test_saida_nao_leva_cnpj_nem_outros_campos_da_tabela(pasta, tmp_path, monkey
     d = gerar(pasta, tmp_path, monkeypatch)
     texto = json.dumps(d, ensure_ascii=False)
     assert "12345678000199" not in texto and "98765432000100" not in texto and "CNPJ" not in texto.upper()
-    assert set(d["escolas"][0]) == {"inep", "nome", "rede", "localizacao", "oferece_creche", "oferece_pre_escola",
-                                    "matriculas_creche", "matriculas_0_a_3_anos", "matriculas_creche_tempo_integral",
-                                    "matriculas_pre_escola", "turmas_creche", "turmas_pre_escola"}
+    assert set(d) == {"meta", "totais_por_rede"}
+    assert d["meta"]["granularidade_publicada"] == "totais por rede de ensino; sem contagens por escola"
+    assert "escolas" not in d
+    detalhado = gerar_detalhado(pasta)
+    assert "12345678000199" not in json.dumps(detalhado, ensure_ascii=False)
+    assert "98765432000100" not in json.dumps(detalhado, ensure_ascii=False)
 
 
 def test_arquivo_em_latin1_e_leitura_em_blocos(tmp_path):
@@ -114,7 +123,7 @@ def test_coluna_faltando_da_erro_claro(tmp_path):
 
 def test_sem_tabela_de_turma_os_campos_ficam_null(pasta, tmp_path, monkeypatch, capsys):
     (pasta / o.ARQUIVOS["turma"]).unlink()
-    d = gerar(pasta, tmp_path, monkeypatch)
+    d = gerar_detalhado(pasta)
     assert all(e["turmas_creche"] is None for e in d["escolas"])
     assert "AVISO" in capsys.readouterr().out
 
