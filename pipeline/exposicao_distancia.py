@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import json
 import sys
+from privacidade_territorial import setor_suprimido
 from datetime import date
 from pathlib import Path
 
@@ -30,9 +31,9 @@ CENARIOS = {
     "coordenadas_do_catalogo": False,
     "com_centro_do_cep": True,
 }
-AVISO = ("Distâncias em linha reta entre o centro de cada setor do IBGE e o serviço mais próximo; não consideram ruas, ônibus nem "
-         "horários. Mostram onde a rede cadastrada fica longe da população e não provam falta de serviço. Categoria com cobertura "
-         "incompleta de coordenadas tem distância superestimada.")
+AVISO = ("Distâncias em linha reta entre o centro dos setores não suprimidos e o serviço mais próximo; não consideram ruas, ônibus nem "
+         "horários. Os resumos contam setores, não pessoas. Setores pequenos têm suas distâncias omitidas por cautela estatística. "
+         "Categoria com cobertura incompleta de coordenadas tem distância superestimada.")
 
 
 def quantil_ponderado(pares, q):
@@ -48,20 +49,19 @@ def quantil_ponderado(pares, q):
     return sorted(pares)[-1][0]
 
 
-def resumir(pares, limiares):
-    """pares = [(distancia_km, pessoas)]. Resumo ponderado pela população."""
-    total = sum(p for _, p in pares)
-    out = {"pessoas": total, "setores": len(pares)}
-    if total <= 0:
-        return out
-    out["mediana_km"] = round(quantil_ponderado(pares, 0.5), 2)
-    out["p90_km"] = round(quantil_ponderado(pares, 0.9), 2)
-    out["acima_de"] = {}
+def resumir_setores(distancias, limiares):
+    """Resumo não ponderado: informa quantidade e proporção de setores, nunca contagem de pessoas."""
+    valores = sorted(distancias)
+    total = len(valores)
+    if not total:
+        return None
+    mediana = valores[total // 2] if total % 2 else round((valores[total // 2 - 1] + valores[total // 2]) / 2, 2)
+    p90 = valores[min(total - 1, int((total - 1) * 0.9))]
+    acima = {}
     for lim in limiares:
-        longe = sum(p for d, p in pares if d > lim)
-        out["acima_de"]["%g km" % lim] = {"pessoas": longe, "percentual": round(100 * longe / total, 1),
-                                          "setores": sum(1 for d, _ in pares if d > lim)}
-    return out
+        n = sum(d > lim for d in valores)
+        acima["%g km" % lim] = {"setores": n, "percentual": round(100 * n / total, 1)}
+    return {"setores": total, "mediana_km": round(mediana, 2), "p90_km": round(p90, 2), "acima_de": acima}
 
 
 def calcular(geojson, servicos, indice_cep, usar_cep, limiares=LIMIARES_KM):
@@ -84,17 +84,23 @@ def calcular(geojson, servicos, indice_cep, usar_cep, limiares=LIMIARES_KM):
     setores = []
     for f in geojson["features"]:
         pr = f["properties"]
+        if setor_suprimido(pr):
+            continue
         lat, lon = at.centro(f["geometry"])
-        setores.append({"sem_bairro": not pr.get("bairro"), "pessoas": int(pr.get("pessoas") or 0), "lat": lat, "lon": lon})
+        setores.append({"sem_bairro": not pr.get("bairro"), "lat": lat, "lon": lon})
     saida = {}
     for c, pontos in por_cat.items():
         cobertura = {"com_coordenada": len(pontos), "cadastrados": totais[c], "completo": len(pontos) == totais[c] and totais[c] > 0}
         if not pontos:
-            saida[c] = {"cobertura": cobertura, "populacao_toda": None}
+            saida[c] = {"cobertura": cobertura, "setores_validos": None, "setores_sem_bairro": None}
             continue
-        pares = [(min(at.haversine_km(st["lat"], st["lon"], la, lo) for la, lo in pontos), st["pessoas"]) for st in setores]
-        pares_sem = [(d, st["pessoas"]) for (d, _), st in zip(pares, setores) if st["sem_bairro"]]
-        saida[c] = {"cobertura": cobertura, "populacao_toda": resumir(pares, limiares), "setores_sem_bairro": resumir(pares_sem, limiares)}
+        distancias = [min(at.haversine_km(st["lat"], st["lon"], la, lo) for la, lo in pontos) for st in setores]
+        sem_bairro = [d for d, st in zip(distancias, setores) if st["sem_bairro"]]
+        saida[c] = {
+            "cobertura": cobertura,
+            "setores_validos": resumir_setores(distancias, limiares),
+            "setores_sem_bairro": resumir_setores(sem_bairro, limiares),
+        }
     return saida
 
 
@@ -105,7 +111,8 @@ def gerar(geojson, servicos, indice_cep, hoje=None):
             "gerado_em": (hoje or date.today()).isoformat(),
             "aviso": AVISO,
             "limiares_km": list(LIMIARES_KM),
-            "pessoas_total": sum(int(f["properties"].get("pessoas") or 0) for f in geojson["features"]),
+            "pessoas_total": None,
+            "setores_suprimidos": sum(1 for f in geojson["features"] if setor_suprimido(f["properties"])),
         },
         "cenarios": {nome: calcular(geojson, servicos, indice_cep, usar) for nome, usar in CENARIOS.items()},
     }
