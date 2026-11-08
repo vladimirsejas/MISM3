@@ -5,7 +5,7 @@
 
 ## 1. Finalidade
 
-A política de privacidade territorial do MISM3 já determina que setores pequenos, categorias raras e combinações específicas sejam avaliados antes da divulgação, mas não fixa parâmetros numéricos. Este documento propõe uma regra operacional com alternativas de limiar. Os valores são opções para avaliação, não uma norma, obrigação legal ou decisão já tomada.
+**Atualização de 08/11/2026 — decisão D4 adotada:** o autor aprovou a faixa conservadora desta proposta: menos de 5 pessoas ou menos de 3 domicílios por setor. A regra foi aplicada a 17 setores, com supressão complementar nos agregados dos 13 bairros afetados e retirada dos totais municipais demográficos do painel. As alternativas descritas abaixo permanecem como histórico metodológico; não substituem a regra D4 em vigor. A regra não é limiar legal universal nem garantia absoluta de anonimato.
 
 O objetivo é evitar que um mapa ou tabela permita identificar ou inferir informação sobre pessoa ou domicílio por meio de contagens pequenas, combinações raras, comparação entre filtros ou subtração de totais. A regra deve preservar, tanto quanto possível, a utilidade dos indicadores territoriais.
 
