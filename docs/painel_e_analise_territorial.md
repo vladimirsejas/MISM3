@@ -34,7 +34,7 @@ Regra: **nenhum indicador entra no painel sem uma decisão que a Prefeitura poss
 
 | Pergunta de gestão | Indicador | Decisão que apoia | Fonte provável | Disponível hoje? |
 |---|---|---|---|---|
-| Onde a creche está abaixo da demanda conhecida? | Crianças aguardando vaga por etapa e território de residência, contra vagas e capacidade | Ampliar, remanejar ou reorganizar a oferta | Secretaria da Educação (agregado); Censo 2022 para crianças de 0 a 4 anos | **Não.** Só população total por setor; faixa etária e fila dependem de dados novos |
+| Onde a creche está abaixo da demanda conhecida? | Crianças aguardando vaga por etapa e território de residência, contra vagas e capacidade | Ampliar, remanejar ou reorganizar a oferta | Secretaria da Educação (agregado); Censo 2022 para crianças de 0 a 4 anos | **Não.** Indicadores demográficos apenas nos setores não suprimidos; faixa etária e fila dependem de dados novos |
 | Onde a assistência social está mais pressionada? | Famílias em acompanhamento e atendimentos por equipe de referência | Reforçar equipes, redistribuir serviços | Secretaria de Desenvolvimento Social; RMA e Censo SUAS | **Não** |
 | Onde pode haver barreira de acesso à saúde da mulher? | Cobertura de pré-natal e de rastreamento (mulheres elegíveis no denominador) por território assistencial | Busca ativa pelas equipes de saúde | SISAB/e-Gestor APS, SISCAN, Fundação de Saúde | **Não** (fontes públicas existem; falta conferir o recorte territorial) |
 | Onde a rede de proteção perde a continuidade? | Proporção agregada de encaminhamentos concluídos e tempo até o acolhimento, em períodos amplos | Melhorar protocolos entre os serviços | Serviços da rede, em agregado | **Não**; exige análise jurídica antes (ver abaixo) |
