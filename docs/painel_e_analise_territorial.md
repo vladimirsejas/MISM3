@@ -8,15 +8,15 @@ Atualizado em 05/11/2026. **Estado: tela pronta; os dados de exposição à dist
 - **Acesso:** só o bloco "Para a gestão" leva a ela, e o site inteiro é `noindex`. Como a tela não tem dado de pessoa, não há o que proteger por login.
 
 ## Análise territorial (`pipeline/analise_territorial.py`)
-- **O que faz:** cruza a população dos 408 setores do IBGE (Censo 2022) com a localização dos serviços do catálogo verificado: distância média da população até o CRAS, a UBS e a escola municipal mais próximos, serviços por bairro e um agrupamento exploratório de bairros (k-means).
+- **O que faz:** cruza a malha dos 408 setores do IBGE com a localização dos serviços do catálogo verificado. Os resumos de distância contam setores não suprimidos, sem ponderação por população. Indicadores demográficos e distâncias por setor são omitidos nos 17 setores protegidos; agregados e médias dos 13 bairros afetados também são omitidos. O agrupamento exploratório de bairros fica indisponível nesta versão porque depende de variáveis protegidas.
 - **Análise territorial por bairro:** a execução registrada em 04/11/2026 contém 28 bairros. O script **se recusa a escrever** sem coordenadas suficientes, em vez de inventar números. A exposição à distância possui arquivo próprio, atualizado em 05/11/2026, e seus resultados por cenário estão apresentados na seção seguinte.
 - **De onde vêm as coordenadas:** os CRAS e as UBS/USF têm coordenada conferida visualmente no Google Maps (`docs/evidencias_conferencia_visual/` e `docs/registro_conferencia_visual_2026-11-04.md`). UPA, CAPS e PAT continuam com endereço, sem CEP; a lista dos serviços a completar está em `docs/ceps_a_preencher.md`. Depois: `python pipeline/servicos.py --somente-manual` e `python pipeline/analise_territorial.py` (precisa do `web/dados/cep_indice.json`).
 - **Por que não cruzar por nome de bairro:** testado e descartado. Os 28 bairros do IBGE não casam com as listas de bairros dos CRAS (por exemplo, "Bela Vista" casava com 3 CRAS e "Grande Cervezão" não casava com "Jd. Chervezon"). Atribuir população a um CRAS errado enganaria a gestão.
-- **Limites:** distância em linha reta (sem ruas, ônibus nem horários); localização do serviço aproximada pelo centro do CEP; mostra onde a rede cadastrada está longe da população, **não prova falta de serviço**; sem dado pessoal de ninguém.
+- **Limites:** distância em linha reta (sem ruas, ônibus nem horários); localização do serviço aproximada pelo centro do CEP; os resumos contam setores, não pessoas; a supressão reduz o risco de inferência, mas não garante anonimato absoluto; **não prova falta de serviço**.
 
 ## Exposição à distância (`web/dados/exposicao_distancia.json`)
 
-Arquivo gerado em 05/11/2026, com dados de 408 setores censitários e população total de 201.418 pessoas. O indicador é a **exposição à distância em linha reta (centro do setor censitário até o serviço cadastrado mais próximo)**.
+Arquivo de exposição atualizado para a publicação com resumos por setores não suprimidos. O indicador é a **exposição à distância em linha reta (centro do setor censitário até o serviço cadastrado mais próximo)**; não divulga totais populacionais nem pondera distâncias por população.
 
 | Serviço | Coordenadas do catálogo | Com centro do CEP | População a mais de 1 km — catálogo | População a mais de 1 km — centro do CEP |
 |---|---:|---:|---:|---:|
