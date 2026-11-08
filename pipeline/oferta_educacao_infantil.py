@@ -4,8 +4,8 @@ Entrada : as tabelas nacionais do INEP (uma linha por ESCOLA, com contagens; nã
             Tabela_Escola_2025_V2.csv, Tabela_Matricula_2025_V2.csv, Tabela_Turma_2025_V2.csv
           em docs/educacao/dados/ (ou passe --pasta). São grandes (100 MB+) porque cobrem o país todo e ficam
           só no computador de quem usa (estão no .gitignore).
-Saída   : web/dados/oferta_educacao_infantil.json, pequeno e só de Rio Claro: por escola, matrículas, turmas e
-          oferta de creche e pré-escola, mais totais por rede (municipal, privada...). Este sim vai para o Git.
+Saída   : web/dados/oferta_educacao_infantil.json, somente totais agregados por rede (municipal, privada...).
+          Os registros por escola são usados em memória para calcular os totais e nunca são serializados no arquivo público.
 
 Uso:
     python pipeline/oferta_educacao_infantil.py
@@ -139,8 +139,9 @@ def montar(escola, matricula=None, turma=None, hoje: str | None = None) -> dict:
             "municipio": MUNICIPIO_IBGE7,
             "gerado_em": hoje or agora_iso()[:10],
             "escolas_fora_de_atividade_ignoradas": ignoradas,
-            "aviso": "Matrícula não é vaga, demanda nem fila de espera. Esta tabela mostra a oferta que já existe "
-                     "no Censo Escolar; não mostra quem está esperando nem a população de 0 a 3 anos.",
+            "granularidade_publicada": "totais por rede de ensino; sem contagens por escola",
+            "aviso": "Matrícula não é vaga, demanda nem fila de espera. Esta tabela mostra somente totais por rede "
+                     "de ensino; não publica contagens por escola, não mostra quem está esperando nem a população de 0 a 3 anos.",
         },
         "totais_por_rede": totais,
         "escolas": escolas,
@@ -164,9 +165,12 @@ def main() -> int:
             print("AVISO: %s não encontrado; os campos dessa tabela ficam vazios (null)." % c.name)
     if dados["escola"].empty:
         erro("Nenhuma escola do município %s na tabela de escolas. Confira se o arquivo é de 2025 e nacional." % MUNICIPIO_IBGE7)
-    saida = montar(dados["escola"], dados.get("matricula"), dados.get("turma"))
-    salvar_json(saida, a.saida)
-    print("Gravado %s (%d escolas com educação infantil em Rio Claro)." % (a.saida, len(saida["escolas"])))
+    calculado = montar(dados["escola"], dados.get("matricula"), dados.get("turma"))
+    # O resultado detalhado fica somente em memória. O arquivo dentro de web/dados é público:
+    # publicar apenas totais por rede evita expor contagens pequenas de matrículas por escola.
+    saida_publica = {"meta": calculado["meta"], "totais_por_rede": calculado["totais_por_rede"]}
+    salvar_json(saida_publica, a.saida)
+    print("Gravado %s (totais agregados por rede; %d escolas usadas no cálculo)." % (a.saida, len(calculado["escolas"])))
     for rede, t in saida["totais_por_rede"].items():
         print("  %-10s %3d escolas | %3d com creche | %5d matrículas em creche | %4d turmas de creche | %5d na pré-escola"
               % (rede, t["escolas_com_educacao_infantil"], t["escolas_com_creche"], t["matriculas_creche"],
