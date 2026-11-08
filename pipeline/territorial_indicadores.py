@@ -29,6 +29,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import analise_territorial as at  # noqa: E402
 import exposicao_distancia as ed  # noqa: E402
+from privacidade_territorial import setor_suprimido  # noqa: E402
 
 RAIZ = Path(__file__).resolve().parents[1]
 DADOS = RAIZ / "web" / "dados"
@@ -211,8 +212,12 @@ def gerar(dados: dict) -> dict:
         lat, lon = at.centro(f["geometry"])
         if not at.contem(f["geometry"], lon, lat):
             centroides_fora += 1
-        setores.append({"id": pr["setor"], "bairro": pr.get("bairro") or None, "pessoas": int(pr.get("pessoas") or 0),
-                        "domicilios": int(pr.get("domicilios") or 0), "lat": lat, "lon": lon, "caixa": _caixa(f["geometry"]), "geom": f["geometry"]})
+        suprimido = setor_suprimido(pr)
+        setores.append({"id": pr["setor"], "bairro": pr.get("bairro") or None,
+                        "pessoas": None if suprimido else int(pr["pessoas"]),
+                        "domicilios": None if suprimido else int(pr["domicilios"]),
+                        "suprimido_privacidade": suprimido, "lat": lat, "lon": lon,
+                        "caixa": _caixa(f["geometry"]), "geom": f["geometry"]})
 
     # Densidade e área: valores já calculados em territorio.json (não são recalculados aqui).
     for s in setores:
@@ -252,6 +257,11 @@ def gerar(dados: dict) -> dict:
                 continue
             centrais, inferiores, superiores = [], [], []
             for s in setores:
+                if s["suprimido_privacidade"]:
+                    centrais.append(None)
+                    inferiores.append(None)
+                    superiores.append(None)
+                    continue
                 medidas = [(at.haversine_km(s["lat"], s["lon"], la, lo), raio) for la, lo, raio in pts]
                 centrais.append(min(d for d, _ in medidas))
                 if any(raio is None for _, raio in medidas):
@@ -263,18 +273,19 @@ def gerar(dados: dict) -> dict:
                     inferiores.append(min(f[0] for f in faixas))
                     superiores.append(min(f[1] for f in faixas))
             dist[cen][cat], dist_min[cen][cat], dist_max[cen][cat] = centrais, inferiores, superiores
-            pares = [(d, s["pessoas"]) for d, s in zip(centrais, setores)]
-            sem = [(d, s["pessoas"]) for d, s in zip(centrais, setores) if not s["bairro"]]
-            resumo[cen][cat] = {"populacao_toda": ed.resumir(pares, ed.LIMIARES_KM), "setores_sem_bairro": ed.resumir(sem, ed.LIMIARES_KM)}
+            pares = [d for d, s in zip(centrais, setores) if d is not None]
+            sem = [d for d, s in zip(centrais, setores) if d is not None and not s["bairro"]]
+            resumo[cen][cat] = {"setores_validos": ed.resumir_setores(pares, ed.LIMIARES_KM),
+                                "setores_sem_bairro": ed.resumir_setores(sem, ed.LIMIARES_KM)}
 
     divergencias = conferir(expo, resumo, cobertura)
     if divergencias:
         raise ValueError("os resultados diferem de web/dados/exposicao_distancia.json:\n  " + "\n  ".join(divergencias))
 
     classes = {
-        "pessoas": {"rotulo": "Pessoas (população agregada)", "unidade": "pessoas por setor", "limites": quantis([s["pessoas"] for s in setores])},
+        "pessoas": {"rotulo": "Pessoas (população agregada)", "unidade": "pessoas por setor", "limites": quantis([s["pessoas"] for s in setores if s["pessoas"] is not None])},
         "densidade": {"rotulo": "Densidade populacional", "unidade": "pessoas por km²", "limites": LIMITES_DENSIDADE},
-        "domicilios": {"rotulo": "Domicílios (agregados)", "unidade": "domicílios por setor", "limites": quantis([s["domicilios"] for s in setores])},
+        "domicilios": {"rotulo": "Domicílios (agregados)", "unidade": "domicílios por setor", "limites": quantis([s["domicilios"] for s in setores if s["domicilios"] is not None])},
         "equipamentos": {"rotulo": "Equipamentos localizados no setor", "unidade": "equipamentos por setor", "limites": [1, 2, 3]},
         "distancia": {"rotulo": "Distância em linha reta até o equipamento mais próximo", "unidade": "km", "limites": FAIXAS_DISTANCIA_KM},
     }
@@ -302,16 +313,16 @@ def gerar(dados: dict) -> dict:
             "rotulos_cenario": ROTULOS_CENARIO,
             "rotulos_categoria": ROTULOS_CATEGORIA,
             "ressalvas": [
-                "Nesta versão nenhum setor censitário é suprimido nem agregado. Os %d setores com menos de 5 pessoas ou menos de 3 domicílios (faixa conservadora da proposta de supressão e agregação) são marcados no mapa com o aviso 'menos de 5 pessoas ou menos de 3 domicílios; interprete com cautela' (decisão D4 em docs/territorial/DECISOES_DO_AUTOR.md; pode ser revista pelo autor)." % sum(1 for s in setores if s["pessoas"] < 5 or s["domicilios"] < 3),
+                "Dados de população, domicílios, densidade e distâncias por setor são suprimidos nos %d setores com menos de 5 pessoas ou menos de 3 domicílios. Os agregados dos bairros afetados também são omitidos. A geometria e os pontos institucionais permanecem disponíveis, conforme a decisão D4." % sum(1 for s in setores if s["suprimido_privacidade"]),
                 "O cenário com centro do CEP cadastral do equipamento é uma análise de sensibilidade: a posição é aproximada e não equivale à coordenada individual do catálogo.",
                 "A auditoria geométrica encontrou %d centroides fora dos respectivos polígonos em %d setores. O centroide atual não foi substituído: a alternativa interna e o impacto nas distâncias ainda precisam ser comparados antes de qualquer mudança." % (centroides_fora, len(setores)),
                 "A localização escolar é lida da base consolidada, com método, precisão, fonte e raio. Para CRAS/UBS, 22 dos 28 registros têm método e confiança documentados em localizacao_registro.csv; os outros 6 têm coordenadas no catálogo, mas sem registro explícito de proveniência ou raio conhecido.",
                 "Categorias com cobertura incompleta de coordenadas têm distância superestimada.",
             ],
-            "conferencia": {"coincide_com_exposicao_distancia": True, "setores": len(setores), "pessoas": sum(s["pessoas"] for s in setores)},
+            "conferencia": {"coincide_com_exposicao_distancia": True, "setores": len(setores), "pessoas": None, "setores_suprimidos": sum(1 for s in setores if s["suprimido_privacidade"])},
             "equipamentos_fora_da_malha": fora,
         },
-        "totais": {"setores": len(setores), "pessoas": sum(s["pessoas"] for s in setores), "domicilios": sum(s["domicilios"] for s in setores),
+        "totais": {"setores": len(setores), "pessoas": None, "domicilios": None, "setores_suprimidos": sum(1 for s in setores if s["suprimido_privacidade"]),
                    "area_km2": terr["totais"]["area_km2"], "bairros": terr["totais"]["bairros"]},
         "classes": classes,
         "cobertura": cobertura,
@@ -328,7 +339,7 @@ def gerar(dados: dict) -> dict:
             for e in sorted(equip, key=lambda e: (e["categoria"], e["id"]))
         ],
         "setores": [
-            {"id": s["id"], "bairro": s["bairro"], "pessoas": s["pessoas"], "domicilios": s["domicilios"], "area_km2": s["area_km2"], "densidade": s["densidade"],
+            {"id": s["id"], "bairro": s["bairro"], "pessoas": s["pessoas"], "domicilios": s["domicilios"], "suprimido_privacidade": s["suprimido_privacidade"], "area_km2": s["area_km2"], "densidade": None if s["suprimido_privacidade"] else s["densidade"],
              "equipamentos": contagem[s["id"]],
              "distancia_km": {cen: {cat: (None if dist[cen][cat][i] is None else round(dist[cen][cat][i], 3)) for cat in CATEGORIAS} for cen in CENARIOS},
              "distancia_min_km": {cen: {cat: (None if dist_min[cen][cat][i] is None else round(dist_min[cen][cat][i], 3)) for cat in CATEGORIAS} for cen in CENARIOS},
@@ -347,10 +358,10 @@ def conferir(expo: dict, resumo: dict, cobertura: dict) -> list[str]:
             if esperado["cobertura"] != cobertura[cen][cat]:
                 erros.append(f"{cen}/{cat}: cobertura {cobertura[cen][cat]} difere de {esperado['cobertura']}")
             obtido = resumo[cen][cat]
-            if (obtido is None) != (esperado.get("populacao_toda") is None):
+            if (obtido is None) != (esperado.get("setores_validos") is None):
                 erros.append(f"{cen}/{cat}: presença do resumo difere")
             elif obtido is not None:
-                for chave in ("populacao_toda", "setores_sem_bairro"):
+                for chave in ("setores_validos", "setores_sem_bairro"):
                     if obtido[chave] != esperado[chave]:
                         erros.append(f"{cen}/{cat}/{chave}: {obtido[chave]} difere de {esperado[chave]}")
     return erros
