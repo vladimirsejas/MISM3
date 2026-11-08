@@ -95,7 +95,7 @@ assert(/distancia_min_km/.test(js) && /distancia_max_km/.test(js), "a interface 
 assert(/confianca_localizacao/.test(js) && /data_aplicacao_localizacao/.test(js) && /raio_incerteza_m/.test(js), "o título dos pontos informa confiança, data e raio quando documentados");
 dados.setores.forEach((s) => ["coordenadas_do_catalogo", "com_centro_do_cep"].forEach((cen) => ["cras", "ubs", "escola"].forEach((cat) => {
   const faixa = M.faixaDistancia(s, cen, cat), central = s.distancia_km[cen][cat];
-  if (central === null) assert.strictEqual(faixa, null);
+  if (central === null || (s.distancia_min_km[cen][cat] === null && s.distancia_max_km[cen][cat] === null)) assert.strictEqual(faixa, null);
   else { assert(faixa && faixa.minimo <= central && central <= faixa.maximo); }
 })));
 const setorComFaixa = dados.setores.find((s) => M.textoFaixaDistancia(s, "com_centro_do_cep", "escola"));
