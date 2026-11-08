@@ -91,6 +91,15 @@ comb.forEach(([ind, cat, cen]) => {
 });
 assert.strictEqual(M.descreverValor("distancia", null), "localização pendente");
 assert.strictEqual(M.descreverValor("pessoas", 201418), "201.418 pessoas");
+assert(/distancia_min_km/.test(js) && /distancia_max_km/.test(js), "a interface consome os limites inferior e superior");
+dados.setores.forEach((s) => ["coordenadas_do_catalogo", "com_centro_do_cep"].forEach((cen) => ["cras", "ubs", "escola"].forEach((cat) => {
+  const faixa = M.faixaDistancia(s, cen, cat), central = s.distancia_km[cen][cat];
+  if (central === null) assert.strictEqual(faixa, null);
+  else { assert(faixa && faixa.minimo <= central && central <= faixa.maximo); }
+})));
+const setorComFaixa = dados.setores.find((s) => M.textoFaixaDistancia(s, "com_centro_do_cep", "escola"));
+assert(setorComFaixa && /envelope geométrico/.test(M.textoFaixaDistancia(setorComFaixa, "com_centro_do_cep", "escola")));
+
 assert.strictEqual(M.decimal(2.175, 2), "2,18");
 assert.strictEqual(dados.setores.reduce((a, s) => a + s.pessoas, 0), 201418);
 
