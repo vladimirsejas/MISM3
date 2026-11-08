@@ -93,9 +93,12 @@ A preparação removeu os registros por escola de `oferta_educacao_infantil.json
 
 ### 4.1 Repositório público e histórico anterior
 
-O repositório GitHub `vladimirsejas/MISM3` está público. A auditoria confirmou que a branch `main` ainda contém os valores originais de população e domicílios dos 17 setores D4 em `web/dados/setores.geojson` e `web/dados/territorio.json`. O histórico público também conserva versões anteriores desses arquivos.
+O repositório GitHub `vladimirsejas/MISM3` está público. A auditoria confirmou que a branch `main` ainda contém:
+- os valores originais de população e domicílios dos 17 setores D4 em `web/dados/setores.geojson` e os valores dos 408 setores e totais municipais em `web/dados/territorio.json`;
+- 69 registros de matrículas por escola em `web/dados/oferta_educacao_infantil.json`, incluindo uma contagem de apenas duas matrículas na faixa de 0 a 3 anos;
+- vínculos e dados do Censo Escolar por unidade em `web/dados/escolas_municipais.json`.
 
-A branch de publicação possui os arquivos sanitizados, mas isso não remove os dados das versões públicas da `main` nem do histórico Git. A mitigação exige decisão separada do autor: tornar temporariamente o repositório privado e planejar a limpeza do histórico, ou autorizar uma estratégia de sanitização do repositório. Não fazer alteração na `main`, mudança de visibilidade ou reescrita de histórico sem autorização expressa.
+O histórico público conserva versões anteriores desses arquivos. A branch de publicação possui os arquivos sanitizados e agregados, mas isso não remove os dados das versões públicas da `main` nem do histórico Git. A mitigação exige decisão separada do autor: tornar temporariamente o repositório privado e planejar a limpeza do histórico, ou autorizar uma estratégia de sanitização do repositório. Não fazer alteração na `main`, mudança de visibilidade ou reescrita de histórico sem autorização expressa.
 
 ### 4.2 Estado da PR e infraestrutura
 
