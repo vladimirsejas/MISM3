@@ -313,7 +313,7 @@ def gerar(dados: dict) -> dict:
             "rotulos_cenario": ROTULOS_CENARIO,
             "rotulos_categoria": ROTULOS_CATEGORIA,
             "ressalvas": [
-                "Dados de população, domicílios, densidade e distâncias por setor são suprimidos nos %d setores com menos de 5 pessoas ou menos de 3 domicílios. Os agregados dos bairros afetados também são omitidos. A geometria e os pontos institucionais permanecem disponíveis, conforme a decisão D4." % sum(1 for s in setores if s["suprimido_privacidade"]),
+                "Por cautela estatística, os dados de população, domicílios, densidade e distâncias por setor são suprimidos nos %d setores com menos de 5 pessoas ou menos de 3 domicílios. Os agregados dos %d bairros afetados também são omitidos para reduzir risco de inferência por subtração. A geometria e os pontos institucionais permanecem." % (sum(1 for s in setores if s["suprimido_privacidade"]), len({s["bairro"] for s in setores if s["suprimido_privacidade"]})),
                 "O cenário com centro do CEP cadastral do equipamento é uma análise de sensibilidade: a posição é aproximada e não equivale à coordenada individual do catálogo.",
                 "A auditoria geométrica encontrou %d centroides fora dos respectivos polígonos em %d setores. O centroide atual não foi substituído: a alternativa interna e o impacto nas distâncias ainda precisam ser comparados antes de qualquer mudança." % (centroides_fora, len(setores)),
                 "A localização escolar é lida da base consolidada, com método, precisão, fonte e raio. Para CRAS/UBS, 22 dos 28 registros têm método e confiança documentados em localizacao_registro.csv; os outros 6 têm coordenadas no catálogo, mas sem registro explícito de proveniência ou raio conhecido.",
