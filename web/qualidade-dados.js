@@ -239,8 +239,8 @@
     ]);
     adicionarCartoes("qd-equipamentos", [
       { titulo: "Equipamentos", valor: formatar(e.total), detalhe: "CRAS " + e.por_categoria.cras + ", UBS " + e.por_categoria.ubs + " e escolas " + e.por_categoria.escola + "." },
-      { titulo: "CRAS/UBS com procedência", valor: e.cras_ubs.proveniencia_documentada + " de " + e.cras_ubs.total, detalhe: "Método, confiança e data registrados." },
-      { titulo: "CRAS/UBS sem procedência", valor: formatar(e.cras_ubs.proveniencia_ausente), detalhe: "Permanecem sem raio documentado.", alerta: e.cras_ubs.proveniencia_ausente > 0 },
+      { titulo: "CRAS/UBS com método de coordenada", valor: e.cras_ubs.proveniencia_documentada + " de " + e.cras_ubs.total, detalhe: "Método, confiança e data de aplicação registrados." },
+      { titulo: "CRAS/UBS sem método de coordenada", valor: formatar(e.cras_ubs.proveniencia_ausente), detalhe: "O endereço tem fonte no catálogo; falta documentar a obtenção/validação da coordenada e o raio.", alerta: e.cras_ubs.proveniencia_ausente > 0 },
       { titulo: "Escolas por localização", valor: e.escolas.coordenada_individual + " individuais / " + e.escolas.referencia_cep + " por CEP", detalhe: "Referências por CEP são aproximadas." },
       { titulo: "Coordenadas fora da malha", valor: formatar(e.coordenadas_fora_da_malha), detalhe: "Pontos que não caem em nenhum polígono.", alerta: e.coordenadas_fora_da_malha > 0 },
       { titulo: "Sem coordenadas", valor: formatar(e.sem_coordenada), detalhe: "Registros sem latitude ou longitude.", alerta: e.sem_coordenada > 0 }
