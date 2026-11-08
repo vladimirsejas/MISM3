@@ -51,19 +51,20 @@ O CEP institucional de um equipamento público, quando usado exclusivamente para
 
 ## 5. Setores pequenos e risco de identificação
 
-A agregação por setor censitário reduz granularidade, mas não garante anonimato em qualquer circunstância. Setores com população muito pequena, categorias raras ou combinações de atributos muito específicas podem permitir inferências sobre indivíduos ou domicílios. No mapa atual, os 17 setores abaixo do critério de cautela são apenas sinalizados; isso não equivale à supressão estatística nem demonstra que o risco de reidentificação foi eliminado.
+A agregação por setor censitário reduz granularidade, mas não garante anonimato em qualquer circunstância. Setores com população muito pequena, categorias raras ou combinações de atributos muito específicas podem permitir inferências sobre indivíduos ou domicílios. Pela decisão D4 revisada em 08/11/2026, os 17 setores com menos de 5 pessoas ou menos de 3 domicílios têm população, domicílios, densidade e distâncias/indicadores derivados omitidos em todos os arquivos públicos. A geometria dos setores e os pontos institucionais permanecem disponíveis.
 
 Antes de publicar tabelas, mapas temáticos ou indicadores:
 
 - Avaliar o tamanho populacional e domiciliar dos setores.
 - Avaliar raridade de categorias e combinações de atributos.
-- Evitar exibir contagens pequenas que possam revelar uma condição individual.
-- Suprimir valores ou agregar setores quando a divulgação representar risco.
+- Aplicar a supressão primária nos 17 setores abaixo do critério D4.
+- Aplicar supressão complementar aos agregados dos 13 bairros afetados e omitir totais municipais demográficos no painel, para reduzir reconstrução por subtração.
+- Omitir indicadores derivados por setor nos setores protegidos; não basta esconder os números apenas na interface.
 - Evitar filtros sucessivos que permitam recuperar por diferença um valor suprimido.
 - Evitar cruzamentos muito detalhados entre idade, sexo, condição de saúde, serviço e território.
 - Registrar a regra de supressão aplicada e sua justificativa.
 
-**Parâmetros numéricos de supressão:** não estão definidos nesta fase. Devem ser propostos, justificados e aprovados antes da publicação de indicadores sensíveis. Não se estabelece aqui um limiar arbitrário. Até essa decisão, a visualização deve permanecer identificada como protótipo de pesquisa e não deve ser usada para divulgar cruzamentos sensíveis ou contagens raras por setor.
+**Parâmetros numéricos de supressão:** a decisão D4 aprovada pelo autor adotou, como regra conservadora do projeto, menos de 5 pessoas ou menos de 3 domicílios por setor. Não se afirma que esse seja um limiar legal universal nem que elimine todo risco de reidentificação. A publicação deve ser reavaliada quando novos indicadores, filtros, períodos ou fontes puderem ser combinados.
 
 ## 6. Verificações automáticas obrigatórias
 
