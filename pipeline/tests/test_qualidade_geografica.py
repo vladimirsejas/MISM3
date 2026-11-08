@@ -60,3 +60,16 @@ def test_base_real_confere_contagens_de_proveniencia_e_privacidade():
         "total": 68, "coordenada_individual": 33, "referencia_cep": 35, "sem_metodo_reconhecido": 0
     }
     assert r["privacidade"]["setores_abaixo_da_faixa_de_cautela_D4"] == 17
+
+
+def test_comando_gera_relatorios_json_e_markdown(tmp_path):
+    import json
+
+    saida_json = tmp_path / "qualidade.json"
+    saida_md = tmp_path / "qualidade.md"
+    assert qg.main(["--saida-json", str(saida_json), "--saida-md", str(saida_md)]) == 0
+    dados = json.loads(saida_json.read_text(encoding="utf-8"))
+    texto = saida_md.read_text(encoding="utf-8")
+    assert dados["geometrias"]["total"] == 408
+    assert "497.3 km²" in texto
+    assert "proveniência" in texto
