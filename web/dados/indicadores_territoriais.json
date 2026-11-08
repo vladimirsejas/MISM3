@@ -1,11 +1,11 @@
 {
   "meta": {
     "versao": "1",
-    "carimbo": "e1ccf8fa1966bfad",
+    "carimbo": "75bb8faa084809a1",
     "fonte": "IBGE, Censo Demográfico 2022 (malha de setores censitários), catálogo institucional, registro de proveniência e base consolidada das escolas municipais",
     "entradas_sha256": {
       "analise_territorial.json": "abea4525da790a940a9609f39a229a1cb763f34ef51b359106b609c2fbc44aa3",
-      "cep_indice.json": "53c979396ce7d7b3385bc7f6b56baac580e8a71b945b1c3195b35081d51ccf85",
+      "cep_indice.json": "5a4d18f9663a5258058842d0bd6378bf8f023a78a688b14c49db3ec19c08a7e1",
       "escolas_municipais.json": "dc9d4f137874e33a7d660142a768cc220db738ba29dca275024d1255aee3f9eb",
       "exposicao_distancia.json": "b4112800e8cff6c5af7d0e1460a075a7311c5ecd328bcb2ee409fc866da5fb56",
       "localizacao_registro.csv": "0a6f81ca4f7d546ef7f00d844247af8b7e738c1259ac92c0ebb3a245bc5b59fe",
