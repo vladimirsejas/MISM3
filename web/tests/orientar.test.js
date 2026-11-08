@@ -23,6 +23,14 @@ assert(areas(R("preciso de trabalho porque a aposentadoria não paga as despesas
 assert.strictEqual(areas(R("sou vó, crio meus netos e estou sem dinheiro para as despesas"))[0], "assistencia", "necessidade de assistência deve liderar quando a avó relata falta de dinheiro para criar netos");
 assert.strictEqual(areas(R("estou sustentando meus netos e a geladeira está vazia"))[0], "assistencia", "falta de comida para netos deve priorizar assistência");
 assert.strictEqual(areas(R("estou com os netos, não sobra dinheiro para comida"))[0], "assistencia", "aperto financeiro com netos deve priorizar assistência");
+assert.strictEqual(areas(R("minha filha deixou as crianças comigo e eu vivo só da aposentadoria"))[0], "assistencia", "responsabilidade por crianças e aposentadoria insuficiente priorizam Assistência");
+assert.strictEqual(areas(R("minha pensão não cobre o que os netinhos precisam para viver"))[0], "assistencia", "pensão insuficiente para netos prioriza Assistência");
+assert.strictEqual(areas(R("quero atualizar o cadastro porque chegou um neto para morar aqui"))[0], "assistencia", "mudança na composição familiar e atualização cadastral levam ao CRAS");
+assert.strictEqual(areas(R("quero saber se preciso atualizar o cadastro quando um neto vem morar aqui"))[0], "assistencia", "variação de atualização do CadÚnico mantém Assistência");
+assert.strictEqual(areas(R("preciso levar minha neta ao posto mas não sei se posso acompanhar"))[0], "saude", "dúvida de acompanhamento de neta em unidade de saúde prioriza Saúde");
+const boloParaVenda = R("como faço um bolo de fubá para vender");
+assert(!boloParaVenda.abstem && areas(boloParaVenda).slice(0, 3).includes("trabalho"), "pedido para vender alimento é orientado a Trabalho, sem ensinar receita");
+
 assert(areas(R("minha filha deixou os pequenos aqui em casa e preciso de apoio social")).slice(0, 3).includes("assistencia"), "crianças deixadas com a avó e pedido de apoio social devem mostrar assistência");
 assert(areas(R("o INSS recusou meu pedido de aposentadoria e quero recorrer")).slice(0, 3).includes("direitos"), "contestação de aposentadoria negada continua em Direitos");
 assert.strictEqual(areas(R("minhas netas moram comigo e falta dinheiro para alimentação"))[0], "assistencia", "variação feminina netas também deve levar à assistência");
@@ -62,7 +70,20 @@ assert(s.perigo && s.perigo.telefones.includes("188") && s.itens.some((i) => i.i
 const g = R("ola, preciso de ajuda");
 assert(g.geral && g.itens.length >= 5 && g.itens.every((i) => i.tipo === "area"));
 assert(R("oi").saudacao);
-["como investir em bitcoin", "vendo moto barata", "kkkkkkk", "preciso da senha do wifi"].forEach((t) => {
+[
+  "como investir em bitcoin",
+  "vendo moto barata",
+  "kkkkkkk",
+  "preciso da senha do wifi",
+  "me ensina a fazer pão de queijo",
+  "me ensina a fazer panqueca",
+  "me ensina a fazer panqueca",
+  "como cancelar meu cartão de crédito",
+  "perdi meu cartão e quero bloquear",
+  "perdi meu cartão e quero bloquear agora",
+  "como trocar a senha do aplicativo do banco",
+  "como consultar meu extrato bancário"
+].forEach((t) => {
   const r = R(t);
   assert(r.abstem && !r.itens.length && !r.perigo, `"${t}" deveria ser reconhecido como fora do escopo`);
   assert(/Não consegui ligar/.test(UI.html(r, {}, [{ id: "saude", nome: "Saúde" }])), "e a tela oferece o caminho das áreas");
