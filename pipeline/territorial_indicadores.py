@@ -42,7 +42,7 @@ CENARIOS = tuple(ed.CENARIOS)  # coordenadas_do_catalogo, com_centro_do_cep
 CATEGORIAS = tuple(at.CATEGORIAS)  # cras, ubs, escola
 ROTULOS_CATEGORIA = {"cras": "CRAS", "ubs": "UBS e USF", "escola": "Escolas municipais"}
 ROTULOS_CENARIO = {
-    "coordenadas_do_catalogo": "Coordenadas do catálogo (conferidas)",
+    "coordenadas_do_catalogo": "Coordenadas individuais registradas no catálogo (sem fallback CEP)",
     "com_centro_do_cep": "Análise de sensibilidade: centro do CEP cadastral do equipamento",
 }
 AVISO_METODOLOGICO = ("A distância em linha reta não representa tempo de deslocamento ou acesso efetivo: não considera ruas, transporte, horários, "
