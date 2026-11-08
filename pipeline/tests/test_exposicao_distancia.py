@@ -9,8 +9,8 @@ def quadrado(x0, y0, lado=0.01):
 def geo():
     # Alfa (1000 pessoas) e Beta (3000), lado a lado; Beta sem bairro
     return {"features": [
-        {"properties": {"bairro": "Alfa", "pessoas": 1000}, "geometry": quadrado(-47.60, -22.40)},
-        {"properties": {"bairro": "", "pessoas": 3000}, "geometry": quadrado(-47.57, -22.40)},
+        {"properties": {"bairro": "Alfa", "pessoas": 1000, "domicilios": 400}, "geometry": quadrado(-47.60, -22.40)},
+        {"properties": {"bairro": "", "pessoas": 3000, "domicilios": 1200}, "geometry": quadrado(-47.57, -22.40)},
     ]}
 
 
