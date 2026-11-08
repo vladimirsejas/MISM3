@@ -35,7 +35,7 @@ A auditoria confirmou que:
 
 A política de privacidade registra que sinalização não equivale a proteção estatística e que os parâmetros de supressão ainda não foram definidos. A publicação pública exige uma decisão explícita sobre a revisão de D4: manter os valores com ressalva, suprimir os campos de baixa contagem em todos os arquivos públicos, ou agregar os setores afetados. Se houver supressão, ela precisa alcançar também os indicadores derivados e os arquivos brutos servidos ao navegador; esconder somente o número na tela não basta.
 
-**Ponto adicional de qualidade:** a mensagem atual do mapa diz “população muito pequena”, embora o critério também inclua setores com menos de três domicílios. Alguns desses setores têm dezenas de pessoas e apenas um domicílio cadastrado. A redação precisa refletir as duas condições para não induzir interpretação errada.
+**Ponto adicional de qualidade corrigido nesta preparação:** a mensagem do mapa e a ressalva gerada agora informam o critério exato — “menos de 5 pessoas ou menos de 3 domicílios; interprete com cautela”. Isso evita chamar de população pequena um setor que tem dezenas de pessoas, mas menos de três domicílios.
 
 ### 3.2 CEP e dados de endereço
 
