@@ -35,7 +35,7 @@ DADOS = RAIZ / "web" / "dados"
 CATALOGO = RAIZ / "catalogo" / "servicos_manuais.csv"
 SAIDA = DADOS / "indicadores_territoriais.json"
 VERSAO = "1"
-ENTRADAS = ("setores.geojson", "territorio.json", "exposicao_distancia.json", "analise_territorial.json")
+ENTRADAS = ("setores.geojson", "territorio.json", "exposicao_distancia.json", "analise_territorial.json", "escolas_municipais.json")
 ENTRADA_CEP = "cep_indice.json"
 CENARIOS = tuple(ed.CENARIOS)  # coordenadas_do_catalogo, com_centro_do_cep
 CATEGORIAS = tuple(at.CATEGORIAS)  # cras, ubs, escola
@@ -89,19 +89,47 @@ def coord_do_catalogo(lat, lon):
     return None
 
 
-def equipamentos(linhas: list, indice_cep: dict) -> list[dict]:
-    """Equipamentos das três categorias, com a posição de cada cenário. Mesma seleção de pipeline/exposicao_distancia.py."""
+def equipamentos(linhas: list, indice_cep: dict, escolas: list[dict]) -> list[dict]:
+    """CRAS/UBS vêm do catálogo; escolas vêm da base consolidada, que preserva método, fonte e raio."""
     saida = []
     for r in linhas:
         if not str(r.get("id", "")).startswith("man-"):
             continue
-        for cat, (tipo, sub) in at.CATEGORIAS.items():
+        for cat in ("cras", "ubs"):
+            tipo, sub = at.CATEGORIAS[cat]
             if r.get("tipo") != tipo or r.get("subtipo") != sub:
                 continue
             xy_catalogo = coord_do_catalogo(r.get("lat"), r.get("lon"))
             xy_cep = at.coordenada_do_servico({"lat": None, "lon": None, "cep": r.get("cep")}, indice_cep) if not xy_catalogo else None
-            saida.append({"id": r["id"], "nome": r["nome"], "categoria": cat, "xy_catalogo": xy_catalogo, "xy_cep": xy_cep})
-    return saida
+            cep = "".join(ch for ch in str(r.get("cep") or "") if ch.isdigit())
+            item_cep = indice_cep.get(cep) if cep else None
+            raio_cep = float(item_cep[2]) if xy_cep and item_cep and len(item_cep) > 2 else 0.0
+            saida.append({"id": r["id"], "nome": r["nome"], "categoria": cat, "xy_catalogo": xy_catalogo,
+                          "xy_cep": xy_cep, "raio_catalogo_m": 0.0, "raio_cep_m": raio_cep,
+                          "metodo_localizacao": "coordenada_individual" if xy_catalogo else ("centroide_cep" if xy_cep else "pendente"),
+                          "fonte_localizacao": "catalogo_manual.csv" if xy_catalogo else ("CNEFE/índice CEP" if xy_cep else None)})
+
+    # A base consolidada é a fonte de localização escolar. Não reutilizar a cópia escolar do catálogo:
+    # isso evita divergência de coordenadas e preserva os raios operacionais já calculados.
+    for escola in escolas:
+        local = escola.get("localizacao_mapa") or {}
+        try:
+            lat, lon = float(local["latitude"]), float(local["longitude"])
+        except (KeyError, TypeError, ValueError):
+            lat = lon = None
+        metodo = str(local.get("metodo") or "pendente")
+        xy = (lat, lon) if lat is not None and lon is not None and CAIXA_RIO_CLARO[0] <= lat <= CAIXA_RIO_CLARO[1] and CAIXA_RIO_CLARO[2] <= lon <= CAIXA_RIO_CLARO[3] else None
+        individual = xy if metodo == "coordenada_individual" else None
+        aproximada = xy if metodo == "centroide_cep" else None
+        raio = float(local.get("raio_m") or 0) if aproximada else 0.0
+        if raio < 0:
+            raise ValueError("raio_m negativo na localização escolar %s" % (escola.get("id") or "sem ID"))
+        saida.append({"id": escola["id"], "nome": escola["nome"], "categoria": "escola",
+                      "xy_catalogo": individual, "xy_cep": aproximada,
+                      "raio_catalogo_m": 0.0, "raio_cep_m": raio,
+                      "metodo_localizacao": metodo if xy else "pendente",
+                      "fonte_localizacao": local.get("fonte") if xy else None})
+    return sorted(saida, key=lambda e: (e["categoria"], e["id"]))
 
 
 def posicoes(equip: list[dict], cenario: str, cat: str) -> list[tuple]:
@@ -110,10 +138,19 @@ def posicoes(equip: list[dict], cenario: str, cat: str) -> list[tuple]:
     for e in equip:
         if e["categoria"] != cat:
             continue
-        xy = e["xy_catalogo"] or (e["xy_cep"] if usar_cep else None)
-        if xy:
-            pts.append(xy)
+        if e["xy_catalogo"]:
+            lat, lon = e["xy_catalogo"]
+            pts.append((lat, lon, float(e.get("raio_catalogo_m") or 0)))
+        elif usar_cep and e["xy_cep"]:
+            lat, lon = e["xy_cep"]
+            pts.append((lat, lon, float(e.get("raio_cep_m") or 0)))
     return pts
+
+
+def faixa_distancia_km(distancia_km: float, raio_m: float) -> tuple[float, float]:
+    """Envelope geométrico operacional, não intervalo de confiança estatístico."""
+    raio_km = max(0.0, float(raio_m or 0)) / 1000.0
+    return max(0.0, distancia_km - raio_km), distancia_km + raio_km
 
 
 def _caixa(geom: dict) -> tuple[float, float, float, float]:
@@ -141,7 +178,7 @@ def gerar(dados: dict) -> dict:
     ent, hashes = dados["json"], dados["hashes"]
     geo, terr, expo = ent["setores.geojson"], ent["territorio.json"], ent["exposicao_distancia.json"]
     feicoes = sorted(geo["features"], key=lambda f: f["properties"]["setor"])
-    equip = equipamentos(dados["catalogo"], dados["indice_cep"])
+    equip = equipamentos(dados["catalogo"], dados["indice_cep"], ent["escolas_municipais.json"].get("escolas", []))
 
     # Posição representativa de cada setor: a mesma de pipeline/analise_territorial.py (centroide geométrico).
     setores = []
@@ -177,21 +214,29 @@ def gerar(dados: dict) -> dict:
     fora = {c: sum(1 for e in equip if e["categoria"] == c and e["xy_catalogo"] and e["setor"] is None) for c in CATEGORIAS}
 
     # Indicadores 5 e 6: distâncias por setor e cobertura, por cenário e categoria.
-    dist, resumo, cobertura = {}, {}, {}
+    dist, dist_min, dist_max, resumo, cobertura = {}, {}, {}, {}, {}
     totais_cat = {c: sum(1 for e in equip if e["categoria"] == c) for c in CATEGORIAS}
     for cen in CENARIOS:
-        dist[cen], resumo[cen], cobertura[cen] = {}, {}, {}
+        dist[cen], dist_min[cen], dist_max[cen], resumo[cen], cobertura[cen] = {}, {}, {}, {}, {}
         for cat in CATEGORIAS:
             pts = posicoes(equip, cen, cat)
             cobertura[cen][cat] = {"com_coordenada": len(pts), "cadastrados": totais_cat[cat], "completo": len(pts) == totais_cat[cat] and totais_cat[cat] > 0}
             if not pts:
                 dist[cen][cat] = [None] * len(setores)
+                dist_min[cen][cat] = [None] * len(setores)
+                dist_max[cen][cat] = [None] * len(setores)
                 resumo[cen][cat] = None
                 continue
-            ds = [min(at.haversine_km(s["lat"], s["lon"], la, lo) for la, lo in pts) for s in setores]
-            dist[cen][cat] = ds
-            pares = [(d, s["pessoas"]) for d, s in zip(ds, setores)]
-            sem = [(d, s["pessoas"]) for d, s in zip(ds, setores) if not s["bairro"]]
+            centrais, inferiores, superiores = [], [], []
+            for s in setores:
+                medidas = [(at.haversine_km(s["lat"], s["lon"], la, lo), raio) for la, lo, raio in pts]
+                centrais.append(min(d for d, _ in medidas))
+                faixas = [faixa_distancia_km(d, raio) for d, raio in medidas]
+                inferiores.append(min(f[0] for f in faixas))
+                superiores.append(min(f[1] for f in faixas))
+            dist[cen][cat], dist_min[cen][cat], dist_max[cen][cat] = centrais, inferiores, superiores
+            pares = [(d, s["pessoas"]) for d, s in zip(centrais, setores)]
+            sem = [(d, s["pessoas"]) for d, s in zip(centrais, setores) if not s["bairro"]]
             resumo[cen][cat] = {"populacao_toda": ed.resumir(pares, ed.LIMIARES_KM), "setores_sem_bairro": ed.resumir(sem, ed.LIMIARES_KM)}
 
     divergencias = conferir(expo, resumo, cobertura)
@@ -213,12 +258,18 @@ def gerar(dados: dict) -> dict:
             "fonte": "IBGE, Censo Demográfico 2022 (malha de setores censitários) e catálogo institucional do Observatório da Mulher (catalogo/servicos_manuais.csv)",
             "entradas_sha256": {k: hashes[k] for k in sorted(hashes)},
             "entradas_geradas_em": {"setores.geojson": geo["meta"]["gerado_em"], "territorio.json": meta_terr["gerado_em"],
-                                    "exposicao_distancia.json": meta_expo["gerado_em"], "analise_territorial.json": ent["analise_territorial.json"]["meta"]["gerado_em"]},
+                                    "exposicao_distancia.json": meta_expo["gerado_em"], "analise_territorial.json": ent["analise_territorial.json"]["meta"]["gerado_em"],
+                                    "escolas_municipais.json": ent["escolas_municipais.json"]["meta"]["gerado_em"]},
             "auditoria_centros": {"metodo_atual": "centroide geométrico do maior componente do MultiPolygon, selecionado pelo número de vértices do anel externo; cálculo usa somente o anel externo", "setores_auditados": len(setores), "centroides_fora_do_poligono": centroides_fora, "substituicao_automatica": False, "observacao": "A comparação com ponto interno representativo e a avaliação do impacto nas distâncias permanecem pendentes. Nenhum centro foi substituído."},
-            "metodo": ("Setor censitário como unidade. Pessoas e domicílios: campos agregados da malha do IBGE (v0001 = total de pessoas e v0002 = total de domicílios, inclusive coletivos e não ocupados, conforme o dicionário de dados dos agregados preliminares do IBGE; falta confirmar que a malha usada é da mesma divulgação). "
-                       "Densidade e área: valores de territorio.json. Equipamentos no setor: ponto no polígono com a coordenada do catálogo; ponto na fronteira conta no primeiro setor em ordem de código. "
-                       "Distância: Haversine (raio 6371,0088 km) do ponto representativo calculado por at.centro (centroide do maior componente, escolhido pelo número de vértices; anel externo), ao equipamento mais próximo da categoria, no mesmo cálculo de pipeline/exposicao_distancia.py, "
-                       "conferido contra web/dados/exposicao_distancia.json. Cobertura: equipamentos com coordenada sobre equipamentos cadastrados."),
+            "metodo": ("Setor censitário como unidade. Pessoas e domicílios: campos agregados da malha do IBGE; a correspondência de v0001/v0002 com o dicionário da divulgação usada ainda exige conferência documental. "
+                       "Densidade e área: valores de territorio.json. CRAS/UBS: catálogo institucional. Escolas: web/dados/escolas_municipais.json, campo localizacao_mapa, preservando método, precisão, fonte e raio. "
+                       "Distância central: Haversine (raio 6371,0088 km) do centroide atual do setor ao equipamento elegível mais próximo. Para localizações com raio operacional r, o envelope é d_min=max(0,d-r) e d_max=d+r; para várias referências, usa-se o menor limite inferior e o menor limite superior. "
+                       "O envelope é geométrico, não intervalo de confiança. Os resumos centrais continuam conferidos contra web/dados/exposicao_distancia.json."),
+            "metodologia_incerteza": {"unidade_raio": "metros", "formula": "d_min=max(0,d-r); d_max=d+r",
+                                     "interpretacao": "Envelope geométrico operacional, não intervalo de confiança estatístico.",
+                                     "origem_raio": "Escolas: localizacao_mapa.raio_m em escolas_municipais.json. CRAS/UBS sem coordenada individual: terceiro elemento do índice CEP. Coordenadas individuais não recebem raio artificial.",
+                                     "limite": "O raio aproxima a dispersão dos endereços associados ao CEP; não garante conter o equipamento nem é margem de erro validada pelo IBGE.",
+                                     "comparacao": "Faixas sobrepostas não permitem afirmar qual equipamento é mais próximo."},
             "aviso_metodologico": AVISO_METODOLOGICO,
             "rotulos_cenario": ROTULOS_CENARIO,
             "rotulos_categoria": ROTULOS_CATEGORIA,
@@ -226,7 +277,7 @@ def gerar(dados: dict) -> dict:
                 "Nesta versão nenhum setor censitário é suprimido nem agregado. Os %d setores com menos de 5 pessoas ou menos de 3 domicílios (faixa conservadora da proposta de supressão e agregação) são marcados no mapa com o aviso 'população muito pequena, interprete com cautela' (decisão D4 em docs/territorial/DECISOES_DO_AUTOR.md; pode ser revista pelo autor)." % sum(1 for s in setores if s["pessoas"] < 5 or s["domicilios"] < 3),
                 "O cenário com centro do CEP cadastral do equipamento é uma análise de sensibilidade: a posição é aproximada e não equivale à coordenada individual do catálogo.",
                 "A auditoria geométrica encontrou %d centroides fora dos respectivos polígonos em %d setores. O centroide atual não foi substituído: a alternativa interna e o impacto nas distâncias ainda precisam ser comparados antes de qualquer mudança." % (centroides_fora, len(setores)),
-                "O método e a confiança de cada coordenada ficam em catalogo/localizacao_registro.csv e não são lidos por este script.",
+                "A localização escolar é lida da base consolidada, com método, precisão, fonte e raio. Para CRAS/UBS, coordenadas individuais vêm do catálogo; referências pelo índice CEP permanecem aproximadas.",
                 "Categorias com cobertura incompleta de coordenadas têm distância superestimada.",
             ],
             "conferencia": {"coincide_com_exposicao_distancia": True, "setores": len(setores), "pessoas": sum(s["pessoas"] for s in setores)},
@@ -240,6 +291,8 @@ def gerar(dados: dict) -> dict:
         "equipamentos": [
             {"id": e["id"], "nome": e["nome"], "categoria": e["categoria"],
              "precisao": "catalogo" if e["xy_catalogo"] else ("centro_do_cep" if e["xy_cep"] else "pendente"),
+             "metodo_localizacao": e.get("metodo_localizacao"), "fonte_localizacao": e.get("fonte_localizacao"),
+             "raio_incerteza_m": round(float(e.get("raio_catalogo_m") or 0) if e["xy_catalogo"] else float(e.get("raio_cep_m") or 0), 1),
              "lat": round((e["xy_catalogo"] or e["xy_cep"] or (None, None))[0], 6) if (e["xy_catalogo"] or e["xy_cep"]) else None,
              "lon": round((e["xy_catalogo"] or e["xy_cep"] or (None, None))[1], 6) if (e["xy_catalogo"] or e["xy_cep"]) else None,
              "setor": e["setor"]}
@@ -248,7 +301,9 @@ def gerar(dados: dict) -> dict:
         "setores": [
             {"id": s["id"], "bairro": s["bairro"], "pessoas": s["pessoas"], "domicilios": s["domicilios"], "area_km2": s["area_km2"], "densidade": s["densidade"],
              "equipamentos": contagem[s["id"]],
-             "distancia_km": {cen: {cat: (None if dist[cen][cat][i] is None else round(dist[cen][cat][i], 3)) for cat in CATEGORIAS} for cen in CENARIOS}}
+             "distancia_km": {cen: {cat: (None if dist[cen][cat][i] is None else round(dist[cen][cat][i], 3)) for cat in CATEGORIAS} for cen in CENARIOS},
+             "distancia_min_km": {cen: {cat: (None if dist_min[cen][cat][i] is None else round(dist_min[cen][cat][i], 3)) for cat in CATEGORIAS} for cen in CENARIOS},
+             "distancia_max_km": {cen: {cat: (None if dist_max[cen][cat][i] is None else round(dist_max[cen][cat][i], 3)) for cat in CATEGORIAS} for cen in CENARIOS}}
             for i, s in enumerate(setores)
         ],
     }
