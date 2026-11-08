@@ -221,6 +221,8 @@ def auditar_publicacao() -> list[Falha]:
     terr = json.loads((DADOS / "territorio.json").read_text(encoding="utf-8"))
     expo = json.loads((DADOS / "exposicao_distancia.json").read_text(encoding="utf-8"))
     cep_indice = json.loads((DADOS / "cep_indice.json").read_text(encoding="utf-8"))
+    escolas = json.loads((DADOS / "escolas_municipais.json").read_text(encoding="utf-8"))
+    oferta = json.loads((DADOS / "oferta_educacao_infantil.json").read_text(encoding="utf-8"))
     analise = json.loads((DADOS / "analise_territorial.json").read_text(encoding="utf-8"))
     features = geo.get("features", [])
     protegidos = [f for f in features if f.get("properties", {}).get("suprimido_privacidade") is True]
@@ -253,6 +255,11 @@ def auditar_publicacao() -> list[Falha]:
             falhas.append(Falha(f"territorio.json/distancia_ate_servico/{categoria}", "privacidade", "resumo de distância ainda publica contagens populacionais"))
     if expo.get("meta", {}).get("pessoas_total") is not None:
         falhas.append(Falha("exposicao_distancia.json/meta", "privacidade", "exposição ainda publica total populacional"))
+    if "escolas" in oferta or any(
+        any("matricula" in k.lower() or "turma" in k.lower() for k in escola)
+        for escola in escolas.get("escolas", [])
+    ):
+        falhas.append(Falha("escolas_municipais.json/oferta_educacao_infantil.json", "privacidade", "cadastro público ainda expõe matrículas ou turmas por escola"))
     for cenario, categorias in expo.get("cenarios", {}).items():
         for categoria, resumo in categorias.items():
             if "populacao_toda" in resumo or any("pessoas" in k for k in resumo):
