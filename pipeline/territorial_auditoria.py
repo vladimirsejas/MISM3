@@ -33,7 +33,7 @@ CAMPOS_PERMITIDOS = {
     "versao", "carimbo", "fonte", "entradas_sha256", "entradas_geradas_em", "metodo", "aviso_metodologico", "rotulos_cenario",
     "auditoria_centros", "metodo_atual", "setores_auditados", "centroides_fora_do_poligono", "substituicao_automatica", "observacao",
     "rotulos_categoria", "ressalvas", "conferencia", "equipamentos_fora_da_malha", "coincide_com_exposicao_distancia",
-    "setores.geojson", "territorio.json", "exposicao_distancia.json", "analise_territorial.json", "servicos_manuais.csv", "cep_indice.json",
+    "setores.geojson", "territorio.json", "exposicao_distancia.json", "analise_territorial.json", "escolas_municipais.json", "servicos_manuais.csv", "cep_indice.json",
     "area_km2", "bairros", "domicilios", "pessoas", "rotulo", "unidade", "limites",
     "com_coordenada", "cadastrados", "completo",
     "populacao_toda", "setores_sem_bairro", "mediana_km", "p90_km", "acima_de", "percentual", "1 km", "2 km",
