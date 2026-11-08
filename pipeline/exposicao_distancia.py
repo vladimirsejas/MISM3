@@ -51,7 +51,7 @@ def quantil_ponderado(pares, q):
 
 def resumir_setores(distancias, limiares):
     """Resumo não ponderado: informa quantidade e proporção de setores, nunca contagem de pessoas."""
-    valores = sorted(distancias)
+    valores = sorted(round(float(d), 3) for d in distancias)
     total = len(valores)
     if not total:
         return None
