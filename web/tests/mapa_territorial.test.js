@@ -106,13 +106,16 @@ assert(setorSemRaio && /faixa indisponível: raio não documentado/.test(M.texto
 assert(setorComFaixa && /envelope geométrico/.test(M.textoFaixaDistancia(setorComFaixa, "com_centro_do_cep", "escola")));
 
 assert.strictEqual(M.decimal(2.175, 2), "2,18");
-assert.strictEqual(dados.setores.reduce((a, s) => a + s.pessoas, 0), 201418);
+assert.strictEqual(dados.totais.pessoas, null, "o total municipal não deve permitir reconstruir os setores protegidos");
+assert.strictEqual(dados.totais.domicilios, null, "o total de domicílios não deve permitir reconstruir os setores protegidos");
 
-/* ---- decisão D4: setores pequenos são marcados, nenhum é suprimido ---- */
+/* ---- decisão D4: 17 setores têm dados demográficos e derivados suprimidos ---- */
 const pequenos = dados.setores.filter((s) => M.setorPequeno(s));
-assert.strictEqual(pequenos.length, 17, "17 setores com menos de 5 pessoas ou menos de 3 domicílios");
-assert(pequenos.every((s) => s.pessoas < 5 || s.domicilios < 3) && dados.setores.filter((s) => !M.setorPequeno(s)).every((s) => s.pessoas >= 5 && s.domicilios >= 3));
-assert(js.indexOf("menos de 5 pessoas ou menos de 3 domicílios; interprete com cautela") !== -1 && /17 setores/.test(JSON.stringify(dados.meta.ressalvas)), "o aviso e a contagem aparecem na página");
+assert.strictEqual(pequenos.length, 17, "17 setores abaixo do critério D4");
+assert(pequenos.every((s) => s.suprimido_privacidade && s.pessoas === null && s.domicilios === null && s.densidade === null));
+assert(pequenos.every((s) => Object.values(s.distancia_km).every((grupo) => Object.values(grupo).every((v) => v === null))));
+assert(dados.setores.filter((s) => !M.setorPequeno(s)).every((s) => s.pessoas !== null && s.domicilios !== null));
+assert(/dados demográficos e indicadores derivados omitidos por cautela estatística/.test(js) && /17 setores/.test(JSON.stringify(dados.meta.ressalvas)) && /13 bairros afetados/.test(JSON.stringify(dados.meta.ressalvas)), "a interface e os metadados documentam a supressão primária e complementar");
 assert(/@media \(max-width:40rem\)[\s\S]*data-label/.test(css) && /data-label/.test(js), "tabelas viram lista no celular (sem rolagem horizontal)");
 
 assert(/setAttribute\("tabindex", "-1"\)/.test(js) && /setAttribute\("tabindex", "0"\)/.test(js) && /function definirFoco/.test(js), "roving tabindex: só o setor atual tem tabindex 0 (um único ponto de Tab)");
