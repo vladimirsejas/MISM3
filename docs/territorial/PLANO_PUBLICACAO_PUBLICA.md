@@ -98,7 +98,7 @@ O repositório GitHub `vladimirsejas/MISM3` está público. A auditoria confirmo
 - 69 registros de matrículas por escola em `web/dados/oferta_educacao_infantil.json`, incluindo uma contagem de apenas duas matrículas na faixa de 0 a 3 anos;
 - vínculos e dados do Censo Escolar por unidade em `web/dados/escolas_municipais.json`.
 
-O histórico público conserva versões anteriores desses arquivos. A branch de publicação possui os arquivos sanitizados e agregados, mas isso não remove os dados das versões públicas da `main` nem do histórico Git. A mitigação exige decisão separada do autor: tornar temporariamente o repositório privado e planejar a limpeza do histórico, ou autorizar uma estratégia de sanitização do repositório. Não fazer alteração na `main`, mudança de visibilidade ou reescrita de histórico sem autorização expressa.
+O histórico público conserva versões anteriores desses arquivos. Além disso, relatórios antigos de auditoria CEP continham CEPs de teste, coordenadas aproximadas e retângulos de tiles. Os relatórios e rastros detalhados foram substituídos por resumos genéricos nesta branch, e os scripts passaram a exigir CEP informado explicitamente e gravar saídas no diretório temporário local. Isso também não apaga os detalhes de commits anteriores. A branch de publicação possui os arquivos sanitizados e agregados, mas isso não remove os dados das versões públicas da `main` nem do histórico Git. A mitigação exige decisão separada do autor: tornar temporariamente o repositório privado e planejar a limpeza do histórico, ou autorizar uma estratégia de sanitização do repositório. Não fazer alteração na `main`, mudança de visibilidade ou reescrita de histórico sem autorização expressa.
 
 ### 4.2 Estado da PR e infraestrutura
 
@@ -113,7 +113,7 @@ O histórico público conserva versões anteriores desses arquivos. A branch de 
 
 A publicação só deve avançar quando todos estiverem atendidos:
 
-- [ ] D4 validada em todos os arquivos da branch de publicação e mitigada na `main` pública e no histórico do repositório.
+- [x] D4 aplicada aos arquivos de publicação e aos geradores da branch; [ ] exposição histórica mitigada na `main` pública, em commits antigos e em relatórios anteriores.
 - [ ] Índice de CEP revisado quanto à necessidade, privacidade e termos de redistribuição.
 - [ ] Licenças, autorizações e atribuições dos recursos de terceiros confirmadas ou recursos substituídos.
 - [ ] Serviços e telefones prioritários conferidos; contagens recalculadas.
