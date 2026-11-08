@@ -106,6 +106,16 @@
 
   function achou(lista, texto) { return lista.some(function (r) { return r.test(texto); }); }
 
+  /* Necessidade material familiar não é, por si só, evidência de violência ou perigo infantil.
+     Regras explícitas de dano continuam prevalecendo; este filtro evita falso positivo do classificador aprendido. */
+  function necessidadeMaterialSemDano(t) {
+    var familiar = /\b(?:criancas?|filh[oa]s?|netos?|netas?|netinhos?|netinhas?)\b/.test(t);
+    var material = /\b(?:aposentadoria|pensao|renda|dinheiro|beneficio|contas?|despesas?|necessidades?|mercado|alimentacao|comida|recursos?)\b/.test(t);
+    var dano = /\b(?:apanh\w*|agred\w*|bat(?:e|eu|endo)|abus\w*|maltrat\w*|machuc\w*|ameac\w*|violenc\w*|tranc\w*|abandon\w*|negligenc\w*|fome|passando fome|sem comer|sem comida|perigo|socorro|ferid\w*|queimad\w*|sangr\w*)\b/.test(t);
+    return familiar && material && !dano;
+  }
+
+
   /* Âncoras: um alerta que vem SÓ do detector aprendido precisa de ao menos uma palavra do campo do assunto. Modelos pequenos confundem
      "vou tirar férias" com "vou tirar a minha vida"; a âncora barra esse tipo de erro sem atrapalhar as regras. */
   var ANCORAS = {
@@ -136,6 +146,7 @@
       var regra = versoes.some(function (v) { return achou(COMPILADO[tp].forte, v); }), p = probs ? probs[tp] : undefined, lim = detector ? detector.limiares[tp] : undefined;
       var alto = detector && detector.altos[tp] !== undefined ? detector.altos[tp] : lim;
       if (!regra && ANCORAS[tp] && !emAlguma(ANCORAS[tp])) p = undefined; /* o detector sozinho não vale sem uma palavra do assunto */
+      if (!regra && tp === "crianca" && necessidadeMaterialSemDano(t)) p = undefined; /* pobreza e responsabilidade familiar não são alerta de abuso sem sinal de dano */
       if (p !== undefined && lim !== undefined && p >= lim) doModelo[tp] = Math.round(p * 1000) / 1000;
       if (regra || (p !== undefined && alto !== undefined && p >= alto)) { tipos.push(tp); nivel = 2; }
       else if (p !== undefined && lim !== undefined && p >= lim) fracos.push(tp); /* detector com confiança moderada: só aviso discreto */
