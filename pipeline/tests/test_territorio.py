@@ -115,7 +115,7 @@ def test_dados_reais_indicador_instavel_nao_vira_valor(real):
         if props.get("suprimido_privacidade") or (props.get("domicilios") is not None and props["domicilios"] < t.MIN_DOMICILIOS):
             assert real["setores"][props["setor"]]["p"] is None
         if props.get("suprimido_privacidade"):
-            assert real["setores"][props["setor"]]["d"] is None and real["setores"][props["setor"]]["dist_creche"] is None
+            assert real["setores"][props["setor"]]["d"] is None and real["setores"][props["setor"]].get("dist_creche") is None
     valores = [s["p"] for s in real["setores"].values() if s["p"] is not None]
     assert max(valores) < 15, "um setor com base suficiente não deve ter dezenas de pessoas por domicílio"
 
