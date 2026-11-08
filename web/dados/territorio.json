@@ -16,7 +16,7 @@
   },
   "aviso": "Dados de população, domicílios e indicadores derivados são omitidos em setores com menos de 5 pessoas ou menos de 3 domicílios, e nos agregados de bairros afetados. O painel preserva a geometria e os pontos institucionais. Não há idade, renda nem sexo nesta malha.",
   "aviso_distancia": "Distância em linha reta do centro de cada setor até o serviço mais próximo, só entre os serviços que têm localização. Onde a localização vem do CEP, é aproximada. Não considera ruas, ônibus nem horários, e um setor 'longe' pode ter serviço que ainda não foi localizado. Mostra onde olhar, não prova falta de serviço.",
-  "setores_suprimidos": 0
+  "setores_suprimidos": 17
  },
  "totais": {
   "pessoas": null,
@@ -43,7 +43,7 @@
     131,
     73
    ],
-   "suprimidos": 0
+   "suprimidos": 17
   },
   "pessoas_por_domicilio": {
    "unidade": "pessoas por domicílio",
@@ -62,7 +62,7 @@
     11
    ],
    "sem_base_suficiente": 35,
-   "suprimidos": 0
+   "suprimidos": 17
   }
  },
  "bairros": [
@@ -224,7 +224,7 @@
    "area_km2": 1.5,
    "densidade": null,
    "pessoas_por_domicilio": null,
-   "dados_suprimidos": false
+   "dados_suprimidos": true
   },
   {
    "nome": "Bela Vista",
@@ -234,7 +234,7 @@
    "area_km2": 1.87,
    "densidade": null,
    "pessoas_por_domicilio": null,
-   "dados_suprimidos": false
+   "dados_suprimidos": true
   },
   {
    "nome": "Centenário",
@@ -244,7 +244,7 @@
    "area_km2": 4.9,
    "densidade": null,
    "pessoas_por_domicilio": null,
-   "dados_suprimidos": false
+   "dados_suprimidos": true
   },
   {
    "nome": "Cidade Jardim",
@@ -254,7 +254,7 @@
    "area_km2": 3.29,
    "densidade": null,
    "pessoas_por_domicilio": null,
-   "dados_suprimidos": false
+   "dados_suprimidos": true
   },
   {
    "nome": "Consolação",
@@ -264,7 +264,7 @@
    "area_km2": 2.65,
    "densidade": null,
    "pessoas_por_domicilio": null,
-   "dados_suprimidos": false
+   "dados_suprimidos": true
   },
   {
    "nome": "Distrito Industrial",
@@ -274,7 +274,7 @@
    "area_km2": 14.36,
    "densidade": null,
    "pessoas_por_domicilio": null,
-   "dados_suprimidos": false
+   "dados_suprimidos": true
   },
   {
    "nome": "Grande Cervezão",
@@ -284,7 +284,7 @@
    "area_km2": 5.24,
    "densidade": null,
    "pessoas_por_domicilio": null,
-   "dados_suprimidos": false
+   "dados_suprimidos": true
   },
   {
    "nome": "Inocoop",
@@ -294,7 +294,7 @@
    "area_km2": 1.35,
    "densidade": null,
    "pessoas_por_domicilio": null,
-   "dados_suprimidos": false
+   "dados_suprimidos": true
   },
   {
    "nome": "Jardim Novo/Terra Nova",
@@ -304,7 +304,7 @@
    "area_km2": 6.3,
    "densidade": null,
    "pessoas_por_domicilio": null,
-   "dados_suprimidos": false
+   "dados_suprimidos": true
   },
   {
    "nome": "Mãe Preta",
@@ -314,7 +314,7 @@
    "area_km2": 3.41,
    "densidade": null,
    "pessoas_por_domicilio": null,
-   "dados_suprimidos": false
+   "dados_suprimidos": true
   },
   {
    "nome": "Santana",
@@ -324,7 +324,7 @@
    "area_km2": 1.69,
    "densidade": null,
    "pessoas_por_domicilio": null,
-   "dados_suprimidos": false
+   "dados_suprimidos": true
   },
   {
    "nome": "Sem bairro definido pelo IBGE",
@@ -334,7 +334,7 @@
    "area_km2": 420.62,
    "densidade": null,
    "pessoas_por_domicilio": null,
-   "dados_suprimidos": false
+   "dados_suprimidos": true
   },
   {
    "nome": "Vila Paulista",
@@ -344,7 +344,7 @@
    "area_km2": 4.73,
    "densidade": null,
    "pessoas_por_domicilio": null,
-   "dados_suprimidos": false
+   "dados_suprimidos": true
   }
  ],
  "setores": {
@@ -3076,17 +3076,17 @@
    ],
    "contagem": [
     154,
-    175,
-    47,
+    170,
+    37,
     10,
-    22
+    20
    ],
-   "mediana_km": 0.58,
+   "mediana_km": 0.57,
    "setores_total": 408,
-   "setores_suprimidos": 0,
-   "setores_validos": 408,
-   "setores_ate_1_km": 331,
-   "setores_3_km_ou_mais": 22
+   "setores_suprimidos": 17,
+   "setores_validos": 391,
+   "setores_ate_1_km": 326,
+   "setores_3_km_ou_mais": 20
   }
  },
  "educacao_infantil": {
