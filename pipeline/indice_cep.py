@@ -15,6 +15,7 @@ Saida: web/dados/cep_indice.json
 """
 from __future__ import annotations
 
+import json
 import sys
 import zipfile
 from pathlib import Path
@@ -23,6 +24,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from ceps_lista import CAMINHO_PADRAO as CAMINHO_LISTA_CEPS, ler_lista_ceps  # noqa: E402
 from common import (BRUTO, DADOS as DADOS_RAIZ, MUNICIPIO_IBGE7, MUNICIPIO_NOME, UF, WEB_DADOS, achar_coluna, agora_iso, erro,  # noqa: E402
                     haversine_m, ler_csv_flex, normalizar_cep, para_numero, salvar_json)
+from privacidade_territorial import setor_suprimido  # noqa: E402
 
 DADOS_PARQUET = DADOS_RAIZ / "parquet"
 
@@ -98,6 +100,20 @@ def completar_com_lista(indice: dict, lista: list[dict], raio_m: int = RAIO_LIST
     return novos
 
 
+def filtrar_ceps_de_setores_suprimidos(indice: dict, geojson: dict) -> tuple[dict, int]:
+    """Remove do índice público qualquer CEP associado a setor protegido pela decisão D4."""
+    protegidos = {
+        f.get("properties", {}).get("setor")
+        for f in geojson.get("features", [])
+        if setor_suprimido(f.get("properties", {}))
+    }
+    filtrado = {
+        cep: valor for cep, valor in indice.items()
+        if len(valor) < 4 or not valor[3] or valor[3] not in protegidos
+    }
+    return filtrado, len(indice) - len(filtrado)
+
+
 def ler_cnefe() -> "pd.DataFrame":  # noqa: F821
     pasta = BRUTO / "cnefe"
     parquets = [
@@ -140,6 +156,11 @@ def main() -> None:
         erro(str(e))
     lista = ler_lista_ceps(a.ceps_google)
     novos = completar_com_lista(indice, lista) if lista else {}
+    geo_path = WEB_DADOS / "setores.geojson"
+    if not geo_path.exists():
+        erro("Gere primeiro web/dados/setores.geojson; o índice CEP precisa respeitar a supressão D4.")
+    geojson = json.loads(geo_path.read_text(encoding="utf-8"))
+    indice, ceps_suprimidos = filtrar_ceps_de_setores_suprimidos(indice, geojson)
     if lista:
         print("  %d CEPs a mais vieram da lista de CEPs (o CNEFE não os cobre)." % len(novos))
     else:
@@ -152,12 +173,15 @@ def main() -> None:
             "formato": "cep -> [latitude, longitude, raio_m, setor_censitario, n_enderecos]",
             "ceps_so_da_lista": sorted(novos),
             "observacao_lista": "CEPs em 'ceps_so_da_lista' vêm de um ponto único da lista de CEPs (n_enderecos = 0, setor vazio, raio %d m)." % RAIO_LISTA_M,
+            "ceps_de_setores_suprimidos_omitidos": ceps_suprimidos,
+            "observacao_privacidade": "CEPs associados a setores protegidos pela decisão D4 não são publicados no índice.",
         },
         "ceps": indice,
     }
     salvar_json(saida, WEB_DADOS / "cep_indice.json")
     pequenos = sum(1 for v in indice.values() if v[4] < POUCOS)
-    print("  %d CEPs indexados (%d com menos de %d enderecos, com area borrada)." % (len(indice), pequenos, POUCOS))
+    print("  %d CEPs indexados; %d associados a setores protegidos foram omitidos." % (len(indice), ceps_suprimidos))
+    print("  %d CEPs com menos de %d endereços permanecem com área borrada." % (pequenos, POUCOS))
     print("Proximo passo: python pipeline/servicos.py")
 
 
