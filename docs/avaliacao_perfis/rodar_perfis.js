@@ -44,6 +44,6 @@ linhas.forEach((l) => {
 });
 const falhas = linhas.filter((l) => !l.res.acerto || l.res.perigoOk === false || l.res.falsoAlarme);
 if (falhas.length) {
-  console.error("\\nCI bloqueada: " + falhas.length + " falha(s) no conjunto " + arquivo + ".");
+  console.error("\nCI bloqueada: " + falhas.length + " falha(s) no conjunto " + arquivo + ".");
   process.exitCode = 1;
 }
