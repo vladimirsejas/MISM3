@@ -134,6 +134,7 @@ Não existe: modelo de linguagem, embeddings neurais, previsão de risco, elegib
 | `analise_territorial.py` | Setores e serviços | Distâncias e agrupamento | numpy, scikit-learn (KMeans) |
 | `exposicao_distancia.py` | Setores e serviços | `web/dados/exposicao_distancia.json` (parcela da população a mais de 1 km e 2 km do serviço mais próximo) | stdlib |
 | `territorial_indicadores.py`, `territorial_auditoria.py` | `web/dados/` (setores, território, distâncias) e catálogo | `web/dados/indicadores_territoriais.json` (mapa territorial v1, conferido contra `exposicao_distancia.json`) e relatório de auditoria de privacidade | stdlib |
+| `auditoria_centroides.py` | `setores.geojson` e `indicadores_territoriais.json` | Relatórios JSON e Markdown de sensibilidade dos centroides e distâncias, sem alterar a produção | stdlib |
 | `oferta_educacao_infantil.py` | Censo Escolar 2025 | `web/dados/oferta_educacao_infantil.json` | pandas |
 | `escolas_municipais.py` | Catálogo municipal, vínculos INEP e Censo Escolar | `web/dados/escolas_municipais.json` | stdlib |
 | `ligar_catalogo_inep.py` | Catálogo e Censo | `catalogo/inep_escolas.csv` (sobrescreve; revisar antes) | stdlib |
@@ -223,6 +224,7 @@ Notas de ambiente:
 - [docs/mapa_de_dados.md](docs/mapa_de_dados.md), [docs/inventario_de_fontes.md](docs/inventario_de_fontes.md), [docs/documetacao/LEIA-ME.md](docs/documetacao/LEIA-ME.md): dados e fontes arquivadas.
 - [docs/roteiro_teste_orientador.md](docs/roteiro_teste_orientador.md): roteiro de teste manual do orientador.
 - [docs/territorial/PLANO_IMPLEMENTACAO_MAPA_TERRITORIAL.md](docs/territorial/PLANO_IMPLEMENTACAO_MAPA_TERRITORIAL.md): plano de implementação do mapa territorial (recuperação, auditoria, qualidade dos dados, usabilidade, navegação e validação para publicação).
+- [docs/territorial/AUDITORIA_SENSIBILIDADE_CENTROIDES.md](docs/territorial/AUDITORIA_SENSIBILIDADE_CENTROIDES.md): método e execução da comparação dos pontos representativos.
 - [docs/plano_proximo_ciclo.md](docs/plano_proximo_ciclo.md), [docs/plano_fontes_externas_e_expansao.md](docs/plano_fontes_externas_e_expansao.md), [docs/analise_competitiva_mism3.md](docs/analise_competitiva_mism3.md), [docs/benchmark_externo_ideias_funcionais.md](docs/benchmark_externo_ideias_funcionais.md): planejamento e pesquisa.
 
 ## Manutenção deste README
