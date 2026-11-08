@@ -14,6 +14,7 @@ A branch `feat/mapa-territorial-como-mapa-principal` transforma o mapa territori
 
 - `pipeline/territorial_indicadores.py` passa a usar `web/dados/escolas_municipais.json` como fonte consolidada das 68 escolas, preservando `localizacao_mapa.metodo`, `precisao`, `fonte` e `raio_m`.
 - O catálogo manual continua sendo a fonte de CRAS e UBS/USF; coordenadas individuais não recebem raio artificial.
+- A proveniência das coordenadas CRAS/UBS é lida de `catalogo/localizacao_registro.csv`: 22 registros têm método/confiança/data (11 alta, 11 média); 6 ficam explicitamente como `nao_registrada`, sem inferência de confiança.
 - O arquivo `web/dados/indicadores_territoriais.json` registra os campos `distancia_min_km` e `distancia_max_km` para cada setor, cenário e categoria.
 - Para cada equipamento aproximado, o raio operacional é aplicado por `d_min=max(0,d-r)` e `d_max=d+r`. Para a referência mais próxima entre vários equipamentos, são usados o menor limite inferior e o menor limite superior.
 - A faixa é envelope geométrico operacional, não intervalo de confiança. Faixas sobrepostas não permitem ordenar com segurança qual equipamento é mais próximo.
