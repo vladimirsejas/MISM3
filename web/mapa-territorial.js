@@ -411,6 +411,7 @@
       var detalhes = [];
       if (e.metodo_localizacao) detalhes.push("método: " + e.metodo_localizacao);
       if (e.confianca_localizacao) detalhes.push("confiança registrada: " + e.confianca_localizacao);
+      if (e.raio_incerteza_m > 0) detalhes.push("raio operacional: " + decimal(e.raio_incerteza_m / 1000, 2) + " km");
       if (e.data_aplicacao_localizacao) detalhes.push("registro: " + e.data_aplicacao_localizacao);
       if (e.fonte_localizacao) detalhes.push("fonte: " + e.fonte_localizacao);
       t.textContent = e.nome + " (" + rotuloCategoria(e.categoria) + "): " + rot + (detalhes.length ? ". " + detalhes.join("; ") : "");
