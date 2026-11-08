@@ -86,7 +86,7 @@ assert.strictEqual(dados.bairros.find((b) => b.nome === dados.meta.sem_bairro.ro
 assert.strictEqual(dados.classes.densidade.contagem.reduce((s, n) => s + n, 0), 391);
 assert.strictEqual(dados.classes.densidade.suprimidos, 17);
 const ppd = dados.classes.pessoas_por_domicilio;
-assert.strictEqual(ppd.contagem.reduce((s, n) => s + n, 0) + ppd.sem_base_suficiente, 408);
+assert.strictEqual(ppd.contagem.reduce((s, n) => s + n, 0) + ppd.sem_base_suficiente + ppd.suprimidos, 408);
 assert.strictEqual(ppd.suprimidos, 17);
 const protegidos = geo.features.filter((f) => f.properties.suprimido_privacidade);
 assert.strictEqual(protegidos.length, 17);
