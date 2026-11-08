@@ -62,3 +62,29 @@ def test_geometria_sem_ponto_interno_falha_explicitamente():
         assert "ponto interno" in str(exc)
     else:
         raise AssertionError("esperava falha para geometria degenerada")
+
+
+def test_malha_real_audita_408_setores_e_identifica_nove_centroides_externos():
+    import json
+
+    raiz = Path(__file__).resolve().parents[2]
+    geo = json.loads((raiz / "web/dados/setores.geojson").read_text(encoding="utf-8"))
+    indicadores = json.loads((raiz / "web/dados/indicadores_territoriais.json").read_text(encoding="utf-8"))
+    resultado = ac.comparar(geo, indicadores)
+
+    assert resultado["meta"]["setores_auditados"] == 408
+    assert resultado["meta"]["centroides_atualmente_fora"] == 9
+    assert set(resultado["meta"]["codigos_centroides_fora"]) == {
+        "354390705000026",
+        "354390705000165",
+        "354390705000339",
+        "354390705000432",
+        "354390705000460",
+        "354390705000524",
+        "354390705000529",
+        "354390705000530",
+        "354390705000541",
+    }
+    assert all(s["centroide_atual"]["dentro_do_poligono"] or s["ponto_interno_alternativo"]
+               for s in resultado["setores"])
+    assert resultado["resumo"]["distancias"]["coordenadas_do_catalogo"]["ubs"]["setores_com_distancia"] == 408
