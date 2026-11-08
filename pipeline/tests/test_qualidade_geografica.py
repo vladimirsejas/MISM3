@@ -53,6 +53,9 @@ def test_base_real_confere_contagens_de_proveniencia_e_privacidade():
     assert not r["geometrias"]["geometrias_com_erro_estrutural"]
     assert r["areas"]["soma_setorial_km2"] == 497.3
     assert r["areas"]["referencia_municipal_km2"] == 498.403
+    assert r["areas"]["recalculo_local_km2"] == 497.34
+    assert r["areas"]["recalculo_geodesico_km2"] == 499.665
+    assert r["areas"]["diferenca_recalculo_geodesico_vs_referencia_km2"] == 1.262
     assert r["equipamentos"]["cras_ubs"]["total"] == 28
     assert r["equipamentos"]["cras_ubs"]["proveniencia_documentada"] == 22
     assert len(r["equipamentos"]["cras_ubs"]["proveniencia_ausente"]) == 6
