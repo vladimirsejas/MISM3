@@ -225,6 +225,7 @@ Notas de ambiente:
 - [docs/roteiro_teste_orientador.md](docs/roteiro_teste_orientador.md): roteiro de teste manual do orientador.
 - [docs/territorial/PLANO_IMPLEMENTACAO_MAPA_TERRITORIAL.md](docs/territorial/PLANO_IMPLEMENTACAO_MAPA_TERRITORIAL.md): plano de implementação do mapa territorial (recuperação, auditoria, qualidade dos dados, usabilidade, navegação e validação para publicação).
 - [docs/territorial/AUDITORIA_SENSIBILIDADE_CENTROIDES.md](docs/territorial/AUDITORIA_SENSIBILIDADE_CENTROIDES.md): método e execução da comparação dos pontos representativos.
+- [docs/territorial/RESULTADO_AUDITORIA_CENTROIDES_2026-11-08.md](docs/territorial/RESULTADO_AUDITORIA_CENTROIDES_2026-11-08.md): resultados calculados para os 408 setores e impacto nos nove centroides externos.
 - [docs/plano_proximo_ciclo.md](docs/plano_proximo_ciclo.md), [docs/plano_fontes_externas_e_expansao.md](docs/plano_fontes_externas_e_expansao.md), [docs/analise_competitiva_mism3.md](docs/analise_competitiva_mism3.md), [docs/benchmark_externo_ideias_funcionais.md](docs/benchmark_externo_ideias_funcionais.md): planejamento e pesquisa.
 
 ## Manutenção deste README
