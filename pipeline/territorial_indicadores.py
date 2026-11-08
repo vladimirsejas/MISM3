@@ -115,7 +115,7 @@ def equipamentos(linhas: list, indice_cep: dict, escolas: list[dict], localizaca
             xy_cep = at.coordenada_do_servico({"lat": None, "lon": None, "cep": r.get("cep")}, indice_cep) if not xy_catalogo else None
             cep = "".join(ch for ch in str(r.get("cep") or "") if ch.isdigit())
             item_cep = indice_cep.get(cep) if cep else None
-            raio_cep = float(item_cep[2]) if xy_cep and item_cep and len(item_cep) > 2 else 0.0
+            raio_cep = float(item_cep[2]) if xy_cep and item_cep and len(item_cep) > 2 else (None if xy_cep else 0.0)
             registro = localizacao_registro.get(r["id"], {})
             if registro.get("lat") and registro.get("lon") and xy_catalogo:
                 coord_registro = coord_do_catalogo(registro["lat"], registro["lon"])
@@ -142,7 +142,7 @@ def equipamentos(linhas: list, indice_cep: dict, escolas: list[dict], localizaca
         xy = (lat, lon) if lat is not None and lon is not None and CAIXA_RIO_CLARO[0] <= lat <= CAIXA_RIO_CLARO[1] and CAIXA_RIO_CLARO[2] <= lon <= CAIXA_RIO_CLARO[3] else None
         individual = (round(xy[0], 5), round(xy[1], 5)) if xy and metodo == "coordenada_individual" else None
         aproximada = xy if metodo == "centroide_cep" else None
-        raio = float(local.get("raio_m") or 0) if aproximada else 0.0
+        raio = (float(local["raio_m"]) if local.get("raio_m") is not None else None) if aproximada else 0.0
         if raio < 0:
             raise ValueError("raio_m negativo na localização escolar %s" % (escola.get("id") or "sem ID"))
         saida.append({"id": escola["id"], "nome": escola["nome"], "categoria": "escola",
@@ -165,7 +165,8 @@ def posicoes(equip: list[dict], cenario: str, cat: str) -> list[tuple]:
             pts.append((lat, lon, None if raio is None else float(raio)))
         elif usar_cep and e["xy_cep"]:
             lat, lon = e["xy_cep"]
-            pts.append((lat, lon, float(e.get("raio_cep_m") or 0)))
+            raio = e.get("raio_cep_m")
+            pts.append((lat, lon, None if raio is None else float(raio)))
     return pts
 
 
@@ -320,7 +321,7 @@ def gerar(dados: dict) -> dict:
              "precisao": "catalogo" if e["xy_catalogo"] else ("centro_do_cep" if e["xy_cep"] else "pendente"),
              "metodo_localizacao": e.get("metodo_localizacao"), "confianca_localizacao": e.get("confianca_localizacao"),
              "data_aplicacao_localizacao": e.get("data_aplicacao_localizacao"), "fonte_localizacao": e.get("fonte_localizacao"),
-             "raio_incerteza_m": (None if (e["xy_catalogo"] and e.get("raio_catalogo_m") is None) else round(float(e.get("raio_catalogo_m") or 0) if e["xy_catalogo"] else float(e.get("raio_cep_m") or 0), 1)),
+             "raio_incerteza_m": (None if ((e["xy_catalogo"] and e.get("raio_catalogo_m") is None) or (not e["xy_catalogo"] and e.get("raio_cep_m") is None)) else round(float(e.get("raio_catalogo_m") or 0) if e["xy_catalogo"] else float(e.get("raio_cep_m") or 0), 1)),
              "lat": round((e["xy_catalogo"] or e["xy_cep"] or (None, None))[0], 6) if (e["xy_catalogo"] or e["xy_cep"]) else None,
              "lon": round((e["xy_catalogo"] or e["xy_cep"] or (None, None))[1], 6) if (e["xy_catalogo"] or e["xy_cep"]) else None,
              "setor": e["setor"]}
