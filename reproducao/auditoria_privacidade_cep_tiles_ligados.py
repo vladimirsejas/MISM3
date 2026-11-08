@@ -14,13 +14,10 @@ Para cada fase mede: requisições totais e externas por domínio (Esri e OpenSt
 (cantos noroeste e sudeste e extensão em km); se o texto digitado, o CEP ou as coordenadas do CEP aparecem em URL, cabeçalho ou corpo; método diferente de
 GET ou corpo; e, ao fim e depois de recarregar, cookies, localStorage, sessionStorage, IndexedDB, Cache Storage e Service Workers.
 
-Uso (da raiz do repositório; PLAYWRIGHT_BROWSERS_PATH se os navegadores estiverem em outro lugar):
-    MISM3_AUDIT_CEP=13504-090 python reproducao/auditoria_privacidade_cep_tiles_ligados.py
-    python reproducao/auditoria_privacidade_cep_tiles_ligados.py --resumo      (junta os resultados já gerados em um quadro comparativo)
-Saídas (sufixo próprio; nada é sobrescrito):
-    reproducao/auditoria_privacidade_cep_tiles_ligados_<CEP>.md
-    reproducao/resultados/auditoria_cep_tiles_ligados_<CEP>/auditoria_requisicoes.json e resumo.json
-    reproducao/auditoria_privacidade_cep_tiles_ligados_resumo.md   (com --resumo)
+Uso local (informe um CEP de teste explicitamente; PLAYWRIGHT_BROWSERS_PATH se necessário):
+    MISM3_AUDIT_CEP=<CEP_DE_TESTE> python reproducao/auditoria_privacidade_cep_tiles_ligados.py
+    python reproducao/auditoria_privacidade_cep_tiles_ligados.py --resumo
+As saídas detalhadas ficam no diretório temporário do sistema (ou em MISM3_AUDIT_OUTPUT_DIR), nunca no repositório público.
 """
 from __future__ import annotations
 
@@ -34,6 +31,7 @@ import socketserver
 import sys
 import threading
 import time
+import tempfile
 from collections import Counter, defaultdict
 from pathlib import Path
 from urllib.parse import unquote_plus, urlparse
@@ -43,7 +41,7 @@ import comum  # noqa: E402
 
 RAIZ = comum.RAIZ
 WEB = RAIZ / "web"
-RES = RAIZ / "reproducao" / "resultados"
+RES = Path(os.environ.get("MISM3_AUDIT_OUTPUT_DIR", tempfile.gettempdir())) / "mism3_auditoria_privacidade" / "resultados"
 MENSAGEM = "Preciso de ajuda fictícia para a vaga de creche da pequena Zorzalina Quimérica"
 EM_MODO_RESUMO = "--resumo" in sys.argv
 
@@ -52,7 +50,9 @@ if not EM_MODO_RESUMO:
         from playwright.sync_api import sync_playwright
     except ImportError:  # pragma: no cover
         sys.exit("Playwright não está instalado: python -m pip install playwright && python -m playwright install chromium")
-    CEP = os.environ.get("MISM3_AUDIT_CEP", "13504-090").strip()
+    CEP = os.environ.get("MISM3_AUDIT_CEP", "").strip()
+    if not CEP:
+        sys.exit("Defina MISM3_AUDIT_CEP com um CEP de teste em ambiente local; nenhum CEP padrão é embutido no repositório.")
     CEP_DIGITOS = re.sub(r"\D", "", CEP)
     if not re.fullmatch(r"\d{8}", CEP_DIGITOS):
         sys.exit("CEP inválido. Informe oito dígitos em MISM3_AUDIT_CEP.")
@@ -60,7 +60,7 @@ if not EM_MODO_RESUMO:
     CEP_PREFIXO = CEP_DIGITOS[:5]
     _idx = json.loads((WEB / "dados" / "cep_indice.json").read_text(encoding="utf-8"))["ceps"].get(CEP_DIGITOS)
     CEP_LAT, CEP_LON, CEP_RAIO = (_idx[0], _idx[1], _idx[2]) if _idx else (None, None, None)
-    SAIDA = RES / f"auditoria_cep_tiles_ligados_{CEP_DIGITOS}"
+    SAIDA = RES / "auditoria_cep_tiles_ligados_local"
 
 
 # ---------------------------------------------------------------- servidor estático local
@@ -457,10 +457,12 @@ def medir() -> None:
            f"- **Pedido de imagens de uma região:** {sum(1 for r in todas_ext if analisar_tile(r['url']))} requisições de tiles (Esri: {sum(1 for r in todas_ext if 'arcgisonline' in r['url'])}; OpenStreetMap: {sum(1 for r in todas_ext if 'openstreetmap' in r['url'])}); a URL de cada tile traz zoom, coluna e linha.",
            f"- **Exposição do endereço IP ao provedor:** inerente a qualquer requisição externa; requisições externas feitas: {len(todas_ext)}.",
            f"- Requisições com método diferente de GET ou com corpo, em todos os cenários: {sum(1 for r in registro if r['metodo'] != 'GET' or r['corpo'])}.", ""]
+    SAIDA.mkdir(parents=True, exist_ok=True)
     (SAIDA / "auditoria_requisicoes.json").write_text(json.dumps({"meta": meta, "navegador": f"Chromium {versao} (Playwright)", "requisicoes": registro}, ensure_ascii=False, indent=1) + "\n", encoding="utf-8", newline="\n")
     (SAIDA / "resumo.json").write_text(json.dumps(resumo, ensure_ascii=False, indent=1) + "\n", encoding="utf-8", newline="\n")
-    (RAIZ / "reproducao" / f"auditoria_privacidade_cep_tiles_ligados_{CEP_DIGITOS}.md").write_text("\n".join(md) + "\n", encoding="utf-8", newline="\n")
-    print("ok:", f"reproducao/auditoria_privacidade_cep_tiles_ligados_{CEP_DIGITOS}.md")
+    caminho_md = RES.parent / "auditoria_privacidade_cep_tiles_ligados_local.md"
+    caminho_md.write_text("\n".join(md) + "\n", encoding="utf-8", newline="\n")
+    print("ok:", caminho_md)
     for cod, r in resumo["cenarios"].items():
         print(cod, {f: (d["externas"], d["por_dominio"]) for f, d in r["fases"].items()})
 
@@ -503,8 +505,10 @@ def resumir() -> None:
             for fase, f in c["fases"].items():
                 md.append(f"| {d['cep']} | {cod} | {fase} | {f['externas']} | {f['por_dominio'].get('Esri', 0)} | {f['por_dominio'].get('OpenStreetMap', 0)} | {f['concluidas']} / {f['canceladas']} |")
     md.append("")
-    (RAIZ / "reproducao" / "auditoria_privacidade_cep_tiles_ligados_resumo.md").write_text("\n".join(md) + "\n", encoding="utf-8", newline="\n")
-    print("ok: reproducao/auditoria_privacidade_cep_tiles_ligados_resumo.md")
+    RES.mkdir(parents=True, exist_ok=True)
+    caminho_md = RES.parent / "auditoria_privacidade_cep_tiles_ligados_resumo_local.md"
+    caminho_md.write_text("\n".join(md) + "\n", encoding="utf-8", newline="\n")
+    print("ok:", caminho_md)
 
 
 if __name__ == "__main__":
