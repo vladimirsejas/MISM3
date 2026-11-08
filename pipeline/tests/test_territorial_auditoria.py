@@ -118,3 +118,17 @@ def test_setores_pequenos_sao_listados_sem_suprimir_nada(real):
     assert len(real["setores"]) == 408, "nenhum setor foi suprimido ou agregado"
     texto = aud.relatorio(real, [])
     assert "decisão do autor" in texto and "não suprime nem agrega nenhum setor" in texto
+
+def test_nao_aceita_raio_zero_quando_a_proveniencia_nao_esta_registrada(real):
+    equipamento = next(e for e in real["equipamentos"] if e["categoria"] in {"cras", "ubs"} and e["confianca_localizacao"] == "nao_registrada")
+    equipamento["raio_incerteza_m"] = 0
+    falhas = aud.auditar(real)
+    assert any(f.caminho.endswith("/raio_incerteza_m") and f.tipo == "proveniência" for f in falhas)
+
+
+def test_nao_publica_envelope_se_ha_equipamento_sem_raio_conhecido(real):
+    setor = real["setores"][0]
+    setor["distancia_min_km"]["com_centro_do_cep"]["cras"] = 0
+    setor["distancia_max_km"]["com_centro_do_cep"]["cras"] = 0.1
+    falhas = aud.auditar(real)
+    assert any("não publicar envelope" in f.mensagem for f in falhas)
