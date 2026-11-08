@@ -69,7 +69,7 @@ assert(!("escolas" in oferta), "o arquivo público não contém matrículas indi
 assert(Object.keys(oferta.totais_por_rede).length > 0);
 
 const ceps = Object.values(cep.ceps || {});
-assert(!ceps.some(item => ids.has(String(item.setor))),
+assert(!ceps.some(item => ids.has(String(item[3]))),
   "o índice de CEP público não deve apontar para os setores suprimidos");
 
 console.log("privacidade_territorial.test.js: D4, agregados complementares, CEP e matrículas por escola protegidos");
