@@ -85,6 +85,6 @@ def test_malha_real_audita_408_setores_e_identifica_nove_centroides_externos():
         "354390705000530",
         "354390705000541",
     }
-    assert all(s["centroide_atual"]["dentro_do_poligono"] or s["ponto_interno_alternativo"]
+    assert all(s["ponto_interno_alternativo"]["metodo"] == ac.METODO_ALTERNATIVO
                for s in resultado["setores"])
     assert resultado["resumo"]["distancias"]["coordenadas_do_catalogo"]["ubs"]["setores_com_distancia"] == 408
