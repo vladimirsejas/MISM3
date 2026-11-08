@@ -82,7 +82,7 @@
     }
     var unidade = estado.metrica === "densidade" ? "pessoas por km²" : "pessoas por domicílio";
     if (ehDistancia()) unidade = "distância em linha reta até o serviço mais próximo (" + c.rotulo + ")";
-    document.getElementById("sub-mapa").textContent = "Cada setor é colorido por " + unidade + ". Os tons seguem a legenda, do menor valor (primeiro item) ao maior (último).";
+    document.getElementById("sub-mapa").textContent = "Os setores sem supressão estatística são coloridos por " + unidade + ". Os setores protegidos permanecem no mapa, mas sem classificação demográfica ou de distância.";
   }
 
   function colorir() {
