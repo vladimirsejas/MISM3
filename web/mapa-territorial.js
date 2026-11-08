@@ -385,7 +385,7 @@
     box.appendChild(ul);
     var pts = el("ul");
     [["▲", "CRAS"], ["■", "UBS e USF"], ["●", "Escola municipal"]].forEach(function (x) {
-      var l = el("li"); l.appendChild(el("span", "mt-forma", x[0])); l.appendChild(el("span", "", x[1] + ": ponto cheio = coordenada do catálogo; ponto vazado = posição aproximada pelo centro do CEP cadastral do equipamento")); pts.appendChild(l);
+      var l = el("li"); l.appendChild(el("span", "mt-forma", x[0])); l.appendChild(el("span", "", x[1] + ": ponto cheio = coordenada individual registrada no catálogo; o título do ponto informa método e confiança quando documentados. Ponto vazado = posição aproximada pelo centro do CEP cadastral do equipamento")); pts.appendChild(l);
     });
     box.appendChild(pts);
   }
@@ -406,9 +406,14 @@
       else if (e.categoria === "ubs") no = svg("rect", { x: (xy[0] - r).toFixed(1), y: (xy[1] - r).toFixed(1), width: r * 2, height: r * 2 });
       else no = svg("polygon", { points: [xy[0].toFixed(1) + "," + (xy[1] - r - 1).toFixed(1), (xy[0] - r - 1).toFixed(1) + "," + (xy[1] + r).toFixed(1), (xy[0] + r + 1).toFixed(1) + "," + (xy[1] + r).toFixed(1)].join(" ") });
       Object.keys(estilo).forEach(function (k) { no.setAttribute(k, estilo[k]); });
-      rot = e.precisao === "catalogo" ? "coordenada do catálogo" : "posição aproximada pelo centro do CEP cadastral do equipamento";
+      rot = e.precisao === "catalogo" ? "coordenada individual registrada no catálogo" : "posição aproximada pelo centro do CEP cadastral do equipamento";
       t = svg("title", {});
-      t.textContent = e.nome + " (" + rotuloCategoria(e.categoria) + "): " + rot;
+      var detalhes = [];
+      if (e.metodo_localizacao) detalhes.push("método: " + e.metodo_localizacao);
+      if (e.confianca_localizacao) detalhes.push("confiança registrada: " + e.confianca_localizacao);
+      if (e.data_aplicacao_localizacao) detalhes.push("registro: " + e.data_aplicacao_localizacao);
+      if (e.fonte_localizacao) detalhes.push("fonte: " + e.fonte_localizacao);
+      t.textContent = e.nome + " (" + rotuloCategoria(e.categoria) + "): " + rot + (detalhes.length ? ". " + detalhes.join("; ") : "");
       no.appendChild(t);
       camada.appendChild(no);
     }
