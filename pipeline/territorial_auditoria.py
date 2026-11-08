@@ -8,8 +8,7 @@ O que verifica, olhando nomes de campo E conteúdo:
   4. proveniência: a posição de cada equipamento precisa vir rotulada (catalogo, centro_do_cep ou pendente) e "pendente" não pode ter coordenada.
 O relatório nunca reproduz o valor suspeito: informa só o caminho do campo e o tipo de problema.
 
-Setores pequenos: a política não define limiar de supressão (a regra numérica é decisão do autor). Este script NÃO suprime nada e NÃO escolhe faixa:
-apenas LISTA os setores que cairiam em cada faixa candidata da proposta (docs/territorial/PROPOSTA_SUPRESSAO_E_AGREGACAO.md), para a decisão do autor.
+Setores pequenos: a decisão D4 aprovada pelo autor suprime os setores com menos de 5 pessoas ou menos de 3 domicílios. Este script verifica se a supressão está aplicada nos indicadores e nos arquivos públicos relacionados; não lista identificadores nem valores suprimidos.
 
 Uso:   python pipeline/territorial_auditoria.py [arquivo.json] [--relatorio docs/territorial/AUDITORIA_MAPA_V1.md]
 Sai com código 1 se a auditoria reprovar.
@@ -40,6 +39,8 @@ CAMPOS_PERMITIDOS = {
     "id", "nome", "categoria", "precisao", "metodo_localizacao", "confianca_localizacao", "data_aplicacao_localizacao", "fonte_localizacao", "raio_incerteza_m", "lat", "lon", "setor", "bairro", "densidade", "distancia_km", "distancia_min_km", "distancia_max_km",
     "metodologia_incerteza", "unidade_raio", "formula", "interpretacao", "origem_raio", "limite", "comparacao",
     "coordenadas_do_catalogo", "com_centro_do_cep", "cras", "ubs", "escola", "creche", "distancia",
+    "suprimido_privacidade", "dados_suprimidos", "setores_suprimidos", "setores_suprimidos_privacidade",
+    "setores_validos", "setores_total", "setores_ate_1_km", "setores_3_km_ou_mais", "suprimidos", "nota_privacidade",
 }
 # Hashes (SHA-256 das entradas e carimbo) podem conter, por acaso, 8 dígitos seguidos. Só estes campos, e só quando o valor INTEIRO é um hash
 # hexadecimal, ficam fora da busca de padrões numéricos. Qualquer outro valor nesses campos é auditado normalmente.
@@ -164,15 +165,32 @@ def auditar(dado: dict, nomes_instituicoes: set | None = None, bairros: set | No
                 superiores = setor.get("distancia_max_km", {}).get(cenario, {})
                 if limites.get(categoria) is not None or superiores.get(categoria) is not None:
                     falhas.append(Falha(f"setores/{i}/distancia_min_km/{cenario}/{categoria}", "proveniência", "não publicar envelope quando existe equipamento elegível sem raio conhecido"))
+        protegido = setor.get("suprimido_privacidade") is True
+        pessoas, domicilios = setor.get("pessoas"), setor.get("domicilios")
+        abaixo_limite = (pessoas is not None and pessoas < 5) or (domicilios is not None and domicilios < 3)
+        if abaixo_limite and not protegido:
+            falhas.append(Falha(f"setores/{i}", "privacidade", "setor abaixo do critério D4 sem supressão"))
+        if protegido:
+            if pessoas is not None or domicilios is not None or setor.get("densidade") is not None:
+                falhas.append(Falha(f"setores/{i}", "privacidade", "setor protegido ainda expõe população, domicílios ou densidade"))
+            for grupo in ("distancia_km", "distancia_min_km", "distancia_max_km"):
+                if any(v is not None for c in setor.get(grupo, {}).values() for v in c.values()):
+                    falhas.append(Falha(f"setores/{i}/{grupo}", "privacidade", "setor protegido ainda expõe indicador de distância"))
+    totais = dado.get("totais", {})
+    if totais.get("pessoas") is not None or totais.get("domicilios") is not None:
+        falhas.append(Falha("totais", "privacidade", "totais municipais demográficos devem permanecer omitidos enquanto houver supressão complementar"))
     return falhas
 
 
 def setores_pequenos(dado: dict) -> dict[str, list[str]]:
-    """Lista, por faixa candidata, os setores que exigiriam decisão do autor. Não suprime nem escolhe faixa."""
-    saida = {}
-    for nome, pmin, dmin in FAIXAS_CANDIDATAS:
-        saida[nome] = sorted(s["id"] for s in dado.get("setores", []) if s["pessoas"] < pmin or s["domicilios"] < dmin)
-    return saida
+    """Retorna apenas contagens de conformidade; nunca lista IDs nem valores dos setores protegidos."""
+    suprimidos = sorted(s["id"] for s in dado.get("setores", []) if s.get("suprimido_privacidade") is True)
+    inconsistentes = sorted(
+        s["id"] for s in dado.get("setores", [])
+        if s.get("suprimido_privacidade") is not True
+        and ((s.get("pessoas") is not None and s["pessoas"] < 5) or (s.get("domicilios") is not None and s["domicilios"] < 3))
+    )
+    return {"suprimidos": suprimidos, "inconsistentes": inconsistentes}
 
 
 def relatorio(dado: dict, falhas: list[Falha]) -> str:
@@ -187,17 +205,12 @@ def relatorio(dado: dict, falhas: list[Falha]) -> str:
               "nomes (equipamento contra o catálogo institucional; bairro contra a malha do IBGE) e proveniência da posição dos equipamentos.", ""]
     if falhas:
         linhas += ["## Ocorrências", ""] + [f"- `{f.caminho}`: **{f.tipo}**. {f.mensagem}" for f in falhas] + [""]
-    linhas += ["## Setores para decisão do autor (não suprimidos)", "",
-               "A política de privacidade não fixa limiar numérico de supressão, e esta versão **não suprime nem agrega nenhum setor**. "
-               "A proposta em `docs/territorial/PROPOSTA_SUPRESSAO_E_AGREGACAO.md` traz três faixas candidatas, ainda não aprovadas. "
-               "Setores que cairiam em cada faixa (população abaixo do primeiro valor **ou** domicílios abaixo do segundo):", "",
-               "| Faixa candidata | Critério | Setores |", "|---|---|---|"]
-    for nome, pmin, dmin in FAIXAS_CANDIDATAS:
-        linhas.append(f"| {nome} | menos de {pmin} pessoas ou menos de {dmin} domicílios | {len(peq[nome])} |")
-    linhas += [""]
-    for nome, pmin, dmin in FAIXAS_CANDIDATAS:
-        linhas += [f"Faixa {nome} ({len(peq[nome])} setores): " + (", ".join(f"`{s}`" for s in peq[nome]) if peq[nome] else "nenhum"), ""]
-    linhas += ["Publicar o mapa com esses setores visíveis depende da decisão do autor sobre a faixa e sobre suprimir ou agregar.", ""]
+    linhas += ["## Aplicação da decisão D4", "",
+               f"- Setores protegidos: {len(peq['suprimidos'])}",
+               f"- Setores abaixo do critério sem supressão: {len(peq['inconsistentes'])}",
+               "- Critério: menos de 5 pessoas ou menos de 3 domicílios.",
+               "- Os valores e identificadores dos setores protegidos não são listados neste relatório.",
+               "- Os agregados demográficos dos bairros afetados e os totais municipais de população/domicílios também devem permanecer omitidos.", ""]
     return "\n".join(linhas)
 
 
@@ -224,7 +237,7 @@ def main(argv: list[str]) -> int:
         return 1
     peq = setores_pequenos(dado)
     print("AUDITORIA APROVADA: %s" % arquivo.name)
-    print("Setores para decisão do autor (não suprimidos): " + "; ".join(f"{n}: {len(v)}" for n, v in peq.items()))
+    print("D4: %d setores suprimidos; %d inconsistências de supressão." % (len(peq["suprimidos"]), len(peq["inconsistentes"])))
     return 0
 
 
