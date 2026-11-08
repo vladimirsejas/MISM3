@@ -279,15 +279,19 @@
       norma(qC);
       var qL = Object.keys(qW).length ? projetar(qWn) : null;
       var dica = opcoes.dica ? opcoes.dica(texto) : null;
+      var contextoAssistencia = familiaComNecessidade(tn) || cadastroComposicaoFamiliar(tn);
+      var buscaTrabalho = /\\b(?:emprego|trabalho|trabalhar|vaga|bico|procuro|procurando|voltar a trabalhar)\\b/.test(tn);
+      var contextoSaude = cuidadoFamiliarSaude(tn);
       return U.map(function (u, d) {
         var sw = pontoEscalar(docsW[d], qWn), sc = pontoEscalar(docsC[d], qC), sl = 0;
         if (qL) { var z = lsa.docs[d], t = 0; for (var j = 0; j < K; j++) t += z[j] / 1000 * qL[j]; sl = Math.max(0, t); }
         var s = pesos.palavras * sw + pesos.letras * sc + pesos.significado * sl;
         if (dica && u.needs && u.needs.length) s += pesos.intencao * Math.max.apply(null, u.needs.map(function (n) { return dica[n] || 0; }));
-        if (familiaComNecessidade(tn) || cadastroComposicaoFamiliar(tn)) {
+        if (contextoAssistencia) {
           if (u.area === "assistencia") s += 0.45;
+          if (buscaTrabalho && u.area === "trabalho") s += 0.35;
         }
-        if (cuidadoFamiliarSaude(tn) && u.area === "saude") s += 0.45;
+        if (contextoSaude && u.area === "saude") s += 0.45;
         if (ctx && ctx.area && u.area === ctx.area) s += pesos.area;
         if (CONDICOES[u.id] && !CONDICOES[u.id].test(tn)) s -= 1; /* serviço especializado só aparece quando o assunto é dele */
         if (EXCLUSOES[u.id] && EXCLUSOES[u.id].test(tn)) s -= 1; /* e há serviços que não servem a certos assuntos */
