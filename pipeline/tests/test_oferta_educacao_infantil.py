@@ -123,6 +123,7 @@ def test_coluna_faltando_da_erro_claro(tmp_path):
 
 def test_sem_tabela_de_turma_os_campos_ficam_null(pasta, tmp_path, monkeypatch, capsys):
     (pasta / o.ARQUIVOS["turma"]).unlink()
+    gerar(pasta, tmp_path, monkeypatch)  # executa a CLI e confirma o aviso de entrada ausente
     d = gerar_detalhado(pasta)
     assert all(e["turmas_creche"] is None for e in d["escolas"])
     assert "AVISO" in capsys.readouterr().out
