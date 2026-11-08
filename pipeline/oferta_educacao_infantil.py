@@ -171,7 +171,7 @@ def main() -> int:
     saida_publica = {"meta": calculado["meta"], "totais_por_rede": calculado["totais_por_rede"]}
     salvar_json(saida_publica, a.saida)
     print("Gravado %s (totais agregados por rede; %d escolas usadas no cálculo)." % (a.saida, len(calculado["escolas"])))
-    for rede, t in saida["totais_por_rede"].items():
+    for rede, t in calculado["totais_por_rede"].items():
         print("  %-10s %3d escolas | %3d com creche | %5d matrículas em creche | %4d turmas de creche | %5d na pré-escola"
               % (rede, t["escolas_com_educacao_infantil"], t["escolas_com_creche"], t["matriculas_creche"],
                  t["turmas_creche"], t["matriculas_pre_escola"]))
