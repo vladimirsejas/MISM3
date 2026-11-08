@@ -102,9 +102,9 @@ O histórico público conserva versões anteriores desses arquivos. A branch de 
 
 ### 4.2 Estado da PR e infraestrutura
 
-- A PR #92 permanece aberta, em draft e sem merge. A branch de trabalho é `feat/mapa-territorial-como-mapa-principal`; não alterar `main` sem autorização expressa.
-- O Cloudflare Pages confirmou deploy bem-sucedido da prévia no commit `92cfb5f`. URL da branch: https://feat-mapa-territorial-como-m.mism3-observatorio.pages.dev. O deploy foi confirmado, mas a inspeção visual e os testes manuais em desktop e celular ainda precisam ser feitos.
-- A GitHub Actions concluiu com sucesso no commit `92cfb5f` (run [42527731423](https://github.com/vladimirsejas/MISM3/actions/runs/42527731423)): 272 testes Python passaram, 1 foi ignorado, a suíte JavaScript passou e os scripts de avaliação funcional terminaram sem falha. Isso não substitui validação com usuárias reais.
+- A PR #92 permanece aberta, em draft e sem merge. A branch de trabalho é `feat/mapa-territorial-como-mapa-principal`; não alterar `main` sem autorização expressa. A comparação mais recente estava 255 commits à frente e nenhum atrás.
+- O Cloudflare Pages confirmou deploy bem-sucedido da prévia no commit `8e45ddc`. URL da branch: https://feat-mapa-territorial-como-m.mism3-observatorio.pages.dev. Os commits posteriores ainda precisam de novo deploy; a inspeção visual e os testes manuais em desktop e celular continuam pendentes.
+- A GitHub Actions concluiu com sucesso no commit `c34a903` (run [42532559670](https://github.com/vladimirsejas/MISM3/actions/runs/42532559670)): 279 testes Python passaram, 1 foi ignorado, a suíte JavaScript passou e todos os conjuntos de perfis independentes atingiram 100% (20/20). As alterações posteriores de remoção de CEPs/coordenadas de artefatos de auditoria exigem a nova CI da ponta atual; não são consideradas validadas até a conclusão desse workflow. Isso não substitui validação com usuárias reais.
 - Há também um registro de build falho de um serviço Cloudflare Workers chamado `mism3`. O repositório não contém diretório ou configuração de Worker correspondente na árvore auditada. Confirmar no painel da Cloudflare se esse serviço participa de algum domínio/rota do MISM3; não confundir essa falha com o deploy do Pages.
 - O bloqueio `noindex, nofollow` deve permanecer até a aprovação dos critérios abaixo.
 - Antes da liberação: executar teste de navegação em desktop e celular, teste de requisições externas, verificação dos arquivos publicados, checagem de domínio/HTTPS e plano de rollback.
@@ -118,7 +118,7 @@ A publicação só deve avançar quando todos estiverem atendidos:
 - [ ] Licenças, autorizações e atribuições dos recursos de terceiros confirmadas ou recursos substituídos.
 - [ ] Serviços e telefones prioritários conferidos; contagens recalculadas.
 - [ ] README, estado do projeto, política pública e metadados atualizados; a lista de matrículas por escola foi removida do arquivo público.
-- [x] CI automatizada aprovada no commit funcional `92cfb5f` (nova execução obrigatória se houver alterações de código).
+- [x] CI automatizada aprovada no commit `c34a903`; [ ] nova execução aprovada na ponta atual após a remoção dos artefatos de auditoria.
 - [ ] Prévia do Pages validada em desktop e celular.
 - [ ] Dependência do Worker esclarecida.
 - [ ] Autor autoriza a retirada de `noindex` e a publicação oficial.
