@@ -206,8 +206,8 @@ def montar(geojson: dict, oferta: dict | None = None, hoje: str | None = None, s
             b["domicilios"] += domicilios
         b["area"] += area
 
-    pessoas_total = None
-    domicilios_total = None
+    pessoas_total = None if suprimidos else sum(b["pessoas"] for b in por_bairro.values())
+    domicilios_total = None if suprimidos else sum(b["domicilios"] for b in por_bairro.values())
     area_total = sum(b["area"] for b in por_bairro.values())
     bairros = []
     for nome, b in por_bairro.items():
@@ -228,17 +228,19 @@ def montar(geojson: dict, oferta: dict | None = None, hoje: str | None = None, s
             "fonte": "IBGE, Censo Demográfico 2022, malha de setores censitários; contagens pequenas omitidas por cautela estatística",
             "gerado_em": hoje or agora_iso()[:10],
             "conferencia": {
-                "pessoas_somadas": None, "pessoas_publicadas_ibge": None,
+                "pessoas_somadas": pessoas_total, "pessoas_publicadas_ibge": IBGE_PESSOAS_2022 if not suprimidos else None,
                 "area_somada_km2": round(area_total, 1), "area_publicada_ibge_km2": IBGE_AREA_KM2,
                 "diferenca_area_pct": round(100 * (area_total - IBGE_AREA_KM2) / IBGE_AREA_KM2, 2),
             },
-            "sem_bairro": {"rotulo": SEM_BAIRRO, "setores": sem["setores"] if sem else 0, "pessoas": None},
+            "sem_bairro": {"rotulo": SEM_BAIRRO, "setores": sem["setores"] if sem else 0, "pessoas": None if (sem and sem["suprimido"]) or suprimidos else (sem["pessoas"] if sem else 0)},
             "setores_suprimidos": suprimidos,
             "aviso": "Dados de população, domicílios e indicadores derivados são omitidos em setores com menos de 5 pessoas ou menos de 3 domicílios, e nos agregados de bairros afetados. O painel preserva a geometria e os pontos institucionais. Não há idade, renda nem sexo nesta malha.",
         },
         "totais": {
-            "pessoas": None, "domicilios": None, "setores": len(setores), "bairros": len(bairros),
-            "area_km2": round(area_total, 1), "densidade": None, "pessoas_por_domicilio": None,
+            "pessoas": pessoas_total, "domicilios": domicilios_total, "setores": len(setores), "bairros": len(bairros),
+            "area_km2": round(area_total, 1),
+            "densidade": None if suprimidos or not area_total else round(pessoas_total / area_total),
+            "pessoas_por_domicilio": None if suprimidos or not domicilios_total else round(pessoas_total / domicilios_total, 2),
         },
         "classes": {
             "densidade": {"unidade": "pessoas por km²", "limites": LIMITES_DENSIDADE,
