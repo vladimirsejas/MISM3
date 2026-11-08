@@ -132,6 +132,7 @@ def test_sem_cep_endereco_ou_telefone_na_saida(publicado):
 def test_entradas_declaradas_incluem_o_indice_de_cep_so_para_localizar_equipamentos(publicado):
     assert "cep_indice.json" in publicado["meta"]["entradas_sha256"]
     assert "escolas_municipais.json" in publicado["meta"]["entradas_sha256"]
+    assert "localizacao_registro.csv" in publicado["meta"]["entradas_sha256"]
     assert all(len(v) == 64 for v in publicado["meta"]["entradas_sha256"].values())
     assert ed.CENARIOS.keys() == set(ti.CENARIOS)
 
@@ -164,4 +165,17 @@ def test_base_escolar_consolidada_preserva_raios_e_proveniencia(publicado):
     assert all(e["raio_incerteza_m"] > 0 for e in aproximadas)
     individuais = [e for e in escolas if e["precisao"] == "catalogo"]
     assert all(e["raio_incerteza_m"] == 0 for e in individuais)
+
+def test_proveniencia_de_cras_ubs_nao_presume_confianca(publicado):
+    servicos = [e for e in publicado["equipamentos"] if e["categoria"] in {"cras", "ubs"}]
+    registrados = [e for e in servicos if e["confianca_localizacao"] in {"alta", "media"}]
+    sem_registro = [e for e in servicos if e["confianca_localizacao"] == "nao_registrada"]
+    assert len(servicos) == 28
+    assert len(registrados) == 22
+    assert sum(e["confianca_localizacao"] == "alta" for e in registrados) == 11
+    assert sum(e["confianca_localizacao"] == "media" for e in registrados) == 11
+    assert len(sem_registro) == 6
+    assert all(e["metodo_localizacao"] == "catalogo_sem_registro_de_proveniencia" for e in sem_registro)
+    assert all(e["data_aplicacao_localizacao"] for e in registrados)
+    assert all(e["fonte_localizacao"] == "servicos_manuais.csv + localizacao_registro.csv" for e in registrados)
 
