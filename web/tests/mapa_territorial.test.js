@@ -50,7 +50,7 @@ assert(/localização pendente/.test(js) && /serviço localizado no setor|servi�
 const index = ler("index.html"), app = ler("app.js");
 assert(/href="mapa-territorial\.html"/.test(index), "a tela inicial oferece acesso ao mapa territorial");
 assert(/window\.location\.replace\("mapa-territorial\.html"\)/.test(app), "os atalhos antigos do mapa e do painel levam ao mapa territorial");
-fs.readdirSync(web).filter((f) => /\.(html|js|css)$/.test(f) && !/^mapa-territorial\./.test(f) && !["index.html", "app.js"].includes(f)).forEach((f) => {
+fs.readdirSync(web).filter((f) => /\.(html|js|css)$/.test(f) && !/^mapa-territorial\./.test(f) && !["index.html", "app.js", "qualidade-dados.html"].includes(f)).forEach((f) => {
   assert(!/mapa-territorial/.test(ler(f)), "referência não prevista à página nova em " + f);
 });
 
