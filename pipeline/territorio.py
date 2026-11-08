@@ -28,6 +28,7 @@ from __future__ import annotations
 import json
 import math
 import sys
+from privacidade_territorial import setor_suprimido
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -119,11 +120,11 @@ def _mediana_ponderada(pares) -> float | None:
 
 
 def distancias_ate_servicos(geojson: dict, servicos: list[dict], indice_cep: dict | None) -> tuple[dict, dict]:
-    """(distâncias, pendentes). Distâncias: por categoria com cobertura suficiente, os pontos, a distância de cada setor e o
-    resumo. Pendentes: categorias com serviço cadastrado, mas poucos localizados (abaixo de COBERTURA_MINIMA); sem distância."""
+    """Distâncias por setor apenas para setores não suprimidos; resumos contam setores, nunca pessoas."""
     centros = {}
     for f in geojson["features"]:
-        centros[f["properties"]["setor"]] = (centro(f["geometry"]), int(f["properties"]["pessoas"]))
+        p = f["properties"]
+        centros[p["setor"]] = (centro(f["geometry"]), not setor_suprimido(p))
     saida, pendentes = {}, {}
     for chave, cat in CATEGORIAS_SERVICO.items():
         elegiveis = [s for s in servicos if str(s.get("id", "")).startswith("man-") and cat["serve"](s)]
@@ -138,28 +139,33 @@ def distancias_ate_servicos(geojson: dict, servicos: list[dict], indice_cep: dic
             pendentes[chave] = {"rotulo": cat["rotulo"], "cadastrados": len(elegiveis), "localizados": len(pontos),
                                 "minimo_pct": round(100 * COBERTURA_MINIMA)}
             continue
-        por_setor, pesos = {}, []
-        for codigo, ((lat, lon), pessoas) in centros.items():
-            d = min(haversine_km(lat, lon, p["lat"], p["lon"]) for p in pontos)
-            por_setor[codigo] = round(d, 2)
-            pesos.append((d, pessoas))
+        por_setor, distancias = {}, []
+        for codigo, (coord, liberado) in centros.items():
+            if not liberado:
+                por_setor[codigo] = None
+                continue
+            lat, lon = coord
+            d = round(min(haversine_km(lat, lon, p["lat"], p["lon"]) for p in pontos), 2)
+            por_setor[codigo] = d
+            distancias.append(d)
         contagem = [0] * (len(LIMITES_DISTANCIA_KM) + 1)
-        pessoas_cl = [0] * (len(LIMITES_DISTANCIA_KM) + 1)
-        for codigo, d in por_setor.items():
-            i = classe(d, LIMITES_DISTANCIA_KM)
-            contagem[i] += 1
-            pessoas_cl[i] += centros[codigo][1]
-        total = sum(p for _, p in pesos)
+        for d in distancias:
+            contagem[classe(d, LIMITES_DISTANCIA_KM)] += 1
+        distancias_ordenadas = sorted(distancias)
+        mediana = None
+        if distancias_ordenadas:
+            meio = len(distancias_ordenadas) // 2
+            mediana = distancias_ordenadas[meio] if len(distancias_ordenadas) % 2 else round((distancias_ordenadas[meio - 1] + distancias_ordenadas[meio]) / 2, 2)
         saida[chave] = {
             "rotulo": cat["rotulo"], "nota": cat["nota"],
             "cadastrados": len(elegiveis), "localizados": len(pontos),
             "localizados_pelo_endereco": sum(p["precisao"] == "endereco" for p in pontos),
             "pontos": pontos, "por_setor": por_setor,
-            "limites": LIMITES_DISTANCIA_KM, "contagem": contagem, "pessoas_por_classe": pessoas_cl,
-            "pessoas_ate_1_km": sum(w for d, w in pesos if d <= 1.0),
-            "pessoas_3_km_ou_mais": sum(w for d, w in pesos if d >= 3.0),
-            "mediana_km": None if _mediana_ponderada(pesos) is None else round(_mediana_ponderada(pesos), 2),
-            "pessoas_total": total,
+            "limites": LIMITES_DISTANCIA_KM, "contagem": contagem,
+            "setores_total": len(centros), "setores_suprimidos": len(centros) - len(distancias),
+            "setores_ate_1_km": sum(d <= 1.0 for d in distancias),
+            "setores_3_km_ou_mais": sum(d >= 3.0 for d in distancias),
+            "mediana_km": mediana,
         }
     return saida, pendentes
 
@@ -167,22 +173,26 @@ def distancias_ate_servicos(geojson: dict, servicos: list[dict], indice_cep: dic
 def montar(geojson: dict, oferta: dict | None = None, hoje: str | None = None, servicos: list[dict] | None = None,
            indice_cep: dict | None = None) -> dict:
     setores = {}
-    por_bairro = defaultdict(lambda: {"setores": 0, "pessoas": 0, "domicilios": 0, "area": 0.0})
+    por_bairro = defaultdict(lambda: {"setores": 0, "pessoas": 0, "domicilios": 0, "area": 0.0, "suprimido": False})
     cont_dens = Counter()
     cont_ppd = Counter()
     sem_base = 0
+    suprimidos = 0
     for f in geojson["features"]:
         p = f["properties"]
         area = area_km2(f["geometry"])
-        pessoas, domicilios = int(p["pessoas"]), int(p["domicilios"])
-        dens = pessoas / area if area > 0 else None
-        ppd = pessoas / domicilios if domicilios >= MIN_DOMICILIOS else None
+        suprimido = setor_suprimido(p)
+        pessoas = None if suprimido or p.get("pessoas") is None else int(p["pessoas"])
+        domicilios = None if suprimido or p.get("domicilios") is None else int(p["domicilios"])
+        dens = pessoas / area if pessoas is not None and area > 0 else None
+        ppd = pessoas / domicilios if pessoas is not None and domicilios is not None and domicilios >= MIN_DOMICILIOS else None
         setores[p["setor"]] = {
-            "a": round(area, 4),
-            "d": None if dens is None else round(dens),
-            "p": None if ppd is None else round(ppd, 2),
+            "a": round(area, 4), "d": None if dens is None else round(dens),
+            "p": None if ppd is None else round(ppd, 2), "suprimido_privacidade": suprimido,
         }
-        if dens is not None:
+        if suprimido:
+            suprimidos += 1
+        elif dens is not None:
             cont_dens[classe(dens, LIMITES_DENSIDADE)] += 1
         if ppd is not None:
             cont_ppd[classe(ppd, LIMITES_PESSOAS_POR_DOMICILIO)] += 1
@@ -190,50 +200,53 @@ def montar(geojson: dict, oferta: dict | None = None, hoje: str | None = None, s
             sem_base += 1
         b = por_bairro[(p["bairro"] or "").strip() or SEM_BAIRRO]
         b["setores"] += 1
-        b["pessoas"] += pessoas
-        b["domicilios"] += domicilios
+        b["suprimido"] = b["suprimido"] or suprimido
+        if pessoas is not None and domicilios is not None:
+            b["pessoas"] += pessoas
+            b["domicilios"] += domicilios
         b["area"] += area
 
-    pessoas_total = sum(b["pessoas"] for b in por_bairro.values())
-    domicilios_total = sum(b["domicilios"] for b in por_bairro.values())
+    pessoas_total = None
+    domicilios_total = None
     area_total = sum(b["area"] for b in por_bairro.values())
     bairros = []
     for nome, b in por_bairro.items():
         bairros.append({
-            "nome": nome, "setores": b["setores"], "pessoas": b["pessoas"], "domicilios": b["domicilios"],
+            "nome": nome, "setores": b["setores"],
+            "pessoas": None if b["suprimido"] else b["pessoas"],
+            "domicilios": None if b["suprimido"] else b["domicilios"],
+            "dados_suprimidos": b["suprimido"],
             "area_km2": round(b["area"], 2),
-            "densidade": round(b["pessoas"] / b["area"]) if b["area"] > 0 else None,
-            "pessoas_por_domicilio": round(b["pessoas"] / b["domicilios"], 2) if b["domicilios"] >= MIN_DOMICILIOS else None,
+            "densidade": None if b["suprimido"] or b["area"] <= 0 else round(b["pessoas"] / b["area"]),
+            "pessoas_por_domicilio": None if b["suprimido"] or b["domicilios"] < MIN_DOMICILIOS else round(b["pessoas"] / b["domicilios"], 2),
         })
-    bairros.sort(key=lambda b: (-b["pessoas"], b["nome"]))
+    bairros.sort(key=lambda b: (b["pessoas"] is None, -(b["pessoas"] or 0), b["nome"]))
     sem = por_bairro.get(SEM_BAIRRO)
 
     saida = {
         "meta": {
-            "fonte": "IBGE, Censo Demográfico 2022, malha de setores censitários (campos v0001 = pessoas e v0002 = domicílios)",
+            "fonte": "IBGE, Censo Demográfico 2022, malha de setores censitários; contagens pequenas omitidas por cautela estatística",
             "gerado_em": hoje or agora_iso()[:10],
             "conferencia": {
-                "pessoas_somadas": pessoas_total, "pessoas_publicadas_ibge": IBGE_PESSOAS_2022,
+                "pessoas_somadas": None, "pessoas_publicadas_ibge": None,
                 "area_somada_km2": round(area_total, 1), "area_publicada_ibge_km2": IBGE_AREA_KM2,
                 "diferenca_area_pct": round(100 * (area_total - IBGE_AREA_KM2) / IBGE_AREA_KM2, 2),
             },
-            "sem_bairro": {"rotulo": SEM_BAIRRO, "setores": sem["setores"] if sem else 0, "pessoas": sem["pessoas"] if sem else 0},
-            "aviso": "Mostra onde as pessoas moram, não quem precisa de ajuda. Não há idade, renda nem sexo nesta malha. "
-                     "Mais gente por km² não quer dizer mais necessidade, nem menos serviço.",
+            "sem_bairro": {"rotulo": SEM_BAIRRO, "setores": sem["setores"] if sem else 0, "pessoas": None},
+            "setores_suprimidos": suprimidos,
+            "aviso": "Dados de população, domicílios e indicadores derivados são omitidos em setores com menos de 5 pessoas ou menos de 3 domicílios, e nos agregados de bairros afetados. O painel preserva a geometria e os pontos institucionais. Não há idade, renda nem sexo nesta malha.",
         },
         "totais": {
-            "pessoas": pessoas_total, "domicilios": domicilios_total, "setores": len(setores), "bairros": len(bairros),
-            "area_km2": round(area_total, 1),
-            "densidade": round(pessoas_total / area_total),
-            "pessoas_por_domicilio": round(pessoas_total / domicilios_total, 2),
+            "pessoas": None, "domicilios": None, "setores": len(setores), "bairros": len(bairros),
+            "area_km2": round(area_total, 1), "densidade": None, "pessoas_por_domicilio": None,
         },
         "classes": {
             "densidade": {"unidade": "pessoas por km²", "limites": LIMITES_DENSIDADE,
-                          "contagem": [cont_dens[i] for i in range(len(LIMITES_DENSIDADE) + 1)]},
+                          "contagem": [cont_dens[i] for i in range(len(LIMITES_DENSIDADE) + 1)], "suprimidos": suprimidos},
             "pessoas_por_domicilio": {"unidade": "pessoas por domicílio", "limites": LIMITES_PESSOAS_POR_DOMICILIO,
                                       "min_domicilios": MIN_DOMICILIOS,
                                       "contagem": [cont_ppd[i] for i in range(len(LIMITES_PESSOAS_POR_DOMICILIO) + 1)],
-                                      "sem_base_suficiente": sem_base},
+                                      "sem_base_suficiente": sem_base, "suprimidos": suprimidos},
         },
         "bairros": bairros,
         "setores": setores,
@@ -244,9 +257,9 @@ def montar(geojson: dict, oferta: dict | None = None, hoje: str | None = None, s
     if dist:
         saida["distancia_ate_servico"] = {k: {kk: vv for kk, vv in v.items() if kk != "por_setor"} for k, v in dist.items()}
         saida["meta"]["aviso_distancia"] = (
-            "Distância em linha reta do centro de cada setor até o serviço mais próximo, só entre os serviços que têm localização. "
-            "Onde a localização vem do CEP, é aproximada. Não considera ruas, ônibus nem horários, e um setor 'longe' pode ter "
-            "serviço que ainda não foi localizado. Mostra onde olhar, não prova falta de serviço.")
+            "Distâncias em linha reta são exibidas somente para setores sem supressão estatística. "
+            "Os resumos contam setores, não pessoas. Onde a localização vem do CEP, é aproximada; "
+            "não considera ruas, ônibus nem horários e não prova falta de serviço.")
         for chave, v in dist.items():
             for codigo, d in v["por_setor"].items():
                 saida["setores"][codigo]["dist_" + chave] = d
