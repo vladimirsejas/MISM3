@@ -12,6 +12,7 @@ const territorio = ler("territorio.json");
 const analise = ler("analise_territorial.json");
 const exposicao = ler("exposicao_distancia.json");
 const oferta = ler("oferta_educacao_infantil.json");
+const escolas = ler("escolas_municipais.json");
 const cep = ler("cep_indice.json");
 
 const protegidos = indicadores.setores.filter(s => s.suprimido_privacidade === true);
@@ -67,6 +68,8 @@ assert.deepStrictEqual(Object.keys(oferta).sort(), ["meta", "totais_por_rede"]);
 assert.strictEqual(oferta.meta.granularidade_publicada, "totais por rede de ensino; sem contagens por escola");
 assert(!("escolas" in oferta), "o arquivo público não contém matrículas individualizadas");
 assert(Object.keys(oferta.totais_por_rede).length > 0);
+assert(!escolas.escolas.some(e => "censo_escolar_2025" in e || Object.keys(e).some(k => /matricula|turma/i.test(k))),
+  "o cadastro público de escolas não deve conter matrícula ou turma por unidade");
 
 const ceps = Object.values(cep.ceps || {});
 assert(!ceps.some(item => ids.has(String(item[3]))),
