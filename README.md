@@ -142,7 +142,7 @@ Não existe: modelo de linguagem, embeddings neurais, previsão de risco, elegib
 | `qualidade_geografica.py` | Malha de setores, indicadores territoriais e registro de localização | Relatórios JSON e Markdown de qualidade geográfica, procedência, área e cautela D4 | stdlib |
 | `pipeline/privacidade_territorial.py` | Regra central de supressão estatística D4 | Suprime contagens pequenas antes da publicação do GeoJSON e orienta os demais pipelines | stdlib |
 | `auditoria_centroides.py` | `setores.geojson` e `indicadores_territoriais.json` | Relatórios JSON e Markdown de sensibilidade dos centroides e distâncias, sem alterar a produção | stdlib |
-| `oferta_educacao_infantil.py` | Censo Escolar 2025 | `web/dados/oferta_educacao_infantil.json` | pandas |
+| `oferta_educacao_infantil.py` | Censo Escolar 2025; calcula totais por rede em memória e publica somente agregados, sem matrículas por escola | `web/dados/oferta_educacao_infantil.json` | pandas |
 | `escolas_municipais.py` | Catálogo municipal, vínculos INEP e Censo Escolar | `web/dados/escolas_municipais.json` | stdlib |
 | `ligar_catalogo_inep.py` | Catálogo e Censo | `catalogo/inep_escolas.csv` (sobrescreve; revisar antes) | stdlib |
 | `horarios_onibus.py` | `catalogo/horarios_onibus.txt` | `web/dados/horarios_onibus.json` | stdlib |
