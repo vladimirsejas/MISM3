@@ -24,10 +24,17 @@ def publicado():
     return json.loads((DADOS / "indicadores_territoriais.json").read_text(encoding="utf-8"))
 
 
-def test_408_setores_e_soma_de_populacao(publicado):
+def test_408_setores_e_supressao_D4(publicado):
     assert publicado["totais"]["setores"] == len(publicado["setores"]) == 408
-    assert sum(s["pessoas"] for s in publicado["setores"]) == publicado["totais"]["pessoas"] == 201418
-    assert sum(s["domicilios"] for s in publicado["setores"]) == publicado["totais"]["domicilios"] == 87946
+    protegidos = [s for s in publicado["setores"] if s["suprimido_privacidade"]]
+    assert len(protegidos) == publicado["totais"]["setores_suprimidos"] == 17
+    assert publicado["totais"]["pessoas"] is None and publicado["totais"]["domicilios"] is None
+    for s in protegidos:
+        assert s["pessoas"] is None and s["domicilios"] is None and s["densidade"] is None
+        assert all(v is None for c in s["distancia_km"].values() for v in c.values())
+        assert all(v is None for c in s["distancia_min_km"].values() for v in c.values())
+        assert all(v is None for c in s["distancia_max_km"].values() for v in c.values())
+    assert all(s["pessoas"] is not None and s["domicilios"] is not None for s in publicado["setores"] if not s["suprimido_privacidade"])
 
 
 def test_codigos_de_setor_unicos_e_iguais_aos_da_malha(publicado):
@@ -40,12 +47,12 @@ def test_codigos_de_setor_unicos_e_iguais_aos_da_malha(publicado):
 
 def test_totais_batem_com_exposicao_distancia(publicado):
     expo = json.loads((DADOS / "exposicao_distancia.json").read_text(encoding="utf-8"))
-    assert publicado["totais"]["pessoas"] == expo["meta"]["pessoas_total"]
+    assert publicado["totais"]["pessoas"] is None and expo["meta"]["pessoas_total"] is None
     for cen in ti.CENARIOS:
         for cat in ti.CATEGORIAS:
             esperado = expo["cenarios"][cen][cat]
             assert publicado["cobertura"][cen][cat] == esperado["cobertura"], (cen, cat)
-            assert publicado["resumo_distancias"][cen][cat]["populacao_toda"] == esperado["populacao_toda"], (cen, cat)
+            assert publicado["resumo_distancias"][cen][cat]["setores_validos"] == esperado["setores_validos"], (cen, cat)
             assert publicado["resumo_distancias"][cen][cat]["setores_sem_bairro"] == esperado["setores_sem_bairro"], (cen, cat)
 
 
@@ -56,8 +63,8 @@ def test_distancias_por_setor_reproduzem_os_limiares_de_exposicao_distancia(publ
     for cen in ti.CENARIOS:
         for cat in ti.CATEGORIAS:
             for rotulo, limiar in (("1 km", 1.0), ("2 km", 2.0)):
-                esperado = expo["cenarios"][cen][cat]["populacao_toda"]["acima_de"][rotulo]["setores"]
-                ds = [s["distancia_km"][cen][cat] for s in publicado["setores"]]
+                esperado = expo["cenarios"][cen][cat]["setores_validos"]["acima_de"][rotulo]["setores"]
+                ds = [s["distancia_km"][cen][cat] for s in publicado["setores"] if s["distancia_km"][cen][cat] is not None]
                 assert sum(1 for d in ds if d > limiar) <= esperado <= sum(1 for d in ds if d >= limiar), (cen, cat, rotulo)
 
 
@@ -110,9 +117,9 @@ def test_carimbo_muda_se_uma_entrada_mudar():
 def test_a_conferencia_contra_exposicao_distancia_recusa_numero_diferente(saida):
     expo = json.loads((DADOS / "exposicao_distancia.json").read_text(encoding="utf-8"))
     resumo = json.loads(json.dumps(saida["resumo_distancias"]))
-    resumo["com_centro_do_cep"]["escola"]["populacao_toda"]["mediana_km"] += 0.01
+    resumo["com_centro_do_cep"]["escola"]["setores_validos"]["mediana_km"] += 0.01
     erros = ti.conferir(expo, resumo, saida["cobertura"])
-    assert erros and "com_centro_do_cep/escola/populacao_toda" in erros[0]
+    assert erros and "com_centro_do_cep/escola/setores_validos" in erros[0]
     assert ti.conferir(expo, saida["resumo_distancias"], saida["cobertura"]) == []
 
 
