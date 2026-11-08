@@ -87,7 +87,8 @@ O catálogo publicado contém 168 registros. A documentação ainda registra ite
 ## 4. Infraestrutura e lançamento
 
 - A PR #92 permanece aberta, em draft e sem merge. A branch de trabalho é `feat/mapa-territorial-como-mapa-principal`; não alterar `main` sem autorização expressa.
-- A prévia do Cloudflare Pages teve deploy bem-sucedido no commit `89683e7`. A validação da prévia do commit mais recente precisa ser conferida após os testes.
+- O Cloudflare Pages confirmou deploy bem-sucedido da prévia no commit `92cfb5f`. URL da branch: https://feat-mapa-territorial-como-m.mism3-observatorio.pages.dev. O deploy foi confirmado, mas a inspeção visual e os testes manuais em desktop e celular ainda precisam ser feitos.
+- A GitHub Actions concluiu com sucesso no commit `92cfb5f` (run [42527731423](https://github.com/vladimirsejas/MISM3/actions/runs/42527731423)): 272 testes Python passaram, 1 foi ignorado, a suíte JavaScript passou e os scripts de avaliação funcional terminaram sem falha. Isso não substitui validação com usuárias reais.
 - Há também um registro de build falho de um serviço Cloudflare Workers chamado `mism3`. O repositório não contém diretório ou configuração de Worker correspondente na árvore auditada. Confirmar no painel da Cloudflare se esse serviço participa de algum domínio/rota do MISM3; não confundir essa falha com o deploy do Pages.
 - O bloqueio `noindex, nofollow` deve permanecer até a aprovação dos critérios abaixo.
 - Antes da liberação: executar teste de navegação em desktop e celular, teste de requisições externas, verificação dos arquivos publicados, checagem de domínio/HTTPS e plano de rollback.
@@ -101,7 +102,7 @@ A publicação só deve avançar quando todos estiverem atendidos:
 - [ ] Licenças, autorizações e atribuições dos recursos de terceiros confirmadas ou recursos substituídos.
 - [ ] Serviços e telefones prioritários conferidos; contagens recalculadas.
 - [ ] README, estado do projeto, política pública e metadados atualizados.
-- [ ] CI completa aprovada na ponta atual da branch.
+- [x] CI automatizada aprovada no commit funcional `92cfb5f` (nova execução obrigatória se houver alterações de código).
 - [ ] Prévia do Pages validada em desktop e celular.
 - [ ] Dependência do Worker esclarecida.
 - [ ] Autor autoriza a retirada de `noindex` e a publicação oficial.
