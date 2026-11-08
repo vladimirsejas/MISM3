@@ -282,16 +282,16 @@ def main() -> int:
     saida = montar(geojson, oferta, servicos=servicos, indice_cep=indice_cep)
     salvar_json(saida, WEB_DADOS / "territorio.json")
     c, t = saida["meta"]["conferencia"], saida["totais"]
-    print("Gravado web/dados/territorio.json: %d setores, %d bairros, %d pessoas, %d domicílios." %
-          (t["setores"], t["bairros"], t["pessoas"], t["domicilios"]))
-    print("Conferência com o IBGE: pessoas %d (publicado %d); área %.1f km² (publicado %.1f; diferença %.2f%%)." %
-          (c["pessoas_somadas"], c["pessoas_publicadas_ibge"], c["area_somada_km2"], c["area_publicada_ibge_km2"], c["diferenca_area_pct"]))
+    print("Gravado web/dados/territorio.json: %d setores, %d bairros; contagens demográficas suprimidas por cautela." %
+          (t["setores"], t["bairros"]))
+    print("Conferência de área: %.1f km² (referência IBGE %.1f; diferença %.2f%%). Contagens populacionais não são reexibidas." %
+          (c["area_somada_km2"], c["area_publicada_ibge_km2"], c["diferenca_area_pct"]))
     print("Densidade: %s | pessoas por domicílio: %s (sem base suficiente: %d)" %
           (saida["classes"]["densidade"]["contagem"], saida["classes"]["pessoas_por_domicilio"]["contagem"],
            saida["classes"]["pessoas_por_domicilio"]["sem_base_suficiente"]))
     for chave, v in saida.get("distancia_ate_servico", {}).items():
-        print("Distância até %s: %d de %d localizados (%d pelo endereço); mediana %.2f km; %d pessoas a 3 km ou mais." %
-              (v["rotulo"], v["localizados"], v["cadastrados"], v["localizados_pelo_endereco"], v["mediana_km"], v["pessoas_3_km_ou_mais"]))
+        print("Distância até %s: %d de %d localizados (%d pelo endereço); %d setores a 3 km ou mais entre os não suprimidos." %
+              (v["rotulo"], v["localizados"], v["cadastrados"], v["localizados_pelo_endereco"], v["setores_3_km_ou_mais"]))
     for chave, v in saida.get("distancia_pendente", {}).items():
         print("SEM distância até %s: só %d de %d localizados (mínimo %d%%). Localize mais serviços antes de mostrar." %
               (v["rotulo"], v["localizados"], v["cadastrados"], v["minimo_pct"]))
