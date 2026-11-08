@@ -103,7 +103,7 @@ def validar_geometrias(geojson):
             "duplicados": duplicados, "geometrias_com_erro_estrutural": invalidas}
 
 
-def resumir(geojson, territorio, indicadores, localizacao):
+def resumir(geojson, territorio, indicadores, localizacao, catalogo_registros=None):
     setores = geojson.get("features", [])
     equipamentos = indicadores.get("equipamentos", [])
     categorias = {c: [e for e in equipamentos if e.get("categoria") == c] for c in ("cras", "ubs", "escola")}
@@ -111,6 +111,23 @@ def resumir(geojson, territorio, indicadores, localizacao):
     documentados = [e for e in cras_ubs if e.get("confianca_localizacao") in {"alta", "media"}
                     and e.get("metodo_localizacao") and e.get("data_aplicacao_localizacao")]
     sem_proveniencia = [e for e in cras_ubs if e not in documentados]
+    catalogo_por_id = catalogo_registros or {}
+    endereco_fonte_documentada = []
+    endereco_fonte_ausente = []
+    for equipamento in cras_ubs:
+        registro = catalogo_por_id.get(equipamento.get("id"), {})
+        item = {
+            "id": equipamento.get("id"),
+            "nome": equipamento.get("nome"),
+            "endereco": registro.get("endereco"),
+            "fonte_url": registro.get("fonte_url"),
+            "fonte": registro.get("fonte"),
+            "verificado_em": registro.get("verificado_em"),
+        }
+        if registro.get("endereco") and registro.get("fonte_url") and registro.get("verificado_em"):
+            endereco_fonte_documentada.append(item)
+        else:
+            endereco_fonte_ausente.append(item)
     escolas = categorias["escola"]
     escolas_individuais = [e for e in escolas if e.get("metodo_localizacao") == "coordenada_individual"]
     escolas_cep = [e for e in escolas if e.get("metodo_localizacao") == "centroide_cep"]
@@ -138,7 +155,9 @@ def resumir(geojson, territorio, indicadores, localizacao):
             "sem_coordenada": len(sem_coordenada),
             "coordenadas_fora_da_malha": [{"id": e.get("id"), "categoria": e.get("categoria")} for e in fora],
             "cras_ubs": {"total": len(cras_ubs), "proveniencia_documentada": len(documentados),
-                         "proveniencia_ausente": [{"id": e.get("id"), "categoria": e.get("categoria")} for e in sem_proveniencia]},
+                         "proveniencia_ausente": [{"id": e.get("id"), "categoria": e.get("categoria")} for e in sem_proveniencia],
+                         "endereco_fonte_documentada": endereco_fonte_documentada,
+                         "endereco_fonte_ausente": endereco_fonte_ausente},
             "escolas": {"total": len(escolas), "coordenada_individual": len(escolas_individuais),
                         "referencia_cep": len(escolas_cep),
                         "sem_metodo_reconhecido": len(escolas) - len(escolas_individuais) - len(escolas_cep)},
@@ -155,7 +174,9 @@ def carregar(dados=DADOS, catalogo=CATALOGO, localizacao=LOCALIZACAO):
     indicadores = json.loads((dados / "indicadores_territoriais.json").read_text(encoding="utf-8"))
     with localizacao.open(encoding="utf-8-sig", newline="") as f:
         registros = {r["id"] for r in csv.DictReader(f) if r.get("id")}
-    return resumir(geo, territorio, indicadores, registros)
+    with catalogo.open(encoding="utf-8-sig", newline="") as f:
+        catalogo_registros = {r["id"]: r for r in csv.DictReader(f) if r.get("id")}
+    return resumir(geo, territorio, indicadores, registros, catalogo_registros)
 
 
 def relatorio_markdown(resultado):
@@ -176,8 +197,19 @@ def relatorio_markdown(resultado):
               f"- Equipamentos: {e['total']} (CRAS {e['por_categoria']['cras']}, UBS {e['por_categoria']['ubs']}, escolas {e['por_categoria']['escola']})",
               f"- Sem coordenada: {e['sem_coordenada']}",
               f"- Coordenadas fora da malha: {len(e['coordenadas_fora_da_malha'])}",
-              f"- CRAS/UBS com proveniência documentada: {e['cras_ubs']['proveniencia_documentada']}/{e['cras_ubs']['total']}",
-              f"- CRAS/UBS sem proveniência: {len(e['cras_ubs']['proveniencia_ausente'])}",
+              f"- CRAS/UBS com método de coordenada documentado: {e['cras_ubs']['proveniencia_documentada']}/{e['cras_ubs']['total']}",
+              f"- CRAS/UBS sem método de coordenada documentado: {len(e['cras_ubs']['proveniencia_ausente'])}",
+              f"- CRAS/UBS com endereço, fonte e data no catálogo: {len(e['cras_ubs']['endereco_fonte_documentada'])}/{e['cras_ubs']['total']}",
+              "",
+              "### Registros sem método de coordenada",
+              "",
+              "| Equipamento | Endereço cadastrado | Fonte do cadastro | Verificado em |",
+              "|---|---|---|---|",
+              *[f"| {item['nome'] or item['id']} | {item['endereco'] or 'não informado'} | {item['fonte'] or item['fonte_url'] or 'não informada'} | {item['verificado_em'] or 'não informada'} |"
+                for item in e['cras_ubs']['endereco_fonte_documentada']
+                if item['id'] in {p['id'] for p in e['cras_ubs']['proveniencia_ausente']}],
+              "",
+              "A presença de endereço e fonte no catálogo não documenta como a coordenada foi obtida ou validada, nem justifica um raio de incerteza.",
               f"- Escolas: {e['escolas']['coordenada_individual']} individuais, {e['escolas']['referencia_cep']} por CEP", "",
               "## Privacidade", "",
               f"- Setores sinalizados pela cautela D4: {resultado['privacidade']['setores_abaixo_da_faixa_de_cautela_D4']}",
@@ -195,7 +227,7 @@ def main(argv=None):
     args.saida_json.parent.mkdir(parents=True, exist_ok=True)
     args.saida_json.write_text(json.dumps(resultado, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     args.saida_md.write_text(relatorio_markdown(resultado), encoding="utf-8")
-    print("Auditoria geográfica concluída: %d setores; %d CRAS/UBS sem proveniência." % (
+    print("Auditoria geográfica concluída: %d setores; %d CRAS/UBS sem método de coordenada." % (
         resultado["geometrias"]["total"], len(resultado["equipamentos"]["cras_ubs"]["proveniencia_ausente"])))
     return 0
 

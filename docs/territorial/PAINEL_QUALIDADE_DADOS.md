@@ -18,3 +18,6 @@ python pipeline/qualidade_geografica.py
 \`\`\`
 
 A rotina Python gera relatórios JSON e Markdown em \`docs/territorial/\`. O painel web calcula os indicadores diretamente dos arquivos locais para não depender de um relatório previamente gerado.
+
+
+Os seis CRAS/UBS sem método de coordenada continuam com seus endereços e fontes institucionais no catálogo. A falta é a rastreabilidade da coordenada (como foi obtida/validada e o raio aplicável), não a ausência de cadastro do endereço.
