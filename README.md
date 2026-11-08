@@ -2,7 +2,11 @@
 
 Site estático de orientação para mulheres de Rio Claro (SP): reúne serviços públicos verificados (assistência social, saúde, educação, trabalho, direitos, moradia, transporte) e recomenda para onde ir a partir do que a pessoa escreve. Projeto acadêmico de demonstração (Fatec Rio Claro, Inteligência Artificial). Não é um site oficial da Prefeitura, não é vendido e não tem fins comerciais.
 
-Estado em 13/10/2026. O que existe, o que foi testado e o que ainda é proposta: [docs/estado_do_projeto.md](docs/estado_do_projeto.md). Decisões e histórico: [docs/registro_decisoes_desenvolvimento.md](docs/registro_decisoes_desenvolvimento.md).
+Estado técnico detalhado: [docs/estado_do_projeto.md](docs/estado_do_projeto.md) (última verificação registrada em 05/11/2026). Decisões e histórico: [docs/registro_decisoes_desenvolvimento.md](docs/registro_decisoes_desenvolvimento.md).
+
+## Preparação para publicação pública — 08/11/2026
+
+A diretriz do autor é publicar o site, o mapa territorial e o painel de gestão, com dados agregados e ressalvas metodológicas. A preparação ainda está em andamento: as páginas permanecem com `noindex, nofollow`, e a publicação oficial depende da revisão de privacidade dos setores pequenos, dos termos de redistribuição dos dados e imagens, da confirmação dos serviços e da validação final. Consulte o [plano de publicação pública](docs/territorial/PLANO_PUBLICACAO_PUBLICA.md) e a [página de privacidade e dados](web/privacidade.html).
 
 Restrições de projeto: não usa modelo de linguagem; o texto digitado nunca sai do navegador; não prevê risco individual; não decide elegibilidade a benefício; não promete vaga. Cada dado mostra fonte e data de conferência.
 
