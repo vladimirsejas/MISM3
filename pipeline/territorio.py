@@ -267,7 +267,9 @@ def montar(geojson: dict, oferta: dict | None = None, hoje: str | None = None, s
                 saida["setores"][codigo]["dist_" + chave] = d
     if oferta:
         saida["educacao_infantil"] = {
-            "fonte": oferta["meta"]["fonte"], "aviso": oferta["meta"]["aviso"], "por_rede": oferta["totais_por_rede"]}
+            "fonte": oferta["meta"]["fonte"], "aviso": oferta["meta"]["aviso"],
+            "granularidade_publicada": oferta["meta"].get("granularidade_publicada", "não informada"),
+            "por_rede": oferta["totais_por_rede"]}
     return saida
 
 
