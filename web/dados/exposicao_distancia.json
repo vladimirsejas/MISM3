@@ -2,12 +2,13 @@
  "meta": {
   "fonte": "IBGE, Censo Demográfico 2022 (setores) e catálogo verificado do Observatório da Mulher",
   "gerado_em": "2026-11-05",
-  "aviso": "Distâncias em linha reta entre o centro de cada setor do IBGE e o serviço mais próximo; não consideram ruas, ônibus nem horários. Mostram onde a rede cadastrada fica longe da população e não provam falta de serviço. Categoria com cobertura incompleta de coordenadas tem distância superestimada.",
+  "aviso": "Os resumos contam somente setores não suprimidos, sem ponderação por população. Dados demográficos e distâncias por setor são omitidos nos setores pequenos. Distâncias em linha reta não consideram ruas, ônibus nem horários.",
   "limiares_km": [
-   1.0,
-   2.0
+   1,
+   2
   ],
-  "pessoas_total": 201418
+  "pessoas_total": null,
+  "setores_suprimidos": 17
  },
  "cenarios": {
   "coordenadas_do_catalogo": {
@@ -17,39 +18,33 @@
      "cadastrados": 6,
      "completo": true
     },
-    "populacao_toda": {
-     "pessoas": 201418,
-     "setores": 408,
-     "mediana_km": 1.22,
-     "p90_km": 2.73,
+    "setores_validos": {
+     "setores": 391,
+     "mediana_km": 1.3,
+     "p90_km": 3.05,
      "acima_de": {
       "1 km": {
-       "pessoas": 121265,
-       "percentual": 60.2,
-       "setores": 271
+       "setores": 256,
+       "percentual": 65.5
       },
       "2 km": {
-       "pessoas": 42201,
-       "percentual": 21.0,
-       "setores": 115
+       "setores": 104,
+       "percentual": 26.6
       }
      }
     },
     "setores_sem_bairro": {
-     "pessoas": 12846,
-     "setores": 43,
-     "mediana_km": 4.76,
-     "p90_km": 11.03,
+     "setores": 39,
+     "mediana_km": 5.92,
+     "p90_km": 12.25,
      "acima_de": {
       "1 km": {
-       "pessoas": 8039,
-       "percentual": 62.6,
-       "setores": 36
+       "setores": 32,
+       "percentual": 82.1
       },
       "2 km": {
-       "pessoas": 7616,
-       "percentual": 59.3,
-       "setores": 33
+       "setores": 30,
+       "percentual": 76.9
       }
      }
     }
@@ -60,39 +55,33 @@
      "cadastrados": 22,
      "completo": true
     },
-    "populacao_toda": {
-     "pessoas": 201418,
-     "setores": 408,
-     "mediana_km": 0.64,
-     "p90_km": 1.37,
+    "setores_validos": {
+     "setores": 391,
+     "mediana_km": 0.71,
+     "p90_km": 1.63,
      "acima_de": {
       "1 km": {
-       "pessoas": 49280,
-       "percentual": 24.5,
-       "setores": 131
+       "setores": 120,
+       "percentual": 30.7
       },
       "2 km": {
-       "pessoas": 5303,
-       "percentual": 2.6,
-       "setores": 29
+       "setores": 24,
+       "percentual": 6.1
       }
      }
     },
     "setores_sem_bairro": {
-     "pessoas": 12846,
-     "setores": 43,
-     "mediana_km": 0.85,
-     "p90_km": 4.12,
+     "setores": 39,
+     "mediana_km": 1.88,
+     "p90_km": 5.95,
      "acima_de": {
       "1 km": {
-       "pessoas": 4202,
-       "percentual": 32.7,
-       "setores": 26
+       "setores": 22,
+       "percentual": 56.4
       },
       "2 km": {
-       "pessoas": 3155,
-       "percentual": 24.6,
-       "setores": 21
+       "setores": 19,
+       "percentual": 48.7
       }
      }
     }
@@ -103,39 +92,33 @@
      "cadastrados": 68,
      "completo": false
     },
-    "populacao_toda": {
-     "pessoas": 201418,
-     "setores": 408,
-     "mediana_km": 0.63,
-     "p90_km": 1.56,
+    "setores_validos": {
+     "setores": 391,
+     "mediana_km": 0.67,
+     "p90_km": 1.99,
      "acima_de": {
       "1 km": {
-       "pessoas": 52294,
-       "percentual": 26.0,
-       "setores": 129
+       "setores": 116,
+       "percentual": 29.7
       },
       "2 km": {
-       "pessoas": 13100,
-       "percentual": 6.5,
-       "setores": 44
+       "setores": 39,
+       "percentual": 10
       }
      }
     },
     "setores_sem_bairro": {
-     "pessoas": 12846,
-     "setores": 43,
-     "mediana_km": 1.73,
-     "p90_km": 10.58,
+     "setores": 39,
+     "mediana_km": 3.54,
+     "p90_km": 11.59,
      "acima_de": {
       "1 km": {
-       "pessoas": 7844,
-       "percentual": 61.1,
-       "setores": 32
+       "setores": 28,
+       "percentual": 71.8
       },
       "2 km": {
-       "pessoas": 5987,
-       "percentual": 46.6,
-       "setores": 25
+       "setores": 24,
+       "percentual": 61.5
       }
      }
     }
@@ -148,39 +131,33 @@
      "cadastrados": 6,
      "completo": true
     },
-    "populacao_toda": {
-     "pessoas": 201418,
-     "setores": 408,
-     "mediana_km": 1.22,
-     "p90_km": 2.73,
+    "setores_validos": {
+     "setores": 391,
+     "mediana_km": 1.3,
+     "p90_km": 3.05,
      "acima_de": {
       "1 km": {
-       "pessoas": 121265,
-       "percentual": 60.2,
-       "setores": 271
+       "setores": 256,
+       "percentual": 65.5
       },
       "2 km": {
-       "pessoas": 42201,
-       "percentual": 21.0,
-       "setores": 115
+       "setores": 104,
+       "percentual": 26.6
       }
      }
     },
     "setores_sem_bairro": {
-     "pessoas": 12846,
-     "setores": 43,
-     "mediana_km": 4.76,
-     "p90_km": 11.03,
+     "setores": 39,
+     "mediana_km": 5.92,
+     "p90_km": 12.25,
      "acima_de": {
       "1 km": {
-       "pessoas": 8039,
-       "percentual": 62.6,
-       "setores": 36
+       "setores": 32,
+       "percentual": 82.1
       },
       "2 km": {
-       "pessoas": 7616,
-       "percentual": 59.3,
-       "setores": 33
+       "setores": 30,
+       "percentual": 76.9
       }
      }
     }
@@ -191,39 +168,33 @@
      "cadastrados": 22,
      "completo": true
     },
-    "populacao_toda": {
-     "pessoas": 201418,
-     "setores": 408,
-     "mediana_km": 0.64,
-     "p90_km": 1.37,
+    "setores_validos": {
+     "setores": 391,
+     "mediana_km": 0.71,
+     "p90_km": 1.63,
      "acima_de": {
       "1 km": {
-       "pessoas": 49280,
-       "percentual": 24.5,
-       "setores": 131
+       "setores": 120,
+       "percentual": 30.7
       },
       "2 km": {
-       "pessoas": 5303,
-       "percentual": 2.6,
-       "setores": 29
+       "setores": 24,
+       "percentual": 6.1
       }
      }
     },
     "setores_sem_bairro": {
-     "pessoas": 12846,
-     "setores": 43,
-     "mediana_km": 0.85,
-     "p90_km": 4.12,
+     "setores": 39,
+     "mediana_km": 1.88,
+     "p90_km": 5.95,
      "acima_de": {
       "1 km": {
-       "pessoas": 4202,
-       "percentual": 32.7,
-       "setores": 26
+       "setores": 22,
+       "percentual": 56.4
       },
       "2 km": {
-       "pessoas": 3155,
-       "percentual": 24.6,
-       "setores": 21
+       "setores": 19,
+       "percentual": 48.7
       }
      }
     }
@@ -234,39 +205,33 @@
      "cadastrados": 68,
      "completo": true
     },
-    "populacao_toda": {
-     "pessoas": 201418,
-     "setores": 408,
-     "mediana_km": 0.39,
-     "p90_km": 0.85,
+    "setores_validos": {
+     "setores": 391,
+     "mediana_km": 0.43,
+     "p90_km": 1.05,
      "acima_de": {
       "1 km": {
-       "pessoas": 12421,
-       "percentual": 6.2,
-       "setores": 52
+       "setores": 42,
+       "percentual": 10.7
       },
       "2 km": {
-       "pessoas": 4284,
-       "percentual": 2.1,
-       "setores": 26
+       "setores": 24,
+       "percentual": 6.1
       }
      }
     },
     "setores_sem_bairro": {
-     "pessoas": 12846,
-     "setores": 43,
-     "mediana_km": 0.62,
-     "p90_km": 4.27,
+     "setores": 39,
+     "mediana_km": 0.99,
+     "p90_km": 5.97,
      "acima_de": {
       "1 km": {
-       "pessoas": 3250,
-       "percentual": 25.3,
-       "setores": 23
+       "setores": 19,
+       "percentual": 48.7
       },
       "2 km": {
-       "pessoas": 3050,
-       "percentual": 23.7,
-       "setores": 19
+       "setores": 18,
+       "percentual": 46.2
       }
      }
     }
