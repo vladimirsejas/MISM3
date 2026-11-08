@@ -18,7 +18,7 @@ CENARIOS = {
     "coordenadas_do_catalogo": {"catalogo"},
     "com_centro_do_cep": {"catalogo", "centro_do_cep"},
 }
-METODO_ALTERNATIVO = "ponto_interno_maior_corda_horizontal_v1"
+METODO_ALTERNATIVO = "centroide_com_correcao_interna_minima_v1"
 
 
 def _poligonos(geom):
@@ -101,28 +101,53 @@ def _subtrair_intervalos(base, remover):
     return [(a, b) for a, b in resultado if b - a > 1e-12]
 
 
-def ponto_interno(geom):
-    """Ponto no interior pelo maior segmento horizontal interno, com varredura determinística."""
+def ponto_interno(geom, centroide=None):
+    """Mantém o centroide quando interno; caso contrário, busca o ponto interno mais próximo.
+
+    A busca usa linhas no meio das faixas Y dos vértices e linhas próximas à
+    latitude do centroide. Em cada intervalo interno, projeta a longitude do
+    centroide para o intervalo e escolhe o candidato de menor distância
+    geodésica. Buracos são descontados explicitamente.
+    """
+    if centroide is None:
+        lat_centro, lon_centro = _centro_atual(geom)
+    else:
+        lon_centro, lat_centro = centroide
+    if _contem(geom, lon_centro, lat_centro):
+        return lat_centro, lon_centro
+
     melhor = None
     for poligono in _poligonos(geom):
         if not poligono or not poligono[0]:
             continue
         ys_vertices = sorted({float(p[1]) for anel in poligono for p in anel})
+        if len(ys_vertices) < 2:
+            continue
         ys = [(a + b) / 2 for a, b in zip(ys_vertices, ys_vertices[1:]) if b - a > 1e-12]
+        minimo, maximo = ys_vertices[0], ys_vertices[-1]
+        if minimo < lat_centro < maximo and lat_centro not in ys_vertices:
+            ys.append(lat_centro)
+        elif minimo < lat_centro < maximo:
+            epsilon_y = min((maximo - minimo) * 1e-9, 1e-10)
+            ys.extend(y for y in (lat_centro - epsilon_y, lat_centro + epsilon_y) if minimo < y < maximo)
+
         for y in ys:
             intervalos = _intersecoes_anel(poligono[0], y)
             for buraco in poligono[1:]:
                 intervalos = _subtrair_intervalos(intervalos, _intersecoes_anel(buraco, y))
             for x0, x1 in intervalos:
-                x = (x0 + x1) / 2
-                if _anel_contem(poligono[0], x, y) and not any(_anel_contem(h, x, y) for h in poligono[1:]):
-                    if melhor is None or x1 - x0 > melhor[0]:
-                        melhor = (x1 - x0, y, x)
+                epsilon_x = min((x1 - x0) * 1e-8, 1e-10)
+                x = max(x0 + epsilon_x, min(x1 - epsilon_x, lon_centro))
+                if not _anel_contem(poligono[0], x, y) or any(_anel_contem(h, x, y) for h in poligono[1:]):
+                    continue
+                distancia = _haversine_km(lat_centro, lon_centro, y, x)
+                if melhor is None or distancia < melhor[0]:
+                    melhor = (distancia, y, x)
+
     if melhor is None:
         raise ValueError("Não foi possível encontrar ponto interno para a geometria")
     _, lat, lon = melhor
     return lat, lon
-
 
 def _percentil(valores, q):
     if not valores:
@@ -162,7 +187,7 @@ def comparar(geojson, indicadores):
         geom = feicao.get("geometry") or {}
         lat_atual, lon_atual = _centro_atual(geom)
         atual_interno = _contem(geom, lon_atual, lat_atual)
-        lat_novo, lon_novo = ponto_interno(geom)
+        lat_novo, lon_novo = ponto_interno(geom, (lon_atual, lat_atual))
         if not _contem(geom, lon_novo, lat_novo):
             raise ValueError("Ponto alternativo fora do setor %s" % codigo)
         deslocamento = _haversine_km(lat_atual, lon_atual, lat_novo, lon_novo) * 1000
@@ -235,7 +260,7 @@ def relatorio_markdown(resultado):
     linhas = [
         "# Auditoria de sensibilidade dos pontos representativos dos setores", "",
         "## Escopo", "",
-        "Comparação exploratória sem alteração dos indicadores de produção. O ponto alternativo é o maior segmento horizontal interno encontrado por varredura determinística; não é apresentado como centroide nem como método oficial.", "",
+        "Comparação exploratória sem alteração dos indicadores de produção. O centroide atual é mantido quando está dentro do polígono; quando está fora, o algoritmo procura o ponto interno mais próximo por varredura de linhas horizontais. O resultado não é um novo centroide oficial.", "",
         "## Resultado geométrico", "",
         "- Setores auditados: %d" % meta["setores_auditados"],
         "- Centroides atuais fora dos polígonos: %d" % meta["centroides_atualmente_fora"],
