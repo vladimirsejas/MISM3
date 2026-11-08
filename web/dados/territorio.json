@@ -15,7 +15,7 @@
    "pessoas": null
   },
   "aviso": "Dados de população, domicílios e indicadores derivados são omitidos em setores com menos de 5 pessoas ou menos de 3 domicílios, e nos agregados de bairros afetados. O painel preserva a geometria e os pontos institucionais. Não há idade, renda nem sexo nesta malha.",
-  "aviso_distancia": "Distância em linha reta do centro de cada setor até o serviço mais próximo, só entre os serviços que têm localização. Onde a localização vem do CEP, é aproximada. Não considera ruas, ônibus nem horários, e um setor 'longe' pode ter serviço que ainda não foi localizado. Mostra onde olhar, não prova falta de serviço.",
+  "aviso_distancia": "Distâncias em linha reta são exibidas somente para setores sem supressão estatística. Os resumos contam setores, não pessoas. Onde a localização vem do CEP, é aproximada; não considera ruas, ônibus nem horários e não prova falta de serviço.",
   "setores_suprimidos": 17
  },
  "totais": {
