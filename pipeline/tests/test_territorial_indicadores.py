@@ -137,10 +137,11 @@ def test_entradas_declaradas_incluem_o_indice_de_cep_so_para_localizar_equipamen
     assert ed.CENARIOS.keys() == set(ti.CENARIOS)
 
 def test_faixas_de_incerteza_sao_publicadas_e_contem_a_estimativa_central(publicado):
-    """A faixa é envelope geométrico para referências aproximadas, não intervalo de confiança."""
+    """A faixa é envelope geométrico; sem raio documentado, o intervalo fica indisponível."""
     assert publicado["meta"]["metodologia_incerteza"]["formula"] == "d_min=max(0,d-r); d_max=d+r"
     assert "não intervalo de confiança" in publicado["meta"]["metodologia_incerteza"]["interpretacao"].lower()
     intervalos = []
+    indisponiveis = 0
     for setor in publicado["setores"]:
         for cen in ti.CENARIOS:
             for cat in ti.CATEGORIAS:
@@ -149,10 +150,20 @@ def test_faixas_de_incerteza_sao_publicadas_e_contem_a_estimativa_central(public
                 maximo = setor["distancia_max_km"][cen][cat]
                 if central is None:
                     assert minimo is None and maximo is None
+                elif minimo is None or maximo is None:
+                    assert minimo is None and maximo is None
+                    indisponiveis += 1
                 else:
                     assert minimo <= central <= maximo
                     intervalos.append((minimo, central, maximo))
     assert any(minimo < central or central < maximo for minimo, central, maximo in intervalos)
+    assert indisponiveis > 0
+    for setor in publicado["setores"]:
+        for cen in ti.CENARIOS:
+            assert setor["distancia_min_km"][cen]["cras"] is None
+            assert setor["distancia_max_km"][cen]["cras"] is None
+            assert setor["distancia_min_km"][cen]["ubs"] is None
+            assert setor["distancia_max_km"][cen]["ubs"] is None
 
 
 def test_base_escolar_consolidada_preserva_raios_e_proveniencia(publicado):
@@ -176,6 +187,7 @@ def test_proveniencia_de_cras_ubs_nao_presume_confianca(publicado):
     assert sum(e["confianca_localizacao"] == "media" for e in registrados) == 11
     assert len(sem_registro) == 6
     assert all(e["metodo_localizacao"] == "catalogo_sem_registro_de_proveniencia" for e in sem_registro)
+    assert all(e["raio_incerteza_m"] is None for e in sem_registro)
     assert all(e["data_aplicacao_localizacao"] for e in registrados)
     assert all(e["fonte_localizacao"] == "servicos_manuais.csv + localizacao_registro.csv" for e in registrados)
 
