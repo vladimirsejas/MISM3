@@ -113,6 +113,8 @@ Em que `φ` representa latitude em radianos, `λ` representa longitude em radian
 
 **Limitações:** cobertura não significa precisão uniforme. Coordenadas de métodos diferentes devem ser identificadas separadamente. A coordenada aproximada pelo centro do CEP não deve ser apresentada como equivalente a uma coordenada institucional conferida.
 
+**Situação da proveniência na PR #92:** entre os 28 CRAS/UBS com coordenadas do catálogo, 22 têm método, confiança (11 alta e 11 média) e data de aplicação registrados em `localizacao_registro.csv`. Os outros 6 têm coordenadas cadastradas, mas não possuem registro explícito de proveniência; são publicados com confiança `nao_registrada` e não devem ser descritos como verificados. A confirmação desses seis registros é pendência antes de afirmar cobertura completa de proveniência.
+
 **Linguagem permitida:** “localização pendente”, “coordenada verificada”, “coordenada aproximada” e “cobertura das coordenadas”.
 
 ## 4. Cenários de localização por CEP institucional
