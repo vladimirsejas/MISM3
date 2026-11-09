@@ -9,8 +9,7 @@ Entradas (todas já existentes; nada é baixado nem enviado):
   Exceção documentada: web/dados/cep_indice.json é lido SÓ para localizar o CEP cadastral de cada equipamento público no cenário
   "com_centro_do_cep" (a mesma regra de pipeline/exposicao_distancia.py). Nenhum CEP é gravado na saída.
 
-As distâncias NÃO usam lógica nova: reaproveitam o centroide, a distância de Haversine e a regra de localização dos serviços de
-pipeline/analise_territorial.py, e o resumo de pipeline/exposicao_distancia.py. O script confere o resultado contra
+As distâncias usam o ponto representativo interno de pipeline/analise_territorial.py: o centroide matemático é preservado quando está dentro do setor; nos 9 casos externos, usa-se o ponto interno mais próximo. A distância continua sendo Haversine e a regra de localização dos serviços permanece a mesma. O script confere o resultado contra
 web/dados/exposicao_distancia.json e se recusa a gravar se houver qualquer diferença.
 
 Determinístico: mesma entrada, mesma saída. O carimbo da saída é derivado do hash do conteúdo das entradas (sem data variável).
@@ -28,6 +27,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import analise_territorial as at  # noqa: E402
+from auditoria_centroides import _centro_atual  # noqa: E402
 import exposicao_distancia as ed  # noqa: E402
 from privacidade_territorial import setor_suprimido  # noqa: E402
 
@@ -303,10 +303,10 @@ def gerar(dados: dict) -> dict:
             "entradas_geradas_em": {"setores.geojson": geo["meta"]["gerado_em"], "territorio.json": meta_terr["gerado_em"],
                                     "exposicao_distancia.json": meta_expo["gerado_em"], "analise_territorial.json": ent["analise_territorial.json"]["meta"]["gerado_em"],
                                     "escolas_municipais.json": ent["escolas_municipais.json"]["meta"]["gerado_em"]},
-            "auditoria_centros": {"metodo_atual": "centroide geométrico do maior componente do MultiPolygon, selecionado pelo número de vértices do anel externo; cálculo usa somente o anel externo", "setores_auditados": len(setores), "centroides_fora_do_poligono": centroides_fora, "substituicao_automatica": False, "observacao": "A comparação com ponto interno representativo e a avaliação do impacto nas distâncias permanecem pendentes. Nenhum centro foi substituído."},
+            "auditoria_centros": {"metodo_atual": "centroide matemático anterior, calculado no maior anel externo", "setores_auditados": len(setores), "centroides_fora_do_poligono": centroides_fora, "substituicao_automatica": True, "observacao": "O ponto interno representativo foi adotado nos 9 setores cujo centroide matemático ficava fora; os 399 centroides internos foram preservados."},
             "metodo": ("Setor censitário como unidade. Pessoas e domicílios: V0001 = total de pessoas; V0002 = total de domicílios (DPPO + DPPV + DPPUO + DPIO + DCCM + DCSM), conforme a Nota metodológica n. 06 dos Agregados por Setores Censitários do Censo 2022. "
                        "Densidade e área: valores de territorio.json. CRAS/UBS: coordenadas em servicos_manuais.csv e método, confiança e data em localizacao_registro.csv quando registrados; ausência de registro não equivale a confiança alta. Escolas: web/dados/escolas_municipais.json, campo localizacao_mapa, preservando método, precisão, fonte e raio. "
-                       "Distância central: Haversine (raio 6371,0088 km) do centroide atual do setor ao equipamento elegível mais próximo. Para localizações com raio operacional r, o envelope é d_min=max(0,d-r) e d_max=d+r; para várias referências, usa-se o menor limite inferior e o menor limite superior. "
+                       "Distância central: Haversine (raio 6371,0088 km) do ponto representativo interno do setor ao equipamento elegível mais próximo. Para localizações com raio operacional r, o envelope é d_min=max(0,d-r) e d_max=d+r; para várias referências, usa-se o menor limite inferior e o menor limite superior. "
                        "O envelope é geométrico, não intervalo de confiança. Quando o raio não está documentado, o intervalo é omitido e a distância central permanece identificada como estimativa. Os resumos centrais continuam conferidos contra web/dados/exposicao_distancia.json."),
             "metodologia_incerteza": {"unidade_raio": "metros", "formula": "d_min=max(0,d-r); d_max=d+r",
                                      "interpretacao": "Envelope geométrico operacional, não intervalo de confiança estatístico.",
