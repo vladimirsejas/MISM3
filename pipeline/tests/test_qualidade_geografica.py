@@ -145,7 +145,7 @@ def test_validador_identifica_sobreposicao_e_lacuna_com_limite_referencia():
         {"properties": {"setor": "354390705000001"}, "geometry": poligono(-47.51, -47.49)},
         {"properties": {"setor": "354390705000002"}, "geometry": poligono(-47.50, -47.48)},
     ]}
-    limite = {"features": [{"geometry": poligono(-47.52, -47.47)}]}
+    limite = {"features": [{"geometry": poligono(-47.60, -47.40)}]}
     overlap = qg.validar_topologia(geo_overlap, limite)
     assert len(overlap["sobreposicoes"]) == 1
     assert overlap["sobreposicoes"][0]["area_m2"] > 1
