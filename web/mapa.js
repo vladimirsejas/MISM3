@@ -10,7 +10,7 @@
   var POR_PAGINA = 24;
 
   var estado = { todos: [], indice: null, setorBairro: null, apelidos: [], ativas: {}, texto: "", origem: null, origemRaio: 0, limite: POR_PAGINA };
-  var mapa = null, camadaPontos = null, camadaOrigem = null, tiles = null, marcadores = {}, primeiraVez = true;
+  var mapa = null, camadaPontos = null, camadaOrigem = null, tiles = null, marcadores = {}, primeiraVez = true, mapaResizeObserver = null;
 
   function el(tag, classe, texto) {
     var e = document.createElement(tag);
@@ -90,6 +90,14 @@
   }
 
   /* ---------------------------------------------------------------- mapa */
+  /* O redimensionamento do viewport (inclusive zoom do navegador) deve atualizar o renderer SVG do Leaflet. */
+  window.addEventListener("resize", function () {
+    if (!mapa) return;
+    window.requestAnimationFrame(function () {
+      if (mapa) mapa.invalidateSize({ pan: false, debounceMoveend: true });
+    });
+  });
+
   function iniciarMapa(setores) {
     if (typeof L === "undefined") { mensagem("O mapa não pôde ser carregado, mas a lista abaixo funciona normalmente."); return; }
     mapa = L.map("mapa-servicos", { zoomControl: false, attributionControl: true, minZoom: 10, maxZoom: 18 }).setView([-22.41, -47.56], 12);
@@ -101,7 +109,13 @@
     camadaPontos = L.layerGroup().addTo(mapa);
     camadaOrigem = L.layerGroup().addTo(mapa);
     /* Na tela inicial o mapa fica escondido quando a pessoa abre uma área e volta: reajusta o tamanho quando reaparece. */
-    if (window.ResizeObserver) new ResizeObserver(function () { mapa.invalidateSize(); }).observe($("mapa-servicos"));
+    if (window.ResizeObserver) {
+      /* Mantém a referência viva: sem ela o observador pode ser coletado e o SVG conserva a largura do viewport anterior. */
+      mapaResizeObserver = new ResizeObserver(function () {
+        if (mapa) mapa.invalidateSize({ pan: false, debounceMoveend: true });
+      });
+      mapaResizeObserver.observe($("mapa-servicos"));
+    }
   }
 
   function desenharPontos(lista) {
@@ -141,8 +155,14 @@
     if (!mapa) return;
     if (ligar && !tiles) {
       tiles = L.layerGroup([
-        L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}", { maxNativeZoom: 16, maxZoom: 18, attribution: "Mapa-base: Esri" }),
-        L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}", { maxNativeZoom: 16, maxZoom: 18 })
+        L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}", {
+          maxNativeZoom: 16, maxZoom: 18,
+          attribution: 'Tiles © <a href="https://www.esri.com/en-us/legal/terms/web-site-service" target="_blank" rel="noopener noreferrer">Esri</a>, HERE, Garmin, <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap contributors</a>, and the GIS user community'
+        }),
+        L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}", {
+          maxNativeZoom: 16, maxZoom: 18,
+          attribution: 'Tiles © <a href="https://www.esri.com/en-us/legal/terms/web-site-service" target="_blank" rel="noopener noreferrer">Esri</a>, HERE, Garmin, <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap contributors</a>, and the GIS user community'
+        })
       ]).addTo(mapa);
       tiles.eachLayer(function (l) { l.bringToBack(); });
     } else if (!ligar && tiles) { mapa.removeLayer(tiles); tiles = null; }

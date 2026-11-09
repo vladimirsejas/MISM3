@@ -1,6 +1,6 @@
-"""Compara centroides atuais com pontos internos representativos dos setores.
+"""Compara centroides matemáticos anteriores com pontos representativos internos adotados na produção.
 
-Gera relatório de sensibilidade sem alterar os indicadores de produção.
+Mede o impacto espacial dos pontos representativos recalculados na geometria de referência atual.
 Uso: python pipeline/auditoria_centroides.py
 """
 from __future__ import annotations
@@ -9,7 +9,10 @@ import argparse
 import json
 import math
 import statistics
+import tempfile
 from pathlib import Path
+
+from privacidade_territorial import setor_suprimido
 
 RAIZ = Path(__file__).resolve().parents[1]
 DADOS = RAIZ / "web" / "dados"
@@ -178,7 +181,8 @@ def _equipamentos_por_cenario(equipamentos):
 
 def comparar(geojson, indicadores):
     equipamentos = _equipamentos_por_cenario(indicadores.get("equipamentos", []))
-    setores, deslocamentos, externos = [], [], []
+    setores, deslocamentos, deslocamentos_corrigidos, externos = [], [], [], []
+    setores_suprimidos = 0
     deltas = {c: {cat: [] for cat in CATEGORIAS} for c in CENARIOS}
 
     for feicao in sorted(geojson.get("features", []), key=lambda f: str(f.get("properties", {}).get("setor", ""))):
@@ -194,12 +198,17 @@ def comparar(geojson, indicadores):
         deslocamentos.append(deslocamento)
         if not atual_interno:
             externos.append(codigo)
+            deslocamentos_corrigidos.append(deslocamento)
+
+        suprimido = setor_suprimido(props)
+        if suprimido:
+            setores_suprimidos += 1
 
         distancias = {}
         for cenario, cats in equipamentos.items():
             distancias[cenario] = {}
             for categoria, pontos in cats.items():
-                if not pontos:
+                if suprimido or not pontos:
                     distancias[cenario][categoria] = {"atual_km": None, "alternativa_km": None, "delta_km": None}
                     continue
                 d_atual = min(_haversine_km(lat_atual, lon_atual, lat, lon) for lat, lon in pontos)
@@ -235,20 +244,25 @@ def comparar(geojson, indicadores):
 
     return {
         "meta": {
-            "metodo_atual": "pipeline/analise_territorial.py: centro()",
+            "metodo_atual": "centroide matemático anterior de pipeline/analise_territorial.py",
             "metodo_alternativo": METODO_ALTERNATIVO,
             "unidade_deslocamento": "metros",
             "unidade_distancia": "quilometros",
             "setores_auditados": len(setores),
+            "setores_suprimidos": setores_suprimidos,
             "centroides_atualmente_fora": len(externos),
             "codigos_centroides_fora": externos,
-            "regra": "Ponto interno alternativo usado apenas para análise de sensibilidade; não substitui o centroide de produção.",
+            "regra": "Ponto representativo interno adotado na produção; preserva os %d centroides que já estavam dentro dos polígonos e corrige somente os %d externos. O ponto corrigido não é denominado centroide matemático." % (len(setores) - len(externos), len(externos)),
             "equipamentos": "web/dados/indicadores_territoriais.json; mesmos pontos elegíveis por cenário e categoria.",
         },
         "resumo": {
             "deslocamento_ponto_mediana_m": round(statistics.median(deslocamentos), 3) if deslocamentos else None,
             "deslocamento_ponto_p90_m": round(_percentil(deslocamentos, 0.90), 3) if deslocamentos else None,
             "deslocamento_ponto_maximo_m": round(max(deslocamentos), 3) if deslocamentos else None,
+            "setores_corrigidos": len(deslocamentos_corrigidos),
+            "deslocamento_mediano_setores_corrigidos_m": round(statistics.median(deslocamentos_corrigidos), 3) if deslocamentos_corrigidos else 0.0,
+            "deslocamento_p90_setores_corrigidos_m": round(_percentil(deslocamentos_corrigidos, 0.90), 3) if deslocamentos_corrigidos else 0.0,
+            "deslocamento_maximo_setores_corrigidos_m": round(max(deslocamentos_corrigidos), 3) if deslocamentos_corrigidos else 0.0,
             "distancias": resumo_distancias,
         },
         "setores": setores,
@@ -264,10 +278,15 @@ def relatorio_markdown(resultado):
         "## Resultado geométrico", "",
         "- Setores auditados: %d" % meta["setores_auditados"],
         "- Centroides atuais fora dos polígonos: %d" % meta["centroides_atualmente_fora"],
+        "- Setores protegidos: %d (distâncias e deltas omitidos)" % meta["setores_suprimidos"],
         "- Códigos: %s" % (", ".join(meta["codigos_centroides_fora"]) or "nenhum"),
         "- Deslocamento mediano: %s m" % resumo["deslocamento_ponto_mediana_m"],
         "- Deslocamento P90: %s m" % resumo["deslocamento_ponto_p90_m"],
-        "- Deslocamento máximo: %s m" % resumo["deslocamento_ponto_maximo_m"], "",
+        "- Deslocamento máximo (todos os setores): %s m" % resumo["deslocamento_ponto_maximo_m"],
+        "- Deslocamento mediano/P90/máximo dos setores corrigidos: %s / %s / %s m" % (
+            resumo["deslocamento_mediano_setores_corrigidos_m"],
+            resumo["deslocamento_p90_setores_corrigidos_m"],
+            resumo["deslocamento_maximo_setores_corrigidos_m"]), "",
         "## Impacto nas distâncias", "",
         "| Cenário | Categoria | Setores | Mediana da variação absoluta (km) | P90 absoluto (km) | Máximo absoluto (km) | Setores com alteração > 10 m |",
         "|---|---|---:|---:|---:|---:|---:|",
@@ -286,8 +305,9 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--geojson", type=Path, default=DADOS / "setores.geojson")
     parser.add_argument("--indicadores", type=Path, default=DADOS / "indicadores_territoriais.json")
-    parser.add_argument("--saida-json", type=Path, default=RAIZ / "docs/territorial/RELATORIO_SENSIBILIDADE_CENTROIDES.json")
-    parser.add_argument("--saida-md", type=Path, default=RAIZ / "docs/territorial/RELATORIO_SENSIBILIDADE_CENTROIDES.md")
+    pasta_temporaria = Path(tempfile.gettempdir())
+    parser.add_argument("--saida-json", type=Path, default=pasta_temporaria / "mism3_auditoria_centroides.json")
+    parser.add_argument("--saida-md", type=Path, default=pasta_temporaria / "mism3_auditoria_centroides.md")
     args = parser.parse_args(argv)
     geo = json.loads(args.geojson.read_text(encoding="utf-8"))
     indicadores = json.loads(args.indicadores.read_text(encoding="utf-8"))

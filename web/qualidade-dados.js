@@ -8,6 +8,7 @@
   "use strict";
 
   var REFERENCIA_AREA_KM2 = 498.403;
+  var REFERENCIA_AREA_GEODESICA_KM2 = 498.402;
   var LATITUDE_REFERENCIA = -22.40;
   var KM_POR_GRAU_LAT = 110.574;
   var KM_POR_GRAU_LON = 111.320 * Math.cos(LATITUDE_REFERENCIA * Math.PI / 180);
@@ -61,7 +62,7 @@
     return Math.abs(soma) / 2;
   }
 
-  function areaAnelGeodesica(anel) {
+  function areaAnelEsferica(anel) {
     var soma = 0, i, a, b;
     for (i = 0; i < anel.length; i++) {
       a = anel[i]; b = anel[(i + 1) % anel.length];
@@ -72,21 +73,21 @@
   }
 
   function areasGeojson(geo) {
-    var local = 0, geodesica = 0, features = geo.features || [], i, polys, j, p, k;
+    var local = 0, esferica = 0, features = geo.features || [], i, polys, j, p, k;
     for (i = 0; i < features.length; i++) {
       polys = poligonos(features[i].geometry);
       for (j = 0; j < polys.length; j++) {
         p = polys[j];
         if (!p.length) continue;
         local += areaAnelLocal(p[0]);
-        geodesica += areaAnelGeodesica(p[0]);
+        esferica += areaAnelEsferica(p[0]);
         for (k = 1; k < p.length; k++) {
           local -= areaAnelLocal(p[k]);
-          geodesica -= areaAnelGeodesica(p[k]);
+          esferica -= areaAnelEsferica(p[k]);
         }
       }
     }
-    return { local: local, geodesica: geodesica };
+    return { local: local, esferica: esferica };
   }
 
   function validarGeometrias(geo) {
@@ -124,7 +125,7 @@
     var features = geo.features || [], equipamentos = indicadores.equipamentos || [];
     var categorias = { cras: [], ubs: [], escola: [] }, i, e, props, lat, lon;
     var semCoordenada = [], foraMalha = [], crasUbs = [], documentados = [], semProveniencia = [];
-    var escolasIndividuais = [], escolasCep = [], pequenos = [], areas, areaPublicada, diff;
+    var escolasIndividuais = [], escolasCep = [], pequenos = [], areas, areaPublicada, diff, conferencia;
     for (i = 0; i < equipamentos.length; i++) {
       e = equipamentos[i];
       if (categorias[e.categoria]) categorias[e.categoria].push(e);
@@ -151,19 +152,22 @@
       if (Number(props.pessoas || 0) < 5 || Number(props.domicilios || 0) < 3) pequenos.push(props.setor);
     }
     areas = areasGeojson(geo);
-    areaPublicada = Number((territorio.totais || {}).area_km2 || 0);
+    conferencia = (territorio.meta || {}).conferencia || {};
+    areaPublicada = Number(conferencia.area_somada_km2 !== undefined
+      ? conferencia.area_somada_km2 : ((territorio.totais || {}).area_km2 || 0));
     diff = areaPublicada - REFERENCIA_AREA_KM2;
     return {
       geometrias: validarGeometrias(geo),
       areas: {
         soma_setorial_km2: areaPublicada,
         referencia_municipal_km2: REFERENCIA_AREA_KM2,
+        referencia_municipal_geodesica_km2: REFERENCIA_AREA_GEODESICA_KM2,
         diferenca_km2: diff,
         diferenca_percentual: 100 * diff / REFERENCIA_AREA_KM2,
         recalculo_local_km2: areas.local,
-        recalculo_geodesico_km2: areas.geodesica,
+        recalculo_esferico_km2: areas.esferica,
         diferenca_recalculo_local_vs_referencia_km2: areas.local - REFERENCIA_AREA_KM2,
-        diferenca_recalculo_geodesico_vs_referencia_km2: areas.geodesica - REFERENCIA_AREA_KM2
+        diferenca_recalculo_esferico_vs_referencia_km2: areas.esferica - REFERENCIA_AREA_GEODESICA_KM2
       },
       equipamentos: {
         total: equipamentos.length,
@@ -232,15 +236,16 @@
       { titulo: "Códigos duplicados", valor: formatar(g.duplicados.length), detalhe: "Duplicidades identificadas na malha.", alerta: g.duplicados.length > 0 }
     ]);
     adicionarCartoes("qd-areas", [
-      { titulo: "Soma publicada", valor: formatar(a.soma_setorial_km2, 3) + " km²", detalhe: "Área agregada no arquivo territorial." },
-      { titulo: "Referência municipal", valor: formatar(a.referencia_municipal_km2, 3) + " km²", detalhe: "Valor de referência registrado na auditoria." },
-      { titulo: "Recálculo local", valor: formatar(a.recalculo_local_km2, 3) + " km²", detalhe: "Método plano local utilizado no pipeline." },
-      { titulo: "Recálculo geodésico", valor: formatar(a.recalculo_geodesico_km2, 3) + " km²", detalhe: "Fórmula esférica independente.", alerta: true }
+      { titulo: "Soma setorial GRS80", valor: formatar(a.soma_setorial_km2, 3) + " km²", detalhe: "Soma geodésica publicada pelo pipeline com pyproj.Geod no elipsoide GRS80." },
+      { titulo: "Atributo municipal IBGE", valor: formatar(a.referencia_municipal_km2, 3) + " km²", detalhe: "Campo AREA_KM2 da malha municipal de 2025." },
+      { titulo: "Limite municipal GRS80", valor: formatar(a.referencia_municipal_geodesica_km2, 3) + " km²", detalhe: "Área recalculada do polígono municipal com Geod GRS80." },
+      { titulo: "Recálculo local", valor: formatar(a.recalculo_local_km2, 3) + " km²", detalhe: "Aproximação plana local independente." },
+      { titulo: "Recálculo esférico", valor: formatar(a.recalculo_esferico_km2, 3) + " km²", detalhe: "Verificação esférica independente; não substitui o cálculo GRS80.", alerta: true }
     ]);
     adicionarCartoes("qd-equipamentos", [
       { titulo: "Equipamentos", valor: formatar(e.total), detalhe: "CRAS " + e.por_categoria.cras + ", UBS " + e.por_categoria.ubs + " e escolas " + e.por_categoria.escola + "." },
-      { titulo: "CRAS/UBS com método de coordenada", valor: e.cras_ubs.proveniencia_documentada + " de " + e.cras_ubs.total, detalhe: "Método, confiança e data de aplicação registrados." },
-      { titulo: "CRAS/UBS sem método de coordenada", valor: formatar(e.cras_ubs.proveniencia_ausente), detalhe: "O endereço tem fonte no catálogo; falta documentar a obtenção/validação da coordenada e o raio.", alerta: e.cras_ubs.proveniencia_ausente > 0 },
+      { titulo: "CRAS/UBS com coordenada individual documentada", valor: e.cras_ubs.proveniencia_documentada + " de " + e.cras_ubs.total, detalhe: "Método, confiança e data de aplicação registrados." },
+      { titulo: "Sem coordenada individual documentada", valor: formatar(e.cras_ubs.proveniencia_ausente), detalhe: "Seis posições usam centro do CEP cadastral e raio operacional: são aproximadas, não coordenadas individuais verificadas.", alerta: e.cras_ubs.proveniencia_ausente > 0 },
       { titulo: "Escolas por localização", valor: e.escolas.coordenada_individual + " individuais / " + e.escolas.referencia_cep + " por CEP", detalhe: "Referências por CEP são aproximadas." },
       { titulo: "Coordenadas fora da malha", valor: formatar(e.coordenadas_fora_da_malha), detalhe: "Pontos que não caem em nenhum polígono.", alerta: e.coordenadas_fora_da_malha > 0 },
       { titulo: "Sem coordenadas", valor: formatar(e.sem_coordenada), detalhe: "Registros sem latitude ou longitude.", alerta: e.sem_coordenada > 0 }
@@ -273,5 +278,5 @@
   }
 
   return { poligonos: poligonos, anelContem: anelContem, pontoNaMalha: pontoNaMalha, areaAnelLocal: areaAnelLocal,
-    areaAnelGeodesica: areaAnelGeodesica, areasGeojson: areasGeojson, validarGeometrias: validarGeometrias, resumir: resumir };
+    areaAnelEsferica: areaAnelEsferica, areasGeojson: areasGeojson, validarGeometrias: validarGeometrias, resumir: resumir };
 });

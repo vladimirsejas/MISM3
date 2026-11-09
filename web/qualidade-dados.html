@@ -31,12 +31,12 @@
   <section aria-labelledby="qd-titulo-areas">
     <h2 id="qd-titulo-areas">Consistência das áreas</h2>
     <div id="qd-areas" class="qd-grade"></div>
-    <p class="qd-nota">Os métodos de cálculo produzem resultados diferentes. O painel registra a divergência; não escolhe automaticamente um método nem ajusta os valores para coincidir com a referência municipal.</p>
+    <p class="qd-nota">A soma dos setores usa pyproj.Geod no elipsoide GRS80. O limite municipal de 2025 tem área geodésica de 498,402 km²; o atributo AREA_KM2 do IBGE informa 498,403 km². O recálculo esférico exibido é apenas uma verificação independente, não substitui o método GRS80. A diferença de contorno entre as edições municipais de 2022 e 2025 não é um buraco interno da malha.</p>
   </section>
   <section aria-labelledby="qd-titulo-equipamentos">
     <h2 id="qd-titulo-equipamentos">Equipamentos e procedência</h2>
     <div id="qd-equipamentos" class="qd-grade"></div>
-    <p class="qd-nota">Nos seis registros sem método de coordenada, o catálogo de serviços contém endereço, fonte institucional e data de verificação. A pendência é documentar como a latitude e a longitude foram obtidas ou validadas e qual raio de incerteza se aplica.</p>
+    <p class="qd-nota">Vinte e dois dos 28 CRAS/UBS têm coordenada individual documentada. Nos outros seis, a posição usada na análise é o centro do CEP cadastral, com raio operacional do índice: é uma aproximação, não uma coordenada individual verificada. O catálogo mantém endereço, fonte institucional e data de verificação.</p>
   </section>
   <section aria-labelledby="qd-titulo-privacidade">
     <h2 id="qd-titulo-privacidade">Privacidade e cautela territorial</h2>
@@ -50,7 +50,7 @@
   <section class="qd-limites" aria-labelledby="qd-titulo-limites">
     <h2 id="qd-titulo-limites">O que esta auditoria não comprova</h2>
     <ul>
-      <li>Integridade estrutural não equivale a validação topológica completa: auto-interseções, sobreposições e lacunas ainda exigem análise específica.</li>
+      <li>Este painel no navegador verifica a estrutura dos arquivos. A validação topológica completa — validade geométrica, sobreposições, buracos internos e comparação das edições IBGE — é executada no pipeline Python.</li>
       <li>Uma coordenada dentro da malha não comprova que o equipamento esteja fisicamente naquele local.</li>
       <li>Distância em linha reta não representa percurso, tempo de viagem nem acesso efetivo.</li>
       <li>Ausência de procedência registrada não significa que o serviço não exista.</li>

@@ -10,8 +10,8 @@
   --serif:Georgia,"Times New Roman",serif;
 }
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{margin:0;background:radial-gradient(1100px 480px at 88% -6%,#fde6dc 0%,transparent 62%),var(--bg);color:var(--fg);font:1.0625rem/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+html{-webkit-text-size-adjust:100%;overflow-x:clip}
+body{margin:0;overflow-x:clip;background:radial-gradient(1100px 480px at 88% -6%,#fde6dc 0%,transparent 62%),var(--bg);color:var(--fg);font:1.0625rem/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 a{color:var(--pri-esc)}
 h1,h2,h3,h4{line-height:1.25;margin:0 0 .4rem}
 p{margin:.35rem 0}
@@ -76,7 +76,7 @@ h1[tabindex="-1"]:focus{outline:none}
 .btn-heroi-2{border:1.5px solid var(--pri-esc);background:rgba(255,255,255,.75);color:var(--pri-esc)}
 .btn-heroi-2:hover{background:#fff}
 .heroi-arte{order:-1;line-height:0}
-.heroi-capa{display:block;width:100%;height:auto;margin:0 auto;border-radius:24px;border:1px solid var(--bor);box-shadow:0 10px 30px rgba(120,40,60,.15)}
+.heroi-capa-placeholder{min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;margin:0 auto 1.2rem;padding:2.5rem 1.5rem;border-radius:24px;border:1px solid var(--bor);background:radial-gradient(circle at 20% 25%,rgba(153,132,190,.22),transparent 36%),linear-gradient(135deg,#f5f1f8,#eeeaf2 55%,#f8f4f0);color:var(--pri-esc);text-align:center;box-shadow:0 10px 30px rgba(65,45,80,.08)}.heroi-capa-placeholder .heroi-sigla{display:grid;place-items:center;width:76px;height:76px;border:1px solid currentColor;border-radius:50%;font-family:Georgia,serif;font-size:1.35rem;letter-spacing:.08em}.heroi-capa-placeholder strong{font-family:Georgia,serif;font-size:clamp(1.35rem,4vw,2.1rem);font-weight:600}.heroi-capa-placeholder small{font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mut)}
 .titulo-bloco{font-family:var(--serif);font-weight:500;font-size:1.55rem;margin:1.5rem 0 .8rem;color:var(--fg)}
 .titulo-bloco:focus{outline:none}
 .portas{display:grid;grid-template-columns:minmax(0,1fr);gap:.7rem;list-style:none;margin:0 0 1.8rem;padding:0}
@@ -252,7 +252,7 @@ a.tel-grande{display:inline-block;font-weight:800;font-size:1.2rem;color:var(--a
 /* Rodapé: brasão estilizado e aviso de projeto acadêmico (não oficial) */
 .rodape-sobre{display:flex;gap:1rem;align-items:center;margin-bottom:1rem}
 .rodape-sobre p{margin:.3rem 0}
-.brasao{flex:none;width:128px;height:auto}
+.identidade-neutra{flex:none;display:grid;place-items:center;width:64px;height:64px;border:1px solid var(--bor);border-radius:50%;background:var(--fundo-card);color:var(--pri-esc);font-family:Georgia,serif;font-size:1.25rem;letter-spacing:.08em}
 @media(max-width:480px){.rodape-sobre{flex-direction:column;align-items:flex-start}}
 
 /* ---------- horários de ônibus ---------- */
@@ -342,7 +342,7 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:#8a1c1c!im
 .mapa-campo .linha{display:flex;flex-wrap:wrap;gap:.5rem}
 .mapa-campo .linha input{flex:1 1 auto;min-width:9rem;width:auto}
 .mapa-resumo{margin:.8rem 0 .5rem;font-weight:600}
-.mapa-caixa{height:clamp(420px,78vh,820px);min-height:420px;border:1px solid var(--bor);border-radius:var(--raio);background:#fbf1ec;overflow:hidden;z-index:0}
+.mapa-caixa{width:100%;max-width:100%;min-width:0;height:clamp(420px,78vh,820px);min-height:420px;border:1px solid var(--bor);border-radius:var(--raio);background:#fbf1ec;overflow:clip;z-index:0}
 .mapa-legenda{font-size:.9rem;color:var(--mut)}
 .mapa-pino{background:none;border:0}
 .mapa-pino svg{display:block;filter:drop-shadow(0 1px 2px rgba(60,20,30,.45))}
@@ -477,8 +477,6 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:#8a1c1c!im
 .orientacao-contato{margin:.2rem 0;font-size:.95rem}
 .orientacao-lista .meta{display:block}
 .plano-detalhe{margin:1rem 0}.plano-detalhe summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:600}
-.faixa-mulheres{margin:0 0 1.4rem;border-radius:24px;overflow:hidden;border:1px solid var(--bor);background:#fbeee6;line-height:0}
-.faixa-mulheres img{display:block;width:100%;height:auto}
 
 
 /* Atalhos verticais da área Trabalho: navegação curta, visível e responsiva. */

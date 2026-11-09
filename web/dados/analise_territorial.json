@@ -1,8 +1,8 @@
 {
  "meta": {
-  "fonte": "IBGE, Censo Demográfico 2022 (setores) e catálogo verificado do Observatório da Mulher",
-  "gerado_em": "2026-11-05",
-  "aviso": "Distâncias em linha reta entre o centro de cada setor do IBGE e o serviço mais próximo, com a localização do serviço aproximada pelo centro do CEP. Não consideram ruas, ônibus nem horários. Mostram onde a rede cadastrada está longe da população; não provam falta de serviço. O agrupamento de bairros é exploratório.",
+  "fonte": "IBGE, Censo Demográfico 2022 (setores), catálogo verificado e base integrada de escolas municipais",
+  "gerado_em": "2026-11-09",
+  "aviso": "Distâncias em linha reta entre o centro de cada setor do IBGE e a localização cadastrada do serviço. As escolas usam a base consolidada, que distingue coordenadas individuais de referências aproximadas por CEP; CRAS e UBS usam o catálogo e, quando necessário, o índice de CEP. Coordenadas sem proveniência registrada não são tratadas como pontos exatos. Não consideram ruas, ônibus nem horários; não provam que exista ou não exista falta de serviço. O agrupamento de bairros é exploratório.",
   "cobertura_dos_servicos": {
    "cras": {
     "com_coordenada": 6,
@@ -14,7 +14,24 @@
    },
    "escola": {
     "com_coordenada": 68,
-    "cadastrados": 68
+    "cadastrados": 68,
+    "localizacao_por_metodo": {
+     "centroide_cep": 35,
+     "coordenada_individual": 33
+    },
+    "precisao": {
+     "aproximada": 35,
+     "individual": 33
+    },
+    "com_raio_informado": 35,
+    "fonte_localizacao": "web/dados/escolas_municipais.json: localizacao_mapa",
+    "sem_localizacao_mapa": 0,
+    "raio_m": {
+     "quantidade": 35,
+     "minimo": 150.0,
+     "mediana": 290.0,
+     "maximo": 1500.0
+    }
    }
   },
   "pessoas_total": null,
@@ -25,281 +42,281 @@
    "bairro": "Alto do Santana",
    "setores": 16,
    "pessoas": 8257,
+   "dados_suprimidos": false,
    "servicos_no_bairro": 6,
-   "distancia_media_cras_km": 1.2,
-   "distancia_media_ubs_km": 0.78,
-   "distancia_media_escola_km": 0.26,
-   "dados_suprimidos": false
+   "distancia_media_cras_km": 1.06,
+   "distancia_media_ubs_km": 0.77,
+   "distancia_media_escola_km": 0.26
   },
   {
    "bairro": "Arco-Íris",
    "setores": 15,
    "pessoas": null,
+   "dados_suprimidos": true,
    "servicos_no_bairro": 4,
    "distancia_media_cras_km": null,
    "distancia_media_ubs_km": null,
-   "distancia_media_escola_km": null,
-   "dados_suprimidos": true
+   "distancia_media_escola_km": null
   },
   {
    "bairro": "Bela Vista",
    "setores": 13,
    "pessoas": null,
+   "dados_suprimidos": true,
    "servicos_no_bairro": 1,
    "distancia_media_cras_km": null,
    "distancia_media_ubs_km": null,
-   "distancia_media_escola_km": null,
-   "dados_suprimidos": true
+   "distancia_media_escola_km": null
   },
   {
    "bairro": "Centenário",
    "setores": 10,
    "pessoas": null,
+   "dados_suprimidos": true,
    "servicos_no_bairro": 4,
    "distancia_media_cras_km": null,
    "distancia_media_ubs_km": null,
-   "distancia_media_escola_km": null,
-   "dados_suprimidos": true
+   "distancia_media_escola_km": null
   },
   {
    "bairro": "Centro",
    "setores": 23,
    "pessoas": 7894,
+   "dados_suprimidos": false,
    "servicos_no_bairro": 5,
-   "distancia_media_cras_km": 1.76,
-   "distancia_media_ubs_km": 1.21,
-   "distancia_media_escola_km": 0.37,
-   "dados_suprimidos": false
+   "distancia_media_cras_km": 1.87,
+   "distancia_media_ubs_km": 1.3,
+   "distancia_media_escola_km": 0.37
   },
   {
    "bairro": "Cidade Jardim",
    "setores": 17,
    "pessoas": null,
+   "dados_suprimidos": true,
    "servicos_no_bairro": 1,
    "distancia_media_cras_km": null,
    "distancia_media_ubs_km": null,
-   "distancia_media_escola_km": null,
-   "dados_suprimidos": true
+   "distancia_media_escola_km": null
   },
   {
    "bairro": "Cidade Nova",
    "setores": 5,
    "pessoas": 2431,
+   "dados_suprimidos": false,
    "servicos_no_bairro": 1,
-   "distancia_media_cras_km": 2.62,
+   "distancia_media_cras_km": 2.75,
    "distancia_media_ubs_km": 0.53,
-   "distancia_media_escola_km": 0.27,
-   "dados_suprimidos": false
+   "distancia_media_escola_km": 0.27
   },
   {
    "bairro": "Consolação",
    "setores": 20,
    "pessoas": null,
+   "dados_suprimidos": true,
    "servicos_no_bairro": 3,
    "distancia_media_cras_km": null,
    "distancia_media_ubs_km": null,
-   "distancia_media_escola_km": null,
-   "dados_suprimidos": true
+   "distancia_media_escola_km": null
   },
   {
    "bairro": "Distrito Industrial",
    "setores": 7,
    "pessoas": null,
+   "dados_suprimidos": true,
    "servicos_no_bairro": 0,
    "distancia_media_cras_km": null,
    "distancia_media_ubs_km": null,
-   "distancia_media_escola_km": null,
-   "dados_suprimidos": true
+   "distancia_media_escola_km": null
   },
   {
    "bairro": "Grande Cervezão",
    "setores": 27,
    "pessoas": null,
+   "dados_suprimidos": true,
    "servicos_no_bairro": 6,
    "distancia_media_cras_km": null,
    "distancia_media_ubs_km": null,
-   "distancia_media_escola_km": null,
-   "dados_suprimidos": true
+   "distancia_media_escola_km": null
   },
   {
    "bairro": "Inocoop",
    "setores": 15,
    "pessoas": null,
+   "dados_suprimidos": true,
    "servicos_no_bairro": 1,
    "distancia_media_cras_km": null,
    "distancia_media_ubs_km": null,
-   "distancia_media_escola_km": null,
-   "dados_suprimidos": true
+   "distancia_media_escola_km": null
   },
   {
    "bairro": "Jardim América",
    "setores": 8,
    "pessoas": 5287,
+   "dados_suprimidos": false,
    "servicos_no_bairro": 4,
-   "distancia_media_cras_km": 1.42,
+   "distancia_media_cras_km": 1.34,
    "distancia_media_ubs_km": 0.64,
-   "distancia_media_escola_km": 0.25,
-   "dados_suprimidos": false
+   "distancia_media_escola_km": 0.25
   },
   {
    "bairro": "Jardim Floridiana",
    "setores": 7,
    "pessoas": 4395,
+   "dados_suprimidos": false,
    "servicos_no_bairro": 1,
-   "distancia_media_cras_km": 0.88,
+   "distancia_media_cras_km": 0.78,
    "distancia_media_ubs_km": 0.9,
-   "distancia_media_escola_km": 0.53,
-   "dados_suprimidos": false
+   "distancia_media_escola_km": 0.53
   },
   {
    "bairro": "Jardim Guanabara",
    "setores": 8,
    "pessoas": 5172,
+   "dados_suprimidos": false,
    "servicos_no_bairro": 2,
-   "distancia_media_cras_km": 0.79,
-   "distancia_media_ubs_km": 0.4,
-   "distancia_media_escola_km": 0.41,
-   "dados_suprimidos": false
+   "distancia_media_cras_km": 0.8,
+   "distancia_media_ubs_km": 0.39,
+   "distancia_media_escola_km": 0.41
   },
   {
    "bairro": "Jardim Nova Rio Claro",
    "setores": 2,
    "pessoas": 1477,
+   "dados_suprimidos": false,
    "servicos_no_bairro": 0,
    "distancia_media_cras_km": 1.59,
-   "distancia_media_ubs_km": 1.33,
-   "distancia_media_escola_km": 1.33,
-   "dados_suprimidos": false
+   "distancia_media_ubs_km": 1.34,
+   "distancia_media_escola_km": 1.33
   },
   {
    "bairro": "Jardim Novo Wenzel",
    "setores": 7,
    "pessoas": 5282,
+   "dados_suprimidos": false,
    "servicos_no_bairro": 3,
    "distancia_media_cras_km": 0.57,
    "distancia_media_ubs_km": 0.33,
-   "distancia_media_escola_km": 0.28,
-   "dados_suprimidos": false
+   "distancia_media_escola_km": 0.28
   },
   {
    "bairro": "Jardim Novo/Terra Nova",
    "setores": 19,
    "pessoas": null,
+   "dados_suprimidos": true,
    "servicos_no_bairro": 6,
    "distancia_media_cras_km": null,
    "distancia_media_ubs_km": null,
-   "distancia_media_escola_km": null,
-   "dados_suprimidos": true
+   "distancia_media_escola_km": null
   },
   {
    "bairro": "Jardim São Paulo",
    "setores": 14,
    "pessoas": 7328,
+   "dados_suprimidos": false,
    "servicos_no_bairro": 0,
-   "distancia_media_cras_km": 1.1,
+   "distancia_media_cras_km": 1.21,
    "distancia_media_ubs_km": 1.04,
-   "distancia_media_escola_km": 0.7,
-   "dados_suprimidos": false
+   "distancia_media_escola_km": 0.7
   },
   {
    "bairro": "Jardim das Palmeiras",
    "setores": 14,
    "pessoas": 7557,
+   "dados_suprimidos": false,
    "servicos_no_bairro": 7,
    "distancia_media_cras_km": 0.49,
    "distancia_media_ubs_km": 0.34,
-   "distancia_media_escola_km": 0.31,
-   "dados_suprimidos": false
+   "distancia_media_escola_km": 0.31
   },
   {
    "bairro": "Mãe Preta",
    "setores": 19,
    "pessoas": null,
+   "dados_suprimidos": true,
    "servicos_no_bairro": 4,
    "distancia_media_cras_km": null,
    "distancia_media_ubs_km": null,
-   "distancia_media_escola_km": null,
-   "dados_suprimidos": true
+   "distancia_media_escola_km": null
   },
   {
    "bairro": "Recanto Paraíso",
    "setores": 26,
    "pessoas": 14634,
-   "servicos_no_bairro": 7,
-   "distancia_media_cras_km": 1.63,
-   "distancia_media_ubs_km": 0.36,
-   "distancia_media_escola_km": 0.34,
-   "dados_suprimidos": false
+   "dados_suprimidos": false,
+   "servicos_no_bairro": 6,
+   "distancia_media_cras_km": 1.52,
+   "distancia_media_ubs_km": 0.4,
+   "distancia_media_escola_km": 0.34
   },
   {
    "bairro": "Residencial Florença",
    "setores": 4,
    "pessoas": 1312,
+   "dados_suprimidos": false,
    "servicos_no_bairro": 0,
    "distancia_media_cras_km": 2.08,
    "distancia_media_ubs_km": 1.99,
-   "distancia_media_escola_km": 1.56,
-   "dados_suprimidos": false
+   "distancia_media_escola_km": 1.56
   },
   {
    "bairro": "Santa Maria",
    "setores": 16,
    "pessoas": 10628,
+   "dados_suprimidos": false,
    "servicos_no_bairro": 10,
-   "distancia_media_cras_km": 1.96,
+   "distancia_media_cras_km": 1.92,
    "distancia_media_ubs_km": 0.39,
-   "distancia_media_escola_km": 0.23,
-   "dados_suprimidos": false
+   "distancia_media_escola_km": 0.23
   },
   {
    "bairro": "Santana",
    "setores": 15,
    "pessoas": null,
+   "dados_suprimidos": true,
    "servicos_no_bairro": 4,
    "distancia_media_cras_km": null,
    "distancia_media_ubs_km": null,
-   "distancia_media_escola_km": null,
-   "dados_suprimidos": true
+   "distancia_media_escola_km": null
   },
   {
    "bairro": "Sem bairro identificado",
    "setores": 43,
-   "pessoas": 12846,
+   "pessoas": null,
+   "dados_suprimidos": true,
    "servicos_no_bairro": 9,
-   "distancia_media_cras_km": 5.28,
-   "distancia_media_ubs_km": 1.66,
-   "distancia_media_escola_km": 1.48,
-   "dados_suprimidos": false
+   "distancia_media_cras_km": null,
+   "distancia_media_ubs_km": null,
+   "distancia_media_escola_km": null
   },
   {
    "bairro": "Vila Nova",
    "setores": 13,
    "pessoas": 6484,
+   "dados_suprimidos": false,
    "servicos_no_bairro": 2,
-   "distancia_media_cras_km": 1.91,
-   "distancia_media_ubs_km": 0.86,
-   "distancia_media_escola_km": 0.37,
-   "dados_suprimidos": false
+   "distancia_media_cras_km": 1.85,
+   "distancia_media_ubs_km": 0.91,
+   "distancia_media_escola_km": 0.37
   },
   {
    "bairro": "Vila Paulista",
    "setores": 11,
    "pessoas": null,
+   "dados_suprimidos": true,
    "servicos_no_bairro": 3,
    "distancia_media_cras_km": null,
    "distancia_media_ubs_km": null,
-   "distancia_media_escola_km": null,
-   "dados_suprimidos": true
+   "distancia_media_escola_km": null
   },
   {
    "bairro": "Wenzel",
    "setores": 14,
    "pessoas": 6589,
-   "servicos_no_bairro": 2,
-   "distancia_media_cras_km": 0.77,
-   "distancia_media_ubs_km": 0.83,
-   "distancia_media_escola_km": 0.41,
-   "dados_suprimidos": false
+   "dados_suprimidos": false,
+   "servicos_no_bairro": 3,
+   "distancia_media_cras_km": 0.64,
+   "distancia_media_ubs_km": 0.64,
+   "distancia_media_escola_km": 0.41
   }
  ],
  "grupos": null

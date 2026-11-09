@@ -23,6 +23,18 @@ def ubs(id_, lat=None, lon=None, cep=None):
     return s
 
 
+def proveniencia(*servicos):
+    return {
+        s["id"]: {
+            "lat": str(s["lat"]),
+            "lon": str(s["lon"]),
+            "metodo": "teste_controlado",
+            "confianca": "alta",
+        }
+        for s in servicos if s.get("lat") is not None and s.get("lon") is not None
+    }
+
+
 def test_quantil_ponderado():
     assert ex.quantil_ponderado([(1, 1), (2, 1), (3, 2)], 0.5) == 2
     assert ex.quantil_ponderado([], 0.5) is None
@@ -30,7 +42,8 @@ def test_quantil_ponderado():
 
 def test_percentual_acima_do_limiar_e_sem_bairro():
     # UBS no centro de Alfa: Alfa fica a ~0 km, Beta (a ~3 km a leste) fica a mais de 2 km
-    r = ex.calcular(geo(), [ubs("man-ubs-a", -22.395, -47.595)], {}, usar_cep=False)["ubs"]
+    servico = ubs("man-ubs-a", -22.395, -47.595)
+    r = ex.calcular(geo(), [servico], {}, usar_cep=False, localizacao_registro=proveniencia(servico))["ubs"]
     ac = r["setores_validos"]["acima_de"]
     assert ac["2 km"]["setores"] == 1 and ac["2 km"]["percentual"] == 50.0
     assert r["setores_sem_bairro"]["acima_de"]["2 km"]["percentual"] == 100.0
@@ -40,8 +53,9 @@ def test_percentual_acima_do_limiar_e_sem_bairro():
 def test_cobertura_incompleta_sem_cep_e_completa_com_cep():
     servicos = [ubs("man-ubs-a", -22.395, -47.595), ubs("man-ubs-b", cep="13500000")]
     indice = {"13500000": [-22.395, -47.565]}
-    sem = ex.calcular(geo(), servicos, indice, usar_cep=False)["ubs"]
-    com = ex.calcular(geo(), servicos, indice, usar_cep=True)["ubs"]
+    registro = proveniencia(servicos[0])
+    sem = ex.calcular(geo(), servicos, indice, usar_cep=False, localizacao_registro=registro)["ubs"]
+    com = ex.calcular(geo(), servicos, indice, usar_cep=True, localizacao_registro=registro)["ubs"]
     assert sem["cobertura"] == {"com_coordenada": 1, "cadastrados": 2, "completo": False}
     assert com["cobertura"]["completo"] is True
     assert com["setores_validos"]["acima_de"]["2 km"]["setores"] == 0     # a segunda UBS aproxima o setor Beta
@@ -53,6 +67,40 @@ def test_categoria_sem_nenhuma_coordenada():
 
 
 def test_gerar_traz_dois_cenarios():
-    out = ex.gerar(geo(), [ubs("man-ubs-a", -22.395, -47.595)], {})
+    servico = ubs("man-ubs-a", -22.395, -47.595)
+    out = ex.gerar(geo(), [servico], {}, localizacao_registro=proveniencia(servico))
     assert set(out["cenarios"]) == {"coordenadas_do_catalogo", "com_centro_do_cep"}
     assert out["meta"]["pessoas_total"] is None and out["meta"]["setores_suprimidos"] == 0
+
+
+
+def test_coordenada_sem_proveniencia_so_entra_no_cenario_de_cep():
+    servico = ubs("man-ubs-a", -22.395, -47.595, cep="13501000")
+    indice = {"13501000": [-22.395, -47.595, 350, "354390705000001P", 12]}
+    out = ex.gerar(geo(), [servico], indice, localizacao_registro={})
+    assert out["cenarios"]["coordenadas_do_catalogo"]["ubs"]["cobertura"] == {
+        "com_coordenada": 0, "cadastrados": 1, "completo": False
+    }
+    assert out["cenarios"]["com_centro_do_cep"]["ubs"]["cobertura"] == {
+        "com_coordenada": 1, "cadastrados": 1, "completo": True
+    }
+
+
+def test_escolas_usa_base_consolidada_e_nao_catalogo():
+    catalogo = [{
+        "id": "man-escola-catalogo", "tipo": "creche",
+        "subtipo": "escola_municipal", "lat": -22.395, "lon": -47.595,
+    }]
+    escolas = [
+        {"id": "escola-individual", "localizacao_mapa": {
+            "latitude": -22.395, "longitude": -47.595, "metodo": "coordenada_individual"
+        }},
+        {"id": "escola-cep", "localizacao_mapa": {
+            "latitude": -22.395, "longitude": -47.565, "metodo": "centroide_cep", "raio_m": 350
+        }},
+    ]
+    out = ex.gerar(geo(), catalogo, {}, localizacao_registro={}, escolas=escolas)
+    sem_cep = out["cenarios"]["coordenadas_do_catalogo"]["escola"]["cobertura"]
+    com_cep = out["cenarios"]["com_centro_do_cep"]["escola"]["cobertura"]
+    assert sem_cep == {"com_coordenada": 1, "cadastrados": 2, "completo": False}
+    assert com_cep == {"com_coordenada": 2, "cadastrados": 2, "completo": True}

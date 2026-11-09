@@ -259,6 +259,7 @@
     return '<section class="ia-caixa duvida" id="duvida" aria-labelledby="titulo-duvida"><h2 id="titulo-duvida">Tem uma dúvida? Escreva aqui</h2>' +
       '<p class="meta">Escreva do seu jeito: procuramos o serviço certo, começando por esta área (' + esc(area.nome) + '). O que você escreve fica só neste aparelho.</p>' +
       '<form id="form-duvida" autocomplete="off"><label for="duvida-texto" class="so-leitor">Sua dúvida sobre ' + esc(area.nome) + '</label>' +
+      '<p class="privacidade">A busca acontece neste aparelho: sua mensagem não é enviada nem guardada. O campo é apagado quando você muda de área ou volta ao início.</p>' +
       '<textarea id="duvida-texto" rows="2" maxlength="200" autocomplete="off" spellcheck="false" placeholder="Ex.: ' + esc(area.exemploDuvida || "como faço para pedir ajuda?") + '"></textarea>' +
       '<div class="acoes"><button type="submit" class="btn">Procurar</button><button type="button" class="btn secundario" id="duvida-limpar" hidden>Limpar</button></div></form>' +
       '<div id="duvida-saida" aria-live="polite"></div></section>';
@@ -491,6 +492,7 @@
     areaAtual = null;
     if (window.JornadaUI) JornadaUI.limpar();
     limparIA();
+    limparDuvida();
     esconderVistas();
     $("inicio-tela").hidden = false; $("area").hidden = true; $("fontes").hidden = true;
     $("navegacao").hidden = true; $("secao-atual").hidden = true;
@@ -501,6 +503,7 @@
   function mostrarArea(area) {
     areaAtual = area;
     limparIA();
+    limparDuvida();
     esconderVistas();
     $("inicio-tela").hidden = true; $("area").hidden = false; $("fontes").hidden = false;
     $("navegacao").hidden = false; $("secao-atual").hidden = false;
@@ -541,6 +544,7 @@
     areaAtual = null;
     if (window.JornadaUI) JornadaUI.limpar();
     limparIA();
+    limparDuvida();
     $("inicio-tela").hidden = true; $("area").hidden = true; $("fontes").hidden = true;
     esconderVistas(); $(v.el).hidden = false;
     $("navegacao").hidden = false; $("secao-atual").hidden = false;
@@ -646,7 +650,10 @@
     return Promise.all([opcional("dados/catalogo_manual.json"), opcional("dados/servicos.json"), opcional("dados/horarios_onibus.json"), opcional("dados/setor_bairro.json")]).then(function (r) {
       dados.setorBairro = r[3] && r[3].bairros ? r[3].bairros : null;
       dados.horarios = r[2];
-      var manual = (r[0] && r[0].servicos) || [], pipeline = (r[1] && r[1].servicos) || [];
+      /* O arquivo marcador vazio evita 404 enquanto a regeneração local não foi autorizada/concluída.
+         Ele não é contado como fonte do pipeline nem altera a origem exibida à usuária. */
+      var pipelineDisponivel = !!(r[1] && (!r[1].meta || r[1].meta.status !== "pendente_regeneracao_local"));
+      var manual = (r[0] && r[0].servicos) || [], pipeline = pipelineDisponivel ? ((r[1] && r[1].servicos) || []) : [];
       var idsManuais = Object.create(null), codigosManuais = Object.create(null);
       manual.forEach(function (s) { idsManuais[s.id] = true; if (s.cnes) codigosManuais[String(s.cnes)] = true; });
       var acrescimos = pipeline.filter(function (s) {
@@ -661,9 +668,9 @@
         for (var i = 0; i < dados.servicos.length; i++) if (dados.servicos[i].id === id) return dados.servicos[i];
         return null;
       });
-      dados.falhou = !r[0] && !r[1];
-      dados.origem = r[1] ? "Catálogo verificado e base do pipeline" : "Catálogo verificado manualmente";
-      var datas = [r[0], r[1]].map(function (x) { return (x && x.meta && x.meta.gerado_em) || ""; }).sort();
+      dados.falhou = !r[0] && !pipelineDisponivel;
+      dados.origem = pipelineDisponivel ? "Catálogo verificado e base do pipeline" : "Catálogo verificado manualmente";
+      var datas = [r[0], pipelineDisponivel ? r[1] : null].map(function (x) { return (x && x.meta && x.meta.gerado_em) || ""; }).sort();
       dados.geradoEm = datas[datas.length - 1];
     }).catch(function () { dados.falhou = true; }).then(function () {
       return carregar("dados/cep_indice.json").then(function (idx) {

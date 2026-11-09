@@ -51,7 +51,9 @@ Python (instalar: `python -m pip install -r requirements.txt`; fonte única das 
 | pandas | `pipeline/cnes.py`, `common.py`, `indice_cep.py`, `oferta_educacao_infantil.py`, `servicos.py` e testes | Leitura e tratamento de CSV grandes (CNES, CNEFE, Censo Escolar) |
 | numpy | `analise_territorial.py`, `common.py`, `indice_cep.py`, `indice_orientacao.py`, `treinar_necessidades.py`, `treinar_perigo.py`, `treinar_escopo.py` | Arrays, cálculo numérico, distâncias |
 | scikit-learn | `treinar_necessidades.py`, `treinar_perigo.py`, `treinar_escopo.py` (TfidfVectorizer, LogisticRegression, OneVsRestClassifier, StratifiedKFold); `indice_orientacao.py` (TfidfVectorizer, TruncatedSVD); `analise_territorial.py` (KMeans) | Treino dos modelos, TF-IDF, redução de dimensão (LSA) e agrupamento. Traz o scipy como dependência |
-| pyshp (módulo `shapefile`) | `pipeline/setores.py` | Ler o shapefile de setores censitários do IBGE |
+| pyshp (módulo `shapefile`) | `pipeline/setores.py`, `pipeline/limite_municipal.py` | Ler shapefiles do IBGE |
+| pyproj | `pipeline/territorio.py`, `pipeline/qualidade_geografica.py`, `pipeline/limite_municipal.py` | Áreas geodésicas no elipsoide GRS80 e transformação de coordenadas |
+| shapely | `pipeline/qualidade_geografica.py`, `pipeline/limite_municipal.py` | Validade geométrica, interseções, união e diferença de polígonos |
 | openpyxl | `pipeline/inspecionar_arquivo.py` | Inspecionar a estrutura de planilhas .xlsx |
 | pytest | `pipeline/tests/` | Testes do pipeline |
 
@@ -66,7 +68,7 @@ JavaScript:
 
 Não há pacotes npm, `package.json`, framework, bundler nem CDN. Todo o JavaScript do site é código do projeto, exceto o Leaflet.
 
-Serviços externos: o site consulta dois serviços de tiles de mapa: `tile.openstreetmap.org` (OpenStreetMap), em `web/app.js`, só se a usuária marcar "Mostrar ruas"; e `server.arcgisonline.com` (Esri), em `web/mapa.js`, só se a usuária marcar "Mostrar ruas e nomes" no mapa de serviços (a caixa vem desmarcada). Ao abrir o site, nenhuma imagem de mapa é pedida a outro domínio. Os termos desses serviços não foram verificados (ver `AVISOS-DE-TERCEIROS.md`). Links para páginas oficiais, WhatsApp e Google Maps abrem por clique. Em tempo de desenvolvimento, `pipeline/baixar.py` baixa dados do IBGE, INEP e DATASUS, e `pipeline/testar_api.py` faz uma chamada mínima à API da Anthropic só para verificar a chave (variável `ANTHROPIC_API_KEY`; o site não usa essa API).
+Serviços externos: o site consulta dois serviços de tiles de mapa, ambos opcionais e desativados até ação da usuária: `tile.openstreetmap.org` (OpenStreetMap), em `web/app.js`, quando ela marca "Mostrar ruas"; e `server.arcgisonline.com` (Esri), em `web/mapa.js`, quando marca "Mostrar ruas e nomes" no mapa de serviços. Ambas vêm desmarcadas. Ao abrir o site, nenhuma imagem de mapa é pedida a outro domínio. As políticas de uso e atribuições foram revisadas e estão registradas em `AVISOS-DE-TERCEIROS.md`: OSM exige atribuição, Referer e respeito ao cache; a Esri exige atribuição e condiciona o acesso gratuito ao uso não comercial, cuja qualificação para eventual uso futuro ainda não foi formalmente confirmada. Os tiles não são redistribuídos pelo repositório. Links para páginas oficiais, WhatsApp e Google Maps abrem por clique. Em tempo de desenvolvimento, `pipeline/baixar.py` baixa dados do IBGE, INEP e DATASUS, e `pipeline/testar_api.py` faz uma chamada mínima à API da Anthropic só para verificar a chave (variável `ANTHROPIC_API_KEY`; o site não usa essa API).
 
 Integração contínua: GitHub Actions (`actions/checkout@v4`, `actions/setup-python@v5`, `actions/setup-node@v4`), Python 3.12, Node 20.
 
@@ -134,12 +136,13 @@ Não existe: modelo de linguagem, embeddings neurais, previsão de risco, elegib
 | `servicos.py` | `catalogo/servicos_manuais.csv`, CNES, INEP | `web/dados/catalogo_manual.json` e `servicos.json` | pandas |
 | `geocodificar_catalogo.py` | Catálogo | Planilha de sugestões de CEP e coordenada | stdlib |
 | `atualizar_localizacoes.py` | Catálogo, CNEFE, lista de CEPs | Localizações e mapa territorial | stdlib |
-| `setores.py` | Shapefile de setores do IBGE | `web/dados/setores.geojson`, `setor_bairro.json` | pyshp |
-| `territorio.py` | Censo 2022 por setor | `web/dados/territorio.json` | stdlib |
+| `setores.py` | Malha IBGE de setores 2022; preserva vértices e aplica somente arredondamento a seis casas | `web/dados/setores.geojson`, `setor_bairro.json` | pyshp |
+| `territorio.py` | Censo 2022 por setor | `web/dados/territorio.json` | pyproj |
 | `analise_territorial.py` | Setores e serviços | Distâncias e agrupamento | numpy, scikit-learn (KMeans) |
 | `exposicao_distancia.py` | Setores e serviços | `web/dados/exposicao_distancia.json` (parcela da população a mais de 1 km e 2 km do serviço mais próximo) | stdlib |
 | `territorial_indicadores.py`, `territorial_auditoria.py` | `web/dados/` (setores, território, distâncias) e catálogo | `web/dados/indicadores_territoriais.json` (mapa territorial v1, conferido contra `exposicao_distancia.json`) e relatório de auditoria de privacidade | stdlib |
-| `qualidade_geografica.py` | Malha de setores, indicadores territoriais e registro de localização | Relatórios JSON e Markdown de qualidade geográfica, procedência, área e cautela D4 | stdlib |
+| `qualidade_geografica.py` | Malha de setores 2022, limite municipal 2025, indicadores e registro de localização | Validade, topologia, diferença entre edições, área geodésica GRS80 e proveniência | pyproj, shapely |
+| `limite_municipal.py` | Malha Municipal Digital IBGE 2022 (SP) | `dados/geografia/limite_municipal_2022.geojson` | pyshp, pyproj, shapely |
 | `pipeline/privacidade_territorial.py` | Regra central de supressão estatística D4 | Suprime contagens pequenas antes da publicação do GeoJSON e orienta os demais pipelines | stdlib |
 | `auditoria_centroides.py` | `setores.geojson` e `indicadores_territoriais.json` | Relatórios JSON e Markdown de sensibilidade dos centroides e distâncias, sem alterar a produção | stdlib |
 | `oferta_educacao_infantil.py` | Censo Escolar 2025; calcula totais por rede em memória e publica somente agregados, sem matrículas por escola | `web/dados/oferta_educacao_infantil.json` | pandas |
@@ -254,3 +257,12 @@ Licenças diferentes valem para partes diferentes do repositório; elas não se 
 ## Uso responsável e limites
 
 O MISM3 orienta a busca por serviços públicos e não substitui avaliação, orientação ou atendimento profissional. O sistema não determina diagnósticos, elegibilidade ou decisões individuais. Até esta versão, não foi validado com usuárias reais. As perguntas dos conjuntos de avaliação são fictícias e foram escritas pela equipe do projeto.
+
+
+## Estado técnico do fechamento — 09/11/2026
+
+O mapa territorial é uma página separada (`web/mapa-territorial.html`) que desenha localmente os 408 setores censitários do IBGE em SVG, sem mapa de fundo nem tiles externos. O painel de qualidade dos dados é uma página separada (`web/qualidade-dados.html`). Ambos permanecem sob `noindex, nofollow`; não estão liberados para publicação. A PR #99 concentra o fechamento técnico e científico na branch `mism3-fechamento`; não deve ser mesclada até que os blocos e as execuções reais da Actions estejam registrados em `docs/FECHAMENTO.md`.
+
+A geometria publicada preserva os vértices da referência IBGE 2022 e arredonda coordenadas a seis casas decimais. A auditoria topológica usa 0,0121 m² como tolerância de quantização. A D4 suprime os 17 setores protegidos; eles não contribuem para estatísticas de distância, que podem incluir no máximo 391 setores. Distância é em linha reta e não mede tempo de deslocamento nem acesso efetivo.
+
+A regeneração final de derivados que dependem de CNES, CNEFE e microdados INEP locais permanece pendente e deve ocorrer somente no computador do responsável, conforme [runbook local](docs/territorial/REGENERACAO_LOCAL_PENDENTE.md). Não enviar fontes brutas, coordenadas residenciais ou tabelas restritas à Actions, ao GitHub ou a artefatos.

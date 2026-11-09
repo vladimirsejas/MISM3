@@ -22,8 +22,8 @@ def feature(setor, bairro, pessoas, domicilios, geometria):
 
 def test_area_de_um_quadrado_de_0_01_grau():
     area = t.area_km2({"type": "Polygon", "coordinates": [quadrado(-47.56, -22.40, 0.01)]})
-    esperado = 0.01 * 111.320 * math.cos(math.radians(-22.40)) * 0.01 * 110.574
-    assert area == pytest.approx(esperado, rel=1e-6) and 1.0 < area < 1.2   # ~1,14 km²
+    esperado = 1.1402862853121758  # área geodésica GRS80 do quadrado de 0,01 grau
+    assert area == pytest.approx(esperado, rel=1e-9) and 1.0 < area < 1.2
 
 
 def test_area_com_furo_e_multipoligono():
@@ -139,10 +139,22 @@ def cras(lat, lon, **extra):
     return {"id": "man-cras-x", "tipo": "assistencia", "subtipo": "cras", "nome": "CRAS X", "lat": lat, "lon": lon, "cep": None, **extra}
 
 
+def proveniencia(*servicos):
+    return {
+        s["id"]: {"lat": str(s["lat"]), "lon": str(s["lon"]), "metodo": "teste_controlado", "confianca": "alta"}
+        for s in servicos if s.get("lat") is not None and s.get("lon") is not None
+    }
+
+
 def test_localizar_servico_endereco_cep_e_cep_vago():
-    assert t.localizar_servico({"lat": -22.40, "lon": -47.56}, None) == (-22.40, -47.56, "endereco", 0)
-    assert t.localizar_servico({"lat": -23.5, "lon": -46.6}, None) is None                    # São Paulo: fora de Rio Claro
-    assert t.localizar_servico({"lat": "texto", "lon": "x"}, None) is None
+    servico = {"id": "man-x", "lat": -22.40, "lon": -47.56}
+    registro = {"man-x": {"lat": "-22.40", "lon": "-47.56", "metodo": "teste_controlado", "confianca": "alta"}}
+    assert t.localizar_servico(servico, None) is None  # coordenada sem proveniência não é exata
+    assert t.localizar_servico(servico, None, registro) == (-22.40, -47.56, "endereco", 0)
+    fora = {"id": "man-x", "lat": -23.5, "lon": -46.6}
+    registro_fora = {"man-x": {"lat": "-23.5", "lon": "-46.6", "metodo": "teste_controlado", "confianca": "alta"}}
+    assert t.localizar_servico(fora, None, registro_fora) is None  # São Paulo: fora de Rio Claro
+    assert t.localizar_servico({"id": "man-x", "lat": "texto", "lon": "x"}, None, registro) is None
     indice = {"13501000": [-22.41, -47.55, 300, "s", 12], "13500000": [-22.40, -47.56, 1500, "s", 900]}
     assert t.localizar_servico({"cep": "13501-000"}, indice) == (-22.41, -47.55, "cep", 300)
     assert t.localizar_servico({"cep": "13500000"}, indice) is None                           # CEP geral da cidade: vago demais
@@ -151,7 +163,8 @@ def test_localizar_servico_endereco_cep_e_cep_vago():
 
 def test_distancia_ate_o_servico_mais_proximo_e_resumo():
     # CRAS no centro do setor "a": "a" fica a ~0 km, "b" (0,01° a leste) a ~1,03 km e "c" (0,03° a leste) a ~3,08 km
-    d = t.distancias_ate_servicos(tres_setores(), [cras(-22.395, -47.595)], None)[0]["cras"]
+    servico = cras(-22.395, -47.595)
+    d = t.distancias_ate_servicos(tres_setores(), [servico], None, proveniencia(servico))[0]["cras"]
     a, b, c = (d["por_setor"][k] for k in "abc")
     assert a < 0.05 and 1.0 < b < 1.07 and 3.0 < c < 3.15
     assert d["contagem"] == [1, 0, 1, 0, 1] and sum(d["contagem"]) == 3                    # <0,5 | 0,5-1 | 1-2 | 2-3 | >=3
@@ -165,17 +178,18 @@ def test_cobertura_conta_o_que_nao_foi_localizado_e_acima_do_minimo_mostra():
     # 3 de 4 localizados (75%): mostra, e diz "3 de 4"
     servicos = [cras(-22.395 + i * 0.001, -47.595, id="man-cras-%d" % i, nome="CRAS %d" % i) for i in range(3)]
     servicos.append({**cras(None, None), "id": "man-cras-sem", "nome": "CRAS SEM LOCAL"})
-    dist, pendentes = t.distancias_ate_servicos(tres_setores(), servicos, None)
+    dist, pendentes = t.distancias_ate_servicos(tres_setores(), servicos, None, proveniencia(*servicos))
     assert (dist["cras"]["cadastrados"], dist["cras"]["localizados"]) == (4, 3) and pendentes == {}
 
 
 def test_cobertura_baixa_nao_gera_distancia_e_fica_pendente():
     # 1 de 3 localizado (33%): "65 mil pessoas longe do CRAS" seria falso, porque faltam 2 CRAS no mapa
     servicos = [cras(-22.395, -47.595), {**cras(None, None), "id": "man-cras-b", "nome": "B"}, {**cras(None, None), "id": "man-cras-c", "nome": "C"}]
-    dist, pendentes = t.distancias_ate_servicos(tres_setores(), servicos, None)
+    registro = proveniencia(servicos[0])
+    dist, pendentes = t.distancias_ate_servicos(tres_setores(), servicos, None, registro)
     assert "cras" not in dist
     assert pendentes["cras"] == {"rotulo": "CRAS", "cadastrados": 3, "localizados": 1, "minimo_pct": 70}
-    d = t.montar(tres_setores(), servicos=servicos)
+    d = t.montar(tres_setores(), servicos=servicos, localizacao_registro=registro)
     assert "distancia_ate_servico" not in d and d["distancia_pendente"]["cras"]["localizados"] == 1
     assert not any(k.startswith("dist_") for s in d["setores"].values() for k in s)   # nem a distância por setor
 
@@ -183,7 +197,7 @@ def test_cobertura_baixa_nao_gera_distancia_e_fica_pendente():
 def test_exatamente_no_minimo_mostra():
     servicos = [cras(-22.395, -47.595, id="man-cras-%d" % i, nome=str(i)) for i in range(7)]
     servicos += [{**cras(None, None), "id": "man-cras-s%d" % i, "nome": "s%d" % i} for i in range(3)]   # 7 de 10 = 70%
-    assert "cras" in t.distancias_ate_servicos(tres_setores(), servicos, None)[0]
+    assert "cras" in t.distancias_ate_servicos(tres_setores(), servicos, None, proveniencia(*servicos))[0]
 
 
 def test_so_servicos_do_catalogo_manual_e_a_categoria_certa():
@@ -192,7 +206,7 @@ def test_so_servicos_do_catalogo_manual_e_a_categoria_certa():
     escola = {"id": "man-em-1", "tipo": "creche", "subtipo": "escola_municipal", "nome": "EM sem etapas", "lat": -22.395, "lon": -47.595}
     com_creche = {**escola, "id": "man-em-2", "nome": "EM com creche", "etapas": {"creche": True, "pre_escola": True, "fonte": "f"}}
     so_pre = {**escola, "id": "man-em-3", "nome": "EM só pré", "etapas": {"creche": False, "pre_escola": True, "fonte": "f"}}
-    r = t.distancias_ate_servicos(tres_setores(), [ubs, cnes, escola, com_creche, so_pre], None)[0]
+    r = t.distancias_ate_servicos(tres_setores(), [ubs, cnes, escola, com_creche, so_pre], None, proveniencia(ubs, com_creche))[0]
     assert set(r) == {"ubs", "creche"}                                                      # sem CRAS localizado, a categoria some
     assert r["ubs"]["cadastrados"] == 1                                                     # o registro do CNES não entra
     assert [p["nome"] for p in r["creche"]["pontos"]] == ["EM com creche"]                  # sem etapa conhecida ou sem creche: fora
@@ -206,9 +220,30 @@ def test_montar_sem_servico_localizado_nao_traz_distancia_nenhuma():
 
 
 def test_montar_com_servico_traz_distancia_por_setor_aviso_e_pontos_sem_duplicar():
-    d = t.montar(tres_setores(), servicos=[cras(-22.395, -47.595)], indice_cep=None)
+    servico = cras(-22.395, -47.595)
+    d = t.montar(tres_setores(), servicos=[servico], indice_cep=None, localizacao_registro=proveniencia(servico))
     assert d["setores"]["a"]["dist_cras"] < 0.05 and d["setores"]["c"]["dist_cras"] > 3
     assert "aproximada" in d["meta"]["aviso_distancia"] and "não prova falta de serviço" in d["meta"]["aviso_distancia"]
     bloco = d["distancia_ate_servico"]["cras"]
     assert "por_setor" not in bloco and bloco["pontos"][0]["precisao"] == "endereco"
     assert set(bloco["pontos"][0]) == {"nome", "lat", "lon", "precisao", "raio_m"}          # só o que o mapa precisa; nada de telefone ou endereço
+
+
+
+def test_coordenadas_sem_proveniencia_usam_cep_ou_ficam_pendentes():
+    import json
+
+    raiz = Path(__file__).resolve().parents[2]
+    catalogo = json.loads((raiz / "web/dados/catalogo_manual.json").read_text(encoding="utf-8"))["servicos"]
+    indice = json.loads((raiz / "web/dados/cep_indice.json").read_text(encoding="utf-8"))["ceps"]
+    registro = t.carregar_localizacao_registro()
+    ids = {
+        "man-cras-jardim-independencia", "man-cras-panorama", "man-saude-ubs-29",
+        "man-saude-ubs-wenzel", "man-saude-usf-ferraz", "man-saude-usf-sao-miguel",
+    }
+    servicos = {s["id"]: s for s in catalogo if s.get("id") in ids}
+    assert set(servicos) == ids
+    resultados = {id_: t.localizar_servico(servicos[id_], indice, registro) for id_ in ids}
+    assert all(resultado is None or resultado[2] == "cep" for resultado in resultados.values())
+    assert sum(resultado is not None for resultado in resultados.values()) == 4
+    assert all(registro.get(id_) is None for id_ in ids)

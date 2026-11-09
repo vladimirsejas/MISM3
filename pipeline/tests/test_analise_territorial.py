@@ -1,5 +1,6 @@
 """Testes da análise territorial com dados sintéticos pequenos (a conferência dos números é feita à mão)."""
 import math
+from pathlib import Path
 
 import pytest
 
@@ -18,8 +19,15 @@ def geo():
     ]}
 
 
-def cras(id_, lat, lon):
-    return {"id": id_, "tipo": "assistencia", "subtipo": "cras", "nome": id_, "lat": lat, "lon": lon}
+def cras(id_, lat, lon, cep=None):
+    return {"id": id_, "tipo": "assistencia", "subtipo": "cras", "nome": id_, "lat": lat, "lon": lon, "cep": cep}
+
+
+def proveniencia(*servicos):
+    return {
+        s["id"]: {"lat": str(s["lat"]), "lon": str(s["lon"]), "metodo": "teste_controlado", "confianca": "alta"}
+        for s in servicos
+    }
 
 
 def test_haversine_um_grau_de_latitude():
@@ -34,7 +42,7 @@ def test_ponto_em_poligono_e_buraco():
 def test_distancia_ponderada_pela_populacao_e_servico_no_bairro():
     # um CRAS no meio do setor Alfa (a ~0 km do centro de Alfa)
     s = [cras("man-cras-a", -22.395, -47.595)]
-    r = at.analisar(geo(), s, {})
+    r = at.analisar(geo(), s, {}, localizacao_registro=proveniencia(*s))
     b = {x["bairro"]: x for x in r["bairros"]}
     assert b["Alfa"]["distancia_media_cras_km"] < 0.1
     assert b["Beta"]["distancia_media_cras_km"] > 0.8        # um centésimo de grau de longitude, ~1 km
@@ -63,7 +71,8 @@ def test_so_catalogo_verificado_a_mao():
 
 
 def test_aviso_e_sem_dado_pessoal():
-    r = at.analisar(geo(), [cras("man-cras-a", -22.395, -47.595)], {})
+    servico = cras("man-cras-a", -22.395, -47.595)
+    r = at.analisar(geo(), [servico], {}, localizacao_registro=proveniencia(servico))
     assert "não provam" in r["meta"]["aviso"] and "exploratório" in r["meta"]["aviso"]
     assert set(r["bairros"][0]) <= {"bairro", "setores", "pessoas", "dados_suprimidos", "servicos_no_bairro", "grupo", "distancia_media_cras_km", "distancia_media_ubs_km", "distancia_media_escola_km"}
 
@@ -103,7 +112,7 @@ def test_base_escolar_consolidada_e_fonte_da_localizacao():
         },
     }]
 
-    resultado = at.analisar(geo(), catalogo, {}, escolas=escolas)
+    resultado = at.analisar(geo(), catalogo, {}, escolas=escolas, localizacao_registro=proveniencia(catalogo[0]))
     cobertura = resultado["meta"]["cobertura_dos_servicos"]["escola"]
 
     # A coordenada consolidada deve prevalecer sobre a cópia do catálogo.
@@ -153,6 +162,7 @@ def test_base_real_tem_33_coordenadas_individuais_e_35_por_cep_sem_duplicidade()
         [cras("man-cras-a", -22.395, -47.595)],
         {},
         escolas=escolas,
+        localizacao_registro=proveniencia(cras("man-cras-a", -22.395, -47.595)),
     )
     cobertura = resultado["meta"]["cobertura_dos_servicos"]["escola"]
     assert cobertura["cadastrados"] == 68
@@ -167,5 +177,45 @@ def test_base_real_tem_33_coordenadas_individuais_e_35_por_cep_sem_duplicidade()
     }
     assert cobertura["sem_localizacao_mapa"] == 0
     assert cobertura["raio_m"]["quantidade"] == 35
+    assert 150 <= cobertura["raio_m"]["minimo"] <= cobertura["raio_m"]["mediana"] <= cobertura["raio_m"]["maximo"] <= 1500
     # 1 CRAS + 68 escolas: a escola não pode ser contada duas vezes pelo catálogo.
     assert sum(b["servicos_no_bairro"] for b in resultado["bairros"]) <= 69
+
+
+
+def test_centro_de_producao_preserva_centroides_internos_e_corrige_os_externos():
+    import json
+    import auditoria_centroides as ac
+
+    raiz = Path(__file__).resolve().parents[2]
+    geojson = json.loads((raiz / "web/dados/setores.geojson").read_text(encoding="utf-8"))
+    preservados, corrigidos = 0, 0
+    for feature in geojson["features"]:
+        geom = feature["geometry"]
+        lat_antigo, lon_antigo = ac._centro_atual(geom)
+        lat_novo, lon_novo = at.centro(geom)
+        assert ac._contem(geom, lon_novo, lat_novo)
+        if ac._contem(geom, lon_antigo, lat_antigo):
+            preservados += 1
+            assert (lat_novo, lon_novo) == (lat_antigo, lon_antigo)
+        else:
+            corrigidos += 1
+            assert at.haversine_km(lat_antigo, lon_antigo, lat_novo, lon_novo) < 0.062
+    assert (preservados, corrigidos) == (397, 11)
+
+
+
+def test_coordenada_de_catalogo_sem_proveniencia_nao_e_aceita_como_ponto_exato():
+    servico = cras("man-cras-sem-registro", -22.395, -47.595, cep="13501000")
+    assert at.coordenada_do_servico(servico, {}, {}) is None
+    indice = {"13501000": [-22.396, -47.596, 420, "354390705000001P", 10]}
+    assert at.coordenada_do_servico(servico, indice, {}) == (-22.396, -47.596)
+
+
+def test_coordenada_registrada_precisa_coincidir_com_catalogo():
+    servico = cras("man-cras-a", -22.395, -47.595)
+    registro = proveniencia(servico)
+    assert at.coordenada_catalogo_verificada(servico, registro) == (-22.395, -47.595)
+    registro["man-cras-a"]["lon"] = "-47.500"
+    with pytest.raises(ValueError, match="diverge"):
+        at.coordenada_catalogo_verificada(servico, registro)

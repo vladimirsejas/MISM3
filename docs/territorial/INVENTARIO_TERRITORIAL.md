@@ -2,6 +2,29 @@
 
 **Escopo original:** leitura documental da branch `main`. **Atualização técnica:** em 08/11/2026, os itens abaixo foram complementados pela inspeção e consolidação da branch `feat/mapa-territorial-como-mapa-principal` (PR #92). Os resultados de CI são registrados separadamente; não se afirma aprovação antes da execução.
 
+## Atualização de execução — 09/11/2026
+
+Esta seção prevalece sobre o retrato histórico da PR #92, registrado abaixo.
+
+### Proveniência e localização dos equipamentos
+
+- As coordenadas de CRAS/UBS do catálogo só são aceitas como coordenadas individuais quando latitude, longitude, método e confiança coincidem com `catalogo/localizacao_registro.csv`.
+- Os seis equipamentos sem registro não usam mais a coordenada bruta do catálogo. O cenário com CEP institucional recorre ao centro e ao raio do índice CNEFE; isso é aproximação, não verificação do endereço.
+- Para os seis registros, os CEPs estão no índice. O cenário de coordenadas individuais passa a ter cobertura esperada de 4/6 CRAS e 18/22 UBS; com CEP, 6/6 CRAS e 22/22 UBS.
+- O mapa territorial legado aplica limite de 800 m ao raio do CEP: quatro dos seis casos sem proveniência entram por CEP e dois permanecem sem localização elegível. A regra e a cobertura precisam ser apresentadas separadamente dos cenários do painel de indicadores.
+- `exposicao_distancia.py` resume quantidade e percentual de setores não suprimidos; não calcula população exposta nem pondera mediana e percentil 90 pela população.
+
+### Geometria e área
+
+- O cálculo de área setorial foi alterado para área geodésica no elipsoide GRS80. A conferência da malha de 2022 produziu aproximadamente 498,396 km²; o atributo de área do limite municipal IBGE 2022 é 498,422 km². A referência municipal de 498,403 km² citada em versões anteriores é de outra publicação/vintage e não deve ser tratada como a mesma medida.
+- A auditoria topológica identificou interseções entre polígonos: seis pares ultrapassam o limiar de 1.000 m². A soma das interseções registradas é aproximadamente 62,7 mil m².
+- A diferença entre a união dos setores e o limite municipal indicou aproximadamente 0,104348 km² de setores fora do limite. A origem desses excessos ainda precisa ser examinada; não houve recorte automático nem alteração da malha-fonte.
+- O ponto representativo de produção preserva 399 centroides matemáticos internos e corrige somente os nove que estavam fora dos polígonos.
+
+### Estado dos artefatos
+
+Os scripts e testes foram atualizados na branch de fechamento, mas os JSONs derivados ainda precisam ser regenerados a partir dessas regras e conferidos por execução integral. Até essa regeneração, os arquivos versionados `territorio.json`, `analise_territorial.json`, `exposicao_distancia.json` e `indicadores_territoriais.json` não devem ser apresentados como saídas atualizadas. A `main` não foi alterada; não houve merge nem publicação.
+
 ## Estado da inspeção
 
 A branch `main` consultada contém `protocolo/` e `reproducao/`. As PRs #68 e #70 estão fechadas e mescladas. O topo da `main` é o commit `86c7ada7ba35c5002f62d057a8b6e529740dc2f8`, cujo commit de merge corresponde à PR #70; seu primeiro pai é o merge da PR #68 (`52ded74d291516c830764dddaafe00f6acddd725`). A sequência foi confirmada pelos metadados dos merges.

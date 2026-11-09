@@ -1,4 +1,6 @@
-# Resultado da auditoria de sensibilidade dos centroides — 08/11/2026
+# Resultado histórico da auditoria de sensibilidade dos centroides — 08/11/2026
+
+> **Registro histórico supersedido em 09/11/2026.** Esta auditoria usou a geometria simplificada e encontrou nove centroides externos. A decisão posterior adotou a geometria original do IBGE, sem simplificação, identificou 11 centroides matemáticos externos e passou a usar ponto interno representativo somente nesses 11 casos. Os 397 centroides matemáticos internos são preservados. A conclusão antiga abaixo não é a regra de produção vigente; a referência atual é `docs/territorial/METODOLOGIA_INDICADORES_TERRITORIAIS.md`, `pipeline/analise_territorial.py` e `docs/FECHAMENTO.md`.
 
 ## Execução
 

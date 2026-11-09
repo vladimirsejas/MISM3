@@ -37,3 +37,8 @@ Abra `http://localhost:8000` e use **Ctrl+F5**. Ao clicar na caixa "Conte com su
 ## 4. Limites que você deve ter em mente
 - As frases de treino e de teste foram escritas pela equipe, não por mulheres reais. Os percentuais em `docs/ia/avaliacao_orientacao.md` não valem como promessa de acerto.
 - Em segurança, o sistema ainda deixa passar situações. Nunca o apresente como substituto dos telefones de emergência.
+
+
+## 5. Privacidade do texto digitado
+
+Digite uma pergunta na caixa inicial e outra na caixa de dúvida de uma área. Em seguida, volte ao início ou mude de área. O campo e a resposta anterior devem desaparecer. Verifique no DevTools que a única chamada de rede da aplicação para a busca é GET de arquivos JSON da própria origem; nenhuma frase digitada deve aparecer em URL, corpo, log, armazenamento local ou cookie.

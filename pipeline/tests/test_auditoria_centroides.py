@@ -43,7 +43,7 @@ def test_ponto_interno_considera_componente_de_multipoligono():
 
 def test_comparacao_calcula_variacao_de_distancia_sem_mudar_dado_de_entrada():
     geo = {"type": "FeatureCollection", "features": [{
-        "type": "Feature", "properties": {"setor": "1", "pessoas": 10}, "geometry": quadrado()
+        "type": "Feature", "properties": {"setor": "1", "pessoas": 10, "domicilios": 5}, "geometry": quadrado()
     }]}
     indicadores = {"equipamentos": [
         {"categoria": "ubs", "precisao": "catalogo", "lat": 1.0, "lon": 5.0},
@@ -65,7 +65,7 @@ def test_geometria_sem_ponto_interno_falha_explicitamente():
         raise AssertionError("esperava falha para geometria degenerada")
 
 
-def test_malha_real_audita_408_setores_e_identifica_nove_centroides_externos():
+def test_malha_real_audita_408_setores_e_identifica_onze_centroides_externos():
     import json
 
     raiz = Path(__file__).resolve().parents[2]
@@ -74,13 +74,15 @@ def test_malha_real_audita_408_setores_e_identifica_nove_centroides_externos():
     resultado = ac.comparar(geo, indicadores)
 
     assert resultado["meta"]["setores_auditados"] == 408
-    assert resultado["meta"]["centroides_atualmente_fora"] == 9
+    assert resultado["meta"]["centroides_atualmente_fora"] == 11
     assert set(resultado["meta"]["codigos_centroides_fora"]) == {
         "354390705000026",
         "354390705000165",
+        "354390705000195",
         "354390705000339",
         "354390705000432",
         "354390705000460",
+        "354390705000502",
         "354390705000524",
         "354390705000529",
         "354390705000530",
@@ -88,10 +90,21 @@ def test_malha_real_audita_408_setores_e_identifica_nove_centroides_externos():
     }
     assert all(s["ponto_interno_alternativo"]["metodo"] == ac.METODO_ALTERNATIVO
                for s in resultado["setores"])
-    assert resultado["resumo"]["distancias"]["coordenadas_do_catalogo"]["ubs"]["setores_com_distancia"] == 408
+    esperado_com_distancia = len(geo["features"]) - indicadores["totais"]["setores_suprimidos"]
+    assert resultado["meta"]["setores_suprimidos"] == indicadores["totais"]["setores_suprimidos"] == 17
+    for cenario in ac.CENARIOS:
+        for categoria in ac.CATEGORIAS:
+            assert resultado["resumo"]["distancias"][cenario][categoria]["setores_com_distancia"] == esperado_com_distancia == 391
+
+    protegidos = {s["id"] for s in indicadores["setores"] if s["suprimido_privacidade"]}
+    for setor in resultado["setores"]:
+        if setor["setor"] in protegidos:
+            for cenario in ac.CENARIOS:
+                for distancia in setor["distancias"][cenario].values():
+                    assert distancia == {"atual_km": None, "alternativa_km": None, "delta_km": None}
 
 
-def test_correcao_minima_preserva_os_399_centroides_validos_e_altera_so_nove():
+def test_correcao_minima_preserva_os_397_centroides_validos_e_altera_so_onze():
     import json
 
     raiz = Path(__file__).resolve().parents[2]
@@ -101,8 +114,8 @@ def test_correcao_minima_preserva_os_399_centroides_validos_e_altera_so_nove():
 
     movidos = [s for s in resultado["setores"] if s["deslocamento_m"] > 0]
     preservados = [s for s in resultado["setores"] if s["centroide_atual"]["dentro_do_poligono"]]
-    assert len(movidos) == 9
-    assert len(preservados) == 399
+    assert len(movidos) == 11
+    assert len(preservados) == 397
     assert max(s["deslocamento_m"] for s in movidos) < 62
     for setor in preservados:
         assert setor["deslocamento_m"] == 0
@@ -110,3 +123,40 @@ def test_correcao_minima_preserva_os_399_centroides_validos_e_altera_so_nove():
             for distancia in cenario.values():
                 if distancia["delta_km"] is not None:
                     assert distancia["delta_km"] == 0
+
+
+
+def test_impacto_maximo_nas_distancias_fica_abaixo_de_55_metros():
+    import json
+
+    raiz = Path(__file__).resolve().parents[2]
+    geo = json.loads((raiz / "web/dados/setores.geojson").read_text(encoding="utf-8"))
+    indicadores = json.loads((raiz / "web/dados/indicadores_territoriais.json").read_text(encoding="utf-8"))
+    resultado = ac.comparar(geo, indicadores)
+    maximo = max(
+        resumo["maximo_delta_absoluto_km"]
+        for cenarios in resultado["resumo"]["distancias"].values()
+        for resumo in cenarios.values()
+        if resumo["maximo_delta_absoluto_km"] is not None
+    )
+    assert maximo < 0.055
+    assert resultado["resumo"]["deslocamento_ponto_maximo_m"] < 62
+
+
+def test_auditoria_de_centroides_suprime_distancias_de_setor_protegido():
+    geo = {"type": "FeatureCollection", "features": [
+        {"type": "Feature", "properties": {"setor": "protegido", "pessoas": None, "domicilios": None, "suprimido_privacidade": True}, "geometry": quadrado()},
+        {"type": "Feature", "properties": {"setor": "publico", "pessoas": 10, "domicilios": 5}, "geometry": quadrado()},
+    ]}
+    indicadores = {"equipamentos": [
+        {"categoria": "ubs", "precisao": "catalogo", "lat": 1.0, "lon": 5.0},
+    ]}
+    resultado = ac.comparar(geo, indicadores)
+    protegido = next(s for s in resultado["setores"] if s["setor"] == "protegido")
+    publico = next(s for s in resultado["setores"] if s["setor"] == "publico")
+    assert resultado["meta"]["setores_suprimidos"] == 1
+    assert protegido["distancias"]["coordenadas_do_catalogo"]["ubs"] == {
+        "atual_km": None, "alternativa_km": None, "delta_km": None
+    }
+    assert publico["distancias"]["coordenadas_do_catalogo"]["ubs"]["delta_km"] == 0
+    assert resultado["resumo"]["distancias"]["coordenadas_do_catalogo"]["ubs"]["setores_com_distancia"] == 1

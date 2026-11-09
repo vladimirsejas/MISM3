@@ -1,21 +1,29 @@
-# Auditoria automatizada da qualidade geográfica
+# Qualidade geográfica da malha territorial
 
-## O que verifica
+## Referências e reprodutibilidade
 
-Execute `python pipeline/qualidade_geografica.py` na raiz do repositório. O módulo lê somente os arquivos territoriais versionados e produz relatórios JSON e Markdown.
+A referência de setores é `dados/referencia_ibge/setores_rio_claro_original_ibge_2022.geojson`, com 408 setores do IBGE, geometria original em SIRGAS 2000 (EPSG:4674) e sem contagens demográficas. O limite municipal de comparação é `dados/referencia_ibge/municipio_rio_claro_2025.geojson`. A proveniência, os campos preservados e os hashes dos arquivos-fonte estão em `dados/referencia_ibge/PROVENIENCIA.txt`.
 
-Verifica a estrutura das geometrias GeoJSON (tipo, anéis, fechamento, limites de coordenadas), duplicidade de códigos de setor, localização dos equipamentos dentro da malha, procedência registrada de CRAS/UBS, método de localização das escolas, diferença entre a soma das áreas setoriais e a referência municipal e quantidade de setores sinalizados pela cautela D4. Para a área, calcula novamente a soma pelo plano local usado atualmente e por uma fórmula geodésica esférica independente.
+`pipeline/setores.py` não aplica Douglas–Peucker nem outra simplificação. Preserva os vértices originais e arredonda somente as coordenadas para seis casas decimais (`CASAS = 6`). A Actions confere cada geometria publicada contra a geometria original arredondada, setor por setor, e rejeita geometria inválida, sobreposição ou buraco interno acima da precisão de publicação.
 
-## Saídas
+## Precisão e topologia
 
-- `docs/territorial/RELATORIO_QUALIDADE_GEOGRAFICA.json`
-- `docs/territorial/RELATORIO_QUALIDADE_GEOGRAFICA.md`
+Seis casas decimais em latitude/longitude representam aproximadamente 0,11 m em Rio Claro. Uma célula de quantização de 0,11 m × 0,11 m corresponde a cerca de 0,0121 m². Por isso, o limiar de detecção de sobreposição entre pares e de buraco interno é 0,0121 m². O limite é derivado da resolução das coordenadas, não dos resultados medidos. O limiar de relevância para destacar sobreposições maiores continua separado, em 1.000 m².
 
-## Limites
+Na geometria de referência arredondada a seis casas, a suíte confere 408 feições válidas, zero pares sobrepostos acima de 0,0121 m² e área de buracos internos abaixo desse limiar. A auditoria também confirma que a geometria publicada corresponde à referência original arredondada, sem simplificação.
 
-A validação geométrica desta versão verifica integridade estrutural dos anéis e limites das coordenadas; não substitui uma validação topológica completa de auto-interseções e sobreposições. A soma pelo método local fica em aproximadamente 497,340 km²; o recálculo geodésico esférico fica em aproximadamente 499,665 km², enquanto a referência municipal é 498,403 km². A diferença muda de sinal entre os dois métodos, portanto não pode ser atribuída apenas a arredondamento: exige verificar recorte municipal, cobertura, sobreposição e lacunas entre polígonos. A auditoria registra a divergência, não escolhe automaticamente um método nem corrige artificialmente as áreas. A auditoria não supre os seis registros de proveniência ausentes, não inventa raios e não aplica supressão ou agregação aos setores pequenos.
+## Áreas e edições territoriais
 
+As áreas são calculadas geodesicamente com `pyproj.Geod(ellps="GRS80")`, não por aproximação plana. A soma das áreas dos 408 setores de 2022 é 498,422 km². A área geodésica do limite municipal de 2025 é 498,402 km²; a diferença entre as somas é aproximadamente 0,020 km².
 
-## Distinção entre fonte do endereço e método da coordenada
+A malha de setores de 2022 e a malha municipal de 2025 são edições diferentes. A comparação espacial dos contornos aponta cerca de 0,708 km² de área do município de 2025 não coberta pela união dos setores e cerca de 0,727 km² de setores fora do limite municipal de 2025. Esses valores descrevem a diferença entre edições cartográficas; não são buracos internos da cobertura setorial, nem evidência de sobreposição entre setores. A cobertura setorial interna é avaliada separadamente.
 
-O catálogo manual registra endereço, URL de fonte institucional e data de verificação para os seis CRAS/UBS que ainda não possuem método de coordenada documentado. Nos registros atuais, esses cadastros foram verificados em 10/10/2026. Isso comprova a existência de uma referência documental para o endereço, mas não comprova como a latitude/longitude foi derivada ou validada. Por esse motivo, os seis continuam sem confiança espacial e sem raio de incerteza atribuídos. A rotina agora cruza o catálogo com o registro de localização e mostra separadamente essas duas situações.
+## Centroides
+
+A auditoria dos centroides matemáticos foi refeita sobre a geometria original, sem arredondamento. Foram identificados 11 centroides fora do respectivo polígono, em 408 setores. A lista exata dos códigos é testada em `pipeline/tests/test_referencia_ibge.py`. A produção preserva os centroides internos e usa um ponto representativo interno somente nos setores cujo centroide matemático está fora; esse ponto alternativo não é denominado centroide matemático.
+
+## Limites de interpretação
+
+A auditoria geométrica verifica validade, correspondência, sobreposição e buracos internos. A diferença entre os limites de 2022 e 2025 não deve ser confundida com erro do processamento. A geometria não comprova acesso por ruas, transporte, horários ou capacidade de atendimento.
+
+Os dados de pessoas e domicílios não são extraídos da referência geométrica. A publicação desses indicadores depende da regra D4 e da regeneração local autorizada, sem envio de bases brutas ao GitHub.

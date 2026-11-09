@@ -1,11 +1,11 @@
 {
  "meta": {
   "fonte": "IBGE, Censo Demográfico 2022 (setores) e catálogo verificado do Observatório da Mulher",
-  "gerado_em": "2026-11-05",
-  "aviso": "Os resumos contam somente setores não suprimidos, sem ponderação por população. Dados demográficos e distâncias por setor são omitidos nos setores pequenos. Distâncias em linha reta não consideram ruas, ônibus nem horários.",
+  "gerado_em": "2026-11-09",
+  "aviso": "Os resumos contam somente setores não suprimidos e não são ponderados por população; não representam pessoas expostas. Distâncias em linha reta não consideram ruas, ônibus nem horários. Coordenadas de catálogo sem proveniência registrada não entram no cenário de coordenadas individuais.",
   "limiares_km": [
-   1,
-   2
+   1.0,
+   2.0
   ],
   "pessoas_total": null,
   "setores_suprimidos": 17
@@ -14,28 +14,28 @@
   "coordenadas_do_catalogo": {
    "cras": {
     "cobertura": {
-     "com_coordenada": 6,
+     "com_coordenada": 4,
      "cadastrados": 6,
-     "completo": true
+     "completo": false
     },
     "setores_validos": {
      "setores": 391,
-     "mediana_km": 1.3,
-     "p90_km": 3.05,
+     "mediana_km": 2.39,
+     "p90_km": 3.66,
      "acima_de": {
       "1 km": {
-       "setores": 256,
-       "percentual": 65.5
+       "setores": 307,
+       "percentual": 78.5
       },
       "2 km": {
-       "setores": 104,
-       "percentual": 26.6
+       "setores": 230,
+       "percentual": 58.8
       }
      }
     },
     "setores_sem_bairro": {
      "setores": 39,
-     "mediana_km": 5.92,
+     "mediana_km": 6.24,
      "p90_km": 12.25,
      "acima_de": {
       "1 km": {
@@ -51,37 +51,37 @@
    },
    "ubs": {
     "cobertura": {
-     "com_coordenada": 22,
+     "com_coordenada": 18,
      "cadastrados": 22,
-     "completo": true
+     "completo": false
     },
     "setores_validos": {
      "setores": 391,
-     "mediana_km": 0.71,
-     "p90_km": 1.63,
+     "mediana_km": 0.79,
+     "p90_km": 2.04,
      "acima_de": {
       "1 km": {
-       "setores": 120,
-       "percentual": 30.7
+       "setores": 149,
+       "percentual": 38.1
       },
       "2 km": {
-       "setores": 24,
-       "percentual": 6.1
+       "setores": 40,
+       "percentual": 10.2
       }
      }
     },
     "setores_sem_bairro": {
      "setores": 39,
-     "mediana_km": 1.88,
+     "mediana_km": 2.04,
      "p90_km": 5.95,
      "acima_de": {
       "1 km": {
-       "setores": 22,
-       "percentual": 56.4
+       "setores": 23,
+       "percentual": 59.0
       },
       "2 km": {
-       "setores": 19,
-       "percentual": 48.7
+       "setores": 20,
+       "percentual": 51.3
       }
      }
     }
@@ -98,12 +98,12 @@
      "p90_km": 1.99,
      "acima_de": {
       "1 km": {
-       "setores": 116,
-       "percentual": 29.7
+       "setores": 117,
+       "percentual": 29.9
       },
       "2 km": {
        "setores": 39,
-       "percentual": 10
+       "percentual": 10.0
       }
      }
     },
@@ -133,16 +133,16 @@
     },
     "setores_validos": {
      "setores": 391,
-     "mediana_km": 1.3,
+     "mediana_km": 1.29,
      "p90_km": 3.05,
      "acima_de": {
       "1 km": {
-       "setores": 256,
-       "percentual": 65.5
+       "setores": 252,
+       "percentual": 64.5
       },
       "2 km": {
-       "setores": 104,
-       "percentual": 26.6
+       "setores": 105,
+       "percentual": 26.9
       }
      }
     },
@@ -170,16 +170,16 @@
     },
     "setores_validos": {
      "setores": 391,
-     "mediana_km": 0.71,
-     "p90_km": 1.63,
+     "mediana_km": 0.7,
+     "p90_km": 1.75,
      "acima_de": {
       "1 km": {
-       "setores": 120,
-       "percentual": 30.7
+       "setores": 125,
+       "percentual": 32.0
       },
       "2 km": {
-       "setores": 24,
-       "percentual": 6.1
+       "setores": 26,
+       "percentual": 6.6
       }
      }
     },
@@ -207,7 +207,7 @@
     },
     "setores_validos": {
      "setores": 391,
-     "mediana_km": 0.43,
+     "mediana_km": 0.42,
      "p90_km": 1.05,
      "acima_de": {
       "1 km": {

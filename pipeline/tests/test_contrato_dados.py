@@ -22,7 +22,7 @@ def test_ids_unicos_e_campos_basicos():
 def test_coordenada_so_quando_ha_fonte_de_coordenada():
     for s in CATALOGO:
         tem = s.get("lat") is not None and s.get("lon") is not None
-        assert s.get("geo") in ("coordenada_fonte", "sem_local"), s["id"]
+        assert s.get("geo") in ("coordenada_fonte", "centroide_cep", "sem_local"), s["id"]
         assert tem == (s["geo"] == "coordenada_fonte"), f"{s['id']}: coordenada sem fonte, ou fonte sem coordenada"
         if tem:
             assert -23.0 < s["lat"] < -22.0 and -48.3 < s["lon"] < -47.2, f"{s['id']}: fora de Rio Claro"

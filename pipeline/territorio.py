@@ -5,14 +5,14 @@ Entrada : web/dados/setores.geojson (408 setores com bairro, situação, pessoas
 Saída   : web/dados/territorio.json, que alimenta a vista "Rio Claro em numeros" do dashboard (web/index.html).
 
 Indicadores (todos de dado público e agregado; nada de pessoa):
-  - densidade = pessoas / área do setor (hab/km²). A área vem do próprio polígono, num plano local centrado em
-    Rio Claro. Conferência: a soma das áreas dá ~497 km² contra 498,4 km² publicados pelo IBGE.
+  - densidade = pessoas / área do setor (hab/km²). A área vem do próprio polígono, calculada geodesicamente no elipsoide GRS80.
+    A referência municipal é registrada separadamente; a malha setorial é do Censo 2022.
   - pessoas por domicílio, só para setores com pelo menos MIN_DOMICILIOS domicílios. Setores pequenos dão valores
     absurdos (há setor com 106 pessoas em 1 domicílio, provavelmente domicílio coletivo) e ficam "sem base suficiente".
 
 Distância até o serviço (só quando há serviços COM LOCALIZAÇÃO no catálogo): para cada setor, a distância em linha reta do
 centro do setor até o CRAS, a UBS/USF e a escola municipal com creche (confirmada no Censo Escolar) mais próximos.
-A localização vem do endereço (latitude e longitude do catálogo, "precisão endereço") ou, na falta dela, do centro do CEP
+A localização vem de coordenadas do catálogo com proveniência registrada ou, na falta dela, do centro do CEP
 (web/dados/cep_indice.json, "precisão CEP", aproximada; CEP com raio acima de RAIO_MAX_CEP_M é vago demais e não conta).
 Sem nenhum serviço localizado, o arquivo simplesmente não traz distâncias: números sem base enganariam. O mesmo vale para uma
 categoria com poucos serviços localizados (menos de COBERTURA_MINIMA): ela vira "pendente" e a página diz o que falta.
@@ -29,16 +29,16 @@ import json
 import math
 import sys
 from privacidade_territorial import setor_suprimido
+from pyproj import Geod
 from collections import Counter, defaultdict
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from analise_territorial import centro, haversine_km  # noqa: E402  (centroide do setor e distância em linha reta)
+from analise_territorial import (centro, haversine_km, coordenada_catalogo_verificada,
+                                 carregar_localizacao_registro)  # noqa: E402
 from common import WEB_DADOS, agora_iso, erro, salvar_json  # noqa: E402
 
-LAT0 = -22.40                       # latitude central de Rio Claro, para o plano local
-KM_POR_GRAU_LAT = 110.574
-KM_POR_GRAU_LON = 111.320 * math.cos(math.radians(LAT0))
+GEOD = Geod(ellps="GRS80")
 MIN_DOMICILIOS = 20                 # abaixo disso, pessoas por domicílio não é confiável
 LIMITES_DENSIDADE = [500, 2000, 5000, 10000]        # hab/km²; 5 classes
 LIMITES_PESSOAS_POR_DOMICILIO = [2.0, 2.3, 2.6, 3.0]  # 5 classes
@@ -62,13 +62,16 @@ CATEGORIAS_SERVICO = {
 SEM_BAIRRO = "Sem bairro definido pelo IBGE"   # a malha do IBGE não traz bairro para parte dos setores (NM_BAIRRO vazio)
 IBGE_PESSOAS_2022 = 201418
 IBGE_AREA_KM2 = 498.403
+IBGE_AREA_ANO = 2025
 
 
 def area_do_anel_km2(anel) -> float:
-    soma = 0.0
-    for (x1, y1), (x2, y2) in zip(anel, anel[1:] + anel[:1]):
-        soma += (x1 * KM_POR_GRAU_LON) * (y2 * KM_POR_GRAU_LAT) - (x2 * KM_POR_GRAU_LON) * (y1 * KM_POR_GRAU_LAT)
-    return abs(soma) / 2
+    """Área geodésica no elipsoide GRS80, em km²."""
+    area, _ = GEOD.polygon_area_perimeter(
+        [float(p[0]) for p in anel],
+        [float(p[1]) for p in anel],
+    )
+    return abs(area) / 1_000_000
 
 
 def area_km2(geometria: dict) -> float:
@@ -89,14 +92,11 @@ def _na_caixa(lat, lon) -> bool:
     return CAIXA_RIO_CLARO[0] <= lat <= CAIXA_RIO_CLARO[1] and CAIXA_RIO_CLARO[2] <= lon <= CAIXA_RIO_CLARO[3]
 
 
-def localizar_servico(s: dict, indice_cep: dict | None):
-    """(lat, lon, precisao, raio_m) do serviço, ou None. 'endereco' = latitude/longitude do catálogo; 'cep' = centro do CEP."""
-    lat, lon = s.get("lat"), s.get("lon")
-    if lat is not None and lon is not None:
-        try:
-            lat, lon = float(lat), float(lon)
-        except (TypeError, ValueError):
-            return None
+def localizar_servico(s: dict, indice_cep: dict | None, localizacao_registro=None):
+    """(lat, lon, precisao, raio_m) do serviço; coordenada de catálogo exige proveniência registrada."""
+    coordenada = coordenada_catalogo_verificada(s, localizacao_registro)
+    if coordenada:
+        lat, lon = coordenada
         return (lat, lon, "endereco", 0) if _na_caixa(lat, lon) else None
     cep = "".join(c for c in str(s.get("cep") or "") if c.isdigit())
     v = (indice_cep or {}).get(cep)
@@ -119,7 +119,7 @@ def _mediana_ponderada(pares) -> float | None:
     return pares[-1][0]
 
 
-def distancias_ate_servicos(geojson: dict, servicos: list[dict], indice_cep: dict | None) -> tuple[dict, dict]:
+def distancias_ate_servicos(geojson: dict, servicos: list[dict], indice_cep: dict | None, localizacao_registro=None) -> tuple[dict, dict]:
     """Distâncias por setor apenas para setores não suprimidos; resumos contam setores, nunca pessoas."""
     centros = {}
     for f in geojson["features"]:
@@ -130,7 +130,7 @@ def distancias_ate_servicos(geojson: dict, servicos: list[dict], indice_cep: dic
         elegiveis = [s for s in servicos if str(s.get("id", "")).startswith("man-") and cat["serve"](s)]
         pontos = []
         for s in elegiveis:
-            loc = localizar_servico(s, indice_cep)
+            loc = localizar_servico(s, indice_cep, localizacao_registro)
             if loc:
                 pontos.append({"nome": s["nome"], "lat": round(loc[0], 6), "lon": round(loc[1], 6), "precisao": loc[2], "raio_m": loc[3]})
         if not pontos:
@@ -171,7 +171,7 @@ def distancias_ate_servicos(geojson: dict, servicos: list[dict], indice_cep: dic
 
 
 def montar(geojson: dict, oferta: dict | None = None, hoje: str | None = None, servicos: list[dict] | None = None,
-           indice_cep: dict | None = None) -> dict:
+           indice_cep: dict | None = None, localizacao_registro=None) -> dict:
     setores = {}
     por_bairro = defaultdict(lambda: {"setores": 0, "pessoas": 0, "domicilios": 0, "area": 0.0, "suprimido": False})
     cont_dens = Counter()
@@ -229,7 +229,9 @@ def montar(geojson: dict, oferta: dict | None = None, hoje: str | None = None, s
             "gerado_em": hoje or agora_iso()[:10],
             "conferencia": {
                 "pessoas_somadas": pessoas_total, "pessoas_publicadas_ibge": IBGE_PESSOAS_2022 if not suprimidos else None,
-                "area_somada_km2": round(area_total, 1), "area_publicada_ibge_km2": IBGE_AREA_KM2,
+                "area_somada_km2": round(area_total, 3), "area_publicada_ibge_km2": IBGE_AREA_KM2,
+                "area_referencia_ibge_ano": IBGE_AREA_ANO,
+                "metodo_area_setorial": "Geodésico elipsoidal GRS80 (pyproj.Geod), anéis externos menos furos",
                 "diferenca_area_pct": round(100 * (area_total - IBGE_AREA_KM2) / IBGE_AREA_KM2, 2),
             },
             "sem_bairro": {"rotulo": SEM_BAIRRO, "setores": sem["setores"] if sem else 0, "pessoas": None if (sem and sem["suprimido"]) or suprimidos else (sem["pessoas"] if sem else 0)},
@@ -253,7 +255,7 @@ def montar(geojson: dict, oferta: dict | None = None, hoje: str | None = None, s
         "bairros": bairros,
         "setores": setores,
     }
-    dist, pendentes = distancias_ate_servicos(geojson, servicos or [], indice_cep) if servicos else ({}, {})
+    dist, pendentes = distancias_ate_servicos(geojson, servicos or [], indice_cep, localizacao_registro) if servicos else ({}, {})
     if pendentes:
         saida["distancia_pendente"] = pendentes
     if dist:
@@ -283,7 +285,8 @@ def main() -> int:
     p_cat, p_cep = WEB_DADOS / "catalogo_manual.json", WEB_DADOS / "cep_indice.json"
     servicos = json.loads(p_cat.read_text(encoding="utf-8")).get("servicos") if p_cat.exists() else None
     indice_cep = json.loads(p_cep.read_text(encoding="utf-8")).get("ceps", {}) if p_cep.exists() else None
-    saida = montar(geojson, oferta, servicos=servicos, indice_cep=indice_cep)
+    localizacao_registro = carregar_localizacao_registro()
+    saida = montar(geojson, oferta, servicos=servicos, indice_cep=indice_cep, localizacao_registro=localizacao_registro)
     salvar_json(saida, WEB_DADOS / "territorio.json")
     c, t = saida["meta"]["conferencia"], saida["totais"]
     print("Gravado web/dados/territorio.json: %d setores, %d bairros; contagens demográficas suprimidas por cautela." %

@@ -184,3 +184,27 @@ assert(areas(R("sou avo, crio meus netos e preciso de trabalho")).indexOf("assis
 /* Quem diz que não consegue manter/sustentar as crianças: Assistência, não silêncio. */
 ["nao estou dando conta de sustentar as criancas", "sozinha para manter meus filhos pequenos"].forEach((t) =>
   assert(areas(R(t)).indexOf("assistencia") >= 0, "não consigo manter as crianças leva à Assistência: " + t));
+
+
+// Privacidade do texto livre: apenas GETs de arquivos estáticos locais, sem persistência nem envio da mensagem.
+const appFonte = fs.readFileSync(path.join(web, "app.js"), "utf8");
+assert.strictEqual((appFonte.match(/fetch\(/g) || []).length, 1, "app.js mantém um único fetch genérico para arquivos locais");
+assert(/return fetch\(url, \{ cache: "no-store" \}\)/.test(appFonte), "a leitura é GET de arquivo local, sem corpo enviado");
+assert(!/fetch\(\s*(?:texto|t\.value|entrada|mensagem)/i.test(appFonte), "o texto da usuária nunca é passado ao fetch");
+assert(!/method\s*:\s*["']POST|sendBeacon|XMLHttpRequest|WebSocket|localStorage|sessionStorage|document\.cookie|indexedDB/.test(appFonte),
+  "a tela não envia nem persiste texto");
+const blocoModelo = appFonte.slice(appFonte.indexOf("function carregarModeloIA"), appFonte.indexOf("function limparIA"));
+assert(/carregar\("dados\/modelo_necessidades\.json"\)/.test(blocoModelo), "o classificador é um arquivo estático local");
+assert(/function responderDuvida\([\s\S]*?prepararOrientador\(\)/.test(appFonte), "a resposta usa o orientador local");
+assert(/addEventListener\("focus",[\s\S]*?prepararOrientador\(\)/.test(appFonte), "os modelos só começam a carregar quando a usuária entra na caixa");
+assert(/sua mensagem não é enviada nem guardada/.test(appFonte), "a caixa por área informa o processamento local");
+
+function blocoFuncao(nome) {
+  const inicio = appFonte.indexOf("function " + nome);
+  assert(inicio >= 0, "função de navegação encontrada: " + nome);
+  const proxima = appFonte.indexOf("\n  function ", inicio + 10);
+  return appFonte.slice(inicio, proxima < 0 ? appFonte.length : proxima);
+}
+["mostrarInicio", "mostrarArea", "mostrarVista"].forEach((nome) => {
+  assert(/limparDuvida\(\)/.test(blocoFuncao(nome)), nome + " apaga o texto livre ao sair da tela atual");
+});

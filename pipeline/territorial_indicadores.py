@@ -9,8 +9,7 @@ Entradas (todas já existentes; nada é baixado nem enviado):
   Exceção documentada: web/dados/cep_indice.json é lido SÓ para localizar o CEP cadastral de cada equipamento público no cenário
   "com_centro_do_cep" (a mesma regra de pipeline/exposicao_distancia.py). Nenhum CEP é gravado na saída.
 
-As distâncias NÃO usam lógica nova: reaproveitam o centroide, a distância de Haversine e a regra de localização dos serviços de
-pipeline/analise_territorial.py, e o resumo de pipeline/exposicao_distancia.py. O script confere o resultado contra
+As distâncias usam o ponto representativo interno de pipeline/analise_territorial.py: o centroide matemático é preservado quando está dentro do setor; nos casos externos identificados pela auditoria da geometria atual, usa-se o ponto interno mais próximo. A distância continua sendo Haversine e a regra de localização dos serviços permanece a mesma. O script confere o resultado contra
 web/dados/exposicao_distancia.json e se recusa a gravar se houver qualquer diferença.
 
 Determinístico: mesma entrada, mesma saída. O carimbo da saída é derivado do hash do conteúdo das entradas (sem data variável).
@@ -28,6 +27,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import analise_territorial as at  # noqa: E402
+from auditoria_centroides import _centro_atual  # noqa: E402
 import exposicao_distancia as ed  # noqa: E402
 from privacidade_territorial import setor_suprimido  # noqa: E402
 
@@ -112,22 +112,34 @@ def equipamentos(linhas: list, indice_cep: dict, escolas: list[dict], localizaca
             tipo, sub = at.CATEGORIAS[cat]
             if r.get("tipo") != tipo or r.get("subtipo") != sub:
                 continue
-            xy_catalogo = coord_do_catalogo(r.get("lat"), r.get("lon"))
-            xy_cep = at.coordenada_do_servico({"lat": None, "lon": None, "cep": r.get("cep")}, indice_cep) if not xy_catalogo else None
+            xy_catalogo = at.coordenada_catalogo_verificada(r, localizacao_registro)
+            xy_cep = at.coordenada_do_servico({"id": r.get("id"), "lat": None, "lon": None, "cep": r.get("cep")}, indice_cep) if not xy_catalogo else None
             cep = "".join(ch for ch in str(r.get("cep") or "") if ch.isdigit())
             item_cep = indice_cep.get(cep) if cep else None
             raio_cep = float(item_cep[2]) if xy_cep and item_cep and len(item_cep) > 2 else (None if xy_cep else 0.0)
             registro = localizacao_registro.get(r["id"], {})
             if registro.get("lat") and registro.get("lon") and xy_catalogo:
                 coord_registro = coord_do_catalogo(registro["lat"], registro["lon"])
-                if coord_registro != xy_catalogo:
+                if coord_registro != (round(xy_catalogo[0], 5), round(xy_catalogo[1], 5)):
                     raise ValueError("proveniência de localização diverge do catálogo para %s" % r["id"])
-            metodo = registro.get("metodo") or ("catalogo_sem_registro_de_proveniencia" if xy_catalogo else ("centroide_cep" if xy_cep else "pendente"))
-            confianca = registro.get("confianca") or ("nao_registrada" if xy_catalogo else ("aproximada_operacional" if xy_cep else "nao_registrada"))
-            fonte = ("servicos_manuais.csv + localizacao_registro.csv" if registro.get("metodo") else
-                     ("servicos_manuais.csv (proveniência não registrada)" if xy_catalogo else ("CNEFE/índice CEP" if xy_cep else None)))
+            if xy_catalogo:
+                metodo = registro["metodo"]
+                confianca = registro["confianca"]
+                fonte = "servicos_manuais.csv + localizacao_registro.csv"
+            elif xy_cep:
+                metodo = "centroide_cep"
+                confianca = "aproximada_operacional"
+                fonte = "CNEFE/índice CEP"
+            elif coord_do_catalogo(r.get("lat"), r.get("lon")):
+                metodo = "catalogo_sem_registro_de_proveniencia"
+                confianca = "nao_registrada"
+                fonte = "servicos_manuais.csv (coordenada não utilizada por falta de proveniência)"
+            else:
+                metodo = "pendente"
+                confianca = "nao_registrada"
+                fonte = None
             saida.append({"id": r["id"], "nome": r["nome"], "categoria": cat, "xy_catalogo": xy_catalogo,
-                          "xy_cep": xy_cep, "raio_catalogo_m": 0.0 if registro.get("metodo") and registro.get("confianca") else None, "raio_cep_m": raio_cep,
+                          "xy_cep": xy_cep, "raio_catalogo_m": 0.0 if xy_catalogo else None, "raio_cep_m": raio_cep,
                           "metodo_localizacao": metodo, "confianca_localizacao": confianca,
                           "data_aplicacao_localizacao": registro.get("aplicado_em"), "fonte_localizacao": fonte})
 
@@ -204,14 +216,17 @@ def gerar(dados: dict) -> dict:
     feicoes = sorted(geo["features"], key=lambda f: f["properties"]["setor"])
     equip = equipamentos(dados["catalogo"], dados["indice_cep"], ent["escolas_municipais.json"].get("escolas", []), dados["localizacao_registro"])
 
-    # Posição representativa de cada setor: a mesma de pipeline/analise_territorial.py (centroide geométrico).
+    # Posição representativa: centroide quando interno; ponto interno corrigido nos 9 casos externos.
     setores = []
     centroides_fora = 0
     for f in feicoes:
         pr = f["properties"]
+        lat_antigo, lon_antigo = _centro_atual(f["geometry"])
+        if not at.contem(f["geometry"], lon_antigo, lat_antigo):
+            centroides_fora += 1
         lat, lon = at.centro(f["geometry"])
         if not at.contem(f["geometry"], lon, lat):
-            centroides_fora += 1
+            raise ValueError("Ponto representativo de produção fora do setor %s" % pr["setor"])
         suprimido = setor_suprimido(pr)
         setores.append({"id": pr["setor"], "bairro": pr.get("bairro") or None,
                         "pessoas": None if suprimido else int(pr["pessoas"]),
@@ -300,14 +315,14 @@ def gerar(dados: dict) -> dict:
             "entradas_geradas_em": {"setores.geojson": geo["meta"]["gerado_em"], "territorio.json": meta_terr["gerado_em"],
                                     "exposicao_distancia.json": meta_expo["gerado_em"], "analise_territorial.json": ent["analise_territorial.json"]["meta"]["gerado_em"],
                                     "escolas_municipais.json": ent["escolas_municipais.json"]["meta"]["gerado_em"]},
-            "auditoria_centros": {"metodo_atual": "centroide geométrico do maior componente do MultiPolygon, selecionado pelo número de vértices do anel externo; cálculo usa somente o anel externo", "setores_auditados": len(setores), "centroides_fora_do_poligono": centroides_fora, "substituicao_automatica": False, "observacao": "A comparação com ponto interno representativo e a avaliação do impacto nas distâncias permanecem pendentes. Nenhum centro foi substituído."},
+            "auditoria_centros": {"metodo_atual": "centroide matemático anterior, calculado no maior anel externo", "setores_auditados": len(setores), "centroides_fora_do_poligono": centroides_fora, "substituicao_automatica": True, "observacao": "O ponto interno representativo foi adotado nos %d setores cujo centroide matemático ficava fora; os %d centroides internos foram preservados." % (centroides_fora, len(setores) - centroides_fora)},
             "metodo": ("Setor censitário como unidade. Pessoas e domicílios: V0001 = total de pessoas; V0002 = total de domicílios (DPPO + DPPV + DPPUO + DPIO + DCCM + DCSM), conforme a Nota metodológica n. 06 dos Agregados por Setores Censitários do Censo 2022. "
-                       "Densidade e área: valores de territorio.json. CRAS/UBS: coordenadas em servicos_manuais.csv e método, confiança e data em localizacao_registro.csv quando registrados; ausência de registro não equivale a confiança alta. Escolas: web/dados/escolas_municipais.json, campo localizacao_mapa, preservando método, precisão, fonte e raio. "
-                       "Distância central: Haversine (raio 6371,0088 km) do centroide atual do setor ao equipamento elegível mais próximo. Para localizações com raio operacional r, o envelope é d_min=max(0,d-r) e d_max=d+r; para várias referências, usa-se o menor limite inferior e o menor limite superior. "
+                       "Densidade e área: valores de territorio.json. CRAS/UBS: coordenadas do catálogo só são aceitas quando latitude, longitude, método e confiança coincidem com localizacao_registro.csv; sem proveniência, usa-se o centro do CEP institucional, com raio do índice, ou o equipamento fica pendente. Escolas: web/dados/escolas_municipais.json, campo localizacao_mapa, preservando método, precisão, fonte e raio. "
+                       "Distância central: Haversine (raio 6371,0088 km) do ponto representativo interno do setor ao equipamento elegível mais próximo. Para localizações com raio operacional r, o envelope é d_min=max(0,d-r) e d_max=d+r; para várias referências, usa-se o menor limite inferior e o menor limite superior. "
                        "O envelope é geométrico, não intervalo de confiança. Quando o raio não está documentado, o intervalo é omitido e a distância central permanece identificada como estimativa. Os resumos centrais continuam conferidos contra web/dados/exposicao_distancia.json."),
             "metodologia_incerteza": {"unidade_raio": "metros", "formula": "d_min=max(0,d-r); d_max=d+r",
                                      "interpretacao": "Envelope geométrico operacional, não intervalo de confiança estatístico.",
-                                     "origem_raio": "Escolas: localizacao_mapa.raio_m em escolas_municipais.json. CRAS/UBS sem coordenada individual: terceiro elemento do índice CEP. Coordenadas individuais com método documentado não recebem raio artificial. Sem método/proveniência suficiente, o raio é desconhecido e o envelope não é publicado.",
+                                     "origem_raio": "Escolas: localizacao_mapa.raio_m em escolas_municipais.json. CRAS/UBS sem coordenada individual com proveniência registrada: terceiro elemento do índice CEP. Coordenadas com método documentado não recebem raio artificial. Sem método/proveniência suficiente, o raio é desconhecido e o envelope não é publicado.",
                                      "limite": "O raio aproxima a dispersão dos endereços associados ao CEP; não garante conter o equipamento nem é margem de erro validada pelo IBGE. Quando o raio não está documentado, o intervalo é omitido e a distância central permanece identificada como estimativa.",
                                      "comparacao": "Faixas sobrepostas não permitem afirmar qual equipamento é mais próximo."},
             "aviso_metodologico": AVISO_METODOLOGICO,
@@ -316,10 +331,12 @@ def gerar(dados: dict) -> dict:
             "ressalvas": [
                 "Por cautela estatística, os dados de população, domicílios, densidade e distâncias por setor são suprimidos nos %d setores com menos de 5 pessoas ou menos de 3 domicílios. Os agregados dos %d bairros afetados também são omitidos para reduzir risco de inferência por subtração. A geometria e os pontos institucionais permanecem." % (sum(1 for s in setores if s["suprimido_privacidade"]), len({s["bairro"] for s in setores if s["suprimido_privacidade"]})),
                 "O cenário com centro do CEP cadastral do equipamento é uma análise de sensibilidade: a posição é aproximada e não equivale à coordenada individual do catálogo.",
-                "A auditoria geométrica encontrou %d centroides fora dos respectivos polígonos em %d setores. O centroide atual não foi substituído: a alternativa interna e o impacto nas distâncias ainda precisam ser comparados antes de qualquer mudança." % (centroides_fora, len(setores)),
-                "A localização escolar é lida da base consolidada, com método, precisão, fonte e raio. Para CRAS/UBS, 22 dos 28 registros têm método e confiança documentados em localizacao_registro.csv; os outros 6 têm coordenadas no catálogo, mas sem registro explícito de proveniência ou raio conhecido.",
+                "A auditoria geométrica identificou %d centroides matemáticos fora dos respectivos polígonos em %d setores. A produção preserva os %d centroides internos e usa ponto representativo interno corrigido somente nos %d externos; esse ponto não é denominado centroide matemático." % (centroides_fora, len(setores), len(setores) - centroides_fora, centroides_fora),
+                "A localização escolar é lida da base consolidada, com método, precisão, fonte e raio. Para CRAS/UBS, 22 dos 28 registros têm método e confiança documentados em localizacao_registro.csv; os outros 6 não usam as coordenadas brutas do catálogo e recorrem ao CEP institucional generalizado quando disponível.",
                 "Categorias com cobertura incompleta de coordenadas têm distância superestimada.",
             ],
+            "metodo_ponto_setorial": "centroide matemático quando interno; ponto interno mais próximo quando externo (centroide_com_correcao_interna_minima_v1)",
+            "centroides_matematicos_originais_fora": centroides_fora,
             "conferencia": {"coincide_com_exposicao_distancia": True, "setores": len(setores), "pessoas": None, "setores_suprimidos": sum(1 for s in setores if s["suprimido_privacidade"])},
             "equipamentos_fora_da_malha": fora,
         },
