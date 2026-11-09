@@ -102,6 +102,10 @@ async function testarPagina(browser, caminho, largura, altura, mapa) {
     return {
       larguraDocumento: document.documentElement.scrollWidth,
       larguraViewport: viewport,
+      larguraBody: document.body.scrollWidth,
+      larguraBodyCliente: document.body.clientWidth,
+      overflowHtml: getComputedStyle(document.documentElement).overflowX,
+      overflowBody: getComputedStyle(document.body).overflowX,
       excedentes
     };
   });
