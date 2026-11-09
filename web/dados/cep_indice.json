@@ -4,7 +4,7 @@
   "municipio": "Rio Claro/SP (IBGE 3543907)",
   "gerado_em": "2026-10-11",
   "formato": "cep -> [latitude, longitude, raio_m, setor_censitario, n_enderecos]",
-  "ceps_de_setores_suprimidos_omitidos": 0,
+  "ceps_de_setores_suprimidos_omitidos": 3,
   "observacao_privacidade": "CEPs associados a setores protegidos pela decisão D4 não são publicados no índice."
  },
  "ceps": {
@@ -1106,13 +1106,6 @@
    150,
    "354390705000440P",
    29
-  ],
-  "13501600": [
-   -22.4308,
-   -47.5726,
-   1500,
-   "354390705000201P",
-   27
   ],
   "13501608": [
    -22.4369,
@@ -8100,13 +8093,6 @@
    "354390705000445P",
    24
   ],
-  "13506525": [
-   -22.41,
-   -47.541,
-   300,
-   "354390705000462P",
-   1
-  ],
   "13506528": [
    -22.405,
    -47.55,
@@ -8477,13 +8463,6 @@
    900,
    "354390705000385P",
    140
-  ],
-  "13506693": [
-   -22.418,
-   -47.549,
-   300,
-   "354390705000271P",
-   1
   ],
   "13506700": [
    -22.3977,
