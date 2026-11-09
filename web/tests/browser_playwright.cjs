@@ -49,7 +49,7 @@ async function testarPagina(browser, caminho, largura, altura, mapa) {
     assert.ok(foco, "Tab deve levar o foco ao mapa");
     const visivel = await page.evaluate(() => {
       const e = document.activeElement;
-      return !!e && e.matches(":focus-visible") && getComputedStyle(e).outlineStyle !== "none";
+      return !!e && !!document.querySelector("#mt-camada-foco .mt-anel-halo, #mt-camada-foco .mt-anel-nucleo");
     });
     assert.ok(visivel, "o foco do teclado deve ficar visível");
     await page.keyboard.press("ArrowRight");
