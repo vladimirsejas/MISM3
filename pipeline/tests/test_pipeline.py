@@ -211,17 +211,21 @@ def test_servicos_manuais_anexa_etapas_so_a_quem_esta_ligado():
     assert "etapas" not in servicos.servicos_manuais(df, {})[0]  # sem ligação, o cartão fica como estava
 
 
-def test_carregar_etapas_junta_ligacao_e_oferta_e_nao_leva_matriculas(tmp_path, capsys):
-    ligacao, oferta = tmp_path / "l.csv", tmp_path / "o.json"
+def test_carregar_etapas_usa_tabela_escola_local_e_nao_leva_matriculas(tmp_path, capsys):
+    ligacao, escola = tmp_path / "l.csv", tmp_path / "Tabela_Escola_2025_V2.csv"
     ligacao.write_text("id,inep,nome_catalogo,nome_censo,metodo\n"
                        "a,111,A,A CENSO,mesmas palavras\nb,222,B,B CENSO,mesmas palavras\n", encoding="utf-8")
-    oferta.write_text(json.dumps({"escolas": [
-        {"inep": "111", "oferece_creche": True, "oferece_pre_escola": False, "matriculas_creche": 80}]}), encoding="utf-8")
-    r = servicos.carregar_etapas(ligacao, oferta)
-    assert r == {"a": {"creche": True, "pre_escola": False, "fonte": "Censo Escolar 2025 (INEP)"}}  # sem número de matrículas
-    assert "b ligado ao INEP 222" in capsys.readouterr().out                                       # ligação órfã avisa
-    assert servicos.carregar_etapas(tmp_path / "nao_existe.csv", oferta) == {}
-
+    escola.write_text(
+        "CO_MUNICIPIO;CO_ENTIDADE;TP_SITUACAO_FUNCIONAMENTO;IN_COMUM_CRECHE;IN_COMUM_PRE\n"
+        "3543907;111;1;1;0\n"
+        "3543907;222;2;1;1\n"
+        "3550308;333;1;1;1\n",
+        encoding="utf-8",
+    )
+    r = servicos.carregar_etapas(ligacao, escola)
+    assert r == {"a": {"creche": True, "pre_escola": False, "fonte": "Censo Escolar 2025 (INEP)"}}
+    assert "b ligado ao INEP 222" in capsys.readouterr().out
+    assert servicos.carregar_etapas(tmp_path / "nao_existe.csv", escola) == {}
 
 def test_observacao_deixa_de_dizer_que_nao_se_sabe_a_etapa_so_nas_escolas_ligadas():
     obs = ('Escola municipal de Rio Claro. A página oficial "Unidades de ensino" lista a escola, ' + servicos.FRASE_SEM_ETAPAS +
