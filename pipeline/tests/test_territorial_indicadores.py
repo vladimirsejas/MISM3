@@ -84,7 +84,9 @@ def test_equipamentos_por_categoria_e_precisao(publicado):
         por.setdefault(e["categoria"], []).append(e)
     assert {c: len(v) for c, v in por.items()} == {"cras": 6, "ubs": 22, "escola": 68}
     assert {e["precisao"] for e in eq} <= {"catalogo", "centro_do_cep", "pendente"}
-    assert all(e["precisao"] == "catalogo" for e in por["cras"] + por["ubs"])
+    assert sum(e["precisao"] == "catalogo" for e in por["cras"] + por["ubs"]) == 22
+    assert sum(e["precisao"] == "centro_do_cep" for e in por["cras"] + por["ubs"]) == 6
+    assert all(e["precisao"] != "pendente" for e in por["cras"] + por["ubs"])
     escolas = [e["precisao"] for e in por["escola"]]
     assert escolas.count("catalogo") == 33 and escolas.count("centro_do_cep") == 35 and escolas.count("pendente") == 0
     assert all((e["precisao"] == "pendente") == (e["lat"] is None) for e in eq)
@@ -184,17 +186,19 @@ def test_base_escolar_consolidada_preserva_raios_e_proveniencia(publicado):
     individuais = [e for e in escolas if e["precisao"] == "catalogo"]
     assert all(e["raio_incerteza_m"] == 0 for e in individuais)
 
-def test_proveniencia_de_cras_ubs_nao_presume_confianca(publicado):
+def test_proveniencia_de_cras_ubs_usa_cep_quando_catalogo_nao_tem_registro(publicado):
     servicos = [e for e in publicado["equipamentos"] if e["categoria"] in {"cras", "ubs"}]
     registrados = [e for e in servicos if e["confianca_localizacao"] in {"alta", "media"}]
-    sem_registro = [e for e in servicos if e["confianca_localizacao"] == "nao_registrada"]
+    fallback_cep = [e for e in servicos if e["metodo_localizacao"] == "centroide_cep"]
     assert len(servicos) == 28
     assert len(registrados) == 22
     assert sum(e["confianca_localizacao"] == "alta" for e in registrados) == 11
     assert sum(e["confianca_localizacao"] == "media" for e in registrados) == 11
-    assert len(sem_registro) == 6
-    assert all(e["metodo_localizacao"] == "catalogo_sem_registro_de_proveniencia" for e in sem_registro)
-    assert all(e["raio_incerteza_m"] is None for e in sem_registro)
+    assert len(fallback_cep) == 6
+    assert all(e["precisao"] == "centro_do_cep" for e in fallback_cep)
+    assert all(e["confianca_localizacao"] == "aproximada_operacional" for e in fallback_cep)
+    assert all(e["raio_incerteza_m"] > 0 for e in fallback_cep)
+    assert all(e["fonte_localizacao"] == "CNEFE/índice CEP" for e in fallback_cep)
     assert all(e["data_aplicacao_localizacao"] for e in registrados)
     assert all(e["fonte_localizacao"] == "servicos_manuais.csv + localizacao_registro.csv" for e in registrados)
 
