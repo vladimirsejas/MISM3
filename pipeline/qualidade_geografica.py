@@ -331,16 +331,27 @@ def carregar(dados=DADOS, catalogo=CATALOGO, localizacao=LOCALIZACAO):
 
 def relatorio_markdown(resultado):
     e, g, a = resultado["equipamentos"], resultado["geometrias"], resultado["areas"]
+    t = resultado["topologia"]
     linhas = ["# Relatório de qualidade geográfica", "",
               "## Geometrias", "",
               f"- Setores: {g['total']}; códigos únicos: {g['codigos_unicos']}",
               f"- Geometrias com erro estrutural: {len(g['geometrias_com_erro_estrutural'])}",
               f"- Códigos duplicados: {len(g['duplicados'])}", "",
+              "## Topologia da malha", "",
+              f"- Avaliação contra limite municipal IBGE: {t['avaliacao_lacunas']}",
+              f"- Interseções entre setores acima de 1 m²: {len(t['sobreposicoes'])}",
+              f"- Interseções acima do limiar de {t['limiar_relevancia_sobreposicao_m2']:.0f} m²: {len(t['sobreposicoes_relevantes'])}",
+              f"- Área total das interseções: {t['area_sobreposicoes_total_m2']} m²",
+              f"- Maior interseção: {t['area_sobreposicao_maxima_m2']} m²",
+              f"- Área de lacunas dentro do município: {t.get('area_lacunas_km2', 'não avaliada')} km²",
+              f"- Área de setores fora do limite municipal: {t.get('area_setores_fora_municipio_km2', 'não avaliada')} km²",
+              f"- Área de atributo do limite IBGE 2022: {t.get('limite_area_atributo_ibge_km2', 'não informada')} km²", "",
+              "As interseções são registradas como encontradas; o limiar apenas destaca ocorrências para revisão e não elimina as menores do total.", "",
               "## Área territorial", "",
               f"- Soma das áreas setoriais: {a['soma_setorial_km2']} km²",
               f"- Referência municipal: {a['referencia_municipal_km2']} km²",
               f"- Diferença do total publicado: {a['diferenca_km2']} km² ({a['diferenca_percentual']}%)",
-              f"- Recalculo local (método atual): {a['recalculo_local_km2']} km²",
+              f"- Recalculo plano local aproximado: {a['recalculo_local_km2']} km²",
               f"- Recalculo geodésico elipsoidal GRS80: {a['recalculo_geodesico_km2']} km²",
               f"- Diferença geodésica para a referência: {a['diferenca_recalculo_geodesico_vs_referencia_km2']} km²", "",
               "## Equipamentos e proveniência", "",
