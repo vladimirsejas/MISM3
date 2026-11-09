@@ -16,6 +16,7 @@ Saida: web/dados/cep_indice.json
 from __future__ import annotations
 
 import json
+import math
 import re
 import sys
 import zipfile
@@ -111,18 +112,59 @@ def id_do_setor(valor) -> str:
     return m.group(1) if m else s
 
 
+def _registro_cep_valido(cep, valor) -> bool:
+    """Valida o contrato público antes de qualquer decisão de divulgação."""
+    if not re.fullmatch(r"\\d{8}", str(cep or "")):
+        return False
+    if not isinstance(valor, (list, tuple)) or len(valor) != 5:
+        return False
+    lat, lon, raio, setor, quantidade = valor
+    if not isinstance(setor, str) or not setor.strip():
+        return False
+    if isinstance(quantidade, bool) or not isinstance(quantidade, (int, float)):
+        return False
+    if not math.isfinite(float(quantidade)) or quantidade < 0 or int(quantidade) != quantidade:
+        return False
+    for numero, minimo, maximo in ((lat, -90, 90), (lon, -180, 180), (raio, 0, float("inf"))):
+        if isinstance(numero, bool) or not isinstance(numero, (int, float)) or not math.isfinite(float(numero)):
+            return False
+        if numero < minimo or numero > maximo:
+            return False
+    return True
+
+
+def _setores_geojson(geojson: dict) -> tuple[set[str], set[str], dict[str, dict]]:
+    """Retorna setores conhecidos, protegidos e geometrias; ausência de prova não libera publicação."""
+    conhecidos, protegidos, geometrias = set(), set(), {}
+    for feature in geojson.get("features", []):
+        propriedades = feature.get("properties") or {}
+        codigo = id_do_setor(propriedades.get("setor"))
+        if not codigo:
+            continue
+        conhecidos.add(codigo)
+        if setor_suprimido(propriedades):
+            protegidos.add(codigo)
+        geometria = feature.get("geometry")
+        if geometria:
+            geometrias[codigo] = geometria
+    return conhecidos, protegidos, geometrias
+
+
 def filtrar_ceps_de_setores_suprimidos(indice: dict, geojson: dict) -> tuple[dict, int]:
-    """Remove do índice público qualquer CEP associado a setor protegido pela decisão D4."""
-    protegidos = {
-        id_do_setor(f.get("properties", {}).get("setor"))
-        for f in geojson.get("features", [])
-        if setor_suprimido(f.get("properties", {}))
-    }
-    protegidos.discard("")
-    filtrado = {
-        cep: valor for cep, valor in indice.items()
-        if len(valor) < 4 or not valor[3] or id_do_setor(valor[3]) not in protegidos
-    }
+    """Mantém apenas CEPs com vínculo setorial verificável e setor não protegido pela D4.
+
+    Um CEP sem setor, com código ausente da malha, registro inválido ou setor protegido é
+    omitido. Não é possível presumir que um setor desconhecido atende à regra D4.
+    """
+    conhecidos, protegidos, _ = _setores_geojson(geojson)
+    filtrado = {}
+    for cep, valor in indice.items():
+        if not _registro_cep_valido(cep, valor):
+            continue
+        setor = id_do_setor(valor[3])
+        if not setor or setor not in conhecidos or setor in protegidos:
+            continue
+        filtrado[cep] = list(valor)
     return filtrado, len(indice) - len(filtrado)
 
 
@@ -172,28 +214,42 @@ def centroide_e_raio_do_setor(geom: dict) -> tuple[float, float, int] | None:
 
 
 def generalizar_ceps_com_poucos_enderecos(indice: dict, geojson: dict, minimo: int = MINIMO_ENDERECOS_POR_CEP) -> tuple[dict, int, int]:
-    """CEP com menos de `minimo` endereços deixa de publicar o ponto dos endereços: passa a apontar para o centro do setor censitário.
-
-    Devolve (indice novo, quantos foram generalizados, quantos foram omitidos). Fail-closed: se o setor não existe no GeoJSON ou não tem
-    geometria utilizável, o CEP é omitido em vez de manter o ponto original. CEPs só da lista (setor vazio, n_enderecos 0) não têm setor e
-    também são omitidos."""
-    geoms = {id_do_setor(f.get("properties", {}).get("setor")): f.get("geometry") or {} for f in geojson.get("features", [])}
+    """Generaliza CEPs com poucos endereços e omite registros sem prova setorial/geometria."""
+    conhecidos, protegidos, geoms = _setores_geojson(geojson)
     novo, generalizados, omitidos = {}, 0, 0
     for cep, valor in indice.items():
-        if len(valor) < 5 or not isinstance(valor[4], (int, float)) or valor[4] >= minimo:
-            novo[cep] = valor
+        if not _registro_cep_valido(cep, valor):
+            omitidos += 1
             continue
-        setor = id_do_setor(valor[3]) if len(valor) > 3 else ""
+        setor = id_do_setor(valor[3])
+        if not setor or setor not in conhecidos or setor in protegidos:
+            omitidos += 1
+            continue
+        quantidade = int(valor[4])
+        if quantidade >= minimo:
+            novo[cep] = list(valor)
+            continue
         resumo = centroide_e_raio_do_setor(geoms[setor]) if setor in geoms else None
         if resumo is None:
             omitidos += 1
             continue
         lat, lon, raio = resumo
-        resultado = [lat, lon, max(raio, valor[2] if isinstance(valor[2], (int, float)) else 0), valor[3], valor[4]]
-        if resultado != valor:  # só conta o que de fato mudou: reaplicar a regra a um índice já saneado não altera nada
+        resultado = [lat, lon, max(raio, valor[2]), valor[3], quantidade]
+        if resultado != list(valor):
             generalizados += 1
         novo[cep] = resultado
     return novo, generalizados, omitidos
+
+
+def sanear_indice_para_publicacao(indice: dict, geojson: dict) -> tuple[dict, dict]:
+    """Aplica D4, vínculo setorial verificável e generalização em qualquer caminho de geração."""
+    filtrado, removidos_validacao = filtrar_ceps_de_setores_suprimidos(indice, geojson)
+    final, generalizados, omitidos_generalizacao = generalizar_ceps_com_poucos_enderecos(filtrado, geojson)
+    return final, {
+        "omitidos_validacao_setorial": removidos_validacao,
+        "generalizados_poucos_enderecos": generalizados,
+        "omitidos_generalizacao": omitidos_generalizacao,
+    }
 
 
 def sanear_indice_publicado(caminho_indice: Path, caminho_geojson: Path) -> int:
@@ -202,13 +258,17 @@ def sanear_indice_publicado(caminho_indice: Path, caminho_geojson: Path) -> int:
     Devolve quantas entradas foram alteradas ou removidas. É idempotente: rodar de novo não altera nada."""
     dados = json.loads(caminho_indice.read_text(encoding="utf-8"))
     geojson = json.loads(caminho_geojson.read_text(encoding="utf-8"))
-    ceps, removidos = filtrar_ceps_de_setores_suprimidos(dados["ceps"], geojson)
-    ceps, generalizados, omitidos = generalizar_ceps_com_poucos_enderecos(ceps, geojson)
+    ceps, estatisticas = sanear_indice_para_publicacao(dados["ceps"], geojson)
+    removidos = estatisticas["omitidos_validacao_setorial"]
+    generalizados = estatisticas["generalizados_poucos_enderecos"]
+    omitidos = estatisticas["omitidos_generalizacao"]
     if removidos or generalizados or omitidos:
         dados["ceps"] = ceps
         meta = dados.setdefault("meta", {})
-        meta["ceps_de_setores_suprimidos_omitidos"] = meta.get("ceps_de_setores_suprimidos_omitidos", 0) + removidos + omitidos
-        meta["ceps_generalizados_por_poucos_enderecos"] = sum(1 for v in ceps.values() if len(v) > 4 and v[4] < MINIMO_ENDERECOS_POR_CEP)  # estado atual, não acumulado
+        meta["ceps_sem_vinculo_setorial_verificavel_ou_protegido_omitidos"] = removidos
+        meta["ceps_generalizados_por_poucos_enderecos"] = sum(1 for v in ceps.values() if v[4] < MINIMO_ENDERECOS_POR_CEP)
+        meta["ceps_poucos_enderecos_sem_geometria_omitidos"] = omitidos
+        meta["ceps_so_da_lista"] = [c for c in meta.get("ceps_so_da_lista", []) if c in ceps]
         meta["regra_poucos_enderecos"] = ("CEP com menos de %d endereços não publica o ponto dos endereços: a coordenada é o centro do setor censitário e o raio cobre o setor "
                                           "(entre %d e %d m). CEP sem setor utilizável é omitido." % (MINIMO_ENDERECOS_POR_CEP, RAIO_MINIMO_GENERALIZADO_M, RAIO_MAXIMO_GENERALIZADO_M))
         # mantém o formato legível do arquivo publicado (indent=1 e quebra final) para o diff mostrar só o que mudou
@@ -268,7 +328,8 @@ def main() -> None:
     if not geo_path.exists():
         erro("Gere primeiro web/dados/setores.geojson; o índice CEP precisa respeitar a supressão D4.")
     geojson = json.loads(geo_path.read_text(encoding="utf-8"))
-    indice, ceps_suprimidos = filtrar_ceps_de_setores_suprimidos(indice, geojson)
+    indice, estatisticas = sanear_indice_para_publicacao(indice, geojson)
+    novos = {cep: valor for cep, valor in novos.items() if cep in indice}
     if lista:
         print("  %d CEPs a mais vieram da lista de CEPs (o CNEFE não os cobre)." % len(novos))
     else:
@@ -280,16 +341,19 @@ def main() -> None:
             "gerado_em": agora_iso(),
             "formato": "cep -> [latitude, longitude, raio_m, setor_censitario, n_enderecos]",
             "ceps_so_da_lista": sorted(novos),
-            "observacao_lista": "CEPs em 'ceps_so_da_lista' vêm de um ponto único da lista de CEPs (n_enderecos = 0, setor vazio, raio %d m)." % RAIO_LISTA_M,
-            "ceps_de_setores_suprimidos_omitidos": ceps_suprimidos,
-            "observacao_privacidade": "CEPs associados a setores protegidos pela decisão D4 não são publicados no índice.",
+            "observacao_lista": "CEPs sem vínculo setorial verificável não são publicados no índice.",
+            "ceps_sem_vinculo_setorial_verificavel_ou_protegido_omitidos": estatisticas["omitidos_validacao_setorial"],
+            "ceps_generalizados_por_poucos_enderecos": estatisticas["generalizados_poucos_enderecos"],
+            "ceps_poucos_enderecos_sem_geometria_omitidos": estatisticas["omitidos_generalizacao"],
+            "observacao_privacidade": "CEPs sem setor verificável, associados a setores protegidos ou com registros inválidos são omitidos. CEPs com menos de 3 endereços são generalizados para o centro do setor; se a geometria não for utilizável, são omitidos.",
         },
         "ceps": indice,
     }
     salvar_json(saida, WEB_DADOS / "cep_indice.json")
     pequenos = sum(1 for v in indice.values() if v[4] < POUCOS)
-    print("  %d CEPs indexados; %d associados a setores protegidos foram omitidos." % (len(indice), ceps_suprimidos))
-    print("  %d CEPs com menos de %d endereços permanecem com área borrada." % (pequenos, POUCOS))
+    print("  %d CEPs indexados; %d sem vínculo setorial verificável ou protegidos foram omitidos." %
+          (len(indice), estatisticas["omitidos_validacao_setorial"]))
+    print("  %d CEPs com menos de %d endereços foram generalizados." % (pequenos, POUCOS))
     print("Proximo passo: python pipeline/servicos.py")
 
 
