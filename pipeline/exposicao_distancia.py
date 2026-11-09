@@ -62,7 +62,7 @@ def resumir_setores(distancias, limiares):
     return {"setores": total, "mediana_km": round(mediana, 2), "p90_km": round(p90, 2), "acima_de": acima}
 
 
-def calcular(geojson, servicos, indice_cep, usar_cep, limiares=LIMIARES_KM):
+def calcular(geojson, servicos, indice_cep, usar_cep, limiares=LIMIARES_KM, localizacao_registro=None):
     por_cat = {c: [] for c in at.CATEGORIAS}
     totais = {c: 0 for c in at.CATEGORIAS}
     for s in servicos:
@@ -71,12 +71,10 @@ def calcular(geojson, servicos, indice_cep, usar_cep, limiares=LIMIARES_KM):
         for c, (tipo, sub) in at.CATEGORIAS.items():
             if s.get("tipo") == tipo and s.get("subtipo") == sub:
                 totais[c] += 1
-                if s.get("lat") is not None and s.get("lon") is not None:
-                    xy = (float(s["lat"]), float(s["lon"]))
-                elif usar_cep:
-                    xy = at.coordenada_do_servico(s, indice_cep)
+                if usar_cep:
+                    xy = at.coordenada_do_servico(s, indice_cep, localizacao_registro)
                 else:
-                    xy = None
+                    xy = at.coordenada_catalogo_verificada(s, localizacao_registro)
                 if xy:
                     por_cat[c].append(xy)
     setores = []
@@ -102,7 +100,7 @@ def calcular(geojson, servicos, indice_cep, usar_cep, limiares=LIMIARES_KM):
     return saida
 
 
-def gerar(geojson, servicos, indice_cep, hoje=None):
+def gerar(geojson, servicos, indice_cep, hoje=None, localizacao_registro=None):
     return {
         "meta": {
             "fonte": "IBGE, Censo Demográfico 2022 (setores) e catálogo verificado do Observatório da Mulher",
@@ -112,7 +110,7 @@ def gerar(geojson, servicos, indice_cep, hoje=None):
             "pessoas_total": None,
             "setores_suprimidos": sum(1 for f in geojson["features"] if setor_suprimido(f["properties"])),
         },
-        "cenarios": {nome: calcular(geojson, servicos, indice_cep, usar) for nome, usar in CENARIOS.items()},
+        "cenarios": {nome: calcular(geojson, servicos, indice_cep, usar, localizacao_registro=localizacao_registro) for nome, usar in CENARIOS.items()},
     }
 
 
@@ -125,7 +123,7 @@ def main() -> int:
     cat = json.loads((DADOS / "catalogo_manual.json").read_text(encoding="utf-8"))["servicos"]
     arq = DADOS / "cep_indice.json"
     indice = json.loads(arq.read_text(encoding="utf-8")).get("ceps", {}) if arq.exists() else {}
-    saida = gerar(geo, cat, indice)
+    localizacao_registro = at.carregar_localizacao_registro()\n    saida = gerar(geo, cat, indice, localizacao_registro=localizacao_registro)
     destino = DADOS / "exposicao_distancia.json"
     destino.write_text(json.dumps(saida, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     print("Gravado %s; contagens populacionais não são publicadas." % destino.relative_to(RAIZ))
