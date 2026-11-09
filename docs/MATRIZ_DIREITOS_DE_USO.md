@@ -38,6 +38,19 @@ A data de consulta é 2026-11-09. Quando a URL estiver como **não verificado**,
 | Prefeitura — Manual de Identidade Visual | https://rioclaro.sp.gov.br/wp-content/uploads/2024/04/MANUAL_DE_IDENTIDADE_VISUAL.pdf | Manual aberto; orienta aplicação da marca, mas não prova autorização específica para este projeto usar/redistribuir o brasão. |
 | IBGE — FTP malha SP 2022 | https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios/malha_com_atributos/setores/shp/UF/SP/SP_setores_CD2022.zip | Origem oficial identificada; a página de download não foi tratada como licença de redistribuição. |
 
+## INEP e CNES — distinção entre privacidade, finalidade pública e licença
+
+A classificação foi refinada em 09/11/2026 após abertura das fontes oficiais. **O MISM3 não publica microdados pessoais do INEP**: a rotina `pipeline/oferta_educacao_infantil.py` lê as tabelas localmente, filtra Rio Claro, calcula totais por rede e grava apenas `meta` e `totais_por_rede`; a lista detalhada fica em memória e não é serializada. O teste e a revisão do arquivo publicado devem preservar essa característica.
+
+A Lei nº 15.017/2024 determina que dados e microdados educacionais sejam tratados, divulgados e compartilhados, sempre que possível, de forma anonimizada, observados os parâmetros de anonimização. A ANPD publicou que o INEP implementou medidas para reduzir riscos de privacidade e elaborou RIPD, encerrando o processo de fiscalização. Isso sustenta a finalidade pública e a abordagem de anonimização, mas não transforma automaticamente microdados brutos em material redistribuível por terceiros nem substitui a auditoria de risco das saídas locais.
+
+- Microdados brutos INEP: **uso analítico local sim; redistribuição pelo MISM3 não autorizada nesta matriz**.
+- `web/dados/oferta_educacao_infantil.json`: **PODE SER PUBLICADO SOMENTE AGREGADO**, porque o arquivo efetivo contém apenas totais por rede, sem linhas por escola ou estudante. A decisão não cobre qualquer nova granularidade.
+- `catalogo/inep_escolas.csv` e `web/dados/escolas_municipais.json`: uso interno permitido para correspondência e análise, mas redistribuição permanece pendente por serem tabelas/cadastros institucionais de fontes mistas; não contêm matrículas individuais.
+- CNES: a Portaria nº 1.646/2015 define o cadastro como documento público e sistema oficial e prevê disponibilizar informações sobre estabelecimentos, serviços e capacidade instalada à sociedade e pesquisadores. O recurso de download no Portal SUS não identifica uma licença específica: o campo de licença é texto genérico. Assim, o uso analítico de dados institucionais é registrado como sim; a redistribuição do arquivo bruto continua não autorizada até confirmação da licença. A pendência do CNES é principalmente de direitos de uso, não de dados de pacientes.
+
+**Não confundir:** anonimização e agregação tratam risco de identificação; licença/termos tratam condições de reutilização e redistribuição. São verificações complementares, não substitutas.
+
 ## Matriz completa por arquivo e fonte
 
 O CSV ao lado é a versão tabular canônica, com uma linha por arquivo versionado identificado e uma linha por fonte externa independente. A tabela abaixo repete os registros para leitura e revisão.
