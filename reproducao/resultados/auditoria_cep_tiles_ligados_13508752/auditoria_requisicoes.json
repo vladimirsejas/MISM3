@@ -1,5 +1,0 @@
-{
-  "status": "redacted_for_publication",
-  "reason": "Identificadores de CEP, coordenadas aproximadas e rastros brutos de requisições foram removidos da versão pública.",
-  "reproduction": "Executar localmente com MISM3_AUDIT_CEP e MISM3_AUDIT_OUTPUT_DIR; saídas detalhadas ficam fora do repositório."
-}

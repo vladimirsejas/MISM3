@@ -10,7 +10,7 @@ Material de reprodução e auditoria do MISM3. Tudo aqui foi criado sem modifica
 | `rodar_variantes.js` | Cópia adaptada de `avaliacao/rodar_sistema.js` e `avaliacao/sistema_v2.js`: executa só as perguntas que recebe e liga ou desliga componentes sem alterar `web/`. |
 | `ablacao.py` | Tarefa 1: ablação (9 condições e uma linha de base TF-IDF). Gera `resultados/ablacao.md` e `resultados/ablacao.csv`. |
 | `metricas_por_necessidade.py` | Tarefa 2: matriz de confusão por área, precisão, revocação, F1, macro-F1, acurácia balanceada e métricas do detector de perigo. Gera `resultados/metricas_por_necessidade.md` e os CSV. |
-| `auditoria_privacidade.py` | Tarefa 3: auditoria de rede e de armazenamento com Playwright (Chromium). Gera `auditoria_privacidade.md` e `resultados/auditoria_requisicoes.json`. |
+| `auditoria_privacidade.py` | Tarefa 3: auditoria de rede e de armazenamento com Playwright (Chromium). As saídas detalhadas (relatório e registro de requisições, com URLs de tiles e CEPs de teste) NÃO são versionadas (`.gitignore`); o resumo público, sem identificadores, é `AUDITORIA_REDE_RESUMO.md`. |
 | `gerar_ambiente.py` | Tarefa 4: gera `AMBIENTE.md` (versões, comandos, tamanhos, análise de sementes). |
 | `resultados/` | Saídas geradas (Markdown, CSV e JSON), com o comando, o commit, as versões e a semente registrados em cada relatório. |
 
