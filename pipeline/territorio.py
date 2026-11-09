@@ -29,6 +29,7 @@ import json
 import math
 import sys
 from privacidade_territorial import setor_suprimido
+from pyproj import Geod
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -36,9 +37,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from analise_territorial import centro, haversine_km  # noqa: E402  (centroide do setor e distância em linha reta)
 from common import WEB_DADOS, agora_iso, erro, salvar_json  # noqa: E402
 
-LAT0 = -22.40                       # latitude central de Rio Claro, para o plano local
-KM_POR_GRAU_LAT = 110.574
-KM_POR_GRAU_LON = 111.320 * math.cos(math.radians(LAT0))
+GEOD = Geod(ellps="GRS80")
 MIN_DOMICILIOS = 20                 # abaixo disso, pessoas por domicílio não é confiável
 LIMITES_DENSIDADE = [500, 2000, 5000, 10000]        # hab/km²; 5 classes
 LIMITES_PESSOAS_POR_DOMICILIO = [2.0, 2.3, 2.6, 3.0]  # 5 classes
@@ -62,13 +61,16 @@ CATEGORIAS_SERVICO = {
 SEM_BAIRRO = "Sem bairro definido pelo IBGE"   # a malha do IBGE não traz bairro para parte dos setores (NM_BAIRRO vazio)
 IBGE_PESSOAS_2022 = 201418
 IBGE_AREA_KM2 = 498.403
+IBGE_AREA_ANO = 2025
 
 
 def area_do_anel_km2(anel) -> float:
-    soma = 0.0
-    for (x1, y1), (x2, y2) in zip(anel, anel[1:] + anel[:1]):
-        soma += (x1 * KM_POR_GRAU_LON) * (y2 * KM_POR_GRAU_LAT) - (x2 * KM_POR_GRAU_LON) * (y1 * KM_POR_GRAU_LAT)
-    return abs(soma) / 2
+    """Área geodésica no elipsoide GRS80, em km²."""
+    area, _ = GEOD.polygon_area_perimeter(
+        [float(p[0]) for p in anel],
+        [float(p[1]) for p in anel],
+    )
+    return abs(area) / 1_000_000
 
 
 def area_km2(geometria: dict) -> float:
