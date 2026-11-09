@@ -119,3 +119,48 @@ def test_seis_equipamentos_sem_metodo_mantem_raio_desconhecido():
     assert all(e["metodo_localizacao"] == "catalogo_sem_registro_de_proveniencia" for e in itens)
     assert all(e["confianca_localizacao"] == "nao_registrada" for e in itens)
     assert all(e["raio_incerteza_m"] is None for e in itens)
+
+
+
+def test_validador_identifica_auto_intersecao_em_poligono():
+    geo = {"features": [{
+        "properties": {"setor": "354390705000001"},
+        "geometry": {"type": "Polygon", "coordinates": [[
+            [-47.5, -22.4], [-47.4, -22.3], [-47.5, -22.3],
+            [-47.4, -22.4], [-47.5, -22.4],
+        ]]},
+    }]}
+    resultado = qg.validar_geometrias(geo)
+    assert resultado["geometrias_com_erro_estrutural"]
+    assert any("geometria_invalida" in p for p in resultado["geometrias_com_erro_estrutural"][0]["problemas"])
+
+
+def test_validador_identifica_sobreposicao_e_lacuna_com_limite_referencia():
+    def poligono(x0, x1):
+        return {"type": "Polygon", "coordinates": [[
+            [x0, -22.4], [x1, -22.4], [x1, -22.39], [x0, -22.39], [x0, -22.4],
+        ]]}
+
+    geo_overlap = {"features": [
+        {"properties": {"setor": "354390705000001"}, "geometry": poligono(-47.51, -47.49)},
+        {"properties": {"setor": "354390705000002"}, "geometry": poligono(-47.50, -47.48)},
+    ]}
+    limite = {"features": [{"geometry": poligono(-47.52, -47.47)}]}
+    overlap = qg.validar_topologia(geo_overlap, limite)
+    assert len(overlap["sobreposicoes"]) == 1
+    assert overlap["sobreposicoes"][0]["area_m2"] > 1
+    assert overlap["lacunas_detectadas"] is True
+    assert overlap["setores_fora_detectados"] is False
+
+
+def test_correspondencia_setorial_detecta_ids_ausentes_e_extras():
+    geo = {"features": [
+        {"properties": {"setor": "354390705000001"}},
+        {"properties": {"setor": "354390705000002"}},
+    ]}
+    territorio = {"setores": {"354390705000001": {}, "354390705000003": {}}}
+    indicadores = {"setores": [{"id": "354390705000001"}, {"id": "354390705000002"}]}
+    resultado = qg.validar_correspondencia_setores(geo, territorio, indicadores)
+    assert resultado["correspondencia_completa"] is False
+    assert resultado["ausentes_no_territorio"] == ["354390705000002"]
+    assert resultado["extras_no_territorio"] == ["354390705000003"]
