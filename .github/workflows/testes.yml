@@ -3,11 +3,15 @@ on:
   pull_request:
   push:
     branches: [main]
+permissions:
+  contents: write
 jobs:
   testes:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref || github.ref }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -15,6 +19,21 @@ jobs:
         with:
           node-version: "20"
       - run: python -m pip install -r requirements.txt
+      - name: Regenerar dados geográficos na branch de fechamento
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'mism3-fechamento' && github.event.pull_request.head.repo.full_name == github.repository
+        run: |
+          python pipeline/limite_municipal.py
+          python pipeline/territorio.py
+          python pipeline/analise_territorial.py
+          python pipeline/exposicao_distancia.py
+          python pipeline/territorial_indicadores.py
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dados/geografia/limite_municipal_2022.geojson web/dados/territorio.json web/dados/analise_territorial.json web/dados/exposicao_distancia.json web/dados/indicadores_territoriais.json
+          if ! git diff --cached --quiet; then
+            git commit -m "data: regenera saídas após validação geográfica"
+            git push origin HEAD:mism3-fechamento
+          fi
       - run: PYTHONPATH=pipeline python -m pytest pipeline/tests -q
       - run: for f in web/tests/*.test.js; do node "$f" || exit 1; done
       - run: python avaliacao/avaliar.py v2 --conjunto todos
