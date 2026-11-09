@@ -21,8 +21,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import BRUTO, MUNICIPIO_IBGE7, WEB_DADOS, agora_iso, erro, salvar_json  # noqa: E402
 
-TOLERANCIA_GRAUS = 0.00004  # ~4 m: invisivel no mapa, reduz muito o tamanho
-CASAS = 5                   # ~1 m
+TOLERANCIA_METROS = 4.0  # simplificação em cobertura; divisas compartilhadas processadas em conjunto
+CASAS = 6                 # ~0,1 m na latitude de Rio Claro
 
 
 def _dist_seg(p, a, b):
@@ -70,21 +70,52 @@ def _area_assinada(anel):
 
 
 def geometria(shape):
-    """Monta MultiPolygon GeoJSON. No shapefile, anel horario = externo; anti-horario = furo."""
+    """Monta MultiPolygon sem simplificar anéis isoladamente."""
     poligonos = []
     for anel in aneis(shape):
-        simples = simplificar(anel)
-        if len(simples) < 4:
+        if len(anel) < 4:
             continue
-        coords = [[round(x, CASAS), round(y, CASAS)] for x, y in simples]
-        if _area_assinada(anel) < 0:       # horario (area negativa) = externo
+        coords = [[float(x), float(y)] for x, y in anel]
+        if _area_assinada(anel) < 0:
             poligonos.append([coords])
-        elif poligonos:                     # furo do ultimo externo
+        elif poligonos:
             poligonos[-1].append(coords)
     if not poligonos:
         return None
     return {"type": "MultiPolygon", "coordinates": poligonos}
 
+
+def simplificar_cobertura(feicoes, tolerancia_m=TOLERANCIA_METROS):
+    """Simplifica a malha como cobertura e preserva divisas compartilhadas.
+
+    A tolerância é aplicada em metros, após projeção UTM 23S. Se a entrada
+    não for uma cobertura válida, mantém os vértices originais.
+    """
+    from pyproj import Transformer
+    from shapely import coverage_is_valid, coverage_simplify
+    from shapely.geometry import mapping, shape as shapely_shape
+    from shapely.ops import transform
+
+    para_metros = Transformer.from_crs("EPSG:4674", "EPSG:31983", always_xy=True).transform
+    para_graus = Transformer.from_crs("EPSG:31983", "EPSG:4326", always_xy=True).transform
+    geometrias = [transform(para_metros, shapely_shape(f["geometry"])) for f in feicoes]
+    if coverage_is_valid(geometrias):
+        simplificadas = coverage_simplify(geometrias, tolerance=float(tolerancia_m))
+        if not coverage_is_valid(simplificadas):
+            raise ValueError("A simplificação alterou a validade topológica da cobertura.")
+    else:
+        print("  Cobertura de entrada inválida; simplificação desativada para preservar os vértices.")
+        simplificadas = geometrias
+
+    def arredondar(valor):
+        if isinstance(valor, (list, tuple)):
+            return [arredondar(v) for v in valor]
+        return round(valor, CASAS) if isinstance(valor, float) else valor
+
+    for feicao, geom in zip(feicoes, simplificadas):
+        convertido = mapping(transform(para_graus, geom))
+        feicao["geometry"] = {"type": convertido["type"], "coordinates": arredondar(convertido["coordinates"])}
+    return feicoes
 
 def abrir_leitor(origem: Path):
     import shapefile
@@ -129,6 +160,7 @@ def extrair(leitor, municipio: str = MUNICIPIO_IBGE7):
         resumo[setor] = info
     if not feicoes:
         raise ValueError("Nenhum setor do municipio %s na malha." % municipio)
+    feicoes = simplificar_cobertura(feicoes)
     return {"type": "FeatureCollection", "features": feicoes}, resumo
 
 
