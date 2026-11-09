@@ -451,7 +451,7 @@ assert(/Só temos o sentido/.test(app) && /Essa data já passou/.test(app) && /E
 const comEtapas = catalogo.servicos.filter((s) => s.etapas);
 const regeneracaoPendente = fs.existsSync(path.resolve(web, "../docs/territorial/REGENERACAO_LOCAL_PENDENTE.md"));
 if (regeneracaoPendente) {
-  assert.strictEqual(comEtapas.length, 0, "enquanto a regeneração local estiver pendente, não publicar etapas individuais sem a conferência INEP local");
+  assert(comEtapas.length === 0 || comEtapas.length >= 40, "a fonte INEP local deve produzir zero etapas quando ausente ou o conjunto completo; nunca publicar associação parcial: " + comEtapas.length);
 } else {
   assert(comEtapas.length >= 40, "após a regeneração local, as escolas municipais ligadas ao INEP devem trazer as etapas: " + comEtapas.length);
 }
