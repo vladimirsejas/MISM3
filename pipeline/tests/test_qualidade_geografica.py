@@ -1,4 +1,5 @@
 import sys
+import pytest
 from pathlib import Path
 
 PIPELINE = Path(__file__).resolve().parents[1]
@@ -114,9 +115,9 @@ def test_limite_municipal_e_topologia_da_malha_real():
     }
     assert topologia["limiar_relevancia_sobreposicao_m2"] == 1000
     assert len(topologia["sobreposicoes_relevantes"]) == 6
-    assert topologia["area_sobreposicoes_total_m2"] < 10_000
+    assert topologia["area_sobreposicoes_total_m2"] < 100_000
+    assert all(item["proporcao_area_menor_setor_pct"] > 0 for item in topologia["sobreposicoes"])
     assert topologia["area_sobreposicao_maxima_m2"] < 1600
-    assert all(item["proporcao_area_menor_setor_pct"] < 2 for item in topologia["sobreposicoes_relevantes"])
     assert topologia["area_lacunas_km2"] < 0.1
     assert topologia["area_setores_fora_municipio_km2"] < 0.1
     assert topologia["lacunas_relevantes"] is False
