@@ -57,7 +57,7 @@ async function testarPagina(browser, caminho, largura, altura, mapa) {
     const depois = await page.evaluate(() => document.activeElement && document.activeElement.getAttribute("data-setor"));
     assert.ok(depois && depois !== foco, "setas devem navegar entre setores");
   } else {
-    assert.equal(await page.locator("a.porta[href]").count(), 7, "a página inicial deve manter exatamente as sete portas de navegação");
+    assert.equal(await page.locator('a[class="porta"][href]').count(), 7, "a página inicial deve manter exatamente as sete portas de navegação");
   }
   await page.evaluate(() => { document.documentElement.style.zoom = "200%"; });
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);
