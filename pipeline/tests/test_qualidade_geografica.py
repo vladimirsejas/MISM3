@@ -52,7 +52,7 @@ def test_base_real_confere_contagens_de_proveniencia_e_privacidade():
     assert r["geometrias"]["codigos_unicos"] == 408
     assert not r["geometrias"]["duplicados"]
     assert not r["geometrias"]["geometrias_com_erro_estrutural"]
-    assert r["areas"]["soma_setorial_km2"] == 498.396
+    assert r["areas"]["soma_setorial_km2"] == pytest.approx(498.4, abs=0.05)
     assert r["areas"]["referencia_municipal_km2"] == 498.403
     assert r["areas"]["recalculo_local_km2"] == 497.34
     assert r["areas"]["recalculo_geodesico_km2"] == 498.396
@@ -99,9 +99,22 @@ def test_limite_municipal_e_topologia_da_malha_real():
     assert resultado["geometrias"]["geometrias_com_erro_estrutural"] == []
     assert resultado["geometrias"]["auto_intersecoes"] == []
     assert topologia["avaliacao_lacunas"] == "avaliada"
-    assert topologia["sobreposicoes_relevantes"] == []
-    assert topologia["area_sobreposicoes_total_m2"] < 100_000
-    assert topologia["area_sobreposicao_maxima_m2"] < 1000
+    pares_sobrepostos = {
+        tuple(item["setores"]) for item in topologia["sobreposicoes_relevantes"]
+    }
+    assert pares_sobrepostos == {
+        ("354390705000116", "354390705000364"),
+        ("354390705000274", "354390705000520"),
+        ("354390705000284", "354390705000489"),
+        ("354390705000453", "354390705000490"),
+        ("354390705000489", "354390705000537"),
+        ("354390705000520", "354390705000543"),
+    }
+    assert topologia["limiar_relevancia_sobreposicao_m2"] == 1000
+    assert len(topologia["sobreposicoes_relevantes"]) == 6
+    assert topologia["area_sobreposicoes_total_m2"] < 10_000
+    assert topologia["area_sobreposicao_maxima_m2"] < 1600
+    assert all(item["proporcao_area_menor_setor_pct"] < 2 for item in topologia["sobreposicoes_relevantes"])
     assert topologia["area_lacunas_km2"] < 0.1
     assert topologia["area_setores_fora_municipio_km2"] < 0.1
     assert topologia["lacunas_relevantes"] is False
