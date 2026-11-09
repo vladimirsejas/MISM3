@@ -25,8 +25,11 @@ KM_POR_GRAU_LON = 111.320 * math.cos(math.radians(LATITUDE_REFERENCIA))
 GEOD = Geod(ellps="GRS80")
 TRANSFORMAR_UTM = Transformer.from_crs("EPSG:4326", "EPSG:31983", always_xy=True).transform
 LIMITE_MUNICIPAL = RAIZ / "dados" / "geografia" / "limite_municipal_2022.geojson"
-TOLERANCIA_TOPOLOGICA_M2 = 1.0
-# 1 m² registra todo resíduo; 1.000 m² (0,001 km²) separa sobreposição/lacuna material.
+ TOLERANCIA_TOPOLOGICA_M2 = 1.0
+# Com 6 casas decimais, a coordenada tem resolução linear de cerca de 0,1 m em Rio Claro.
+# 0,01 m² equivale aproximadamente à célula de quantização (0,1 m × 0,1 m): abaixo disso,
+# a área é indistinguível da precisão de publicação; acima, a interseção é contabilizada.
+LIMIAR_DETECCAO_SOBREPOSICAO_M2 = 0.01
 LIMIAR_TOPOLOGICO_RELEVANTE_M2 = 1000.0
 
 
@@ -171,7 +174,7 @@ def validar_topologia(geojson, limite_municipal=None):
                     continue
                 intersecao = geometria.intersection(projetadas[j])
                 area_m2 = intersecao.area
-                if area_m2 > TOLERANCIA_TOPOLOGICA_M2:
+                if area_m2 > LIMIAR_DETECCAO_SOBREPOSICAO_M2:
                     menor_setor_m2 = min(geometria.area, projetadas[j].area)
                     sobreposicoes.append({
                         "setores": [codigos[i], codigos[j]],
@@ -191,7 +194,9 @@ def validar_topologia(geojson, limite_municipal=None):
             "motivo_lacunas": "Limite municipal oficial de referência não foi fornecido.",
             "sobreposicoes": sobreposicoes,
             "sobreposicoes_relevantes": sobreposicoes_relevantes,
-            "limiar_relevancia_sobreposicao_m2": LIMIAR_TOPOLOGICO_RELEVANTE_M2,
+            "limiar_deteccao_sobreposicao_m2": LIMIAR_DETECCAO_SOBREPOSICAO_M2,
+            "limiar_deteccao_sobreposicao_m2": LIMIAR_DETECCAO_SOBREPOSICAO_M2,
+        "limiar_relevancia_sobreposicao_m2": LIMIAR_TOPOLOGICO_RELEVANTE_M2,
             "area_sobreposicoes_total_m2": round(area_sobreposicoes_total, 3),
             "area_sobreposicao_maxima_m2": round(area_sobreposicao_maxima, 3),
             "area_somada_setores_km2_utm": round(soma_areas / 1_000_000, 6),
