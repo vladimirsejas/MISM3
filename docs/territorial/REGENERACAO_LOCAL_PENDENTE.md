@@ -31,27 +31,30 @@ Executar exclusivamente no computador do responsável, em cópia de trabalho da 
 
 ### Sequência de execução
 
-Na raiz do repositório, com o ambiente Python 3.12 ativado:
+Na raiz do repositório, com o ambiente Python 3.12 ativado, executar na ordem abaixo. A ordem respeita as dependências observadas no código: a geração do índice CEP exige a malha setorial; os catálogos e análises dependem do índice e dos agregados escolares.
 
-```bash
+```powershell
 python -m pip install -r requirements.txt
-python pipeline/servicos.py --somente-manual
 python pipeline/setores.py "CAMINHO_LOCAL/SP_setores_CD2022.zip"
+python pipeline/indice_cep.py
+python pipeline/oferta_educacao_infantil.py --pasta "docs/educacao/dados"
+python pipeline/escolas_municipais.py
+python pipeline/servicos.py --somente-manual
 python pipeline/territorio.py
 python pipeline/analise_territorial.py
 python pipeline/exposicao_distancia.py
 python pipeline/territorial_indicadores.py
-python pipeline/qualidade_geografica.py --saida-json "%TEMP%/mism3_qualidade_geografica.json" --saida-md "%TEMP%/mism3_qualidade_geografica.md"
-python pipeline/auditoria_centroides.py --saida-json "%TEMP%/mism3_auditoria_centroides.json" --saida-md "%TEMP%/mism3_auditoria_centroides.md"
+python pipeline/qualidade_geografica.py --saida-json "$env:TEMP/mism3_qualidade_geografica.json" --saida-md "$env:TEMP/mism3_qualidade_geografica.md"
+python pipeline/auditoria_centroides.py --saida-json "$env:TEMP/mism3_auditoria_centroides.json" --saida-md "$env:TEMP/mism3_auditoria_centroides.md"
 ```
 
-No Windows PowerShell, substituir `%TEMP%\...` por `$env:TEMP\...`. O caminho do ZIP é local e deve apontar para o arquivo oficial já obtido; não baixar fontes automaticamente nesta etapa. Antes de rodar os geradores dependentes de escolas/CNES, conferir que os dados locais exigidos estão presentes e que os scripts identificam as versões e entradas esperadas. Se um pré-requisito estiver ausente, interromper aquele comando sem substituir a fonte por dado sintético.
+O caminho do ZIP é local e deve apontar para o arquivo oficial já obtido; não baixar fontes automaticamente nesta etapa. O parâmetro `--pasta` aponta para as três tabelas INEP 2025 locais. `oferta_educacao_infantil.py` publica somente totais por rede; `servicos.py --somente-manual` lê apenas a tabela Escola local para derivar os dois booleanos de etapa por escola vinculada, sem ler ou publicar matrículas/turmas individuais. `escolas_municipais.py` gera a base consolidada de cadastro e localização das escolas. Antes de executar, conferir a presença das entradas locais e suas versões. Se um pré-requisito estiver ausente, interromper o comando sem substituir a fonte por dado sintético.
 
 ### Saídas esperadas
 
 - `web/dados/catalogo_manual.json`: catálogo manual normalizado.
 - `web/dados/setores.geojson` e `web/dados/setor_bairro.json`: geometria de 408 setores, vértices originais preservados e coordenadas arredondadas a seis casas.
-- `web/dados/territorio.json`: indicadores agregados territoriais.
+- `web/dados/oferta_educacao_infantil.json`: totais INEP agregados por rede, sem contagens por escola.\n- `web/dados/escolas_municipais.json`: cadastro consolidado de 68 escolas e seus vínculos/localização, sem matrículas por unidade.\n- `web/dados/territorio.json`: indicadores agregados territoriais.
 - `web/dados/analise_territorial.json`: análise de cobertura e localização de equipamentos.
 - `web/dados/exposicao_distancia.json`: cenários de distância em linha reta, sem tratar distância como tempo ou acesso efetivo.
 - `web/dados/indicadores_territoriais.json`: indicadores territoriais minimizados, com D4 aplicada.
@@ -59,9 +62,10 @@ No Windows PowerShell, substituir `%TEMP%\...` por `$env:TEMP\...`. O caminho do
 
 ### Testes obrigatórios e critérios de aceite
 
-```bash
-PYTHONPATH=pipeline python -m pytest pipeline/tests -q
-for f in web/tests/*.test.js; do node "$f" || exit 1; done
+```powershell
+$env:PYTHONPATH = "pipeline"
+python -m pytest pipeline/tests -q
+Get-ChildItem web/tests/*.test.js | ForEach-Object { node $_.FullName; if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE } }
 python pipeline/territorial_indicadores.py --conferir
 ```
 
