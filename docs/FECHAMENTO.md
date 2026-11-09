@@ -67,7 +67,7 @@ SHA de partida: `9ed9731ca55b97888a6e0fef2df04fdd9eedbd9d`
 - A política de tiles OSM foi lida; a camada continua opt-in, envia apenas o Referer de origem e mantém atribuição com link. Os termos Esri foram lidos; a permissão gratuita depende de uso não comercial e a qualificação institucional do uso futuro ainda não foi formalmente confirmada. A atribuição das duas camadas Esri foi ampliada para incluir Esri, HERE, Garmin, OpenStreetMap contributors e a comunidade GIS.
 - As licenças dos pacotes Python diretos foram registradas por versão, incluindo dependências nativas GEOS/PROJ; foi acrescentado teste de regressão para impedir que a licença do projeto seja confundida com licença de dados ou tiles de terceiros. Aprovação da Actions pendente.
 
-A regeneração geográfica ocorre no primeiro ciclo da PR #99 enquanto ela não tiver o rótulo `geografia-regenerada`. Depois que os dados forem gerados e commitados, o rótulo será aplicado para que a execução final valide o SHA com os dados versionados sem repetir o download. Nenhuma etapa publica, faz deploy ou aciona Cloudflare.
+A GitHub Actions não baixa fontes brutas nem regenera os dados territoriais. Ela valida as referências geométricas e os arquivos versionados. A regeneração final dos derivados que dependem das contagens brutas e da regra D4 será feita localmente pelo Claude Code no computador do responsável. Nenhuma etapa publica, faz deploy ou aciona Cloudflare.
 
 
 
@@ -125,3 +125,14 @@ A etapa de regeneração automática foi retirada da Actions. A Actions não bai
 - A tentativa de reexecutar a execução `42672449139` foi recusada pelo GitHub com HTTP 403 e mensagem `This workflow run cannot be retried`. Não foi alterada a configuração da Actions nem criado outro workflow para contornar a política.
 - O código e os testes geográficos foram commitados na branch. A validação isolada de referência IBGE continua comprovada somente no SHA `33c6b94a0f0dd231be9dbb100a93824d6d008e26`, execução `42671168961`; não se atribui aprovação às alterações posteriores sem execução real.
 - A validação final do Bloco 2 permanece bloqueada até a Actions voltar a criar jobs e até a regeneração local autorizada pelo responsável. Nenhuma mudança em `main`, merge, deploy, Cloudflare ou publicação foi feita.
+
+
+## Bloco 3 — atualização do inventário de fontes e licenças
+
+- O inventário passou a listar separadamente a referência geometry-only dos setores IBGE 2022 e o contorno municipal IBGE 2025, ambos em `dados/referencia_ibge/`. A proveniência registra os hashes; os arquivos não contêm contagens demográficas e não recebem licença aberta por este repositório.
+- `LICENSE-DADOS-E-DOCUMENTACAO.md` explicita a exclusão de `dados/referencia_ibge/`, assim como já exclui `web/dados/`, catálogos e cartografia da CC BY 4.0. MIT continua restrita ao código.
+- O README foi corrigido para não dizer que os termos dos tiles não foram verificados: a política OSM foi lida e registrada; os termos Esri foram lidos, com a condição de uso não comercial e a ressalva de que a qualificação institucional do uso futuro ainda não foi formalmente confirmada.
+- A camada OSM em `web/app.js` só carrega após ação da usuária, usa `referrerPolicy: "origin"` e exibe atribuição vinculada. As camadas Esri em `web/mapa.js` também são opt-in e exibem créditos Esri, HERE, Garmin, OpenStreetMap contributors e comunidade GIS.
+- A decisão já registrada para `mapaRioClaroUSF.geojson` foi preservada sem reabertura: origem/licença não confirmadas e sem autorização de redistribuição até confirmação. As capturas Google e os CEPs geocodificados continuam locais, sem cópia para GitHub, Actions ou Zenodo.
+- Foram ampliados os testes de inventário e de atribuição para conferir as referências IBGE, a separação das licenças, a preservação da decisão do mapa das UBS, a atribuição dos tiles, o carregamento opt-in e a permanência do `noindex, nofollow`.
+- A validação por Actions continua bloqueada pela falha pré-job documentada acima: execuções recentes retornaram zero jobs. Não se declara o Bloco 3 aprovado sem execução real da suíte.

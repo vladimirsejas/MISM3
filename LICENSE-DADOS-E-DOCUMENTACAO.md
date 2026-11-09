@@ -28,7 +28,7 @@ Os itens abaixo estão dentro de `docs/`, mas **não são abrangidos** por esta 
 
 ## Materiais que não recebem esta licença
 
-Também **não** são licenciados por esta declaração os catálogos e arquivos de dados do repositório (`catalogo/*.csv`, `catalogo/horarios_onibus.txt`, `web/dados/`), que reúnem informações de fontes oficiais e de terceiros, nem as imagens de `web/img/`, nem os mapas e a cartografia. A situação de cada um está em [AVISOS-DE-TERCEIROS.md](AVISOS-DE-TERCEIROS.md).
+Também **não** são licenciados por esta declaração os catálogos e arquivos de dados do repositório (`catalogo/*.csv`, `catalogo/horarios_onibus.txt`, `web/dados/`, `dados/referencia_ibge/`), que reúnem informações de fontes oficiais e de terceiros, nem as imagens de `web/img/`, nem os mapas e a cartografia. A situação de cada um está em [AVISOS-DE-TERCEIROS.md](AVISOS-DE-TERCEIROS.md).
 
 ## Limites desta declaração
 
