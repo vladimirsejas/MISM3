@@ -169,3 +169,25 @@ def test_base_real_tem_33_coordenadas_individuais_e_35_por_cep_sem_duplicidade()
     assert cobertura["raio_m"]["quantidade"] == 35
     # 1 CRAS + 68 escolas: a escola não pode ser contada duas vezes pelo catálogo.
     assert sum(b["servicos_no_bairro"] for b in resultado["bairros"]) <= 69
+
+
+
+def test_centro_de_producao_preserva_centroides_internos_e_corrige_os_externos():
+    import json
+    import auditoria_centroides as ac
+
+    raiz = Path(__file__).resolve().parents[2]
+    geojson = json.loads((raiz / "web/dados/setores.geojson").read_text(encoding="utf-8"))
+    preservados, corrigidos = 0, 0
+    for feature in geojson["features"]:
+        geom = feature["geometry"]
+        lat_antigo, lon_antigo = ac._centro_atual(geom)
+        lat_novo, lon_novo = at.centro(geom)
+        assert ac._contem(geom, lon_novo, lat_novo)
+        if ac._contem(geom, lon_antigo, lat_antigo):
+            preservados += 1
+            assert (lat_novo, lon_novo) == (lat_antigo, lon_antigo)
+        else:
+            corrigidos += 1
+            assert at.haversine_km(lat_antigo, lon_antigo, lat_novo, lon_novo) < 0.062
+    assert (preservados, corrigidos) == (399, 9)
