@@ -26,6 +26,7 @@ GEOD = Geod(ellps="GRS80")
 TRANSFORMAR_UTM = Transformer.from_crs("EPSG:4326", "EPSG:31983", always_xy=True).transform
 LIMITE_MUNICIPAL = RAIZ / "dados" / "geografia" / "limite_municipal_2022.geojson"
 TOLERANCIA_TOPOLOGICA_M2 = 1.0
+LIMIAR_TOPOLOGICO_RELEVANTE_M2 = 150.0
 
 
 def _poligonos(geom):
@@ -88,6 +89,7 @@ def validar_geometrias(geojson):
     ids, duplicados, invalidas, codigos_invalidos = set(), [], [], []
     tipos = {"Polygon": 0, "MultiPolygon": 0, "outros": 0}
     geometrias_validas = []
+    auto_intersecoes = []
     for f in geojson.get("features", []):
         props = f.get("properties") or {}
         codigo = str(props.get("setor") or "sem_codigo")
@@ -107,7 +109,10 @@ def validar_geometrias(geojson):
             if geometria.is_empty:
                 erros.append("geometria_vazia")
             if not geometria.is_valid:
-                erros.append("geometria_invalida:" + explain_validity(geometria))
+                motivo = explain_validity(geometria)
+                erros.append("geometria_invalida:" + motivo)
+                if "Self-intersection" in motivo or "Ring Self-intersection" in motivo:
+                    auto_intersecoes.append({"setor": codigo, "motivo": motivo})
             if geometria.is_valid and not geometria.is_empty:
                 geometrias_validas.append((codigo, geometria))
         except Exception as exc:
@@ -137,6 +142,7 @@ def validar_geometrias(geojson):
         "duplicados": sorted(set(duplicados)),
         "tipos": tipos,
         "geometrias_com_erro_estrutural": invalidas,
+        "auto_intersecoes": auto_intersecoes,
         "geometrias_validas_para_topologia": len(geometrias_validas),
     }
 
@@ -167,6 +173,9 @@ def validar_topologia(geojson, limite_municipal=None):
                     sobreposicoes.append({"setores": [codigos[i], codigos[j]], "area_m2": round(area_m2, 3)})
         uniao = unary_union(projetadas)
         soma_areas = sum(g.area for g in projetadas)
+    area_sobreposicoes_total = sum(item["area_m2"] for item in sobreposicoes)
+    area_sobreposicao_maxima = max((item["area_m2"] for item in sobreposicoes), default=0.0)
+    sobreposicoes_relevantes = [item for item in sobreposicoes if item["area_m2"] > LIMIAR_TOPOLOGICO_RELEVANTE_M2]
     else:
         uniao, soma_areas = None, 0.0
     if limite_municipal is None or uniao is None:
@@ -174,6 +183,9 @@ def validar_topologia(geojson, limite_municipal=None):
             "avaliacao_lacunas": "nao_avaliada",
             "motivo_lacunas": "Limite municipal oficial de referência não foi fornecido.",
             "sobreposicoes": sobreposicoes,
+            "sobreposicoes_relevantes": sobreposicoes_relevantes,
+            "area_sobreposicoes_total_m2": round(area_sobreposicoes_total, 3),
+            "area_sobreposicao_maxima_m2": round(area_sobreposicao_maxima, 3),
             "area_somada_setores_km2_utm": round(soma_areas / 1_000_000, 6),
             "area_uniao_setores_km2_utm": round(uniao.area / 1_000_000, 6) if uniao is not None else None,
         }
@@ -188,13 +200,18 @@ def validar_topologia(geojson, limite_municipal=None):
     return {
         "avaliacao_lacunas": "avaliada",
         "sobreposicoes": sobreposicoes,
+        "sobreposicoes_relevantes": sobreposicoes_relevantes,
+        "area_sobreposicoes_total_m2": round(area_sobreposicoes_total, 3),
+        "area_sobreposicao_maxima_m2": round(area_sobreposicao_maxima, 3),
         "area_limite_municipal_km2_utm": round(limite.area / 1_000_000, 6),
         "area_somada_setores_km2_utm": round(soma_areas / 1_000_000, 6),
         "area_uniao_setores_km2_utm": round(uniao.area / 1_000_000, 6),
         "area_lacunas_km2": round(lacunas.area / 1_000_000, 9),
         "area_setores_fora_municipio_km2": round(fora.area / 1_000_000, 9),
         "lacunas_detectadas": lacunas.area > TOLERANCIA_TOPOLOGICA_M2,
+        "lacunas_relevantes": lacunas.area > LIMIAR_TOPOLOGICO_RELEVANTE_M2,
         "setores_fora_detectados": fora.area > TOLERANCIA_TOPOLOGICA_M2,
+        "setores_fora_relevantes": fora.area > LIMIAR_TOPOLOGICO_RELEVANTE_M2,
         "limite_area_atributo_ibge_km2": features_limite[0].get("properties", {}).get("area_atributo_ibge_km2"),
     }
 
