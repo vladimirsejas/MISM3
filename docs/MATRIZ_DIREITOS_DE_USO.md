@@ -27,14 +27,16 @@ A data de consulta é 2026-11-09. Quando a URL estiver como **não verificado**,
 
 | Fonte | URL oficial aberta | Resultado estrito |
 |---|---|---|
-| IBGE — Termo de Uso e Política de Privacidade | https://www.ibge.gov.br/acesso-informacao/acoes-e-programas/politica-de-privacidade.html | É termo do portal/serviços e aborda sigilo estatístico e LGPD; não é licença específica de redistribuição das malhas/CNEFE. |
-| INEP — Microdados e Censo Escolar | https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/microdados/censo-escolar | Página do Censo Escolar aberta; a página geral registra adequação de microdados para evitar identificação. Não foi localizada licença específica de redistribuição do arquivo utilizado. |
-| CNES — recurso oficial | https://dadosabertos.saude.gov.br/dataset/cnes-cadastro-nacional-de-estabelecimentos-de-saude/resource/4600a142-12c4-4c1c-ae5c-ffcb0cc71e59 | O campo de licença é genérico e não nomeia licença aplicável ao arquivo CNES. |
+| IBGE — Dados Abertos | https://www.ibge.gov.br/acesso-informacao/dados-abertos.html | O IBGE publica Plano de Dados Abertos em conformidade com o Decreto 8.777/2016; a reutilização dos dados federais deve observar o art. 4º e as ressalvas legais. |
+| INEP — Dados Abertos | https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos | O INEP lista microdados, Plano de Dados Abertos e SEDAP; aplica-se a política federal de livre utilização, com salvaguardas de privacidade. |
+| Ministério da Saúde — Dados Abertos e CNES | https://www.gov.br/saude/pt-br/acesso-a-informacao/dados-abertos/dados-abertos; https://dadosabertos.saude.gov.br/dataset/cnes-cadastro-nacional-de-estabelecimentos-de-saude | O Ministério declara que seu PDA segue o Decreto 8.777/2016; CNES institucional é livremente reutilizável, ressalvados dados pessoais, sigilosos e de terceiros. |
 | OSM — direitos autorais/licença | https://www.openstreetmap.org/copyright | ODbL confirmada para dados OSM, com atribuição e share-alike. |
 | OSM — política de tiles | https://operations.osmfoundation.org/policies/tiles/ | Política aberta; tiles não são um conjunto de dados livre para redistribuição e não podem ser raspados/pré-baixados. |
 | Esri — termos de site e serviço | https://www.esri.com/pt-br/legal/terms/web-site-service | Uso gratuito externo condicionado a não comercial; Esri reserva a decisão sobre enquadramento. Não redistribuir tiles. |
 | Prefeitura — Manual de Identidade Visual | https://rioclaro.sp.gov.br/wp-content/uploads/2024/04/MANUAL_DE_IDENTIDADE_VISUAL.pdf | Manual aberto; orienta aplicação da marca, mas não prova autorização específica para este projeto usar/redistribuir o brasão. |
-| IBGE — FTP malha SP 2022 | https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios/malha_com_atributos/setores/shp/UF/SP/SP_setores_CD2022.zip | Origem oficial identificada; a página de download não foi tratada como licença de redistribuição. |
+| Decreto 8.777/2016 e Decreto 9.903/2019 | https://www.presidencia.gov.br/ccivil_03/_ato2015-2018/2016/decreto/d8777.htm; https://planalto.gov.br/ccivil_03/_ato2019-2022/2019/decreto/d9903.htm | Art. 4º: dados disponibilizados pelo Poder Executivo federal são de livre utilização; §§1º e 2º tratam de direitos patrimoniais da União e direitos de terceiros. |
+| LAI — texto atualizado | https://www2.camara.leg.br/legin/fed/lei/2011/lei-12527-18-novembro-2011-611802-normaatualizada-pl.html | Art. 7º trata do acesso; art. 8º, §3º, III, de formatos abertos e acesso automatizado; art. 31 protege informações pessoais. |
+| IBGE — malha de setores 2022 | https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios/malha_com_atributos/setores/shp/UF/SP/SP_setores_CD2022.zip | Malha oficial do IBGE; publicação permitida sob a política federal de dados abertos, com atribuição e proteção dos agregados estatísticos. |
 
 ## Regime jurídico dos dados públicos federais — CNES, INEP e IBGE
 
