@@ -60,7 +60,8 @@ async function testarPagina(browser, caminho, largura, altura, mapa) {
     assert.equal(await page.locator('a[class="porta"][href]').count(), 7, "a página inicial deve manter exatamente as sete portas de navegação");
   }
   await page.setViewportSize({ width: Math.floor(largura / 2), height: Math.floor(altura / 2) });
-  await page.waitForTimeout(100);
+  await page.evaluate(() => window.dispatchEvent(new Event("resize")));
+  await page.waitForTimeout(200);
   const dimensoes = await page.evaluate(() => {
     const viewport = document.documentElement.clientWidth;
     const excedentes = Array.from(document.querySelectorAll("body *")).map((e) => {
