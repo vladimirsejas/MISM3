@@ -19,10 +19,10 @@ SHA de partida: `9ed9731ca55b97888a6e0fef2df04fdd9eedbd9d`
 | 1. Privacidade | Concluído | `edc9ea8ee14170d14b275641bf57bc32bdea7dbd` | `42657889614` — sucesso |
 | 2. Geografia | Em andamento — correções e testes versionados; Actions sem jobs e regeneração local pendente | `a1a0f88`, `71eead9`, `81f6843`, `22e2c40`, `4b3db12`, `33c6b94`, `671e958`, `7d1e003`, `23e9b78` | `42671168961` — referência aprovada; `42672174236`, `42672449139` e `42672558750` — falha pré-job, zero jobs criados |
 | 3. Fontes e licenças | Em andamento — inventário e atribuições atualizados; restrições não confirmadas mantidas explícitas | `c3cbff0`, `f66f616`, `df7d519`, `9aae00b`, `1fe887b` | `42673160479` — execução pendente; Actions sem jobs nas execuções anteriores |
-| 4. Mapa e painel | Correções de exportação, privacidade e responsividade validadas; regeneração local continua no Bloco 2 | commits desta retomada | Run #804 (`42682346999`) — `testes` e `navegador` sucesso |
+| 4. Mapa e painel | Correções de exportação, privacidade e responsividade validadas; regeneração local continua no Bloco 2 | commits desta retomada | Runs #804, #809 e #810 — `testes` e `navegador` sucesso |
 | 5. Sistema de orientação | Em andamento — privacidade do texto livre reforçada; 306 testes Python passaram, um ajuste de auditoria D4 pendente | `2a21b73` e commit corretivo desta atualização | `42674601130` — referência aprovada; pytest 306 passed, 1 failed, 2 skipped; corrigida a expectativa de 391 setores com distância |
-| 6. Documentação definitiva | Concluído — documentação, fontes, licenças, decisões e runbook local atualizados | commits desta retomada | Run #804 (`42682346999`) — ambos os jobs sucesso |
-| 7. Fechamento | Concluído para revisão — PR #99 pronto, aberto, sem merge; publicação externa não autorizada | commits desta retomada | Run #804 (`42682346999`) — `testes` sucesso e `navegador` sucesso |
+| 6. Documentação definitiva | Concluído — documentação, fontes, licenças, decisões e runbook local atualizados | commits desta retomada | Runs #804, #809 (`42683016876`) e #810 (`42683020835`) — ambos os jobs sucesso |
+| 7. Fechamento | Concluído para revisão — PR #99 pronto, aberto, sem merge; publicação externa não autorizada | commits desta retomada | Runs #809 (`42683016876`) e #810 (`42683020835`) — `testes` e `navegador` sucesso |
 
 ## Registro técnico
 
@@ -316,3 +316,11 @@ O teste foi corrigido para derivar `391 = 408 - 17` dos dados publicados e verif
 - O teste continua exigindo as duas categorias de privacidade: somente tiles OSM/Esri sob opt-in; somente links de atribuição Esri/OSM com `rel="noopener noreferrer"`.
 - PR #99 fica pronta para revisão, aberta e sem merge. Não houve deploy, publicação fora do GitHub, operação Cloudflare ou alteração em `main`.
 - **Ressalva explícita:** o fechamento técnico/CI não conclui a regeneração territorial local. O Bloco 2 permanece em andamento até o responsável executar e validar localmente a regeneração e as verificações de dados descritas em `docs/territorial/REGENERACAO_LOCAL_PENDENTE.md`. O marcador `servicos.json` não altera essa condição.
+
+
+## Confirmação final no HEAD pronto para revisão
+
+- HEAD validado: `b759f6fd8bb19728fd1773725d8f94f8dbe08cab`.
+- Runs #809 (`42683016876`) e #810 (`42683020835`) foram executados sobre esse mesmo SHA e terminaram com os dois jobs reais concluídos em sucesso: `testes` e `navegador`.
+- Nos dois: referência IBGE 5 passed; pytest 308 passed, 2 skipped; todos os testes Node passaram, inclusive o teste novo do marcador de serviços; Playwright passou desktop/celular, 408 setores, 17 protegidos, foco/teclado, same-origin, zero erros HTTP/console e zoom 200%.
+- PR #99 confirmada aberta, pronta para revisão (`draft=false`), não mesclada (`merged=false`). `main` e Cloudflare não foram alteradas.
