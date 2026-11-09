@@ -367,6 +367,8 @@ def relatorio_markdown(resultado):
               "## Topologia da malha", "",
               f"- Avaliação contra limite municipal IBGE: {t['avaliacao_lacunas']}",
               f"- Interseções entre setores acima de {t['limiar_deteccao_sobreposicao_m2']:.4f} m²: {len(t['sobreposicoes'])}",
+              f"- Buracos internos acima de {t['limiar_deteccao_buraco_m2']:.4f} m²: {len(t['buracos_internos_m2'])}",
+              f"- Área total de buracos internos detectados: {t['area_buracos_internos_total_m2']} m²",
               f"- Interseções acima do limiar de relevância de {t['limiar_relevancia_sobreposicao_m2']:.0f} m²: {len(t['sobreposicoes_relevantes'])}",
               f"- Área total das interseções: {t['area_sobreposicoes_total_m2']} m²",
               f"- Maior interseção: {t['area_sobreposicao_maxima_m2']} m²",
