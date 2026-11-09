@@ -141,8 +141,14 @@
     if (!mapa) return;
     if (ligar && !tiles) {
       tiles = L.layerGroup([
-        L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}", { maxNativeZoom: 16, maxZoom: 18, attribution: "Mapa-base: Esri" }),
-        L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}", { maxNativeZoom: 16, maxZoom: 18 })
+        L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}", {
+          maxNativeZoom: 16, maxZoom: 18,
+          attribution: 'Tiles © <a href="https://www.esri.com/en-us/legal/terms/web-site-service" target="_blank" rel="noopener noreferrer">Esri</a>, HERE, Garmin, <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap contributors</a>, and the GIS user community'
+        }),
+        L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}", {
+          maxNativeZoom: 16, maxZoom: 18,
+          attribution: 'Tiles © <a href="https://www.esri.com/en-us/legal/terms/web-site-service" target="_blank" rel="noopener noreferrer">Esri</a>, HERE, Garmin, <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap contributors</a>, and the GIS user community'
+        })
       ]).addTo(mapa);
       tiles.eachLayer(function (l) { l.bringToBack(); });
     } else if (!ligar && tiles) { mapa.removeLayer(tiles); tiles = null; }
