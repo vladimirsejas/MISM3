@@ -32,7 +32,7 @@ const externos = new Set();
 });
 const permitidos = new Set(["tile.openstreetmap.org", "server.arcgisonline.com"]);
 externos.forEach((h) => {
-  const ehLink = h === "www.openstreetmap.org" /* só o link de atribuição exigido pela licença ODbL: não é carregado como recurso */ || /^(www\.)?(google|gov|wa\.me|rioclaro|cmdca|defensoria|instagram|facebook|whatsapp)/.test(h) || /\.(gov\.br|sp\.gov\.br|com\.br)$/.test(h) || h === "wa.me";
+  const ehLink = h === "www.openstreetmap.org" /* link de atribuição ODbL; não é carregado como recurso */ || h === "www.esri.com" /* link dos termos de atribuição Esri; tiles são servidos por server.arcgisonline.com e só com opt-in */ || /^(www\.)?(google|gov|wa\.me|rioclaro|cmdca|defensoria|instagram|facebook|whatsapp)/.test(h) || /\.(gov\.br|sp\.gov\.br|com\.br)$/.test(h) || h === "wa.me";
   assert(permitidos.has(h) || ehLink, "domínio externo inesperado em app.js ou mapa.js: " + h + " (se for um serviço de imagens, precisa de caixa de opt-in e de linha em AVISOS-DE-TERCEIROS.md)");
 });
 
