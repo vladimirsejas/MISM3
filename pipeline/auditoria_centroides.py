@@ -249,6 +249,7 @@ def comparar(geojson, indicadores):
             "unidade_deslocamento": "metros",
             "unidade_distancia": "quilometros",
             "setores_auditados": len(setores),
+            "setores_suprimidos": setores_suprimidos,
             "centroides_atualmente_fora": len(externos),
             "codigos_centroides_fora": externos,
             "regra": "Ponto representativo interno adotado na produção; preserva os %d centroides que já estavam dentro dos polígonos e corrige somente os %d externos. O ponto corrigido não é denominado centroide matemático." % (len(setores) - len(externos), len(externos)),
