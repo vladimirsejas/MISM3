@@ -84,3 +84,23 @@ def test_coordenada_sem_proveniencia_so_entra_no_cenario_de_cep():
     assert out["cenarios"]["com_centro_do_cep"]["ubs"]["cobertura"] == {
         "com_coordenada": 1, "cadastrados": 1, "completo": True
     }
+
+
+def test_escolas_usa_base_consolidada_e_nao_catalogo():
+    catalogo = [{
+        "id": "man-escola-catalogo", "tipo": "creche",
+        "subtipo": "escola_municipal", "lat": -22.395, "lon": -47.595,
+    }]
+    escolas = [
+        {"id": "escola-individual", "localizacao_mapa": {
+            "latitude": -22.395, "longitude": -47.595, "metodo": "coordenada_individual"
+        }},
+        {"id": "escola-cep", "localizacao_mapa": {
+            "latitude": -22.395, "longitude": -47.565, "metodo": "centroide_cep", "raio_m": 350
+        }},
+    ]
+    out = ex.gerar(geo(), catalogo, {}, localizacao_registro={}, escolas=escolas)
+    sem_cep = out["cenarios"]["coordenadas_do_catalogo"]["escola"]["cobertura"]
+    com_cep = out["cenarios"]["com_centro_do_cep"]["escola"]["cobertura"]
+    assert sem_cep == {"com_coordenada": 1, "cadastrados": 2, "completo": False}
+    assert com_cep == {"com_coordenada": 2, "cadastrados": 2, "completo": True}
