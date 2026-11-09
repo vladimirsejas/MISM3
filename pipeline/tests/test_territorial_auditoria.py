@@ -108,10 +108,10 @@ def test_hash_so_e_dispensado_quando_o_valor_inteiro_e_hash_e_no_campo_de_hash(r
     assert "conteúdo" in tipos(aud.auditar(real))
 
 
-def test_setores_pequenos_estao_suprimidos_e_nao_sao_listados(real):
+def test_setores_pequenos_estao_suprimidos_e_a_funcao_retorna_apenas_contagens(real):
     peq = aud.setores_pequenos(real)
-    assert len(peq["suprimidos"]) == 17
-    assert peq["inconsistentes"] == []
+    assert peq == {"suprimidos": 17, "inconsistentes": 0}
+    assert all(isinstance(valor, int) for valor in peq.values())
     texto = aud.relatorio(real, [])
     assert "D4" in texto and "Setores protegidos: 17" in texto
     assert "identificadores dos setores protegidos não são listados" in texto
