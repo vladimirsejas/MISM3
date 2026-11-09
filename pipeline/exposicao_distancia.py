@@ -3,12 +3,12 @@
   python pipeline/exposicao_distancia.py
 
 Complementa analise_territorial.py. Para cada categoria (CRAS, UBS/USF, escola municipal) mede, para cada setor censitário do
-IBGE (Censo 2022), a distância em linha reta do centro do setor até o serviço mais próximo e informa quantas pessoas ficam a mais de
-1 km e a mais de 2 km, além da mediana e do percentil 90 ponderados pela população. NÃO usa dado pessoal de ninguém.
+IBGE (Censo 2022), a distância em linha reta do ponto representativo do setor até o serviço mais próximo e informa quantos setores ficam a mais de
+1 km e a mais de 2 km, além da mediana e do percentil 90 não ponderados. Não estima pessoas expostas nem usa dado pessoal.
 
 Dois cenários, para mostrar a sensibilidade do resultado à qualidade da localização:
-  coordenadas_do_catalogo  -> só serviços com latitude e longitude no catálogo (conferidas pelo autor);
-  com_centro_do_cep        -> acrescenta, quando falta coordenada, o centro do CEP (aproximado, menos preciso).
+  coordenadas_do_catalogo  -> só coordenadas com método, confiança e valores registrados em localizacao_registro.csv;
+  com_centro_do_cep        -> acrescenta, quando falta proveniência de coordenada, o centro do CEP institucional (aproximado).
 
 Cuidado de leitura: quando uma categoria tem serviços sem coordenada, o serviço que falta não entra no cálculo e a distância fica
 SUPERESTIMADA. Por isso cada resultado traz "cobertura" e o campo "completo"; só interprete como retrato da rede quando completo = true.
