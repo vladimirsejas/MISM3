@@ -84,3 +84,8 @@ As correções do painel de qualidade e da classificação dos domínios de tile
 - A validação estática dos tiles separa os dois hosts de requisição (`tile.openstreetmap.org` e `server.arcgisonline.com`) dos links de atribuição (`www.openstreetmap.org` e `www.esri.com`). As camadas continuam desmarcadas por padrão e dependentes de opt-in. Nenhuma destas correções substitui os testes de navegador ou a regeneração dos dados.
 - Após as correções, continuam obrigatórios: suíte Python completa, todos os testes `web/tests/*.test.js`, execução Playwright desktop/celular e confirmação dos 408 setores, 17 setores D4 protegidos, foco visível, zero erros de console, nenhuma requisição externa no cenário sem opt-in e ausência de rolagem horizontal em zoom 200%.
 - Não remover este arquivo com base apenas na aprovação do CI de código. A remoção continua condicionada à regeneração local, validação dos derivados minimizados, auditoria D4 e igualdade entre publicação e gerador, conforme os critérios cumulativos acima.
+
+
+### Marcador técnico de serviços do pipeline — 09/11/2026
+
+Foi adicionado `web/dados/servicos.json` apenas como marcador vazio para impedir 404 no navegador enquanto a regeneração local continua pendente. O arquivo contém `servicos: []` e `meta.status: "pendente_regeneracao_local"`; não contém registros CNES/Censo Escolar, não representa dados regenerados e não substitui o procedimento local deste runbook. `web/app.js` reconhece esse estado e mantém a origem apresentada como “Catálogo verificado manualmente”, sem afirmar que a base do pipeline está disponível. O marcador só deve ser substituído pelos dados reais depois da regeneração e validação local previstas neste documento.
