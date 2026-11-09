@@ -21,7 +21,7 @@ jobs:
           node-version: "20"
       - run: python -m pip install -r requirements.txt
       - name: Regenerar dados geográficos com a malha oficial (somente PR de fechamento)
-        if: github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'mism3-fechamento' && github.event.pull_request.head.repo.full_name == github.repository && !contains(github.event.pull_request.labels.*.name, 'geografia-regenerada')
+        if: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'mism3-fechamento' && github.event.pull_request.head.repo.full_name == github.repository && !contains(github.event.pull_request.labels.*.name, 'geografia-regenerada') }}
         env:
           URL_MALHA: https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/Agregados_por_Setores_Censitarios/malha_com_atributos/setores/shp/UF/SP/SP_setores_CD2022.zip
         run: |
