@@ -9,7 +9,7 @@ Escrito em 11/10/2026. Define o papel de cada tecnologia, o que está implementa
 | **Regras de palavras-chave** | `web/necessidades.js`. Entram junto com o modelo, para nunca perder um alerta de violência. **Não são IA.** | Implementado |
 | **Sistema de recomendação (por conteúdo)** | Depois de reconhecer a necessidade, ranqueia os **serviços do catálogo verificado** pela semelhança (TF-IDF de n-gramas) entre o texto da mulher e o nome, tipo e observação de cada serviço, com condições de segurança (ex.: o CAPS de álcool e drogas só aparece se o texto falar disso). | **Implementado** (v1) |
 | **Plano do Trabalho** | Árvore de decisão escrita à mão (**regras, não aprendizado**). | Regras |
-| **Inteligência pública (Observatório)** | Indicadores agregados, lacunas e análise territorial para a Secretaria. | **Não implementado** (ver `docs/observatorio_e_dados_da_secretaria.md`) |
+| **Inteligência pública (Observatório)** | Mapa territorial por setor censitário, painel de qualidade e indicadores agregados para leitura territorial. | **Implementado em versão exploratória**, com regeneração final de derivados locais pendente; não diagnostica pessoas nem mede acesso efetivo. |
 
 ## Atualização de 12/10/2026: do classificador para um sistema de orientação
 Depois de comparar três pareceres de IA (DeepSeek, Gemini e outro), ficou decidido: **não** colocar modelo de linguagem nem modelo pesado no navegador (os celulares do público não aguentam, e relatos sensíveis não podem sair do aparelho), **manter os dados verificados como a inteligência** e usar a IA como interface. Implementado nesta rodada:
@@ -64,3 +64,10 @@ A classificação e a busca são executadas no navegador. O texto digitado fica 
 As regras de perigo são avaliadas imediatamente antes da espera pelo carregamento dos modelos. Se um modelo não carregar, o sistema conserva as regras locais e apresenta os caminhos oficiais de emergência. Ao voltar ao início, mudar de área ou abrir uma vista do painel, os campos de texto livre e seus resultados são limpos. As respostas das jornadas também ficam somente em memória e são descartadas ao retornar ao início ou fechar a página.
 
 Essa garantia se refere ao código e ao comportamento programado; deve continuar protegida por testes que impeçam POST, telemetria, armazenamento ou inclusão do texto em URLs.
+
+
+## Atualização de arquitetura territorial — 09/11/2026
+
+O mapa territorial é servido em `web/mapa-territorial.html` e desenhado em SVG por `web/mapa-territorial.js`. Os únicos dados carregados por essa página são JSON locais da própria origem. Não há mapa-base, tiles ou API externa no mapa territorial. O painel de qualidade permanece separado. As duas páginas mantêm `noindex, nofollow` enquanto o fechamento e a liberação não forem autorizados.
+
+O pipeline territorial usa Python 3.12 e dependências fixadas em `requirements.txt`. A geometria dos 408 setores preserva os vértices originais do IBGE, com arredondamento a seis casas decimais. A política D4 suprime os 17 setores protegidos; o cálculo de distâncias considera apenas os 391 não suprimidos. O sistema de orientação continua executando no navegador: o texto livre não é enviado a servidor nem armazenado.
