@@ -171,7 +171,7 @@ def distancias_ate_servicos(geojson: dict, servicos: list[dict], indice_cep: dic
 
 
 def montar(geojson: dict, oferta: dict | None = None, hoje: str | None = None, servicos: list[dict] | None = None,
-           indice_cep: dict | None = None) -> dict:
+           indice_cep: dict | None = None, localizacao_registro=None) -> dict:
     setores = {}
     por_bairro = defaultdict(lambda: {"setores": 0, "pessoas": 0, "domicilios": 0, "area": 0.0, "suprimido": False})
     cont_dens = Counter()
