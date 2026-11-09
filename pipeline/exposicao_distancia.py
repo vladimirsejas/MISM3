@@ -1,4 +1,4 @@
-"""Exposição à distância (v1): que parcela da população mora longe do serviço mais próximo.
+"""Distribuição de distâncias por setor (v1): quantos setores ficam longe do serviço mais próximo.
 
   python pipeline/exposicao_distancia.py
 
@@ -31,7 +31,7 @@ CENARIOS = {
     "coordenadas_do_catalogo": False,
     "com_centro_do_cep": True,
 }
-AVISO = "Os resumos contam somente setores não suprimidos, sem ponderação por população. Dados demográficos e distâncias por setor são omitidos nos setores pequenos. Distâncias em linha reta não consideram ruas, ônibus nem horários."
+AVISO = "Os resumos contam somente setores não suprimidos e não são ponderados por população; não representam pessoas expostas. Distâncias em linha reta não consideram ruas, ônibus nem horários. Coordenadas de catálogo sem proveniência registrada não entram no cenário de coordenadas individuais."
 
 
 def quantil_ponderado(pares, q):
