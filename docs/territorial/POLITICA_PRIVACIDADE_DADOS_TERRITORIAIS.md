@@ -130,3 +130,12 @@ Qualquer nova finalidade, cruzamento ou nível de granularidade exige nova anál
 ## 10. Enquadramento ético
 
 O enquadramento na Resolução CNS 510/2016 depende do desenho efetivo da pesquisa e dos procedimentos e dados utilizados. Esta política não afirma dispensa de apreciação ética.
+
+## Índice público de CEP (regra aplicada em 08/11/2026)
+
+O arquivo `web/dados/cep_indice.json` liga cada CEP a um ponto, a um raio e ao setor censitário. Regras de divulgação, aplicadas por `pipeline/indice_cep.py` (comando `--sanear-publicado` para o arquivo já publicado) e conferidas por teste sobre os dados reais:
+
+1. **Setor protegido (D4):** o CEP associado a setor com menos de 5 pessoas ou menos de 3 domicílios não é publicado. O código do setor do CNEFE tem sufixo de letra (`...P`) e é normalizado antes da comparação.
+2. **CEP com menos de 3 endereços:** o ponto dos endereços não é publicado, porque com 1 ou 2 endereços ele identifica uma ou duas edificações. A coordenada passa a ser o centro do setor censitário (não protegido) e o raio é o do setor, entre 300 e 1.500 m. A busca por CEP continua funcionando, com precisão de setor.
+3. **Fail-closed:** CEP de setor ausente do GeoJSON publicado, ou sem geometria utilizável, e com menos de 3 endereços, é omitido.
+4. **Limite conhecido:** 124 CEPs (117 com 5 ou mais endereços) apontam para 25 códigos de setor do CNEFE que não existem na malha publicada; a regra D4 não pode ser verificada para eles. Nenhum tem menos de 3 endereços depois da regra 2.

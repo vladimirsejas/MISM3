@@ -126,18 +126,94 @@ def filtrar_ceps_de_setores_suprimidos(indice: dict, geojson: dict) -> tuple[dic
     return filtrado, len(indice) - len(filtrado)
 
 
+MINIMO_ENDERECOS_POR_CEP = 3  # mesma lógica da D4 (menos de 3 domicílios): CEP com menos de 3 endereços não publica ponto próprio
+RAIO_MINIMO_GENERALIZADO_M = 300
+RAIO_MAXIMO_GENERALIZADO_M = 1500
+
+
+def _aneis(geom: dict):
+    """Anéis (lista de [lon, lat]) do polígono ou multipolígono: o primeiro de cada polígono é o externo, os demais são furos."""
+    if geom.get("type") == "Polygon":
+        return [geom["coordinates"]]
+    if geom.get("type") == "MultiPolygon":
+        return geom["coordinates"]
+    return []
+
+
+def centroide_e_raio_do_setor(geom: dict) -> tuple[float, float, int] | None:
+    """Centro (lat, lon) ponderado pela área e raio (m) até o vértice mais distante, limitado a [300, 1500] m.
+
+    A conta é plana em graus, suficiente para um setor urbano; o resultado é arredondado a 4 casas e a 10 m."""
+    area_total = cx = cy = 0.0
+    pontos = []
+    for poligono in _aneis(geom):
+        for i, anel in enumerate(poligono):
+            a2 = sx = sy = 0.0
+            for (x0, y0), (x1, y1) in zip(anel, anel[1:]):
+                cruz = x0 * y1 - x1 * y0
+                a2 += cruz
+                sx += (x0 + x1) * cruz
+                sy += (y0 + y1) * cruz
+            if abs(a2) < 1e-18:
+                continue
+            area = abs(a2) / 2
+            peso = area if i == 0 else -area
+            area_total += peso
+            cx += (sx / (3 * a2)) * peso
+            cy += (sy / (3 * a2)) * peso
+            if i == 0:
+                pontos.extend(anel)
+    if abs(area_total) < 1e-18 or not pontos:
+        return None
+    lon, lat = cx / area_total, cy / area_total
+    raio = max(haversine_m(lat, lon, y, x) for x, y in pontos)
+    raio = int(-(-raio // 10) * 10)
+    return round(lat, 4), round(lon, 4), max(RAIO_MINIMO_GENERALIZADO_M, min(RAIO_MAXIMO_GENERALIZADO_M, raio))
+
+
+def generalizar_ceps_com_poucos_enderecos(indice: dict, geojson: dict, minimo: int = MINIMO_ENDERECOS_POR_CEP) -> tuple[dict, int, int]:
+    """CEP com menos de `minimo` endereços deixa de publicar o ponto dos endereços: passa a apontar para o centro do setor censitário.
+
+    Devolve (indice novo, quantos foram generalizados, quantos foram omitidos). Fail-closed: se o setor não existe no GeoJSON ou não tem
+    geometria utilizável, o CEP é omitido em vez de manter o ponto original. CEPs só da lista (setor vazio, n_enderecos 0) não têm setor e
+    também são omitidos."""
+    geoms = {id_do_setor(f.get("properties", {}).get("setor")): f.get("geometry") or {} for f in geojson.get("features", [])}
+    novo, generalizados, omitidos = {}, 0, 0
+    for cep, valor in indice.items():
+        if len(valor) < 5 or not isinstance(valor[4], (int, float)) or valor[4] >= minimo:
+            novo[cep] = valor
+            continue
+        setor = id_do_setor(valor[3]) if len(valor) > 3 else ""
+        resumo = centroide_e_raio_do_setor(geoms[setor]) if setor in geoms else None
+        if resumo is None:
+            omitidos += 1
+            continue
+        lat, lon, raio = resumo
+        resultado = [lat, lon, max(raio, valor[2] if isinstance(valor[2], (int, float)) else 0), valor[3], valor[4]]
+        if resultado != valor:  # só conta o que de fato mudou: reaplicar a regra a um índice já saneado não altera nada
+            generalizados += 1
+        novo[cep] = resultado
+    return novo, generalizados, omitidos
+
+
 def sanear_indice_publicado(caminho_indice: Path, caminho_geojson: Path) -> int:
-    """Aplica a decisão D4 ao índice JÁ publicado (sem reler o CNEFE) e atualiza os metadados. Devolve quantos CEPs saíram."""
+    """Aplica ao índice JÁ publicado (sem reler o CNEFE) a D4 e a regra de CEP com poucos endereços; atualiza os metadados.
+
+    Devolve quantas entradas foram alteradas ou removidas. É idempotente: rodar de novo não altera nada."""
     dados = json.loads(caminho_indice.read_text(encoding="utf-8"))
     geojson = json.loads(caminho_geojson.read_text(encoding="utf-8"))
     ceps, removidos = filtrar_ceps_de_setores_suprimidos(dados["ceps"], geojson)
-    if removidos:
+    ceps, generalizados, omitidos = generalizar_ceps_com_poucos_enderecos(ceps, geojson)
+    if removidos or generalizados or omitidos:
         dados["ceps"] = ceps
         meta = dados.setdefault("meta", {})
-        meta["ceps_de_setores_suprimidos_omitidos"] = meta.get("ceps_de_setores_suprimidos_omitidos", 0) + removidos
-        # mantém o formato legível do arquivo publicado (indent=1 e quebra final) para o diff mostrar só os CEPs removidos
+        meta["ceps_de_setores_suprimidos_omitidos"] = meta.get("ceps_de_setores_suprimidos_omitidos", 0) + removidos + omitidos
+        meta["ceps_generalizados_por_poucos_enderecos"] = sum(1 for v in ceps.values() if len(v) > 4 and v[4] < MINIMO_ENDERECOS_POR_CEP)  # estado atual, não acumulado
+        meta["regra_poucos_enderecos"] = ("CEP com menos de %d endereços não publica o ponto dos endereços: a coordenada é o centro do setor censitário e o raio cobre o setor "
+                                          "(entre %d e %d m). CEP sem setor utilizável é omitido." % (MINIMO_ENDERECOS_POR_CEP, RAIO_MINIMO_GENERALIZADO_M, RAIO_MAXIMO_GENERALIZADO_M))
+        # mantém o formato legível do arquivo publicado (indent=1 e quebra final) para o diff mostrar só o que mudou
         caminho_indice.write_text(json.dumps(dados, ensure_ascii=False, indent=1) + "\n", encoding="utf-8", newline="\n")
-    return removidos
+    return removidos + generalizados + omitidos
 
 
 def ler_cnefe() -> "pd.DataFrame":  # noqa: F821
@@ -177,7 +253,7 @@ def main() -> None:
     a = ap.parse_args()
     if a.sanear_publicado:
         n = sanear_indice_publicado(WEB_DADOS / "cep_indice.json", WEB_DADOS / "setores.geojson")
-        print("  %d CEPs de setores protegidos foram removidos do índice publicado." % n)
+        print("  %d entradas do índice publicado foram alteradas ou removidas (D4 e CEP com poucos endereços)." % n)
         return
     print("Lendo CNEFE...")
     df = ler_cnefe()
