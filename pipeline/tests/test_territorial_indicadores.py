@@ -202,6 +202,20 @@ def test_proveniencia_de_cras_ubs_usa_cep_quando_catalogo_nao_tem_registro(publi
     assert all(e["data_aplicacao_localizacao"] for e in registrados)
     assert all(e["fonte_localizacao"] == "servicos_manuais.csv + localizacao_registro.csv" for e in registrados)
 
+    ids_sem_registro = {
+        "man-cras-jardim-independencia", "man-cras-panorama", "man-saude-ubs-29",
+        "man-saude-ubs-wenzel", "man-saude-usf-ferraz", "man-saude-usf-sao-miguel",
+    }
+    assert {e["id"] for e in fallback_cep} == ids_sem_registro
+    with (RAIZ / "catalogo" / "servicos_manuais.csv").open(encoding="utf-8-sig", newline="") as f:
+        catalogo = {r["id"]: r for r in csv.DictReader(f)}
+    indice = json.loads((DADOS / "cep_indice.json").read_text(encoding="utf-8"))["ceps"]
+    for equipamento in fallback_cep:
+        cep = "".join(ch for ch in catalogo[equipamento["id"]]["cep"] if ch.isdigit())
+        lat, lon, raio = indice[cep][:3]
+        assert (equipamento["lat"], equipamento["lon"]) == (lat, lon)
+        assert equipamento["raio_incerteza_m"] == raio
+
 def test_dicionario_ibge_de_v0001_e_v0002_esta_registrado(publicado):
     metodo = publicado["meta"]["metodo"]
     assert "V0001 = total de pessoas" in metodo
