@@ -288,3 +288,13 @@ O teste foi corrigido para derivar `391 = 408 - 17` dos dados publicados e verif
 - A correção `overflow-x:clip` aplicada a `html` e `body` eliminou a falha de largura: o teste avançou além da verificação `scrollWidth <= clientWidth` em ambos os runs. Não remover a asserção.
 - Para identificar as URLs exatas dos dois 404s, `web/tests/browser_playwright.cjs` agora registra respostas HTTP com status >=400 e inclui URL/status na mensagem de falha; a verificação de zero erros de console e a nova verificação de respostas HTTP sem erro permanecem ativas. Commit: `af91b2ed48301dbf689cac530d71a884f538ff18`.
 - A próxima execução deve localizar os dois recursos faltantes. Não presumir que sejam favicon ou dados opcionais antes de ler os URLs concretos.
+
+
+## Identificação dos 404s e correção sem regenerar dados — 09/11/2026
+
+- Run #793 (`42682073180`) concluiu `testes` com sucesso e executou o job `navegador`; o Playwright confirmou os critérios anteriores e identificou exatamente dois 404, ambos para `/dados/servicos.json` na página inicial. Não eram favicon nem recursos de imagem. O segundo run da mesma revisão, #794 (`42682073490`), teve `testes` em sucesso e navegador ainda em execução na última consulta.
+- O arquivo `web/dados/servicos.json` estava ausente porque a regeneração local continua pendente. Não foi executada nem simulada a geração de dados. Foi criado um marcador técnico vazio com `meta.status="pendente_regeneracao_local"` e `servicos=[]`, commit `5bb51f30513cb08ca9c5e75d4a973e93d861780d`.
+- `web/app.js` agora distingue esse marcador de uma base de pipeline real: não incorpora registros, não afirma que o pipeline está disponível e mantém a origem “Catálogo verificado manualmente”. Commit `fd94ecb0b32712b9268649ec79786ed40d53683c`.
+- Foi criado `web/tests/servicos_pendentes.test.js` para verificar que o marcador permanece vazio, que o estado é explicitamente pendente e que a aplicação não o apresenta como dados do pipeline. Commit `9237b8ea9990ea1031e6b7fcd4248eae1088cf4d`.
+- O runbook local foi atualizado para explicar o marcador e reafirmar que ele não libera a regeneração. Commit `a54543c31b68f9e675257fcf3cb21dce0f024364`.
+- A próxima Actions precisa confirmar zero respostas HTTP de erro e zero erros de console, mantendo todos os testes anteriores.
