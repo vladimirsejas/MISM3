@@ -5,9 +5,9 @@ Junta tres origens, sempre marcando de onde veio cada registro:
   * Censo Escolar (creches)    - dados/bruto/escolas/microdados_ed_basica_*.csv
   * Catalogo manual verificado - catalogo/servicos_manuais.csv (CRAS, Secretaria da Mulher...)
 
-Localizacao: se a fonte traz coordenada valida, usa; senao usa o centro do CEP
-(web/dados/cep_indice.json). O campo "geo" diz qual dos dois foi usado, e o site
-mostra isso a usuaria. Sem CEP e sem coordenada = "sem_local" (aparece na lista, nao no mapa).
+Localização manual: latitude/longitude só são usadas quando coincidem com método e confiança em catalogo/localizacao_registro.csv.
+Sem proveniência, o catálogo público não expõe a coordenada bruta; o mapa tenta localizar pelo CEP institucional no índice CNEFE.
+Dados INEP/CNES mantêm a regra de localização de sua própria fonte.
 
 Uso:  python pipeline/servicos.py
       python pipeline/servicos.py --somente-manual   # so o catalogo manual -> web/dados/catalogo_manual.json
@@ -22,7 +22,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import (BRUTO, CATALOGO, RAIZ, MUNICIPIO_IBGE6, MUNICIPIO_IBGE7, WEB_DADOS, achar_coluna, agora_iso,  # noqa: E402
-                    ler_csv_flex, normalizar_cep, salvar_json)
+                    ler_csv_flex, normalizar_cep, salvar_json)\nfrom analise_territorial import carregar_localizacao_registro, coordenada_catalogo_verificada  # noqa: E402
 
 TIPOS = ("creche", "saude", "assistencia", "mulher", "emprego_curso")
 # Rio Claro/SP fica em aprox. lat -22.4, lon -47.56. Caixa folgada para rejeitar coordenada errada.
@@ -162,11 +162,20 @@ def servicos_manuais(df, indice: dict, etapas: dict | None = None, localizacao_r
             raise ValueError("Tipo invalido '%s' no catalogo manual (use: %s)" % (tipo, ", ".join(TIPOS)))
         if not g("fonte_url") or not g("verificado_em"):
             raise ValueError("Registro '%s' sem fonte_url/verificado_em: todo item manual precisa de fonte e data." % g("nome"))
-        lat, lon, geo = localizar(g("cep"), g("lat"), g("lon"), indice)
+        identificador = g("id") or "man-%s" % _norm(g("nome") or "")
+        coordenada = coordenada_catalogo_verificada(
+            {"id": identificador, "lat": g("lat"), "lon": g("lon")}, localizacao_registro
+        )
+        if coordenada:
+            lat, lon, geo = coordenada[0], coordenada[1], "coordenada_fonte"
+        else:
+            # Não copiar coordenada bruta sem proveniência. O mapa usa o CEP no índice CNEFE.
+            lat = lon = None
+            cepn = normalizar_cep(g("cep"))
+            geo = "centroide_cep" if cepn and cepn in indice else "sem_local"
         # "conferido=nao": a informacao veio de pesquisa na internet e ainda nao foi lida na pagina oficial.
         # O site mostra isso a usuaria e nunca escreve "verificado" nesses itens.
         nao_conferido = (g("conferido") or "").lower() in ("nao", "não", "n")
-        identificador = g("id") or "man-%s" % _norm(g("nome") or "")
         saida.append({
             "id": identificador, "tipo": tipo, "subtipo": g("subtipo"),
             "nome": g("nome"), "cep": normalizar_cep(g("cep")), "endereco": g("endereco"),
@@ -217,7 +226,8 @@ def main_somente_manual() -> None:
     """Gera web/dados/catalogo_manual.json so com o catalogo manual verificado (sem CNES/INEP).
     O site usa este arquivo quando servicos.json (base completa) ainda nao foi gerado."""
     m = CATALOGO / "servicos_manuais.csv"
-    indice = json.loads((WEB_DADOS / "cep_indice.json").read_text(encoding="utf-8")).get("ceps", {}) if (WEB_DADOS / "cep_indice.json").exists() else {}\n    saida = montar(indice, None, None, ler_csv_flex(m), etapas=carregar_etapas(), localizacao_registro=carregar_localizacao_registro())
+    indice = json.loads((WEB_DADOS / "cep_indice.json").read_text(encoding="utf-8")).get("ceps", {}) if (WEB_DADOS / "cep_indice.json").exists() else {}
+    saida = montar(indice, None, None, ler_csv_flex(m), etapas=carregar_etapas(), localizacao_registro=carregar_localizacao_registro())
     salvar_json(saida, WEB_DADOS / "catalogo_manual.json")
     print("catalogo_manual.json: %d servicos (so catalogo manual; sem CNES nem Censo Escolar)" % len(saida["servicos"]))
 
