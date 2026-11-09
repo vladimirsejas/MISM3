@@ -138,7 +138,7 @@ O arquivo `web/dados/cep_indice.json` liga cada CEP a um ponto, a um raio e ao s
 1. **Setor protegido (D4):** o CEP associado a setor com menos de 5 pessoas ou menos de 3 domicílios não é publicado. O código do setor do CNEFE tem sufixo de letra (`...P`) e é normalizado antes da comparação.
 2. **CEP com menos de 3 endereços:** o ponto dos endereços não é publicado, porque com 1 ou 2 endereços ele identifica uma ou duas edificações. A coordenada passa a ser o centro do setor censitário (não protegido) e o raio é o do setor, entre 300 e 1.500 m. A busca por CEP continua funcionando, com precisão de setor.
 3. **Fail-closed:** CEP de setor ausente do GeoJSON publicado, ou sem geometria utilizável, e com menos de 3 endereços, é omitido.
-4. **Limite conhecido:** 124 CEPs (117 com 5 ou mais endereços) apontam para 25 códigos de setor do CNEFE que não existem na malha publicada; a regra D4 não pode ser verificada para eles. Nenhum tem menos de 3 endereços depois da regra 2.
+4. **Limite histórico, resolvido no saneamento de 09/11/2026:** antes do saneamento, 124 CEPs (117 com 5 ou mais endereços) apontavam para 25 códigos de setor do CNEFE ausentes da malha. A versão pública atual omite os 124 registros sem vínculo setorial verificável; nenhum CEP publicado aponta para setor protegido. A contagem de 1.243 registros e a regra aplicada estão descritas na atualização operacional abaixo.
 
 
 ## Atualização operacional — 09/11/2026
