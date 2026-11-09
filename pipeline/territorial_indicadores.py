@@ -122,10 +122,22 @@ def equipamentos(linhas: list, indice_cep: dict, escolas: list[dict], localizaca
                 coord_registro = coord_do_catalogo(registro["lat"], registro["lon"])
                 if coord_registro != xy_catalogo:
                     raise ValueError("proveniência de localização diverge do catálogo para %s" % r["id"])
-            metodo = registro.get("metodo") or ("catalogo_sem_registro_de_proveniencia" if xy_catalogo else ("centroide_cep" if xy_cep else "pendente"))
-            confianca = registro.get("confianca") or ("nao_registrada" if xy_catalogo else ("aproximada_operacional" if xy_cep else "nao_registrada"))
-            fonte = ("servicos_manuais.csv + localizacao_registro.csv" if registro.get("metodo") else
-                     ("servicos_manuais.csv (proveniência não registrada)" if xy_catalogo else ("CNEFE/índice CEP" if xy_cep else None)))
+            if xy_catalogo:
+                metodo = registro["metodo"]
+                confianca = registro["confianca"]
+                fonte = "servicos_manuais.csv + localizacao_registro.csv"
+            elif xy_cep:
+                metodo = "centroide_cep"
+                confianca = "aproximada_operacional"
+                fonte = "CNEFE/índice CEP"
+            elif coord_do_catalogo(r.get("lat"), r.get("lon")):
+                metodo = "catalogo_sem_registro_de_proveniencia"
+                confianca = "nao_registrada"
+                fonte = "servicos_manuais.csv (coordenada não utilizada por falta de proveniência)"
+            else:
+                metodo = "pendente"
+                confianca = "nao_registrada"
+                fonte = None
             saida.append({"id": r["id"], "nome": r["nome"], "categoria": cat, "xy_catalogo": xy_catalogo,
                           "xy_cep": xy_cep, "raio_catalogo_m": 0.0 if xy_catalogo else None, "raio_cep_m": raio_cep,
                           "metodo_localizacao": metodo, "confianca_localizacao": confianca,
