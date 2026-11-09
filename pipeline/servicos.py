@@ -150,9 +150,12 @@ def carregar_etapas(ligacao: Path | None = None, escola: Path | None = None) -> 
     saida = {}
     with ligacao.open(encoding="utf-8-sig", newline="") as f:
         for r in csv.DictReader(f):
-            etapas = por_codigo.get(str(r["inep"]).strip())
+            codigo = str(r["inep"]).strip()
+            etapas = por_codigo.get(codigo)
             if etapas is not None:
                 saida[r["id"]] = etapas
+            else:
+                print("AVISO: %s ligado ao INEP %s, que não está na tabela Escola ativa do Censo; sem etapas." % (r["id"], codigo))
     return saida
 
 
