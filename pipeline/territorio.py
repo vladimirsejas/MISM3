@@ -5,8 +5,8 @@ Entrada : web/dados/setores.geojson (408 setores com bairro, situação, pessoas
 Saída   : web/dados/territorio.json, que alimenta a vista "Rio Claro em numeros" do dashboard (web/index.html).
 
 Indicadores (todos de dado público e agregado; nada de pessoa):
-  - densidade = pessoas / área do setor (hab/km²). A área vem do próprio polígono, num plano local centrado em
-    Rio Claro. Conferência: a soma das áreas dá ~497 km² contra 498,4 km² publicados pelo IBGE.
+  - densidade = pessoas / área do setor (hab/km²). A área vem do próprio polígono, calculada geodesicamente no elipsoide GRS80.
+    A referência municipal é registrada separadamente; a malha setorial é do Censo 2022.
   - pessoas por domicílio, só para setores com pelo menos MIN_DOMICILIOS domicílios. Setores pequenos dão valores
     absurdos (há setor com 106 pessoas em 1 domicílio, provavelmente domicílio coletivo) e ficam "sem base suficiente".
 
