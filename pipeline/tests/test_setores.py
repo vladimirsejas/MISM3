@@ -74,3 +74,28 @@ def test_grava_setor_bairro_so_com_bairro(tmp_path, monkeypatch):
     saida = json.loads((tmp_path / "web_dados" / "setor_bairro.json").read_text(encoding="utf-8"))
     assert saida["bairros"] == {"354390700000001": "Centro"}  # o setor sem bairro nao aparece
     assert "IBGE" in saida["meta"]["fonte"] and "agrupado" in saida["meta"]["nota"]
+
+
+
+def test_simplificacao_preserva_divisa_compartilhada():
+    from shapely.geometry import shape
+
+    limite_a = [
+        [-47.56, -22.40], [-47.55, -22.40], [-47.551, -22.398],
+        [-47.55, -22.396], [-47.55, -22.39], [-47.56, -22.39], [-47.56, -22.40],
+    ]
+    limite_b = [
+        [-47.55, -22.40], [-47.54, -22.40], [-47.54, -22.39],
+        [-47.55, -22.39], [-47.55, -22.396], [-47.551, -22.398], [-47.55, -22.40],
+    ]
+    feicoes = [
+        {"type": "Feature", "properties": {"setor": "a"},
+         "geometry": {"type": "Polygon", "coordinates": [limite_a]}},
+        {"type": "Feature", "properties": {"setor": "b"},
+         "geometry": {"type": "Polygon", "coordinates": [limite_b]}},
+    ]
+
+    setores.simplificar_cobertura(feicoes)
+    a, b = [shape(f["geometry"]) for f in feicoes]
+    assert a.intersection(b).area <= 0.01
+    assert a.boundary.intersection(b.boundary).length > 0
