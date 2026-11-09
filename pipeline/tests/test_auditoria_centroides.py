@@ -110,3 +110,21 @@ def test_correcao_minima_preserva_os_399_centroides_validos_e_altera_so_nove():
             for distancia in cenario.values():
                 if distancia["delta_km"] is not None:
                     assert distancia["delta_km"] == 0
+
+
+
+def test_impacto_maximo_nas_distancias_fica_abaixo_de_55_metros():
+    import json
+
+    raiz = Path(__file__).resolve().parents[2]
+    geo = json.loads((raiz / "web/dados/setores.geojson").read_text(encoding="utf-8"))
+    indicadores = json.loads((raiz / "web/dados/indicadores_territoriais.json").read_text(encoding="utf-8"))
+    resultado = ac.comparar(geo, indicadores)
+    maximo = max(
+        resumo["maximo_delta_absoluto_km"]
+        for cenarios in resultado["resumo"]["distancias"].values()
+        for resumo in cenarios.values()
+        if resumo["maximo_delta_absoluto_km"] is not None
+    )
+    assert maximo < 0.055
+    assert resultado["resumo"]["deslocamento_ponto_maximo_m"] < 62
