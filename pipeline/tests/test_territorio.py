@@ -163,7 +163,8 @@ def test_localizar_servico_endereco_cep_e_cep_vago():
 
 def test_distancia_ate_o_servico_mais_proximo_e_resumo():
     # CRAS no centro do setor "a": "a" fica a ~0 km, "b" (0,01° a leste) a ~1,03 km e "c" (0,03° a leste) a ~3,08 km
-    servico = cras(-22.395, -47.595)\n    d = t.distancias_ate_servicos(tres_setores(), [servico], None, proveniencia(servico))[0]["cras"]
+    servico = cras(-22.395, -47.595)
+    d = t.distancias_ate_servicos(tres_setores(), [servico], None, proveniencia(servico))[0]["cras"]
     a, b, c = (d["por_setor"][k] for k in "abc")
     assert a < 0.05 and 1.0 < b < 1.07 and 3.0 < c < 3.15
     assert d["contagem"] == [1, 0, 1, 0, 1] and sum(d["contagem"]) == 3                    # <0,5 | 0,5-1 | 1-2 | 2-3 | >=3
@@ -177,13 +178,16 @@ def test_cobertura_conta_o_que_nao_foi_localizado_e_acima_do_minimo_mostra():
     # 3 de 4 localizados (75%): mostra, e diz "3 de 4"
     servicos = [cras(-22.395 + i * 0.001, -47.595, id="man-cras-%d" % i, nome="CRAS %d" % i) for i in range(3)]
     servicos.append({**cras(None, None), "id": "man-cras-sem", "nome": "CRAS SEM LOCAL"})
-    dist, pendentes = t.distancias_ate_servicos(tres_setores(), servicos, None, proveniencia(*servicos))\n    assert (dist["cras"]["cadastrados"], dist["cras"]["localizados"]) == (4, 3) and pendentes == {}
+    dist, pendentes = t.distancias_ate_servicos(tres_setores(), servicos, None, proveniencia(*servicos))
+    assert (dist["cras"]["cadastrados"], dist["cras"]["localizados"]) == (4, 3) and pendentes == {}
 
 
 def test_cobertura_baixa_nao_gera_distancia_e_fica_pendente():
     # 1 de 3 localizado (33%): "65 mil pessoas longe do CRAS" seria falso, porque faltam 2 CRAS no mapa
     servicos = [cras(-22.395, -47.595), {**cras(None, None), "id": "man-cras-b", "nome": "B"}, {**cras(None, None), "id": "man-cras-c", "nome": "C"}]
-    registro = proveniencia(servicos[0])\n    dist, pendentes = t.distancias_ate_servicos(tres_setores(), servicos, None, registro)\n    assert "cras" not in dist
+    registro = proveniencia(servicos[0])
+    dist, pendentes = t.distancias_ate_servicos(tres_setores(), servicos, None, registro)
+    assert "cras" not in dist
     assert pendentes["cras"] == {"rotulo": "CRAS", "cadastrados": 3, "localizados": 1, "minimo_pct": 70}
     d = t.montar(tres_setores(), servicos=servicos, localizacao_registro=registro)
     assert "distancia_ate_servico" not in d and d["distancia_pendente"]["cras"]["localizados"] == 1
@@ -216,7 +220,8 @@ def test_montar_sem_servico_localizado_nao_traz_distancia_nenhuma():
 
 
 def test_montar_com_servico_traz_distancia_por_setor_aviso_e_pontos_sem_duplicar():
-    servico = cras(-22.395, -47.595)\n    d = t.montar(tres_setores(), servicos=[servico], indice_cep=None, localizacao_registro=proveniencia(servico))
+    servico = cras(-22.395, -47.595)
+    d = t.montar(tres_setores(), servicos=[servico], indice_cep=None, localizacao_registro=proveniencia(servico))
     assert d["setores"]["a"]["dist_cras"] < 0.05 and d["setores"]["c"]["dist_cras"] > 3
     assert "aproximada" in d["meta"]["aviso_distancia"] and "não prova falta de serviço" in d["meta"]["aviso_distancia"]
     bloco = d["distancia_ate_servico"]["cras"]
