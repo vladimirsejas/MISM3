@@ -17,7 +17,7 @@ SHA de partida: `9ed9731ca55b97888a6e0fef2df04fdd9eedbd9d`
 | Bloco | Estado | Commit | Actions |
 |---|---|---|---|
 | 1. Privacidade | Concluído | `edc9ea8ee14170d14b275641bf57bc32bdea7dbd` | `42657889614` — sucesso |
-| 2. Geografia | Em andamento — referência e centroides revalidados; correções topológicas e testes finais em validação | `a1a0f88`, `71eead9`, `81f6843`, `22e2c40`, `4b3db12`, `33c6b94`, `671e958` | `42671168961` — referência IBGE aprovada; suíte geral com 11 falhas de expectativas antigas; execução seguinte pendente |
+| 2. Geografia | Em andamento — correções e testes versionados; Actions sem jobs e regeneração local pendente | `a1a0f88`, `71eead9`, `81f6843`, `22e2c40`, `4b3db12`, `33c6b94`, `671e958`, `7d1e003`, `23e9b78` | `42671168961` — referência aprovada; `42672174236`, `42672449139` e `42672558750` — falha pré-job, zero jobs criados |
 | 3. Fontes e licenças | Em andamento | `c3cbff0`, `f66f616`, `df7d519`, `9aae00b` | Testes de atribuição e inventário documental adicionados; aprovação integral pendente |
 | 4. Mapa e painel | Em andamento | `c3cbff0`, `f66f616` | Atribuição cartográfica e teste automatizado de créditos corrigidos; testes de navegador e acessibilidade ainda pendentes |
 | 5. Sistema de orientação | Pendente | — | — |
@@ -117,3 +117,11 @@ A etapa de regeneração automática foi retirada da Actions. A Actions não bai
 - O catálogo admite três estados de localização: coordenada de fonte, centro do CEP e sem localização. Os seis CRAS/UBS sem coordenada individual documentada têm fallback pelo CEP institucional, com raio operacional do índice; o cenário de sensibilidade com CEP pode reduzir a distância estimada para CRAS e UBS, além de escolas. Os testes não devem tratar esses seis casos como ausência de raio quando o índice fornece o raio operacional.
 - O teste de igualdade entre arquivo publicado e gerador não pode ser declarado aprovado antes da regeneração local das saídas que dependem das contagens brutas e da regra D4. Foi criado o marcador `docs/territorial/REGENERACAO_LOCAL_PENDENTE.md`; enquanto ele existir, o teste aparece explicitamente como ignorado, e volta a ser obrigatório quando o Claude Code remover o marcador após regenerar e validar os dados minimizados.
 - O teste geográfico usa o limiar de 0,0121 m² tanto para interseção entre pares quanto para buracos internos da união, derivado da quantização de seis casas decimais. A comparação com o limite municipal 2025 continua separada, pois a diferença de contorno entre as edições 2022 e 2025 é aproximadamente 0,7 km² e não representa buraco interno na malha de setores.
+
+
+## Bloqueio operacional da GitHub Actions — 09/11/2026
+
+- Após a execução `42671168961`, as execuções `42672174236` (SHA `671e9589827337196c1252359ea5cb4b8e22f900`), `42672449139` (SHA `7d1e003f73c3b848e7ce0e37b6301cf11e17b012`) e `42672558750` (SHA `23e9b78ebb894e2a7da7b92e410466a86ba982d7`) terminaram com conclusão `failure`, mas a API do GitHub retornou `total_count=0` em `/actions/runs/{id}/jobs` para as três: nenhum job foi criado, nenhum passo executou e não há log de pytest para interpretar. Isso não é uma reprovação dos testes; é uma falha anterior à criação do job.
+- A tentativa de reexecutar a execução `42672449139` foi recusada pelo GitHub com HTTP 403 e mensagem `This workflow run cannot be retried`. Não foi alterada a configuração da Actions nem criado outro workflow para contornar a política.
+- O código e os testes geográficos foram commitados na branch. A validação isolada de referência IBGE continua comprovada somente no SHA `33c6b94a0f0dd231be9dbb100a93824d6d008e26`, execução `42671168961`; não se atribui aprovação às alterações posteriores sem execução real.
+- A validação final do Bloco 2 permanece bloqueada até a Actions voltar a criar jobs e até a regeneração local autorizada pelo responsável. Nenhuma mudança em `main`, merge, deploy, Cloudflare ou publicação foi feita.
