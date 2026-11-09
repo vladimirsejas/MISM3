@@ -169,9 +169,15 @@ def validar_topologia(geojson, limite_municipal=None):
                 j = int(j)
                 if j <= i:
                     continue
-                area_m2 = geometria.intersection(projetadas[j]).area
+                intersecao = geometria.intersection(projetadas[j])
+                area_m2 = intersecao.area
                 if area_m2 > TOLERANCIA_TOPOLOGICA_M2:
-                    sobreposicoes.append({"setores": [codigos[i], codigos[j]], "area_m2": round(area_m2, 3)})
+                    menor_setor_m2 = min(geometria.area, projetadas[j].area)
+                    sobreposicoes.append({
+                        "setores": [codigos[i], codigos[j]],
+                        "area_m2": round(area_m2, 3),
+                        "proporcao_area_menor_setor_pct": round(100 * area_m2 / menor_setor_m2, 5) if menor_setor_m2 else None,
+                    })
         uniao = unary_union(projetadas)
         soma_areas = sum(g.area for g in projetadas)
     else:
@@ -184,7 +190,7 @@ def validar_topologia(geojson, limite_municipal=None):
             "avaliacao_lacunas": "nao_avaliada",
             "motivo_lacunas": "Limite municipal oficial de referência não foi fornecido.",
             "sobreposicoes": sobreposicoes,
-            "sobreposicoes_relevantes": sobreposicoes_relevantes,
+            "sobreposicoes_relevantes": sobreposicoes_relevantes,\n            "limiar_relevancia_sobreposicao_m2": LIMIAR_TOPOLOGICO_RELEVANTE_M2,
             "area_sobreposicoes_total_m2": round(area_sobreposicoes_total, 3),
             "area_sobreposicao_maxima_m2": round(area_sobreposicao_maxima, 3),
             "area_somada_setores_km2_utm": round(soma_areas / 1_000_000, 6),
@@ -201,7 +207,7 @@ def validar_topologia(geojson, limite_municipal=None):
     return {
         "avaliacao_lacunas": "avaliada",
         "sobreposicoes": sobreposicoes,
-        "sobreposicoes_relevantes": sobreposicoes_relevantes,
+        "sobreposicoes_relevantes": sobreposicoes_relevantes,\n        "limiar_relevancia_sobreposicao_m2": LIMIAR_TOPOLOGICO_RELEVANTE_M2,
         "area_sobreposicoes_total_m2": round(area_sobreposicoes_total, 3),
         "area_sobreposicao_maxima_m2": round(area_sobreposicao_maxima, 3),
         "area_limite_municipal_km2_utm": round(limite.area / 1_000_000, 6),
