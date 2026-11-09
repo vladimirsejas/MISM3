@@ -28,6 +28,9 @@ def test_geojson_remove_contagens_e_derivados_sem_apagar_geometria():
                     "densidade": 900,
                     "pessoas_por_domicilio": 4,
                     "dist_creche": 0.2,
+                    "dist_cras": 0.4,
+                    "dist_ubs": 0.5,
+                    "dist_escola": 0.6,
                     "suprimido_privacidade": False,
                 },
                 "geometry": {"type": "Point", "coordinates": [0, 0]},
@@ -47,6 +50,9 @@ def test_geojson_remove_contagens_e_derivados_sem_apagar_geometria():
     assert pequeno["properties"]["densidade"] is None
     assert pequeno["properties"]["pessoas_por_domicilio"] is None
     assert pequeno["properties"]["dist_creche"] is None
+    assert pequeno["properties"]["dist_cras"] is None
+    assert pequeno["properties"]["dist_ubs"] is None
+    assert pequeno["properties"]["dist_escola"] is None
     assert pequeno["geometry"] == {"type": "Point", "coordinates": [0, 0]}
     assert normal["properties"]["pessoas"] == 100
     assert normal["properties"]["domicilios"] == 40
