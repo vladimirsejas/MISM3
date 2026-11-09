@@ -8,9 +8,10 @@
   "observacao_privacidade": "CEPs sem setor verificável, associados a setores protegidos ou com registros inválidos são omitidos. CEPs com menos de 3 endereços são generalizados para o centro do setor; se a geometria não for utilizável, são omitidos.",
   "ceps_generalizados_por_poucos_enderecos": 44,
   "regra_poucos_enderecos": "CEP com menos de 3 endereços não publica o ponto dos endereços: a coordenada é o centro do setor censitário e o raio cobre o setor (entre 300 e 1500 m). CEP sem setor utilizável é omitido.",
-  "ceps_sem_vinculo_setorial_verificavel_ou_protegido_omitidos": 124,
+  "ceps_sem_vinculo_setorial_verificavel_ou_protegido_omitidos": 0,
   "ceps_poucos_enderecos_sem_geometria_omitidos": 0,
-  "regra_validacao_setorial": "Somente são publicados CEPs com código de setor presente na malha e que não esteja protegido pela regra D4."
+  "regra_validacao_setorial": "Somente são publicados CEPs com código de setor presente na malha e que não esteja protegido pela regra D4.",
+  "ceps_so_da_lista": []
  },
  "ceps": {
   "13500030": [
@@ -2499,7 +2500,7 @@
    22
   ],
   "13503190": [
-   -22.4196,
+   -22.4195,
    -47.5748,
    370,
    "354390705000037P",
