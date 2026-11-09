@@ -42,7 +42,8 @@ def test_quantil_ponderado():
 
 def test_percentual_acima_do_limiar_e_sem_bairro():
     # UBS no centro de Alfa: Alfa fica a ~0 km, Beta (a ~3 km a leste) fica a mais de 2 km
-    servico = ubs("man-ubs-a", -22.395, -47.595)\n    r = ex.calcular(geo(), [servico], {}, usar_cep=False, localizacao_registro=proveniencia(servico))["ubs"]
+    servico = ubs("man-ubs-a", -22.395, -47.595)
+    r = ex.calcular(geo(), [servico], {}, usar_cep=False, localizacao_registro=proveniencia(servico))["ubs"]
     ac = r["setores_validos"]["acima_de"]
     assert ac["2 km"]["setores"] == 1 and ac["2 km"]["percentual"] == 50.0
     assert r["setores_sem_bairro"]["acima_de"]["2 km"]["percentual"] == 100.0
@@ -52,8 +53,9 @@ def test_percentual_acima_do_limiar_e_sem_bairro():
 def test_cobertura_incompleta_sem_cep_e_completa_com_cep():
     servicos = [ubs("man-ubs-a", -22.395, -47.595), ubs("man-ubs-b", cep="13500000")]
     indice = {"13500000": [-22.395, -47.565]}
-    sem = ex.calcular(geo(), servicos, indice, usar_cep=False)["ubs"]
-    com = ex.calcular(geo(), servicos, indice, usar_cep=True)["ubs"]
+    registro = proveniencia(servicos[0])
+    sem = ex.calcular(geo(), servicos, indice, usar_cep=False, localizacao_registro=registro)["ubs"]
+    com = ex.calcular(geo(), servicos, indice, usar_cep=True, localizacao_registro=registro)["ubs"]
     assert sem["cobertura"] == {"com_coordenada": 1, "cadastrados": 2, "completo": False}
     assert com["cobertura"]["completo"] is True
     assert com["setores_validos"]["acima_de"]["2 km"]["setores"] == 0     # a segunda UBS aproxima o setor Beta
@@ -65,7 +67,8 @@ def test_categoria_sem_nenhuma_coordenada():
 
 
 def test_gerar_traz_dois_cenarios():
-    servico = ubs("man-ubs-a", -22.395, -47.595)\n    out = ex.gerar(geo(), [servico], {}, localizacao_registro=proveniencia(servico))
+    servico = ubs("man-ubs-a", -22.395, -47.595)
+    out = ex.gerar(geo(), [servico], {}, localizacao_registro=proveniencia(servico))
     assert set(out["cenarios"]) == {"coordenadas_do_catalogo", "com_centro_do_cep"}
     assert out["meta"]["pessoas_total"] is None and out["meta"]["setores_suprimidos"] == 0
 
