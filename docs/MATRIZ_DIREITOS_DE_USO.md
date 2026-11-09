@@ -255,4 +255,38 @@ Foram preparados rascunhos em `docs/pedidos_autorizacao/` para IBGE, INEP, Minis
 4. O CNES tem campo genérico de licença no recurso consultado; não estender automaticamente a licença geral do portal ao arquivo CNES.
 5. Esri e OSM são serviços remotos de tiles. A licença dos dados OSM não é a política do servidor de tiles; termos Esri não concedem redistribuição dos tiles.
 6. O brasão e imagens sem autorização comprovada devem ser substituídos por espaço neutro no site. Esta matriz não presume que imagens enviadas ao autor tenham sido licenciadas para redistribuição.
+7. Documentos PDF arquivados são cópias integrais de terceiros. Até confirmação, manter apenas referências/links oficiais e não redistribuir as cópias.| Fonte: CNEFE 2022 — arquivos brutos e agregados por CEP | IBGE; FTP e página oficial CNEFE / IBGE | sim | não | **PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO** | Solicitar posição formal ao IBGE; manter brutos e agregados locais. |
+| Fonte: malha de setores censitários 2022 e agregados IBGE | IBGE; FTP oficial SP_setores_CD2022.zip e Censo 2022 / IBGE | sim | não | **PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO** | Solicitar confirmação escrita sobre geometria e agregados derivados. |
+| Fonte: malha municipal IBGE 2025 | IBGE; FTP Malha Municipal 2025 / IBGE | sim | não | **PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO** | Solicitar confirmação escrita ao IBGE. |
+| Fonte: Censo Escolar 2025 — microdados e agregados INEP | INEP; microdados Censo Escolar 2025 / INEP | sim | não | **PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO** | Solicitar confirmação sobre uso analítico e publicação de agregados específicos. |
+| Fonte: CNES — estabelecimentos e recursos UBS | Ministério da Saúde/DATASUS / Ministério da Saúde/DATASUS | sim | não | **PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO** | Solicitar licença/condições aplicáveis aos arquivos CNES e derivados. |
+| Fonte: imagens e cartografia de Google Maps/Street View e geocodificação | Google Maps Platform e fornecedores Airbus/Maxar / Google e fornecedores | sim | não | **PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO** | Manter capturas e coordenadas Google fora do pacote; solicitar esclarecimento formal. |
+| Fonte: tiles e dados OpenStreetMap | OpenStreetMap Foundation e colaboradores / OpenStreetMap Foundation | sim | sim | **PODE SER PUBLICADO** | Manter atribuição OSM, observar política de tiles e separar licença dos dados da política do servidor. |
+| Fonte: tiles Esri World Light Gray Base/Reference | Esri e fornecedores de dados indicados no serviço / Esri | sim | não | **PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO** | Manter camada opcional e desativada; solicitar confirmação de enquadramento acadêmico não comercial. |
+| Fonte: brasão e identidade visual municipal | Prefeitura Municipal de Rio Claro / Município de Rio Claro | incerto | não | **NÃO PODE SER UTILIZADO ATÉ ESCLARECIMENTO** | Substituir no site por espaço neutro e pedir autorização escrita. |
+| Fonte: cartografia de abrangência das UBS | Divisão territorial informada à equipe; documento original não localizado / Órgão municipal emissor não identificado; cartografia digital MISM | incerto | não | **NÃO PODE SER UTILIZADO ATÉ ESCLARECIMENTO** | Não publicar nem atribuir ao IBGE/OSM; recuperar documento e obter autorização formal. |
+| Fonte: horários e páginas SOU Transportes | SOU Transportes / SOU Transportes | incerto | não | **NÃO PODE SER UTILIZADO ATÉ ESCLARECIMENTO** | Solicitar autorização escrita para transcrição, reprodução e redistribuição. |
+| Fonte: registros do Procon-SP para Rio Claro | Procon-SP / Fundação Procon-SP | sim | não | **PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO** | Solicitar confirmação sobre reprodução de contatos e informações no catálogo. |
+| Fonte: bibliotecas Python diretas em requirements.txt | PyPI e repositórios oficiais dos projetos / Mantenedores de pandas, NumPy, scikit-learn, SciPy, pyshp, pyproj, Shapely, openpyxl e pytest | sim | sim | **PODE SER PUBLICADO** | Manter inventário por versão e auditar dependências transitivas antes de empacotar binários. |
+| Fonte: API Anthropic usada apenas em desenvolvimento | Anthropic / Anthropic | sim | não | **PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO** | Manter fora do runtime público e revisar os termos se houver uso continuado. |
+
+## Pacote de publicação e exclusões
+
+- O manifesto `docs/PACOTE_PUBLICACAO.csv` é uma lista positiva: somente itens cuja decisão seja **PODE SER PUBLICADO** ou **PODE SER PUBLICADO SOMENTE AGREGADO** podem entrar no pacote de dados/mídia.
+- Todo arquivo desta matriz não aprovado fica excluído do pacote de publicação até regularização. A exclusão do pacote não apaga fontes locais do responsável e não constitui autorização para redistribuir o arquivo pelo GitHub, Zenodo ou outro canal.
+- Os arquivos brutos de CNEFE, CNES, INEP, CEPs geocodificados pelo Google, capturas de tela e a cartografia de abrangência das UBS permanecem no ambiente local; não devem ser enviados a Actions, logs, artefatos ou depósitos.
+- O manifesto não é uma licença. Antes de montar um release/depósito, o empacotamento deve obedecer à lista positiva e à matriz. O site de trabalho pode continuar contendo arquivos de execução que não integram o pacote científico de redistribuição; não confundir disponibilidade no repositório de desenvolvimento com aprovação de redistribuição.
+
+## Pedidos de autorização
+
+Foram preparados rascunhos em `docs/pedidos_autorizacao/` para IBGE, INEP, Ministério da Saúde/DATASUS, Prefeitura de Rio Claro (brasão e cartografia UBS), SOU Transportes, Google e Esri, além dos publicadores de documentos arquivados. Nenhum e-mail foi enviado. Os campos de destinatário permanecem em branco quando o endereço não foi comprovado.
+
+## Limitações e decisões que exigem cautela
+
+1. A cartografia de abrangência das UBS é relatada como derivada de documento escrito entregue à equipe, mas o documento original não foi recuperado. Não atribuir os limites ao IBGE ou OSM.
+2. CNEFE contém informação de endereços; o índice CEP é derivado e generalizado, mas a generalização D4 não cria uma licença de redistribuição.
+3. O INEP exige atenção à anonimização e risco de reidentificação; docentes, gestores e matrículas individualizadas não entram no pacote.
+4. O CNES tem campo genérico de licença no recurso consultado; não estender automaticamente a licença geral do portal ao arquivo CNES.
+5. Esri e OSM são serviços remotos de tiles. A licença dos dados OSM não é a política do servidor de tiles; termos Esri não concedem redistribuição dos tiles.
+6. O brasão e imagens sem autorização comprovada devem ser substituídos por espaço neutro no site. Esta matriz não presume que imagens enviadas ao autor tenham sido licenciadas para redistribuição.
 7. Documentos PDF arquivados são cópias integrais de terceiros. Até confirmação, manter apenas referências/links oficiais e não redistribuir as cópias.
