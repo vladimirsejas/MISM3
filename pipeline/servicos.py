@@ -153,7 +153,7 @@ FRASE_SEM_ETAPAS = ("mas não diz quais etapas ela atende (berçário, maternal,
 FRASE_COM_ETAPAS = "mas não diz se há vaga: ligue para perguntar sobre vaga."
 
 
-def servicos_manuais(df, indice: dict, etapas: dict | None = None) -> list[dict]:
+def servicos_manuais(df, indice: dict, etapas: dict | None = None, localizacao_registro=None) -> list[dict]:
     saida = []
     for _, r in df.iterrows():
         g = lambda c: (None if str(r.get(c, "")) in ("nan", "None", "") else str(r[c]).strip())  # noqa: E731
@@ -188,7 +188,7 @@ def servicos_manuais(df, indice: dict, etapas: dict | None = None) -> list[dict]
 
 
 # ------------------------------------------------------------ principal
-def montar(indice: dict, cnes=None, escolas=None, manuais=None, hoje: str | None = None, etapas: dict | None = None) -> dict:
+def montar(indice: dict, cnes=None, escolas=None, manuais=None, hoje: str | None = None, etapas: dict | None = None, localizacao_registro=None) -> dict:
     hoje = hoje or agora_iso()
     itens: list[dict] = []
     contagem = {}
@@ -198,7 +198,7 @@ def montar(indice: dict, cnes=None, escolas=None, manuais=None, hoje: str | None
     if escolas is not None:
         a = servicos_creches(escolas, indice, hoje); itens += a; contagem["creches_inep"] = len(a)
     if manuais is not None:
-        a = servicos_manuais(manuais, indice, etapas); itens += a; contagem["manuais"] = len(a)
+        a = servicos_manuais(manuais, indice, etapas, localizacao_registro); itens += a; contagem["manuais"] = len(a)
         codigos_manuais = {str(s["cnes"]) for s in a if s.get("cnes")}
     # Somente o catálogo manual pode substituir um registro CNES com o mesmo código.
     # Incluir os códigos da lista CNES aqui apagaria também registros CNES sem substituto manual.
@@ -217,7 +217,7 @@ def main_somente_manual() -> None:
     """Gera web/dados/catalogo_manual.json so com o catalogo manual verificado (sem CNES/INEP).
     O site usa este arquivo quando servicos.json (base completa) ainda nao foi gerado."""
     m = CATALOGO / "servicos_manuais.csv"
-    saida = montar({}, None, None, ler_csv_flex(m), etapas=carregar_etapas())
+    indice = json.loads((WEB_DADOS / "cep_indice.json").read_text(encoding="utf-8")).get("ceps", {}) if (WEB_DADOS / "cep_indice.json").exists() else {}\n    saida = montar(indice, None, None, ler_csv_flex(m), etapas=carregar_etapas(), localizacao_registro=carregar_localizacao_registro())
     salvar_json(saida, WEB_DADOS / "catalogo_manual.json")
     print("catalogo_manual.json: %d servicos (so catalogo manual; sem CNES nem Censo Escolar)" % len(saida["servicos"]))
 
@@ -257,7 +257,7 @@ def main() -> None:
     if m.exists():
         manuais = ler_csv_flex(m)
 
-    saida = montar(indice, cnes, escolas, manuais, etapas=carregar_etapas())
+    saida = montar(indice, cnes, escolas, manuais, etapas=carregar_etapas(), localizacao_registro=carregar_localizacao_registro())
     salvar_json(saida, WEB_DADOS / "servicos.json")
     por_tipo, por_geo = {}, {}
     for s in saida["servicos"]:
