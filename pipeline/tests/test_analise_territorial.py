@@ -1,5 +1,6 @@
 """Testes da análise territorial com dados sintéticos pequenos (a conferência dos números é feita à mão)."""
 import math
+from pathlib import Path
 
 import pytest
 
