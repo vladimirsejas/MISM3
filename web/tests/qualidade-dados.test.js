@@ -13,6 +13,24 @@ const geo = { type: "FeatureCollection", features: [
   { properties: { setor: "2", pessoas: 20, domicilios: 8 }, geometry: quadrado }
 ] };
 
+function testeExportacoesDoModulo() {
+  const exportsEsperados = [
+    "poligonos",
+    "anelContem",
+    "pontoNaMalha",
+    "areaAnelLocal",
+    "areaAnelEsferica",
+    "areasGeojson",
+    "validarGeometrias",
+    "resumir"
+  ];
+  assert.deepStrictEqual(Object.keys(qd).sort(), exportsEsperados.slice().sort());
+  exportsEsperados.forEach((nome) => {
+    assert.strictEqual(typeof qd[nome], "function", "export deve existir e ser função: " + nome);
+  });
+  assert.strictEqual(qd.areaAnelGeodesica, undefined, "não deve exportar uma função geodésica inexistente");
+}
+
 function testeEstrutura() {
   const r = qd.validarGeometrias(geo);
   assert.strictEqual(r.total, 2);
@@ -73,12 +91,14 @@ function testeBaseReal() {
   assert.strictEqual(r.equipamentos.escolas.referencia_cep, 35);
   assert.strictEqual(r.privacidade.setores_abaixo_da_faixa_de_cautela_D4, 17);
   assert.strictEqual(r.areas.soma_setorial_km2, 498.422);
+  assert.strictEqual(r.areas.referencia_municipal_km2, 498.403);
   assert.strictEqual(r.areas.referencia_municipal_geodesica_km2, 498.402);
   assert.ok(Math.abs(r.areas.recalculo_local_km2 - 497.365) < 0.002);
   assert.ok(Math.abs(r.areas.recalculo_esferico_km2 - 499.691) < 0.01);
   assert.ok(Math.abs(r.areas.diferenca_recalculo_esferico_vs_referencia_km2 - (499.691 - 498.402)) < 0.01);
 }
 
+testeExportacoesDoModulo();
 testeEstrutura();
 testeBuracos();
 testeResumo();
