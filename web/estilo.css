@@ -342,7 +342,7 @@ input[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:#8a1c1c!im
 .mapa-campo .linha{display:flex;flex-wrap:wrap;gap:.5rem}
 .mapa-campo .linha input{flex:1 1 auto;min-width:9rem;width:auto}
 .mapa-resumo{margin:.8rem 0 .5rem;font-weight:600}
-.mapa-caixa{height:clamp(420px,78vh,820px);min-height:420px;border:1px solid var(--bor);border-radius:var(--raio);background:#fbf1ec;overflow:hidden;z-index:0}
+.mapa-caixa{width:100%;max-width:100%;min-width:0;height:clamp(420px,78vh,820px);min-height:420px;border:1px solid var(--bor);border-radius:var(--raio);background:#fbf1ec;overflow:hidden;contain:paint;z-index:0}
 .mapa-legenda{font-size:.9rem;color:var(--mut)}
 .mapa-pino{background:none;border:0}
 .mapa-pino svg{display:block;filter:drop-shadow(0 1px 2px rgba(60,20,30,.45))}
