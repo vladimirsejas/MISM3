@@ -205,6 +205,16 @@ def validar_topologia(geojson, limite_municipal=None):
         raise ValueError("O limite municipal de referência é inválido ou vazio.")
     lacunas = limite.difference(uniao)
     fora = uniao.difference(limite)
+    setores_fora = []
+    for codigo, geometria in zip(codigos, projetadas):
+        area_fora_setor = geometria.difference(limite).area
+        if area_fora_setor > TOLERANCIA_TOPOLOGICA_M2:
+            setores_fora.append({
+                "setor": codigo,
+                "area_fora_m2": round(area_fora_setor, 3),
+                "proporcao_area_setor_pct": round(100 * area_fora_setor / geometria.area, 5) if geometria.area else None,
+            })
+    setores_fora.sort(key=lambda item: item["area_fora_m2"], reverse=True)
     return {
         "avaliacao_lacunas": "avaliada",
         "sobreposicoes": sobreposicoes,
@@ -217,6 +227,8 @@ def validar_topologia(geojson, limite_municipal=None):
         "area_uniao_setores_km2_utm": round(uniao.area / 1_000_000, 6),
         "area_lacunas_km2": round(lacunas.area / 1_000_000, 9),
         "area_setores_fora_municipio_km2": round(fora.area / 1_000_000, 9),
+        "setores_com_area_fora_municipio": setores_fora,
+        "quantidade_setores_com_area_fora_municipio": len(setores_fora),
         "lacunas_detectadas": lacunas.area > TOLERANCIA_TOPOLOGICA_M2,
         "lacunas_relevantes": lacunas.area > LIMIAR_TOPOLOGICO_RELEVANTE_M2,
         "setores_fora_detectados": fora.area > TOLERANCIA_TOPOLOGICA_M2,
@@ -345,6 +357,7 @@ def relatorio_markdown(resultado):
               f"- Maior interseção: {t['area_sobreposicao_maxima_m2']} m²",
               f"- Área de lacunas dentro do município: {t.get('area_lacunas_km2', 'não avaliada')} km²",
               f"- Área de setores fora do limite municipal: {t.get('area_setores_fora_municipio_km2', 'não avaliada')} km²",
+              f"- Setores com área externa ao limite municipal: {t.get('quantidade_setores_com_area_fora_municipio', 'não avaliada')}",
               f"- Área de atributo do limite IBGE 2022: {t.get('limite_area_atributo_ibge_km2', 'não informada')} km²", "",
               "As interseções são registradas como encontradas; o limiar apenas destaca ocorrências para revisão e não elimina as menores do total.", "",
               "## Área territorial", "",
