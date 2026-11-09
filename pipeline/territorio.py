@@ -12,7 +12,7 @@ Indicadores (todos de dado público e agregado; nada de pessoa):
 
 Distância até o serviço (só quando há serviços COM LOCALIZAÇÃO no catálogo): para cada setor, a distância em linha reta do
 centro do setor até o CRAS, a UBS/USF e a escola municipal com creche (confirmada no Censo Escolar) mais próximos.
-A localização vem do endereço (latitude e longitude do catálogo, "precisão endereço") ou, na falta dela, do centro do CEP
+A localização vem de coordenadas do catálogo com proveniência registrada ou, na falta dela, do centro do CEP
 (web/dados/cep_indice.json, "precisão CEP", aproximada; CEP com raio acima de RAIO_MAX_CEP_M é vago demais e não conta).
 Sem nenhum serviço localizado, o arquivo simplesmente não traz distâncias: números sem base enganariam. O mesmo vale para uma
 categoria com poucos serviços localizados (menos de COBERTURA_MINIMA): ela vira "pendente" e a página diz o que falta.
@@ -34,7 +34,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from analise_territorial import centro, haversine_km  # noqa: E402  (centroide do setor e distância em linha reta)
+from analise_territorial import (centro, haversine_km, coordenada_catalogo_verificada,\n                                 carregar_localizacao_registro)  # noqa: E402
 from common import WEB_DADOS, agora_iso, erro, salvar_json  # noqa: E402
 
 GEOD = Geod(ellps="GRS80")
@@ -91,14 +91,11 @@ def _na_caixa(lat, lon) -> bool:
     return CAIXA_RIO_CLARO[0] <= lat <= CAIXA_RIO_CLARO[1] and CAIXA_RIO_CLARO[2] <= lon <= CAIXA_RIO_CLARO[3]
 
 
-def localizar_servico(s: dict, indice_cep: dict | None):
-    """(lat, lon, precisao, raio_m) do serviço, ou None. 'endereco' = latitude/longitude do catálogo; 'cep' = centro do CEP."""
-    lat, lon = s.get("lat"), s.get("lon")
-    if lat is not None and lon is not None:
-        try:
-            lat, lon = float(lat), float(lon)
-        except (TypeError, ValueError):
-            return None
+def localizar_servico(s: dict, indice_cep: dict | None, localizacao_registro=None):
+    """(lat, lon, precisao, raio_m) do serviço; coordenada de catálogo exige proveniência registrada."""
+    coordenada = coordenada_catalogo_verificada(s, localizacao_registro)
+    if coordenada:
+        lat, lon = coordenada
         return (lat, lon, "endereco", 0) if _na_caixa(lat, lon) else None
     cep = "".join(c for c in str(s.get("cep") or "") if c.isdigit())
     v = (indice_cep or {}).get(cep)
@@ -121,7 +118,7 @@ def _mediana_ponderada(pares) -> float | None:
     return pares[-1][0]
 
 
-def distancias_ate_servicos(geojson: dict, servicos: list[dict], indice_cep: dict | None) -> tuple[dict, dict]:
+def distancias_ate_servicos(geojson: dict, servicos: list[dict], indice_cep: dict | None, localizacao_registro=None) -> tuple[dict, dict]:
     """Distâncias por setor apenas para setores não suprimidos; resumos contam setores, nunca pessoas."""
     centros = {}
     for f in geojson["features"]:
@@ -132,7 +129,7 @@ def distancias_ate_servicos(geojson: dict, servicos: list[dict], indice_cep: dic
         elegiveis = [s for s in servicos if str(s.get("id", "")).startswith("man-") and cat["serve"](s)]
         pontos = []
         for s in elegiveis:
-            loc = localizar_servico(s, indice_cep)
+            loc = localizar_servico(s, indice_cep, localizacao_registro)
             if loc:
                 pontos.append({"nome": s["nome"], "lat": round(loc[0], 6), "lon": round(loc[1], 6), "precisao": loc[2], "raio_m": loc[3]})
         if not pontos:
@@ -257,7 +254,7 @@ def montar(geojson: dict, oferta: dict | None = None, hoje: str | None = None, s
         "bairros": bairros,
         "setores": setores,
     }
-    dist, pendentes = distancias_ate_servicos(geojson, servicos or [], indice_cep) if servicos else ({}, {})
+    dist, pendentes = distancias_ate_servicos(geojson, servicos or [], indice_cep, localizacao_registro) if servicos else ({}, {})
     if pendentes:
         saida["distancia_pendente"] = pendentes
     if dist:
@@ -287,7 +284,8 @@ def main() -> int:
     p_cat, p_cep = WEB_DADOS / "catalogo_manual.json", WEB_DADOS / "cep_indice.json"
     servicos = json.loads(p_cat.read_text(encoding="utf-8")).get("servicos") if p_cat.exists() else None
     indice_cep = json.loads(p_cep.read_text(encoding="utf-8")).get("ceps", {}) if p_cep.exists() else None
-    saida = montar(geojson, oferta, servicos=servicos, indice_cep=indice_cep)
+    localizacao_registro = carregar_localizacao_registro()
+    saida = montar(geojson, oferta, servicos=servicos, indice_cep=indice_cep, localizacao_registro=localizacao_registro)
     salvar_json(saida, WEB_DADOS / "territorio.json")
     c, t = saida["meta"]["conferencia"], saida["totais"]
     print("Gravado web/dados/territorio.json: %d setores, %d bairros; contagens demográficas suprimidas por cautela." %
