@@ -134,11 +134,11 @@ Essas são as coberturas esperadas pela aplicação da regra ao registro atual. 
 
 ## 5. Auditoria geométrica do ponto representativo
 
-**A correção do ponto representativo foi implementada no código: 399 centroides internos preservados e nove pontos externos substituídos por pontos internos. A validação final depende da regeneração dos JSONs e da execução integral dos testes.
+**Status da correção:** implementada no código. Dos 408 setores, 399 mantêm exatamente o centroide matemático original porque já estavam dentro do polígono. Nos nove restantes, o ponto externo é substituído por um ponto interno representativo.
 
-O método atual em pipeline/analise_territorial.py, função centro, escolhe em cada geometria MultiPolygon o componente cujo anel externo tem mais vértices e calcula o centroide desse anel. A seleção por quantidade de vértices não equivale à seleção por área; o cálculo não considera os anéis internos (buracos) nem combina todos os componentes pela área.
+O método base continua calculando o centroide do maior componente escolhido pelo número de vértices do anel externo. A correção não o transforma em centroide ponderado pela área. Quando o centroide cai fora, `ponto_interno` procura candidatos em linhas horizontais internas, desconta os buracos e seleciona o candidato de menor distância geodésica ao centroide original. O resultado é um ponto interno, não um centroide matemático.
 
-**Resultado da verificação espacial:** 9 dos 408 centroides calculados pelo método atual caem fora do respectivo polígono. Os códigos identificados são:
+**Setores corrigidos:**
 
 - 354390705000026
 - 354390705000165
@@ -150,19 +150,11 @@ O método atual em pipeline/analise_territorial.py, função centro, escolhe em 
 - 354390705000530
 - 354390705000541
 
-Uma checagem exploratória adicional calculou o centroide ponderado pela área dos componentes e dos anéis. Ela também encontrou 9 centroides fora; nos nove casos, o deslocamento em relação ao método atual foi inferior a 0,14 metro. Portanto, simplesmente ponderar componentes pela área não resolve esses casos.
+A auditoria de sensibilidade anterior registrou deslocamento máximo de aproximadamente 61,546 m e impacto máximo de aproximadamente 54,149 m nas distâncias. Os testes automatizados foram preparados para confirmar que a correção permanece abaixo de 62 m e que a alteração absoluta das distâncias fica abaixo de 55 m.
 
-**Decisão nesta rodada:** não substituir automaticamente o centroide. A integração da incerteza espacial dos equipamentos foi autorizada em 08/11/2026, mas é independente da escolha do ponto representativo do setor. O ponto alternativo deve ser interno ao polígono e comparado antes da adoção.
+A correção não altera nem recorta a geometria-fonte. Ela muda apenas o ponto usado como origem da distância. O ponto representativo não mede ocupação interna, acessibilidade efetiva nem distribuição da população dentro do setor.
 
-Próxima comparação necessária:
-
-1. Gerar um ponto interno representativo para cada um dos 408 setores, inclusive geometrias multipartes e setores com buracos.
-2. Confirmar por teste ponto-no-polígono que todos os pontos alternativos pertencem à geometria correspondente.
-3. Calcular as distâncias com o mesmo conjunto de equipamentos e nos mesmos cenários de localização.
-4. Comparar deslocamento entre pontos, diferenças de distância por setor e categoria, mediana, percentil 90 e proporções acima dos limiares.
-5. Registrar algoritmo, sistema de coordenadas, versão da biblioteca e resultados.
-6. Adotar o método somente após avaliar o impacto e documentar a decisão.
-
+**Validação pendente:** regenerar os JSONs dependentes e executar integralmente os testes na versão final da branch.
 A auditoria não mede ocupação interna do setor nem acessibilidade efetiva.
 
 ## 6. Contrato metodológico comum aos indicadores
