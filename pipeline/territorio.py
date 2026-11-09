@@ -231,7 +231,9 @@ def montar(geojson: dict, oferta: dict | None = None, hoje: str | None = None, s
             "gerado_em": hoje or agora_iso()[:10],
             "conferencia": {
                 "pessoas_somadas": pessoas_total, "pessoas_publicadas_ibge": IBGE_PESSOAS_2022 if not suprimidos else None,
-                "area_somada_km2": round(area_total, 1), "area_publicada_ibge_km2": IBGE_AREA_KM2,
+                "area_somada_km2": round(area_total, 3), "area_publicada_ibge_km2": IBGE_AREA_KM2,
+                "area_referencia_ibge_ano": IBGE_AREA_ANO,
+                "metodo_area_setorial": "Geodésico elipsoidal GRS80 (pyproj.Geod), anéis externos menos furos",
                 "diferenca_area_pct": round(100 * (area_total - IBGE_AREA_KM2) / IBGE_AREA_KM2, 2),
             },
             "sem_bairro": {"rotulo": SEM_BAIRRO, "setores": sem["setores"] if sem else 0, "pessoas": None if (sem and sem["suprimido"]) or suprimidos else (sem["pessoas"] if sem else 0)},
