@@ -334,3 +334,13 @@ O teste foi corrigido para derivar `391 = 408 - 17` dos dados publicados e verif
 - INEP: microdados disponibilizados no âmbito da política federal podem ser utilizados; o MISM3 limita a publicação a totais por rede e mantém tabelas detalhadas locais. A tabela de correspondência de escolas (códigos/nome institucionais) passa a **PODE SER PUBLICADO**; dados educacionais agregados continuam **PODE SER PUBLICADO SOMENTE AGREGADO**.
 - Corrigida a referência legal: a LAI não possui art. 9º, §2º, com obrigação de citar fonte/data. A atribuição e a data de extração permanecem requisitos de proveniência e boa prática, compatíveis com a definição de dados abertos. Art. 8º, §3º, III trata de acesso automatizado em formato aberto; art. 31 protege informações pessoais.
 - Fontes oficiais abertas em 09/11/2026: Decreto 8.777/2016, Decreto 9.903/2019, páginas de Dados Abertos do Ministério da Saúde e IBGE, página de Dados Abertos do INEP e texto atualizado da LAI.
+
+
+## Bloco 9 — manifesto e teste automatizado de direitos de uso
+
+- O manifesto `docs/PACOTE_PUBLICACAO.csv` foi preenchido com todos os arquivos de dados/mídia versionados identificados na varredura da árvore do repositório; `docs/PACOTE_PUBLICACAO_EXCLUIDOS.txt` lista os itens fora do pacote de redistribuição.
+- A matriz passou a conter linhas para os próprios artefatos de governança, com titularidade autoral indicada e referência à Lei nº 9.610/1998.
+- Criado `pipeline/tests/test_matriz_direitos_uso.py`: verifica cobertura integral da matriz e do manifesto, bloqueia a inclusão de arquivo cuja decisão não seja publicável e confirma que a saída pública do INEP contém apenas `meta` e `totais_por_rede`.
+- A matriz, o manifesto e o teste são controles de empacotamento do release; a marcação de exclusão não remove arquivos do histórico nem altera a visibilidade atual do repositório GitHub. Itens não autorizados devem ser removidos/substituídos no pacote de distribuição antes do release; fontes locais do autor permanecem preservadas.
+- Arquivos cobertos nesta geração: 183; incluídos: 47; excluídos: 136.
+- A suíte e a Actions serão consideradas concluídas somente após os jobs do SHA final terminarem com sucesso.
