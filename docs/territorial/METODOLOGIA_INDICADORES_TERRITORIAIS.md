@@ -92,7 +92,7 @@ Em que `φ` representa latitude em radianos, `λ` representa longitude em radian
 
 **Fonte:** geometria dos setores em `web/dados/setores.geojson`; coordenadas institucionais elegíveis do catálogo e seus registros de proveniência; função de distância em `pipeline/analise_territorial.py` e processamento em `pipeline/exposicao_distancia.py`.
 
-**Ponto representativo:** o código preserva o centroide matemático quando está dentro do setor. Nos nove casos em que o centroide ficava fora do polígono, utiliza um ponto interno corrigido; esse ponto não é denominado centroide matemático. Os 399 centroides internos são preservados.
+**Ponto representativo:** o código preserva o centroide matemático quando está dentro do setor. Nos 11 casos em que o centroide matemático ficava fora do polígono, utiliza um ponto interno representativo; esse ponto não é denominado centroide matemático. Os 397 centroides matemáticos internos são preservados.
 
 **Incerteza espacial:** quando o equipamento tem raio operacional `r`, publicar o envelope geométrico `d_min = max(0, d-r)` e `d_max = d+r`. Para várias referências, o limite inferior é o menor `d_min` e o superior é o menor `d_max`. O raio do CEP é parâmetro operacional derivado da dispersão dos endereços CNEFE, não campo oficial do IBGE nem intervalo de confiança. Coordenadas individuais com proveniência registrada não recebem margem artificial. Os seis CRAS/UBS sem proveniência no catálogo não podem usar as coordenadas brutas: no cenário com CEP, recorrem ao centro do CEP institucional e ao raio do índice. Faixas sobrepostas não permitem ordenar com segurança qual equipamento é mais próximo.
 
@@ -134,7 +134,7 @@ Essas são as coberturas esperadas pela aplicação da regra ao registro atual. 
 
 ## 5. Auditoria geométrica do ponto representativo
 
-**Status da correção:** implementada no código. Dos 408 setores, 399 mantêm exatamente o centroide matemático original porque já estavam dentro do polígono. Nos nove restantes, o ponto externo é substituído por um ponto interno representativo.
+**Status da correção:** implementada no código. Dos 408 setores, 397 mantêm exatamente o centroide matemático original porque já estavam dentro do polígono. Nos nove restantes, o ponto externo é substituído por um ponto interno representativo.
 
 O método base continua calculando o centroide do maior componente escolhido pelo número de vértices do anel externo. A correção não o transforma em centroide ponderado pela área. Quando o centroide cai fora, `ponto_interno` procura candidatos em linhas horizontais internas, desconta os buracos e seleciona o candidato de menor distância geodésica ao centroide original. O resultado é um ponto interno, não um centroide matemático.
 
