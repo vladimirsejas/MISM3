@@ -278,5 +278,5 @@
   }
 
   return { poligonos: poligonos, anelContem: anelContem, pontoNaMalha: pontoNaMalha, areaAnelLocal: areaAnelLocal,
-    areaAnelGeodesica: areaAnelGeodesica, areasGeojson: areasGeojson, validarGeometrias: validarGeometrias, resumir: resumir };
+    areaAnelEsferica: areaAnelEsferica, areasGeojson: areasGeojson, validarGeometrias: validarGeometrias, resumir: resumir };
 });
