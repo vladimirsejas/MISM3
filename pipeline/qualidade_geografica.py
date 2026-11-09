@@ -173,11 +173,11 @@ def validar_topologia(geojson, limite_municipal=None):
                     sobreposicoes.append({"setores": [codigos[i], codigos[j]], "area_m2": round(area_m2, 3)})
         uniao = unary_union(projetadas)
         soma_areas = sum(g.area for g in projetadas)
+    else:
+        uniao, soma_areas = None, 0.0
     area_sobreposicoes_total = sum(item["area_m2"] for item in sobreposicoes)
     area_sobreposicao_maxima = max((item["area_m2"] for item in sobreposicoes), default=0.0)
     sobreposicoes_relevantes = [item for item in sobreposicoes if item["area_m2"] > LIMIAR_TOPOLOGICO_RELEVANTE_M2]
-    else:
-        uniao, soma_areas = None, 0.0
     if limite_municipal is None or uniao is None:
         return {
             "avaliacao_lacunas": "nao_avaliada",
