@@ -142,16 +142,16 @@ def test_validador_identifica_auto_intersecao_em_poligono():
 
 
 def test_validador_identifica_sobreposicao_e_lacuna_com_limite_referencia():
-    def poligono(x0, x1):
+    def poligono(x0, x1, y0=-22.4, y1=-22.39):
         return {"type": "Polygon", "coordinates": [[
-            [x0, -22.4], [x1, -22.4], [x1, -22.39], [x0, -22.39], [x0, -22.4],
+            [x0, y0], [x1, y0], [x1, y1], [x0, y1], [x0, y0],
         ]]}
 
     geo_overlap = {"features": [
         {"properties": {"setor": "354390705000001"}, "geometry": poligono(-47.51, -47.49)},
         {"properties": {"setor": "354390705000002"}, "geometry": poligono(-47.50, -47.48)},
     ]}
-    limite = {"features": [{"geometry": poligono(-47.60, -47.40)}]}
+    limite = {"features": [{"geometry": poligono(-47.60, -47.40, -22.5, -22.3)}]}
     overlap = qg.validar_topologia(geo_overlap, limite)
     assert len(overlap["sobreposicoes"]) == 1
     assert overlap["sobreposicoes"][0]["area_m2"] > 1
