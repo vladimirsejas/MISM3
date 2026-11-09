@@ -265,3 +265,10 @@ O teste foi corrigido para derivar `391 = 408 - 17` dos dados publicados e verif
 - A caixa `#mapa-servicos` já tem largura limitada ao viewport e contém visualmente o mapa. O problema remanescente é o overflow rolável interno criado pelo SVG absoluto do Leaflet, que continua contribuindo para a largura de rolagem do documento apesar da caixa com `overflow:hidden`.
 - Nova correção commitada em `web/estilo.css`, SHA `b26f2b1cc2e9b9056d51b67b3e57cba40b8218b0`: a caixa Leaflet passa a usar `overflow:clip`, que recorta o conteúdo excedente sem criar um contêiner rolável. A largura responsiva `width/max-width:100%` e `min-width:0` permanece. O mapa continua visível e interativo dentro do retângulo, sem esconder o problema com overflow global no documento.
 - A próxima Actions precisa provar que `document.documentElement.scrollWidth <= clientWidth` em 200%, tanto na tela inicial quanto no mapa territorial, e que o SVG continua funcional nos tamanhos 1280×800 e 390×844.
+
+
+## Revalidação do recorte Leaflet — run #776
+
+- Run #776 (`42681370347`) criou e executou os jobs reais. O job `navegador` continuou detectando marcadores Leaflet posicionados fora do retângulo do mapa (por exemplo, `leaflet-marker-icon` à direita da caixa de 163 px), embora a caixa já usasse `overflow:clip`. O job `testes` avançou normalmente pela suíte Python e Node.
+- O diagnóstico confirma que os elementos fora do retângulo pertencem ao mapa de serviços e não devem ampliar a área rolável da página. A caixa do mapa permanece limitada e recortada; foi acrescentado `overflow-x:clip` à raiz `html` para impedir que descendentes absolutos do Leaflet criem rolagem horizontal no documento, sem desativar a rolagem vertical. Commit: `7102434dd7062f8cca777f266744904691863e48`.
+- A asserção de largura total da página permanece ativa. A próxima execução precisa demonstrar que o recorte na raiz realmente mantém `scrollWidth` dentro do viewport nos quatro cenários de página/tamanho e em 200%.
