@@ -7,6 +7,7 @@ const base = "http://127.0.0.1:8765";
 const origem = new URL(base).origin;
 const erros = [];
 const externos = [];
+const falhasHttp = [];
 
 async function abrirServidor(page, caminho) {
   for (let tentativa = 0; tentativa < 20; tentativa++) {
@@ -24,6 +25,7 @@ async function testarPagina(browser, caminho, largura, altura, mapa) {
   const page = await context.newPage();
   page.on("console", (msg) => { if (msg.type() === "error") erros.push(caminho + ": " + msg.text()); });
   page.on("pageerror", (err) => erros.push(caminho + ": " + err.message));
+  page.on("response", (res) => { if (res.status() >= 400) falhasHttp.push(caminho + ": " + res.status() + " " + res.url()); });
   page.on("request", (req) => {
     if (new URL(req.url()).origin !== origem) externos.push(caminho + ": " + req.url());
   });
@@ -124,7 +126,8 @@ async function testarPagina(browser, caminho, largura, altura, mapa) {
       await testarPagina(browser, "mapa-territorial.html", tamanho.w, tamanho.h, true);
     }
     assert.deepEqual(externos, [], "nenhuma requisição pode sair da própria origem");
-    assert.deepEqual(erros, [], "nenhum erro de console ou JavaScript");
+    assert.deepEqual(erros, [], "nenhum erro de console ou JavaScript; respostas HTTP: " + JSON.stringify(falhasHttp));
+    assert.deepEqual(falhasHttp, [], "nenhuma resposta HTTP de erro: " + JSON.stringify(falhasHttp));
     process.stdout.write("Playwright: página inicial e mapa territorial aprovados em desktop e celular; 408 setores, 17 protegidos, teclado, foco, origem única e zoom 200%.\n");
   } finally {
     await browser.close();
