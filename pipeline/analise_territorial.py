@@ -8,12 +8,13 @@ método, precisão, fonte e raio informado. Para cada bairro calcula distâncias
 
 NÃO usa dado pessoal de ninguém. É descritivo: mostra onde a rede cadastrada está longe da população, e não prova que falta serviço.
 
-CRAS e UBS usam coordenadas do catálogo ou referência do índice de CEP. As escolas usam a base consolidada. Sem coordenadas utilizáveis,
+CRAS e UBS usam coordenadas do catálogo somente quando método, confiança e coordenadas constam no registro de proveniência; sem isso, usam o CEP institucional quando disponível. As escolas usam a base consolidada. Sem coordenadas utilizáveis,
 o script NÃO escreve nada e explica o que falta: números sem base seriam enganosos.
 Saída: web/dados/analise_territorial.json (lido pelo painel da Secretaria).
 """
 from __future__ import annotations
 
+import csv
 import json
 from privacidade_territorial import setor_suprimido
 import math
@@ -32,7 +33,7 @@ CATEGORIAS = {  # nome da coluna -> (tipo, subtipo) no catálogo
 SEM_BAIRRO = "Sem bairro identificado"
 AVISO = ("Distâncias em linha reta entre o centro de cada setor do IBGE e a localização cadastrada do serviço. As escolas usam a base "
          "consolidada, que distingue coordenadas individuais de referências aproximadas por CEP; CRAS e UBS usam o catálogo e, quando necessário, "
-         "o índice de CEP. Não consideram ruas, ônibus nem horários; não provam que exista ou não exista falta de serviço. O agrupamento de bairros é exploratório.")
+         "o índice de CEP. Coordenadas sem proveniência registrada não são tratadas como pontos exatos. Não consideram ruas, ônibus nem horários; não provam que exista ou não exista falta de serviço. O agrupamento de bairros é exploratório.")
 
 
 def haversine_km(lat1, lon1, lat2, lon2) -> float:
@@ -90,9 +91,55 @@ def centro(geom):
     return ponto_interno(geom, (centroide[1], centroide[0]))
 
 
-def coordenada_do_servico(s, indice_cep):
-    if s.get("lat") is not None and s.get("lon") is not None:
-        return float(s["lat"]), float(s["lon"])
+def carregar_localizacao_registro(caminho=None):
+    """Agrupa o registro de proveniência por equipamento; ausência de arquivo não libera coordenadas do catálogo."""
+    arquivo = Path(caminho) if caminho else RAIZ / "catalogo" / "localizacao_registro.csv"
+    if not arquivo.exists():
+        return {}
+    registros = {}
+    with arquivo.open(encoding="utf-8-sig", newline="") as f:
+        for linha in csv.DictReader(f):
+            identificador = str(linha.get("id") or "").strip()
+            campo = str(linha.get("campo") or "").strip()
+            valor = str(linha.get("valor") or "").strip()
+            if not identificador:
+                continue
+            item = registros.setdefault(identificador, {})
+            if campo in {"lat", "lon", "cep"} and valor:
+                if campo in item and item[campo] != valor:
+                    raise ValueError("registro de localização conflitante para %s/%s" % (identificador, campo))
+                item[campo] = valor
+            for nome in ("metodo", "confianca", "aplicado_em"):
+                metadado = str(linha.get(nome) or "").strip()
+                if metadado:
+                    if nome in item and item[nome] != metadado:
+                        raise ValueError("metadado de proveniência conflitante para %s/%s" % (identificador, nome))
+                    item[nome] = metadado
+    return registros
+
+
+def coordenada_catalogo_verificada(s, localizacao_registro=None):
+    """Só aceita lat/lon do catálogo quando o registro traz método, confiança e as duas coordenadas."""
+    registro = (localizacao_registro or {}).get(str(s.get("id") or ""), {})
+    if not registro.get("metodo") or not registro.get("confianca") or not registro.get("lat") or not registro.get("lon"):
+        return None
+    try:
+        lat_registro, lon_registro = float(registro["lat"]), float(registro["lon"])
+        lat_catalogo, lon_catalogo = float(s["lat"]), float(s["lon"])
+    except (KeyError, TypeError, ValueError):
+        return None
+    if not (-90 <= lat_registro <= 90 and -180 <= lon_registro <= 180):
+        return None
+    if abs(lat_registro - lat_catalogo) > 0.00001 or abs(lon_registro - lon_catalogo) > 0.00001:
+        raise ValueError("coordenada do catálogo diverge do registro de proveniência para %s" % s.get("id"))
+    return lat_registro, lon_registro
+
+
+def coordenada_do_servico(s, indice_cep, localizacao_registro=None):
+    """Usa coordenada registrada; sem proveniência, recorre ao CEP institucional generalizado."""
+    xy = coordenada_catalogo_verificada(s, localizacao_registro)
+    if xy:
+        return xy
     cep = re.sub(r"\D", "", str(s.get("cep") or ""))
     if cep and cep in indice_cep:
         v = indice_cep[cep]
@@ -100,7 +147,7 @@ def coordenada_do_servico(s, indice_cep):
     return None
 
 
-def analisar(geojson, servicos, indice_cep, k_grupos=3, hoje=None, escolas=None) -> dict:
+def analisar(geojson, servicos, indice_cep, k_grupos=3, hoje=None, escolas=None, localizacao_registro=None) -> dict:
     """Devolve o dicionário de saída. Levanta ValueError quando falta base para calcular."""
     # serviços por categoria, com coordenada
     por_cat = {c: [] for c in CATEGORIAS}
@@ -115,7 +162,7 @@ def analisar(geojson, servicos, indice_cep, k_grupos=3, hoje=None, escolas=None)
                 continue
             if s.get("tipo") == tipo and s.get("subtipo") == sub:
                 totais[c] += 1
-                xy = coordenada_do_servico(s, indice_cep)
+                xy = coordenada_do_servico(s, indice_cep, localizacao_registro)
                 if xy:
                     por_cat[c].append((s, xy))
 
@@ -270,8 +317,9 @@ def main() -> int:
         print("NÃO GERADO: falta web/dados/escolas_municipais.json. Gere a base escolar antes da análise territorial.")
         return 1
     escolas = json.loads(arq_escolas.read_text(encoding="utf-8")).get("escolas", [])
+    localizacao_registro = carregar_localizacao_registro()
     try:
-        saida = analisar(geo, cat, indice, escolas=escolas)
+        saida = analisar(geo, cat, indice, escolas=escolas, localizacao_registro=localizacao_registro)
     except ValueError as e:
         print("NÃO GERADO:", e)
         print("Nada foi escrito. Coloque web/dados/cep_indice.json (gerado por pipeline/indice_cep.py) e rode de novo.")
