@@ -65,7 +65,15 @@ assert(MS.svgMarcador("saude", false).includes('fill="' + MS.ESTILO.saude.cor + 
 assert(MS.svgMarcador("saude", true).includes('fill="#ffffff"') && MS.svgMarcador("saude", true).includes('stroke="' + MS.ESTILO.saude.cor + '"'));
 
 /* ---- 6. Página e privacidade ---- */
-const html = ler("index.html"), js = ler("mapa.js");
+const html = ler("index.html"), js = ler("mapa.js"), app = ler("app.js");
+const camadasEsri = js.split("L.tileLayer(").filter((trecho) => /World_Light_Gray_(Base|Reference)/.test(trecho));
+assert.strictEqual(camadasEsri.length, 2, "as duas camadas Esri do mapa-base permanecem identificadas");
+camadasEsri.forEach((trecho) => {
+  assert(/attribution:/.test(trecho) && /HERE, Garmin/.test(trecho) && /OpenStreetMap contributors/.test(trecho),
+    "cada camada Esri exibe os créditos do serviço e das fontes cartográficas");
+});
+assert(/referrerPolicy:\s*"origin"/.test(app) && /OpenStreetMap contributors/.test(app),
+  "os tiles OSM mantêm Referer de origem e atribuição visível");
 assert(!fs.existsSync(path.join(web, "mapa.html")), "o mapa mora na tela inicial: não existe página separada");
 assert(/<script src="vendor\/leaflet\.js">/.test(html) && !/src="https?:/.test(html) && !/<link[^>]+href="https?:/.test(html), "só dependências locais (sem CDN)");
 assert(/id="sair-rapido"/.test(html) && /<details class="emergencia"/.test(html), "a página mantém o botão de emergência e o de sair");
