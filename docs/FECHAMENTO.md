@@ -344,3 +344,11 @@ O teste foi corrigido para derivar `391 = 408 - 17` dos dados publicados e verif
 - A matriz, o manifesto e o teste são controles de empacotamento do release; a marcação de exclusão não remove arquivos do histórico nem altera a visibilidade atual do repositório GitHub. Itens não autorizados devem ser removidos/substituídos no pacote de distribuição antes do release; fontes locais do autor permanecem preservadas.
 - Arquivos cobertos nesta geração: 183; incluídos: 47; excluídos: 136.
 - A suíte e a Actions serão consideradas concluídas somente após os jobs do SHA final terminarem com sucesso.
+
+
+## Bloco 10 — placeholders visuais e exclusão de mídia sem autorização
+
+- Removidos da árvore da branch de publicação seis arquivos de mídia sem autorização comprovada: brasão original, dois derivados do brasão, brasão estilizado, capa em aquarela e faixa ilustrada.
+- `web/index.html` e `web/estilo.css` agora usam placeholders textuais/geométricos neutros, sem imagem de terceiro ou símbolo oficial municipal.
+- Matriz e manifesto registram os seis caminhos como excluídos do pacote. Arquivos locais do autor não foram apagados.
+- Rascunhos de solicitação foram criados para Prefeitura (brasão e cartografia UBS), titular das imagens, Google, Esri, SOU Transportes e publicadores dos PDFs. Nenhuma mensagem foi enviada.

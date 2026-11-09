@@ -1300,3 +1300,11 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - A D4 suprime 17 setores e todos os indicadores derivados protegidos. Estatísticas de distância abrangem no máximo 391 setores.
 - O índice CEP público saneado tem 1.243 CEPs; os 124 sem vínculo setorial verificável foram omitidos e os 44 com menos de três endereços foram generalizados.
 - A regeneração final dependente de fontes locais é executada pelo responsável no computador local; não enviar fontes brutas ou tabelas restritas para GitHub, Actions ou artefatos.
+
+
+## 09/11/2026 — substituição preventiva de imagens sem autorização comprovada
+
+- O brasão municipal e as imagens de origem/licença não comprovadas foram removidos da árvore da branch de publicação `mism3-fechamento`.
+- O cabeçalho permanece textual; a capa e a marca do rodapé foram substituídas por placeholders neutros feitos em HTML/CSS.
+- A decisão é preventiva e limitada à redistribuição: não declara ilicitude dos arquivos nem apaga os originais locais do autor.
+- A restauração de qualquer imagem depende de identificação do titular e autorização/termos aplicáveis.
