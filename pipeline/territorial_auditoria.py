@@ -217,8 +217,8 @@ def relatorio(dado: dict, falhas: list[Falha]) -> str:
     if falhas:
         linhas += ["## Ocorrências", ""] + [f"- `{f.caminho}`: **{f.tipo}**. {f.mensagem}" for f in falhas] + [""]
     linhas += ["## Aplicação da decisão D4", "",
-               f"- Setores protegidos: {len(peq['suprimidos'])}",
-               f"- Setores abaixo do critério sem supressão: {len(peq['inconsistentes'])}",
+               f"- Setores protegidos: {peq['suprimidos']}",
+               f"- Setores abaixo do critério sem supressão: {peq['inconsistentes']}",
                "- Critério: menos de 5 pessoas ou menos de 3 domicílios.",
                "- Os valores e identificadores dos setores protegidos não são listados neste relatório.",
                "- Os agregados demográficos dos bairros afetados e os totais municipais de população/domicílios também devem permanecer omitidos.", ""]
