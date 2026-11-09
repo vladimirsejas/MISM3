@@ -243,3 +243,10 @@ O teste foi corrigido para derivar `391 = 408 - 17` dos dados publicados e verif
 - A inspeção do código revelou que `mapa.js` criava o `ResizeObserver` inline, sem manter referência ao objeto. O observador pode ser coletado, deixando o SVG do overlay com a largura do viewport anterior quando a tela é redimensionada.
 - Correção commitada em `web/mapa.js`, SHA `425096c7c7ea7e459311558267e5f9c82b819b84`: o observador agora fica retido na variável `mapaResizeObserver`, verifica se o mapa ainda existe e chama `invalidateSize({ pan: false, debounceMoveend: true })` quando a caixa muda de tamanho. A regra CSS mantém `width/max-width:100%` e `min-width:0`, mas não usa mais `contain:paint`, que não resolveu a falha. Commit CSS: `46191fa3b10d2e65cf301b7373ba2eaecc944d92`.
 - A confirmação depende de nova execução Playwright no HEAD posterior a esses commits; a causa e a correção serão consideradas validadas somente se o SVG acompanhar o tamanho do mapa e o documento não ultrapassar o viewport em 200%.
+
+
+## Revalidação do redimensionamento — runs #761 e #762
+
+- Os runs #761 (`42680803442`) e #762 (`42680804888`) criaram ambos os jobs reais. No #762, o job `navegador` ainda reproduziu o SVG com 427 px após a correção do ResizeObserver; portanto, a retenção do observador sozinha não bastou. A execução #761 continuava com o job `testes` em andamento no momento da consulta.
+- Foi acrescentado um segundo mecanismo explícito e independente: `web/mapa.js` agora escuta o evento `resize` da janela e chama `mapa.invalidateSize({ pan: false, debounceMoveend: true })` no próximo `requestAnimationFrame`. Isso cobre diretamente o redimensionamento do viewport usado pelo zoom do navegador, além do observador do elemento. Commit: `eec094d57ff77ea75dd7f5cac6c01d0eb5128971`.
+- A validação não será relaxada nem o overflow será escondido por CSS global. A próxima run deve provar que o Leaflet recalcula o SVG e que o documento cabe no viewport.
