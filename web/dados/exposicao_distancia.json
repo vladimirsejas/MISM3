@@ -1,0 +1,241 @@
+{
+ "meta": {
+  "fonte": "IBGE, Censo Demográfico 2022 (setores) e catálogo verificado do Observatório da Mulher",
+  "gerado_em": "2026-11-05",
+  "aviso": "Os resumos contam somente setores não suprimidos, sem ponderação por população. Dados demográficos e distâncias por setor são omitidos nos setores pequenos. Distâncias em linha reta não consideram ruas, ônibus nem horários.",
+  "limiares_km": [
+   1,
+   2
+  ],
+  "pessoas_total": null,
+  "setores_suprimidos": 17
+ },
+ "cenarios": {
+  "coordenadas_do_catalogo": {
+   "cras": {
+    "cobertura": {
+     "com_coordenada": 6,
+     "cadastrados": 6,
+     "completo": true
+    },
+    "setores_validos": {
+     "setores": 391,
+     "mediana_km": 1.3,
+     "p90_km": 3.05,
+     "acima_de": {
+      "1 km": {
+       "setores": 256,
+       "percentual": 65.5
+      },
+      "2 km": {
+       "setores": 104,
+       "percentual": 26.6
+      }
+     }
+    },
+    "setores_sem_bairro": {
+     "setores": 39,
+     "mediana_km": 5.92,
+     "p90_km": 12.25,
+     "acima_de": {
+      "1 km": {
+       "setores": 32,
+       "percentual": 82.1
+      },
+      "2 km": {
+       "setores": 30,
+       "percentual": 76.9
+      }
+     }
+    }
+   },
+   "ubs": {
+    "cobertura": {
+     "com_coordenada": 22,
+     "cadastrados": 22,
+     "completo": true
+    },
+    "setores_validos": {
+     "setores": 391,
+     "mediana_km": 0.71,
+     "p90_km": 1.63,
+     "acima_de": {
+      "1 km": {
+       "setores": 120,
+       "percentual": 30.7
+      },
+      "2 km": {
+       "setores": 24,
+       "percentual": 6.1
+      }
+     }
+    },
+    "setores_sem_bairro": {
+     "setores": 39,
+     "mediana_km": 1.88,
+     "p90_km": 5.95,
+     "acima_de": {
+      "1 km": {
+       "setores": 22,
+       "percentual": 56.4
+      },
+      "2 km": {
+       "setores": 19,
+       "percentual": 48.7
+      }
+     }
+    }
+   },
+   "escola": {
+    "cobertura": {
+     "com_coordenada": 33,
+     "cadastrados": 68,
+     "completo": false
+    },
+    "setores_validos": {
+     "setores": 391,
+     "mediana_km": 0.67,
+     "p90_km": 1.99,
+     "acima_de": {
+      "1 km": {
+       "setores": 116,
+       "percentual": 29.7
+      },
+      "2 km": {
+       "setores": 39,
+       "percentual": 10
+      }
+     }
+    },
+    "setores_sem_bairro": {
+     "setores": 39,
+     "mediana_km": 3.54,
+     "p90_km": 11.59,
+     "acima_de": {
+      "1 km": {
+       "setores": 28,
+       "percentual": 71.8
+      },
+      "2 km": {
+       "setores": 24,
+       "percentual": 61.5
+      }
+     }
+    }
+   }
+  },
+  "com_centro_do_cep": {
+   "cras": {
+    "cobertura": {
+     "com_coordenada": 6,
+     "cadastrados": 6,
+     "completo": true
+    },
+    "setores_validos": {
+     "setores": 391,
+     "mediana_km": 1.3,
+     "p90_km": 3.05,
+     "acima_de": {
+      "1 km": {
+       "setores": 256,
+       "percentual": 65.5
+      },
+      "2 km": {
+       "setores": 104,
+       "percentual": 26.6
+      }
+     }
+    },
+    "setores_sem_bairro": {
+     "setores": 39,
+     "mediana_km": 5.92,
+     "p90_km": 12.25,
+     "acima_de": {
+      "1 km": {
+       "setores": 32,
+       "percentual": 82.1
+      },
+      "2 km": {
+       "setores": 30,
+       "percentual": 76.9
+      }
+     }
+    }
+   },
+   "ubs": {
+    "cobertura": {
+     "com_coordenada": 22,
+     "cadastrados": 22,
+     "completo": true
+    },
+    "setores_validos": {
+     "setores": 391,
+     "mediana_km": 0.71,
+     "p90_km": 1.63,
+     "acima_de": {
+      "1 km": {
+       "setores": 120,
+       "percentual": 30.7
+      },
+      "2 km": {
+       "setores": 24,
+       "percentual": 6.1
+      }
+     }
+    },
+    "setores_sem_bairro": {
+     "setores": 39,
+     "mediana_km": 1.88,
+     "p90_km": 5.95,
+     "acima_de": {
+      "1 km": {
+       "setores": 22,
+       "percentual": 56.4
+      },
+      "2 km": {
+       "setores": 19,
+       "percentual": 48.7
+      }
+     }
+    }
+   },
+   "escola": {
+    "cobertura": {
+     "com_coordenada": 68,
+     "cadastrados": 68,
+     "completo": true
+    },
+    "setores_validos": {
+     "setores": 391,
+     "mediana_km": 0.43,
+     "p90_km": 1.05,
+     "acima_de": {
+      "1 km": {
+       "setores": 42,
+       "percentual": 10.7
+      },
+      "2 km": {
+       "setores": 24,
+       "percentual": 6.1
+      }
+     }
+    },
+    "setores_sem_bairro": {
+     "setores": 39,
+     "mediana_km": 0.99,
+     "p90_km": 5.97,
+     "acima_de": {
+      "1 km": {
+       "setores": 19,
+       "percentual": 48.7
+      },
+      "2 km": {
+       "setores": 18,
+       "percentual": 46.2
+      }
+     }
+    }
+   }
+  }
+ }
+}
