@@ -352,3 +352,10 @@ O teste foi corrigido para derivar `391 = 408 - 17` dos dados publicados e verif
 - `web/index.html` e `web/estilo.css` agora usam placeholders textuais/geométricos neutros, sem imagem de terceiro ou símbolo oficial municipal.
 - Matriz e manifesto registram os seis caminhos como excluídos do pacote. Arquivos locais do autor não foram apagados.
 - Rascunhos de solicitação foram criados para Prefeitura (brasão e cartografia UBS), titular das imagens, Google, Esri, SOU Transportes e publicadores dos PDFs. Nenhuma mensagem foi enviada.
+
+
+## Correção da Actions — documentação CNES
+
+- A execução `42694539906` identificou uma regressão documental: o teste de dependências exige que `AVISOS-DE-TERCEIROS.md` mantenha o link direto do conjunto CNES do Portal de Dados Abertos do SUS. A revisão legal havia atualizado o texto, mas omitido o endereço literal exigido pelo inventário de terceiros.
+- O link oficial foi reinserido com a fundamentação do Decreto nº 8.777/2016 e as ressalvas de dados pessoais, sigilosos e de terceiros. Não houve alteração de código ou dados do CNES.
+- A nova execução integral da Actions será acompanhada no SHA desta correção.
