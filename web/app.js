@@ -650,7 +650,10 @@
     return Promise.all([opcional("dados/catalogo_manual.json"), opcional("dados/servicos.json"), opcional("dados/horarios_onibus.json"), opcional("dados/setor_bairro.json")]).then(function (r) {
       dados.setorBairro = r[3] && r[3].bairros ? r[3].bairros : null;
       dados.horarios = r[2];
-      var manual = (r[0] && r[0].servicos) || [], pipeline = (r[1] && r[1].servicos) || [];
+      /* O arquivo marcador vazio evita 404 enquanto a regeneração local não foi autorizada/concluída.
+         Ele não é contado como fonte do pipeline nem altera a origem exibida à usuária. */
+      var pipelineDisponivel = !!(r[1] && (!r[1].meta || r[1].meta.status !== "pendente_regeneracao_local"));
+      var manual = (r[0] && r[0].servicos) || [], pipeline = pipelineDisponivel ? ((r[1] && r[1].servicos) || []) : [];
       var idsManuais = Object.create(null), codigosManuais = Object.create(null);
       manual.forEach(function (s) { idsManuais[s.id] = true; if (s.cnes) codigosManuais[String(s.cnes)] = true; });
       var acrescimos = pipeline.filter(function (s) {
@@ -665,9 +668,9 @@
         for (var i = 0; i < dados.servicos.length; i++) if (dados.servicos[i].id === id) return dados.servicos[i];
         return null;
       });
-      dados.falhou = !r[0] && !r[1];
-      dados.origem = r[1] ? "Catálogo verificado e base do pipeline" : "Catálogo verificado manualmente";
-      var datas = [r[0], r[1]].map(function (x) { return (x && x.meta && x.meta.gerado_em) || ""; }).sort();
+      dados.falhou = !r[0] && !pipelineDisponivel;
+      dados.origem = pipelineDisponivel ? "Catálogo verificado e base do pipeline" : "Catálogo verificado manualmente";
+      var datas = [r[0], pipelineDisponivel ? r[1] : null].map(function (x) { return (x && x.meta && x.meta.gerado_em) || ""; }).sort();
       dados.geradoEm = datas[datas.length - 1];
     }).catch(function () { dados.falhou = true; }).then(function () {
       return carregar("dados/cep_indice.json").then(function (idx) {
