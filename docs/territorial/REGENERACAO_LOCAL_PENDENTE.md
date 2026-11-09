@@ -74,3 +74,13 @@ Além da suíte, conferir os relatórios locais: 408 setores válidos; zero sobr
 ### Remoção do marcador
 
 Remover este arquivo somente quando, cumulativamente: (1) a regeneração tiver sido executada localmente com as entradas autorizadas e suas versões/hashes registrados; (2) os arquivos derivados tiverem sido revisados e minimizados; (3) a regra D4 tiver sido conferida nos 17 setores e nos agregados de bairro; (4) nenhum dado bruto, linha individual, coordenada Google ou tabela restrita tiver sido copiado para os derivados públicos; (5) `python pipeline/territorial_indicadores.py --conferir` passar; (6) a suíte Python e Node passar; (7) o teste de igualdade publicado/gerador deixar de ser ignorado e passar na Actions. Até lá, manter o marcador e não afirmar que a regeneração final foi concluída.
+
+
+## Atualização de continuidade — 09/11/2026
+
+As correções do painel de qualidade e da classificação dos domínios de tiles/atribuição não alteram a geração dos derivados territoriais nem autorizam remover este marcador. A regeneração local permanece pendente e deve seguir integralmente o runbook acima, no computador do responsável, com as fontes locais originais preservadas.
+
+- O painel de qualidade agora exporta a função existente `areaAnelEsferica`, sem declarar cálculo geodésico inexistente no JavaScript. Os quatro valores permanecem separados: atributo municipal IBGE 498,403 km²; área geodésica GRS80 do limite 2025 498,402 km²; soma geodésica dos setores 498,422 km²; recálculo esférico independente, identificado expressamente como esférico.
+- A validação estática dos tiles separa os dois hosts de requisição (`tile.openstreetmap.org` e `server.arcgisonline.com`) dos links de atribuição (`www.openstreetmap.org` e `www.esri.com`). As camadas continuam desmarcadas por padrão e dependentes de opt-in. Nenhuma destas correções substitui os testes de navegador ou a regeneração dos dados.
+- Após as correções, continuam obrigatórios: suíte Python completa, todos os testes `web/tests/*.test.js`, execução Playwright desktop/celular e confirmação dos 408 setores, 17 setores D4 protegidos, foco visível, zero erros de console, nenhuma requisição externa no cenário sem opt-in e ausência de rolagem horizontal em zoom 200%.
+- Não remover este arquivo com base apenas na aprovação do CI de código. A remoção continua condicionada à regeneração local, validação dos derivados minimizados, auditoria D4 e igualdade entre publicação e gerador, conforme os critérios cumulativos acima.
