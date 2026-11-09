@@ -83,7 +83,7 @@ def test_comando_gera_relatorios_json_e_markdown(tmp_path):
     dados = json.loads(saida_json.read_text(encoding="utf-8"))
     texto = saida_md.read_text(encoding="utf-8")
     assert dados["geometrias"]["total"] == 408
-    assert "498.4 km²" in texto
+    assert "498.396 km²" in texto
     assert "proveniência" in texto
 
 
