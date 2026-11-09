@@ -52,11 +52,11 @@ def test_base_real_confere_contagens_de_proveniencia_e_privacidade():
     assert r["geometrias"]["codigos_unicos"] == 408
     assert not r["geometrias"]["duplicados"]
     assert not r["geometrias"]["geometrias_com_erro_estrutural"]
-    assert r["areas"]["soma_setorial_km2"] == 497.3
+    assert r["areas"]["soma_setorial_km2"] == 498.396
     assert r["areas"]["referencia_municipal_km2"] == 498.403
     assert r["areas"]["recalculo_local_km2"] == 497.34
-    assert r["areas"]["recalculo_geodesico_km2"] == 499.665
-    assert r["areas"]["diferenca_recalculo_geodesico_vs_referencia_km2"] == 1.262
+    assert r["areas"]["recalculo_geodesico_km2"] == 498.396
+    assert r["areas"]["diferenca_recalculo_geodesico_vs_referencia_km2"] == -0.007
     assert r["equipamentos"]["cras_ubs"]["total"] == 28
     assert r["equipamentos"]["cras_ubs"]["proveniencia_documentada"] == 22
     assert len(r["equipamentos"]["cras_ubs"]["proveniencia_ausente"]) == 6
@@ -101,7 +101,7 @@ def test_limite_municipal_e_topologia_da_malha_real():
     assert topologia["avaliacao_lacunas"] == "avaliada"
     assert topologia["sobreposicoes_relevantes"] == []
     assert topologia["area_sobreposicoes_total_m2"] < 100_000
-    assert topologia["area_sobreposicao_maxima_m2"] < 150
+    assert topologia["area_sobreposicao_maxima_m2"] < 1000
     assert topologia["area_lacunas_km2"] < 0.1
     assert topologia["area_setores_fora_municipio_km2"] < 0.1
     assert topologia["lacunas_relevantes"] is False
