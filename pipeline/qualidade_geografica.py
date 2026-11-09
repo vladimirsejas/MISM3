@@ -25,7 +25,7 @@ KM_POR_GRAU_LON = 111.320 * math.cos(math.radians(LATITUDE_REFERENCIA))
 GEOD = Geod(ellps="GRS80")
 TRANSFORMAR_UTM = Transformer.from_crs("EPSG:4326", "EPSG:31983", always_xy=True).transform
 LIMITE_MUNICIPAL = RAIZ / "dados" / "geografia" / "limite_municipal_2022.geojson"
- TOLERANCIA_TOPOLOGICA_M2 = 1.0
+TOLERANCIA_TOPOLOGICA_M2 = 1.0
 # Com 6 casas decimais, a coordenada tem resolução linear de cerca de 0,1 m em Rio Claro.
 # 0,01 m² equivale aproximadamente à célula de quantização (0,1 m × 0,1 m): abaixo disso,
 # a área é indistinguível da precisão de publicação; acima, a interseção é contabilizada.
@@ -195,8 +195,7 @@ def validar_topologia(geojson, limite_municipal=None):
             "sobreposicoes": sobreposicoes,
             "sobreposicoes_relevantes": sobreposicoes_relevantes,
             "limiar_deteccao_sobreposicao_m2": LIMIAR_DETECCAO_SOBREPOSICAO_M2,
-            "limiar_deteccao_sobreposicao_m2": LIMIAR_DETECCAO_SOBREPOSICAO_M2,
-        "limiar_relevancia_sobreposicao_m2": LIMIAR_TOPOLOGICO_RELEVANTE_M2,
+            "limiar_relevancia_sobreposicao_m2": LIMIAR_TOPOLOGICO_RELEVANTE_M2,
             "area_sobreposicoes_total_m2": round(area_sobreposicoes_total, 3),
             "area_sobreposicao_maxima_m2": round(area_sobreposicao_maxima, 3),
             "area_somada_setores_km2_utm": round(soma_areas / 1_000_000, 6),
@@ -224,6 +223,7 @@ def validar_topologia(geojson, limite_municipal=None):
         "avaliacao_lacunas": "avaliada",
         "sobreposicoes": sobreposicoes,
         "sobreposicoes_relevantes": sobreposicoes_relevantes,
+        "limiar_deteccao_sobreposicao_m2": LIMIAR_DETECCAO_SOBREPOSICAO_M2,
         "limiar_relevancia_sobreposicao_m2": LIMIAR_TOPOLOGICO_RELEVANTE_M2,
         "area_sobreposicoes_total_m2": round(area_sobreposicoes_total, 3),
         "area_sobreposicao_maxima_m2": round(area_sobreposicao_maxima, 3),
