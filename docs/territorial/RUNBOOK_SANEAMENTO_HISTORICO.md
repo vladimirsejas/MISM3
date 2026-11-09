@@ -1,7 +1,7 @@
 # Procedimento de saneamento do histórico Git e da hospedagem (para o proprietário)
 
 **Data de preparação:** 08/11/2026.
-**Estado:** preparado e verificado em cópia isolada; **nada foi aplicado** ao repositório do GitHub nem à Cloudflare. Os passos abaixo exigem permissões do proprietário. Este documento não contém dados protegidos.
+**Estado:** os passos 4.1 a 4.5 foram **aplicados em 09/11/2026** (ver a seção 7); o passo 4.6 (suporte do GitHub) e todo o painel da Cloudflare continuam pendentes e dependem do proprietário. Este documento não contém dados protegidos.
 
 ## 1. Por que apagar os arquivos em um novo commit não basta
 
@@ -64,3 +64,23 @@ O backup `backup-original.git` guarda o estado anterior. Para restaurar uma bran
 - Referências de PR e commits em cache do GitHub antes do pedido ao suporte.
 - Implantações antigas da Cloudflare que não forem apagadas.
 - A decisão pendente sobre CEPs com menos de 3 endereços (seção 7.3 do plano de publicação) e as licenças e termos de terceiros ainda não confirmados.
+
+## 7. Resultado da aplicação (09/11/2026)
+
+**Feito e verificado**
+
+- Backup antes de reescrever: espelho completo do GitHub (`backup-pre-reescrita-*.git`, 64 referências idênticas, sha a sha, às do GitHub e `git fsck` sem erros).
+- Branches (62) e tags (2) enviadas com `--force-with-lease` apontando para o SHA antigo; a branch da PR #92 e a `main` por último. Nenhuma recusa.
+- Conferência em clone novo do GitHub: as 64 referências são iguais às do pacote verificado; nenhum caminho sensível sobrou em branches e tags; nenhum valor demográfico de setor protegido, matrícula por escola ou CEP de setor protegido nos arquivos restaurados; a árvore da ponta da `main` é idêntica à anterior.
+- Testes no clone novo da `main`: 35 de 35 arquivos JavaScript, 285 testes Python, 18 conjuntos de perfis com 20 de 20 e plano de prioridades 5 de 5. CI e Cloudflare Pages verdes no commit novo; produção servindo a versão saneada.
+
+**Efeitos colaterais**
+
+- As 7 PRs que estavam abertas (#91, #81, #62, #58, #51, #45, #44) foram **fechadas automaticamente pelo GitHub** ao reescrever as bases; o botão de reabrir ficou desabilitado. As branches delas continuam existindo, reescritas; é preciso abrir PRs novas se o trabalho for retomado. A PR #92 já estava integrada.
+- As etiquetas `v0.9-revisao` e `v1.0-pesquisa` têm commits novos; a correspondência está em `reproducao/ADENDO_SHAS_APOS_SANEAMENTO.md`.
+
+**O que o push não resolve (medido depois dele)**
+
+- O GitHub mantém 98 referências `refs/pull/*` que ainda apontam para os commits antigos, e esses commits continuam abrindo por SHA (`github.com/.../commit/<sha>` e `raw.githubusercontent.com`, HTTP 200 nos três commits antigos testados). A verificação sobre todas as referências, incluindo as de PR, falha: caminhos sensíveis continuam alcançáveis por elas.
+- Só o suporte do GitHub (pedido de remoção de dados sensíveis e de visualizações em cache) ou a recriação do repositório remove isso. O texto do pedido está pronto em `C:\MISM_PRIVACIDADE\PACOTE\PEDIDO_SUPORTE_GITHUB.txt`.
+- Cópias locais antigas (a pasta do projeto, de colaboradores, de ferramentas) ainda têm o histórico antigo: apagar e clonar de novo; não usar `git push --force` a partir delas.
