@@ -20,7 +20,7 @@ SHA de partida: `9ed9731ca55b97888a6e0fef2df04fdd9eedbd9d`
 | 2. Geografia | Em andamento — correções e testes versionados; Actions sem jobs e regeneração local pendente | `a1a0f88`, `71eead9`, `81f6843`, `22e2c40`, `4b3db12`, `33c6b94`, `671e958`, `7d1e003`, `23e9b78` | `42671168961` — referência aprovada; `42672174236`, `42672449139` e `42672558750` — falha pré-job, zero jobs criados |
 | 3. Fontes e licenças | Em andamento — inventário e atribuições atualizados; restrições não confirmadas mantidas explícitas | `c3cbff0`, `f66f616`, `df7d519`, `9aae00b`, `1fe887b` | `42673160479` — execução pendente; Actions sem jobs nas execuções anteriores |
 | 4. Mapa e painel | Em andamento — mapa SVG local e painel de qualidade atualizados; validação CI/navegador pendente | `c3cbff0`, `f66f616`, commit desta atualização | Execução Actions pendente; histórico recente de falha pré-job |
-| 5. Sistema de orientação | Pendente | — | — |
+| 5. Sistema de orientação | Em andamento — proteção local e limpeza do texto livre reforçadas; testes de comportamento e avaliação integral pendentes | commit desta atualização | Actions sem jobs; não há aprovação de suíte após as mudanças |
 | 6. Documentação definitiva | Pendente | — | — |
 | 7. Fechamento | Pendente | — | — |
 
@@ -147,3 +147,12 @@ A etapa de regeneração automática foi retirada da Actions. A Actions não bai
 - Os testes JavaScript foram alinhados à publicação atual: a faixa de incerteza está disponível para as distâncias publicadas que têm raio operacional; não se espera mais um CRAS com distância central mas sem intervalo. O mapa e o painel continuam sem coleta, armazenamento ou envio de dados.
 - O plano público recebeu atualização de 09/11/2026, preservando a seção de 08/11 como histórico e marcando que as novas métricas e decisões a substituem. A liberação, remoção de noindex, deploy e publicação permanecem bloqueados.
 - Os testes do navegador e da suíte Node ainda não têm uma execução Actions aprovada no SHA desta atualização. Não declarar o Bloco 4 concluído até a Actions executar os jobs e validar os arquivos.
+
+
+## Bloco 5 — sistema de orientação: privacidade e ciclo de vida
+
+- O orientador permanece local: o texto é classificado no navegador, sem API de linguagem, POST, telemetria, cookie, localStorage, sessionStorage ou IndexedDB. O único `fetch` de `web/app.js` é GET sem corpo para JSON estático da própria origem; os modelos começam a carregar quando a usuária entra na caixa ou envia a pergunta.
+- As regras determinísticas de perigo são avaliadas antes da espera pelo carregamento dos modelos. A falha de um modelo não bloqueia os caminhos fixos de orientação e emergência.
+- Foi identificada uma retenção temporária: a dúvida digitada dentro de uma área permanecia no DOM oculto ao voltar ao início. `mostrarInicio`, `mostrarArea` e `mostrarVista` agora chamam `limparDuvida()`, e o campo informa que a mensagem é processada no aparelho e apagada na navegação.
+- O teste de orientação foi ampliado para conferir GET local, ausência de envio/persistência e limpeza ao sair de cada tela. As jornadas mantêm respostas somente em memória e são limpas ao retornar ao início.
+- O sistema continua sendo orientação informativa, não diagnóstico, avaliação clínica ou garantia de proteção. A cobertura de frases e perfis é verificada pelos testes de regras e pela suíte de avaliação; não se declara aprovação final enquanto a Actions não executar jobs.

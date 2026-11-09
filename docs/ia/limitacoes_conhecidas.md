@@ -32,3 +32,10 @@ No relatório versionado desta branch, a validação cruzada em 408 frases da eq
 - A arquitetura atual evita enviar texto sensível para serviços externos e não deve adicionar telemetria de perguntas sem uma decisão de privacidade explícita.
 - Testes sintéticos e CI verificam comportamentos programados; não substituem teste de usabilidade com pessoas, revisão de profissionais da rede nem confirmação periódica de telefones, endereços e regras municipais.
 - Toda métrica deve declarar conjunto, tamanho, data, critérios e limitações. Não comparar números de conjuntos diferentes como se fossem equivalentes.
+
+
+## Ciclo de vida do texto livre
+
+O orientador não envia perguntas para APIs de linguagem nem para serviços externos. Os únicos pedidos de rede associados à busca são GETs same-origin para os arquivos JSON estáticos do classificador, do índice e dos detectores. A mensagem digitada não integra URL, corpo de requisição ou telemetria. Não há `localStorage`, `sessionStorage`, cookies ou IndexedDB para guardar perguntas.
+
+Os campos de dúvida das áreas e a caixa inicial são limpos ao navegar para outra área, voltar ao início ou abrir uma vista. O alerta determinístico de perigo é calculado imediatamente, antes do carregamento dos modelos. Se os arquivos não estiverem disponíveis, a aplicação mantém a orientação fixa e os telefones de emergência; isso não transforma o classificador em avaliação clínica ou garantia de proteção.

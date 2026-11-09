@@ -259,6 +259,7 @@
     return '<section class="ia-caixa duvida" id="duvida" aria-labelledby="titulo-duvida"><h2 id="titulo-duvida">Tem uma dúvida? Escreva aqui</h2>' +
       '<p class="meta">Escreva do seu jeito: procuramos o serviço certo, começando por esta área (' + esc(area.nome) + '). O que você escreve fica só neste aparelho.</p>' +
       '<form id="form-duvida" autocomplete="off"><label for="duvida-texto" class="so-leitor">Sua dúvida sobre ' + esc(area.nome) + '</label>' +
+      '<p class="privacidade">A busca acontece neste aparelho: sua mensagem não é enviada nem guardada. O campo é apagado quando você muda de área ou volta ao início.</p>' +
       '<textarea id="duvida-texto" rows="2" maxlength="200" autocomplete="off" spellcheck="false" placeholder="Ex.: ' + esc(area.exemploDuvida || "como faço para pedir ajuda?") + '"></textarea>' +
       '<div class="acoes"><button type="submit" class="btn">Procurar</button><button type="button" class="btn secundario" id="duvida-limpar" hidden>Limpar</button></div></form>' +
       '<div id="duvida-saida" aria-live="polite"></div></section>';
@@ -491,6 +492,7 @@
     areaAtual = null;
     if (window.JornadaUI) JornadaUI.limpar();
     limparIA();
+    limparDuvida();
     esconderVistas();
     $("inicio-tela").hidden = false; $("area").hidden = true; $("fontes").hidden = true;
     $("navegacao").hidden = true; $("secao-atual").hidden = true;
@@ -501,6 +503,7 @@
   function mostrarArea(area) {
     areaAtual = area;
     limparIA();
+    limparDuvida();
     esconderVistas();
     $("inicio-tela").hidden = true; $("area").hidden = false; $("fontes").hidden = false;
     $("navegacao").hidden = false; $("secao-atual").hidden = false;
@@ -541,6 +544,7 @@
     areaAtual = null;
     if (window.JornadaUI) JornadaUI.limpar();
     limparIA();
+    limparDuvida();
     $("inicio-tela").hidden = true; $("area").hidden = true; $("fontes").hidden = true;
     esconderVistas(); $(v.el).hidden = false;
     $("navegacao").hidden = false; $("secao-atual").hidden = false;
