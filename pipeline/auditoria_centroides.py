@@ -1,6 +1,6 @@
-"""Compara centroides atuais com pontos internos representativos dos setores.
+"""Compara centroides matemáticos anteriores com pontos representativos internos adotados na produção.
 
-Gera relatório de sensibilidade sem alterar os indicadores de produção.
+Mede o impacto espacial da correção aplicada aos nove pontos que ficavam fora dos polígonos.
 Uso: python pipeline/auditoria_centroides.py
 """
 from __future__ import annotations
@@ -235,14 +235,14 @@ def comparar(geojson, indicadores):
 
     return {
         "meta": {
-            "metodo_atual": "pipeline/analise_territorial.py: centro()",
+            "metodo_atual": "centroide matemático anterior de pipeline/analise_territorial.py",
             "metodo_alternativo": METODO_ALTERNATIVO,
             "unidade_deslocamento": "metros",
             "unidade_distancia": "quilometros",
             "setores_auditados": len(setores),
             "centroides_atualmente_fora": len(externos),
             "codigos_centroides_fora": externos,
-            "regra": "Ponto interno alternativo usado apenas para análise de sensibilidade; não substitui o centroide de produção.",
+            "regra": "Ponto representativo interno adotado na produção; preserva os 399 centroides que já estavam dentro dos polígonos e corrige somente os 9 externos. O ponto corrigido não é denominado centroide matemático.",
             "equipamentos": "web/dados/indicadores_territoriais.json; mesmos pontos elegíveis por cenário e categoria.",
         },
         "resumo": {
