@@ -257,3 +257,12 @@ Licenças diferentes valem para partes diferentes do repositório; elas não se 
 ## Uso responsável e limites
 
 O MISM3 orienta a busca por serviços públicos e não substitui avaliação, orientação ou atendimento profissional. O sistema não determina diagnósticos, elegibilidade ou decisões individuais. Até esta versão, não foi validado com usuárias reais. As perguntas dos conjuntos de avaliação são fictícias e foram escritas pela equipe do projeto.
+
+
+## Estado técnico do fechamento — 09/11/2026
+
+O mapa territorial é uma página separada (`web/mapa-territorial.html`) que desenha localmente os 408 setores censitários do IBGE em SVG, sem mapa de fundo nem tiles externos. O painel de qualidade dos dados é uma página separada (`web/qualidade-dados.html`). Ambos permanecem sob `noindex, nofollow`; não estão liberados para publicação. A PR #99 concentra o fechamento técnico e científico na branch `mism3-fechamento`; não deve ser mesclada até que os blocos e as execuções reais da Actions estejam registrados em `docs/FECHAMENTO.md`.
+
+A geometria publicada preserva os vértices da referência IBGE 2022 e arredonda coordenadas a seis casas decimais. A auditoria topológica usa 0,0121 m² como tolerância de quantização. A D4 suprime os 17 setores protegidos; eles não contribuem para estatísticas de distância, que podem incluir no máximo 391 setores. Distância é em linha reta e não mede tempo de deslocamento nem acesso efetivo.
+
+A regeneração final de derivados que dependem de CNES, CNEFE e microdados INEP locais permanece pendente e deve ocorrer somente no computador do responsável, conforme [runbook local](docs/territorial/REGENERACAO_LOCAL_PENDENTE.md). Não enviar fontes brutas, coordenadas residenciais ou tabelas restritas à Actions, ao GitHub ou a artefatos.
