@@ -250,3 +250,10 @@ O teste foi corrigido para derivar `391 = 408 - 17` dos dados publicados e verif
 - Os runs #761 (`42680803442`) e #762 (`42680804888`) criaram ambos os jobs reais. No #762, o job `navegador` ainda reproduziu o SVG com 427 px após a correção do ResizeObserver; portanto, a retenção do observador sozinha não bastou. A execução #761 continuava com o job `testes` em andamento no momento da consulta.
 - Foi acrescentado um segundo mecanismo explícito e independente: `web/mapa.js` agora escuta o evento `resize` da janela e chama `mapa.invalidateSize({ pan: false, debounceMoveend: true })` no próximo `requestAnimationFrame`. Isso cobre diretamente o redimensionamento do viewport usado pelo zoom do navegador, além do observador do elemento. Commit: `eec094d57ff77ea75dd7f5cac6c01d0eb5128971`.
 - A validação não será relaxada nem o overflow será escondido por CSS global. A próxima run deve provar que o Leaflet recalcula o SVG e que o documento cabe no viewport.
+
+
+## Simulação de zoom 200% no Playwright — ajuste do evento resize
+
+- A execução #766 (`42680967096`) foi iniciada com jobs reais após a correção do listener; a validação de navegador ainda usava a versão anterior do teste e, portanto, não enviava um evento `resize` explícito depois de reduzir o viewport.
+- O teste `web/tests/browser_playwright.cjs` agora reduz o viewport à metade, dispara `window.resize` e aguarda 200 ms para o Leaflet concluir a atualização do renderer. A asserção de largura do documento permanece inalterada e continua exigindo ausência de rolagem horizontal. Commit: `a53b750d59ccb8b79392e5b57b14a850b56f7483`.
+- Essa etapa não substitui a correção do produto: o listener de `resize` e o `ResizeObserver` permanecem no `mapa.js`; o teste apenas reproduz explicitamente o evento de viewport que o navegador gera ao alterar o zoom.
