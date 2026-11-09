@@ -2,7 +2,7 @@
 
 ## 1. Escopo
 
-Este documento especifica os indicadores propostos para a versão inicial do mapa territorial do MISM3. Distingue os componentes já observados nos arquivos atuais das definições que ainda dependem de validação ou implementação.
+Este documento especifica os indicadores efetivamente publicados na versão exploratória do mapa territorial do MISM3 e distingue os cálculos reproduzíveis das saídas cuja regeneração local ainda está pendente.
 
 A unidade estatística principal é o setor censitário do IBGE. Os equipamentos são pontos institucionais. Não são utilizados CEP residencial, endereço de paciente, estudante ou família, nem registros individuais.
 
@@ -220,3 +220,14 @@ A presença ou ausência de pontos dentro de um setor não determina a área de 
 A malha contém 408 setores. O centroide matemático foi preservado nos 399 setores em que já era interno; nos nove casos externos, o cálculo passou a usar ponto interno representativo. A auditoria topológica preliminar encontrou seis pares de setores com interseção acima de 1.000 m² e aproximadamente 0,104348 km² de área setorial fora do limite municipal IBGE 2022. Esses resíduos permanecem registrados para investigação; não houve recorte automático. O cálculo geodésico GRS80 da área setorial é aproximadamente 498,396 km², frente a 498,422 km² no atributo do limite municipal IBGE 2022.
 A política D4 suprime população, domicílios, densidade, pessoas por domicílio e distâncias nos 17 setores abaixo dos limiares de cautela; agregados de bairros afetados e totais municipais sensíveis também são omitidos. Para CRAS/UBS, 22 de 28 coordenadas têm proveniência registrada. As outras seis coordenadas brutas não são mais aceitas: o cenário com CEP utiliza referência institucional aproximada e raio CNEFE quando disponível.
 Os JSONs derivados ainda precisam ser regenerados com as regras atualizadas e conferidos por execução integral dos testes. Os workflows consultados até esta revisão correspondem a commits anteriores ao último conjunto de alterações; portanto, não se declara validação final nem publicação atualizada.
+
+
+## 8. Estado de implementação e limites — 09/11/2026
+
+A malha publicada contém 408 setores censitários do IBGE 2022. A geometria de referência é preservada sem simplificação; somente as coordenadas são arredondadas a seis casas decimais. A área dos setores é calculada geodesicamente com GRS80. A comparação com o limite municipal IBGE 2025 é uma comparação entre edições cartográficas, não uma auditoria de buracos internos na malha.
+
+A política D4 protege 17 setores. Neles, população, domicílios, densidade e distâncias são omitidos; a geometria e a identificação territorial permanecem. Portanto, no máximo 391 setores contribuem para resumos de distância. Não se deve reconstituir valores suprimidos por subtração, comparação de mapas ou cruzamento com outras fontes.
+
+Os cenários de localização são `coordenadas_do_catalogo` e `com_centro_do_cep`. O segundo é análise de sensibilidade baseada no centro e no raio do CEP cadastral do equipamento institucional; não representa coordenada comprovada do prédio. As distâncias são Haversine em linha reta. Não representam rota, tempo de viagem, disponibilidade, capacidade, área de atendimento ou acesso efetivo.
+
+O envelope geométrico mínimo–máximo, quando há raio operacional documentado, não é intervalo de confiança. Quando não há raio, a faixa não é calculada. A regeneração final de indicadores dependentes das fontes locais está bloqueada pelo marcador `docs/territorial/REGENERACAO_LOCAL_PENDENTE.md`.
