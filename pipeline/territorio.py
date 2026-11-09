@@ -34,7 +34,8 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from analise_territorial import (centro, haversine_km, coordenada_catalogo_verificada,\n                                 carregar_localizacao_registro)  # noqa: E402
+from analise_territorial import (centro, haversine_km, coordenada_catalogo_verificada,
+                                 carregar_localizacao_registro)  # noqa: E402
 from common import WEB_DADOS, agora_iso, erro, salvar_json  # noqa: E402
 
 GEOD = Geod(ellps="GRS80")
