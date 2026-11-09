@@ -348,9 +348,12 @@ def main(argv=None):
     parser.add_argument("--saida-md", type=Path, default=None)
     args = parser.parse_args(argv)
     resultado = carregar()
-    args.saida_json.parent.mkdir(parents=True, exist_ok=True)
-    args.saida_json.write_text(json.dumps(resultado, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    args.saida_md.write_text(relatorio_markdown(resultado), encoding="utf-8")
+    if args.saida_json:
+        args.saida_json.parent.mkdir(parents=True, exist_ok=True)
+        args.saida_json.write_text(json.dumps(resultado, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    if args.saida_md:
+        args.saida_md.parent.mkdir(parents=True, exist_ok=True)
+        args.saida_md.write_text(relatorio_markdown(resultado), encoding="utf-8")
     print("Validação geográfica: %d setores; %d CRAS/UBS sem método de coordenada; lacunas: %s." % (
         resultado["geometrias"]["total"], len(resultado["equipamentos"]["cras_ubs"]["proveniencia_ausente"]), resultado["topologia"]["avaliacao_lacunas"]))
     return 0
