@@ -23,6 +23,18 @@ def ubs(id_, lat=None, lon=None, cep=None):
     return s
 
 
+def proveniencia(*servicos):
+    return {
+        s["id"]: {
+            "lat": str(s["lat"]),
+            "lon": str(s["lon"]),
+            "metodo": "teste_controlado",
+            "confianca": "alta",
+        }
+        for s in servicos if s.get("lat") is not None and s.get("lon") is not None
+    }
+
+
 def test_quantil_ponderado():
     assert ex.quantil_ponderado([(1, 1), (2, 1), (3, 2)], 0.5) == 2
     assert ex.quantil_ponderado([], 0.5) is None
@@ -30,7 +42,7 @@ def test_quantil_ponderado():
 
 def test_percentual_acima_do_limiar_e_sem_bairro():
     # UBS no centro de Alfa: Alfa fica a ~0 km, Beta (a ~3 km a leste) fica a mais de 2 km
-    r = ex.calcular(geo(), [ubs("man-ubs-a", -22.395, -47.595)], {}, usar_cep=False)["ubs"]
+    servico = ubs("man-ubs-a", -22.395, -47.595)\n    r = ex.calcular(geo(), [servico], {}, usar_cep=False, localizacao_registro=proveniencia(servico))["ubs"]
     ac = r["setores_validos"]["acima_de"]
     assert ac["2 km"]["setores"] == 1 and ac["2 km"]["percentual"] == 50.0
     assert r["setores_sem_bairro"]["acima_de"]["2 km"]["percentual"] == 100.0
@@ -53,6 +65,19 @@ def test_categoria_sem_nenhuma_coordenada():
 
 
 def test_gerar_traz_dois_cenarios():
-    out = ex.gerar(geo(), [ubs("man-ubs-a", -22.395, -47.595)], {})
+    servico = ubs("man-ubs-a", -22.395, -47.595)\n    out = ex.gerar(geo(), [servico], {}, localizacao_registro=proveniencia(servico))
     assert set(out["cenarios"]) == {"coordenadas_do_catalogo", "com_centro_do_cep"}
     assert out["meta"]["pessoas_total"] is None and out["meta"]["setores_suprimidos"] == 0
+
+
+
+def test_coordenada_sem_proveniencia_so_entra_no_cenario_de_cep():
+    servico = ubs("man-ubs-a", -22.395, -47.595, cep="13501000")
+    indice = {"13501000": [-22.395, -47.595, 350, "354390705000001P", 12]}
+    out = ex.gerar(geo(), [servico], indice, localizacao_registro={})
+    assert out["cenarios"]["coordenadas_do_catalogo"]["ubs"]["cobertura"] == {
+        "com_coordenada": 0, "cadastrados": 1, "completo": False
+    }
+    assert out["cenarios"]["com_centro_do_cep"]["ubs"]["cobertura"] == {
+        "com_coordenada": 1, "cadastrados": 1, "completo": True
+    }
