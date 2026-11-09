@@ -22,7 +22,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import (BRUTO, CATALOGO, RAIZ, MUNICIPIO_IBGE6, MUNICIPIO_IBGE7, WEB_DADOS, achar_coluna, agora_iso,  # noqa: E402
-                    ler_csv_flex, normalizar_cep, salvar_json)\nfrom analise_territorial import carregar_localizacao_registro, coordenada_catalogo_verificada  # noqa: E402
+                    ler_csv_flex, normalizar_cep, salvar_json)
+from analise_territorial import carregar_localizacao_registro, coordenada_catalogo_verificada  # noqa: E402
 
 TIPOS = ("creche", "saude", "assistencia", "mulher", "emprego_curso")
 # Rio Claro/SP fica em aprox. lat -22.4, lon -47.56. Caixa folgada para rejeitar coordenada errada.
