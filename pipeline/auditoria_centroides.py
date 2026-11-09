@@ -1,6 +1,6 @@
 """Compara centroides matemáticos anteriores com pontos representativos internos adotados na produção.
 
-Mede o impacto espacial da correção aplicada aos nove pontos que ficavam fora dos polígonos.
+Mede o impacto espacial dos pontos representativos recalculados na geometria de referência atual.
 Uso: python pipeline/auditoria_centroides.py
 """
 from __future__ import annotations

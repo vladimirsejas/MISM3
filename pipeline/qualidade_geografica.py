@@ -18,18 +18,17 @@ RAIZ = Path(__file__).resolve().parents[1]
 DADOS = RAIZ / "web" / "dados"
 CATALOGO = RAIZ / "catalogo" / "servicos_manuais.csv"
 LOCALIZACAO = RAIZ / "catalogo" / "localizacao_registro.csv"
-REFERENCIA_AREA_KM2 = 498.403
 LATITUDE_REFERENCIA = -22.40
 KM_POR_GRAU_LAT = 110.574
 KM_POR_GRAU_LON = 111.320 * math.cos(math.radians(LATITUDE_REFERENCIA))
 GEOD = Geod(ellps="GRS80")
 TRANSFORMAR_UTM = Transformer.from_crs("EPSG:4326", "EPSG:31983", always_xy=True).transform
-LIMITE_MUNICIPAL = RAIZ / "dados" / "geografia" / "limite_municipal_2022.geojson"
+LIMITE_MUNICIPAL = RAIZ / "dados" / "referencia_ibge" / "municipio_rio_claro_2025.geojson"
 TOLERANCIA_TOPOLOGICA_M2 = 1.0
 # Com 6 casas decimais, a coordenada tem resolução linear de cerca de 0,1 m em Rio Claro.
-# 0,01 m² equivale aproximadamente à célula de quantização (0,1 m × 0,1 m): abaixo disso,
+# 0,0121 m² equivale aproximadamente à célula de quantização (0,11 m × 0,11 m): abaixo disso,
 # a área é indistinguível da precisão de publicação; acima, a interseção é contabilizada.
-LIMIAR_DETECCAO_SOBREPOSICAO_M2 = 0.01
+LIMIAR_DETECCAO_SOBREPOSICAO_M2 = 0.0121
 LIMIAR_TOPOLOGICO_RELEVANTE_M2 = 1000.0
 
 
@@ -62,13 +61,6 @@ def ponto_na_malha(geojson, lon, lat):
 
 
 
-def area_anel_local_km2(anel):
-    soma = 0.0
-    for (x1, y1), (x2, y2) in zip(anel, anel[1:] + anel[:1]):
-        soma += (x1 * KM_POR_GRAU_LON) * (y2 * KM_POR_GRAU_LAT) - (x2 * KM_POR_GRAU_LON) * (y1 * KM_POR_GRAU_LAT)
-    return abs(soma) / 2
-
-
 def area_anel_geodesica_km2(anel):
     """Área geodésica no elipsoide GRS80, em km²."""
     area, _ = GEOD.polygon_area_perimeter(
@@ -79,14 +71,15 @@ def area_anel_geodesica_km2(anel):
 
 
 def areas_geojson_km2(geojson):
-    local = geodesica = 0.0
-    for f in geojson.get("features", []):
-        for poligono in _poligonos(f.get("geometry") or {}):
+    """Soma áreas geodésicas no elipsoide GRS80, subtraindo os anéis internos."""
+    geodesica = 0.0
+    for feature in geojson.get("features", []):
+        for poligono in _poligonos(feature.get("geometry") or {}):
             if not poligono:
                 continue
-            local += area_anel_local_km2(poligono[0]) - sum(area_anel_local_km2(h) for h in poligono[1:])
-            geodesica += area_anel_geodesica_km2(poligono[0]) - sum(area_anel_geodesica_km2(h) for h in poligono[1:])
-    return local, geodesica
+            geodesica += area_anel_geodesica_km2(poligono[0])
+            geodesica -= sum(area_anel_geodesica_km2(h) for h in poligono[1:])
+    return geodesica
 
 
 def validar_geometrias(geojson):
@@ -297,9 +290,10 @@ def resumir(geojson, territorio, indicadores, localizacao, catalogo_registros=No
             and not ponto_na_malha(geojson, float(e["lon"]), float(e["lat"]))]
     pequenos = [f for f in setores if int((f.get("properties") or {}).get("pessoas") or 0) < 5
                 or int((f.get("properties") or {}).get("domicilios") or 0) < 3]
-    area = float((territorio.get("totais") or {}).get("area_km2") or 0)
-    area_local, area_geodesica = areas_geojson_km2(geojson)
-    diferenca = area - REFERENCIA_AREA_KM2
+    area_geodesica = areas_geojson_km2(geojson)
+    area_referencia = areas_geojson_km2(limite_municipal) if limite_municipal else float((territorio.get("totais") or {}).get("area_km2") or 0)
+    area = area_geodesica
+    diferenca = area - area_referencia
     geometria = validar_geometrias(geojson)
     topologia = validar_topologia(geojson, limite_municipal)
     correspondencia = validar_correspondencia_setores(geojson, territorio, indicadores)
@@ -307,14 +301,12 @@ def resumir(geojson, territorio, indicadores, localizacao, catalogo_registros=No
         "geometrias": geometria,
         "topologia": topologia,
         "correspondencia_setores": correspondencia,
-        "areas": {"soma_setorial_km2": area, "referencia_municipal_km2": REFERENCIA_AREA_KM2,
+        "areas": {"soma_setorial_km2": round(area_geodesica, 3), "referencia_municipal_km2": round(area_referencia, 3),
                   "diferenca_km2": round(diferenca, 3),
-                  "diferenca_percentual": round(100 * diferenca / REFERENCIA_AREA_KM2, 3) if REFERENCIA_AREA_KM2 else None,
-                  "recalculo_local_km2": round(area_local, 3),
+                  "diferenca_percentual": round(100 * diferenca / area_referencia, 3) if area_referencia else None,
                   "recalculo_geodesico_km2": round(area_geodesica, 3),
                   "metodo_recalculo_geodesico": "pyproj.Geod no elipsoide GRS80; anéis externos menos furos",
-                  "diferenca_recalculo_local_vs_referencia_km2": round(area_local - REFERENCIA_AREA_KM2, 3),
-                  "diferenca_recalculo_geodesico_vs_referencia_km2": round(area_geodesica - REFERENCIA_AREA_KM2, 3)},
+                  "diferenca_recalculo_geodesico_vs_referencia_km2": round(area_geodesica - area_referencia, 3)},
         "equipamentos": {
             "total": len(equipamentos),
             "por_categoria": {c: len(v) for c, v in categorias.items()},
@@ -356,21 +348,20 @@ def relatorio_markdown(resultado):
               f"- Códigos duplicados: {len(g['duplicados'])}", "",
               "## Topologia da malha", "",
               f"- Avaliação contra limite municipal IBGE: {t['avaliacao_lacunas']}",
-              f"- Interseções entre setores acima de 1 m²: {len(t['sobreposicoes'])}",
-              f"- Interseções acima do limiar de {t['limiar_relevancia_sobreposicao_m2']:.0f} m²: {len(t['sobreposicoes_relevantes'])}",
+              f"- Interseções entre setores acima de {t['limiar_deteccao_sobreposicao_m2']:.4f} m²: {len(t['sobreposicoes'])}",
+              f"- Interseções acima do limiar de relevância de {t['limiar_relevancia_sobreposicao_m2']:.0f} m²: {len(t['sobreposicoes_relevantes'])}",
               f"- Área total das interseções: {t['area_sobreposicoes_total_m2']} m²",
               f"- Maior interseção: {t['area_sobreposicao_maxima_m2']} m²",
               f"- Área de lacunas dentro do município: {t.get('area_lacunas_km2', 'não avaliada')} km²",
               f"- Área de setores fora do limite municipal: {t.get('area_setores_fora_municipio_km2', 'não avaliada')} km²",
               f"- Setores com área externa ao limite municipal: {t.get('quantidade_setores_com_area_fora_municipio', 'não avaliada')}",
-              f"- Área de atributo do limite IBGE 2022: {t.get('limite_area_atributo_ibge_km2', 'não informada')} km²", "",
+              f"- Área de atributo do limite municipal IBGE 2025: {t.get('limite_area_atributo_ibge_km2', 'não informada')} km²", "",
               "As interseções são registradas como encontradas; o limiar apenas destaca ocorrências para revisão e não elimina as menores do total.", "",
               "## Área territorial", "",
               f"- Soma das áreas setoriais: {a['soma_setorial_km2']} km²",
               f"- Referência municipal: {a['referencia_municipal_km2']} km²",
               f"- Diferença do total publicado: {a['diferenca_km2']} km² ({a['diferenca_percentual']}%)",
-              f"- Recalculo plano local aproximado: {a['recalculo_local_km2']} km²",
-              f"- Recalculo geodésico elipsoidal GRS80: {a['recalculo_geodesico_km2']} km²",
+f"- Recalculo geodésico elipsoidal GRS80: {a['recalculo_geodesico_km2']} km²",
               f"- Diferença geodésica para a referência: {a['diferenca_recalculo_geodesico_vs_referencia_km2']} km²", "",
               "## Equipamentos e proveniência", "",
               f"- Equipamentos: {e['total']} (CRAS {e['por_categoria']['cras']}, UBS {e['por_categoria']['ubs']}, escolas {e['por_categoria']['escola']})",

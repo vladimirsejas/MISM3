@@ -45,11 +45,11 @@ SHA de partida: `9ed9731ca55b97888a6e0fef2df04fdd9eedbd9d`
 
 ## Bloco 2 — geografia: execução em andamento
 
-- A geração dos anéis deixou de aplicar Douglas–Peucker separadamente. A malha é transformada para UTM 23S e simplificada como cobertura com Shapely `coverage_simplify`, tolerância de 4 m; se a cobertura original não for válida, os vértices são preservados sem simplificação. A saída usa seis casas decimais.
-- O limiar de detecção de sobreposição foi definido em 0,01 m². Com seis casas decimais, a resolução linear é aproximadamente 0,1 m em Rio Claro; 0,1 m × 0,1 m corresponde a 0,01 m². O limiar é definido pela precisão de publicação, não pela área das interseções observadas. A classificação de relevância permanece separada em 1.000 m².
+- A decisão geométrica foi substituída: não há Douglas–Peucker nem `coverage_simplify`. `pipeline/setores.py` preserva os vértices originais e aplica somente arredondamento a seis casas decimais (`CASAS = 6`). A referência original e os arquivos municipais oficiais ficam em `dados/referencia_ibge/`.
+- O limiar de detecção de sobreposição e buraco interno é 0,0121 m², equivalente aproximadamente a uma célula de arredondamento de 0,11 m × 0,11 m. O limite decorre da precisão de seis casas decimais, não dos resultados observados. A relevância continua separada em 1.000 m².
 - A primeira regeneração automatizada baixou a malha oficial SP_setores_CD2022.zip do FTP do IBGE, processou 408 setores e gerou uma malha de 531 KB. A execução `42666891746` parou antes da auditoria topológica e dos centroides porque `exposicao_distancia.py` ainda calculava escolas a partir do catálogo antigo (14/68 no cenário individual e 66/68 no cenário CEP), enquanto o gerador de indicadores usava a base municipal consolidada (33/68 e 68/68). Não se alterou a expectativa para esconder a divergência.
 - A divergência foi corrigida: `exposicao_distancia.py` agora usa a mesma base consolidada de escolas e os mesmos métodos `coordenada_individual` e `centroide_cep` do gerador de indicadores. Foi acrescentado teste de regressão com catálogo e base escolar conflitantes. Commits: `22e2c40faccb940579b132068479e2d089cff929` e `4b3db12c06c0901de1ff1d94cb8dd0f0478f90ad`.
-- A auditoria dos nove centroides ainda não foi repetida sobre a nova geometria. A topologia, os pares sobrepostos, a área fora do limite municipal e a sensibilidade das distâncias ainda aguardam a execução regenerada e a Actions verde. O bloco permanece aberto.
+- A auditoria da geometria original arredondada foi executada localmente com Shapely 2.1.2: 408 setores válidos, zero sobreposições acima de 0,0121 m², zero buracos internos e 11 centroides matemáticos externos (não nove). Os 11 códigos são fixados em teste. A auditoria completa de impacto nas distâncias e a regeneração de indicadores dependem dos arquivos locais e serão executadas pelo Claude Code no computador do responsável.
 
 
 ## Comparação de branches e integração anterior
@@ -88,3 +88,14 @@ Os seguintes arquivos estão no computador do responsável e não estão dispon�
 - Se a próxima correção depender desses arquivos, preparar código reproduzível e um único prompt consolidado para Claude Code executar no computador do responsável. O prompt deverá exigir inspeção local, preservação dos arquivos-fonte, validação e testes, geração apenas de derivados minimizados e relatório de execução sem dados sensíveis. Não declarar a tarefa concluída antes de receber e validar o resultado da execução local.
 
 A ausência dessas fontes nesta sessão não bloqueia o trabalho independente de código, testes, documentação e auditoria que possa ser realizado no repositório sem os dados privados. Nenhuma alteração aqui autoriza publicação, deploy, merge ou operação na Cloudflare.
+
+
+## Decisão geométrica substitutiva — referência IBGE original
+
+Em 09/11/2026, a decisão anterior de simplificação foi revogada por solicitação expressa do responsável. A branch remove Douglas–Peucker e `coverage_simplify`; a publicação conserva a geometria original dos 408 setores e arredonda coordenadas apenas a seis casas. O arquivo original sem contagens, o limite municipal 2025 e a proveniência foram incorporados em `dados/referencia_ibge/`. O arquivo publicado `web/dados/setores.geojson` foi alinhado à geometria de referência arredondada, preservando propriedades já publicadas; a referência não foi usada para recuperar contagens nem alterar D4.
+
+A auditoria local reproduzida com Shapely 2.1.2 e pyproj 3.7.2 confirmou 408 geometrias válidas, nenhuma sobreposição acima de 0,0121 m² e nenhum buraco interno na união. A soma geodésica dos setores é 498,422 km² e a do limite municipal 2025 é 498,402 km². Em projeção equivalente, a diferença entre as duas edições cartográficas tem 0,707 km² de área municipal 2025 não coberta e 0,727 km² de setores 2022 fora do limite 2025 (diferença simétrica de 1,434 km²); isso não é falha interna da cobertura setorial.
+
+A repetição do teste dos centroides sobre a geometria original encontrou 11 centroides matemáticos externos, com os códigos registrados no teste `pipeline/tests/test_referencia_ibge.py`. A auditoria detalhada de deslocamentos e distâncias deve ser gerada após a atualização local dos indicadores, sem publicar arquivos brutos nem dados escolares restritos.
+
+A etapa de regeneração automática foi retirada da Actions. A Actions não baixa fontes brutas nem tenta regenerar indicadores dependentes de contagens/D4. O pipeline e a suíte são testados sobre dados versionados; a regeneração final será executada localmente pelo Claude Code, usando fontes locais preservadas e gerando somente derivados autorizados.

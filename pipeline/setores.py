@@ -2,7 +2,7 @@
 
 Entrada : o zip "SP_setores_CD2022.zip" (shapefile do estado inteiro) em dados/bruto/setores/
           (ou passe o caminho: python pipeline/setores.py caminho/do.zip)
-Saida   : web/dados/setores.geojson  (so Rio Claro, poligonos simplificados)
+Saida   : web/dados/setores.geojson  (so Rio Claro, polígonos originais com coordenadas arredondadas a seis casas)
           web/dados/setor_bairro.json (setor -> bairro do IBGE; o site usa para dizer o bairro provavel de um CEP)
 
 Usa so a biblioteca pura-Python "pyshp" (pip install pyshp): funciona no Windows sem GDAL.
@@ -21,39 +21,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import BRUTO, MUNICIPIO_IBGE7, WEB_DADOS, agora_iso, erro, salvar_json  # noqa: E402
 
-TOLERANCIA_METROS = 4.0  # simplificação em cobertura; divisas compartilhadas processadas em conjunto
-CASAS = 6                 # ~0,1 m na latitude de Rio Claro
-TOLERANCIA_GRAUS = 0.00004  # compatibilidade do helper simplificar; não usado na geração
-
-
-def _dist_seg(p, a, b):
-    (x, y), (x1, y1), (x2, y2) = p, a, b
-    dx, dy = x2 - x1, y2 - y1
-    if dx == 0 and dy == 0:
-        return ((x - x1) ** 2 + (y - y1) ** 2) ** 0.5
-    t = max(0.0, min(1.0, ((x - x1) * dx + (y - y1) * dy) / (dx * dx + dy * dy)))
-    return ((x - (x1 + t * dx)) ** 2 + (y - (y1 + t * dy)) ** 2) ** 0.5
-
-
-def simplificar(pontos, tol=TOLERANCIA_GRAUS):
-    """Douglas-Peucker iterativo (sem recursao). Mantem primeiro e ultimo ponto."""
-    n = len(pontos)
-    if n <= 4:
-        return list(pontos)
-    manter = [False] * n
-    manter[0] = manter[-1] = True
-    pilha = [(0, n - 1)]
-    while pilha:
-        i, j = pilha.pop()
-        dmax, k = 0.0, -1
-        for m in range(i + 1, j):
-            d = _dist_seg(pontos[m], pontos[i], pontos[j])
-            if d > dmax:
-                dmax, k = d, m
-        if k != -1 and dmax > tol:
-            manter[k] = True
-            pilha += [(i, k), (k, j)]
-    return [p for p, mk in zip(pontos, manter) if mk]
+CASAS = 6  # arredondamento decimal; nenhuma simplificação geométrica
 
 
 def aneis(shape):
@@ -71,12 +39,12 @@ def _area_assinada(anel):
 
 
 def geometria(shape):
-    """Monta MultiPolygon sem simplificar anéis isoladamente."""
+    """Monta MultiPolygon preservando vértices; aplica apenas arredondamento a seis casas."""
     poligonos = []
     for anel in aneis(shape):
         if len(anel) < 4:
             continue
-        coords = [[float(x), float(y)] for x, y in anel]
+        coords = [[round(float(x), CASAS), round(float(y), CASAS)] for x, y in anel]
         if _area_assinada(anel) < 0:
             poligonos.append([coords])
         elif poligonos:
@@ -85,38 +53,6 @@ def geometria(shape):
         return None
     return {"type": "MultiPolygon", "coordinates": poligonos}
 
-
-def simplificar_cobertura(feicoes, tolerancia_m=TOLERANCIA_METROS):
-    """Simplifica a malha como cobertura e preserva divisas compartilhadas.
-
-    A tolerância é aplicada em metros, após projeção UTM 23S. Se a entrada
-    não for uma cobertura válida, mantém os vértices originais.
-    """
-    from pyproj import Transformer
-    from shapely import coverage_is_valid, coverage_simplify
-    from shapely.geometry import mapping, shape as shapely_shape
-    from shapely.ops import transform
-
-    para_metros = Transformer.from_crs("EPSG:4674", "EPSG:31983", always_xy=True).transform
-    para_graus = Transformer.from_crs("EPSG:31983", "EPSG:4326", always_xy=True).transform
-    geometrias = [transform(para_metros, shapely_shape(f["geometry"])) for f in feicoes]
-    if coverage_is_valid(geometrias):
-        simplificadas = coverage_simplify(geometrias, tolerance=float(tolerancia_m))
-        if not coverage_is_valid(simplificadas):
-            raise ValueError("A simplificação alterou a validade topológica da cobertura.")
-    else:
-        print("  Cobertura de entrada inválida; simplificação desativada para preservar os vértices.")
-        simplificadas = geometrias
-
-    def arredondar(valor):
-        if isinstance(valor, (list, tuple)):
-            return [arredondar(v) for v in valor]
-        return round(valor, CASAS) if isinstance(valor, float) else valor
-
-    for feicao, geom in zip(feicoes, simplificadas):
-        convertido = mapping(transform(para_graus, geom))
-        feicao["geometry"] = {"type": convertido["type"], "coordinates": arredondar(convertido["coordinates"])}
-    return feicoes
 
 def abrir_leitor(origem: Path):
     import shapefile
@@ -161,7 +97,6 @@ def extrair(leitor, municipio: str = MUNICIPIO_IBGE7):
         resumo[setor] = info
     if not feicoes:
         raise ValueError("Nenhum setor do municipio %s na malha." % municipio)
-    feicoes = simplificar_cobertura(feicoes)
     return {"type": "FeatureCollection", "features": feicoes}, resumo
 
 

@@ -56,14 +56,6 @@ def test_municipio_inexistente(tmp_path):
         setores.extrair(setores.abrir_leitor(cria_zip(tmp_path)), municipio="9999999")
 
 
-def test_simplificar_mantem_extremos_e_reduz():
-    reta = [(0.0, 0.0), (0.5, 0.000001), (1.0, 0.0), (1.5, 0.000001), (2.0, 0.0)]
-    s = setores.simplificar(reta, tol=0.0001)
-    assert s[0] == reta[0] and s[-1] == reta[-1] and len(s) < len(reta)
-    quina = [(0, 0), (1, 0), (1, 1), (2, 1), (2, 2)]
-    assert setores.simplificar(quina, tol=0.0001) == quina  # curvas reais ficam
-
-
 def test_grava_setor_bairro_so_com_bairro(tmp_path, monkeypatch):
     """O site usa setor_bairro.json para dizer o bairro provavel de um CEP: so entram setores com bairro (nada inventado)."""
     z = cria_zip(tmp_path)
@@ -77,25 +69,17 @@ def test_grava_setor_bairro_so_com_bairro(tmp_path, monkeypatch):
 
 
 
-def test_simplificacao_preserva_divisa_compartilhada():
-    from shapely.geometry import shape
 
-    limite_a = [
-        [-47.56, -22.40], [-47.55, -22.40], [-47.551, -22.398],
-        [-47.55, -22.396], [-47.55, -22.39], [-47.56, -22.39], [-47.56, -22.40],
-    ]
-    limite_b = [
-        [-47.55, -22.40], [-47.54, -22.40], [-47.54, -22.39],
-        [-47.55, -22.39], [-47.55, -22.396], [-47.551, -22.398], [-47.55, -22.40],
-    ]
-    feicoes = [
-        {"type": "Feature", "properties": {"setor": "a"},
-         "geometry": {"type": "Polygon", "coordinates": [limite_a]}},
-        {"type": "Feature", "properties": {"setor": "b"},
-         "geometry": {"type": "Polygon", "coordinates": [limite_b]}},
-    ]
-
-    setores.simplificar_cobertura(feicoes)
-    a, b = [shape(f["geometry"]) for f in feicoes]
-    assert a.intersection(b).area <= 0.01
-    assert a.boundary.intersection(b.boundary).length > 0
+def test_geometria_aplica_somente_arredondamento_a_seis_casas(tmp_path):
+    colecao, _ = setores.extrair(setores.abrir_leitor(cria_zip(tmp_path)))
+    for feature in colecao["features"]:
+        def conferir(valor):
+            if isinstance(valor, list):
+                for item in valor:
+                    conferir(item)
+            elif isinstance(valor, float):
+                assert round(valor, 6) == valor
+        conferir(feature["geometry"]["coordinates"])
+    assert setores.CASAS == 6
+    assert not hasattr(setores, "simplificar")
+    assert not hasattr(setores, "simplificar_cobertura")
