@@ -182,14 +182,25 @@ def auditar(dado: dict, nomes_instituicoes: set | None = None, bairros: set | No
     return falhas
 
 
-def setores_pequenos(dado: dict) -> dict[str, list[str]]:
-    """Retorna apenas contagens de conformidade; nunca lista IDs nem valores dos setores protegidos."""
-    suprimidos = sorted(s["id"] for s in dado.get("setores", []) if s.get("suprimido_privacidade") is True)
-    inconsistentes = sorted(
-        s["id"] for s in dado.get("setores", [])
-        if s.get("suprimido_privacidade") is not True
-        and ((s.get("pessoas") is not None and s["pessoas"] < 5) or (s.get("domicilios") is not None and s["domicilios"] < 3))
-    )
+def setores_pequenos(dado: dict) -> dict[str, int]:
+    """Retorna somente quantidades; nunca expõe identificadores nem valores de setores."""
+    setores = dado.get("setores", [])
+    suprimidos = 0
+    inconsistentes = 0
+    for setor in setores:
+        if setor.get("suprimido_privacidade") is True:
+            suprimidos += 1
+            continue
+        pessoas = setor.get("pessoas")
+        domicilios = setor.get("domicilios")
+        try:
+            pessoas = int(pessoas)
+            domicilios = int(domicilios)
+        except (TypeError, ValueError, OverflowError):
+            inconsistentes += 1
+            continue
+        if pessoas < 5 or domicilios < 3:
+            inconsistentes += 1
     return {"suprimidos": suprimidos, "inconsistentes": inconsistentes}
 
 
@@ -242,7 +253,7 @@ def auditar_publicacao() -> list[Falha]:
             falhas.append(Falha("territorio.json/setores", "privacidade", "setor protegido não está marcado no painel territorial"))
             continue
         if any(v is not None for k, v in setor.items() if k != "a" and k != "suprimido_privacidade"):
-            falhas.append(Falha(f"territorio.json/setores/{codigo}", "privacidade", "painel territorial ainda expõe indicador derivado de setor protegido"))
+            falhas.append(Falha("territorio.json/setores", "privacidade", "painel territorial ainda expõe indicador derivado de setor protegido"))
     if terr.get("totais", {}).get("pessoas") is not None or terr.get("totais", {}).get("domicilios") is not None:
         falhas.append(Falha("territorio.json/totais", "privacidade", "totais municipais demográficos devem permanecer omitidos"))
     if terr.get("meta", {}).get("conferencia", {}).get("pessoas_somadas") is not None:
