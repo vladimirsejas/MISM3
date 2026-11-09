@@ -1,11 +1,11 @@
 {
  "meta": {
   "fonte": "IBGE, Censo Demográfico 2022 (setores) e catálogo verificado do Observatório da Mulher",
-  "gerado_em": "2026-11-05",
+  "gerado_em": "2026-11-09",
   "aviso": "Os resumos contam somente setores não suprimidos, sem ponderação por população. Dados demográficos e distâncias por setor são omitidos nos setores pequenos. Distâncias em linha reta não consideram ruas, ônibus nem horários.",
   "limiares_km": [
-   1,
-   2
+   1.0,
+   2.0
   ],
   "pessoas_total": null,
   "setores_suprimidos": 17
@@ -103,7 +103,7 @@
       },
       "2 km": {
        "setores": 39,
-       "percentual": 10
+       "percentual": 10.0
       }
      }
     },
@@ -207,7 +207,7 @@
     },
     "setores_validos": {
      "setores": 391,
-     "mediana_km": 0.43,
+     "mediana_km": 0.42,
      "p90_km": 1.05,
      "acima_de": {
       "1 km": {
