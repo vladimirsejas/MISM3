@@ -43,7 +43,7 @@ def test_ponto_interno_considera_componente_de_multipoligono():
 
 def test_comparacao_calcula_variacao_de_distancia_sem_mudar_dado_de_entrada():
     geo = {"type": "FeatureCollection", "features": [{
-        "type": "Feature", "properties": {"setor": "1", "pessoas": 10}, "geometry": quadrado()
+        "type": "Feature", "properties": {"setor": "1", "pessoas": 10, "domicilios": 5}, "geometry": quadrado()
     }]}
     indicadores = {"equipamentos": [
         {"categoria": "ubs", "precisao": "catalogo", "lat": 1.0, "lon": 5.0},
@@ -65,7 +65,7 @@ def test_geometria_sem_ponto_interno_falha_explicitamente():
         raise AssertionError("esperava falha para geometria degenerada")
 
 
-def test_malha_real_audita_408_setores_e_identifica_nove_centroides_externos():
+def test_malha_real_audita_408_setores_e_identifica_onze_centroides_externos():
     import json
 
     raiz = Path(__file__).resolve().parents[2]
@@ -74,13 +74,15 @@ def test_malha_real_audita_408_setores_e_identifica_nove_centroides_externos():
     resultado = ac.comparar(geo, indicadores)
 
     assert resultado["meta"]["setores_auditados"] == 408
-    assert resultado["meta"]["centroides_atualmente_fora"] == 9
+    assert resultado["meta"]["centroides_atualmente_fora"] == 11
     assert set(resultado["meta"]["codigos_centroides_fora"]) == {
         "354390705000026",
         "354390705000165",
+        "354390705000195",
         "354390705000339",
         "354390705000432",
         "354390705000460",
+        "354390705000502",
         "354390705000524",
         "354390705000529",
         "354390705000530",
@@ -91,7 +93,7 @@ def test_malha_real_audita_408_setores_e_identifica_nove_centroides_externos():
     assert resultado["resumo"]["distancias"]["coordenadas_do_catalogo"]["ubs"]["setores_com_distancia"] == 408
 
 
-def test_correcao_minima_preserva_os_399_centroides_validos_e_altera_so_nove():
+def test_correcao_minima_preserva_os_397_centroides_validos_e_altera_so_onze():
     import json
 
     raiz = Path(__file__).resolve().parents[2]
@@ -101,8 +103,8 @@ def test_correcao_minima_preserva_os_399_centroides_validos_e_altera_so_nove():
 
     movidos = [s for s in resultado["setores"] if s["deslocamento_m"] > 0]
     preservados = [s for s in resultado["setores"] if s["centroide_atual"]["dentro_do_poligono"]]
-    assert len(movidos) == 9
-    assert len(preservados) == 399
+    assert len(movidos) == 11
+    assert len(preservados) == 397
     assert max(s["deslocamento_m"] for s in movidos) < 62
     for setor in preservados:
         assert setor["deslocamento_m"] == 0
