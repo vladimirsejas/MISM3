@@ -25,20 +25,53 @@ assert(/ligarBase\(\$\("usar-tiles-mapa"\)\.checked\)/.test(mapa), "a camada ini
 assert(!/ligarBase\(true\)/.test(mapa), "nenhuma chamada força a camada ligada");
 assert(/\$\("usar-tiles"\)\.addEventListener\("change"[\s\S]*if \(e\.target\.checked\)/.test(app), "a camada do OpenStreetMap só entra ao marcar a caixa");
 
-/* 4) Só as duas camadas conhecidas fazem pedido a outro domínio no código do site. */
-const externos = new Set();
-["app.js", "mapa.js"].forEach((f) => {
-  (fs.readFileSync(path.join(web, f), "utf8").match(/https?:\/\/[a-z0-9.-]+\//gi) || []).forEach((u) => externos.add(new URL(u).host));
+/* 4) Distingue requisições de tiles de links HTML de atribuição.
+   Somente os dois serviços de tiles conhecidos podem ser requisitados, e ambos dependem de opt-in.
+   Os href abaixo são créditos clicáveis, não endpoints de imagem/rede. */
+const hostsTiles = new Set();
+[app, mapa].forEach((codigo) => {
+  const re = /L\\.tileLayer\\(\\s*["'](https?:\\/\\/[^"']+)/g;
+  let m;
+  while ((m = re.exec(codigo)) !== null) hostsTiles.add(new URL(m[1].replace(/\\{[^}]+\\}/g, "0")).host);
 });
-const permitidos = new Set(["tile.openstreetmap.org", "server.arcgisonline.com"]);
-externos.forEach((h) => {
-  const ehLink = h === "www.openstreetmap.org" /* link de atribuição ODbL; não é carregado como recurso */ || h === "www.esri.com" /* link dos termos de atribuição Esri; tiles são servidos por server.arcgisonline.com e só com opt-in */ || /^(www\.)?(google|gov|wa\.me|rioclaro|cmdca|defensoria|instagram|facebook|whatsapp)/.test(h) || /\.(gov\.br|sp\.gov\.br|com\.br)$/.test(h) || h === "wa.me";
-  assert(permitidos.has(h) || ehLink, "domínio externo inesperado em app.js ou mapa.js: " + h + " (se for um serviço de imagens, precisa de caixa de opt-in e de linha em AVISOS-DE-TERCEIROS.md)");
-});
+assert.deepStrictEqual(Array.from(hostsTiles).sort(), [
+  "server.arcgisonline.com",
+  "tile.openstreetmap.org"
+].sort(), "requisições de tiles limitadas aos dois serviços aprovados");
+assert.strictEqual((mapa.match(/L\\.tileLayer\\(/g) || []).length, 2, "as duas camadas Esri são tiles e não links de atribuição");
+assert.strictEqual((app.match(/L\\.tileLayer\\(/g) || []).length, 1, "a camada OSM é tile e não link de atribuição");
+assert(/ligarBase\\(\\$\\("usar-tiles-mapa"\\)\\.checked\\)/.test(mapa) &&
+  /if \\(ligar && !tiles\\)/.test(mapa), "tiles Esri só são adicionados conforme o opt-in desmarcado por padrão");
+assert(/if \\(e\\.target\\.checked\\)[\\s\\S]*L\\.tileLayer/.test(app), "tiles OSM só são requisitados depois da marcação explícita");
 
-/* 5) O README não afirma mais que a Esri vem ligada por padrão. */
-assert(!/ligad[ao]s? por padrão/.test(readme), "o README não diz que o mapa vem ligado por padrão");
-assert(/ambas vêm desmarcadas/.test(readme) && /Ao abrir o site, nenhuma imagem de mapa é pedida a outro domínio/.test(readme), "o README descreve o opt-in das duas camadas");
+const linksAtribuicao = [];
+[app, mapa].forEach((codigo) => {
+  const re = /attribution:\\s*'([^']*)'/g;
+  let bloco;
+  while ((bloco = re.exec(codigo)) !== null) {
+    const anchors = bloco[1].match(/<a\\b[^>]*>/g) || [];
+    anchors.forEach((tag) => {
+      const href = tag.match(/href=["'](https?:\\/\\/[^"']+)/i);
+      if (!href) return;
+      const host = new URL(href[1]).host;
+      linksAtribuicao.push({ host: host, tag: tag });
+    });
+  }
+});
+const hostsAtribuicao = Array.from(new Set(linksAtribuicao.map((x) => x.host))).sort();
+assert.deepStrictEqual(hostsAtribuicao, ["www.esri.com", "www.openstreetmap.org"],
+  "somente Esri e OpenStreetMap são links externos de atribuição");
+assert(linksAtribuicao.length >= 5, "todos os créditos das duas camadas permanecem clicáveis");
+linksAtribuicao.forEach((link) => {
+  assert(/rel=["']noopener noreferrer["']/.test(link.tag),
+    "link de atribuição deve usar rel=noopener noreferrer: " + link.tag);
+  assert(/target=["']_blank["']/.test(link.tag),
+    "link de atribuição abre em nova aba: " + link.tag);
+});
+const avisos = fs.readFileSync(path.join(raiz, "AVISOS-DE-TERCEIROS.md"), "utf8");
+assert(/Esri: tiles de mapa-base/.test(avisos) &&
+  /www\\.esri\\.com|terms\\/web-site-service/.test(avisos),
+  "inventário de terceiros registra a atribuição e os termos da Esri");
 
 /* ---- Referer dos tiles (política de uso do OpenStreetMap, conferida em 08/11/2026) ---- */
 {
