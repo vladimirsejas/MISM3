@@ -120,7 +120,7 @@ def equipamentos(linhas: list, indice_cep: dict, escolas: list[dict], localizaca
             registro = localizacao_registro.get(r["id"], {})
             if registro.get("lat") and registro.get("lon") and xy_catalogo:
                 coord_registro = coord_do_catalogo(registro["lat"], registro["lon"])
-                if coord_registro != xy_catalogo:
+                if coord_registro != (round(xy_catalogo[0], 5), round(xy_catalogo[1], 5)):
                     raise ValueError("proveniência de localização diverge do catálogo para %s" % r["id"])
             if xy_catalogo:
                 metodo = registro["metodo"]
