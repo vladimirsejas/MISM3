@@ -18,8 +18,8 @@ SHA de partida: `9ed9731ca55b97888a6e0fef2df04fdd9eedbd9d`
 |---|---|---|---|
 | 1. Privacidade | Concluído | `edc9ea8ee14170d14b275641bf57bc32bdea7dbd` | `42657889614` — sucesso |
 | 2. Geografia | Em andamento — correções e testes versionados; Actions sem jobs e regeneração local pendente | `a1a0f88`, `71eead9`, `81f6843`, `22e2c40`, `4b3db12`, `33c6b94`, `671e958`, `7d1e003`, `23e9b78` | `42671168961` — referência aprovada; `42672174236`, `42672449139` e `42672558750` — falha pré-job, zero jobs criados |
-| 3. Fontes e licenças | Em andamento | `c3cbff0`, `f66f616`, `df7d519`, `9aae00b` | Testes de atribuição e inventário documental adicionados; aprovação integral pendente |
-| 4. Mapa e painel | Em andamento | `c3cbff0`, `f66f616` | Atribuição cartográfica e teste automatizado de créditos corrigidos; testes de navegador e acessibilidade ainda pendentes |
+| 3. Fontes e licenças | Em andamento — inventário e atribuições atualizados; restrições não confirmadas mantidas explícitas | `c3cbff0`, `f66f616`, `df7d519`, `9aae00b`, `1fe887b` | `42673160479` — execução pendente; Actions sem jobs nas execuções anteriores |
+| 4. Mapa e painel | Em andamento — mapa SVG local e painel de qualidade atualizados; validação CI/navegador pendente | `c3cbff0`, `f66f616`, commit desta atualização | Execução Actions pendente; histórico recente de falha pré-job |
 | 5. Sistema de orientação | Pendente | — | — |
 | 6. Documentação definitiva | Pendente | — | — |
 | 7. Fechamento | Pendente | — | — |
@@ -136,3 +136,14 @@ A etapa de regeneração automática foi retirada da Actions. A Actions não bai
 - A decisão já registrada para `mapaRioClaroUSF.geojson` foi preservada sem reabertura: origem/licença não confirmadas e sem autorização de redistribuição até confirmação. As capturas Google e os CEPs geocodificados continuam locais, sem cópia para GitHub, Actions ou Zenodo.
 - Foram ampliados os testes de inventário e de atribuição para conferir as referências IBGE, a separação das licenças, a preservação da decisão do mapa das UBS, a atribuição dos tiles, o carregamento opt-in e a permanência do `noindex, nofollow`.
 - A validação por Actions continua bloqueada pela falha pré-job documentada acima: execuções recentes retornaram zero jobs. Não se declara o Bloco 3 aprovado sem execução real da suíte.
+
+
+## Bloco 4 — mapa e painel: atualização técnica
+
+- A página `web/mapa-territorial.html` continua como mapa territorial público e separado da tela inicial, com SVG próprio, sem mapa de fundo, sem tiles externos e sem requisições fora dos dois JSON locais. A CSP restringe scripts, estilos e conexões à própria origem; `noindex, nofollow` permanece.
+- A navegação do mapa mantém foco por teclado, setas entre setores, detalhe acessível e texto de ressalva. Os testes estruturais verificam 408 setores, ausência de `innerHTML` com dados, ES5, linguagem permitida e ausência de chamadas externas.
+- O painel de qualidade foi corrigido para distinguir o atributo municipal IBGE (498,403 km²) da área geodésica GRS80 do limite 2025 (498,402 km²), e da soma geodésica dos setores (498,422 km²). O recálculo esférico do navegador passou a ser identificado como esférico, não como geodésico GRS80.
+- A interface do painel agora explica que 22/28 CRAS/UBS têm coordenada individual documentada e que seis usam centro do CEP cadastral com raio operacional no cenário de sensibilidade. A ausência de coordenada individual não é apresentada como ausência de localização aproximada.
+- Os testes JavaScript foram alinhados à publicação atual: a faixa de incerteza está disponível para as distâncias publicadas que têm raio operacional; não se espera mais um CRAS com distância central mas sem intervalo. O mapa e o painel continuam sem coleta, armazenamento ou envio de dados.
+- O plano público recebeu atualização de 09/11/2026, preservando a seção de 08/11 como histórico e marcando que as novas métricas e decisões a substituem. A liberação, remoção de noindex, deploy e publicação permanecem bloqueados.
+- Os testes do navegador e da suíte Node ainda não têm uma execução Actions aprovada no SHA desta atualização. Não declarar o Bloco 4 concluído até a Actions executar os jobs e validar os arquivos.

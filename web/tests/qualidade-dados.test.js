@@ -53,6 +53,7 @@ function testeResumo() {
   assert.strictEqual(r.privacidade.setores_abaixo_da_faixa_de_cautela_D4, 1);
   assert.strictEqual(r.areas.soma_setorial_km2, 497.3);
   assert.strictEqual(r.areas.referencia_municipal_km2, 498.403);
+  assert.strictEqual(r.areas.referencia_municipal_geodesica_km2, 498.402);
 }
 
 function testeBaseReal() {
@@ -71,14 +72,17 @@ function testeBaseReal() {
   assert.strictEqual(r.equipamentos.escolas.coordenada_individual, 33);
   assert.strictEqual(r.equipamentos.escolas.referencia_cep, 35);
   assert.strictEqual(r.privacidade.setores_abaixo_da_faixa_de_cautela_D4, 17);
-  assert.strictEqual(r.areas.soma_setorial_km2, 497.3);
-  assert.ok(Math.abs(r.areas.recalculo_local_km2 - 497.340) < 0.002);
-  assert.ok(Math.abs(r.areas.recalculo_geodesico_km2 - 499.665) < 0.01);
+  assert.strictEqual(r.areas.soma_setorial_km2, 498.422);
+  assert.strictEqual(r.areas.referencia_municipal_geodesica_km2, 498.402);
+  assert.ok(Math.abs(r.areas.recalculo_local_km2 - 497.365) < 0.002);
+  assert.ok(Math.abs(r.areas.recalculo_esferico_km2 - 499.691) < 0.01);
+  assert.ok(Math.abs(r.areas.diferenca_recalculo_esferico_vs_referencia_km2 - (499.691 - 498.402)) < 0.01);
 }
 
 testeEstrutura();
 testeBuracos();
 testeResumo();
-assert(/catálogo de serviços contém endereço, fonte institucional e data de verificação/.test(html));
+assert(/Nos outros seis, a posição usada na análise é o centro do CEP cadastral, com raio operacional do índice/.test(html));
+assert(/A validação topológica completa/.test(html) && /pipeline Python/.test(html));
 testeBaseReal();
 console.log("qualidade-dados.test.js: painel territorial, procedência, áreas, geometria e cautela D4 validados");
