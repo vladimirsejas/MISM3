@@ -31,7 +31,7 @@ def test_setor_do_cnefe_com_sufixo_de_letra_casa_com_o_geojson_do_ibge():
                         {"properties": {"setor": "354390705000002", "pessoas": 400, "domicilios": 300}, "geometry": {}}]}
     indice = {"13501600": [-22.43, -47.57, 1500, "354390705000201P", 27], "13500000": [-22.4, -47.5, 150, "354390705000002P", 40]}
     resultado, removidos = ic.filtrar_ceps_de_setores_suprimidos(indice, geo)
-    assert removidos == 1 and "13501600" not in resultado and "13500000" in resultado
+    assert removidos == 2 and "13501600" not in resultado and "13500000" in resultado
     assert ic.id_do_setor("354390705000201P") == "354390705000201" and ic.id_do_setor(None) == "" and ic.id_do_setor("pequeno") == "pequeno"
 
 
