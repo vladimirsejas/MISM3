@@ -59,9 +59,15 @@ async function testarPagina(browser, caminho, largura, altura, mapa) {
   } else {
     assert.equal(await page.locator('a[class="porta"][href]').count(), 7, "a página inicial deve manter exatamente as sete portas de navegação");
   }
-  await page.evaluate(() => { document.documentElement.style.zoom = "200%"; });
-  const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);
-  assert.equal(overflow, false, "não deve haver rolagem horizontal em zoom de 200%");
+  await page.setViewportSize({ width: Math.floor(largura / 2), height: Math.floor(altura / 2) });
+  await page.waitForTimeout(100);
+  const dimensoes = await page.evaluate(() => ({
+    larguraDocumento: document.documentElement.scrollWidth,
+    larguraViewport: document.documentElement.clientWidth
+  }));
+  assert.ok(dimensoes.larguraDocumento <= dimensoes.larguraViewport,
+    "não deve haver rolagem horizontal em zoom de 200% (" + caminho + ", viewport " +
+    dimensoes.larguraViewport + "px, documento " + dimensoes.larguraDocumento + "px)");
   await context.close();
 }
 
