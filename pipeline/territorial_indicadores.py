@@ -204,14 +204,17 @@ def gerar(dados: dict) -> dict:
     feicoes = sorted(geo["features"], key=lambda f: f["properties"]["setor"])
     equip = equipamentos(dados["catalogo"], dados["indice_cep"], ent["escolas_municipais.json"].get("escolas", []), dados["localizacao_registro"])
 
-    # Posição representativa de cada setor: a mesma de pipeline/analise_territorial.py (centroide geométrico).
+    # Posição representativa: centroide quando interno; ponto interno corrigido nos 9 casos externos.
     setores = []
     centroides_fora = 0
     for f in feicoes:
         pr = f["properties"]
+        lat_antigo, lon_antigo = _centro_atual(f["geometry"])
+        if not at.contem(f["geometry"], lon_antigo, lat_antigo):
+            centroides_fora += 1
         lat, lon = at.centro(f["geometry"])
         if not at.contem(f["geometry"], lon, lat):
-            centroides_fora += 1
+            raise ValueError("Ponto representativo de produção fora do setor %s" % pr["setor"])
         suprimido = setor_suprimido(pr)
         setores.append({"id": pr["setor"], "bairro": pr.get("bairro") or None,
                         "pessoas": None if suprimido else int(pr["pessoas"]),
@@ -316,10 +319,12 @@ def gerar(dados: dict) -> dict:
             "ressalvas": [
                 "Por cautela estatística, os dados de população, domicílios, densidade e distâncias por setor são suprimidos nos %d setores com menos de 5 pessoas ou menos de 3 domicílios. Os agregados dos %d bairros afetados também são omitidos para reduzir risco de inferência por subtração. A geometria e os pontos institucionais permanecem." % (sum(1 for s in setores if s["suprimido_privacidade"]), len({s["bairro"] for s in setores if s["suprimido_privacidade"]})),
                 "O cenário com centro do CEP cadastral do equipamento é uma análise de sensibilidade: a posição é aproximada e não equivale à coordenada individual do catálogo.",
-                "A auditoria geométrica encontrou %d centroides fora dos respectivos polígonos em %d setores. O centroide atual não foi substituído: a alternativa interna e o impacto nas distâncias ainda precisam ser comparados antes de qualquer mudança." % (centroides_fora, len(setores)),
+                "A auditoria geométrica identificou %d centroides matemáticos fora dos respectivos polígonos em %d setores. A produção preserva os 399 centroides internos e usa ponto representativo interno corrigido somente nos 9 externos; esse ponto não é denominado centroide matemático." % (centroides_fora, len(setores)),
                 "A localização escolar é lida da base consolidada, com método, precisão, fonte e raio. Para CRAS/UBS, 22 dos 28 registros têm método e confiança documentados em localizacao_registro.csv; os outros 6 têm coordenadas no catálogo, mas sem registro explícito de proveniência ou raio conhecido.",
                 "Categorias com cobertura incompleta de coordenadas têm distância superestimada.",
             ],
+            "metodo_ponto_setorial": "centroide matemático quando interno; ponto interno mais próximo quando externo (centroide_com_correcao_interna_minima_v1)",
+            "centroides_matematicos_originais_fora": centroides_fora,
             "conferencia": {"coincide_com_exposicao_distancia": True, "setores": len(setores), "pessoas": None, "setores_suprimidos": sum(1 for s in setores if s["suprimido_privacidade"])},
             "equipamentos_fora_da_malha": fora,
         },
