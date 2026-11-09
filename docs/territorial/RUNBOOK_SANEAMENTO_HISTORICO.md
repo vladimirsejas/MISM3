@@ -28,7 +28,7 @@ Depois da remoção, um commit final na branch `feat/mapa-territorial-como-mapa-
 
 Efeitos da reescrita (todos os SHAs de commits mudam a partir do primeiro commit que tocou esses arquivos):
 
-- 61 commits que só mexiam nesses arquivos deixam de existir (1.005 para 944 commits alcançáveis por branches e tags).
+- Os commits que só mexiam nesses arquivos deixam de existir (cerca de 60); a contagem exata antes e depois está em `PACOTE/verificacao.txt`.
 - As tags `v0.9-revisao` e `v1.0-pesquisa` passam a apontar para commits com SHA novo. **Impacto no experimento:** `reproducao/MANIFESTO_EXECUCAO_v1.md` e o protocolo citam o commit da etiqueta e commits da `main` pelo SHA antigo. Os arquivos do sistema avaliado (código do orientador, modelos, índice, catálogo) continuam byte a byte iguais e o SHA-256 do conjunto congelado não muda; falta apenas registrar, em adendo ao manifesto, a correspondência de SHAs usando `commit-map.txt`.
 - PRs abertas (#92, #91, #81, #62, #58, #51, #45, #44) têm as branches reescritas; o GitHub as mantém, com a lista de commits nova. PRs já mescladas ou fechadas continuam apontando para os SHAs antigos em `refs/pull/*`.
 - Qualquer clone existente (o da pasta do projeto, de colaboradores, de ferramentas de IA) tem o histórico antigo e deve ser **apagado e clonado de novo**; um `git pull` reintroduziria os commits antigos.
