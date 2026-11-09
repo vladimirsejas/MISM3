@@ -86,6 +86,8 @@ def test_comando_gera_relatorios_json_e_markdown(tmp_path):
     assert dados["geometrias"]["total"] == 408
     assert "498.396 km²" in texto
     assert "proveniência" in texto
+    assert "## Topologia da malha" in texto
+    assert "Interseções acima do limiar de 1000 m²: 6" in texto
 
 
 
