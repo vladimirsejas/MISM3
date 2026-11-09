@@ -251,7 +251,7 @@ def comparar(geojson, indicadores):
             "setores_auditados": len(setores),
             "centroides_atualmente_fora": len(externos),
             "codigos_centroides_fora": externos,
-            "regra": "Ponto representativo interno adotado na produção; preserva os 399 centroides que já estavam dentro dos polígonos e corrige somente os 9 externos. O ponto corrigido não é denominado centroide matemático.",
+            "regra": "Ponto representativo interno adotado na produção; preserva os %d centroides que já estavam dentro dos polígonos e corrige somente os %d externos. O ponto corrigido não é denominado centroide matemático." % (len(setores) - len(externos), len(externos)),
             "equipamentos": "web/dados/indicadores_territoriais.json; mesmos pontos elegíveis por cenário e categoria.",
         },
         "resumo": {

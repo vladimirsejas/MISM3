@@ -9,7 +9,7 @@ Entradas (todas já existentes; nada é baixado nem enviado):
   Exceção documentada: web/dados/cep_indice.json é lido SÓ para localizar o CEP cadastral de cada equipamento público no cenário
   "com_centro_do_cep" (a mesma regra de pipeline/exposicao_distancia.py). Nenhum CEP é gravado na saída.
 
-As distâncias usam o ponto representativo interno de pipeline/analise_territorial.py: o centroide matemático é preservado quando está dentro do setor; nos 9 casos externos, usa-se o ponto interno mais próximo. A distância continua sendo Haversine e a regra de localização dos serviços permanece a mesma. O script confere o resultado contra
+As distâncias usam o ponto representativo interno de pipeline/analise_territorial.py: o centroide matemático é preservado quando está dentro do setor; nos casos externos identificados pela auditoria da geometria atual, usa-se o ponto interno mais próximo. A distância continua sendo Haversine e a regra de localização dos serviços permanece a mesma. O script confere o resultado contra
 web/dados/exposicao_distancia.json e se recusa a gravar se houver qualquer diferença.
 
 Determinístico: mesma entrada, mesma saída. O carimbo da saída é derivado do hash do conteúdo das entradas (sem data variável).
