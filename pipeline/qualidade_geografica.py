@@ -315,7 +315,7 @@ def relatorio_markdown(resultado):
               f"- Referência municipal: {a['referencia_municipal_km2']} km²",
               f"- Diferença do total publicado: {a['diferenca_km2']} km² ({a['diferenca_percentual']}%)",
               f"- Recalculo local (método atual): {a['recalculo_local_km2']} km²",
-              f"- Recalculo geodésico esférico: {a['recalculo_geodesico_km2']} km²",
+              f"- Recalculo geodésico elipsoidal GRS80: {a['recalculo_geodesico_km2']} km²",
               f"- Diferença geodésica para a referência: {a['diferenca_recalculo_geodesico_vs_referencia_km2']} km²", "",
               "## Equipamentos e proveniência", "",
               f"- Equipamentos: {e['total']} (CRAS {e['por_categoria']['cras']}, UBS {e['por_categoria']['ubs']}, escolas {e['por_categoria']['escola']})",
