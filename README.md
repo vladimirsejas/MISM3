@@ -51,7 +51,7 @@ Python (instalar: `python -m pip install -r requirements.txt`; fonte única das 
 | pandas | `pipeline/cnes.py`, `common.py`, `indice_cep.py`, `oferta_educacao_infantil.py`, `servicos.py` e testes | Leitura e tratamento de CSV grandes (CNES, CNEFE, Censo Escolar) |
 | numpy | `analise_territorial.py`, `common.py`, `indice_cep.py`, `indice_orientacao.py`, `treinar_necessidades.py`, `treinar_perigo.py`, `treinar_escopo.py` | Arrays, cálculo numérico, distâncias |
 | scikit-learn | `treinar_necessidades.py`, `treinar_perigo.py`, `treinar_escopo.py` (TfidfVectorizer, LogisticRegression, OneVsRestClassifier, StratifiedKFold); `indice_orientacao.py` (TfidfVectorizer, TruncatedSVD); `analise_territorial.py` (KMeans) | Treino dos modelos, TF-IDF, redução de dimensão (LSA) e agrupamento. Traz o scipy como dependência |
-| pyshp (módulo `shapefile`) | `pipeline/setores.py` | Ler o shapefile de setores censitários do IBGE |
+| pyshp (módulo `shapefile`) | `pipeline/setores.py`, `pipeline/limite_municipal.py` | Ler shapefiles do IBGE |\n| pyproj | `pipeline/territorio.py`, `pipeline/qualidade_geografica.py`, `pipeline/limite_municipal.py` | Áreas geodésicas no elipsoide GRS80 e transformação de coordenadas |\n| shapely | `pipeline/qualidade_geografica.py`, `pipeline/limite_municipal.py` | Validade geométrica, interseções, união e diferença de polígonos |
 | openpyxl | `pipeline/inspecionar_arquivo.py` | Inspecionar a estrutura de planilhas .xlsx |
 | pytest | `pipeline/tests/` | Testes do pipeline |
 
@@ -135,11 +135,11 @@ Não existe: modelo de linguagem, embeddings neurais, previsão de risco, elegib
 | `geocodificar_catalogo.py` | Catálogo | Planilha de sugestões de CEP e coordenada | stdlib |
 | `atualizar_localizacoes.py` | Catálogo, CNEFE, lista de CEPs | Localizações e mapa territorial | stdlib |
 | `setores.py` | Shapefile de setores do IBGE | `web/dados/setores.geojson`, `setor_bairro.json` | pyshp |
-| `territorio.py` | Censo 2022 por setor | `web/dados/territorio.json` | stdlib |
+| `territorio.py` | Censo 2022 por setor | `web/dados/territorio.json` | pyproj |
 | `analise_territorial.py` | Setores e serviços | Distâncias e agrupamento | numpy, scikit-learn (KMeans) |
 | `exposicao_distancia.py` | Setores e serviços | `web/dados/exposicao_distancia.json` (parcela da população a mais de 1 km e 2 km do serviço mais próximo) | stdlib |
 | `territorial_indicadores.py`, `territorial_auditoria.py` | `web/dados/` (setores, território, distâncias) e catálogo | `web/dados/indicadores_territoriais.json` (mapa territorial v1, conferido contra `exposicao_distancia.json`) e relatório de auditoria de privacidade | stdlib |
-| `qualidade_geografica.py` | Malha de setores, indicadores territoriais e registro de localização | Relatórios JSON e Markdown de qualidade geográfica, procedência, área e cautela D4 | stdlib |
+| `qualidade_geografica.py` | Malha de setores, limite municipal 2022, indicadores e registro de localização | Validade, topologia, lacunas, correspondência de códigos, área e proveniência | pyproj, shapely |\n| `limite_municipal.py` | Malha Municipal Digital IBGE 2022 (SP) | `dados/geografia/limite_municipal_2022.geojson` | pyshp, pyproj, shapely |
 | `pipeline/privacidade_territorial.py` | Regra central de supressão estatística D4 | Suprime contagens pequenas antes da publicação do GeoJSON e orienta os demais pipelines | stdlib |
 | `auditoria_centroides.py` | `setores.geojson` e `indicadores_territoriais.json` | Relatórios JSON e Markdown de sensibilidade dos centroides e distâncias, sem alterar a produção | stdlib |
 | `oferta_educacao_infantil.py` | Censo Escolar 2025; calcula totais por rede em memória e publica somente agregados, sem matrículas por escola | `web/dados/oferta_educacao_infantil.json` | pandas |
