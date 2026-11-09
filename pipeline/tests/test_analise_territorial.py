@@ -71,7 +71,8 @@ def test_so_catalogo_verificado_a_mao():
 
 
 def test_aviso_e_sem_dado_pessoal():
-    servico = cras("man-cras-a", -22.395, -47.595)\n    r = at.analisar(geo(), [servico], {}, localizacao_registro=proveniencia(servico))
+    servico = cras("man-cras-a", -22.395, -47.595)
+    r = at.analisar(geo(), [servico], {}, localizacao_registro=proveniencia(servico))
     assert "não provam" in r["meta"]["aviso"] and "exploratório" in r["meta"]["aviso"]
     assert set(r["bairros"][0]) <= {"bairro", "setores", "pessoas", "dados_suprimidos", "servicos_no_bairro", "grupo", "distancia_media_cras_km", "distancia_media_ubs_km", "distancia_media_escola_km"}
 
@@ -161,6 +162,7 @@ def test_base_real_tem_33_coordenadas_individuais_e_35_por_cep_sem_duplicidade()
         [cras("man-cras-a", -22.395, -47.595)],
         {},
         escolas=escolas,
+        localizacao_registro=proveniencia(cras("man-cras-a", -22.395, -47.595)),
     )
     cobertura = resultado["meta"]["cobertura_dos_servicos"]["escola"]
     assert cobertura["cadastrados"] == 68
