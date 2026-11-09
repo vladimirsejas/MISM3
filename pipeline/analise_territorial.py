@@ -70,7 +70,7 @@ def contem(geom, lon, lat) -> bool:
 
 
 def centro(geom):
-    """Centroide (pelo cálculo de área) do maior polígono do setor. Devolve (lat, lon)."""
+    """Ponto representativo interno: preserva o centroide quando dentro e corrige apenas os externos."""
     maior = max((p[0] for p in poligonos(geom)), key=len)
     pts = maior[:-1] if len(maior) > 1 and maior[0] == maior[-1] else maior
     area = cx = cy = 0.0
@@ -82,9 +82,12 @@ def centro(geom):
         cx += (x0 + x1) * cruz
         cy += (y0 + y1) * cruz
     if abs(area) < 1e-18:  # polígono degenerado: média simples dos vértices
-        return sum(p[1] for p in pts) / len(pts), sum(p[0] for p in pts) / len(pts)
-    area /= 2
-    return cy / (6 * area), cx / (6 * area)
+        centroide = (sum(p[1] for p in pts) / len(pts), sum(p[0] for p in pts) / len(pts))
+    else:
+        area /= 2
+        centroide = (cy / (6 * area), cx / (6 * area))
+    from auditoria_centroides import ponto_interno
+    return ponto_interno(geom, (centroide[1], centroide[0]))
 
 
 def coordenada_do_servico(s, indice_cep):
