@@ -61,13 +61,33 @@ async function testarPagina(browser, caminho, largura, altura, mapa) {
   }
   await page.setViewportSize({ width: Math.floor(largura / 2), height: Math.floor(altura / 2) });
   await page.waitForTimeout(100);
-  const dimensoes = await page.evaluate(() => ({
-    larguraDocumento: document.documentElement.scrollWidth,
-    larguraViewport: document.documentElement.clientWidth
-  }));
+  const dimensoes = await page.evaluate(() => {
+    const viewport = document.documentElement.clientWidth;
+    const excedentes = Array.from(document.querySelectorAll("body *")).map((e) => {
+      const r = e.getBoundingClientRect();
+      return {
+        tag: e.tagName.toLowerCase(),
+        id: e.id || "",
+        classe: typeof e.className === "string" ? e.className : "",
+        texto: (e.innerText || e.textContent || "").trim().replace(/\\s+/g, " ").slice(0, 70),
+        left: Math.round(r.left),
+        right: Math.round(r.right),
+        width: Math.round(r.width),
+        scrollWidth: e.scrollWidth,
+        clientWidth: e.clientWidth
+      };
+    }).filter((e) => e.width > 0 && e.right > viewport + 1)
+      .sort((a, b) => b.right - a.right).slice(0, 12);
+    return {
+      larguraDocumento: document.documentElement.scrollWidth,
+      larguraViewport: viewport,
+      excedentes
+    };
+  });
   assert.ok(dimensoes.larguraDocumento <= dimensoes.larguraViewport,
     "não deve haver rolagem horizontal em zoom de 200% (" + caminho + ", viewport " +
-    dimensoes.larguraViewport + "px, documento " + dimensoes.larguraDocumento + "px)");
+    dimensoes.larguraViewport + "px, documento " + dimensoes.larguraDocumento +
+    "px, elementos excedentes: " + JSON.stringify(dimensoes.excedentes) + ")");
   await context.close();
 }
 
