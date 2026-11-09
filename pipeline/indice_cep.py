@@ -114,7 +114,7 @@ def id_do_setor(valor) -> str:
 
 def _registro_cep_valido(cep, valor) -> bool:
     """Valida o contrato público antes de qualquer decisão de divulgação."""
-    if not re.fullmatch(r"\\d{8}", str(cep or "")):
+    if not re.fullmatch(r"[0-9]{8}", str(cep or "")):
         return False
     if not isinstance(valor, (list, tuple)) or len(valor) != 5:
         return False
