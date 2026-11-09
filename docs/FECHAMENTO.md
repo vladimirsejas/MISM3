@@ -235,3 +235,11 @@ O teste foi corrigido para derivar `391 = 408 - 17` dos dados publicados e verif
 - Foi acrescentado diagnóstico ao teste Playwright. Run #750 (`42680319107`) confirmou que o elemento que amplia a área rolável é o SVG de overlay do Leaflet dentro de `#mapa-servicos`: a caixa do mapa mede 163 px, mas o SVG do overlay chega a 427 px e a largura do documento a 261 px. O mapa é uma área visual que deve ficar contida na própria caixa, não alargar a página.
 - Correção commitada em `web/estilo.css`, SHA `ad40778ae81392575a53e1656e96d0e8adfb3a65`: `.mapa-caixa` passa a declarar `width/max-width:100%`, `min-width:0` e `contain:paint`, mantendo `overflow:hidden`. A intenção é conter o SVG e seus descendentes no retângulo do mapa, sem remover conteúdo do mapa nem enfraquecer o teste de largura total da página.
 - A nova execução precisa confirmar o efeito real dessa correção em desktop/celular e no zoom 200%. Os runs #745, #746, #748 e #750 não são aprovação do job navegador; o Bloco 7 continua aberto até o job terminar com sucesso.
+
+
+## Correção do redimensionamento Leaflet — 09/11/2026
+
+- Run #754 (`42680591072`) criou os jobs reais `testes` e `navegador`: o job `testes` concluiu com sucesso; o navegador voltou a detectar o mesmo SVG do Leaflet com 427 px dentro de uma caixa de 163 px. A alteração CSS isolada de largura/contensão não resolveu a causa e não foi tratada como aprovação.
+- A inspeção do código revelou que `mapa.js` criava o `ResizeObserver` inline, sem manter referência ao objeto. O observador pode ser coletado, deixando o SVG do overlay com a largura do viewport anterior quando a tela é redimensionada.
+- Correção commitada em `web/mapa.js`, SHA `425096c7c7ea7e459311558267e5f9c82b819b84`: o observador agora fica retido na variável `mapaResizeObserver`, verifica se o mapa ainda existe e chama `invalidateSize({ pan: false, debounceMoveend: true })` quando a caixa muda de tamanho. A regra CSS mantém `width/max-width:100%` e `min-width:0`, mas não usa mais `contain:paint`, que não resolveu a falha. Commit CSS: `46191fa3b10d2e65cf301b7373ba2eaecc944d92`.
+- A confirmação depende de nova execução Playwright no HEAD posterior a esses commits; a causa e a correção serão consideradas validadas somente se o SVG acompanhar o tamanho do mapa e o documento não ultrapassar o viewport em 200%.
