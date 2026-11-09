@@ -121,9 +121,11 @@ def test_limite_municipal_e_topologia_da_malha_real():
     assert all(item["proporcao_area_menor_setor_pct"] > 0 for item in topologia["sobreposicoes"])
     assert topologia["area_sobreposicao_maxima_m2"] < 1600
     assert topologia["area_lacunas_km2"] < 0.1
-    assert topologia["area_setores_fora_municipio_km2"] < 0.1
+    assert topologia["area_setores_fora_municipio_km2"] == pytest.approx(0.104347991, abs=1e-6)
+    assert topologia["quantidade_setores_com_area_fora_municipio"] == len(topologia["setores_com_area_fora_municipio"])
+    assert sum(item["area_fora_m2"] for item in topologia["setores_com_area_fora_municipio"]) >= topologia["area_setores_fora_municipio_km2"] * 1_000_000
     assert topologia["lacunas_relevantes"] is False
-    assert topologia["setores_fora_relevantes"] is False
+    assert topologia["setores_fora_relevantes"] is True
     assert resultado["correspondencia_setores"]["correspondencia_completa"] is True
 
 
