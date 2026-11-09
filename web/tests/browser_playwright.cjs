@@ -49,14 +49,15 @@ async function testarPagina(browser, caminho, largura, altura, mapa) {
     assert.ok(foco, "Tab deve levar o foco ao mapa");
     const visivel = await page.evaluate(() => {
       const e = document.activeElement;
-      return !!e && !!document.querySelector("#mt-camada-foco .mt-anel-halo, #mt-camada-foco .mt-anel-nucleo");
+      const anel = document.querySelector("#mt-camada-foco .mt-anel-halo");
+      return !!e && !!anel && anel.getAttribute("visibility") === "visible" && !!anel.getAttribute("d");
     });
     assert.ok(visivel, "o foco do teclado deve ficar visível");
     await page.keyboard.press("ArrowRight");
     const depois = await page.evaluate(() => document.activeElement && document.activeElement.getAttribute("data-setor"));
     assert.ok(depois && depois !== foco, "setas devem navegar entre setores");
   } else {
-    assert.equal(await page.locator(".porta").count(), 7, "a página inicial deve manter as sete portas");
+    assert.equal(await page.locator("a.porta[href]").count(), 7, "a página inicial deve manter exatamente as sete portas de navegação");
   }
   await page.evaluate(() => { document.documentElement.style.zoom = "200%"; });
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);
