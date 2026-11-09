@@ -99,6 +99,8 @@ def test_limite_municipal_e_topologia_da_malha_real():
     assert resultado["geometrias"]["geometrias_com_erro_estrutural"] == []
     assert resultado["geometrias"]["auto_intersecoes"] == []
     assert topologia["avaliacao_lacunas"] == "avaliada"
+    # Seis interseções residuais da malha de origem são registradas e quantificadas;
+    # não são apagadas nem tratadas como ausência de sobreposição.
     pares_sobrepostos = {
         tuple(item["setores"]) for item in topologia["sobreposicoes_relevantes"]
     }
