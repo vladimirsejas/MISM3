@@ -22,8 +22,8 @@ def feature(setor, bairro, pessoas, domicilios, geometria):
 
 def test_area_de_um_quadrado_de_0_01_grau():
     area = t.area_km2({"type": "Polygon", "coordinates": [quadrado(-47.56, -22.40, 0.01)]})
-    esperado = 0.01 * 111.320 * math.cos(math.radians(-22.40)) * 0.01 * 110.574
-    assert area == pytest.approx(esperado, rel=1e-6) and 1.0 < area < 1.2   # ~1,14 km²
+    esperado = 1.1402862853121758  # área geodésica GRS80 do quadrado de 0,01 grau
+    assert area == pytest.approx(esperado, rel=1e-9) and 1.0 < area < 1.2
 
 
 def test_area_com_furo_e_multipoligono():
