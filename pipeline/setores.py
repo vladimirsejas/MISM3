@@ -23,6 +23,7 @@ from common import BRUTO, MUNICIPIO_IBGE7, WEB_DADOS, agora_iso, erro, salvar_js
 
 TOLERANCIA_METROS = 4.0  # simplificação em cobertura; divisas compartilhadas processadas em conjunto
 CASAS = 6                 # ~0,1 m na latitude de Rio Claro
+TOLERANCIA_GRAUS = 0.00004  # compatibilidade do helper simplificar; não usado na geração
 
 
 def _dist_seg(p, a, b):
