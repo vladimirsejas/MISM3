@@ -5,7 +5,14 @@ import argparse
 import csv
 import json
 import math
+import re
 from pathlib import Path
+
+from pyproj import Geod, Transformer
+from shapely.geometry import shape
+from shapely.ops import transform, unary_union
+from shapely.strtree import STRtree
+from shapely.validation import explain_validity
 
 RAIZ = Path(__file__).resolve().parents[1]
 DADOS = RAIZ / "web" / "dados"
@@ -15,7 +22,10 @@ REFERENCIA_AREA_KM2 = 498.403
 LATITUDE_REFERENCIA = -22.40
 KM_POR_GRAU_LAT = 110.574
 KM_POR_GRAU_LON = 111.320 * math.cos(math.radians(LATITUDE_REFERENCIA))
-RAIO_TERRA_KM = 6371.0088
+GEOD = Geod(ellps="GRS80")
+TRANSFORMAR_UTM = Transformer.from_crs("EPSG:4326", "EPSG:31983", always_xy=True).transform
+LIMITE_MUNICIPAL = RAIZ / "dados" / "geografia" / "limite_municipal_2022.geojson"
+TOLERANCIA_TOPOLOGICA_M2 = 1.0
 
 
 def _poligonos(geom):
@@ -55,11 +65,12 @@ def area_anel_local_km2(anel):
 
 
 def area_anel_geodesica_km2(anel):
-    """Área esférica pelo integral de longitude e seno da latitude (km²)."""
-    soma = 0.0
-    for (lon1, lat1), (lon2, lat2) in zip(anel, anel[1:] + anel[:1]):
-        soma += math.radians(lon2 - lon1) * (2 + math.sin(math.radians(lat1)) + math.sin(math.radians(lat2)))
-    return abs(soma) * RAIO_TERRA_KM ** 2 / 2
+    """Área geodésica no elipsoide GRS80, em km²."""
+    area, _ = GEOD.polygon_area_perimeter(
+        [float(p[0]) for p in anel],
+        [float(p[1]) for p in anel],
+    )
+    return abs(area) / 1_000_000
 
 
 def areas_geojson_km2(geojson):
@@ -74,36 +85,143 @@ def areas_geojson_km2(geojson):
 
 
 def validar_geometrias(geojson):
-    ids, duplicados, invalidas = set(), [], []
+    ids, duplicados, invalidas, codigos_invalidos = set(), [], [], []
+    tipos = {"Polygon": 0, "MultiPolygon": 0, "outros": 0}
+    geometrias_validas = []
     for f in geojson.get("features", []):
         props = f.get("properties") or {}
         codigo = str(props.get("setor") or "sem_codigo")
         if codigo in ids:
             duplicados.append(codigo)
         ids.add(codigo)
+        if not re.fullmatch(r"[0-9]{15}", codigo):
+            codigos_invalidos.append(codigo)
         geom = f.get("geometry") or {}
-        polys = _poligonos(geom)
+        tipo = geom.get("type")
+        tipos[tipo if tipo in {"Polygon", "MultiPolygon"} else "outros"] += 1
         erros = []
-        if not polys:
-            erros.append("tipo_ou_coordenadas_ausentes")
-        for pol in polys:
+        if tipo not in {"Polygon", "MultiPolygon"}:
+            erros.append("tipo_geometrico_nao_suportado")
+        try:
+            geometria = shape(geom)
+            if geometria.is_empty:
+                erros.append("geometria_vazia")
+            if not geometria.is_valid:
+                erros.append("geometria_invalida:" + explain_validity(geometria))
+            if geometria.is_valid and not geometria.is_empty:
+                geometrias_validas.append((codigo, geometria))
+        except Exception as exc:
+            erros.append("geometria_nao_interpretavel:" + type(exc).__name__)
+        for pol in _poligonos(geom):
             if not pol:
                 erros.append("poligono_sem_anel")
                 continue
             for anel in pol:
                 if len(anel) < 4:
                     erros.append("anel_com_menos_de_quatro_pontos")
-                elif anel[0] != anel[-1]:
+                    continue
+                if anel[0] != anel[-1]:
                     erros.append("anel_nao_fechado")
-                if any(not (-180 <= p[0] <= 180 and -90 <= p[1] <= 90) for p in anel):
-                    erros.append("coordenada_fora_dos_limites_geograficos")
+                for ponto in anel:
+                    if (not isinstance(ponto, (list, tuple)) or len(ponto) < 2
+                            or not all(isinstance(v, (int, float)) and math.isfinite(v) for v in ponto[:2])
+                            or not (-180 <= ponto[0] <= 180 and -90 <= ponto[1] <= 90)):
+                        erros.append("coordenada_invalida_ou_fora_dos_limites")
+                        break
         if erros:
             invalidas.append({"setor": codigo, "problemas": sorted(set(erros))})
-    return {"total": len(geojson.get("features", [])), "codigos_unicos": len(ids),
-            "duplicados": duplicados, "geometrias_com_erro_estrutural": invalidas}
+    return {
+        "total": len(geojson.get("features", [])),
+        "codigos_unicos": len(ids),
+        "codigos_fora_do_padrao_ibge": sorted(set(codigos_invalidos)),
+        "duplicados": sorted(set(duplicados)),
+        "tipos": tipos,
+        "geometrias_com_erro_estrutural": invalidas,
+        "geometrias_validas_para_topologia": len(geometrias_validas),
+    }
 
 
-def resumir(geojson, territorio, indicadores, localizacao, catalogo_registros=None):
+def validar_topologia(geojson, limite_municipal=None):
+    """Mede sobreposições, lacunas e área externa em projeção UTM 23S."""
+    projetadas, codigos = [], []
+    for feature in geojson.get("features", []):
+        codigo = str((feature.get("properties") or {}).get("setor") or "sem_codigo")
+        try:
+            geom = shape(feature.get("geometry") or {})
+            if not geom.is_valid or geom.is_empty:
+                continue
+            projetadas.append(transform(TRANSFORMAR_UTM, geom))
+            codigos.append(codigo)
+        except Exception:
+            continue
+    sobreposicoes = []
+    if projetadas:
+        arvore = STRtree(projetadas)
+        for i, geometria in enumerate(projetadas):
+            for j in arvore.query(geometria):
+                j = int(j)
+                if j <= i:
+                    continue
+                area_m2 = geometria.intersection(projetadas[j]).area
+                if area_m2 > TOLERANCIA_TOPOLOGICA_M2:
+                    sobreposicoes.append({"setores": [codigos[i], codigos[j]], "area_m2": round(area_m2, 3)})
+        uniao = unary_union(projetadas)
+        soma_areas = sum(g.area for g in projetadas)
+    else:
+        uniao, soma_areas = None, 0.0
+    if limite_municipal is None or uniao is None:
+        return {
+            "avaliacao_lacunas": "nao_avaliada",
+            "motivo_lacunas": "Limite municipal oficial de referência não foi fornecido.",
+            "sobreposicoes": sobreposicoes,
+            "area_somada_setores_km2_utm": round(soma_areas / 1_000_000, 6),
+            "area_uniao_setores_km2_utm": round(uniao.area / 1_000_000, 6) if uniao is not None else None,
+        }
+    features_limite = limite_municipal.get("features", [])
+    if len(features_limite) != 1:
+        raise ValueError("O limite municipal de referência deve conter exatamente uma feição.")
+    limite = transform(TRANSFORMAR_UTM, shape(features_limite[0]["geometry"]))
+    if not limite.is_valid or limite.is_empty:
+        raise ValueError("O limite municipal de referência é inválido ou vazio.")
+    lacunas = limite.difference(uniao)
+    fora = uniao.difference(limite)
+    return {
+        "avaliacao_lacunas": "avaliada",
+        "sobreposicoes": sobreposicoes,
+        "area_limite_municipal_km2_utm": round(limite.area / 1_000_000, 6),
+        "area_somada_setores_km2_utm": round(soma_areas / 1_000_000, 6),
+        "area_uniao_setores_km2_utm": round(uniao.area / 1_000_000, 6),
+        "area_lacunas_km2": round(lacunas.area / 1_000_000, 9),
+        "area_setores_fora_municipio_km2": round(fora.area / 1_000_000, 9),
+        "lacunas_detectadas": lacunas.area > TOLERANCIA_TOPOLOGICA_M2,
+        "setores_fora_detectados": fora.area > TOLERANCIA_TOPOLOGICA_M2,
+        "limite_area_atributo_ibge_km2": features_limite[0].get("properties", {}).get("area_atributo_ibge_km2"),
+    }
+
+
+def validar_correspondencia_setores(geojson, territorio, indicadores):
+    ids_malha = [str((f.get("properties") or {}).get("setor") or "") for f in geojson.get("features", [])]
+    ids_territorio = set((territorio.get("setores") or {}).keys())
+    ids_indicadores = [str(s.get("id") or "") for s in indicadores.get("setores", [])]
+    malha, indicadores_set = set(ids_malha), set(ids_indicadores)
+    return {
+        "malha": len(ids_malha),
+        "territorio": len(ids_territorio),
+        "indicadores": len(ids_indicadores),
+        "ausentes_no_territorio": sorted(malha - ids_territorio),
+        "extras_no_territorio": sorted(ids_territorio - malha),
+        "ausentes_nos_indicadores": sorted(malha - indicadores_set),
+        "extras_nos_indicadores": sorted(indicadores_set - malha),
+        "duplicados_na_malha": sorted({x for x in ids_malha if ids_malha.count(x) > 1}),
+        "duplicados_nos_indicadores": sorted({x for x in ids_indicadores if ids_indicadores.count(x) > 1}),
+        "correspondencia_completa": (
+            len(ids_malha) == len(malha) == len(ids_indicadores) == len(indicadores_set)
+            and malha == ids_territorio == indicadores_set
+        ),
+    }
+
+
+def resumir(geojson, territorio, indicadores, localizacao, catalogo_registros=None, limite_municipal=None):
     setores = geojson.get("features", [])
     equipamentos = indicadores.get("equipamentos", [])
     categorias = {c: [e for e in equipamentos if e.get("categoria") == c] for c in ("cras", "ubs", "escola")}
@@ -140,13 +258,18 @@ def resumir(geojson, territorio, indicadores, localizacao, catalogo_registros=No
     area_local, area_geodesica = areas_geojson_km2(geojson)
     diferenca = area - REFERENCIA_AREA_KM2
     geometria = validar_geometrias(geojson)
+    topologia = validar_topologia(geojson, limite_municipal)
+    correspondencia = validar_correspondencia_setores(geojson, territorio, indicadores)
     return {
         "geometrias": geometria,
+        "topologia": topologia,
+        "correspondencia_setores": correspondencia,
         "areas": {"soma_setorial_km2": area, "referencia_municipal_km2": REFERENCIA_AREA_KM2,
                   "diferenca_km2": round(diferenca, 3),
                   "diferenca_percentual": round(100 * diferenca / REFERENCIA_AREA_KM2, 3) if REFERENCIA_AREA_KM2 else None,
                   "recalculo_local_km2": round(area_local, 3),
                   "recalculo_geodesico_km2": round(area_geodesica, 3),
+                  "metodo_recalculo_geodesico": "pyproj.Geod no elipsoide GRS80; anéis externos menos furos",
                   "diferenca_recalculo_local_vs_referencia_km2": round(area_local - REFERENCIA_AREA_KM2, 3),
                   "diferenca_recalculo_geodesico_vs_referencia_km2": round(area_geodesica - REFERENCIA_AREA_KM2, 3)},
         "equipamentos": {
@@ -176,7 +299,8 @@ def carregar(dados=DADOS, catalogo=CATALOGO, localizacao=LOCALIZACAO):
         registros = {r["id"] for r in csv.DictReader(f) if r.get("id")}
     with catalogo.open(encoding="utf-8-sig", newline="") as f:
         catalogo_registros = {r["id"]: r for r in csv.DictReader(f) if r.get("id")}
-    return resumir(geo, territorio, indicadores, registros, catalogo_registros)
+    limite = json.loads(LIMITE_MUNICIPAL.read_text(encoding="utf-8")) if LIMITE_MUNICIPAL.exists() else None
+    return resumir(geo, territorio, indicadores, registros, catalogo_registros, limite)
 
 
 def relatorio_markdown(resultado):
@@ -220,15 +344,15 @@ def relatorio_markdown(resultado):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--saida-json", type=Path, default=RAIZ / "docs/territorial/RELATORIO_QUALIDADE_GEOGRAFICA.json")
-    parser.add_argument("--saida-md", type=Path, default=RAIZ / "docs/territorial/RELATORIO_QUALIDADE_GEOGRAFICA.md")
+    parser.add_argument("--saida-json", type=Path, default=None)
+    parser.add_argument("--saida-md", type=Path, default=None)
     args = parser.parse_args(argv)
     resultado = carregar()
     args.saida_json.parent.mkdir(parents=True, exist_ok=True)
     args.saida_json.write_text(json.dumps(resultado, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     args.saida_md.write_text(relatorio_markdown(resultado), encoding="utf-8")
-    print("Auditoria geográfica concluída: %d setores; %d CRAS/UBS sem método de coordenada." % (
-        resultado["geometrias"]["total"], len(resultado["equipamentos"]["cras_ubs"]["proveniencia_ausente"])))
+    print("Validação geográfica: %d setores; %d CRAS/UBS sem método de coordenada; lacunas: %s." % (
+        resultado["geometrias"]["total"], len(resultado["equipamentos"]["cras_ubs"]["proveniencia_ausente"]), resultado["topologia"]["avaliacao_lacunas"]))
     return 0
 
 
