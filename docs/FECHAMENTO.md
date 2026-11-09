@@ -17,9 +17,9 @@ SHA de partida: `9ed9731ca55b97888a6e0fef2df04fdd9eedbd9d`
 | Bloco | Estado | Commit | Actions |
 |---|---|---|---|
 | 1. Privacidade | Concluído | `edc9ea8ee14170d14b275641bf57bc32bdea7dbd` | `42657889614` — sucesso |
-| 2. Geografia | Em andamento | `a1a0f88`, `71eead9`, `81f6843`, `22e2c40`, `4b3db12` | `42666891746` — falhou na conferência entre bases escolares; correção aplicada, nova execução pendente |
-| 3. Fontes e licenças | Pendente | — | — |
-| 4. Mapa e painel | Pendente | — | — |
+| 2. Geografia | Em andamento | `a1a0f88`, `71eead9`, `81f6843`, `22e2c40`, `4b3db12` | `42666891746` — falhou na conferência entre bases escolares; correção aplicada, regeneração integral ainda pendente |
+| 3. Fontes e licenças | Em andamento | `c3cbff0`, `f66f616`, `df7d519`, `9aae00b` | Testes de atribuição e inventário documental adicionados; aprovação integral pendente |
+| 4. Mapa e painel | Em andamento | `c3cbff0`, `f66f616` | Atribuição cartográfica e teste automatizado de créditos corrigidos; testes de navegador e acessibilidade ainda pendentes |
 | 5. Sistema de orientação | Pendente | — | — |
 | 6. Documentação definitiva | Pendente | — | — |
 | 7. Fechamento | Pendente | — | — |
@@ -52,4 +52,20 @@ SHA de partida: `9ed9731ca55b97888a6e0fef2df04fdd9eedbd9d`
 - A auditoria dos nove centroides ainda não foi repetida sobre a nova geometria. A topologia, os pares sobrepostos, a área fora do limite municipal e a sensibilidade das distâncias ainda aguardam a execução regenerada e a Actions verde. O bloco permanece aberto.
 
 
-A regeneração completa deve ser disparada somente por commit explícito com a marca `[regenerar-geografia]`; os commits de correção e documentação não devem baixar a malha novamente. O fluxo de teste registra os artefatos derivados na própria branch, sem publicar ou acionar Cloudflare.
+## Comparação de branches e integração anterior
+
+- Ponta atual da `main` confirmada: `9ed9731ca55b97888a6e0fef2df04fdd9eedbd9d`. A PR #92 já está mesclada no commit `7b0d1f3e646c37337aa69cf74e97474be5661848`; não foi repetido merge.
+- PRs #93, #95, #96, #97 e #98 foram confirmadas como fechadas e mescladas. A comparação `main...mism3-fechamento` mostra a `main` como ancestral, com a branch de fechamento 108 commits à frente e zero atrás.
+- Os commits `36c00fe`, `8337e1b` e `e867977` também são ancestrais da branch de fechamento, verificados por comparação de commits.
+- A comparação arquivo a arquivo dos oito dados da branch `feat/mapa-territorial-como-mapa-principal` foi concluída. `escolas_municipais.json`, `oferta_educacao_infantil.json`, `analise_territorial.json`, `exposicao_distancia.json`, `setores.geojson` e `territorio.json` estavam iguais à `main`; o índice CEP e os indicadores diferiam. A branch de fechamento preserva o índice saneado para 1.243 CEPs (124 CEPs sem vínculo setorial verificável ou protegidos omitidos), em vez das versões de 1.367/1.384 CEPs que não aplicavam integralmente o saneamento. Os indicadores foram recalculados sobre as entradas saneadas e registram a proveniência das escolas e a incerteza espacial. Não foi copiada a versão menos restritiva do índice da branch antiga.
+
+## Bloco 3 — fontes e licenças: execução em andamento
+
+- `AVISOS-DE-TERCEIROS.md` foi atualizado com links oficiais, data de consulta e status explícito para IBGE/CNEFE, malha de setores, INEP, CNES, OpenStreetMap, Esri e bibliotecas Python diretas.
+- Para IBGE/CNEFE e malha de setores, o FTP confirma que os arquivos são públicos, mas não foi localizada licença específica nem autorização expressa de redistribuição. O repositório não declara MIT/CC BY para esses dados.
+- Para INEP, a página oficial de microdados foi identificada; a licença geral do conteúdo do portal não foi estendida automaticamente aos microdados. Para CNES, o portal disponibiliza o conjunto, mas o campo de licença exibido é genérico e não identifica licença específica da extração usada.
+- A política de tiles OSM foi lida; a camada continua opt-in, envia apenas o Referer de origem e mantém atribuição com link. Os termos Esri foram lidos; a permissão gratuita depende de uso não comercial e a qualificação institucional do uso futuro ainda não foi formalmente confirmada. A atribuição das duas camadas Esri foi ampliada para incluir Esri, HERE, Garmin, OpenStreetMap contributors e a comunidade GIS.
+- As licenças dos pacotes Python diretos foram registradas por versão, incluindo dependências nativas GEOS/PROJ; foi acrescentado teste de regressão para impedir que a licença do projeto seja confundida com licença de dados ou tiles de terceiros. Aprovação da Actions pendente.
+
+A regeneração geográfica ocorre no primeiro ciclo da PR #99 enquanto ela não tiver o rótulo `geografia-regenerada`. Depois que os dados forem gerados e commitados, o rótulo será aplicado para que a execução final valide o SHA com os dados versionados sem repetir o download. Nenhuma etapa publica, faz deploy ou aciona Cloudflare.
+

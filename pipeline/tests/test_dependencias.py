@@ -103,3 +103,16 @@ def test_arquivos_citados_em_crases_no_readme_existem():
         if not (RAIZ / caminho).exists():
             faltam.append(caminho)
     assert not faltam, f"caminhos citados no README que não existem: {sorted(set(faltam))}"
+
+
+def test_licencas_de_terceiros_e_servicos_cartograficos_estao_separados():
+    avisos = (RAIZ / "AVISOS-DE-TERCEIROS.md").read_text(encoding="utf-8")
+    licenca = (RAIZ / "LICENSE-DADOS-E-DOCUMENTACAO.md").read_text(encoding="utf-8")
+    assert "CNEFE 2022" in avisos and "SP_setores_CD2022.zip" in avisos
+    assert "dadosabertos.saude.gov.br/dataset/cnes-cadastro-nacional-de-estabelecimentos-de-saude" in avisos
+    assert "microdados/censo-escolar" in avisos
+    assert "ODbL" in avisos and "operations.osmfoundation.org/policies/tiles/" in avisos
+    assert "esri.com/pt-br/legal/terms/web-site-service" in avisos
+    assert "Shapely 2.1.2" in avisos and "GEOS" in avisos and "LGPL-2.1" in avisos
+    assert "Serviços cartográficos remotos" in licenca
+    assert "não são licenciados por esta declaração CC BY 4.0" in licenca
