@@ -308,7 +308,7 @@ def main(argv: list[str]) -> int:
         return 1
     peq = setores_pequenos(dado)
     print("AUDITORIA APROVADA: %s" % arquivo.name)
-    print("D4: %d setores suprimidos; %d inconsistências de supressão." % (len(peq["suprimidos"]), len(peq["inconsistentes"])))
+    print("D4: %d setores suprimidos; %d inconsistências de supressão." % (peq["suprimidos"], peq["inconsistentes"]))
     return 0
 
 
