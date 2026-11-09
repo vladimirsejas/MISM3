@@ -247,7 +247,7 @@ def agrupar(bairros, k):
     resumo = []
     for g in range(k):
         membros = [b for b in bairros if b["grupo"] == g]
-        resumo.append({"grupo": g, "bairros": len(membros), "pessoas": sum(m["pessoas"] for m in membros),
+        resumo.append({"grupo": g, "bairros": len(membros),
                        **{"media_%s" % c: round(sum(m[c] for m in membros) / len(membros), 2) for c in cols}})
     resumo.sort(key=lambda r: r[("media_" + cols[0])])  # do mais perto ao mais longe do primeiro serviço
     return {"metodo": "k-means (k=%d) sobre distâncias padronizadas; exploratório" % k, "usa": cols, "resumo": resumo}
