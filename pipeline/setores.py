@@ -159,8 +159,7 @@ def main() -> None:
                           "nota": "Nome de bairro da malha do IBGE (agrupado). Serve para dizer o bairro PROVAVEL de um CEP; "
                                   "nao e a lista de bairros da Prefeitura."},
                  "bairros": bairros}, WEB_DADOS / "setor_bairro.json")
-    tot = sum(s["pessoas"] or 0 for s in resumo.values())
-    print("  %d setores | %d pessoas somadas (confira com o total oficial do municipio)" % (len(resumo), tot))
+    print("  %d setores processados; contagens demográficas pequenas foram suprimidas antes da publicação." % len(resumo))
 
 
 if __name__ == "__main__":
