@@ -123,7 +123,8 @@ def main() -> int:
     cat = json.loads((DADOS / "catalogo_manual.json").read_text(encoding="utf-8"))["servicos"]
     arq = DADOS / "cep_indice.json"
     indice = json.loads(arq.read_text(encoding="utf-8")).get("ceps", {}) if arq.exists() else {}
-    localizacao_registro = at.carregar_localizacao_registro()\n    saida = gerar(geo, cat, indice, localizacao_registro=localizacao_registro)
+    localizacao_registro = at.carregar_localizacao_registro()
+    saida = gerar(geo, cat, indice, localizacao_registro=localizacao_registro)
     destino = DADOS / "exposicao_distancia.json"
     destino.write_text(json.dumps(saida, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     print("Gravado %s; contagens populacionais não são publicadas." % destino.relative_to(RAIZ))
