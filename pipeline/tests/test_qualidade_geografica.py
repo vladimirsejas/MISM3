@@ -85,3 +85,37 @@ def test_comando_gera_relatorios_json_e_markdown(tmp_path):
     assert dados["geometrias"]["total"] == 408
     assert "497.3 km²" in texto
     assert "proveniência" in texto
+
+
+
+def test_limite_municipal_e_topologia_da_malha_real():
+    resultado = qg.carregar()
+    topologia = resultado["topologia"]
+    assert resultado["geometrias"]["total"] == 408
+    assert resultado["geometrias"]["codigos_unicos"] == 408
+    assert resultado["geometrias"]["codigos_fora_do_padrao_ibge"] == []
+    assert resultado["geometrias"]["duplicados"] == []
+    assert resultado["geometrias"]["tipos"]["outros"] == 0
+    assert resultado["geometrias"]["geometrias_com_erro_estrutural"] == []
+    assert topologia["avaliacao_lacunas"] == "avaliada"
+    assert topologia["sobreposicoes"] == []
+    assert topologia["lacunas_detectadas"] is False
+    assert topologia["setores_fora_detectados"] is False
+    assert resultado["correspondencia_setores"]["correspondencia_completa"] is True
+
+
+def test_seis_equipamentos_sem_metodo_mantem_raio_desconhecido():
+    import json
+    from pathlib import Path
+
+    raiz = Path(__file__).resolve().parents[2]
+    dados = json.loads((raiz / "web/dados/indicadores_territoriais.json").read_text(encoding="utf-8"))
+    ids = {
+        "man-cras-jardim-independencia", "man-cras-panorama", "man-saude-ubs-29",
+        "man-saude-ubs-wenzel", "man-saude-usf-ferraz", "man-saude-usf-sao-miguel",
+    }
+    itens = [e for e in dados["equipamentos"] if e["id"] in ids]
+    assert len(itens) == 6
+    assert all(e["metodo_localizacao"] == "catalogo_sem_registro_de_proveniencia" for e in itens)
+    assert all(e["confianca_localizacao"] == "nao_registrada" for e in itens)
+    assert all(e["raio_incerteza_m"] is None for e in itens)
