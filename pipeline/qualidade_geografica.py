@@ -26,7 +26,8 @@ GEOD = Geod(ellps="GRS80")
 TRANSFORMAR_UTM = Transformer.from_crs("EPSG:4326", "EPSG:31983", always_xy=True).transform
 LIMITE_MUNICIPAL = RAIZ / "dados" / "geografia" / "limite_municipal_2022.geojson"
 TOLERANCIA_TOPOLOGICA_M2 = 1.0
-LIMIAR_TOPOLOGICO_RELEVANTE_M2 = 150.0
+# 1 m² registra todo resíduo; 1.000 m² (0,001 km²) separa sobreposição/lacuna material.
+LIMIAR_TOPOLOGICO_RELEVANTE_M2 = 1000.0
 
 
 def _poligonos(geom):
