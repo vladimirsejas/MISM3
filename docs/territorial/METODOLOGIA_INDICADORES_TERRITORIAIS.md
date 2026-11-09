@@ -92,9 +92,9 @@ Em que `φ` representa latitude em radianos, `λ` representa longitude em radian
 
 **Fonte:** geometria dos setores em `web/dados/setores.geojson`; coordenadas institucionais elegíveis do catálogo e seus registros de proveniência; função de distância em `pipeline/analise_territorial.py` e processamento em `pipeline/exposicao_distancia.py`.
 
-**Ponto representativo:** os cálculos atuais utilizam o centroide geométrico calculado pelo código. A análise de sensibilidade entre centroide geométrico e ponto interno representativo é proposta na seção 5 e ainda não foi executada.
+**Ponto representativo:** o código preserva o centroide matemático quando está dentro do setor. Nos nove casos em que o centroide ficava fora do polígono, utiliza um ponto interno corrigido; esse ponto não é denominado centroide matemático. Os 399 centroides internos são preservados.
 
-**Incerteza espacial:** quando o equipamento tem raio operacional `r`, publicar também o envelope geométrico `d_min = max(0, d-r)` e `d_max = d+r`. Para várias referências, o limite inferior é o menor `d_min` e o superior é o menor `d_max`; a estimativa central continua sendo a menor distância central. O raio do CEP é parâmetro operacional derivado da dispersão dos endereços CNEFE, não campo oficial do IBGE nem intervalo de confiança. Coordenadas individuais não recebem margem artificial. Faixas sobrepostas não permitem ordenar com segurança qual equipamento é mais próximo. Se o raio de uma localização não está documentado, o envelope daquela categoria/cenário não é publicado (limites nulos); a distância central continua disponível, mas deve ser interpretada como estimativa.
+**Incerteza espacial:** quando o equipamento tem raio operacional `r`, publicar o envelope geométrico `d_min = max(0, d-r)` e `d_max = d+r`. Para várias referências, o limite inferior é o menor `d_min` e o superior é o menor `d_max`. O raio do CEP é parâmetro operacional derivado da dispersão dos endereços CNEFE, não campo oficial do IBGE nem intervalo de confiança. Coordenadas individuais com proveniência registrada não recebem margem artificial. Os seis CRAS/UBS sem proveniência no catálogo não podem usar as coordenadas brutas: no cenário com CEP, recorrem ao centro do CEP institucional e ao raio do índice. Faixas sobrepostas não permitem ordenar com segurança qual equipamento é mais próximo.
 
 **Limitações:** não representa percurso por ruas, tempo de viagem, transporte, barreiras físicas, capacidade, horário, elegibilidade ou atendimento efetivo. Se faltarem coordenadas de equipamentos, a distância até o ponto conhecido mais próximo pode ficar superestimada. A cobertura de localização deve acompanhar todo resultado.
 
@@ -114,27 +114,27 @@ Em que `φ` representa latitude em radianos, `λ` representa longitude em radian
 
 **Limitações:** cobertura não significa precisão uniforme. Coordenadas de métodos diferentes devem ser identificadas separadamente. A coordenada aproximada pelo centro do CEP não deve ser apresentada como equivalente a uma coordenada institucional conferida.
 
-**Situação da proveniência na PR #92:** entre os 28 CRAS/UBS com coordenadas do catálogo, 22 têm método, confiança (11 alta e 11 média) e data de aplicação registrados em `localizacao_registro.csv`. Os outros 6 têm coordenadas cadastradas, mas não possuem registro explícito de proveniência; são publicados com confiança `nao_registrada` e não devem ser descritos como verificados. A confirmação desses seis registros é pendência antes de afirmar cobertura completa de proveniência.
+**Situação da proveniência:** entre os 28 CRAS/UBS, 22 têm método, confiança (11 alta e 11 média) e data de aplicação registrados em `localizacao_registro.csv`. Os outros 6 não têm registro explícito de proveniência. Suas coordenadas brutas do catálogo são excluídas dos cenários de coordenadas individuais; quando o CEP institucional está disponível no índice, a posição aproximada é usada com o respectivo raio. Isso não transforma esses seis registros em coordenadas verificadas.
 
 **Linguagem permitida:** “localização pendente”, “coordenada verificada”, “coordenada aproximada” e “cobertura das coordenadas”.
 
 ## 4. Cenários de localização por CEP institucional
 
-O arquivo `web/dados/exposicao_distancia.json` registra dois cenários: `coordenadas_do_catalogo` e `com_centro_do_cep`. O segundo utiliza, quando falta latitude/longitude, o CEP do registro do próprio equipamento para obter posição aproximada no índice. Não se trata de CEP de paciente, estudante ou família.
+O arquivo `web/dados/exposicao_distancia.json` registra dois cenários: `coordenadas_do_catalogo` e `com_centro_do_cep`. O primeiro aceita coordenadas apenas quando latitude, longitude, método e confiança coincidem com `localizacao_registro.csv`. O segundo acrescenta o CEP cadastral do próprio equipamento quando não há proveniência suficiente para aceitar a coordenada bruta. Não se trata de CEP de paciente, estudante ou família.
 
 No arquivo atual, as coberturas são:
 
 | Categoria | Coordenadas do catálogo | Com centro do CEP |
 |---|---:|---:|
-| CRAS | 6/6 | 6/6 |
-| UBS/USF | 22/22 | 22/22 |
+| CRAS | 4/6 | 6/6 |
+| UBS/USF | 18/22 | 22/22 |
 | Escolas | 33/68 | 68/68 |
 
-Esses valores são lidos do arquivo existente e não foram recalculados nesta fase. A escolha de manter o cenário com CEP institucional como análise de sensibilidade ou retirá-lo é decisão do autor. Ver opções e consequências em `INVENTARIO_TERRITORIAL.md`.
+Essas são as coberturas esperadas pela aplicação da regra ao registro atual. Os JSONs derivados (`territorio.json`, `analise_territorial.json`, `exposicao_distancia.json` e `indicadores_territoriais.json`) ainda precisam ser regenerados e validados na execução completa; até lá, não devem ser tratados como saídas atualizadas.
 
 ## 5. Auditoria geométrica do ponto representativo
 
-**Auditoria inicial executada em 07/11/2026 sobre as 408 geometrias versionadas. A substituição do método permanece pendente.**
+**A correção do ponto representativo foi implementada no código: 399 centroides internos preservados e nove pontos externos substituídos por pontos internos. A validação final depende da regeneração dos JSONs e da execução integral dos testes.
 
 O método atual em pipeline/analise_territorial.py, função centro, escolhe em cada geometria MultiPolygon o componente cujo anel externo tem mais vértices e calcula o centroide desse anel. A seleção por quantidade de vértices não equivale à seleção por área; o cálculo não considera os anéis internos (buracos) nem combina todos os componentes pela área.
 
