@@ -89,3 +89,8 @@ O conjunto de dados do CNES está disponível no [Portal de Dados Abertos do SUS
 ## CNEFE: distinção entre arquivos brutos e índice público agregado
 
 O arquivo nacional bruto do CNEFE contém endereços em nível granular e permanece local por minimização. O arquivo público `web/dados/cep_indice.json` é uma saída distinta: o pipeline usa o CNEFE, aplica vínculo setorial verificável, exclui setores protegidos e registros inválidos, generaliza CEPs com menos de três endereços para o centro do setor e descarta entradas exclusivas da lista Google quando não há vínculo setorial. Na versão consultada, `ceps_so_da_lista` está vazio, há 1.243 CEPs e 44 generalizações. Assim, o índice pode ser publicado **somente agregado**, com atribuição ao IBGE e manutenção dos controles D4. Isso não autoriza publicar o CNEFE bruto ou a lista Google.
+
+
+## Pesquisa científica e dados pessoais — LAI, art. 31, §3º, II
+
+A LAI prevê que o consentimento não é exigido quando informações pessoais forem necessárias à realização de estatísticas e pesquisas científicas de evidente interesse público ou geral, sendo vedada a identificação da pessoa. O MISM3 aplica esse limite por meio de agregação, anonimização, supressão D4 e proibição de reidentificação. A exceção não autoriza divulgar registros identificáveis. A licença CC BY-ND 3.0 exibida no rodapé do portal do Ministério da Saúde refere-se ao conteúdo do site e não deve ser automaticamente estendida aos datasets estruturados; a seção de Dados Abertos descreve o regime próprio de reutilização dos dados federais.

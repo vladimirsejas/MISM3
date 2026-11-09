@@ -369,3 +369,10 @@ O teste foi corrigido para derivar `391 = 408 - 17` dos dados publicados e verif
 - O `web/dados/cep_indice.json` contém 1.243 CEPs; 44 CEPs com menos de três endereços foram generalizados ao centro do setor; CEPs sem vínculo verificável e setores protegidos são omitidos. O JSON não contém endereços de rua, números, nomes ou registros residenciais individuais.
 - A decisão do índice derivado foi alterada para **PODE SER PUBLICADO SOMENTE AGREGADO**. O CNEFE bruto continua local e fora do pacote. O manifesto foi atualizado para incluir apenas o índice derivado, não a fonte bruta nem a lista Google.
 - Acrescentado teste que confirma fonte CNEFE, ausência de CEPs exclusivos da lista Google, formato do registro e classificação agregada.
+
+
+## Bloco 12 — base legal de pesquisa estatística e distinção entre portal e dataset
+
+- Acrescentado à matriz o art. 31, §3º, II, da LAI: o consentimento não é exigido para informações pessoais necessárias a estatísticas e pesquisas científicas de evidente interesse público ou geral, sendo vedada a identificação. O MISM3 mantém agregação, supressão D4 e proibição de reidentificação; a exceção não autoriza publicar registros identificáveis.
+- Explicitada a distinção entre a licença CC BY-ND 3.0 exibida no rodapé do portal institucional do Ministério da Saúde (conteúdo do site) e o regime de livre utilização dos datasets federais estruturados, conforme a seção de Dados Abertos e o Decreto nº 8.777/2016. A licença do portal não foi estendida automaticamente ao CNES.
+- Fonte oficial da LAI aberta em 09/11/2026: texto atualizado da Câmara dos Deputados, art. 31, §3º, II.
