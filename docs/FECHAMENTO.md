@@ -69,3 +69,22 @@ SHA de partida: `9ed9731ca55b97888a6e0fef2df04fdd9eedbd9d`
 
 A regeneração geográfica ocorre no primeiro ciclo da PR #99 enquanto ela não tiver o rótulo `geografia-regenerada`. Depois que os dados forem gerados e commitados, o rótulo será aplicado para que a execução final valide o SHA com os dados versionados sem repetir o download. Nenhuma etapa publica, faz deploy ou aciona Cloudflare.
 
+
+
+## Evidência adicional incorporada — equivalência da malha oficial IBGE
+
+- O responsável pelo projeto conferiu o GeoPackage oficial do IBGE contra o shapefile oficial para os 408 setores de Rio Claro: mesmo conjunto de setores, geometrias idênticas e área total de 498,422 km² em ambos os formatos.
+- Essa conferência sustenta que GeoPackage e shapefile representam o mesmo dado geográfico oficial, em formatos distintos. Não são duas fontes independentes nem duas validações independentes da delimitação territorial. A evidência foi informada pelo responsável e ainda não foi reproduzida nesta execução automatizada; deve ser registrada como conferência externa documentada, sem alegar que o agente acessou os arquivos locais.
+- O pipeline pode continuar usando o shapefile oficial já previsto na automação. Não há necessidade de duplicar o GeoPackage no repositório, nem de armazenar ambos os formatos no GitHub. A fonte, a edição, o hash e a transformação efetivamente usada devem permanecer rastreáveis.
+
+## Limite das fontes locais — regra permanente de execução
+
+Os seguintes arquivos estão no computador do responsável e não estão disponíveis nesta sessão GitHub: CNES de agosto/2026 em Parquet; tabelas INEP de 2025; CNEFE de Rio Claro; agregado de CEPs do CNEFE; lista de CEPs com coordenadas obtidas pelo Google; malha de bairros IBGE nacional; capturas de conferência visual de CRAS, escolas e unidades de saúde.
+
+- Não solicitar upload nem download desses arquivos para esta sessão e não tentar reproduzir sua ausência com dados inventados ou substitutos.
+- Não copiar os arquivos, amostras, linhas, capturas, tabelas brutas, coordenadas Google ou resultados identificáveis para GitHub, PR, Actions artifacts, logs, documentação pública ou Zenodo.
+- As tabelas INEP de docentes, gestores e matrículas permanecem exclusivamente no computador do responsável. A leitura local só pode alimentar análises autorizadas e saídas agregadas aprovadas pela auditoria de privacidade.
+- As capturas de conferência visual e a lista de CEPs com coordenadas Google permanecem explicitamente no inventário de licenças do Bloco 3, sem presunção de autorização de redistribuição.
+- Se a próxima correção depender desses arquivos, preparar código reproduzível e um único prompt consolidado para Claude Code executar no computador do responsável. O prompt deverá exigir inspeção local, preservação dos arquivos-fonte, validação e testes, geração apenas de derivados minimizados e relatório de execução sem dados sensíveis. Não declarar a tarefa concluída antes de receber e validar o resultado da execução local.
+
+A ausência dessas fontes nesta sessão não bloqueia o trabalho independente de código, testes, documentação e auditoria que possa ser realizado no repositório sem os dados privados. Nenhuma alteração aqui autoriza publicação, deploy, merge ou operação na Cloudflare.
