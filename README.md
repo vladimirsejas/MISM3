@@ -51,7 +51,8 @@ Python (instalar: `python -m pip install -r requirements.txt`; fonte única das 
 | pandas | `pipeline/cnes.py`, `common.py`, `indice_cep.py`, `oferta_educacao_infantil.py`, `servicos.py` e testes | Leitura e tratamento de CSV grandes (CNES, CNEFE, Censo Escolar) |
 | numpy | `analise_territorial.py`, `common.py`, `indice_cep.py`, `indice_orientacao.py`, `treinar_necessidades.py`, `treinar_perigo.py`, `treinar_escopo.py` | Arrays, cálculo numérico, distâncias |
 | scikit-learn | `treinar_necessidades.py`, `treinar_perigo.py`, `treinar_escopo.py` (TfidfVectorizer, LogisticRegression, OneVsRestClassifier, StratifiedKFold); `indice_orientacao.py` (TfidfVectorizer, TruncatedSVD); `analise_territorial.py` (KMeans) | Treino dos modelos, TF-IDF, redução de dimensão (LSA) e agrupamento. Traz o scipy como dependência |
-| pyshp (módulo `shapefile`) | `pipeline/setores.py`, `pipeline/limite_municipal.py` | Ler shapefiles do IBGE |\n| pyproj | `pipeline/territorio.py`, `pipeline/qualidade_geografica.py`, `pipeline/limite_municipal.py` | Áreas geodésicas no elipsoide GRS80 e transformação de coordenadas |\n| shapely | `pipeline/qualidade_geografica.py`, `pipeline/limite_municipal.py` | Validade geométrica, interseções, união e diferença de polígonos |
+| pyshp (módulo `shapefile`) | `pipeline/setores.py`, `pipeline/limite_municipal.py` | Ler shapefiles do IBGE |
+| pyproj | `pipeline/territorio.py`, `pipeline/qualidade_geografica.py`, `pipeline/limite_municipal.py` | Áreas geodésicas no elipsoide GRS80 e transformação de coordenadas |\n| shapely | `pipeline/qualidade_geografica.py`, `pipeline/limite_municipal.py` | Validade geométrica, interseções, união e diferença de polígonos |
 | openpyxl | `pipeline/inspecionar_arquivo.py` | Inspecionar a estrutura de planilhas .xlsx |
 | pytest | `pipeline/tests/` | Testes do pipeline |
 
