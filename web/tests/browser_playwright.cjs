@@ -69,12 +69,32 @@ async function testarPagina(browser, caminho, largura, altura, mapa) {
         tag: e.tagName.toLowerCase(),
         id: e.id || "",
         classe: typeof e.className === "string" ? e.className : "",
-        texto: (e.innerText || e.textContent || "").trim().replace(/\\s+/g, " ").slice(0, 70),
+        texto: (e.innerText || e.textContent || "").trim().replace(/\s+/g, " ").slice(0, 70),
         left: Math.round(r.left),
         right: Math.round(r.right),
         width: Math.round(r.width),
         scrollWidth: e.scrollWidth,
-        clientWidth: e.clientWidth
+        clientWidth: e.clientWidth,
+        ancestrais: e.tagName.toLowerCase() === "svg" ? (function () {
+          const lista = [];
+          let p = e.parentElement;
+          while (p && lista.length < 5) {
+            const pr = p.getBoundingClientRect();
+            const estilo = getComputedStyle(p);
+            lista.push({
+              tag: p.tagName.toLowerCase(),
+              id: p.id || "",
+              classe: p.getAttribute("class") || "",
+              left: Math.round(pr.left),
+              right: Math.round(pr.right),
+              width: Math.round(pr.width),
+              overflowX: estilo.overflowX,
+              position: estilo.position
+            });
+            p = p.parentElement;
+          }
+          return lista;
+        })() : undefined
       };
     }).filter((e) => e.width > 0 && e.right > viewport + 1)
       .sort((a, b) => b.right - a.right).slice(0, 12);
