@@ -167,6 +167,7 @@ def test_base_real_tem_33_coordenadas_individuais_e_35_por_cep_sem_duplicidade()
     }
     assert cobertura["sem_localizacao_mapa"] == 0
     assert cobertura["raio_m"]["quantidade"] == 35
+    assert 150 <= cobertura["raio_m"]["minimo"] <= cobertura["raio_m"]["mediana"] <= cobertura["raio_m"]["maximo"] <= 1500
     # 1 CRAS + 68 escolas: a escola não pode ser contada duas vezes pelo catálogo.
     assert sum(b["servicos_no_bairro"] for b in resultado["bairros"]) <= 69
 
