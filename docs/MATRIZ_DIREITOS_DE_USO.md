@@ -20,8 +20,8 @@ A data de consulta é 2026-11-09. Quando a URL estiver como **não verificado**,
 
 - Arquivos de dados/mídia presentes na árvore atual da branch: **177**.
 - Registros de arquivos no inventário (incluindo seis imagens removidas e mantidas no histórico da matriz): **183**.
-- Fontes externas independentes: **14**.
-- Decisões por registro: **47 PODE SER PUBLICADO; 6 PODE SER PUBLICADO SOMENTE AGREGADO; 68 PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO; 76 NÃO PODE SER UTILIZADO ATÉ ESCLARECIMENTO**.
+- Fontes externas independentes: **15**.
+- Decisões por registro: **47 PODE SER PUBLICADO; 7 PODE SER PUBLICADO SOMENTE AGREGADO; 67 PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO; 76 NÃO PODE SER UTILIZADO ATÉ ESCLARECIMENTO**.
 
 ## Evidência oficial consultada nesta rodada
 
@@ -208,7 +208,7 @@ O CSV ao lado é a versão tabular canônica, com uma linha por arquivo versiona
 | `web/dados/analise_territorial.json` | Fonte/derivado não autoral ou com dependência de dados de terceiros / Fontes e autorias múltiplas; confirmar por arquivo | sim | não | **PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO** | Manter fora do pacote de publicação; obter termos específicos/autorizações; aplicar agregação e auditoria de privacidade antes de qualquer saída. |
 | `web/dados/bairros_apelidos.json` | IBGE e derivados geográficos/territoriais / IBGE | sim | não | **PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO** | Manter fora do pacote de publicação; obter termos específicos/autorizações; aplicar agregação e auditoria de privacidade antes de qualquer saída. |
 | `web/dados/catalogo_manual.json` | Fonte/derivado não autoral ou com dependência de dados de terceiros / Fontes e autorias múltiplas; confirmar por arquivo | sim | não | **PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO** | Manter fora do pacote de publicação; obter termos específicos/autorizações; aplicar agregação e auditoria de privacidade antes de qualquer saída. |
-| `web/dados/cep_indice.json` | CNEFE/IBGE e/ou Google Maps/Street View; evidência de localização / IBGE | sim | não | **PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO** | Manter fora do pacote de publicação; obter termos específicos/autorizações; aplicar agregação e auditoria de privacidade antes de qualquer saída. |
+| `web/dados/cep_indice.json` | Índice agregado por CEP derivado do CNEFE; sem endereços residenciais, com setores verificáveis, generalização de CEPs com menos de 3 endereços e supressão de setores protegidos / IBGE/CNEFE 2022; transformação e saneamento pelo pipeline MISM3 | sim | sim | **PODE SER PUBLICADO SOMENTE AGREGADO** | Manter somente o índice agregado; não incluir CNEFE bruto nem lista Google. Reexecutar `pipeline/indice_cep.py`, auditoria D4 e verificação de que `ceps_so_da_lista` permanece vazio. |
 | `web/dados/entre_mulheres_canal.json` | Fonte/derivado não autoral ou com dependência de dados de terceiros / Fontes e autorias múltiplas; confirmar por arquivo | sim | não | **PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO** | Manter fora do pacote de publicação; obter termos específicos/autorizações; aplicar agregação e auditoria de privacidade antes de qualquer saída. |
 | `web/dados/escolas_municipais.json` | Cadastro institucional de escolas municipais; sem contagens de matrículas/turmas por unidade. Combina catálogo municipal, vínculo INEP e referência CEP/CNEFE / Cadastro municipal do MISM3; INEP para vínculo escolar; CNEFE para referência CEP | sim | não | **PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO** | Manter fora do pacote científico até regularizar a origem/redistribuição do cadastro e das coordenadas; preservar o uso interno e a análise agregada. |
 | `web/dados/exposicao_distancia.json` | IBGE e derivados geográficos/territoriais / Derivado territorial agregado de fontes IBGE e dados institucionais | sim | sim | **PODE SER PUBLICADO SOMENTE AGREGADO** | Preservar a supressão D4 e as ressalvas metodológicas; não criar visualização de contagens suprimidas nem inferir valores por subtração. |
@@ -235,7 +235,7 @@ O CSV ao lado é a versão tabular canônica, com uma linha por arquivo versiona
 | `web/vendor/images/marker-icon-2x.png` | Biblioteca Leaflet 1.9.4 / Volodymyr Agafonkin e CloudMade | sim | sim | **PODE SER PUBLICADO** | Manter o aviso de copyright e o texto integral da licença. |
 | `web/vendor/images/marker-icon.png` | Biblioteca Leaflet 1.9.4 / Volodymyr Agafonkin e CloudMade | sim | sim | **PODE SER PUBLICADO** | Manter o aviso de copyright e o texto integral da licença. |
 | `web/vendor/images/marker-shadow.png` | Biblioteca Leaflet 1.9.4 / Volodymyr Agafonkin e CloudMade | sim | sim | **PODE SER PUBLICADO** | Manter o aviso de copyright e o texto integral da licença. |
-| `Fonte: CNEFE 2022 — arquivos brutos e agregados por CEP` | IBGE; FTP e página oficial CNEFE / IBGE | sim | não | **PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO** | Não incluir CNEFE bruto no pacote; auditar separadamente qualquer derivado por CEP e impedir exposição de endereços residenciais. |
+| `Fonte: CNEFE bruto — arquivo nacional de endereços` | IBGE; FTP e página oficial CNEFE / IBGE | sim | não | **PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO** | Não incluir arquivos brutos de endereços no pacote; manter localmente e publicar somente derivados agregados que passem pela auditoria D4 e de proveniência. |
 | `Fonte: malha de setores censitários 2022 e agregados IBGE` | IBGE; FTP oficial SP_setores_CD2022.zip e Censo 2022 / IBGE | sim | sim | **PODE SER PUBLICADO SOMENTE AGREGADO** | Publicar a geometria com atribuição IBGE; manter agregados apenas em saídas que passem pela auditoria D4. |
 | `Fonte: malha municipal IBGE 2025` | IBGE; FTP Malha Municipal 2025 / IBGE | sim | sim | **PODE SER PUBLICADO** | Registrar atribuição ao IBGE, título/edição do conjunto, URL oficial e data de extração; preservar a proveniência e não misturar conteúdo de terceiros. |
 | `Fonte: Censo Escolar 2025 — microdados e agregados INEP` | INEP; microdados Censo Escolar 2025 / INEP | sim | sim | **PODE SER PUBLICADO SOMENTE AGREGADO** | Manter microdados de origem fora do pacote; publicar apenas totais por rede após auditoria D4/risco de reidentificação e registrar edição, URL e data. |
@@ -252,6 +252,7 @@ O CSV ao lado é a versão tabular canônica, com uma linha por arquivo versiona
 | `docs/MATRIZ_DIREITOS_DE_USO.csv` | Matriz autoral de inventário e classificação de direitos de uso / Vladimir Queiroz Sejas | sim | sim | **PODE SER PUBLICADO** | Manter autoria, data e histórico de revisão. |
 | `docs/PACOTE_PUBLICACAO.csv` | Manifesto de empacotamento elaborado pelo projeto / Vladimir Queiroz Sejas | sim | sim | **PODE SER PUBLICADO** | Atualizar junto com a matriz e aplicar no processo de release. |
 | `docs/PACOTE_PUBLICACAO_EXCLUIDOS.txt` | Lista de exclusões elaborada pelo projeto / Vladimir Queiroz Sejas | sim | sim | **PODE SER PUBLICADO** | Manter sincronizada com o manifesto. |
+| `Fonte: CNEFE — índice agregado por CEP` | Derivado de CNEFE/Censo Demográfico 2022 pelo pipeline MISM3; generalização e filtragem D4 / IBGE (fonte federal); MISM3 (transformação) | sim | sim | **PODE SER PUBLICADO SOMENTE AGREGADO** | Publicar somente o JSON agregado atual; preservar generalização, vínculo setorial verificável e D4; reauditar a cada regeneração. |
 
 ## Pacote de publicação e exclusões
 

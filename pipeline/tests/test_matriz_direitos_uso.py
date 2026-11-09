@@ -61,3 +61,19 @@ def test_inep_public_output_is_only_aggregated():
     data = json.loads((ROOT / path).read_text(encoding="utf-8"))
     assert set(data) == {"meta", "totais_por_rede"}
     assert "escolas" not in data
+
+
+def test_cep_index_is_cnefe_only_and_aggregated():
+    import json
+    matrix = {row["arquivo ou fonte"]: row for row in read_csv(MATRIX)}
+    manifest = {row["arquivo ou fonte"]: row for row in read_csv(MANIFEST)}
+    path = "web/dados/cep_indice.json"
+    assert matrix[path]["DECISÃO"] == "PODE SER PUBLICADO SOMENTE AGREGADO"
+    assert manifest[path]["inclusão no pacote"] == "sim"
+    data = json.loads((ROOT / path).read_text(encoding="utf-8"))
+    assert data["meta"]["fonte"].startswith("IBGE - Cadastro Nacional")
+    assert data["meta"].get("ceps_so_da_lista", []) == []
+    assert data["meta"]["ceps_sem_vinculo_setorial_verificavel_ou_protegido_omitidos"] >= 0
+    assert data["meta"]["ceps_generalizados_por_poucos_enderecos"] >= 0
+    assert all(len(cep) == 8 and cep.isdigit() for cep in data["ceps"])
+    assert all(len(valor) == 5 and bool(valor[3]) for valor in data["ceps"].values())

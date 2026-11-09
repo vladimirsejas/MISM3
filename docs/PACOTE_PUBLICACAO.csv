@@ -155,7 +155,7 @@
 "web/dados/analise_territorial.json","PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO","não","Excluído do pacote de redistribuição; consultar justificativa e ação pendente na matriz."
 "web/dados/bairros_apelidos.json","PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO","não","Excluído do pacote de redistribuição; consultar justificativa e ação pendente na matriz."
 "web/dados/catalogo_manual.json","PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO","não","Excluído do pacote de redistribuição; consultar justificativa e ação pendente na matriz."
-"web/dados/cep_indice.json","PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO","não","Excluído do pacote de redistribuição; consultar justificativa e ação pendente na matriz."
+"web/dados/cep_indice.json","PODE SER PUBLICADO SOMENTE AGREGADO","sim","Índice agregado derivado do CNEFE, sem entradas Google-only, com generalização de pequenos CEPs e supressão de setores protegidos; ver matriz."
 "web/dados/entre_mulheres_canal.json","PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO","não","Excluído do pacote de redistribuição; consultar justificativa e ação pendente na matriz."
 "web/dados/escolas_municipais.json","PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO","não","Excluído do pacote de redistribuição; consultar justificativa e ação pendente na matriz."
 "web/dados/exposicao_distancia.json","PODE SER PUBLICADO SOMENTE AGREGADO","sim","Incluído no manifesto do pacote; observar a justificativa e as condições da matriz."

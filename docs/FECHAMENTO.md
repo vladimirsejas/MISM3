@@ -359,3 +359,11 @@ O teste foi corrigido para derivar `391 = 408 - 17` dos dados publicados e verif
 - A execução `42694539906` identificou uma regressão documental: o teste de dependências exige que `AVISOS-DE-TERCEIROS.md` mantenha o link direto do conjunto CNES do Portal de Dados Abertos do SUS. A revisão legal havia atualizado o texto, mas omitido o endereço literal exigido pelo inventário de terceiros.
 - O link oficial foi reinserido com a fundamentação do Decreto nº 8.777/2016 e as ressalvas de dados pessoais, sigilosos e de terceiros. Não houve alteração de código ou dados do CNES.
 - A nova execução integral da Actions será acompanhada no SHA desta correção.
+
+
+## Bloco 11 — publicação do índice CEP agregado
+
+- A inspeção de `pipeline/indice_cep.py` confirmou que a lista Google só completa CEPs ausentes do CNEFE; entradas sem setor verificável são descartadas pela sanitização, e `ceps_so_da_lista` permanece vazio na saída versionada.
+- O `web/dados/cep_indice.json` contém 1.243 CEPs; 44 CEPs com menos de três endereços foram generalizados ao centro do setor; CEPs sem vínculo verificável e setores protegidos são omitidos. O JSON não contém endereços de rua, números, nomes ou registros residenciais individuais.
+- A decisão do índice derivado foi alterada para **PODE SER PUBLICADO SOMENTE AGREGADO**. O CNEFE bruto continua local e fora do pacote. O manifesto foi atualizado para incluir apenas o índice derivado, não a fonte bruta nem a lista Google.
+- Acrescentado teste que confirma fonte CNEFE, ausência de CEPs exclusivos da lista Google, formato do registro e classificação agregada.

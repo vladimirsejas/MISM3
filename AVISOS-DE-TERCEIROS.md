@@ -84,3 +84,8 @@ A LAI não possui art. 9º, §2º, que imponha citação de fonte/data. A atribu
 ## CNES / DATASUS — fonte oficial do conjunto
 
 O conjunto de dados do CNES está disponível no [Portal de Dados Abertos do SUS — Cadastro Nacional de Estabelecimentos de Saúde](https://dadosabertos.saude.gov.br/dataset/cnes-cadastro-nacional-de-estabelecimentos-de-saude). A reutilização dos dados federais é amparada pelo art. 4º do Decreto nº 8.777/2016, com redação do Decreto nº 9.903/2019, e pela política de Dados Abertos declarada pelo Ministério da Saúde. A decisão do MISM3 cobre dados institucionais de estabelecimentos, serviços e capacidade instalada, com atribuição; não autoriza publicar dados de pacientes, campos pessoais de profissionais, dados sigilosos ou conteúdo de terceiros.
+
+
+## CNEFE: distinção entre arquivos brutos e índice público agregado
+
+O arquivo nacional bruto do CNEFE contém endereços em nível granular e permanece local por minimização. O arquivo público `web/dados/cep_indice.json` é uma saída distinta: o pipeline usa o CNEFE, aplica vínculo setorial verificável, exclui setores protegidos e registros inválidos, generaliza CEPs com menos de três endereços para o centro do setor e descarta entradas exclusivas da lista Google quando não há vínculo setorial. Na versão consultada, `ceps_so_da_lista` está vazio, há 1.243 CEPs e 44 generalizações. Assim, o índice pode ser publicado **somente agregado**, com atribuição ao IBGE e manutenção dos controles D4. Isso não autoriza publicar o CNEFE bruto ou a lista Google.

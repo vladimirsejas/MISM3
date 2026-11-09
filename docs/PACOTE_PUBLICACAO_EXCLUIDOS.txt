@@ -119,7 +119,6 @@ requirements.txt | NÃO PODE SER UTILIZADO ATÉ ESCLARECIMENTO
 web/dados/analise_territorial.json | PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO
 web/dados/bairros_apelidos.json | PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO
 web/dados/catalogo_manual.json | PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO
-web/dados/cep_indice.json | PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO
 web/dados/entre_mulheres_canal.json | PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO
 web/dados/escolas_municipais.json | PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO
 web/dados/horarios_onibus.json | PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO
