@@ -280,3 +280,11 @@ O teste foi corrigido para derivar `391 = 408 - 17` dos dados publicados e verif
 - Foi aplicado também `overflow-x:clip` ao `body`, preservando a rolagem vertical. Commit: `8112e9f38d9e3b6bc672995538705d65efc38c7d`.
 - O teste Playwright foi ampliado apenas com telemetria diagnóstica (largura e overflow computado de `html` e `body`); a asserção original `scrollWidth <= clientWidth` permanece. Commit: `974f08c064ce956a25652a811976534a19a5aabc`.
 - A próxima execução deve confirmar a largura real do documento e os estilos calculados; se persistir, a correção seguirá focada na origem do overflow, sem remover o teste.
+
+
+## Resultado de #788 e #789 — zoom aprovado, 404s identificados como próxima falha
+
+- Runs #788 (`42681743557`) e #789 (`42681745658`): ambos executaram os jobs reais `testes` e `navegador`. Em ambos, o job `testes` concluiu com sucesso. O navegador passou pelos testes de layout, setores, proteção D4, foco/teclado, requisições same-origin e zoom 200%; falhou apenas na asserção final de console, com dois erros HTTP 404 na página inicial.
+- A correção `overflow-x:clip` aplicada a `html` e `body` eliminou a falha de largura: o teste avançou além da verificação `scrollWidth <= clientWidth` em ambos os runs. Não remover a asserção.
+- Para identificar as URLs exatas dos dois 404s, `web/tests/browser_playwright.cjs` agora registra respostas HTTP com status >=400 e inclui URL/status na mensagem de falha; a verificação de zero erros de console e a nova verificação de respostas HTTP sem erro permanecem ativas. Commit: `af91b2ed48301dbf689cac530d71a884f538ff18`.
+- A próxima execução deve localizar os dois recursos faltantes. Não presumir que sejam favicon ou dados opcionais antes de ler os URLs concretos.
