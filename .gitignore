@@ -51,3 +51,13 @@ MISM3_backup_local_20261010/
 huggingface/
 laboratorio/
 dados/parquet/
+
+# Saídas detalhadas das auditorias de rede (CEPs de teste, coordenadas e registro de requisições): geradas localmente, nunca versionadas.
+# O resumo público, sem identificadores, é reproducao/AUDITORIA_REDE_RESUMO.md
+reproducao/auditoria_privacidade.md
+reproducao/auditoria_privacidade_cep_[0-9]*.md
+reproducao/auditoria_privacidade_cep_tiles_ligados_*.md
+reproducao/resultados/auditoria_requisicoes.json
+reproducao/resultados/auditoria_cep_*/
+# Capturas do mapa territorial coloridas por população: mostrariam classes dos setores protegidos pela decisão D4.
+docs/territorial/imagens_mapa_v1/
