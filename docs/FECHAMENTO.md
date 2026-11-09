@@ -324,3 +324,13 @@ O teste foi corrigido para derivar `391 = 408 - 17` dos dados publicados e verif
 - Runs #809 (`42683016876`) e #810 (`42683020835`) foram executados sobre esse mesmo SHA e terminaram com os dois jobs reais concluídos em sucesso: `testes` e `navegador`.
 - Nos dois: referência IBGE 5 passed; pytest 308 passed, 2 skipped; todos os testes Node passaram, inclusive o teste novo do marcador de serviços; Playwright passou desktop/celular, 408 setores, 17 protegidos, foco/teclado, same-origin, zero erros HTTP/console e zoom 200%.
 - PR #99 confirmada aberta, pronta para revisão (`draft=false`), não mesclada (`merged=false`). `main` e Cloudflare não foram alteradas.
+
+
+## Bloco 8 — revisão jurídica de dados públicos federais
+
+- Reavaliada a classificação jurídica após abertura do Decreto nº 8.777/2016, com redação do Decreto nº 9.903/2019: art. 4º estabelece livre utilização pela sociedade dos dados disponibilizados pelo Poder Executivo federal; §1º trata da utilização gratuita de bases cujos direitos patrimoniais pertençam à União; §2º preserva direitos e condições de terceiros.
+- CNES institucional (estabelecimentos, serviços e capacidade instalada): decisão atualizada para **PODE SER PUBLICADO**, com atribuição Ministério da Saúde/DATASUS, competência e data de extração. A autorização não abrange dados pessoais de profissionais, dados sigilosos ou registros de pacientes.
+- IBGE: malhas oficiais e derivados geométricos sem dados pessoais passam a **PODE SER PUBLICADO** com atribuição; indicadores e agregados territoriais passam a **PODE SER PUBLICADO SOMENTE AGREGADO**, mantendo a supressão D4. CNEFE bruto permanece local por minimização de endereços; não é uma negativa de uso analítico nem uma conclusão de ausência de direitos de uso.
+- INEP: microdados disponibilizados no âmbito da política federal podem ser utilizados; o MISM3 limita a publicação a totais por rede e mantém tabelas detalhadas locais. A tabela de correspondência de escolas (códigos/nome institucionais) passa a **PODE SER PUBLICADO**; dados educacionais agregados continuam **PODE SER PUBLICADO SOMENTE AGREGADO**.
+- Corrigida a referência legal: a LAI não possui art. 9º, §2º, com obrigação de citar fonte/data. A atribuição e a data de extração permanecem requisitos de proveniência e boa prática, compatíveis com a definição de dados abertos. Art. 8º, §3º, III trata de acesso automatizado em formato aberto; art. 31 protege informações pessoais.
+- Fontes oficiais abertas em 09/11/2026: Decreto 8.777/2016, Decreto 9.903/2019, páginas de Dados Abertos do Ministério da Saúde e IBGE, página de Dados Abertos do INEP e texto atualizado da LAI.
