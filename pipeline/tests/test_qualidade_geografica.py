@@ -105,7 +105,10 @@ def test_limite_municipal_e_topologia_da_malha_real():
     # Malha de setores 2022 e limite municipal 2025 são edições diferentes.
     # A divergência entre os contornos é registrada, não tratada como falha interna da cobertura.
     assert topologia["sobreposicoes"] == []
+    assert topologia["buracos_internos_m2"] == []
+    assert topologia["area_buracos_internos_total_m2"] == 0
     assert topologia["limiar_deteccao_sobreposicao_m2"] == 0.0121
+    assert topologia["limiar_deteccao_buraco_m2"] == 0.0121
     assert topologia["area_sobreposicoes_total_m2"] == 0
     assert topologia["area_lacunas_km2"] == pytest.approx(0.707921241, abs=1e-6)
     assert topologia["area_setores_fora_municipio_km2"] == pytest.approx(0.727497653, abs=1e-6)
@@ -115,9 +118,8 @@ def test_limite_municipal_e_topologia_da_malha_real():
     assert resultado["correspondencia_setores"]["correspondencia_completa"] is True
 
 
-def test_seis_equipamentos_sem_metodo_mantem_raio_desconhecido():
+def test_seis_equipamentos_sem_coordenada_catalogo_usam_cep_com_raio_operacional():
     import json
-    from pathlib import Path
 
     raiz = Path(__file__).resolve().parents[2]
     dados = json.loads((raiz / "web/dados/indicadores_territoriais.json").read_text(encoding="utf-8"))
@@ -127,10 +129,11 @@ def test_seis_equipamentos_sem_metodo_mantem_raio_desconhecido():
     }
     itens = [e for e in dados["equipamentos"] if e["id"] in ids]
     assert len(itens) == 6
-    assert all(e["metodo_localizacao"] == "catalogo_sem_registro_de_proveniencia" for e in itens)
-    assert all(e["confianca_localizacao"] == "nao_registrada" for e in itens)
-    assert all(e["raio_incerteza_m"] is None for e in itens)
-
+    assert all(e["metodo_localizacao"] == "centroide_cep" for e in itens)
+    assert all(e["confianca_localizacao"] == "aproximada_operacional" for e in itens)
+    assert all(e["precisao"] == "centro_do_cep" for e in itens)
+    assert all(e["raio_incerteza_m"] > 0 for e in itens)
+    assert all(e["fonte_localizacao"] == "CNEFE/índice CEP" for e in itens)
 
 
 def test_validador_identifica_auto_intersecao_em_poligono():
@@ -177,3 +180,35 @@ def test_correspondencia_setorial_detecta_ids_ausentes_e_extras():
     assert resultado["correspondencia_completa"] is False
     assert resultado["ausentes_no_territorio"] == ["354390705000002"]
     assert resultado["extras_no_territorio"] == ["354390705000003"]
+
+
+def test_limiar_de_buraco_interno_deriva_da_precisao_de_publicacao():
+    from pyproj import Transformer
+    from shapely.geometry import Polygon, mapping
+    from shapely.ops import transform
+
+    para_metros = Transformer.from_crs("EPSG:4326", "EPSG:31983", always_xy=True).transform
+    para_geo = Transformer.from_crs("EPSG:31983", "EPSG:4326", always_xy=True).transform
+    x, y = para_metros(-47.56, -22.40)
+    limite_m = Polygon([
+        (x - 20, y - 20), (x + 20, y - 20), (x + 20, y + 20),
+        (x - 20, y + 20), (x - 20, y - 20),
+    ])
+    limite = {"features": [{"geometry": mapping(transform(para_geo, limite_m))}]}
+
+    def geojson_com_buraco(lado):
+        anel = [(x, y), (x + lado, y), (x + lado, y + lado), (x, y + lado), (x, y)]
+        poligono = Polygon(
+            [(x - 5, y - 5), (x + 5, y - 5), (x + 5, y + 5), (x - 5, y + 5), (x - 5, y - 5)],
+            [anel],
+        )
+        return {"features": [{
+            "properties": {"setor": "354390705000001"},
+            "geometry": mapping(transform(para_geo, poligono)),
+        }]}
+
+    assert qg.LIMIAR_DETECCAO_BURACO_M2 == 0.0121
+    abaixo = qg.validar_topologia(geojson_com_buraco(0.1), limite)
+    acima = qg.validar_topologia(geojson_com_buraco(0.2), limite)
+    assert abaixo["buracos_internos_m2"] == []
+    assert acima["buracos_internos_m2"] == [pytest.approx(0.04, abs=0.002)]

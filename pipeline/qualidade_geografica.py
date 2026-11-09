@@ -29,6 +29,7 @@ TOLERANCIA_TOPOLOGICA_M2 = 1.0
 # 0,0121 m² equivale aproximadamente à célula de quantização (0,11 m × 0,11 m): abaixo disso,
 # a área é indistinguível da precisão de publicação; acima, a interseção é contabilizada.
 LIMIAR_DETECCAO_SOBREPOSICAO_M2 = 0.0121
+LIMIAR_DETECCAO_BURACO_M2 = 0.0121
 LIMIAR_TOPOLOGICO_RELEVANTE_M2 = 1000.0
 
 
@@ -176,9 +177,20 @@ def validar_topologia(geojson, limite_municipal=None):
                     })
         uniao = unary_union(projetadas)
         soma_areas = sum(g.area for g in projetadas)
+        partes_uniao = list(uniao.geoms) if uniao.geom_type == "MultiPolygon" else [uniao]
+        areas_buracos = [
+            shape({"type": "Polygon", "coordinates": [list(anel.coords)]}).area
+            for parte in partes_uniao if parte.geom_type == "Polygon"
+            for anel in parte.interiors
+        ]
+        buracos_internos = [
+            round(area, 6) for area in areas_buracos
+            if area > LIMIAR_DETECCAO_BURACO_M2
+        ]
     else:
-        uniao, soma_areas = None, 0.0
+        uniao, soma_areas, areas_buracos, buracos_internos = None, 0.0, [], []
     area_sobreposicoes_total = sum(item["area_m2"] for item in sobreposicoes)
+    area_buracos_internos_total = sum(buracos_internos)
     area_sobreposicao_maxima = max((item["area_m2"] for item in sobreposicoes), default=0.0)
     sobreposicoes_relevantes = [item for item in sobreposicoes if item["area_m2"] > LIMIAR_TOPOLOGICO_RELEVANTE_M2]
     if limite_municipal is None or uniao is None:
@@ -187,7 +199,10 @@ def validar_topologia(geojson, limite_municipal=None):
             "motivo_lacunas": "Limite municipal oficial de referência não foi fornecido.",
             "sobreposicoes": sobreposicoes,
             "sobreposicoes_relevantes": sobreposicoes_relevantes,
+            "buracos_internos_m2": buracos_internos,
+            "area_buracos_internos_total_m2": round(area_buracos_internos_total, 6),
             "limiar_deteccao_sobreposicao_m2": LIMIAR_DETECCAO_SOBREPOSICAO_M2,
+            "limiar_deteccao_buraco_m2": LIMIAR_DETECCAO_BURACO_M2,
             "limiar_relevancia_sobreposicao_m2": LIMIAR_TOPOLOGICO_RELEVANTE_M2,
             "area_sobreposicoes_total_m2": round(area_sobreposicoes_total, 3),
             "area_sobreposicao_maxima_m2": round(area_sobreposicao_maxima, 3),
@@ -216,7 +231,10 @@ def validar_topologia(geojson, limite_municipal=None):
         "avaliacao_lacunas": "avaliada",
         "sobreposicoes": sobreposicoes,
         "sobreposicoes_relevantes": sobreposicoes_relevantes,
+        "buracos_internos_m2": buracos_internos,
+        "area_buracos_internos_total_m2": round(area_buracos_internos_total, 6),
         "limiar_deteccao_sobreposicao_m2": LIMIAR_DETECCAO_SOBREPOSICAO_M2,
+        "limiar_deteccao_buraco_m2": LIMIAR_DETECCAO_BURACO_M2,
         "limiar_relevancia_sobreposicao_m2": LIMIAR_TOPOLOGICO_RELEVANTE_M2,
         "area_sobreposicoes_total_m2": round(area_sobreposicoes_total, 3),
         "area_sobreposicao_maxima_m2": round(area_sobreposicao_maxima, 3),

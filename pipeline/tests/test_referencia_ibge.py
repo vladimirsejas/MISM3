@@ -44,6 +44,7 @@ def test_publicado_corresponde_a_geometria_ibge_original_arredondada():
     assert set(ref) == set(pub)
     for codigo, feature_ref in ref.items():
         props = feature_ref["properties"]
+        assert set(props) == {"CD_SETOR", "SITUACAO", "CD_BAIRRO", "NM_BAIRRO", "AREA_KM2"}
         assert not ({"v0001", "v0002", "v0003", "v0004", "v0005", "v0006", "v0007"} & set(props))
         geom_esperada = shape({
             "type": feature_ref["geometry"]["type"],
@@ -110,3 +111,27 @@ def test_hashes_dos_arquivos_de_referencia_conferem_com_a_proveniencia():
         caminho = REF.parent / nome
         assert hashlib.sha256(caminho.read_bytes()).hexdigest() == esperado
         assert esperado in texto
+
+
+def test_referencia_municipal_2025_e_areas_geodesicas_grs80():
+    from pyproj import Geod
+
+    municipio = json.loads(MUNICIPIO.read_text(encoding="utf-8"))
+    assert len(municipio["features"]) == 1
+    feature = municipio["features"][0]
+    assert set(feature["properties"]) == {"CD_MUN", "NM_MUN", "AREA_KM2"}
+    assert feature["properties"]["CD_MUN"] == "3543907"
+    assert feature["properties"]["NM_MUN"] == "Rio Claro"
+    assert feature["properties"]["AREA_KM2"] == 498.403
+
+    geod = Geod(ellps="GRS80")
+    area_municipio = abs(geod.geometry_area_perimeter(shape(feature["geometry"]))[0]) / 1_000_000
+    assert round(area_municipio, 3) == 498.402
+
+    referencia, _ = carregar()
+    area_setores = sum(
+        abs(geod.geometry_area_perimeter(shape(f["geometry"]))[0]) / 1_000_000
+        for f in referencia["features"]
+    )
+    assert round(area_setores, 3) == 498.422
+    assert round(area_setores - area_municipio, 3) == 0.019
