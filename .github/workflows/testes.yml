@@ -27,8 +27,9 @@ jobs:
         run: |
           curl --fail --location --retry 4 --retry-delay 5 --output "$RUNNER_TEMP/SP_setores_CD2022.zip" "$URL_MALHA"
           unzip -t "$RUNNER_TEMP/SP_setores_CD2022.zip"
-          python pipeline/servicos.py --somente-manual
           python pipeline/setores.py "$RUNNER_TEMP/SP_setores_CD2022.zip"
+          python pipeline/indice_cep.py --sanear-publicado
+          python pipeline/servicos.py --somente-manual
           python pipeline/territorio.py
           python pipeline/analise_territorial.py
           python pipeline/exposicao_distancia.py
@@ -41,11 +42,16 @@ jobs:
               with open(os.path.join(os.environ["RUNNER_TEMP"], nome + ".json"), encoding="utf-8") as f:
                   dado = json.load(f)
               print("\\n" + nome.upper())
-              print(json.dumps(dado.get("meta", dado), ensure_ascii=False, indent=2))
+              if "meta" in dado:
+                  print("META:")
+                  print(json.dumps(dado["meta"], ensure_ascii=False, indent=2))
+              if "resumo" in dado:
+                  print("RESUMO:")
+                  print(json.dumps(dado["resumo"], ensure_ascii=False, indent=2))
           PY
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add web/dados/catalogo_manual.json web/dados/setores.geojson web/dados/setor_bairro.json web/dados/territorio.json web/dados/analise_territorial.json web/dados/exposicao_distancia.json web/dados/indicadores_territoriais.json
+          git add web/dados/catalogo_manual.json web/dados/cep_indice.json web/dados/setores.geojson web/dados/setor_bairro.json web/dados/territorio.json web/dados/analise_territorial.json web/dados/exposicao_distancia.json web/dados/indicadores_territoriais.json
           if git diff --cached --quiet; then
             echo "Os dados gerados já correspondem às entradas atuais."
           else
