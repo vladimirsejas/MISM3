@@ -89,3 +89,10 @@ As correções do painel de qualidade e da classificação dos domínios de tile
 ### Marcador técnico de serviços do pipeline — 09/11/2026
 
 Foi adicionado `web/dados/servicos.json` apenas como marcador vazio para impedir 404 no navegador enquanto a regeneração local continua pendente. O arquivo contém `servicos: []` e `meta.status: "pendente_regeneracao_local"`; não contém registros CNES/Censo Escolar, não representa dados regenerados e não substitui o procedimento local deste runbook. `web/app.js` reconhece esse estado e mantém a origem apresentada como “Catálogo verificado manualmente”, sem afirmar que a base do pipeline está disponível. O marcador só deve ser substituído pelos dados reais depois da regeneração e validação local previstas neste documento.
+
+
+## Validação de código/CI concluída — regeneração local continua pendente
+
+Em 09/11/2026, o run GitHub Actions #804 (`42682346999`) aprovou os jobs reais `testes` e `navegador`. A suíte de código passou (referência IBGE 5 passed; pytest 308 passed, 2 skipped; todos os testes Node) e o Playwright aprovou desktop 1280×800, celular 390×844, 408 setores, 17 protegidos, foco por teclado visível, zero requisições externas, zero erros de console/HTTP e zoom 200% sem rolagem horizontal.
+
+**Isso não encerra este runbook.** A aprovação do CI valida o código e a interface com os arquivos versionados; não executa a regeneração local nem comprova igualdade entre os dados publicados e as fontes originais locais. O Bloco 2 permanece em andamento até a regeneração local completa, auditoria D4, análise de distâncias, validação dos derivados e conferência de proveniência previstas acima. O marcador vazio `web/dados/servicos.json` deve ser substituído somente por saída real do pipeline após essa execução, nunca tratado como dataset.
