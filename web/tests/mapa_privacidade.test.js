@@ -32,12 +32,27 @@ const externos = new Set();
 });
 const permitidos = new Set(["tile.openstreetmap.org", "server.arcgisonline.com"]);
 externos.forEach((h) => {
-  const ehLink = /^(www\.)?(google|gov|wa\.me|rioclaro|cmdca|defensoria|instagram|facebook|whatsapp)/.test(h) || /\.(gov\.br|sp\.gov\.br|com\.br)$/.test(h) || h === "wa.me";
+  const ehLink = h === "www.openstreetmap.org" /* só o link de atribuição exigido pela licença ODbL: não é carregado como recurso */ || /^(www\.)?(google|gov|wa\.me|rioclaro|cmdca|defensoria|instagram|facebook|whatsapp)/.test(h) || /\.(gov\.br|sp\.gov\.br|com\.br)$/.test(h) || h === "wa.me";
   assert(permitidos.has(h) || ehLink, "domínio externo inesperado em app.js ou mapa.js: " + h + " (se for um serviço de imagens, precisa de caixa de opt-in e de linha em AVISOS-DE-TERCEIROS.md)");
 });
 
 /* 5) O README não afirma mais que a Esri vem ligada por padrão. */
 assert(!/ligad[ao]s? por padrão/.test(readme), "o README não diz que o mapa vem ligado por padrão");
 assert(/ambas vêm desmarcadas/.test(readme) && /Ao abrir o site, nenhuma imagem de mapa é pedida a outro domínio/.test(readme), "o README descreve o opt-in das duas camadas");
+
+/* ---- Referer dos tiles (política de uso do OpenStreetMap, conferida em 08/11/2026) ---- */
+{
+  const fs2 = require("fs"), path2 = require("path");
+  const app = fs2.readFileSync(path2.resolve(__dirname, "..", "app.js"), "utf8");
+  const mapa = fs2.readFileSync(path2.resolve(__dirname, "..", "mapa.js"), "utf8");
+  const osm = (app.match(/L\.tileLayer\("https:\/\/tile\.openstreetmap\.org[\s\S]*?\.addTo\(mapa\)/) || [""])[0];
+  assert(osm.length > 0, "camada do OpenStreetMap encontrada");
+  assert(/referrerPolicy: "origin"/.test(osm), "só os tiles do OpenStreetMap enviam a ORIGEM do site como Referer (a política deles exige Referer em páginas web)");
+  assert(/openstreetmap\.org\/copyright/.test(osm) && /OpenStreetMap contributors/.test(osm), "atribuição do OpenStreetMap com link para a licença");
+  assert(!/referrerPolicy/.test(mapa), "os tiles da Esri não enviam Referer");
+  ["index.html", "mapa-territorial.html", "privacidade.html", "qualidade-dados.html"].forEach((h) => {
+    assert(/name="referrer" content="no-referrer"/.test(fs2.readFileSync(path2.resolve(__dirname, "..", h), "utf8")), "a página segue com no-referrer: " + h);
+  });
+}
 
 console.log("mapa_privacidade.test.js: caixas de ruas desmarcadas, camadas só por marcação, rótulo explica o envio, README coerente");

@@ -773,8 +773,11 @@
   $("usar-tiles").addEventListener("change", function (e) {
     if (!mapa) return;
     if (e.target.checked) {
+      /* A política de uso dos tiles do OpenStreetMap exige Referer em páginas web e proíbe política de referrer restritiva. A página usa
+         no-referrer; só os pedidos destes tiles enviam a ORIGEM do site (sem caminho, sem # e sem CEP), e só depois de a usuária marcar a caixa. */
       tiles = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        maxZoom: 18, attribution: "© OpenStreetMap contributors"
+        maxZoom: 18, referrerPolicy: "origin",
+        attribution: '© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap contributors</a>'
       }).addTo(mapa);
     } else if (tiles) { mapa.removeLayer(tiles); tiles = null; }
   });
