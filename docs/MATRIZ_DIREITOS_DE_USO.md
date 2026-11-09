@@ -21,7 +21,7 @@ A data de consulta é 2026-11-09. Quando a URL estiver como **não verificado**,
 - Arquivos de dados/mídia presentes na árvore atual da branch: **177**.
 - Registros de arquivos no inventário (incluindo seis imagens removidas e mantidas no histórico da matriz): **183**.
 - Fontes externas independentes: **15**.
-- Decisões por registro: **47 PODE SER PUBLICADO; 7 PODE SER PUBLICADO SOMENTE AGREGADO; 67 PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO; 76 NÃO PODE SER UTILIZADO ATÉ ESCLARECIMENTO**.
+- Decisões por registro: **47 PODE SER PUBLICADO; 8 PODE SER PUBLICADO SOMENTE AGREGADO; 67 PODE SER UTILIZADO MAS NÃO REDISTRIBUÍDO; 76 NÃO PODE SER UTILIZADO ATÉ ESCLARECIMENTO**.
 
 ## Evidência oficial consultada nesta rodada
 

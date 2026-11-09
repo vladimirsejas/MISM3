@@ -342,8 +342,10 @@ O teste foi corrigido para derivar `391 = 408 - 17` dos dados publicados e verif
 - A matriz passou a conter linhas para os próprios artefatos de governança, com titularidade autoral indicada e referência à Lei nº 9.610/1998.
 - Criado `pipeline/tests/test_matriz_direitos_uso.py`: verifica cobertura integral da matriz e do manifesto, bloqueia a inclusão de arquivo cuja decisão não seja publicável e confirma que a saída pública do INEP contém apenas `meta` e `totais_por_rede`.
 - A matriz, o manifesto e o teste são controles de empacotamento do release; a marcação de exclusão não remove arquivos do histórico nem altera a visibilidade atual do repositório GitHub. Itens não autorizados devem ser removidos/substituídos no pacote de distribuição antes do release; fontes locais do autor permanecem preservadas.
-- Arquivos cobertos nesta geração: 183; incluídos: 47; excluídos: 136.
-- A suíte e a Actions serão consideradas concluídas somente após os jobs do SHA final terminarem com sucesso.
+- Arquivos cobertos nesta geração: 183; incluídos: 48; excluídos: 135.
+- No SHA `45bcf36d82bbcb5425b65c968c4cb13a0e5d3c18`, a suíte Python terminou com **312 passed, 2 skipped**; referência IBGE: 5 passed; todos os testes Node passaram; as avaliações de perfis concluíram com 100% (20/20); Playwright desktop/celular passou.
+- Runs `42695060972` (push) e `42695074263` (pull_request) executaram os jobs reais `testes` e `navegador` sobre o mesmo SHA e terminaram em sucesso.
+- As primeiras tentativas após substituir as imagens falharam por expectativas antigas no teste do dashboard; as asserções foram atualizadas para validar o placeholder neutro. Outra tentativa apontou a ausência do link direto do CNES em `AVISOS-DE-TERCEIROS.md`; o link foi reinserido. As correções foram validadas na execução verde acima.
 
 
 ## Bloco 10 — placeholders visuais e exclusão de mídia sem autorização
