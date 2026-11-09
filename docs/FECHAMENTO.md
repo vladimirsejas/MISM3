@@ -20,7 +20,7 @@ SHA de partida: `9ed9731ca55b97888a6e0fef2df04fdd9eedbd9d`
 | 2. Geografia | Em andamento — correções e testes versionados; Actions sem jobs e regeneração local pendente | `a1a0f88`, `71eead9`, `81f6843`, `22e2c40`, `4b3db12`, `33c6b94`, `671e958`, `7d1e003`, `23e9b78` | `42671168961` — referência aprovada; `42672174236`, `42672449139` e `42672558750` — falha pré-job, zero jobs criados |
 | 3. Fontes e licenças | Em andamento — inventário e atribuições atualizados; restrições não confirmadas mantidas explícitas | `c3cbff0`, `f66f616`, `df7d519`, `9aae00b`, `1fe887b` | `42673160479` — execução pendente; Actions sem jobs nas execuções anteriores |
 | 4. Mapa e painel | Em andamento — mapa SVG local e painel de qualidade atualizados; validação CI/navegador pendente | `c3cbff0`, `f66f616`, commit desta atualização | Execução Actions pendente; histórico recente de falha pré-job |
-| 5. Sistema de orientação | Em andamento — proteção local e limpeza do texto livre reforçadas; testes de comportamento e avaliação integral pendentes | commit desta atualização | Actions sem jobs; não há aprovação de suíte após as mudanças |
+| 5. Sistema de orientação | Em andamento — privacidade do texto livre reforçada; 306 testes Python passaram, um ajuste de auditoria D4 pendente | `2a21b73` e commit corretivo desta atualização | `42674601130` — referência aprovada; pytest 306 passed, 1 failed, 2 skipped; corrigida a expectativa de 391 setores com distância |
 | 6. Documentação definitiva | Pendente | — | — |
 | 7. Fechamento | Pendente | — | — |
 
@@ -156,3 +156,10 @@ A etapa de regeneração automática foi retirada da Actions. A Actions não bai
 - Foi identificada uma retenção temporária: a dúvida digitada dentro de uma área permanecia no DOM oculto ao voltar ao início. `mostrarInicio`, `mostrarArea` e `mostrarVista` agora chamam `limparDuvida()`, e o campo informa que a mensagem é processada no aparelho e apagada na navegação.
 - O teste de orientação foi ampliado para conferir GET local, ausência de envio/persistência e limpeza ao sair de cada tela. As jornadas mantêm respostas somente em memória e são limpas ao retornar ao início.
 - O sistema continua sendo orientação informativa, não diagnóstico, avaliação clínica ou garantia de proteção. A cobertura de frases e perfis é verificada pelos testes de regras e pela suíte de avaliação; não se declara aprovação final enquanto a Actions não executar jobs.
+
+
+## Ajuste da auditoria de centroides e D4 — execução 42674601130
+
+A execução `42674601130` passou pela validação de referência IBGE e executou a suíte Python: 306 passaram, 2 foram ignorados e 1 falhou. A única falha foi a expectativa do teste de auditoria de centroides: ele contava 408 setores com distância, embora 17 estejam protegidos pela D4. A auditoria geométrica continua abrangendo os 408 setores; os 17 protegidos devem ter distâncias e deltas nulos, e somente 391 setores podem contribuir para as estatísticas de distância.
+
+O teste foi corrigido para derivar `391 = 408 - 17` dos dados publicados e verificar explicitamente que os 17 setores suprimidos não recebem distância nem delta. Não houve alteração na regra D4 nem na geometria. A suíte Node e as avaliações de orientação ainda não foram executadas nessa run porque o pytest interrompeu o workflow antes dessas etapas.

@@ -90,7 +90,18 @@ def test_malha_real_audita_408_setores_e_identifica_onze_centroides_externos():
     }
     assert all(s["ponto_interno_alternativo"]["metodo"] == ac.METODO_ALTERNATIVO
                for s in resultado["setores"])
-    assert resultado["resumo"]["distancias"]["coordenadas_do_catalogo"]["ubs"]["setores_com_distancia"] == 408
+    esperado_com_distancia = len(geo["features"]) - indicadores["totais"]["setores_suprimidos"]
+    assert resultado["meta"]["setores_suprimidos"] == indicadores["totais"]["setores_suprimidos"] == 17
+    for cenario in ac.CENARIOS:
+        for categoria in ac.CATEGORIAS:
+            assert resultado["resumo"]["distancias"][cenario][categoria]["setores_com_distancia"] == esperado_com_distancia == 391
+
+    protegidos = {s["id"] for s in indicadores["setores"] if s["suprimido_privacidade"]}
+    for setor in resultado["setores"]:
+        if setor["setor"] in protegidos:
+            for cenario in ac.CENARIOS:
+                for distancia in setor["distancias"][cenario].values():
+                    assert distancia == {"atual_km": None, "alternativa_km": None, "delta_km": None}
 
 
 def test_correcao_minima_preserva_os_397_centroides_validos_e_altera_so_onze():
