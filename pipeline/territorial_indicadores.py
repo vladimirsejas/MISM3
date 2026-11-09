@@ -394,7 +394,7 @@ def main(argv: list[str]) -> int:
         return 0
     SAIDA.write_text(texto, encoding="utf-8", newline="\n")
     d = json.loads(texto)
-    print("Gravado %s: %d setores, %d pessoas, carimbo %s" % (SAIDA.relative_to(RAIZ), d["totais"]["setores"], d["totais"]["pessoas"], d["meta"]["carimbo"]))
+    print("Gravado %s: %d setores, carimbo %s" % (SAIDA.relative_to(RAIZ), d["totais"]["setores"], d["meta"]["carimbo"]))  # sem totais de população: a D4 os omite
     return 0
 
 

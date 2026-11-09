@@ -16,6 +16,7 @@ Saida: web/dados/cep_indice.json
 from __future__ import annotations
 
 import json
+import re
 import sys
 import zipfile
 from pathlib import Path
@@ -100,18 +101,43 @@ def completar_com_lista(indice: dict, lista: list[dict], raio_m: int = RAIO_LIST
     return novos
 
 
+def id_do_setor(valor) -> str:
+    """Código do setor só com os dígitos iniciais.
+
+    O índice do CNEFE grava o setor com sufixo de letra (por exemplo "354390705000201P"), e o GeoJSON do IBGE grava só os dígitos;
+    comparar as duas formas sem normalizar nunca casa e deixaria passar os CEPs dos setores protegidos."""
+    s = str(valor or "").strip()
+    m = re.match(r"(\d+)[A-Za-z]*$", s)
+    return m.group(1) if m else s
+
+
 def filtrar_ceps_de_setores_suprimidos(indice: dict, geojson: dict) -> tuple[dict, int]:
     """Remove do índice público qualquer CEP associado a setor protegido pela decisão D4."""
     protegidos = {
-        f.get("properties", {}).get("setor")
+        id_do_setor(f.get("properties", {}).get("setor"))
         for f in geojson.get("features", [])
         if setor_suprimido(f.get("properties", {}))
     }
+    protegidos.discard("")
     filtrado = {
         cep: valor for cep, valor in indice.items()
-        if len(valor) < 4 or not valor[3] or valor[3] not in protegidos
+        if len(valor) < 4 or not valor[3] or id_do_setor(valor[3]) not in protegidos
     }
     return filtrado, len(indice) - len(filtrado)
+
+
+def sanear_indice_publicado(caminho_indice: Path, caminho_geojson: Path) -> int:
+    """Aplica a decisão D4 ao índice JÁ publicado (sem reler o CNEFE) e atualiza os metadados. Devolve quantos CEPs saíram."""
+    dados = json.loads(caminho_indice.read_text(encoding="utf-8"))
+    geojson = json.loads(caminho_geojson.read_text(encoding="utf-8"))
+    ceps, removidos = filtrar_ceps_de_setores_suprimidos(dados["ceps"], geojson)
+    if removidos:
+        dados["ceps"] = ceps
+        meta = dados.setdefault("meta", {})
+        meta["ceps_de_setores_suprimidos_omitidos"] = meta.get("ceps_de_setores_suprimidos_omitidos", 0) + removidos
+        # mantém o formato legível do arquivo publicado (indent=1 e quebra final) para o diff mostrar só os CEPs removidos
+        caminho_indice.write_text(json.dumps(dados, ensure_ascii=False, indent=1) + "\n", encoding="utf-8", newline="\n")
+    return removidos
 
 
 def ler_cnefe() -> "pd.DataFrame":  # noqa: F821
@@ -146,7 +172,13 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--ceps-google", type=Path, default=CAMINHO_LISTA_CEPS,
                     help="lista de CEPs com coordenada; completa os CEPs que o CNEFE não cobre")
+    ap.add_argument("--sanear-publicado", action="store_true",
+                    help="só aplica a decisão D4 ao web/dados/cep_indice.json já publicado, sem ler o CNEFE")
     a = ap.parse_args()
+    if a.sanear_publicado:
+        n = sanear_indice_publicado(WEB_DADOS / "cep_indice.json", WEB_DADOS / "setores.geojson")
+        print("  %d CEPs de setores protegidos foram removidos do índice publicado." % n)
+        return
     print("Lendo CNEFE...")
     df = ler_cnefe()
     print("  %d linhas lidas" % len(df))
