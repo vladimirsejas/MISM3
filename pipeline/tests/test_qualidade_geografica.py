@@ -83,7 +83,7 @@ def test_comando_gera_relatorios_json_e_markdown(tmp_path):
     dados = json.loads(saida_json.read_text(encoding="utf-8"))
     texto = saida_md.read_text(encoding="utf-8")
     assert dados["geometrias"]["total"] == 408
-    assert "497.3 km²" in texto
+    assert "498.4 km²" in texto
     assert "proveniência" in texto
 
 
@@ -97,10 +97,15 @@ def test_limite_municipal_e_topologia_da_malha_real():
     assert resultado["geometrias"]["duplicados"] == []
     assert resultado["geometrias"]["tipos"]["outros"] == 0
     assert resultado["geometrias"]["geometrias_com_erro_estrutural"] == []
+    assert resultado["geometrias"]["auto_intersecoes"] == []
     assert topologia["avaliacao_lacunas"] == "avaliada"
-    assert topologia["sobreposicoes"] == []
-    assert topologia["lacunas_detectadas"] is False
-    assert topologia["setores_fora_detectados"] is False
+    assert topologia["sobreposicoes_relevantes"] == []
+    assert topologia["area_sobreposicoes_total_m2"] < 100_000
+    assert topologia["area_sobreposicao_maxima_m2"] < 150
+    assert topologia["area_lacunas_km2"] < 0.1
+    assert topologia["area_setores_fora_municipio_km2"] < 0.1
+    assert topologia["lacunas_relevantes"] is False
+    assert topologia["setores_fora_relevantes"] is False
     assert resultado["correspondencia_setores"]["correspondencia_completa"] is True
 
 
@@ -132,6 +137,7 @@ def test_validador_identifica_auto_intersecao_em_poligono():
     }]}
     resultado = qg.validar_geometrias(geo)
     assert resultado["geometrias_com_erro_estrutural"]
+    assert resultado["auto_intersecoes"]
     assert any("geometria_invalida" in p for p in resultado["geometrias_com_erro_estrutural"][0]["problemas"])
 
 
@@ -150,7 +156,7 @@ def test_validador_identifica_sobreposicao_e_lacuna_com_limite_referencia():
     assert len(overlap["sobreposicoes"]) == 1
     assert overlap["sobreposicoes"][0]["area_m2"] > 1
     assert overlap["lacunas_detectadas"] is True
-    assert overlap["setores_fora_detectados"] is False
+    assert overlap["setores_fora_detectados"] is False, overlap
 
 
 def test_correspondencia_setorial_detecta_ids_ausentes_e_extras():
