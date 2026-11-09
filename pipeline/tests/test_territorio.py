@@ -227,3 +227,23 @@ def test_montar_com_servico_traz_distancia_por_setor_aviso_e_pontos_sem_duplicar
     bloco = d["distancia_ate_servico"]["cras"]
     assert "por_setor" not in bloco and bloco["pontos"][0]["precisao"] == "endereco"
     assert set(bloco["pontos"][0]) == {"nome", "lat", "lon", "precisao", "raio_m"}          # só o que o mapa precisa; nada de telefone ou endereço
+
+
+
+def test_coordenadas_sem_proveniencia_usam_cep_ou_ficam_pendentes():
+    import json
+
+    raiz = Path(__file__).resolve().parents[2]
+    catalogo = json.loads((raiz / "web/dados/catalogo_manual.json").read_text(encoding="utf-8"))["servicos"]
+    indice = json.loads((raiz / "web/dados/cep_indice.json").read_text(encoding="utf-8"))["ceps"]
+    registro = t.carregar_localizacao_registro()
+    ids = {
+        "man-cras-jardim-independencia", "man-cras-panorama", "man-saude-ubs-29",
+        "man-saude-ubs-wenzel", "man-saude-usf-ferraz", "man-saude-usf-sao-miguel",
+    }
+    servicos = {s["id"]: s for s in catalogo if s.get("id") in ids}
+    assert set(servicos) == ids
+    resultados = {id_: t.localizar_servico(servicos[id_], indice, registro) for id_ in ids}
+    assert all(resultado is None or resultado[2] == "cep" for resultado in resultados.values())
+    assert sum(resultado is not None for resultado in resultados.values()) == 4
+    assert all(registro.get(id_) is None for id_ in ids)
