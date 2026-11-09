@@ -10,7 +10,7 @@
   var POR_PAGINA = 24;
 
   var estado = { todos: [], indice: null, setorBairro: null, apelidos: [], ativas: {}, texto: "", origem: null, origemRaio: 0, limite: POR_PAGINA };
-  var mapa = null, camadaPontos = null, camadaOrigem = null, tiles = null, marcadores = {}, primeiraVez = true;
+  var mapa = null, camadaPontos = null, camadaOrigem = null, tiles = null, marcadores = {}, primeiraVez = true, mapaResizeObserver = null;
 
   function el(tag, classe, texto) {
     var e = document.createElement(tag);
@@ -101,7 +101,13 @@
     camadaPontos = L.layerGroup().addTo(mapa);
     camadaOrigem = L.layerGroup().addTo(mapa);
     /* Na tela inicial o mapa fica escondido quando a pessoa abre uma área e volta: reajusta o tamanho quando reaparece. */
-    if (window.ResizeObserver) new ResizeObserver(function () { mapa.invalidateSize(); }).observe($("mapa-servicos"));
+    if (window.ResizeObserver) {
+      /* Mantém a referência viva: sem ela o observador pode ser coletado e o SVG conserva a largura do viewport anterior. */
+      mapaResizeObserver = new ResizeObserver(function () {
+        if (mapa) mapa.invalidateSize({ pan: false, debounceMoveend: true });
+      });
+      mapaResizeObserver.observe($("mapa-servicos"));
+    }
   }
 
   function desenharPontos(lista) {
