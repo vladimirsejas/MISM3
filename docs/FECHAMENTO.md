@@ -272,3 +272,11 @@ O teste foi corrigido para derivar `391 = 408 - 17` dos dados publicados e verif
 - Run #776 (`42681370347`) criou e executou os jobs reais. O job `navegador` continuou detectando marcadores Leaflet posicionados fora do retângulo do mapa (por exemplo, `leaflet-marker-icon` à direita da caixa de 163 px), embora a caixa já usasse `overflow:clip`. O job `testes` avançou normalmente pela suíte Python e Node.
 - O diagnóstico confirma que os elementos fora do retângulo pertencem ao mapa de serviços e não devem ampliar a área rolável da página. A caixa do mapa permanece limitada e recortada; foi acrescentado `overflow-x:clip` à raiz `html` para impedir que descendentes absolutos do Leaflet criem rolagem horizontal no documento, sem desativar a rolagem vertical. Commit: `7102434dd7062f8cca777f266744904691863e48`.
 - A asserção de largura total da página permanece ativa. A próxima execução precisa demonstrar que o recorte na raiz realmente mantém `scrollWidth` dentro do viewport nos quatro cenários de página/tamanho e em 200%.
+
+
+## Recorte da raiz e diagnóstico de overflow — 09/11/2026
+
+- Run #782 (`42681555981`) reproduziu a largura documental de 261 px mesmo com `overflow-x:clip` na caixa Leaflet e na raiz `html`; os marcadores do mapa continuam dentro do contêiner visual, mas aparecem como descendentes absolutos fora da caixa no cálculo de overflow.
+- Foi aplicado também `overflow-x:clip` ao `body`, preservando a rolagem vertical. Commit: `8112e9f38d9e3b6bc672995538705d65efc38c7d`.
+- O teste Playwright foi ampliado apenas com telemetria diagnóstica (largura e overflow computado de `html` e `body`); a asserção original `scrollWidth <= clientWidth` permanece. Commit: `974f08c064ce956a25652a811976534a19a5aabc`.
+- A próxima execução deve confirmar a largura real do documento e os estilos calculados; se persistir, a correção seguirá focada na origem do overflow, sem remover o teste.
