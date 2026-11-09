@@ -61,3 +61,8 @@ Os três arquivos abaixo foram adicionados em `dados/referencia_ibge/` como refe
 - `PROVENIENCIA.txt`: documentação dos arquivos oficiais de origem, sistemas de coordenadas, hashes e verificações de equivalência shapefile/GeoPackage. É evidência de proveniência, não licença.
 
 Os arquivos de geometria não contêm tabelas escolares, CNES, CNEFE, dados de CEP Google, capturas de tela ou contagens de pessoas/domicílios. As fontes locais protegidas e as capturas Google permanecem no computador do responsável, conforme a regra de privacidade e a auditoria de licenças.
+
+
+## Atribuição dos mapas-base Esri — 09/11/2026
+
+As camadas opcionais World Light Gray Base e World Light Gray Reference, em `web/mapa.js`, exibem a atribuição exigida pelo serviço: Esri, HERE, Garmin, OpenStreetMap contributors e comunidade GIS. Os links clicáveis para os termos da Esri (`www.esri.com`) e para os créditos/licença do OpenStreetMap (`www.openstreetmap.org`) são elementos HTML `<a href>` de atribuição, com `target="_blank"` e `rel="noopener noreferrer"`; não são endpoints de tiles nem geram requisição de imagem ao abrir o mapa. As requisições de tiles são exclusivamente para `server.arcgisonline.com` e permanecem condicionadas à marcação explícita da caixa de ruas, desmarcada por padrão. A camada OpenStreetMap direta usa exclusivamente `tile.openstreetmap.org` e também só é carregada após opt-in. O teste `web/tests/mapa_privacidade.test.js` verifica separadamente os dois endpoints de tiles e os dois domínios de links de atribuição. A ressalva de uso não comercial e a necessidade de confirmar a qualificação institucional permanecem vigentes.
