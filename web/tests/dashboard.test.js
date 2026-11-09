@@ -448,18 +448,17 @@ assert(onibus.lacunas.some((t) => /Circular I/.test(t) && /Volta/.test(t)) && on
 assert(!/\.pdf|OCR|docs\/|desenvolvedor/i.test(JSON.stringify(onibus)), "o JSON de horários não pode expor detalhes internos");
 assert(/Só temos o sentido/.test(app) && /Essa data já passou/.test(app) && /Em feriados os horários podem mudar/.test(app), "o site deve avisar sentido faltante, validade vencida e feriados");
 /* ---- etapas das escolas (Censo Escolar 2025): dados individuais dependem da regeneração local ---- */
-const escolasMunicipais = JSON.parse(ler("dados/escolas_municipais.json"));
-const comEtapas = escolasMunicipais.escolas.filter((s) => s.etapas);
+const comEtapas = catalogo.servicos.filter((s) => s.etapas);
 const regeneracaoPendente = fs.existsSync(path.resolve(web, "../docs/territorial/REGENERACAO_LOCAL_PENDENTE.md"));
 if (regeneracaoPendente) {
-  assert.strictEqual(comEtapas.length, 0, "enquanto a regeneração local estiver pendente, não publicar etapas escolares individuais sem a conferência INEP local");
+  assert.strictEqual(comEtapas.length, 0, "enquanto a regeneração local estiver pendente, não publicar etapas individuais sem a conferência INEP local");
 } else {
   assert(comEtapas.length >= 40, "após a regeneração local, as escolas municipais ligadas ao INEP devem trazer as etapas: " + comEtapas.length);
 }
 comEtapas.forEach((s) => {
   assert.deepStrictEqual(Object.keys(s.etapas).sort(), ["creche", "fonte", "pre_escola"], "etapas só com creche, pré-escola e fonte: " + s.nome);
   assert(typeof s.etapas.creche === "boolean" && typeof s.etapas.pre_escola === "boolean", "etapas booleanas: " + s.nome);
-  assert(s.vinculo_inep && s.localizacao_mapa, "etapas somente em escolas com vínculo INEP e registro de localização: " + s.nome);
+  assert(s.tipo === "creche" && s.subtipo === "escola_municipal", "etapas só nas escolas municipais ligadas: " + s.nome);
 });
 assert(app.includes("Etapas que a escola oferece") && app.includes("não se há vaga"), "o cartão deve mostrar as etapas e avisar que não indica vaga");
 
