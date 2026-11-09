@@ -121,29 +121,38 @@ def servicos_creches(df, indice: dict, hoje: str) -> list[dict]:
 
 
 # ------------------------------------------------------------ catalogo manual
-def carregar_etapas(ligacao: Path | None = None, oferta: Path | None = None) -> dict:
-    """{id do catálogo: etapas que a escola oferece segundo o Censo Escolar}.
+def carregar_etapas(ligacao: Path | None = None, escola: Path | None = None) -> dict:
+    """{id do catálogo: etapas binárias confirmadas na tabela Escola local do INEP}.
 
-    Junta catalogo/inep_escolas.csv (id do catálogo -> código INEP) com web/dados/oferta_educacao_infantil.json. Só
-    entra quem está nos dois arquivos. Devolve só se a escola oferece creche e pré-escola: nada de número de
-    matrículas (matrícula não é vaga e, num cartão, pareceria vaga).
+    Lê somente CO_ENTIDADE e os indicadores de oferta de creche/pré-escola da tabela Escola 2025,
+    filtrada para Rio Claro. Não lê nem publica matrículas ou turmas por unidade. A tabela bruta
+    permanece local; o JSON público recebe apenas dois booleanos e a fonte.
     """
     import csv
+    import oferta_educacao_infantil as inep
 
     ligacao = ligacao or CATALOGO / "inep_escolas.csv"
-    oferta = oferta or WEB_DADOS / "oferta_educacao_infantil.json"
-    if not (ligacao.exists() and oferta.exists()):
+    escola = escola or (RAIZ / "docs" / "educacao" / "dados" / inep.ARQUIVOS["escola"])
+    if not (ligacao.exists() and escola.exists()):
         return {}
-    escolas = {e["inep"]: e for e in json.loads(oferta.read_text(encoding="utf-8")).get("escolas", [])}
+    colunas = ["CO_MUNICIPIO", "CO_ENTIDADE", "TP_SITUACAO_FUNCIONAMENTO", "IN_COMUM_CRECHE", "IN_COMUM_PRE"]
+    df = inep.ler_filtrado(escola, colunas)
+    por_codigo = {}
+    for r in df.to_dict("records"):
+        if str(r["TP_SITUACAO_FUNCIONAMENTO"]).strip() != "1":
+            continue
+        codigo = str(r["CO_ENTIDADE"]).strip()
+        por_codigo[codigo] = {
+            "creche": str(r["IN_COMUM_CRECHE"]).strip() == "1",
+            "pre_escola": str(r["IN_COMUM_PRE"]).strip() == "1",
+            "fonte": "Censo Escolar 2025 (INEP)",
+        }
     saida = {}
-    with ligacao.open(encoding="utf-8", newline="") as f:
+    with ligacao.open(encoding="utf-8-sig", newline="") as f:
         for r in csv.DictReader(f):
-            e = escolas.get(r["inep"])
-            if e is None:
-                print("AVISO: %s ligado ao INEP %s, que não está na oferta do Censo; sem etapas." % (r["id"], r["inep"]))
-                continue
-            saida[r["id"]] = {"creche": bool(e["oferece_creche"]), "pre_escola": bool(e["oferece_pre_escola"]),
-                              "fonte": "Censo Escolar 2025 (INEP)"}
+            etapas = por_codigo.get(str(r["inep"]).strip())
+            if etapas is not None:
+                saida[r["id"]] = etapas
     return saida
 
 
