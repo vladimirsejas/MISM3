@@ -90,6 +90,14 @@
   }
 
   /* ---------------------------------------------------------------- mapa */
+  /* O redimensionamento do viewport (inclusive zoom do navegador) deve atualizar o renderer SVG do Leaflet. */
+  window.addEventListener("resize", function () {
+    if (!mapa) return;
+    window.requestAnimationFrame(function () {
+      if (mapa) mapa.invalidateSize({ pan: false, debounceMoveend: true });
+    });
+  });
+
   function iniciarMapa(setores) {
     if (typeof L === "undefined") { mensagem("O mapa não pôde ser carregado, mas a lista abaixo funciona normalmente."); return; }
     mapa = L.map("mapa-servicos", { zoomControl: false, attributionControl: true, minZoom: 10, maxZoom: 18 }).setView([-22.41, -47.56], 12);
