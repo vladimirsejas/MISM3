@@ -60,3 +60,25 @@ jobs:
       - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva16.json
       # Reserva 17: validação independente com rótulos alinhados aos destinos sociais existentes.
       - run: node docs/avaliacao_perfis/rodar_perfis.js perfis_reserva17.json
+
+  navegador:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Instalar Playwright e Chromium em versão fixa
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Servir somente a pasta web localmente
+        run: python -m http.server 8765 --directory web > /tmp/mism3-http.log 2>&1 &
+      - name: Testar página inicial e mapa em desktop e celular
+        run: node web/tests/browser_playwright.cjs
+
