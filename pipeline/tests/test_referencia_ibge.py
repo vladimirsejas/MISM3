@@ -1,3 +1,4 @@
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -12,6 +13,8 @@ from shapely.strtree import STRtree
 ROOT = Path(__file__).resolve().parents[2]
 REF = ROOT / "dados" / "referencia_ibge" / "setores_rio_claro_original_ibge_2022.geojson"
 PUBLICADO = ROOT / "web" / "dados" / "setores.geojson"
+MUNICIPIO = ROOT / "dados" / "referencia_ibge" / "municipio_rio_claro_2025.geojson"
+PROVENIENCIA = ROOT / "dados" / "referencia_ibge" / "PROVENIENCIA.txt"
 CASAS = 6
 # Uma célula de quantização aproximada de 0,11 m × 0,11 m.
 # O limiar é determinado pela resolução das coordenadas publicadas, não pelos resultados.
@@ -84,10 +87,8 @@ def test_centroides_matematicos_sao_reauditados_na_geometria_original():
     referencia, _ = carregar()
     externos = []
     for feature in referencia["features"]:
-        geom = {
-            "type": feature["geometry"]["type"],
-            "coordinates": arredondar(feature["geometry"]["coordinates"]),
-        }
+        # Reauditoria na geometria IBGE bruta, antes do arredondamento de publicação.
+        geom = feature["geometry"]
         lat, lon = auditoria_centroides._centro_atual(geom)
         if not auditoria_centroides._contem(geom, lon, lat):
             externos.append(str(feature["properties"]["CD_SETOR"]))
@@ -97,3 +98,15 @@ def test_centroides_matematicos_sao_reauditados_na_geometria_original():
         "354390705000502", "354390705000524", "354390705000529",
         "354390705000530", "354390705000541",
     ]
+
+
+def test_hashes_dos_arquivos_de_referencia_conferem_com_a_proveniencia():
+    esperados = {
+        "setores_rio_claro_original_ibge_2022.geojson": "41a2f2288e729b52d1ac772897514ccc7c1cfea0b933896330fb31ffcc6e13b5",
+        "municipio_rio_claro_2025.geojson": "53c494fcf906c80dbee59ffad18763df07e28315c5a53795671110f27d01c93a",
+    }
+    texto = PROVENIENCIA.read_text(encoding="utf-8")
+    for nome, esperado in esperados.items():
+        caminho = REF.parent / nome
+        assert hashlib.sha256(caminho.read_bytes()).hexdigest() == esperado
+        assert esperado in texto

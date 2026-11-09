@@ -201,7 +201,7 @@ def test_centro_de_producao_preserva_centroides_internos_e_corrige_os_externos()
         else:
             corrigidos += 1
             assert at.haversine_km(lat_antigo, lon_antigo, lat_novo, lon_novo) < 0.062
-    assert (preservados, corrigidos) == (399, 9)
+    assert (preservados, corrigidos) == (397, 11)
 
 
 

@@ -29,3 +29,7 @@ Preparado em 09/11/2026 a partir de cópias dos arquivos oficiais que o autor ma
    O setores.geojson publicado na main (simplificado com Douglas-Peucker de cerca de 4 m, por polígono) tem 473 pares de setores sobrepostos, dos quais 177 acima de 100 m2.
 
 Ferramentas: Python 3.13, shapely 2.2.0 (GEOS 3.14.1), pyshp, pyogrio 0.13.0, pyproj.
+
+5. SHA-256 dos arquivos GeoJSON de referência versionados (cópias filtradas para Rio Claro, sem contagens):
+   setores_rio_claro_original_ibge_2022.geojson  41a2f2288e729b52d1ac772897514ccc7c1cfea0b933896330fb31ffcc6e13b5
+   municipio_rio_claro_2025.geojson              53c494fcf906c80dbee59ffad18763df07e28315c5a53795671110f27d01c93a
