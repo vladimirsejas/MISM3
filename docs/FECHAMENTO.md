@@ -19,10 +19,10 @@ SHA de partida: `9ed9731ca55b97888a6e0fef2df04fdd9eedbd9d`
 | 1. Privacidade | Concluído | `edc9ea8ee14170d14b275641bf57bc32bdea7dbd` | `42657889614` — sucesso |
 | 2. Geografia | Em andamento — correções e testes versionados; Actions sem jobs e regeneração local pendente | `a1a0f88`, `71eead9`, `81f6843`, `22e2c40`, `4b3db12`, `33c6b94`, `671e958`, `7d1e003`, `23e9b78` | `42671168961` — referência aprovada; `42672174236`, `42672449139` e `42672558750` — falha pré-job, zero jobs criados |
 | 3. Fontes e licenças | Em andamento — inventário e atribuições atualizados; restrições não confirmadas mantidas explícitas | `c3cbff0`, `f66f616`, `df7d519`, `9aae00b`, `1fe887b` | `42673160479` — execução pendente; Actions sem jobs nas execuções anteriores |
-| 4. Mapa e painel | Correções de exportação e privacidade commitadas; validação CI/navegador pendente | `c3cbff0`, `f66f616`, commit desta atualização | Execução Actions pendente; histórico recente de falha pré-job |
+| 4. Mapa e painel | Correções de exportação, privacidade e responsividade validadas; regeneração local continua no Bloco 2 | commits desta retomada | Run #804 (`42682346999`) — `testes` e `navegador` sucesso |
 | 5. Sistema de orientação | Em andamento — privacidade do texto livre reforçada; 306 testes Python passaram, um ajuste de auditoria D4 pendente | `2a21b73` e commit corretivo desta atualização | `42674601130` — referência aprovada; pytest 306 passed, 1 failed, 2 skipped; corrigida a expectativa de 391 setores com distância |
-| 6. Documentação definitiva | Documentação e runbook atualizados; validação final dos testes pendente | commits desta retomada | Actions 719/721 anteriores reprovadas; novas execuções após correções pendentes |
-| 7. Fechamento | Em validação; PR #99 permanece draft, sem merge | commits desta retomada | aprovação dos jobs `testes` e `navegador` ainda pendente |
+| 6. Documentação definitiva | Concluído — documentação, fontes, licenças, decisões e runbook local atualizados | commits desta retomada | Run #804 (`42682346999`) — ambos os jobs sucesso |
+| 7. Fechamento | Concluído para revisão — PR #99 pronto, aberto, sem merge; publicação externa não autorizada | commits desta retomada | Run #804 (`42682346999`) — `testes` sucesso e `navegador` sucesso |
 
 ## Registro técnico
 
@@ -298,3 +298,21 @@ O teste foi corrigido para derivar `391 = 408 - 17` dos dados publicados e verif
 - Foi criado `web/tests/servicos_pendentes.test.js` para verificar que o marcador permanece vazio, que o estado é explicitamente pendente e que a aplicação não o apresenta como dados do pipeline. Commit `9237b8ea9990ea1031e6b7fcd4248eae1088cf4d`.
 - O runbook local foi atualizado para explicar o marcador e reafirmar que ele não libera a regeneração. Commit `a54543c31b68f9e675257fcf3cb21dce0f024364`.
 - A próxima Actions precisa confirmar zero respostas HTTP de erro e zero erros de console, mantendo todos os testes anteriores.
+
+
+## Bloco 6 — documentação definitiva: concluído
+
+- `docs/FECHAMENTO.md` reúne o histórico dos sete blocos, decisões, correções, SHAs, falhas intermediárias e execuções reais.
+- `AVISOS-DE-TERCEIROS.md` registra Esri, OpenStreetMap, fontes e ressalvas de licença/uso; links de atribuição estão separados de endpoints de tiles.
+- `docs/territorial/REGENERACAO_LOCAL_PENDENTE.md` permanece como runbook obrigatório e foi atualizado para esclarecer o marcador vazio `web/dados/servicos.json`. Esse marcador não contém dados do pipeline e não substitui a regeneração local.
+- Os valores de área permanecem separados e rotulados corretamente: atributo IBGE 498,403 km²; área geodésica GRS80 498,402 km²; soma geodésica dos setores 498,422 km²; recálculo esférico 499,691 km², identificado como esférico.
+- A documentação não declara licença de redistribuição que não foi comprovada, não declara o uso institucional Esri como formalmente autorizado e não declara a regeneração local como concluída.
+
+## Bloco 7 — validação e encaminhamento para revisão: concluído
+
+- Run final de validação: **#804**, ID `42682346999`, SHA testado `c243947d0c9763d06cee3c49bce8fc27fa633be8`. Os dois jobs reais terminaram com sucesso.
+- Job `testes`: referência IBGE **5 passed**; suíte Python **308 passed, 2 skipped**; todos os arquivos `web/tests/*.test.js` passaram, incluindo `qualidade-dados.test.js`, `mapa_privacidade.test.js` e `servicos_pendentes.test.js`; avaliações complementares executadas até o fim.
+- Job `navegador`: Playwright aprovou a página inicial e o mapa territorial em desktop **1280×800** e celular **390×844**; **408 setores desenhados**, **17 protegidos** identificados; navegação por teclado e foco visível; nenhuma requisição externa; nenhum erro de console/JavaScript nem resposta HTTP de erro; zoom 200% sem rolagem horizontal.
+- O teste continua exigindo as duas categorias de privacidade: somente tiles OSM/Esri sob opt-in; somente links de atribuição Esri/OSM com `rel="noopener noreferrer"`.
+- PR #99 fica pronta para revisão, aberta e sem merge. Não houve deploy, publicação fora do GitHub, operação Cloudflare ou alteração em `main`.
+- **Ressalva explícita:** o fechamento técnico/CI não conclui a regeneração territorial local. O Bloco 2 permanece em andamento até o responsável executar e validar localmente a regeneração e as verificações de dados descritas em `docs/territorial/REGENERACAO_LOCAL_PENDENTE.md`. O marcador `servicos.json` não altera essa condição.
