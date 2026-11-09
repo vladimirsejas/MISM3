@@ -10,7 +10,6 @@ ARQUIVO = RAIZ / "dados" / "geografia" / "limite_municipal_2022.geojson"
 def test_limite_municipal_e_da_edicao_2022_do_ibge():
     dados = json.loads(ARQUIVO.read_text(encoding="utf-8"))
     assert dados["meta"]["codigo_ibge"] == "3543907"
-    assert dados["meta"]["ano_malha"] if "ano_malha" in dados["meta"] else 2022
     assert "geoftp.ibge.gov.br" in dados["meta"]["url"]
     assert len(dados["features"]) == 1
     feature = dados["features"][0]
