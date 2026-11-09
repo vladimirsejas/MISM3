@@ -62,13 +62,16 @@ def resumir_setores(distancias, limiares):
     return {"setores": total, "mediana_km": round(mediana, 2), "p90_km": round(p90, 2), "acima_de": acima}
 
 
-def calcular(geojson, servicos, indice_cep, usar_cep, limiares=LIMIARES_KM, localizacao_registro=None):
+def calcular(geojson, servicos, indice_cep, usar_cep, limiares=LIMIARES_KM, localizacao_registro=None, escolas=None):
     por_cat = {c: [] for c in at.CATEGORIAS}
     totais = {c: 0 for c in at.CATEGORIAS}
     for s in servicos:
         if not str(s.get("id", "")).startswith("man-"):
             continue
         for c, (tipo, sub) in at.CATEGORIAS.items():
+            # A base escolar consolidada substitui as linhas escolares do catálogo.
+            if escolas is not None and c == "escola":
+                continue
             if s.get("tipo") == tipo and s.get("subtipo") == sub:
                 totais[c] += 1
                 if usar_cep:
@@ -77,6 +80,19 @@ def calcular(geojson, servicos, indice_cep, usar_cep, limiares=LIMIARES_KM, loca
                     xy = at.coordenada_catalogo_verificada(s, localizacao_registro)
                 if xy:
                     por_cat[c].append(xy)
+
+    if escolas is not None:
+        totais["escola"] = len(escolas)
+        for escola in escolas:
+            local = escola.get("localizacao_mapa") or {}
+            try:
+                lat, lon = float(local["latitude"]), float(local["longitude"])
+            except (KeyError, TypeError, ValueError):
+                continue
+            metodo = str(local.get("metodo") or "pendente")
+            if metodo == "coordenada_individual" or (usar_cep and metodo == "centroide_cep"):
+                por_cat["escola"].append((lat, lon))
+
     setores = []
     for f in geojson["features"]:
         pr = f["properties"]
@@ -100,7 +116,7 @@ def calcular(geojson, servicos, indice_cep, usar_cep, limiares=LIMIARES_KM, loca
     return saida
 
 
-def gerar(geojson, servicos, indice_cep, hoje=None, localizacao_registro=None):
+def gerar(geojson, servicos, indice_cep, hoje=None, localizacao_registro=None, escolas=None):
     return {
         "meta": {
             "fonte": "IBGE, Censo Demográfico 2022 (setores) e catálogo verificado do Observatório da Mulher",
@@ -110,7 +126,7 @@ def gerar(geojson, servicos, indice_cep, hoje=None, localizacao_registro=None):
             "pessoas_total": None,
             "setores_suprimidos": sum(1 for f in geojson["features"] if setor_suprimido(f["properties"])),
         },
-        "cenarios": {nome: calcular(geojson, servicos, indice_cep, usar, localizacao_registro=localizacao_registro) for nome, usar in CENARIOS.items()},
+        "cenarios": {nome: calcular(geojson, servicos, indice_cep, usar, localizacao_registro=localizacao_registro, escolas=escolas) for nome, usar in CENARIOS.items()},
     }
 
 
@@ -124,7 +140,12 @@ def main() -> int:
     arq = DADOS / "cep_indice.json"
     indice = json.loads(arq.read_text(encoding="utf-8")).get("ceps", {}) if arq.exists() else {}
     localizacao_registro = at.carregar_localizacao_registro()
-    saida = gerar(geo, cat, indice, localizacao_registro=localizacao_registro)
+    arq_escolas = DADOS / "escolas_municipais.json"
+    if not arq_escolas.exists():
+        print("NÃO GERADO: falta web/dados/escolas_municipais.json. Gere a base escolar antes da exposição territorial.")
+        return 1
+    escolas = json.loads(arq_escolas.read_text(encoding="utf-8")).get("escolas", [])
+    saida = gerar(geo, cat, indice, localizacao_registro=localizacao_registro, escolas=escolas)
     destino = DADOS / "exposicao_distancia.json"
     destino.write_text(json.dumps(saida, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     print("Gravado %s; contagens populacionais não são publicadas." % destino.relative_to(RAIZ))
