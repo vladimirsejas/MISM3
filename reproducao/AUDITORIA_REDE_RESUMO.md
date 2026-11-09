@@ -10,7 +10,7 @@ Este resumo substitui os relatórios detalhados das medições de rede (que cont
 |---|---|
 | Texto digitado, CEP e coordenadas | Em todos os cenários com CEP de equipamento público (três CEPs) e com mensagem e CEP fictícios, houve **0 ocorrências** do texto, do CEP ou das coordenadas do CEP em URL, cabeçalho ou corpo de requisição. |
 | Métodos | Nenhuma requisição diferente de GET e nenhuma com corpo. |
-| Cookies e Referer | Nenhuma requisição externa concluída levou `Cookie`; nenhuma levou `Referer` (a página usa `referrer` igual a `no-referrer`). |
+| Cookies e Referer | Nenhuma requisição externa concluída levou `Cookie`. Nas medições de 06/11/2026 nenhuma levou `Referer` (a página usa `referrer` igual a `no-referrer`). **Mudança de 08/11/2026:** os pedidos de tiles do OpenStreetMap passaram a enviar o `Referer` apenas com a origem do site, porque a política de uso deles exige Referer em páginas web; medido depois da mudança: 15 pedidos, todos 200, `Referer` igual à origem, sem cookie. Os tiles da Esri seguem sem Referer. |
 | Armazenamento | `localStorage`, `sessionStorage`, IndexedDB, Cache Storage e Service Workers terminaram vazios, inclusive depois de recarregar a página. |
 | Caixa de imagens de mapa desmarcada (padrão atual dos dois mapas) | **0 requisições externas** ao abrir a página, digitar o CEP e recarregar. |
 | Caixa de imagens marcada | Saem pedidos `GET` de imagens de mapa (tiles) à Esri (mapa de serviços da página inicial) ou ao OpenStreetMap (mapa "perto de mim"). Nesses pedidos saem o endereço IP, o navegador (user-agent) e a região do mapa vista, pelos números z/x/y dos tiles. |

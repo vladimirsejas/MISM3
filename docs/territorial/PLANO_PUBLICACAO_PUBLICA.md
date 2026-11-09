@@ -114,7 +114,7 @@ O histórico público conserva versões anteriores desses arquivos. Além disso,
 A publicação só deve avançar quando todos estiverem atendidos:
 
 - [x] D4 aplicada aos arquivos de publicação e aos geradores da branch; [ ] exposição histórica mitigada na `main` pública, em commits antigos e em relatórios anteriores.
-- [ ] Índice de CEP revisado quanto à necessidade, privacidade e termos de redistribuição (o filtro D4 foi corrigido e 3 CEPs de setores protegidos saíram; ver seção 7.3 para o que continua pendente).
+- [x] Índice de CEP revisado quanto à privacidade (filtro D4 corrigido e regra de CEP com poucos endereços aplicada); [ ] termos de redistribuição do CNEFE/IBGE ainda não confirmados (seção 7.4).
 - [ ] Licenças, autorizações e atribuições dos recursos de terceiros confirmadas ou recursos substituídos.
 - [ ] Serviços e telefones prioritários conferidos; contagens recalculadas.
 - [ ] README, estado do projeto, política pública e metadados atualizados; a lista de matrículas por escola foi removida do arquivo público.
@@ -147,15 +147,18 @@ Esta seção registra o que foi **medido** nesta data, sem declarar a publicaç�
 
 ### 7.3 Risco residual conhecido
 
-- **CEPs com poucos endereços:** 63 CEPs do índice têm menos de 3 endereços (36 com 1 endereço e 27 com 2). A D4 vale para setores; para CEPs não há decisão do autor. Cada entrada publica latitude e longitude com 4 casas (cerca de 11 m) e um raio de referência: o raio é só metadado, a coordenada é a do conjunto de endereços (no caso de 1 endereço, o próprio ponto). **Decisão pendente:** omitir esses CEPs, generalizar a coordenada para o centro do setor ou manter.
+- **CEPs com poucos endereços (tratado em 08/11/2026):** os CEPs com menos de 3 endereços perderam o ponto próprio: a coordenada passou a ser o centro do setor censitário e o raio cobre o setor (300 a 1.500 m); sem setor utilizável, o CEP é omitido. Regra e limite conhecido (124 CEPs apontam para 25 códigos de setor do CNEFE que não existem na malha publicada) em `POLITICA_PRIVACIDADE_DADOS_TERRITORIAIS.md`.
 - **Subtração:** o total municipal do IBGE (201.418) é público; com todos os setores visíveis publicados, a soma dos 17 setores protegidos, em conjunto, pode ser obtida por subtração. É uma soma de 17 setores, não o valor de nenhum deles (o número não é reproduzido aqui de propósito), mas é uma limitação da decisão de manter os demais setores visíveis.
 - **Conteúdo de tiles:** com a caixa de imagens marcada, Esri ou OpenStreetMap recebem IP, user-agent e a região do mapa vista (ver `reproducao/AUDITORIA_REDE_RESUMO.md`).
 
-### 7.4 Licenças e termos (nada confirmado como autorização)
+### 7.4 Licenças e termos (verificado em 08/11/2026; só o que foi lido em página oficial conta como confirmado)
 
-- **OpenStreetMap, tiles:** a política de uso (https://operations.osmfoundation.org/policies/tiles/) exige Referer em sites; o MISM3 usa `no-referrer`. Em 06/11/2026 os tiles responderam 200 sem Referer nos testes, mas isso não garante que a política seja cumprida nem que não haverá bloqueio.
-- **Esri World Imagery / mapa-base:** os termos oficiais não foram confirmados; respostas de funcionários da Esri em fóruns indicam restrição de licença para uso do serviço. **Bloqueio de publicação até confirmar os termos ou trocar de provedor.**
-- **IBGE, INEP e CNES/DATASUS:** os textos oficiais de licença e de redistribuição não foram confirmados nesta verificação (as buscas retornaram só material sobre os produtos). Permanecem como pendência em `AVISOS-DE-TERCEIROS.md`.
+- **OpenStreetMap, tiles (política lida na íntegra em https://operations.osmfoundation.org/policies/tiles/):** exige URL `https://tile.openstreetmap.org/{z}/{x}/{y}.png`, `Referer` válido em páginas web (e proíbe política de referrer restritiva), atribuição visível ("© OpenStreetMap contributors" com link para a licença), respeito ao cache e nenhuma busca antecipada de tiles fora da vista da pessoa. **Ajuste feito:** só os tiles do OpenStreetMap enviam o `Referer` com a origem do site (`referrerPolicy: "origin"`, sem caminho, `#` ou CEP) e a atribuição ganhou o link; o restante do site continua com `no-referrer`. Medido: 15 de 15 pedidos com 200 e `Referer` igual à origem. O que a política diz sobre uso intenso ou comercial não foi avaliado para este projeto; o carregamento só acontece depois de a pessoa marcar a caixa.
+- **Esri, mapa-base (World Light Gray Base e Reference):** a página do item e a de atribuição da Esri não carregaram na leitura; o JSON do serviço informa `copyrightText` e remete os termos a https://goto.arcgisonline.com/maps/World_Imagery, **que não foi lido**. Os termos que autorizam (ou não) o uso por URL direta num site público **não estão confirmados**. **Bloqueio de publicação até confirmar os termos ou trocar de provedor.** A camada continua opt-in (caixa desmarcada).
+- **IBGE:** o índice oficial do FTP do Censo 2022 diz que "todos os arquivos aqui disponíveis são públicos" (https://ftp.ibge.gov.br/Censos/Censo_Demografico_2022/), mas **nenhuma licença nomeada nem regra de atribuição foi lida**: as páginas `www.ibge.gov.br` e a ficha de metadados da malha responderam 403 à ferramenta de leitura. Pendente: ler a política de uso do IBGE num navegador.
+- **INEP:** as páginas de dados abertos e de microdados do INEP (https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos) indicam, segundo o resumo obtido na leitura (não confirmado palavra por palavra), a licença do site Creative Commons Atribuição-SemDerivações 3.0 e que o INEP restringe formatos por causa da LGPD. Não há regra de redistribuição específica do Censo Escolar nessas páginas. **Se a licença vale para os conjuntos de dados e se o uso em dados derivados e agregados é compatível com "SemDerivações" é questão jurídica em aberto.**
+- **CNES/DATASUS:** o portal de dados abertos do Ministério da Saúde (https://dadosabertos.saude.gov.br/) declara, textualmente, que todo o conteúdo do site está sob a licença Creative Commons Atribuição-SemDerivações 3.0. O site do CNES (`cnes.datasus.saude.gov.br`) não pôde ser lido (falha de DNS), então nada específico do CNES foi confirmado.
+- **Prefeitura de Rio Claro, Procon-SP e demais fontes municipais e estaduais:** não verificadas nesta etapa.
 
 ### 7.5 Verificações no navegador (Chromium sem janela, servidor local)
 
