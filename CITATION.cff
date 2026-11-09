@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "Se você utilizar este software, cite-o conforme os metadados deste arquivo."
+title: "Observatório da Mulher (MISM3): orientação a serviços públicos para mulheres de Rio Claro (SP), com processamento local"
+type: software
+authors:
+  - family-names: Sejas
+    given-names: Vladimir Queiroz
+license: MIT
+repository-code: "https://github.com/vladimirsejas/MISM3"
+abstract: >-
+  Site estático de orientação para mulheres de Rio Claro (SP) que reúne serviços públicos
+  com fonte e data e recomenda para onde ir a partir do que a usuária escreve, com
+  recuperação de informação e processamento local no navegador. O código é licenciado
+  sob MIT; a documentação e os textos autorais, sob CC BY 4.0; dados, imagens, mapas e
+  documentos de terceiros não são cobertos por essas licenças (ver AVISOS-DE-TERCEIROS.md).
+keywords:
+  - orientação a serviços públicos
+  - recuperação de informação
+  - processamento local
+  - Rio Claro
+  - violência contra a mulher
+# Campos que só devem ser preenchidos quando existirem de fato (não inventar):
+# version e date-released: quando houver uma versão com etiqueta (tag) de lançamento.
+# doi: somente depois que o Zenodo atribuir um.
+# affiliation: a definir pelo autor.

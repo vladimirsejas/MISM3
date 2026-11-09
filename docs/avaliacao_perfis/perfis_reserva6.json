@@ -1,0 +1,250 @@
+{
+  "meta": {
+    "escrito_em": "2026-10-16",
+    "autor": "equipe (assistente)",
+    "aviso": "Conjunto consultado durante o desenvolvimento e usado para orientar ajustes; não é mais uma avaliação independente. Manter apenas como regressão no CI. Não usar para treino nem para estimar desempenho final.",
+    "campos": "mesmos de perfis.json"
+  },
+  "frases": [
+    {
+      "id": "r6av1",
+      "perfil": "avo",
+      "texto": "sou vó, crio meus netos e estou sem dinheiro para as despesas",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r6av2",
+      "perfil": "avo",
+      "texto": "cuido dos meus netinhos e não sobra nada da aposentadoria",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r6av3",
+      "perfil": "avo",
+      "texto": "estou criando dois netos e preciso de ajuda com comida",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r6av4",
+      "perfil": "avo",
+      "texto": "meus netos moram comigo e eu não consigo pagar as contas",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia",
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r6av5",
+      "perfil": "avo",
+      "texto": "sou aposentada e sustento meus netos sozinha",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r6av6",
+      "perfil": "avo",
+      "texto": "a pensão é pouca para alimentar meus netinhos",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r6av7",
+      "perfil": "avo",
+      "texto": "crio minha neta desde pequena e preciso de apoio para a família",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r6av8",
+      "perfil": "avo",
+      "texto": "minha aposentadoria não dá para mim e para as crianças que crio",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r6av9",
+      "perfil": "avo",
+      "texto": "estou cuidando dos netos e falta dinheiro para comprar gás",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r6av10",
+      "perfil": "avo",
+      "texto": "sou vó e pago comida e roupa dos meus netos com minha pensão",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r6av11",
+      "perfil": "avo",
+      "texto": "fiquei responsável pelos meus netos e não consigo manter a casa",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos",
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r6av12",
+      "perfil": "avo",
+      "texto": "meu benefício acaba antes do mês e tenho três netinhos comigo",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r6av13",
+      "perfil": "avo",
+      "texto": "cuido dos netos enquanto minha filha trabalha e a renda não chega",
+      "principal": "assistencia",
+      "aceita": [
+        "trabalho"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r6av14",
+      "perfil": "avo",
+      "texto": "preciso cadastrar minha família porque meus netos vivem comigo",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r6av15",
+      "perfil": "avo",
+      "texto": "estou criando meus netos e quero saber onde pedir orientação no CRAS",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r6av16",
+      "perfil": "avo",
+      "texto": "sou avó, faço tudo pelas crianças e não tenho dinheiro nem para alimentação",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r6av17",
+      "perfil": "avo",
+      "texto": "preciso arrumar trabalho porque sustento meus netos e a aposentadoria não basta",
+      "principal": "trabalho",
+      "aceita": [
+        "assistencia"
+      ],
+      "precisa": [
+        "trabalho",
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r6av18",
+      "perfil": "avo",
+      "texto": "meu neto precisa de creche para eu poder procurar emprego",
+      "principal": "educacao",
+      "aceita": [
+        "trabalho"
+      ],
+      "precisa": [
+        "educacao",
+        "trabalho"
+      ]
+    },
+    {
+      "id": "r6lim1",
+      "perfil": "limite",
+      "texto": "como faço um bolo de fubá para vender",
+      "principal": "trabalho",
+      "aceita": [],
+      "precisa": [
+        "trabalho"
+      ]
+    },
+    {
+      "id": "r6lim2",
+      "perfil": "limite",
+      "texto": "me explica a diferença entre aposentadoria e pensão por morte",
+      "principal": "direitos",
+      "aceita": [],
+      "precisa": [
+        "direitos"
+      ]
+    }
+  ]
+}

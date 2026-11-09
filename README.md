@@ -1,0 +1,268 @@
+# Observatório da Mulher (MISM3)
+
+Site estático de orientação para mulheres de Rio Claro (SP): reúne serviços públicos verificados (assistência social, saúde, educação, trabalho, direitos, moradia, transporte) e recomenda para onde ir a partir do que a pessoa escreve. Projeto acadêmico de demonstração (Fatec Rio Claro, Inteligência Artificial). Não é um site oficial da Prefeitura, não é vendido e não tem fins comerciais.
+
+Estado técnico detalhado: [docs/estado_do_projeto.md](docs/estado_do_projeto.md) (última verificação registrada em 05/11/2026). Decisões e histórico: [docs/registro_decisoes_desenvolvimento.md](docs/registro_decisoes_desenvolvimento.md).
+
+## Preparação para publicação pública — 08/11/2026
+
+A diretriz do autor é publicar o site, o mapa territorial e o painel de gestão, com dados agregados e ressalvas metodológicas. A supressão D4 já foi aplicada aos 17 setores pequenos e aos agregados dos 13 bairros afetados; as páginas permanecem com `noindex, nofollow` até a liberação oficial. Ainda dependem de confirmação os termos de redistribuição de dados e imagens, a conferência dos serviços e a validação final. Consulte o [plano de publicação pública](docs/territorial/PLANO_PUBLICACAO_PUBLICA.md) e a [página de privacidade e dados](web/privacidade.html).
+
+Restrições de projeto: não usa modelo de linguagem; o texto digitado nunca sai do navegador; não prevê risco individual; não decide elegibilidade a benefício; não promete vaga. Cada dado mostra fonte e data de conferência.
+
+## Arquitetura
+
+```
+fontes oficiais (IBGE, INEP, CNES, páginas municipais)      catálogos escritos à mão (catalogo/)
+                         \                                    /
+                          v                                  v
+                   pipeline/*.py  (Python: baixa, trata, treina, valida)
+                                   |
+                                   v
+                   web/dados/*.json, *.geojson  (arquivos gerados)
+                                   |
+                                   v
+              web/index.html + web/*.js  (navegador: sem servidor, sem build)
+```
+
+- O site roda inteiro no navegador. Python só gera os arquivos que o site lê; não há servidor próprio nem API em tempo de execução.
+- O dashboard é uma única página (`web/index.html`). Entre Mulheres, Rio Claro em números e o Painel são vistas carregadas sob demanda (`app.js`).
+- Os modelos de aprendizado de máquina são treinados em Python e exportados como JSON (pesos); o navegador só faz multiplicação de matrizes (`web/ia.js`, `web/orientar.js`).
+
+## Linguagens
+
+| Linguagem | Onde | Para que serve | Versão |
+|---|---|---|---|
+| JavaScript (ES5, módulos IIFE, sem bundler, sem npm) | `web/*.js`, `web/tests/`, `avaliacao/*.js` | Todo o site e seus testes; scripts de avaliação | Navegador moderno; Node 18+ para testes (CI: 20; testado: 22) |
+| Python | `pipeline/*.py`, `pipeline/tests/`, `avaliacao/avaliar.py` | Pipeline de dados, treino e exportação dos modelos, avaliação, testes | 3.10+ (CI: 3.12; testado: 3.13 e 3.14) |
+| HTML | `web/index.html` | Dashboard (página única) | HTML5 |
+| CSS | `web/estilo.css`, `web/vendor/leaflet.css` | Visual, contraste, impressão, responsividade | CSS3, sem pré-processador |
+| Batch (Windows) | `abrir_site.bat`, `atualizar_localizacoes.bat` | Abrir o site local; refazer localizações do catálogo | cmd.exe |
+| YAML | `.github/workflows/testes.yml` | Integração contínua (GitHub Actions) | |
+| JSON, GeoJSON, CSV, TXT | `web/dados/`, `catalogo/`, `avaliacao/perguntas.json` | Dados, modelos exportados, catálogos e frases de treino | UTF-8 |
+| Markdown | `README.md`, `docs/` | Documentação | |
+
+## Bibliotecas e dependências
+
+Python (instalar: `python -m pip install -r requirements.txt`; fonte única das versões mínimas):
+
+| Biblioteca | Onde é usada | Para que serve |
+|---|---|---|
+| pandas | `pipeline/cnes.py`, `common.py`, `indice_cep.py`, `oferta_educacao_infantil.py`, `servicos.py` e testes | Leitura e tratamento de CSV grandes (CNES, CNEFE, Censo Escolar) |
+| numpy | `analise_territorial.py`, `common.py`, `indice_cep.py`, `indice_orientacao.py`, `treinar_necessidades.py`, `treinar_perigo.py`, `treinar_escopo.py` | Arrays, cálculo numérico, distâncias |
+| scikit-learn | `treinar_necessidades.py`, `treinar_perigo.py`, `treinar_escopo.py` (TfidfVectorizer, LogisticRegression, OneVsRestClassifier, StratifiedKFold); `indice_orientacao.py` (TfidfVectorizer, TruncatedSVD); `analise_territorial.py` (KMeans) | Treino dos modelos, TF-IDF, redução de dimensão (LSA) e agrupamento. Traz o scipy como dependência |
+| pyshp (módulo `shapefile`) | `pipeline/setores.py`, `pipeline/limite_municipal.py` | Ler shapefiles do IBGE |
+| pyproj | `pipeline/territorio.py`, `pipeline/qualidade_geografica.py`, `pipeline/limite_municipal.py` | Áreas geodésicas no elipsoide GRS80 e transformação de coordenadas |
+| shapely | `pipeline/qualidade_geografica.py`, `pipeline/limite_municipal.py` | Validade geométrica, interseções, união e diferença de polígonos |
+| openpyxl | `pipeline/inspecionar_arquivo.py` | Inspecionar a estrutura de planilhas .xlsx |
+| pytest | `pipeline/tests/` | Testes do pipeline |
+
+Biblioteca padrão do Python mais usada: `argparse`, `csv`, `json`, `pathlib`, `re`, `unicodedata`, `urllib` (downloads em `baixar.py` e `common.py`; verificação da chave em `testar_api.py`), `zipfile`, `subprocess` (chama o Node em `indice_orientacao.py` e `avaliar.py`).
+
+JavaScript:
+
+| Biblioteca | Onde | Para que serve |
+|---|---|---|
+| Leaflet 1.9.4 (BSD-2), copiada em `web/vendor/` (`leaflet.js`, `leaflet.css`, `images/`, `LEAFLET-LICENSE.txt`) | `web/mapa.js` (mapa de serviços), `web/territorio.js` (mapa por setor) | Mapas interativos; servida localmente |
+| Módulos do Node: `fs`, `path`, `assert`, `vm` | `web/tests/*.test.js`, `avaliacao/*.js` | Testes e scripts de linha de comando |
+
+Não há pacotes npm, `package.json`, framework, bundler nem CDN. Todo o JavaScript do site é código do projeto, exceto o Leaflet.
+
+Serviços externos: o site consulta dois serviços de tiles de mapa, ambos opcionais e desativados até ação da usuária: `tile.openstreetmap.org` (OpenStreetMap), em `web/app.js`, quando ela marca "Mostrar ruas"; e `server.arcgisonline.com` (Esri), em `web/mapa.js`, quando marca "Mostrar ruas e nomes" no mapa de serviços. Ambas vêm desmarcadas. Ao abrir o site, nenhuma imagem de mapa é pedida a outro domínio. As políticas de uso e atribuições foram revisadas e estão registradas em `AVISOS-DE-TERCEIROS.md`: OSM exige atribuição, Referer e respeito ao cache; a Esri exige atribuição e condiciona o acesso gratuito ao uso não comercial, cuja qualificação para eventual uso futuro ainda não foi formalmente confirmada. Os tiles não são redistribuídos pelo repositório. Links para páginas oficiais, WhatsApp e Google Maps abrem por clique. Em tempo de desenvolvimento, `pipeline/baixar.py` baixa dados do IBGE, INEP e DATASUS, e `pipeline/testar_api.py` faz uma chamada mínima à API da Anthropic só para verificar a chave (variável `ANTHROPIC_API_KEY`; o site não usa essa API).
+
+Integração contínua: GitHub Actions (`actions/checkout@v4`, `actions/setup-python@v5`, `actions/setup-node@v4`), Python 3.12, Node 20.
+
+## Modelos de aprendizado de máquina
+
+Todos rodam no navegador. Pesos em JSON, treinados em Python, avaliados em `avaliacao/` (resultados e limites em [docs/ia/avaliacao_orientacao.md](docs/ia/avaliacao_orientacao.md)).
+
+| Modelo | Algoritmo | Treino (script, dados) | Saída | Uso no site |
+|---|---|---|---|---|
+| Necessidades | Regressão logística um-contra-todos sobre n-gramas de caracteres (3 a 5) e palavras, TF-IDF | `pipeline/treinar_necessidades.py`, `catalogo/frases_necessidades.txt` | `web/dados/modelo_necessidades.json` | `web/ia.js` (sugestão de necessidades); dica de intenção no orientador |
+| Perigo | Regressão logística por tipo (violência, suicídio, criança, saúde); limiares de aviso e de alerta por validação cruzada | `pipeline/treinar_perigo.py`, `catalogo/frases_perigo.txt` | `web/dados/modelo_perigo.json` | `web/perigo.js`, junto com regras |
+| Escopo | Regressão logística binária (assunto do site ou não) | `pipeline/treinar_escopo.py`, `catalogo/frases_fora_do_escopo.txt` | `web/dados/modelo_escopo.json` | `web/orientar.js` (abstenção) |
+| Busca | TF-IDF de palavras e de letras, mais LSA (TruncatedSVD, 64 dimensões) | `pipeline/indice_orientacao.py` (usa `web/areas.js` e `web/dados/catalogo_manual.json`) | `web/dados/indice_orientacao.json` | `web/orientar.js` (ranking de destinos) |
+
+Segurança: `web/perigo.js` aplica regras determinísticas e o modelo de perigo. Regra ou modelo com alta confiança gera alerta completo (telefones e serviços de proteção fixados); modelo com confiança moderada gera só um aviso. O alerta das regras aparece antes de qualquer arquivo ser baixado.
+
+Não existe: modelo de linguagem, embeddings neurais, previsão de risco, elegibilidade automática de benefício.
+
+## Estrutura do repositório
+
+| Caminho | Conteúdo |
+|---|---|
+| `web/` | Site estático (publicável como está) |
+| `web/dados/` | JSON e GeoJSON lidos pelo site (gerados ou mantidos à mão; ver `docs/mapa_de_dados.md`) |
+| `web/tests/` | Testes em Node (`*.test.js`) |
+| `web/vendor/` | Leaflet |
+| `web/img/` | Imagens do site (brasões, faixa de mulheres) |
+| `catalogo/` | Fontes escritas à mão: serviços, horários de ônibus, ligação com o INEP, frases de treino |
+| `pipeline/` | Scripts Python e `pipeline/tests/` |
+| `avaliacao/` | Conjuntos de perguntas com gabarito e avaliadores |
+| `docs/` | Documentação, decisões e PDFs de fonte (`docs/documetacao/`) |
+| `dados/bruto/` | Downloads grandes; fora do Git |
+| `requirements.txt` | Dependências Python |
+
+## Código do site (`web/*.js`)
+
+| Arquivo | Função |
+|---|---|
+| `app.js` | Roteador por hash, renderização das áreas e vistas, contatos, orientador na tela |
+| `areas.js` | Conteúdo das áreas (cartões, seções, canais, fontes) |
+| `acesso.js` | Lógica pura: distância, idade da informação, regras de exibição |
+| `ia.js` | Classificador de necessidades; `criarClassificador` carrega qualquer modelo no mesmo formato |
+| `necessidades.js` | Regras de palavras-chave de necessidades e normalização de texto |
+| `perigo.js` | Camada de segurança: regras, detector aprendido, âncoras, letras esticadas |
+| `orientar.js` | Motor de busca de destinos (palavras, letras, LSA, intenção, escopo) e abstenção |
+| `orientacao-ui.js` | Tela do orientador (alerta, lista de resultados, saída "não encontrei") |
+| `plano.js` | Meu Plano: ordem de urgência por regra fixa |
+| `jornada.js`, `jornada-educacao.js`, `jornada-assistencia.js`, `jornada-ui.js` | Jornadas guiadas (Trabalho, Educação, Assistência) e currículo |
+| `mapa.js`, `mapa-servicos.js` | Mapa de serviços (Leaflet) e lógica de CEP, bairro e serviço mais próximo |
+| `territorio.js` | Vista "Rio Claro em números" (setores censitários) |
+| `entre-mulheres.js`, `entre-mulheres-ui.js` | Entre Mulheres: preparo do cadastro e tela |
+| `painel-ui.js` | Vista "Análise territorial" (`#painel`): lê `dados/analise_territorial.json`, se existir; não usa dado de pessoa |
+| `mapa-territorial.js` | Página `mapa-territorial.html` (versão de pesquisa, ainda não ligada ao menu): setores em SVG coloridos por indicador, lê só `dados/indicadores_territoriais.json` e `dados/setores.geojson`, sem mapa de fundo e sem requisição externa |
+| `qualidade-dados.js` | Painel de qualidade territorial: integridade estrutural, áreas, procedência dos equipamentos e cautela D4; lê somente arquivos locais |
+
+## Pipeline (`pipeline/*.py`)
+
+| Script | Entrada | Saída | Bibliotecas |
+|---|---|---|---|
+| `baixar.py` | URLs do IBGE, INEP, CNES | `dados/bruto/` | stdlib (`urllib`, `zipfile`) |
+| `common.py` | Utilidades compartilhadas (download com retomada, distância) | | pandas, numpy |
+| `cnes.py` | Base completa do CNES | Diagnóstico e estabelecimentos de saúde | pandas |
+| `indice_cep.py` | CNEFE 2022; filtra CEPs associados a setores protegidos pela D4 | `web/dados/cep_indice.json` | pandas, numpy |
+| `ceps_lista.py` | Lista de CEPs com coordenada | Dados para o índice | stdlib |
+| `servicos.py` | `catalogo/servicos_manuais.csv`, CNES, INEP | `web/dados/catalogo_manual.json` e `servicos.json` | pandas |
+| `geocodificar_catalogo.py` | Catálogo | Planilha de sugestões de CEP e coordenada | stdlib |
+| `atualizar_localizacoes.py` | Catálogo, CNEFE, lista de CEPs | Localizações e mapa territorial | stdlib |
+| `setores.py` | Malha IBGE de setores 2022; preserva vértices e aplica somente arredondamento a seis casas | `web/dados/setores.geojson`, `setor_bairro.json` | pyshp |
+| `territorio.py` | Censo 2022 por setor | `web/dados/territorio.json` | pyproj |
+| `analise_territorial.py` | Setores e serviços | Distâncias e agrupamento | numpy, scikit-learn (KMeans) |
+| `exposicao_distancia.py` | Setores e serviços | `web/dados/exposicao_distancia.json` (parcela da população a mais de 1 km e 2 km do serviço mais próximo) | stdlib |
+| `territorial_indicadores.py`, `territorial_auditoria.py` | `web/dados/` (setores, território, distâncias) e catálogo | `web/dados/indicadores_territoriais.json` (mapa territorial v1, conferido contra `exposicao_distancia.json`) e relatório de auditoria de privacidade | stdlib |
+| `qualidade_geografica.py` | Malha de setores 2022, limite municipal 2025, indicadores e registro de localização | Validade, topologia, diferença entre edições, área geodésica GRS80 e proveniência | pyproj, shapely |
+| `limite_municipal.py` | Malha Municipal Digital IBGE 2022 (SP) | `dados/geografia/limite_municipal_2022.geojson` | pyshp, pyproj, shapely |
+| `pipeline/privacidade_territorial.py` | Regra central de supressão estatística D4 | Suprime contagens pequenas antes da publicação do GeoJSON e orienta os demais pipelines | stdlib |
+| `auditoria_centroides.py` | `setores.geojson` e `indicadores_territoriais.json` | Relatórios JSON e Markdown de sensibilidade dos centroides e distâncias, sem alterar a produção | stdlib |
+| `oferta_educacao_infantil.py` | Censo Escolar 2025; calcula totais por rede em memória e publica somente agregados, sem matrículas por escola | `web/dados/oferta_educacao_infantil.json` | pandas |
+| `escolas_municipais.py` | Catálogo municipal e vínculos INEP; sem matrículas ou turmas por escola | `web/dados/escolas_municipais.json` | stdlib |
+| `ligar_catalogo_inep.py` | Catálogo e Censo | `catalogo/inep_escolas.csv` (sobrescreve; revisar antes) | stdlib |
+| `horarios_onibus.py` | `catalogo/horarios_onibus.txt` | `web/dados/horarios_onibus.json` | stdlib |
+| `treinar_necessidades.py`, `treinar_perigo.py`, `treinar_escopo.py` | Frases em `catalogo/` | Modelos em `web/dados/` | numpy, scikit-learn |
+| `indice_orientacao.py` | Áreas, catálogo, horários | `web/dados/indice_orientacao.json` | numpy, scikit-learn |
+| `verificar_catalogo.py` | Catálogo | Relatório de conferência com as páginas oficiais | stdlib |
+| `inspecionar_arquivo.py` | Arquivos baixados | Estrutura (nunca os registros) | openpyxl |
+| `preparar_versionamento.py` | Arquivos novos | `git add` seguro (tamanho, CPF, dado bruto) | stdlib |
+| `testar_api.py` | `ANTHROPIC_API_KEY` | Resultado de uma chamada mínima | stdlib |
+
+## Como executar
+
+Site (Windows): duplo clique em `abrir_site.bat` (procura Python, escolhe porta livre de 8000 a 8010, serve `web/` e abre o navegador). Em qualquer sistema:
+
+```
+python -m http.server 8000 --directory web
+```
+Abrir `http://localhost:8000`. O site funciona só com os arquivos versionados.
+
+Instalar dependências do pipeline e dos testes:
+
+```
+python -m pip install -r requirements.txt
+```
+
+Testes:
+
+```
+PYTHONPATH=pipeline python -m pytest pipeline/tests -q          # Linux, macOS
+$env:PYTHONPATH = "pipeline"; python -m pytest pipeline/tests    # PowerShell
+for f in web/tests/*.test.js; do node $f || break; done          # Linux, macOS
+foreach ($f in Get-ChildItem web\tests\*.test.js) { node $f.FullName }   # PowerShell
+```
+
+Avaliação do orientador:
+
+```
+python avaliacao/avaliar.py v2 --conjunto final        # também: desenvolvimento, teste, independente, reserva, todos
+node avaliacao/avaliar_plano.js
+```
+
+Regerar dados e modelos (requer scikit-learn funcional):
+
+```
+python pipeline/servicos.py --somente-manual   # catálogo manual -> web/dados/catalogo_manual.json
+python pipeline/indice_orientacao.py           # índice do orientador
+python pipeline/treinar_necessidades.py
+python pipeline/treinar_perigo.py
+python pipeline/treinar_escopo.py
+python pipeline/horarios_onibus.py
+```
+
+Pipeline com dados reais (internet, `dados/bruto/`): `baixar.py cnefe`, `baixar.py escolas`, `setores.py <zip>` (gera primeiro a malha sanitizada D4), `indice_cep.py` (filtra CEPs de setores protegidos), `cnes.py docs/cnes`, `oferta_educacao_infantil.py` (totais por rede), `escolas_municipais.py` (cadastro sem matrículas por unidade), `territorio.py`, `geocodificar_catalogo.py`. Cada script documenta argumentos em `--help` e no cabeçalho.
+
+Notas de ambiente:
+- Windows: o padrão de texto do Python é cp1252. Chamadas a `subprocess` e leituras de arquivo usam `encoding="utf-8"` explícito.
+- Políticas de controle de aplicativo do Windows podem bloquear DLLs do scikit-learn (`DLL load failed`). O teste `test_indice_orientacao.py` é ignorado nesse caso; o CI do GitHub o executa. Não reinstalar numpy ou scipy como tentativa de correção.
+- `ligar_catalogo_inep.py --gravar` sobrescreve `catalogo/inep_escolas.csv`, que é revisado à mão.
+
+## Testes e CI
+
+- `pipeline/tests/`: pytest. Cobre pipeline, contrato dos dados (coordenada só com fonte, registro não conferido com aviso, ligações INEP), paridade Python e JavaScript dos modelos e da tokenização, integridade dos conjuntos de avaliação, dependências e README.
+- `web/tests/`: Node. Cobre lógica das jornadas, necessidades, perigo, orientador, plano, mapa, análise territorial, território, dashboard (portas, emergência, links locais, imagens), sintaxe de todos os scripts e comportamento de segurança da tela.
+- `.github/workflows/testes.yml`: instala `requirements.txt`, roda pytest, os testes em Node, `avaliar.py v2 --conjunto todos` e `avaliar_plano.js` a cada push e pull request.
+- Contagens de testes não são mantidas neste arquivo; a fonte é a saída do pytest e do CI.
+
+## Privacidade e segurança
+
+- O texto digitado e o CEP não são enviados nem gravados. Não há cookie, `localStorage`, `sessionStorage`, analytics nem chamada a API de IA.
+- Únicas requisições: arquivos locais (GET) em `web/dados/`; tiles do OpenStreetMap e da Esri, só quando a usuária marca a caixa de ruas de cada mapa (ambas vêm desmarcadas). Nesses pedidos saem o endereço IP, o navegador e a região do mapa vista, sem cookie e sem Referer, exceto nos pedidos de tiles do OpenStreetMap, que enviam só a origem do site (sem caminho, sem `#`, sem CEP), porque a política de uso deles exige Referer (resumo da auditoria de rede, sem CEPs nem coordenadas, em `reproducao/AUDITORIA_REDE_RESUMO.md`). O site não tem questionário nem código que envie texto digitado a um servidor. O único caminho de saída é o cadastro do Entre Mulheres, que apenas monta um link de WhatsApp ou e-mail para a própria usuária enviar e hoje está sem canal definido (`web/dados/entre_mulheres_canal.json`).
+- O site é `noindex`. O botão "Em perigo agora?" abre contatos oficiais (190, 192, 193, 180, 100, 188) e um botão de saída; sair não apaga o histórico do navegador.
+- Em falha de rede, o alerta de perigo das regras continua funcionando (`alertaAgora` em `web/app.js`).
+
+## Dados e catálogo
+
+- `catalogo/servicos_manuais.csv` é a fonte de verdade dos serviços (campos obrigatórios: `tipo`, `nome`, `fonte_url`, `verificado_em`; `conferido` e `aviso` para itens sem confirmação). Depois de editar, rodar `python pipeline/servicos.py --somente-manual`.
+- Coordenada só existe com fonte (`geo = coordenada_fonte`); localização por CEP é aproximada e nunca vira coordenada de fonte.
+- `pipeline/escolas_municipais.py` consolida o cadastro municipal e os vínculos INEP; gera `web/dados/escolas_municipais.json` sem matrículas ou turmas por unidade. O Censo Escolar é publicado separadamente em totais por rede por `pipeline/oferta_educacao_infantil.py`.
+- Mapa completo de arquivos de dados, geradores e consumidores: [docs/mapa_de_dados.md](docs/mapa_de_dados.md).
+- Verificar o catálogo contra as páginas oficiais (com internet): `python pipeline/verificar_catalogo.py`.
+
+## Documentação
+
+- [docs/funcionalidades.md](docs/funcionalidades.md): descrição funcional por área (trabalho, educação, saúde, mapa, jornadas, transporte).
+- [docs/arquitetura_ia.md](docs/arquitetura_ia.md) e [docs/ia/avaliacao_orientacao.md](docs/ia/avaliacao_orientacao.md): arquitetura de IA, métricas e limites.
+- [docs/mapa_de_dados.md](docs/mapa_de_dados.md), [docs/inventario_de_fontes.md](docs/inventario_de_fontes.md), [docs/documetacao/LEIA-ME.md](docs/documetacao/LEIA-ME.md): dados e fontes arquivadas.
+- [docs/roteiro_teste_orientador.md](docs/roteiro_teste_orientador.md): roteiro de teste manual do orientador.
+- [docs/territorial/PLANO_IMPLEMENTACAO_MAPA_TERRITORIAL.md](docs/territorial/PLANO_IMPLEMENTACAO_MAPA_TERRITORIAL.md): plano de implementação do mapa territorial (recuperação, auditoria, qualidade dos dados, usabilidade, navegação e validação para publicação).
+- [docs/territorial/AUDITORIA_SENSIBILIDADE_CENTROIDES.md](docs/territorial/AUDITORIA_SENSIBILIDADE_CENTROIDES.md): método e execução da comparação dos pontos representativos.
+- [docs/territorial/RESULTADO_AUDITORIA_CENTROIDES_2026-11-08.md](docs/territorial/RESULTADO_AUDITORIA_CENTROIDES_2026-11-08.md): resultados calculados para os 408 setores e impacto nos nove centroides externos.
+- [docs/territorial/QUALIDADE_GEOGRAFICA.md](docs/territorial/QUALIDADE_GEOGRAFICA.md): execução e limites da auditoria automatizada de qualidade geográfica.
+- [docs/territorial/PAINEL_QUALIDADE_DADOS.md](docs/territorial/PAINEL_QUALIDADE_DADOS.md): uso, fontes e limites do painel web de qualidade territorial.
+- [docs/plano_proximo_ciclo.md](docs/plano_proximo_ciclo.md), [docs/plano_fontes_externas_e_expansao.md](docs/plano_fontes_externas_e_expansao.md), [docs/analise_competitiva_mism3.md](docs/analise_competitiva_mism3.md), [docs/benchmark_externo_ideias_funcionais.md](docs/benchmark_externo_ideias_funcionais.md): planejamento e pesquisa.
+
+## Manutenção deste README
+
+Ao adicionar uma biblioteca, uma linguagem ou um arquivo de código em `web/` ou `pipeline/`, atualizar as tabelas acima. `pipeline/tests/test_dependencias.py` falha se uma dependência Python não estiver em `requirements.txt` e neste README, se a versão do Leaflet divergir, ou se um arquivo de `web/*.js` ou `pipeline/*.py` não for citado aqui. Sem emojis; linguagem direta e técnica.
+
+## Licença e citação
+
+Licenças diferentes valem para partes diferentes do repositório; elas não se misturam.
+
+- **Código-fonte original (MIT, arquivo `LICENSE`):** `web/*.js`, `web/*.html`, `web/*.css`, `pipeline/`, `avaliacao/*.py`, `avaliacao/*.js`, `docs/avaliacao_perfis/rodar_perfis.js`, os testes e os scripts `.bat`. Não inclui `web/vendor/`.
+- **Documentação e textos autorais (CC BY 4.0, arquivo `LICENSE-DADOS-E-DOCUMENTACAO.md`):** este README, `docs/` (exceto os PDFs de terceiros e o brasão), `avaliacao/perguntas.json` e as frases de treino em `catalogo/`. O arquivo lista os caminhos e as exclusões.
+- **Fora dessas duas licenças:** o Leaflet em `web/vendor/` (BSD 2-Clause, com a licença ao lado), os dados de terceiros e seus derivados (`web/dados/`, `catalogo/*.csv`, `dados/`), as imagens (`web/img/`, `docs/img/`), os PDFs de terceiros (`docs/documetacao/`, `docs/transporte/`), os mapas e os serviços de tiles. Cada um segue os termos de origem, ou está sem licença confirmada em `AVISOS-DE-TERCEIROS.md`. A ausência de confirmação não é autorização de redistribuição.
+- **Cartografia das UBS:** o GeoJSON das áreas de abrangência das UBS não está versionado e não faz parte do pacote público. A origem relatada e a pendência de comprovação estão em `AVISOS-DE-TERCEIROS.md`.
+- **Como citar:** use os metadados de `CITATION.cff` (o GitHub oferece "Cite this repository"). Ainda não há versão publicada com etiqueta nem DOI.
+
+## Uso responsável e limites
+
+O MISM3 orienta a busca por serviços públicos e não substitui avaliação, orientação ou atendimento profissional. O sistema não determina diagnósticos, elegibilidade ou decisões individuais. Até esta versão, não foi validado com usuárias reais. As perguntas dos conjuntos de avaliação são fictícias e foram escritas pela equipe do projeto.
+
+
+## Estado técnico do fechamento — 09/11/2026
+
+O mapa territorial é uma página separada (`web/mapa-territorial.html`) que desenha localmente os 408 setores censitários do IBGE em SVG, sem mapa de fundo nem tiles externos. O painel de qualidade dos dados é uma página separada (`web/qualidade-dados.html`). Ambos permanecem sob `noindex, nofollow`; não estão liberados para publicação. A PR #99 concentra o fechamento técnico e científico na branch `mism3-fechamento`; não deve ser mesclada até que os blocos e as execuções reais da Actions estejam registrados em `docs/FECHAMENTO.md`.
+
+A geometria publicada preserva os vértices da referência IBGE 2022 e arredonda coordenadas a seis casas decimais. A auditoria topológica usa 0,0121 m² como tolerância de quantização. A D4 suprime os 17 setores protegidos; eles não contribuem para estatísticas de distância, que podem incluir no máximo 391 setores. Distância é em linha reta e não mede tempo de deslocamento nem acesso efetivo.
+
+A regeneração final de derivados que dependem de CNES, CNEFE e microdados INEP locais permanece pendente e deve ocorrer somente no computador do responsável, conforme [runbook local](docs/territorial/REGENERACAO_LOCAL_PENDENTE.md). Não enviar fontes brutas, coordenadas residenciais ou tabelas restritas à Actions, ao GitHub ou a artefatos.

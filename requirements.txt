@@ -1,0 +1,13 @@
+# Dependencias Python do MISM3 (pipeline, treino dos modelos, avaliacao e testes).
+# O site em si nao usa Python em tempo de execucao: web/ e HTML, CSS e JavaScript estaticos.
+# Instalar: python -m pip install -r requirements.txt
+# O README (secao "Bibliotecas") descreve onde cada uma e usada; pipeline/tests/test_dependencias.py confere.
+pandas==3.0.1          # leitura e tratamento de CSV grandes (CNES, CNEFE, Censo Escolar)
+numpy==2.4.3          # arrays e calculo numerico
+scikit-learn==1.9.1    # treino dos modelos, TF-IDF, SVD (LSA) e KMeans
+scipy==1.18.1          # dependência do scikit-learn; versão registrada em reproducao/AMBIENTE.md
+pyshp==3.1.6           # leitura de shapefiles (módulo: shapefile)
+pyproj==3.7.2          # Geod GRS80 e transformação de CRS; versão fixa para reprodutibilidade
+shapely==2.1.2         # validade, interseção, união e diferença de geometrias
+openpyxl==3.1.5        # inspecao da estrutura de planilhas .xlsx
+pytest==9.0.3          # testes do pipeline

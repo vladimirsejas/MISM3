@@ -1,0 +1,254 @@
+import json
+import sys
+from pathlib import Path
+
+import pandas as pd
+import pytest
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import common  # noqa: E402
+import indice_cep  # noqa: E402
+import servicos  # noqa: E402
+
+
+def cnefe_falso():
+    linhas = []
+    # CEP 13500001: 10 enderecos proximos; CEP 13500002: 2 enderecos; outro municipio; sem CEP
+    for i in range(10):
+        linhas.append(("3543907", "13500001", "-22,4000", "-47,5600", "354390705000001"))
+    linhas[0] = ("3543907", "13500001", "-22,4010", "-47,5610", "354390705000001")
+    linhas += [("3543907", "13500002", "-22,41", "-47,57", "354390705000002")] * 2
+    linhas += [("3304003", "27000000", "-22,4", "-43,8", "330400300000001")]  # Rio Claro RJ-like
+    linhas += [("3543907", "", "-22,4", "-47,5", "354390705000003")]
+    return pd.DataFrame(linhas, columns=["COD_MUNICIPIO", "CEP", "LATITUDE", "LONGITUDE", "COD_SETOR"], dtype=str)
+
+
+def test_normalizar_cep():
+    assert common.normalizar_cep("13.500-001") == "13500001"
+    assert common.normalizar_cep(13500001.0) == "13500001"
+    assert common.normalizar_cep("3500001") == "03500001"
+    assert common.normalizar_cep("00000000") is None
+    assert common.normalizar_cep(None) is None
+    assert common.normalizar_cep("abc") is None
+
+
+def test_indice_filtra_municipio_e_cep_vazio():
+    idx = indice_cep.construir_indice(cnefe_falso())
+    assert set(idx) == {"13500001", "13500002"}
+
+
+def test_indice_raio_e_privacidade():
+    idx = indice_cep.construir_indice(cnefe_falso())
+    lat, lon, raio, setor, n = idx["13500001"]
+    assert n == 10 and setor == "354390705000001"
+    assert abs(lat + 22.4) < 0.001
+    assert indice_cep.RAIO_MIN_M <= raio <= indice_cep.RAIO_MAX_M
+    # CEP com poucos enderecos: raio maior e coordenada menos precisa (3 casas)
+    assert idx["13500002"][2] >= indice_cep.RAIO_MIN_POUCOS_M
+    assert len(str(idx["13500002"][0]).split(".")[1]) <= 3
+    # nada alem de 5 campos numericos/codigo: sem rua ou nome
+    assert all(len(v) == 5 for v in idx.values())
+
+
+def test_indice_coluna_ausente():
+    with pytest.raises(ValueError):
+        indice_cep.construir_indice(pd.DataFrame({"X": ["1"]}))
+
+
+def test_indice_municipio_inexistente():
+    with pytest.raises(ValueError):
+        indice_cep.construir_indice(cnefe_falso(), municipio="9999999")
+
+
+INDICE = {"13500001": [-22.4, -47.56, 200, "s", 10]}
+
+
+def test_localizar_prioridade():
+    assert servicos.localizar("13500001", "-22,41", "-47,57", INDICE)[2] == "coordenada_fonte"
+    assert servicos.localizar("13500001", None, None, INDICE) == (-22.4, -47.56, "centroide_cep")
+    assert servicos.localizar("13500009", None, None, INDICE)[2] == "sem_local"
+    # coordenada fora de Rio Claro (ex.: Rio Claro/RJ) e rejeitada e cai para o CEP
+    assert servicos.localizar("13500001", "-22,9", "-43,8", INDICE)[2] == "centroide_cep"
+
+
+def test_subtipo_saude():
+    assert servicos.subtipo_saude("CENTRO DE SAUDE/UNIDADE BASICA") == "ubs"
+    assert servicos.subtipo_saude("Pronto Atendimento") == "urgencia"
+    assert servicos.subtipo_saude("CENTRO DE ATENCAO PSICOSSOCIAL") == "caps"
+    assert servicos.subtipo_saude("POLICLINICA") == "especialidades"
+    assert servicos.subtipo_saude("Clinica") == "outros"
+    # nomes reais do CNES de Rio Claro que NAO sao lugares de atendimento
+    for nome in ("UNIDADE MOVEL DE NIVEL PRE-HOSPITALAR NA AREA DE URGENCIA", "CENTRAL DE REGULACAO MEDICA DAS URGENCIAS",
+                 "FARMACIA", "CENTRAL DE ABASTECIMENTO", "UNIDADE DE VIGILANCIA EM SAUDE", "LABORATORIO DE SAUDE PUBLICA",
+                 "UNIDADE DE APOIO DIAGNOSE E TERAPIA (SADT ISOLADO)", "CONSULTORIO ISOLADO", "UNIDADE MOVEL TERRESTRE"):
+        assert servicos.subtipo_saude(nome) == "apoio", nome
+    assert servicos.subtipo_saude("HOSPITAL ESPECIALIZADO") == "hospital"
+    assert servicos.subtipo_saude("CENTRO DE ATENCAO PSICOSSOCIAL") == "caps"
+    assert servicos.subtipo_saude("CLINICA/CENTRO DE ESPECIALIDADE") == "especialidades"
+
+
+def test_creches():
+    df = pd.DataFrame({
+        "CO_MUNICIPIO": ["3543907", "3543907", "3543907", "3304003"],
+        "IN_COMUM_CRECHE": ["1", "0", "1", "1"],
+        "NO_ENTIDADE": ["EMEI A", "ESCOLA B", "CRECHE C", "CRECHE RJ"],
+        "CO_ENTIDADE": ["1", "2", "3", "4"],
+        "TP_SITUACAO_FUNCIONAMENTO": ["1", "1", "2", "1"],
+        "TP_DEPENDENCIA": ["3", "3", "3", "3"],
+        "CO_CEP": ["13500001", "13500001", "13500001", "27000000"],
+    })
+    s = servicos.servicos_creches(df, INDICE, "2026-10-08")
+    assert [x["nome"] for x in s] == ["Emei A"]  # so ativa, com creche, do municipio certo
+    assert "vagas" in s[0]["observacao"]
+
+
+def test_creches_colunas_faltando():
+    with pytest.raises(ValueError):
+        servicos.servicos_creches(pd.DataFrame({"A": ["1"]}), INDICE, "x")
+
+
+def test_manuais_exigem_fonte_e_tipo():
+    ok = pd.DataFrame([{"tipo": "mulher", "nome": "X", "cep": "13500001", "fonte_url": "http://a", "verificado_em": "2026-10-08"}])
+    assert servicos.servicos_manuais(ok, INDICE)[0]["geo"] == "centroide_cep"
+    with pytest.raises(ValueError):
+        servicos.servicos_manuais(pd.DataFrame([{"tipo": "xx", "nome": "X", "fonte_url": "a", "verificado_em": "b"}]), INDICE)
+    with pytest.raises(ValueError):
+        servicos.servicos_manuais(pd.DataFrame([{"tipo": "mulher", "nome": "X"}]), INDICE)
+
+
+def test_catalogo_manual_cursinho_e_peja():
+    df = common.ler_csv_flex(common.CATALOGO / "servicos_manuais.csv")
+    por_id = {x["id"]: x for x in servicos.servicos_manuais(df, INDICE)}
+    assert por_id["man-metamorfose"]["instagram"] == "metamorfose.rc"
+    assert por_id["man-peja-unesp"]["instagram"] == "peja.gepepdh.unesp"
+    assert "instagram" not in por_id["man-pat"]
+    assert por_id["man-metamorfose"]["subtipo"] == "cursinho_popular"
+
+
+def test_catalogo_manual_real_valido():
+    df = common.ler_csv_flex(common.CATALOGO / "servicos_manuais.csv")
+    s = servicos.servicos_manuais(df, INDICE)
+    assert len(s) >= 2 and all(x["fonte_url"] and x["verificado_em"] for x in s)
+
+
+def test_montar_deduplica():
+    m = pd.DataFrame([{"id": "a", "tipo": "mulher", "nome": "X", "fonte_url": "u", "verificado_em": "d"}] * 2)
+    out = servicos.montar(INDICE, manuais=m, hoje="2026-10-08")
+    assert len(out["servicos"]) == 1
+
+
+def test_catalogo_manual_do_site_tem_fonte_e_nenhum_item_de_exemplo():
+    """web/dados/catalogo_manual.json e o que o site mostra sem o pipeline completo."""
+    import json
+    from pathlib import Path
+    d = json.loads((Path(__file__).resolve().parents[2] / "web" / "dados" / "catalogo_manual.json").read_text(encoding="utf-8"))
+    assert "demo" not in d["meta"]
+    assert d["servicos"], "catalogo vazio"
+    for s in d["servicos"]:
+        assert s["fonte_url"].startswith("http") and s["verificado_em"], s["nome"]
+        assert "[DEMO]" not in s["nome"]
+
+
+def test_manual_nao_conferido_nao_aparece_como_verificado():
+    import pandas as pd
+    from servicos import servicos_manuais
+    df = pd.DataFrame([
+        {"tipo": "assistencia", "nome": "A", "fonte_url": "https://x.gov.br", "verificado_em": "2026-10-10", "conferido": "nao"},
+        {"tipo": "assistencia", "nome": "B", "fonte_url": "https://x.gov.br", "verificado_em": "2026-10-10", "conferido": ""},
+    ])
+    a, b = servicos_manuais(df, {})
+    assert a["conferido"] is False and "não conferida" in a["fonte"]
+    assert b["conferido"] is True and a["fonte"] != b["fonte"]
+
+
+def test_manual_usa_fonte_informada_quando_conferido():
+    import pandas as pd
+    from servicos import servicos_manuais
+    df = pd.DataFrame([{"tipo": "assistencia", "nome": "A", "fonte_url": "https://x.org.br", "verificado_em": "2026-10-10", "fonte": "Site do órgão X"}])
+    assert servicos_manuais(df, {})[0]["fonte"] == "Site do órgão X"
+
+
+def test_manual_repassa_lista_de_bairros():
+    import pandas as pd
+    from servicos import servicos_manuais
+    df = pd.DataFrame([{"tipo": "assistencia", "nome": "CRAS X", "fonte_url": "https://x.gov.br", "verificado_em": "2026-10-10",
+                        "bairros": "Jd. A, Jd. B"}])
+    assert servicos_manuais(df, {})[0]["bairros"] == "Jd. A, Jd. B"
+
+
+def test_manual_repassa_aviso_proprio():
+    import pandas as pd
+    from servicos import servicos_manuais
+    df = pd.DataFrame([{"tipo": "saude", "nome": "X", "fonte_url": "https://x.gov.br", "verificado_em": "2026-10-10", "conferido": "nao", "aviso": "Notícia antiga."}])
+    r = servicos_manuais(df, {})[0]
+    assert r["aviso"] == "Notícia antiga." and r["conferido"] is False
+
+
+def test_unidade_manual_com_codigo_cnes_vence_o_registro_do_cnes():
+    """Sem isso, cada unidade cadastrada à mão apareceria duas vezes ao gerar a base completa."""
+    import pandas as pd
+    from servicos import servicos_manuais, montar
+    manuais = pd.DataFrame([{"tipo": "saude", "nome": "USF X", "fonte_url": "https://x.gov.br", "verificado_em": "2026-10-10", "cnes": "1234567", "telefone": "(19) 3000-0000"}])
+    cnes = [
+        {"id": "cnes-1234567", "tipo": "saude", "subtipo": "ubs", "nome": "UBS X (CNES)"},
+        {"id": "cnes-7654321", "tipo": "saude", "subtipo": "ubs", "nome": "UBS Y (CNES)"},
+    ]
+    saida = montar({}, cnes=cnes, manuais=manuais)
+    nomes = sorted(s["nome"] for s in saida["servicos"])
+    assert nomes == ["UBS Y (CNES)", "USF X"], nomes
+    assert [s for s in saida["servicos"] if s["nome"] == "USF X"][0]["cnes"] == "1234567"
+
+
+# ---------------------------------------------------------------- etapas das escolas (Censo Escolar) no catálogo
+def test_servicos_manuais_anexa_etapas_so_a_quem_esta_ligado():
+    df = pd.DataFrame([
+        {"id": "a", "tipo": "creche", "subtipo": "escola_municipal", "nome": "E.M. A", "fonte_url": "https://x", "verificado_em": "2026-10-10"},
+        {"id": "b", "tipo": "creche", "subtipo": "escola_municipal", "nome": "E.M. B", "fonte_url": "https://x", "verificado_em": "2026-10-10"},
+    ])
+    etapas = {"a": {"creche": True, "pre_escola": False, "fonte": "Censo Escolar 2025 (INEP)"}}
+    saida = servicos.servicos_manuais(df, {}, etapas)
+    assert saida[0]["etapas"] == etapas["a"] and "etapas" not in saida[1]
+    assert "etapas" not in servicos.servicos_manuais(df, {})[0]  # sem ligação, o cartão fica como estava
+
+
+def test_carregar_etapas_usa_tabela_escola_local_e_nao_leva_matriculas(tmp_path, capsys):
+    ligacao, escola = tmp_path / "l.csv", tmp_path / "Tabela_Escola_2025_V2.csv"
+    ligacao.write_text("id,inep,nome_catalogo,nome_censo,metodo\n"
+                       "a,111,A,A CENSO,mesmas palavras\nb,222,B,B CENSO,mesmas palavras\n", encoding="utf-8")
+    escola.write_text(
+        "CO_MUNICIPIO;CO_ENTIDADE;TP_SITUACAO_FUNCIONAMENTO;IN_COMUM_CRECHE;IN_COMUM_PRE\n"
+        "3543907;111;1;1;0\n"
+        "3543907;222;2;1;1\n"
+        "3550308;333;1;1;1\n",
+        encoding="utf-8",
+    )
+    r = servicos.carregar_etapas(ligacao, escola)
+    assert r == {"a": {"creche": True, "pre_escola": False, "fonte": "Censo Escolar 2025 (INEP)"}}
+    assert "b ligado ao INEP 222" in capsys.readouterr().out
+    assert servicos.carregar_etapas(tmp_path / "nao_existe.csv", escola) == {}
+
+def test_observacao_deixa_de_dizer_que_nao_se_sabe_a_etapa_so_nas_escolas_ligadas():
+    obs = ('Escola municipal de Rio Claro. A página oficial "Unidades de ensino" lista a escola, ' + servicos.FRASE_SEM_ETAPAS +
+           " A lista de espera pode ser consultada.")
+    df = pd.DataFrame([{"id": i, "tipo": "creche", "subtipo": "escola_municipal", "nome": i, "fonte_url": "https://x",
+                        "verificado_em": "2026-10-10", "observacao": obs} for i in ("a", "b")])
+    a, b = servicos.servicos_manuais(df, {}, {"a": {"creche": True, "pre_escola": True, "fonte": "f"}})
+    assert "nem se há vaga" not in a["observacao"] and "não diz se há vaga" in a["observacao"]
+    assert "A lista de espera pode ser consultada." in a["observacao"]   # o resto da frase continua
+    assert b["observacao"] == obs                                           # escola sem ligação: texto de antes
+
+
+def test_arquivo_cnefe_parquet_e_priorizado(tmp_path, monkeypatch):
+    pytest.importorskip("pyarrow")
+    import indice_cep as modulo
+    pasta = tmp_path / "bruto" / "cnefe"
+    pasta.mkdir(parents=True)
+    parquet = tmp_path / "parquet" / "mapa_nacional"
+    parquet.mkdir(parents=True)
+    df = cnefe_falso()
+    df.to_parquet(parquet / "Agregados_por_CEP_CNEFE_Censo_2022.parquet", index=False)
+    monkeypatch.setattr(modulo, "BRUTO", tmp_path / "bruto")
+    monkeypatch.setattr(modulo, "DADOS_PARQUET", tmp_path / "parquet")
+    lido = modulo.ler_cnefe()
+    assert list(lido.columns) == list(df.columns)
+    assert len(lido) == len(df)

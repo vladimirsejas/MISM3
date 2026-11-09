@@ -1,0 +1,249 @@
+{
+  "meta": {
+    "escrito_em": "2026-10-16",
+    "autor": "equipe (assistente)",
+    "aviso": "Conjunto consultado durante o desenvolvimento e usado para orientar ajustes; não é mais uma avaliação independente. Manter apenas como regressão no CI. Não usar para treino nem para estimar desempenho final.",
+    "campos": "mesmos de perfis.json"
+  },
+  "frases": [
+    {
+      "id": "r10f1",
+      "perfil": "avo",
+      "texto": "minha aposentadoria não paga o mercado e o botijão para mim e meus netos",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r10f2",
+      "perfil": "avo",
+      "texto": "fiquei responsável pelos pequenos e as contas da casa estão atrasadas",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia",
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r10f3",
+      "perfil": "avo",
+      "texto": "a pensão não dá para comprar comida para os netinhos que crio",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r10f4",
+      "perfil": "avo",
+      "texto": "estou com a responsabilidade das crianças e não consigo pagar o básico",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r10f5",
+      "perfil": "avo",
+      "texto": "meu benefício é curto para sustentar os netos e manter a casa",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia",
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r10f6",
+      "perfil": "avo",
+      "texto": "os pequenos dependem de mim e está faltando comida em casa",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r10f7",
+      "perfil": "avo",
+      "texto": "sou avó e a aposentadoria não chega para a alimentação das crianças",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r10f8",
+      "perfil": "avo",
+      "texto": "minha filha deixou os meninos comigo e preciso de apoio para as despesas",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r10f9",
+      "perfil": "avo",
+      "texto": "não sobra dinheiro para mercado desde que comecei a cuidar dos netos",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r10f10",
+      "perfil": "avo",
+      "texto": "estou criando os filhos da minha filha e não consigo comprar comida",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r10f11",
+      "perfil": "avo",
+      "texto": "a renda da aposentadoria mal cobre as contas e tenho netas em casa",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r10f12",
+      "perfil": "avo",
+      "texto": "preciso de orientação no CRAS porque sustento as crianças sozinha",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r10f13",
+      "perfil": "avo",
+      "texto": "o dinheiro da pensão não basta para o gás e a comida dos netos",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r10f14",
+      "perfil": "avo",
+      "texto": "fiquei com as crianças e agora não consigo manter as despesas de casa",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia",
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r10f15",
+      "perfil": "avo",
+      "texto": "minha aposentadoria está comprometida com as necessidades dos meus netinhos",
+      "principal": "assistencia",
+      "aceita": [
+        "direitos"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r10f16",
+      "perfil": "avo",
+      "texto": "estou sem condições de comprar alimentos para os pequenos que moram comigo",
+      "principal": "assistencia",
+      "aceita": [
+        "moradia"
+      ],
+      "precisa": [
+        "assistencia"
+      ]
+    },
+    {
+      "id": "r10f17",
+      "perfil": "avo",
+      "texto": "quero encontrar trabalho para ajudar nas despesas dos meus netos",
+      "principal": "trabalho",
+      "aceita": [
+        "assistencia"
+      ],
+      "precisa": [
+        "trabalho"
+      ]
+    },
+    {
+      "id": "r10f18",
+      "perfil": "avo",
+      "texto": "preciso de creche para poder procurar emprego e cuidar dos pequenos",
+      "principal": "educacao",
+      "aceita": [
+        "trabalho"
+      ],
+      "precisa": [
+        "educacao",
+        "trabalho"
+      ]
+    },
+    {
+      "id": "r10lim1",
+      "perfil": "avo",
+      "texto": "o INSS indeferiu minha aposentadoria e preciso contestar",
+      "principal": "direitos",
+      "aceita": [],
+      "precisa": [
+        "direitos"
+      ]
+    },
+    {
+      "id": "r10lim2",
+      "perfil": "limite",
+      "texto": "me ensina a fazer pão de queijo",
+      "principal": null,
+      "aceita": [],
+      "precisa": [],
+      "fora": true
+    }
+  ]
+}

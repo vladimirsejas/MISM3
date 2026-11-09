@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="theme-color" content="#7a2b37">
+<title>Privacidade e dados – Observatório da Mulher de Rio Claro</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<a class="pular" href="#principal">Pular para o conteúdo</a>
+<header class="topo">
+  <div class="topo-in">
+    <a class="marca" href="index.html">Observatório da Mulher<span class="marca-local">Rio Claro</span></a>
+    <nav class="navegacao" aria-label="Navegação">
+      <a class="btn-nav" href="index.html">Início</a>
+      <a class="btn-nav" href="mapa-territorial.html">Mapa territorial</a>
+    </nav>
+  </div>
+</header>
+
+<main class="conteudo" id="principal">
+  <p class="heroi-etiqueta"><strong>MISM3</strong> · Transparência</p>
+  <h1>Privacidade, dados e limites</h1>
+  <p class="intro">Esta página explica quais informações o Observatório da Mulher de Rio Claro utiliza, o que acontece com o que você digita e quais serviços externos podem receber dados técnicos de conexão.</p>
+
+  <section class="bloco">
+    <h2>1. O que é o MISM3</h2>
+    <p>O MISM3 é um estudo acadêmico de demonstração. Não é um serviço oficial da Prefeitura de Rio Claro, não fala em nome do Município e não substitui atendimento profissional, avaliação clínica, decisão administrativa ou orientação jurídica.</p>
+  </section>
+
+  <section class="bloco">
+    <h2>2. Dados utilizados pelo Observatório</h2>
+    <p>O mapa territorial utiliza dados públicos agregados por setor censitário e pontos de equipamentos institucionais. Os dados de educação infantil são publicados apenas em totais por rede de ensino, sem contagens de matrículas por escola. O projeto também apresenta informações de serviços públicos e dados educacionais publicados pelo INEP. As páginas do sistema identificam as fontes e, quando disponível, a data de verificação ou geração.</p>
+    <p>O MISM3 não foi desenvolvido para receber prontuários, listas de pacientes, cadastros de famílias, endereços residenciais ou registros individuais de usuárias. Os indicadores territoriais não representam diagnósticos individuais nem demonstram, por si só, a necessidade de uma pessoa.</p>
+  </section>
+
+  <section class="bloco">
+    <h2>3. Texto digitado no orientador</h2>
+    <p>O classificador de necessidades funciona no navegador, no próprio aparelho. O texto digitado é analisado localmente pelo modelo e pelas regras do projeto; não é enviado a uma API de inteligência artificial ou a um serviço externo pelo orientador. A ferramenta pode errar e serve apenas para sugerir por onde começar.</p>
+  </section>
+
+  <section class="bloco">
+    <h2>4. Consulta por CEP</h2>
+    <p>Quando a busca por CEP está disponível, o número digitado é consultado localmente no navegador. O campo não coloca o CEP na barra de endereço e a consulta não envia esse valor ao servidor do MISM3. O site carrega um índice público de CEPs para apoiar a estimativa; esse índice contém posições aproximadas e referências territoriais agregadas. A posição pelo centro do CEP não é o endereço exato de uma pessoa nem a localização precisa de um equipamento.</p>
+    <p>Não informe aqui dados pessoais que não sejam necessários para a consulta. A estimativa por CEP pode ser imprecisa e não deve ser interpretada como localização residencial exata.</p>
+  </section>
+
+  <section class="bloco">
+    <h2>5. Camadas externas dos mapas</h2>
+    <p>As camadas de ruas e nomes dos mapas de serviços e do painel são opcionais e começam desativadas. Se você decidir ativá-las, o navegador fará requisições ao provedor cartográfico correspondente (OpenStreetMap ou Esri). Esse provedor poderá receber dados técnicos da conexão, como o endereço de rede do aparelho, e identificar a região aproximada dos mapas solicitados. Sem ativar essas camadas, o mapa territorial principal utiliza os arquivos locais do projeto e não carrega imagens cartográficas externas.</p>
+  </section>
+
+  <section class="bloco">
+    <h2>6. Hospedagem e dados técnicos de acesso</h2>
+    <p>Como em qualquer site, a infraestrutura de hospedagem e entrega de páginas pode processar informações técnicas necessárias para responder às requisições, como endereço IP, horário e dados do navegador. O projeto não controla os prazos de retenção nem todas as operações realizadas pelo provedor de hospedagem ou pelos provedores cartográficos; consulte também as políticas desses fornecedores.</p>
+  </section>
+
+  <section class="bloco">
+    <h2>7. Limitações e cautela territorial</h2>
+    <p>Os dados agregados por setor censitário não garantem anonimato em qualquer circunstância. Pela decisão D4, população, domicílios, densidade e distâncias/indicadores derivados são omitidos nos 17 setores com menos de 5 pessoas ou menos de 3 domicílios. Os agregados demográficos e médias dos 13 bairros afetados também são omitidos como proteção complementar, e os totais municipais de população e domicílios não são exibidos no painel territorial. A geometria dos setores e os pontos de equipamentos institucionais permanecem disponíveis. A supressão reduz o risco de inferência, mas não é garantia absoluta de anonimato; não tente identificar pessoas ou domicílios combinando fontes e filtros.</p>
+    <p>As distâncias apresentadas são medidas em linha reta. Não representam tempo de viagem, percurso pelas ruas, disponibilidade de vagas, capacidade do serviço ou acesso efetivo. A localização pelo centro do CEP é uma aproximação e é apresentada separadamente das coordenadas registradas no catálogo.</p>
+  </section>
+
+  <section class="bloco">
+    <h2>8. Correções e transparência</h2>
+    <p>As informações podem mudar e algumas fontes podem ficar desatualizadas. Confira sempre os dados diretamente com o órgão responsável antes de se deslocar ou tomar uma decisão. Para registrar uma correção ou apontar um problema técnico, consulte o <a href="https://github.com/vladimirsejas/MISM3">repositório público do projeto</a>.</p>
+    <p>Este texto descreve o funcionamento conhecido do protótipo. Não constitui parecer jurídico, política institucional da Prefeitura nem relatório formal de impacto à proteção de dados.</p>
+  </section>
+</main>
+
+<footer class="rodape">
+  <p><a href="index.html">Voltar ao Observatório</a> · <a href="mapa-territorial.html">Mapa territorial</a></p>
+  <p>Observatório da Mulher – Rio Claro · MISM3 · Estudo acadêmico de demonstração.</p>
+</footer>
+</body>
+</html>
