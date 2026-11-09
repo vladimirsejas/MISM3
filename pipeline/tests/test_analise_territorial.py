@@ -73,6 +73,7 @@ def test_agrupamento_so_com_bairros_suficientes():
     g = at.agrupar(bairros, 3)
     if g is not None:  # sem scikit-learn o agrupamento é simplesmente omitido
         assert len(g["resumo"]) == 3 and sum(r["bairros"] for r in g["resumo"]) == 12
+        assert all("pessoas" not in r for r in g["resumo"])
         assert g["resumo"][0]["media_distancia_media_cras_km"] <= g["resumo"][-1]["media_distancia_media_cras_km"]
     assert at.agrupar(bairros[:4], 3) is None
 
