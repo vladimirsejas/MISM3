@@ -257,3 +257,11 @@ O teste foi corrigido para derivar `391 = 408 - 17` dos dados publicados e verif
 - A execução #766 (`42680967096`) foi iniciada com jobs reais após a correção do listener; a validação de navegador ainda usava a versão anterior do teste e, portanto, não enviava um evento `resize` explícito depois de reduzir o viewport.
 - O teste `web/tests/browser_playwright.cjs` agora reduz o viewport à metade, dispara `window.resize` e aguarda 200 ms para o Leaflet concluir a atualização do renderer. A asserção de largura do documento permanece inalterada e continua exigindo ausência de rolagem horizontal. Commit: `a53b750d59ccb8b79392e5b57b14a850b56f7483`.
 - Essa etapa não substitui a correção do produto: o listener de `resize` e o `ResizeObserver` permanecem no `mapa.js`; o teste apenas reproduz explicitamente o evento de viewport que o navegador gera ao alterar o zoom.
+
+
+## Diagnóstico adicional do Leaflet e recorte não rolável — 09/11/2026
+
+- Run #771 (`42681160809`) executou os dois jobs; `testes` avançou sem falhas até as avaliações complementares, mas o job `navegador` ainda detectou o SVG de overlay com 427 px. A chamada explícita de `resize` e o listener da janela não reduziram o atributo do SVG; portanto, a largura do renderer é mantida maior que a caixa e a falha não pode ser resolvida apenas por invalidação.
+- A caixa `#mapa-servicos` já tem largura limitada ao viewport e contém visualmente o mapa. O problema remanescente é o overflow rolável interno criado pelo SVG absoluto do Leaflet, que continua contribuindo para a largura de rolagem do documento apesar da caixa com `overflow:hidden`.
+- Nova correção commitada em `web/estilo.css`, SHA `b26f2b1cc2e9b9056d51b67b3e57cba40b8218b0`: a caixa Leaflet passa a usar `overflow:clip`, que recorta o conteúdo excedente sem criar um contêiner rolável. A largura responsiva `width/max-width:100%` e `min-width:0` permanece. O mapa continua visível e interativo dentro do retângulo, sem esconder o problema com overflow global no documento.
+- A próxima Actions precisa provar que `document.documentElement.scrollWidth <= clientWidth` em 200%, tanto na tela inicial quanto no mapa territorial, e que o SVG continua funcional nos tamanhos 1280×800 e 390×844.
