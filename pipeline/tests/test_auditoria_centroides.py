@@ -128,3 +128,22 @@ def test_impacto_maximo_nas_distancias_fica_abaixo_de_55_metros():
     )
     assert maximo < 0.055
     assert resultado["resumo"]["deslocamento_ponto_maximo_m"] < 62
+
+
+def test_auditoria_de_centroides_suprime_distancias_de_setor_protegido():
+    geo = {"type": "FeatureCollection", "features": [
+        {"type": "Feature", "properties": {"setor": "protegido", "pessoas": None, "domicilios": None, "suprimido_privacidade": True}, "geometry": quadrado()},
+        {"type": "Feature", "properties": {"setor": "publico", "pessoas": 10, "domicilios": 5}, "geometry": quadrado()},
+    ]}
+    indicadores = {"equipamentos": [
+        {"categoria": "ubs", "precisao": "catalogo", "lat": 1.0, "lon": 5.0},
+    ]}
+    resultado = ac.comparar(geo, indicadores)
+    protegido = next(s for s in resultado["setores"] if s["setor"] == "protegido")
+    publico = next(s for s in resultado["setores"] if s["setor"] == "publico")
+    assert resultado["meta"]["setores_suprimidos"] == 1
+    assert protegido["distancias"]["coordenadas_do_catalogo"]["ubs"] == {
+        "atual_km": None, "alternativa_km": None, "delta_km": None
+    }
+    assert publico["distancias"]["coordenadas_do_catalogo"]["ubs"]["delta_km"] == 0
+    assert resultado["resumo"]["distancias"]["coordenadas_do_catalogo"]["ubs"]["setores_com_distancia"] == 1

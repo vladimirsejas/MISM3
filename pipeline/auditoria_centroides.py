@@ -9,6 +9,7 @@ import argparse
 import json
 import math
 import statistics
+import tempfile
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parents[1]
@@ -286,8 +287,9 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--geojson", type=Path, default=DADOS / "setores.geojson")
     parser.add_argument("--indicadores", type=Path, default=DADOS / "indicadores_territoriais.json")
-    parser.add_argument("--saida-json", type=Path, default=RAIZ / "docs/territorial/RELATORIO_SENSIBILIDADE_CENTROIDES.json")
-    parser.add_argument("--saida-md", type=Path, default=RAIZ / "docs/territorial/RELATORIO_SENSIBILIDADE_CENTROIDES.md")
+    pasta_temporaria = Path(tempfile.gettempdir())
+    parser.add_argument("--saida-json", type=Path, default=pasta_temporaria / "mism3_auditoria_centroides.json")
+    parser.add_argument("--saida-md", type=Path, default=pasta_temporaria / "mism3_auditoria_centroides.md")
     args = parser.parse_args(argv)
     geo = json.loads(args.geojson.read_text(encoding="utf-8"))
     indicadores = json.loads(args.indicadores.read_text(encoding="utf-8"))
