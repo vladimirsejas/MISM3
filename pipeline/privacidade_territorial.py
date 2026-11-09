@@ -11,7 +11,10 @@ CAMPOS_DERIVADOS_SENSIVEIS = (
     "pessoas_por_domicilio",
     "p",
     "d",
+    "dist_cras",
+    "dist_ubs",
     "dist_creche",
+    "dist_escola",
     "distancia_km",
     "distancia_min_km",
     "distancia_max_km",
@@ -42,7 +45,7 @@ def sanitizar_geojson(geojson: dict) -> dict:
             propriedades["pessoas"] = None
             propriedades["domicilios"] = None
             propriedades["suprimido_privacidade"] = True
-            for campo in CAMPOS_DERIVADOS_SENSIVEIS:
-                if campo in propriedades:
+            for campo in list(propriedades):
+                if campo in CAMPOS_DERIVADOS_SENSIVEIS or campo.startswith("dist_") or campo.startswith("distancia_"):
                     propriedades[campo] = None
     return geojson
