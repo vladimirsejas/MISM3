@@ -19,10 +19,10 @@ SHA de partida: `9ed9731ca55b97888a6e0fef2df04fdd9eedbd9d`
 | 1. Privacidade | Concluído | `edc9ea8ee14170d14b275641bf57bc32bdea7dbd` | `42657889614` — sucesso |
 | 2. Geografia | Em andamento — correções e testes versionados; Actions sem jobs e regeneração local pendente | `a1a0f88`, `71eead9`, `81f6843`, `22e2c40`, `4b3db12`, `33c6b94`, `671e958`, `7d1e003`, `23e9b78` | `42671168961` — referência aprovada; `42672174236`, `42672449139` e `42672558750` — falha pré-job, zero jobs criados |
 | 3. Fontes e licenças | Em andamento — inventário e atribuições atualizados; restrições não confirmadas mantidas explícitas | `c3cbff0`, `f66f616`, `df7d519`, `9aae00b`, `1fe887b` | `42673160479` — execução pendente; Actions sem jobs nas execuções anteriores |
-| 4. Mapa e painel | Em andamento — mapa SVG local e painel de qualidade atualizados; validação CI/navegador pendente | `c3cbff0`, `f66f616`, commit desta atualização | Execução Actions pendente; histórico recente de falha pré-job |
+| 4. Mapa e painel | Correções de exportação e privacidade commitadas; validação CI/navegador pendente | `c3cbff0`, `f66f616`, commit desta atualização | Execução Actions pendente; histórico recente de falha pré-job |
 | 5. Sistema de orientação | Em andamento — privacidade do texto livre reforçada; 306 testes Python passaram, um ajuste de auditoria D4 pendente | `2a21b73` e commit corretivo desta atualização | `42674601130` — referência aprovada; pytest 306 passed, 1 failed, 2 skipped; corrigida a expectativa de 391 setores com distância |
-| 6. Documentação definitiva | Pendente | — | — |
-| 7. Fechamento | Pendente | — | — |
+| 6. Documentação definitiva | Documentação e runbook atualizados; validação final dos testes pendente | commits desta retomada | Actions 719/721 anteriores reprovadas; novas execuções após correções pendentes |
+| 7. Fechamento | Em validação; PR #99 permanece draft, sem merge | commits desta retomada | aprovação dos jobs `testes` e `navegador` ainda pendente |
 
 ## Registro técnico
 
@@ -201,3 +201,28 @@ O teste foi corrigido para derivar `391 = 408 - 17` dos dados publicados e verif
 - Falha Python: `pipeline/tests/test_pipeline.py::test_carregar_etapas_junta_ligacao_e_oferta_e_nao_leva_matriculas` ainda passava um JSON antigo para `carregar_etapas`. O arquivo de oferta atual deliberadamente contém apenas totais por rede; a implementação correta lê a tabela Escola INEP local. O teste foi atualizado para essa fonte e agora verifica município, escola ativa e saída sem matrículas/turmas. O aviso para vínculos INEP sem escola ativa foi preservado. Commits de implementação e teste: `fd1b55702188e060015b78527bea5c0d67f9253a`, `f0fe8081a4a9720e2ac111ba26d96dbc1e2e99c2`, `6e65e123abe2e3b445003f0818805322afd1310a`, `a300e7b589387d9234a7f94c5a6a9a3ccef6a65c`.
 - Falha Playwright: a classe adicional `porta destaque` fazia o seletor por classe contar oito elementos, apesar de existirem exatamente sete âncoras de navegação. O teste passou a exigir a classe literal `class="porta"` nas sete âncoras e a verificar que o anel SVG de foco está realmente visível e contém geometria. Ajuste: `90b2d9f7abe570bc5c20f5d7430e13b37a4bb72d`.
 - Não houve enfraquecimento das expectativas de privacidade ou do comportamento. A próxima Actions precisa executar novamente os dois jobs sobre as correções.
+
+
+## Retomada por ordem de serviço — correções 1 e 2 — 09/11/2026
+
+### Correção 1 — exportação do painel de qualidade
+
+- Causa confirmada em `web/qualidade-dados.js`: o objeto exportado referenciava `areaAnelGeodesica`, símbolo inexistente; a implementação disponível é `areaAnelEsferica`. A importação do módulo provocava `ReferenceError`.
+- Corrigida somente a exportação, substituindo o símbolo inexistente por `areaAnelEsferica`. Commit: `46e407de181050f7b2e7f80ff2d60eb946b04c4f`.
+- Acrescentada cobertura em `web/tests/qualidade-dados.test.js`: carrega o módulo, verifica o conjunto completo de oito exports e confirma que cada um é função; também garante que `areaAnelGeodesica` não é exportada. A cobertura existente foi preservada. O teste real também verifica separadamente atributo municipal IBGE 498,403 km², área geodésica GRS80 do limite 2025 498,402 km², soma setorial 498,422 km² e recálculo esférico 499,691 km². Commit: `3ab05c9b6f3e9e19c87d8d9ec0f11f12b27fb820`.
+- Os cartões do painel mantêm os títulos e métodos distintos: atributo municipal IBGE, limite municipal GRS80, soma setorial GRS80 e recálculo esférico. O cálculo esférico não foi renomeado como geodésico.
+
+### Correção 2 — privacidade: endpoints de tiles versus links de atribuição
+
+- A falha não era uma requisição de rede para `www.esri.com`: esse host aparece exclusivamente nos links HTML de atribuição dos dois serviços Esri. Os endpoints de tiles permanecem `server.arcgisonline.com` (Esri) e `tile.openstreetmap.org` (OSM).
+- O teste `web/tests/mapa_privacidade.test.js` agora identifica separadamente as URLs de `L.tileLayer` e os `href` dentro dos blocos de atribuição. A lista de endpoints de tiles continua fechada nos dois hosts existentes; os únicos domínios externos admitidos como links de atribuição são `www.esri.com` e `www.openstreetmap.org`, com `target="_blank"` e `rel="noopener noreferrer"`. A checagem de opt-in, as caixas desmarcadas por padrão, o Referer OSM e o no-referrer das páginas foram mantidos.
+- Commits: `b1545188c88225362087f87962adffe898bdc8ca` (separação das categorias), `3eb46f75f406b4be21bb3f94171a8c2b27b0611d` (correção das expressões de teste) e `5a4ceae0b4c2d86c553a9e35e1a5ec21ddc148c0` (atribuição Esri registrada no inventário).
+- `AVISOS-DE-TERCEIROS.md` registra expressamente os créditos Esri/HERE/Garmin/OSM/comunidade GIS, os dois links de atribuição e a condição de opt-in dos tiles Esri. Não foi ampliada a lista de hosts de requisição e nenhuma camada externa foi ativada por padrão.
+
+### Regeneração local e estado dos Blocos 6 e 7
+
+- `docs/territorial/REGENERACAO_LOCAL_PENDENTE.md` recebeu atualização para registrar as correções e reiterar que a regeneração dos derivados territoriais continua local, com as fontes originais preservadas e sem envio ao GitHub/Actions. Commit: `a3529e33c968cc5c397ea99ed34f9ce784d5dff0`.
+- O Bloco 6 tem documentação consolidada e runbook atualizado, mas a aprovação integral dos testes ainda é condição de fechamento. O Bloco 7 permanece em validação até que as execuções desta correção tenham jobs reais `testes` e `navegador`, com logs e resultados registrados aqui.
+- Histórico recente real, sem atribuir aprovação às correções atuais: run 719 / ID `42679286727` executou os dois jobs. `testes`: 308 passed, 2 skipped, mas falhou em `web/tests/mapa_privacidade.test.js` por classificar o href Esri como domínio externo; `navegador`: falhou no teste de rolagem horizontal a 200% por simulação incorreta de zoom via CSS. Run 721 / ID `42679318196` também executou ambos: a suíte Python aprovou 308 passed, 2 skipped, mas Node voltou a falhar no href Esri; Playwright voltou a falhar na simulação de zoom. Essas falhas motivaram as correções desta ordem.
+- As correções de código e documentação acima ainda precisam de uma nova execução Actions sobre o HEAD atual. Nenhum run posterior foi considerado aprovado neste registro. Não declarar os Blocos 6 e 7 concluídos até haver evidência real dos jobs e dos critérios Playwright.
+- Nenhuma alteração em `main`, merge, deploy, publicação ou operação Cloudflare foi feita.
