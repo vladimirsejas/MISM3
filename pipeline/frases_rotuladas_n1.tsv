@@ -1,0 +1,1561 @@
+# Frases com nível de alerta esperado, para treinar e medir o classificador de nível 1 (pipeline/treinar_n1.py).
+# Formato: três colunas separadas por TABULAÇÃO: nivel<TAB>grupo<TAB>frase. Linhas que começam com # são comentário.
+#   nivel : N0 (nenhum alerta), N1 (aviso) ou N2 (alerta completo).
+#   grupo : "família" da frase. Variantes da mesma frase-base (erro de digitação, reescrita, troca de palavras) devem receber o MESMO grupo,
+#           para que a validação cruzada agrupada nunca ponha variantes da mesma frase em treino e em teste ao mesmo tempo.
+#           Quando a família não está anotada, o grupo é: bloco de origem + "#" + as quatro primeiras palavras normalizadas.
+#           Para frases novas, escreva o mesmo texto de grupo em todas as variantes (por exemplo: lote2_f014).
+# Origem (só o que já existia no repositório; nada foi inventado): web/tests/perigo.test.js, perigo_generalizacao.test.js,
+#   perigo_falhas_sinteticas.test.js, catalogo/frases_perigo.txt, catalogo/frases_fora_do_escopo.txt e avaliacao/perguntas.json.
+# Mapeamentos: em frases_perigo.txt e perguntas.json, "perigo" = N2 e "nenhuma"/sem perigo = N0 (esses arquivos não distinguem N1);
+#   as frases de necessidades (catalogo/frases_necessidades.txt) não entram: o rótulo é de necessidade, não de nível.
+# Pedidos de serviço sobre proteção ("onde fica a delegacia da mulher", "o que é o cram") NÃO entram: no sistema eles dão aviso de nível 1 de propósito
+#   (web/tests/perigo.test.js exige isso, para mostrar o 180), então não são exemplo nem de N0 nem de N1 para o classificador de aviso.
+# Testes que só afirmam "não é nível 2" (N0 ou N1 indiferente) não entram.
+# Todas as frases foram escritas pela equipe, por IA ou por quem manteve o projeto; nenhuma é de mulher real.
+# Lotes acrescentados para treinar o classificador de aviso (N1), cada um com seu grupo de família:
+#   lote_gabriel128#NNN : 128 frases escritas por IA (ChatGPT) para o desenvolvimento do orientador, rotuladas N0/N1/N2 pela equipe.
+#   perigo_controle_coercitivo#bloco e perigo_controle_indireto#bloco : frases de teste escritas à mão por IA (Claude Code), com erros de digitação.
+# Nenhuma delas é de mulher real e todas são conjunto de DESENVOLVIMENTO. As 59 frases escritas pelo autor do projeto NÃO estão aqui: são o teste independente.
+nivel	grupo	frase
+N2	perigo_generalizacao.test.js#bati_meu_naria_e	Bati Meu naria e eest sanfgrando muito.
+N2	perigo_generalizacao.test.js#ele_esta_sanrgando_muito	ele esta sanrgando muito depois da queda
+N2	perigo_generalizacao.test.js#minha_filha_esta_sangrnado	minha filha esta sangrnado bastante do braço
+N2	perigo_generalizacao.test.js#meu_vizinho_esta_sangrndo	meu vizinho esta sangrndo demais
+N2	perigo_generalizacao.test.js#preciso_chamar_uma_ambulacia	preciso chamar uma ambulacia, meu pai passou mal
+N0	perigo_generalizacao.test.js#tomei_um_mate_gelado	tomei um mate gelado agora
+N0	perigo_generalizacao.test.js#preciso_de_um_contato	preciso de um contato do cras
+N0	perigo_generalizacao.test.js#o_juiz_marcou_audiencia	o juiz marcou audiencia para amanha
+N0	perigo_generalizacao.test.js#quero_estudar_numeros_romanos	quero estudar numeros romanos
+N0	perigo_generalizacao.test.js#o_samu_atende_no	o samu atende no meu bairro?
+N2	perigo_generalizacao.test.js#sentimdomuma_dormencia_do_lado	Sentimdomuma dormencia do lado esquerdo.
+N2	perigo_generalizacao.test.js#sinto_formigamento_no_lado	sinto formigamento no lado direito do corpo
+N2	perigo_generalizacao.test.js#minha_mae_esta_com	minha mae esta com a boca torta e nao consegue falar direito
+N2	perigo_generalizacao.test.js#perdi_a_forca_do	perdi a forca do lado esquerdo de repente
+N2	perigo_generalizacao.test.js#meu_pai_teve_dormencia	meu pai teve dormencia na metade do rosto
+N2	perigo_generalizacao.test.js#fiz_um_corte_profund	Fiz um corte profund e não sei o telefone do Samu.
+N2	perigo_generalizacao.test.js#abri_um_corte_fundo	abri um corte fundo na perna com a faca
+N2	perigo_generalizacao.test.js#o_corte_profundo_nao	o corte profundo nao para de sangrar
+N2	perigo_generalizacao.test.js#meu_filho_tem_um	meu filho tem um ferimento grave na cabeca
+N2	perigo_generalizacao.test.js#queria_ligar_para_a	Queria ligar para a emergência mas não sei o número.
+N2	perigo_generalizacao.test.js#preciso_ligar_para_o	preciso ligar para o samu mas esqueci o numero
+N2	perigo_generalizacao.test.js#qual_o_telefone_dos	qual o telefone dos bombeiros
+N2	perigo_generalizacao.test.js#nao_sei_o_numero	nao sei o numero da ambulancia
+N2	perigo_generalizacao.test.js#queria_chamar_uma_ambulancia	queria chamar uma ambulancia pra minha avo
+N0	perigo_generalizacao.test.js#qual_o_numero_do	qual o numero do cras
+N0	perigo_generalizacao.test.js#o_samu_atende_em	o samu atende em rio claro?
+N0	perigo_generalizacao.test.js#meu_telefone_esta_sem	meu telefone esta sem bateria
+N0	perigo_generalizacao.test.js#qual_o_telefone_da	qual o telefone da prefeitura
+N2	perigo_generalizacao.test.js#vivo_tramcada_em_casa	Vivo tramcada em casa.
+N2	perigo_generalizacao.test.js#fico_trancada_em_casa	fico trancada em casa o dia inteiro e ele leva a chave
+N2	perigo_generalizacao.test.js#minha_filha_vive_trancada	minha filha vive trancada em casa pelo marido
+N2	perigo_generalizacao.test.js#ele_me_deixa_trancada	ele me deixa trancada no quarto quando sai
+N2	perigo_generalizacao.test.js#estamos_presas_em_casa	estamos presas em casa, ele nao deixa a gente sair
+N2	perigo_generalizacao.test.js#ela_precisa_procurar_o	Ela precisa procurar o CVV.
+N2	perigo_generalizacao.test.js#tenho_medo_que_ela	Tenho medo que ela se mate.
+N2	perigo_generalizacao.test.js#liga_pro_cvv_que	liga pro cvv que ela esta mal
+N2	perigo_generalizacao.test.js#meu_irmao_disse_que	meu irmao disse que quer se matar
+N2	perigo_generalizacao.test.js#receio_que_minha_filha	receio que minha filha se suicide
+N2	perigo_generalizacao.test.js#acho_que_ela_vai	acho que ela vai tentar se matar
+N2	perigo_generalizacao.test.js#minha_amiga_tentou_se	minha amiga tentou se matar semana passada
+N2	perigo_generalizacao.test.js#tenho_medo_que_ele	tenho medo que ele se machuque de proposito
+N0	perigo_generalizacao.test.js#meu_pai_quer_ver	meu pai quer ver o jogo em casa hoje
+N0	perigo_generalizacao.test.js#tenho_medo_que_ela	tenho medo que ela se machuque na escada
+N0	perigo_generalizacao.test.js#qual_o_cvv_do	qual o cvv do meu cartao
+N0	perigo_generalizacao.test.js#preciso_do_codigo_cvv	preciso do codigo cvv do cartao de credito
+N0	perigo_generalizacao.test.js#o_numero_cvv_fica	o numero cvv fica no verso do cartao
+N0	perigo_generalizacao.test.js#meu_namorado_me_matou	Meu namorado  me matou de rir.
+N0	perigo_generalizacao.test.js#meu_noivo_me_matou	Meu noivo me matou de  tanto correr na pedalada de hoje.
+N0	perigo_generalizacao.test.js#eu_estava_muito_parada	Eu estava muito parada na vida  e meu amigo me deu um tapa de motivação.
+N0	perigo_generalizacao.test.js#ontem_eu_vi_que	Ontem  eu  vi que meu primo me deu um empurrão na vida.
+N0	perigo_generalizacao.test.js#minha_amiga_me_mata	minha amiga me mata de rir com as piadas dela
+N0	perigo_generalizacao.test.js#morri_de_vergonha_na	morri de vergonha na reuniao de hoje
+N0	perigo_generalizacao.test.js#estou_morrendo_de_saudade	estou morrendo de saudade da minha mae
+N0	perigo_generalizacao.test.js#meu_pai_me_matou	meu pai me matou de cansaco na caminhada de domingo
+N0	perigo_generalizacao.test.js#preciso_de_um_tapa	preciso de um tapa de realidade pra largar esse emprego
+N0	perigo_generalizacao.test.js#meu_chefe_deu_um	meu chefe deu um empurrao na minha carreira
+N0	perigo_generalizacao.test.js#aquela_palestra_foi_um	aquela palestra foi um soco na autoestima, mas me fez bem
+N0	perigo_generalizacao.test.js#o_professor_me_deu	o professor me deu um empurraozinho na vida academica
+N2	perigo_generalizacao.test.js#meu_marido_me_deu	meu marido me deu um tapa na cara
+N2	perigo_generalizacao.test.js#ele_me_deu_um	ele me deu um soco no rosto ontem
+N2	perigo_generalizacao.test.js#meu_irmao_me_deu	meu irmao me deu um empurrao na escada
+N2	perigo_generalizacao.test.js#ele_me_deu_um	ele me deu um chute quando eu reclamei
+N2	perigo_generalizacao.test.js#meu_marido_ja_me	meu marido ja me deu varios tapas
+N2	perigo_generalizacao.test.js#ele_disse_que_vai	ele disse que vai me matar
+N2	perigo_generalizacao.test.js#meu_marido_me_mata	meu marido me mata de fome e me bate
+N0	perigo_generalizacao.test.js#levei_um_soco_no	levei um soco no treino de boxe e fiquei com o olho roxo
+N0	perigo_generalizacao.test.js#ganhei_um_chute_na	ganhei um chute na aula de luta hoje
+N0	perigo_generalizacao.test.js#meu_primo_me_deu	meu primo me deu um empurrao na brincadeira e eu cai na piscina
+N0	perigo_generalizacao.test.js#tomei_uma_cotovelada_no	tomei uma cotovelada no jogo de basquete
+N2	perigo_generalizacao.test.js#meu_marido_me_deu	meu marido me deu um soco depois do jogo de futebol
+N2	perigo_generalizacao.test.js#ele_vai_me_matar	ele vai me matar se eu contar pra alguem
+N2	perigo_generalizacao.test.js#meu_marido_ia_me	meu marido ia me matar se soubesse que falei com a policia
+N2	perigo_generalizacao.test.js#ele_disse_que_vai	ele disse que vai me matar se eu comer na mesa
+N2	perigo_generalizacao.test.js#meu_pai_vai_me	meu pai vai me matar se eu sair de casa
+N2	perigo_generalizacao.test.js#estou_com_dor_no	estou com dor no peito
+N2	perigo_generalizacao.test.js#dor_no_braco_esquerdo	dor no braco esquerdo e tontura
+N2	perigo_generalizacao.test.js#dor_no_braco_e	dor no braco e falta de ar
+N2	perigo_generalizacao.test.js#dor_nas_costas_e	dor nas costas e suor frio e falta de ar
+N2	perigo_generalizacao.test.js#tenho_medida_protetiva_e	tenho medida protetiva e ele apareceu ontem na minha porta
+N2	perigo_generalizacao.test.js#depois_da_medida_protetiva	depois da medida protetiva ele nunca mais veio mas hoje mandou mensagem
+N2	perigo_generalizacao.test.js#tenho_medida_protetiva_mas	tenho medida protetiva mas ele continua me ameacando
+N2	perigo_generalizacao.test.js#consegui_a_protetiva_e	consegui a protetiva e ele voltou a me procurar
+N2	perigo_generalizacao.test.js#depois_da_medida_protetiva	depois da medida protetiva nunca mais me procurou mas eu quero me matar
+N2	perigo_generalizacao.test.js#ele_entrou_en_cpmtato	Ele     entrou  en  cpmtato com ela mesmo   o juim proibindo.
+N2	perigo_generalizacao.test.js#ele_nao_pode_falar	Ele não pode falar com elae  ta mandando mensagem no celular.
+N2	perigo_generalizacao.test.js#o_juiz_proibiu_mas	o juiz proibiu mas ele mandou mensagem pra ela hoje
+N2	perigo_generalizacao.test.js#ele_nao_pode_se	ele nao pode se aproximar e apareceu no trabalho dela
+N2	perigo_generalizacao.test.js#mesmo_com_a_ordem	mesmo com a ordem de afastamento ele me ligou
+N2	perigo_generalizacao.test.js#ele_entrou_em_cpmtato	ele entrou em cpmtato com a minha irma mesmo com a decisao da justica proibindo
+N2	perigo_generalizacao.test.js#a_menina_sempre_chega	A menina sempre chega machucada na escola alguém ptrevisa chamar o conselho tutelar.
+N2	perigo_generalizacao.test.js#meu_sobrinho_sempre_volta	meu sobrinho sempre volta da casa do pai com roxos
+N2	perigo_generalizacao.test.js#a_crianca_vive_com	a crianca vive com marcas pelo corpo e precisa do conselho tutelar
+N2	perigo_generalizacao.test.js#vou_chamar_o_conselho	vou chamar o conselho tutelar porque o menino esta machucado e passando fome
+N2	perigo_generalizacao.test.js#o_menino_sempre_chega	o menino sempre chega machucado na aula e ninguem faz nada
+N2	perigo_generalizacao.test.js#meu_pai_chegou_bebado	Meu  pai  chegou bebado  agrediu minha mãe a mim e meus irmão.
+N2	perigo_generalizacao.test.js#meu_padrasto_agrediu_minha	meu padrasto agrediu minha mae e meus irmaos
+N2	perigo_generalizacao.test.js#minha_mae_bateu_em	minha mae bateu em mim e na minha irma
+N2	perigo_generalizacao.test.js#meu_pai_espancou_minha	meu pai espancou minha avo ontem a noite
+N2	perigo_generalizacao.test.js#meu_tio_machucou_a	meu tio machucou a gente toda vez que bebe
+N1	perigo_generalizacao.test.js#meu_ex_me_persegue	Meu ex me persegue.
+N1	perigo_generalizacao.test.js#acho_que_meu_marido	Acho que meu marido me humilha verbalmente.
+N1	perigo_generalizacao.test.js#meu_irmao_me_xinga	Meu irmão me xinga todo dia.
+N1	perigo_generalizacao.test.js#meu_namorado_me_insulta	meu namorado me insulta na frente dos amigos
+N1	perigo_generalizacao.test.js#minha_sogra_me_ofende	minha sogra me ofende toda vez que vem aqui
+N1	perigo_generalizacao.test.js#meu_ex_fica_me	meu ex fica me seguindo na saida do trabalho
+N1	perigo_generalizacao.test.js#meu_chefe_me_humilha	meu chefe me humilha em reuniao
+N1	perigo_generalizacao.test.js#meu_ex_me_persegue	meu ex me persegue pelas redes sociais e nao me deixa em paz
+N2	perigo_generalizacao.test.js#meu_ex_me_persegue	meu ex me persegue e disse que vai me matar
+N2	perigo_generalizacao.test.js#meu_ex_me_persegue	meu ex me persegue e me bateu ontem
+N2	perigo_generalizacao.test.js#meu_ex_me_persegue	meu ex me persegue com uma faca
+N2	perigo_generalizacao.test.js#meu_marido_me_xinga	meu marido me xinga e me ameaça de morte
+N2	perigo_generalizacao.test.js#meu_ex_me_persegue	meu ex me persegue e manda mensagem ameaçando
+N2	perigo_generalizacao.test.js#tenho_medida_protetiva_e	tenho medida protetiva e ele me persegue na rua
+N2	perigo_generalizacao.test.js#meu_marido_me_humilha	meu marido me humilha e me empurrou na escada
+N2	perigo_falhas_sinteticas.test.js#meu_peito_aperta_forte	meu peito aperta forte e o braco esquerdo formiga, estou muito assustada
+N2	perigo_falhas_sinteticas.test.js#sinto_um_aperto_forte	sinto um aperto forte no peito e suor frio
+N2	perigo_falhas_sinteticas.test.js#estou_com_pressao_no	estou com pressao no peito e o braço esquerdo dormente
+N2	perigo_falhas_sinteticas.test.js#meu_peito_esta_pesado	meu peito esta pesado e dói o braço esquerdo
+N2	perigo_falhas_sinteticas.test.js#dor_no_braco_esquerdo	dor no braco esquerdo e falta de ar
+N2	perigo_falhas_sinteticas.test.js#o_peito_queima_e	o peito queima e a dor vai pra mandibula
+N2	perigo_falhas_sinteticas.test.js#formigamento_no_braco_esquerdo	formigamento no braço esquerdo, peito apertado e tontura
+N2	perigo_falhas_sinteticas.test.js#meu_filho_ja_adulto	meu filho ja adulto pega minha aposentadoria e me da tapa quando reclamo
+N2	perigo_falhas_sinteticas.test.js#meu_filho_me_deu	meu filho me deu um soco porque neguei dinheiro
+N2	perigo_falhas_sinteticas.test.js#meu_neto_me_empurra	meu neto me empurra e leva meu cartao da aposentadoria
+N2	perigo_falhas_sinteticas.test.js#minha_filha_me_bate	minha filha me bate e fica com a minha pensao
+N2	perigo_falhas_sinteticas.test.js#meu_irmao_me_da	meu irmao me da murro quando eu nao entrego o dinheiro
+N2	perigo_falhas_sinteticas.test.js#meu_genro_me_bateu	meu genro me bateu e me ameaca
+N2	perigo_falhas_sinteticas.test.js#meu_filho_levanta_a	meu filho levanta a mao pra mim e me chama de velha inutil e pega meu beneficio
+N2	perigo_falhas_sinteticas.test.js#a_justica_me_deu	a justica me deu protecao contra o ex mas ele veio de novo e esta batendo no portao
+N2	perigo_falhas_sinteticas.test.js#o_juiz_concedeu_a	o juiz concedeu a ordem de afastamento mas meu ex apareceu aqui em casa
+N2	perigo_falhas_sinteticas.test.js#tenho_protecao_judicial_contra	tenho protecao judicial contra ele e ele descumpriu, esta rondando minha rua
+N2	perigo_falhas_sinteticas.test.js#ele_nao_respeita_a	ele nao respeita a medida que o juiz deu e voltou pra minha porta
+N2	perigo_falhas_sinteticas.test.js#consegui_a_medida_protetiva	consegui a medida protetiva e mesmo assim ele me procurou hoje de novo
+N2	perigo_falhas_sinteticas.test.js#meu_ex_ignorou_a	meu ex ignorou a decisao da justica e esta tentando entrar na minha casa
+N2	perigo.test.js:deve:violencia#meu_marido_me_bate	meu marido me bate
+N2	perigo.test.js:deve:violencia#ele_me_ameacou_de	ele me ameaçou de morte
+N2	perigo.test.js:deve:violencia#estou_apanhando_em_casa	estou apanhando em casa
+N2	perigo.test.js:deve:violencia#fui_estuprada	fui estuprada
+N2	perigo.test.js:deve:violencia#tenho_medo_dele	tenho medo dele
+N2	perigo.test.js:deve:violencia#sofro_violencia_domestica	sofro violência doméstica
+N2	perigo.test.js:deve:violencia#preciso_sair_de_casa	preciso sair de casa com segurança
+N2	perigo.test.js:deve:violencia#meu_vizinho_bate_na	meu vizinho bate na mulher dele toda noite
+N2	perigo.test.js:deve:violencia#minha_irma_apanha_do	minha irmã apanha do marido
+N2	perigo.test.js:deve:violencia#meu_marido_controla_meu	meu marido controla meu dinheiro
+N2	perigo.test.js:deve:violencia#ele_vigia_meu_celular	ele vigia meu celular
+N2	perigo.test.js:deve:violencia#meu_companheiro_controla_com	meu companheiro controla com quem eu falo
+N2	perigo.test.js:deve:suicidio#pensei_em_tomar_todos	pensei em tomar todos os remédios
+N2	perigo.test.js:deve:suicidio#queria_dormir_e_nao	queria dormir e não acordar mais
+N2	perigo.test.js:deve:suicidio#minha_vida_nao_tem	minha vida não tem mais sentido, não quero estar aqui
+N2	perigo.test.js:deve:suicidio#estou_pensando_em_me	estou pensando em me jogar da ponte
+N2	perigo.test.js:deve:suicidio#vou_me_enforcar	vou me enforcar
+N2	perigo.test.js:deve:suicidio#quero_me_matar	quero me matar
+N2	perigo.test.js:deve:suicidio#nao_aguento_mais_viver	não aguento mais viver
+N2	perigo.test.js:deve:suicidio#penso_em_acabar_com	penso em acabar com tudo
+N2	perigo.test.js:deve:suicidio#tenho_vontade_de_morrer	tenho vontade de morrer
+N2	perigo.test.js:deve:suicidio#quero_sumir	quero sumir
+N2	perigo.test.js:deve:crianca#meu_padrasto_abusa_da	meu padrasto abusa da minha filha
+N2	perigo.test.js:deve:crianca#minha_filha_esta_sendo	minha filha está sendo abusada
+N2	perigo.test.js:deve:crianca#meu_marido_bate_nas	meu marido bate nas crianças
+N2	perigo.test.js:deve:crianca#ele_machuca_os_filhos	ele machuca os filhos
+N2	perigo.test.js:deve:crianca#meu_padrasto_mexe_com	meu padrasto mexe com a minha filha de 9 anos
+N2	perigo.test.js:deve:crianca#a_crianca_la_de	a criança lá de casa apanha de cinto toda noite
+N2	perigo.test.js:deve:crianca#minha_neta_de_7	minha neta de 7 anos contou que o tio passa a mão nela
+N2	perigo.test.js:deve:saude#minha_mae_caiu_e	minha mãe caiu e não responde
+N2	perigo.test.js:deve:saude#meu_filho_engasgou_e	meu filho engasgou e está roxo
+N2	perigo.test.js:deve:saude#meu_filho_desmaiou	meu filho desmaiou
+N2	perigo.test.js:deve:saude#nao_consigo_respirar	não consigo respirar
+N2	perigo.test.js:deve:saude#ela_teve_convulsao	ela teve convulsão
+N2	perigo.test.js:deve:saude#tomou_veneno	tomou veneno
+N2	perigo.test.js:deve:risco#a_casa_esta_pegando	a casa está pegando fogo
+N2	perigo.test.js:deve:risco#cheiro_de_gas	cheiro de gás
+N0	perigo.test.js:comuns#quero_sumir_com_as	quero sumir com as dívidas
+N0	perigo.test.js:comuns#meu_marido_bateu_o	meu marido bateu o carro
+N0	perigo.test.js:comuns#preciso_de_vaga_na	preciso de vaga na creche
+N0	perigo.test.js:comuns#quero_fazer_um_curso	quero fazer um curso
+N0	perigo.test.js:comuns#tem_preventivo_no_posto	tem preventivo no posto?
+N0	perigo.test.js:comuns#ola_preciso_de_ajuda	ola, preciso de ajuda
+N0	perigo.test.js:comuns#onde_fica_o_cras	onde fica o cras
+N0	perigo.test.js:comuns#estou_desempregada	estou desempregada
+N0	perigo.test.js:comuns#quero_me_matricular_na	quero me matricular na escola
+N0	perigo.test.js:comuns#meu_filho_morre_de	meu filho morre de medo de escuro
+N0	perigo.test.js:comuns#o_professor_bateu_o	o professor bateu o recorde da escola
+N0	perigo.test.js:comuns#a_bateria_do_celular	a bateria do celular acabou
+N0	perigo.test.js:comuns#meu_filho_apanha_a	meu filho apanha a bola e joga no gol
+N0	perigo.test.js:comuns#meu_marido_controla_a	meu marido controla a temperatura da casa
+N0	perigo.test.js:necessidade_material#minha_filha_deixou_as	minha filha deixou as crianças comigo e eu vivo só da aposentadoria
+N0	perigo.test.js:necessidade_material#minha_pensao_nao_cobre	minha pensão não cobre o que os netinhos precisam para viver
+N2	perigo.test.js:alertas_do_detector#tentou_me_estrangular_ontem	tentou me estrangular ontem
+N2	perigo.test.js:alertas_do_detector#dormi_no_carro_porque	dormi no carro porque tenho medo de entrar em casa
+N2	perigo.test.js:alertas_do_detector#ja_escrevi_minha_despedida	ja escrevi minha despedida
+N2	perigo.test.js:alertas_do_detector#meus_filhos_ficariam_melhor	meus filhos ficariam melhor sem a mae
+N2	perigo.test.js:escrita_variada#quero_morrer	quero morreeeeer
+N2	perigo.test.js:escrita_variada#socorro	socorrooo
+N2	perigo.test.js:nivel2#meu_padrasto_bate_nas	meu padrasto bate nas crianças
+N2	perigo.test.js:nivel2#quero_me_matar_e	quero me matar e meu marido me bate
+N2	frases_perigo.txt:violencia#meu_marido_me_deu	meu marido me deu um soco no rosto ontem a noite
+N2	frases_perigo.txt:violencia#ele_me_puxou_pelos	ele me puxou pelos cabelos e me arrastou pela casa
+N2	frases_perigo.txt:violencia#levei_um_tapa_na	levei um tapa na cara e ele ainda me chamou de inutil
+N2	frases_perigo.txt:violencia#meu_companheiro_me_ameaca	meu companheiro me ameaca de morte toda vez que bebe
+N2	frases_perigo.txt:violencia#tenho_medo_de_dormir	tenho medo de dormir em casa porque ele fica agressivo
+N2	frases_perigo.txt:violencia#ele_me_proibe_de	ele me proibe de ver minha familia e controla meu celular
+N2	frases_perigo.txt:violencia#meu_namorado_me_enforcou	meu namorado me enforcou durante a discussao
+N2	frases_perigo.txt:violencia#ele_disse_que_se	ele disse que se eu largar dele vai atras de mim ate me achar
+N2	frases_perigo.txt:violencia#estou_apanhando_ha_anos	estou apanhando ha anos e nao sei mais o que fazer
+N2	frases_perigo.txt:violencia#meu_marido_tomou_meus	meu marido tomou meus documentos e meu cartao
+N2	frases_perigo.txt:violencia#ele_me_xinga_e	ele me xinga e me humilha na frente dos meus filhos
+N2	frases_perigo.txt:violencia#o_pai_dos_meus	o pai dos meus filhos invadiu minha casa e me ameacou
+N2	frases_perigo.txt:violencia#ele_ficou_me_esperando	ele ficou me esperando na saida da escola e me agrediu
+N2	frases_perigo.txt:violencia#meu_ex_nao_aceita	meu ex nao aceita o fim e me manda mensagens de ameaca
+N2	frases_perigo.txt:violencia#foi_a_terceira_vez	foi a terceira vez essa semana que ele me bate
+N2	frases_perigo.txt:violencia#levei_uma_surra_e	levei uma surra e estou com o olho roxo
+N2	frases_perigo.txt:violencia#ele_me_empurrou_contra	ele me empurrou contra a parede e tentou me sufocar
+N2	frases_perigo.txt:violencia#tenho_marcas_pelo_corpo	tenho marcas pelo corpo e ele diz que foi culpa minha
+N2	frases_perigo.txt:violencia#ele_fica_me_vigiando	ele fica me vigiando o tempo todo e nao posso sair sozinha
+N2	frases_perigo.txt:violencia#meu_marido_jogou_agua	meu marido jogou agua fervendo em mim
+N2	frases_perigo.txt:violencia#ele_me_trancou_no	ele me trancou no banheiro e apagou a luz
+N2	frases_perigo.txt:violencia#estou_escondida_porque_ele	estou escondida porque ele prometeu me matar
+N2	frases_perigo.txt:violencia#o_homem_com_quem	o homem com quem moro me obriga a fazer sexo
+N2	frases_perigo.txt:violencia#fui_violentada_pelo_meu	fui violentada pelo meu patrao
+N2	frases_perigo.txt:violencia#um_desconhecido_me_agarrou	um desconhecido me agarrou na rua e me ameacou com faca
+N2	frases_perigo.txt:violencia#meu_padrasto_entra_no	meu padrasto entra no meu quarto de noite e me toca
+N2	frases_perigo.txt:violencia#meu_ex_ta_rondando	meu ex ta rondando minha casa e quebrou o vidro do carro
+N2	frases_perigo.txt:violencia#ele_cortou_o_freio	ele cortou o freio do meu carro e disse que foi acidente
+N2	frases_perigo.txt:violencia#meu_marido_destruiu_minhas	meu marido destruiu minhas roupas e meus documentos
+N2	frases_perigo.txt:violencia#ele_nao_me_deixa	ele nao me deixa trabalhar e me bate quando insisto
+N2	frases_perigo.txt:violencia#a_policia_ja_veio	a policia ja veio aqui varias vezes mas ele volta a me bater
+N2	frases_perigo.txt:violencia#tenho_medida_protetiva_mas	tenho medida protetiva mas ele descumpriu e apareceu aqui
+N2	frases_perigo.txt:violencia#quero_sair_de_casa	quero sair de casa hoje mesmo porque ele me bate
+N2	frases_perigo.txt:violencia#preciso_de_um_lugar	preciso de um lugar seguro pra ficar com meus filhos, ele me agride
+N2	frases_perigo.txt:violencia#minha_cunhada_esta_apanhando	minha cunhada esta apanhando do irmao dele e eu ouvi tudo
+N2	frases_perigo.txt:violencia#minha_melhor_amiga_foi	minha melhor amiga foi espancada pelo namorado e esta escondida em casa
+N2	frases_perigo.txt:violencia#escuto_meu_vizinho_gritar	escuto meu vizinho gritar e bater na esposa toda noite
+N2	frases_perigo.txt:violencia#minha_mae_apanha_do	minha mae apanha do meu padrasto desde que eu era pequena
+N2	frases_perigo.txt:violencia#ele_ameaca_contar_coisas	ele ameaca contar coisas minhas se eu terminar com ele
+N2	frases_perigo.txt:violencia#meu_marido_ameaca_me	meu marido ameaca me tirar as criancas e diz que vai me matar
+N2	frases_perigo.txt:violencia#ele_me_bateu_na	ele me bateu na frente de todo mundo e ninguem fez nada
+N2	frases_perigo.txt:violencia#ele_me_bate_quando	ele me bate quando bebe e depois pede desculpas
+N2	frases_perigo.txt:violencia#meu_companheiro_me_deu	meu companheiro me deu um chute na barriga estando eu gravida
+N2	frases_perigo.txt:violencia#fui_agredida_por_ele	fui agredida por ele e fiquei com hematomas nos bracos
+N2	frases_perigo.txt:violencia#ele_me_mordeu_e	ele me mordeu e me arranhou durante a briga
+N2	frases_perigo.txt:violencia#ele_rasgou_minha_roupa	ele rasgou minha roupa e me ameaçou
+N2	frases_perigo.txt:violencia#o_ciumento_do_meu	o ciumento do meu marido me persegue ate no trabalho
+N2	frases_perigo.txt:violencia#ele_grava_tudo_que	ele grava tudo que eu falo e me ameaca se eu contar
+N2	frases_perigo.txt:violencia#ele_esta_armado_e	ele esta armado e disse que hoje acaba comigo
+N2	frases_perigo.txt:violencia#me_escondi_no_quintal	me escondi no quintal da vizinha com medo dele
+N2	frases_perigo.txt:violencia#meu_esposo_me_ameacou	meu esposo me ameaçou com um facao
+N2	frases_perigo.txt:violencia#ele_colocou_a_faca	ele colocou a faca no meu pescoço
+N2	frases_perigo.txt:violencia#o_pai_da_minha	o pai da minha filha me persegue e ja me agrediu duas vezes
+N2	frases_perigo.txt:violencia#meu_cunhado_tentou_me	meu cunhado tentou me forcar e eu consegui fugir
+N2	frases_perigo.txt:violencia#um_colega_de_trabalho	um colega de trabalho me apertou contra a parede
+N2	frases_perigo.txt:violencia#meu_chefe_passa_a	meu chefe passa a mao em mim e me ameaça de demissão
+N2	frases_perigo.txt:violencia#sofro_agressoes_do_meu	sofro agressoes do meu filho adulto que usa drogas
+N2	frases_perigo.txt:violencia#meu_filho_de_25	meu filho de 25 anos me bate quando nao dou dinheiro
+N2	frases_perigo.txt:violencia#meu_genro_bate_na	meu genro bate na minha filha e eu tenho medo de que a mate
+N2	frases_perigo.txt:violencia#ele_me_mantem_em	ele me mantem em carcere privado
+N2	frases_perigo.txt:violencia#nao_posso_sair_de	nao posso sair de casa sem ele deixar e ele me bate se eu desobedeco
+N2	frases_perigo.txt:violencia#meu_marido_me_obriga	meu marido me obriga a entregar todo o salario e me espanca se nao entrego
+N2	frases_perigo.txt:violencia#estou_sendo_ameacada_pelo	estou sendo ameacada pelo meu ex e ele sabe onde moro
+N2	frases_perigo.txt:violencia#ele_me_chamou_pra	ele me chamou pra conversar e me agrediu no carro
+N2	frases_perigo.txt:violencia#apanhei_do_meu_namorado	apanhei do meu namorado de novo
+N2	frases_perigo.txt:violencia#sofri_violencia_do_meu	sofri violencia do meu esposo e nao tenho pra onde ir
+N2	frases_perigo.txt:violencia#ele_me_estrangulou_e	ele me estrangulou e eu quase desmaiei
+N2	frases_perigo.txt:violencia#ele_me_joga_objetos	ele me joga objetos e quebra as coisas quando fica nervoso
+N2	frases_perigo.txt:violencia#minha_vizinha_pediu_socorro	minha vizinha pediu socorro agora pela janela e o marido esta batendo nela
+N2	frases_perigo.txt:violencia#estou_com_muito_medo	estou com muito medo do que ele vai fazer quando chegar em casa
+N2	frases_perigo.txt:violencia#ele_me_ameacou_de	ele me ameaçou de morte por mensagem e eu guardei os prints
+N2	frases_perigo.txt:violencia#fui_mantida_presa_em	fui mantida presa em casa por tres dias
+N2	frases_perigo.txt:violencia#meu_companheiro_usa_as	meu companheiro usa as criancas pra me ameaçar e me agride
+N2	frases_perigo.txt:violencia#ele_mandou_eu_sumir	ele mandou eu sumir senao me mata
+N2	frases_perigo.txt:suicidio#nao_quero_mais_viver	nao quero mais viver
+N2	frases_perigo.txt:suicidio#penso_em_me_matar	penso em me matar todos os dias
+N2	frases_perigo.txt:suicidio#ja_tentei_me_matar	ja tentei me matar uma vez e quero tentar de novo
+N2	frases_perigo.txt:suicidio#quero_acabar_com_a	quero acabar com a minha vida hoje
+N2	frases_perigo.txt:suicidio#estou_pensando_em_tirar	estou pensando em tirar minha propria vida
+N2	frases_perigo.txt:suicidio#nao_aguento_mais_queria	nao aguento mais, queria que tudo acabasse
+N2	frases_perigo.txt:suicidio#seria_melhor_se_eu	seria melhor se eu nao existisse
+N2	frases_perigo.txt:suicidio#minha_familia_estaria_melhor	minha familia estaria melhor sem mim
+N2	frases_perigo.txt:suicidio#nao_vejo_razao_nenhuma	nao vejo razao nenhuma pra continuar vivendo
+N2	frases_perigo.txt:suicidio#tomei_comprimidos_demais_porque	tomei comprimidos demais porque queria morrer
+N2	frases_perigo.txt:suicidio#guardei_remedios_pra_tomar	guardei remedios pra tomar todos de uma vez
+N2	frases_perigo.txt:suicidio#estou_olhando_a_corda	estou olhando a corda e pensando em me enforcar
+N2	frases_perigo.txt:suicidio#vou_me_jogar_na	vou me jogar na frente do carro
+N2	frases_perigo.txt:suicidio#vou_pular_da_janela	vou pular da janela do apartamento
+N2	frases_perigo.txt:suicidio#pensei_em_me_cortar	pensei em me cortar fundo ate nao sentir mais nada
+N2	frases_perigo.txt:suicidio#preparei_uma_carta_de	preparei uma carta de despedida
+N2	frases_perigo.txt:suicidio#quero_dormir_pra_sempre	quero dormir pra sempre e nunca mais acordar
+N2	frases_perigo.txt:suicidio#ja_nao_tenho_nenhum	ja nao tenho nenhum motivo pra viver
+N2	frases_perigo.txt:suicidio#estou_cansada_de_existir	estou cansada de existir
+N2	frases_perigo.txt:suicidio#desejo_sumir_do_mundo	desejo sumir do mundo e nunca mais voltar
+N2	frases_perigo.txt:suicidio#acho_que_todo_mundo	acho que todo mundo ficaria aliviado se eu morresse
+N2	frases_perigo.txt:suicidio#estou_pensando_em_me	estou pensando em me matar com o veneno que tenho em casa
+N2	frases_perigo.txt:suicidio#comprei_uma_arma_pra	comprei uma arma pra acabar com tudo
+N2	frases_perigo.txt:suicidio#ninguem_vai_sentir_minha	ninguem vai sentir minha falta quando eu me for
+N2	frases_perigo.txt:suicidio#nao_suporto_mais_a	nao suporto mais a dor, quero morrer
+N2	frases_perigo.txt:suicidio#estou_sem_forcas_pra	estou sem forças pra continuar, vou dar fim a tudo
+N2	frases_perigo.txt:suicidio#deixei_bilhetes_explicando_porque	deixei bilhetes explicando porque vou embora pra sempre
+N2	frases_perigo.txt:suicidio#vou_me_matar_hoje	vou me matar hoje a noite
+N2	frases_perigo.txt:suicidio#queria_nunca_ter_nascido	queria nunca ter nascido e acabar com isso
+N2	frases_perigo.txt:suicidio#nao_quero_ver_o	nao quero ver o dia de amanha
+N2	frases_perigo.txt:suicidio#tentei_me_envenenar_com	tentei me envenenar com produto de limpeza
+N2	frases_perigo.txt:suicidio#fiz_cortes_nos_bracos	fiz cortes nos braços porque queria morrer
+N2	frases_perigo.txt:suicidio#minha_vida_e_um	minha vida e um peso, vou tirar esse peso de todos
+N2	frases_perigo.txt:suicidio#nao_existe_mais_saida	nao existe mais saida pra mim, so a morte
+N2	frases_perigo.txt:suicidio#queria_me_afogar_no	queria me afogar no rio
+N2	frases_perigo.txt:suicidio#ja_decidi_vou_acabar	ja decidi: vou acabar com a minha vida
+N2	frases_perigo.txt:suicidio#pensamentos_de_morte_nao	pensamentos de morte nao saem da minha cabeça
+N2	frases_perigo.txt:suicidio#estou_com_vontade_de	estou com vontade de me machucar de novo
+N2	frases_perigo.txt:suicidio#todo_dia_penso_que	todo dia penso que seria melhor morrer
+N2	frases_perigo.txt:suicidio#quero_desaparecer_pra_sempre	quero desaparecer pra sempre
+N2	frases_perigo.txt:suicidio#nao_aguento_mais_a	nao aguento mais a depressao e quero terminar com tudo
+N2	frases_perigo.txt:suicidio#estou_com_ideias_de	estou com ideias de suicidio
+N2	frases_perigo.txt:suicidio#vou_tomar_tudo_que	vou tomar tudo que tem na caixa de remedios
+N2	frases_perigo.txt:suicidio#perdi_tudo_e_nao	perdi tudo e nao vejo porque continuar vivendo
+N2	frases_perigo.txt:suicidio#queria_nao_acordar_amanha	queria nao acordar amanha
+N2	frases_perigo.txt:suicidio#cansei_de_lutar_quero	cansei de lutar, quero partir
+N2	frases_perigo.txt:suicidio#estou_pensando_em_me	estou pensando em me enforcar no quintal
+N2	frases_perigo.txt:suicidio#quero_me_atirar_do	quero me atirar do viaduto
+N2	frases_perigo.txt:suicidio#acho_que_vou_fazer	acho que vou fazer uma besteira comigo
+N2	frases_perigo.txt:suicidio#meu_filho_morreu_e	meu filho morreu e eu quero ir junto, nao quero viver
+N2	frases_perigo.txt:suicidio#minha_vida_acabou_e	minha vida acabou e eu quero acabar com tudo agora
+N2	frases_perigo.txt:suicidio#nao_tenho_mais_forcas	nao tenho mais forcas, prefiro morrer
+N2	frases_perigo.txt:suicidio#todo_mundo_me_odeia	todo mundo me odeia, melhor eu morrer
+N2	frases_perigo.txt:suicidio#estou_com_a_faca	estou com a faca na mao pensando em me ferir
+N2	frases_perigo.txt:suicidio#vou_tomar_o_veneno	vou tomar o veneno de rato
+N2	frases_perigo.txt:suicidio#ontem_quase_me_matei	ontem quase me matei e hoje sinto o mesmo
+N2	frases_perigo.txt:suicidio#preciso_de_ajuda_porque	preciso de ajuda porque quero morrer
+N2	frases_perigo.txt:suicidio#tem_hora_que_eu	tem hora que eu so quero me matar
+N2	frases_perigo.txt:suicidio#nao_vale_mais_a	nao vale mais a pena viver
+N2	frases_perigo.txt:suicidio#nao_quero_mais_acordar	nao quero mais acordar de manha nunca mais
+N2	frases_perigo.txt:suicidio#a_unica_saida_que	a unica saida que enxergo e morrer
+N2	frases_perigo.txt:suicidio#estou_me_automutilando_e	estou me automutilando e nao consigo parar
+N2	frases_perigo.txt:suicidio#sinto_que_nao_pertenco	sinto que nao pertenco a este mundo e quero sair dele
+N2	frases_perigo.txt:suicidio#quero_parar_de_respirar	quero parar de respirar pra sempre
+N2	frases_perigo.txt:suicidio#penso_em_me_jogar	penso em me jogar do alto do predio
+N2	frases_perigo.txt:suicidio#tenho_um_plano_pra	tenho um plano pra acabar com a minha vida
+N2	frases_perigo.txt:suicidio#meu_ex_disse_que	meu ex disse que eu devia morrer e eu concordo
+N2	frases_perigo.txt:suicidio#queria_sumir_da_face	queria sumir da face da terra
+N2	frases_perigo.txt:crianca#meu_padrasto_toca_na	meu padrasto toca na minha filha de 8 anos
+N2	frases_perigo.txt:crianca#o_namorado_da_minha	o namorado da minha ex passa a mao na minha sobrinha
+N2	frases_perigo.txt:crianca#meu_irmao_abusa_da	meu irmao abusa da nossa irma pequena
+N2	frases_perigo.txt:crianca#o_tio_da_minha	o tio da minha vizinha mexe com ela quando a mae sai
+N2	frases_perigo.txt:crianca#minha_filha_de_10	minha filha de 10 anos disse que o professor encosta nela
+N2	frases_perigo.txt:crianca#acho_que_o_pai	acho que o pai esta abusando da menina
+N2	frases_perigo.txt:crianca#o_avo_toca_nas	o avo toca nas netas quando fica sozinho com elas
+N2	frases_perigo.txt:crianca#uma_crianca_do_predio	uma crianca do predio apanha todo dia e chora muito
+N2	frases_perigo.txt:crianca#o_padrasto_bate_no	o padrasto bate no meu filho com cinto
+N2	frases_perigo.txt:crianca#minha_sobrinha_tem_marcas	minha sobrinha tem marcas roxas e diz que o pai bate
+N2	frases_perigo.txt:crianca#meu_vizinho_espanca_o	meu vizinho espanca o filho pequeno e eu escuto
+N2	frases_perigo.txt:crianca#vi_um_homem_machucando	vi um homem machucando uma crianca na rua
+N2	frases_perigo.txt:crianca#o_menino_da_casa	o menino da casa ao lado vive trancado e passando fome
+N2	frases_perigo.txt:crianca#meu_neto_de_5	meu neto de 5 anos ta apanhando da madrasta
+N2	frases_perigo.txt:crianca#a_mae_da_minha	a mae da minha amiguinha de escola bate nela de vara
+N2	frases_perigo.txt:crianca#meu_filho_chegou_com	meu filho chegou com a perna queimada e disse que a madrasta fez de proposito
+N2	frases_perigo.txt:crianca#o_namorado_da_minha	o namorado da minha mae me bate e bate no meu irmao pequeno
+N2	frases_perigo.txt:crianca#uma_menina_de_12	uma menina de 12 anos esta gravida do padrasto
+N2	frases_perigo.txt:crianca#o_vizinho_oferece_dinheiro	o vizinho oferece dinheiro pra crianca ir na casa dele
+N2	frases_perigo.txt:crianca#meu_enteado_contou_que	meu enteado contou que o tio mostra o corpo pra ele
+N2	frases_perigo.txt:crianca#meu_marido_bate_nos	meu marido bate nos nossos filhos quando bebe
+N2	frases_perigo.txt:crianca#o_pai_faz_minha	o pai faz minha filha dormir na cama dele e nao deixa a mae entrar
+N2	frases_perigo.txt:crianca#minha_afilhada_de_7	minha afilhada de 7 anos contou segredos que o tio mandou nao contar
+N2	frases_perigo.txt:crianca#tem_um_bebe_chorando	tem um bebe chorando sozinho ha horas num apartamento trancado
+N2	frases_perigo.txt:crianca#o_menino_tem_queimaduras	o menino tem queimaduras de cigarro nos bracos
+N2	frases_perigo.txt:crianca#meu_cunhado_fica_beijando	meu cunhado fica beijando minha filha na boca e eu acho errado
+N2	frases_perigo.txt:crianca#a_crianca_nao_come	a crianca nao come direito porque a mae bate nela
+N2	frases_perigo.txt:crianca#a_diretora_disse_que	a diretora disse que o aluno tem marcas de agressão em casa
+N2	frases_perigo.txt:crianca#meu_filho_de_6	meu filho de 6 anos diz que tem medo do namorado da mãe porque ele bate
+N2	frases_perigo.txt:crianca#a_baba_bate_no	a babá bate no meu bebe e eu vi pela camera
+N2	frases_perigo.txt:crianca#meu_primo_mais_velho	meu primo mais velho toca em mim e eu tenho 11 anos
+N2	frases_perigo.txt:crianca#um_adulto_me_manda	um adulto me manda fotos nuas e pede as minhas, tenho 13 anos
+N2	frases_perigo.txt:crianca#meu_pai_bate_em	meu pai bate em mim com fio quando tira nota baixa
+N2	frases_perigo.txt:crianca#a_menina_do_predio	a menina do predio foi levada pelo tio e ouvi gritos
+N2	frases_perigo.txt:crianca#o_pastor_fica_sozinho	o pastor fica sozinho com as criancas e passa a mao nelas
+N2	frases_perigo.txt:crianca#alguem_esta_vendendo_drogas	alguem esta vendendo drogas pra crianca da escola e usando ela
+N2	frases_perigo.txt:crianca#o_padrasto_manda_ela	o padrasto manda ela ficar quieta e fecha a porta do quarto
+N2	frases_perigo.txt:crianca#minha_filha_de_14	minha filha de 14 anos recebe presentes de um homem de 40 e esconde
+N2	frases_perigo.txt:crianca#meu_menino_de_4	meu menino de 4 anos nao fala e tem hematomas nas costas
+N2	frases_perigo.txt:crianca#vi_minha_vizinha_deixando	vi minha vizinha deixando as criancas sozinhas e trancadas ha dias sem comida
+N2	frases_perigo.txt:crianca#o_tio_chegou_bebado	o tio chegou bebado e bateu nas criancas ate sangrar
+N2	frases_perigo.txt:crianca#minha_enteada_diz_que	minha enteada diz que o pai a toca de noite
+N2	frases_perigo.txt:crianca#os_avos_batem_no	os avos batem no menino com chinelo todo dia
+N2	frases_perigo.txt:crianca#crianca_de_rua_sendo	crianca de rua sendo explorada por adultos na praça
+N2	frases_perigo.txt:crianca#meu_neto_foi_agredido	meu neto foi agredido pelo professor e esta com o braço machucado
+N2	frases_perigo.txt:crianca#um_homem_fica_rondando	um homem fica rondando a escola e chamando as meninas
+N2	frases_perigo.txt:crianca#a_crianca_me_contou	a crianca me contou que o vizinho mostra coisas de adulto no celular
+N2	frases_perigo.txt:crianca#minha_irma_bate_muito	minha irma bate muito no filho dela e ele esta com medo
+N2	frases_perigo.txt:crianca#o_bebe_esta_com	o bebe esta com o rosto machucado e a mae diz que caiu mas nao acredito
+N2	frases_perigo.txt:crianca#meu_sobrinho_teve_o	meu sobrinho teve o braço quebrado e o pai deu desculpa estranha
+N2	frases_perigo.txt:crianca#a_menina_foi_tocada	a menina foi tocada pelo motorista da van escolar
+N2	frases_perigo.txt:crianca#o_adolescente_da_casa	o adolescente da casa ao lado esta sendo espancado pelo pai
+N2	frases_perigo.txt:crianca#a_mae_deixou_a	a mae deixou a filha de 3 anos sozinha e ela quase caiu da janela
+N2	frases_perigo.txt:crianca#a_madrasta_da_minha	a madrasta da minha filha nao deixa ela comer e a tranca
+N2	frases_perigo.txt:crianca#o_menino_sofre_abuso	o menino sofre abuso do padrasto e a mae sabe
+N2	frases_perigo.txt:crianca#meu_filho_me_contou	meu filho me contou que o treinador toca nele no vestiario
+N2	frases_perigo.txt:saude#minha_mae_passou_mal	minha mae passou mal de repente e esta fria e sem reagir
+N2	frases_perigo.txt:saude#meu_filho_caiu_e	meu filho caiu e bateu a cabeca, ta vomitando e muito sonolento
+N2	frases_perigo.txt:saude#minha_avo_ta_com	minha avo ta com o rosto repuxado e nao fala direito
+N2	frases_perigo.txt:saude#meu_marido_esta_com	meu marido esta com dor forte no peito e suando muito
+N2	frases_perigo.txt:saude#o_bebe_nao_esta	o bebe nao esta respirando direito e esta ficando roxinho
+N2	frases_perigo.txt:saude#ela_tomou_muitos_remedios	ela tomou muitos remedios e esta desmaiando
+N2	frases_perigo.txt:saude#estou_com_sangramento_muito	estou com sangramento muito intenso e tontura
+N2	frases_perigo.txt:saude#minha_filha_esta_com	minha filha esta com febre altissima e tendo convulsao
+N2	frases_perigo.txt:saude#ele_engoliu_uma_pilha	ele engoliu uma pilha e esta com dificuldade pra respirar
+N2	frases_perigo.txt:saude#meu_pai_caiu_da	meu pai caiu da escada e nao se mexe
+N2	frases_perigo.txt:saude#estou_gravida_de_8	estou gravida de 8 meses com dor forte e perdendo liquido
+N2	frases_perigo.txt:saude#minha_vizinha_idosa_caiu	minha vizinha idosa caiu em casa e nao consegue levantar nem responder
+N2	frases_perigo.txt:saude#crianca_foi_atropelada_e	crianca foi atropelada e esta caida na rua
+N2	frases_perigo.txt:saude#meu_irmao_tomou_veneno	meu irmao tomou veneno sem querer
+N2	frases_perigo.txt:saude#meu_bebe_esta_mole	meu bebe esta mole e nao acorda
+N2	frases_perigo.txt:saude#o_nenem_engasgou_com	o neném engasgou com leite e esta ficando azul
+N2	frases_perigo.txt:saude#estou_com_falta_de	estou com falta de ar muito forte e labios roxos
+N2	frases_perigo.txt:saude#tive_um_acidente_de	tive um acidente de moto e estou sangrando muito
+N2	frases_perigo.txt:saude#cortei_a_mao_fundo	cortei a mao fundo e nao para de sair sangue
+N2	frases_perigo.txt:saude#ele_esta_com_o	ele esta com o corpo duro e olhos revirados
+N2	frases_perigo.txt:saude#minha_mae_esta_com	minha mae esta com a boca torta e o braço mole
+N2	frases_perigo.txt:saude#senti_uma_dor_esmagando	senti uma dor esmagando o peito e o braço esquerdo formigando
+N2	frases_perigo.txt:saude#tomei_uma_dose_grande	tomei uma dose grande de remedio de pressao sem querer
+N2	frases_perigo.txt:saude#meu_filho_bebeu_produto	meu filho bebeu produto de limpeza
+N2	frases_perigo.txt:saude#ela_esta_tendo_uma	ela esta tendo uma crise forte e nao recobra os sentidos
+N2	frases_perigo.txt:saude#o_cachorro_mordeu_meu	o cachorro mordeu meu filho no rosto e o machucado e grande
+N2	frases_perigo.txt:saude#meu_marido_caiu_e	meu marido caiu e esta sem pulso
+N2	frases_perigo.txt:saude#minha_tia_esta_infartando	minha tia esta infartando, ta suando frio
+N2	frases_perigo.txt:saude#a_crianca_pulou_na	a crianca pulou na piscina e ficou parada na agua
+N2	frases_perigo.txt:saude#choque_eletrico_na_minha	choque eletrico na minha filha, ela esta desacordada
+N2	frases_perigo.txt:saude#a_vovo_se_engasgou	a vovo se engasgou e nao consegue falar nem respirar
+N2	frases_perigo.txt:saude#minha_filha_teve_uma	minha filha teve uma queda feia e esta sem enxergar direito
+N2	frases_perigo.txt:saude#ele_esta_com_muita	ele esta com muita dor de barriga, duro, e vomitando sangue
+N2	frases_perigo.txt:saude#pisou_em_prego_e	pisou em prego e esta com tremores e rigidez no corpo
+N2	frases_perigo.txt:saude#estou_com_vontade_de	estou com vontade de vomitar sangue e tontura forte
+N2	frases_perigo.txt:saude#meu_filho_teve_convulsao	meu filho teve convulsao e ainda nao voltou ao normal
+N2	frases_perigo.txt:saude#estou_tendo_contracoes_fortes	estou tendo contracoes fortes e ainda faltam semanas
+N2	frases_perigo.txt:saude#mulher_gravida_caiu_e	mulher gravida caiu e esta sangrando
+N2	frases_perigo.txt:saude#queimei_o_braco_todo	queimei o braço todo com oleo quente
+N2	frases_perigo.txt:saude#inalei_fumaca_e_estou	inalei fumaca e estou com a garganta fechando
+N2	frases_perigo.txt:saude#minha_amiga_bebeu_muito	minha amiga bebeu muito e nao acorda
+N2	frases_perigo.txt:saude#fui_picada_por_cobra	fui picada por cobra e o pé esta inchando muito
+N2	frases_perigo.txt:saude#meu_vizinho_esta_engasgado	meu vizinho esta engasgado, ajuda
+N2	frases_perigo.txt:saude#a_crianca_esta_com	a crianca esta com a garganta inchando depois de comer amendoim
+N2	frases_perigo.txt:saude#estou_com_um_corte	estou com um corte profundo no abdomen
+N2	frases_perigo.txt:saude#minha_mae_tem_diabetes	minha mae tem diabetes e esta confusa e suando, nao responde direito
+N2	frases_perigo.txt:saude#meu_bebe_de_2	meu bebe de 2 meses esta com febre e muito molinho
+N2	frases_perigo.txt:saude#o_homem_desmaiou_no	o homem desmaiou no onibus e ninguem sabe o que fazer
+N2	frases_perigo.txt:saude#meu_filho_tomou_remedio	meu filho tomou remedio da minha bolsa e esta muito sonolento
+N2	frases_perigo.txt:saude#ela_caiu_da_cama	ela caiu da cama e esta com o pescoço torto
+N2	frases_perigo.txt:saude#estou_com_tontura_forte	estou com tontura forte e vejo tudo escurecendo
+N2	frases_perigo.txt:saude#ele_ficou_com_a	ele ficou com a boca roxa depois de comer
+N2	frases_perigo.txt:saude#afogamento_na_piscina_a	afogamento na piscina, a menina saiu da agua desacordada
+N2	frases_perigo.txt:saude#meu_pai_bateu_a	meu pai bateu a cabeca e saiu sangue do ouvido
+N2	frases_perigo.txt:saude#estou_com_dor_muito	estou com dor muito forte no lado direito da barriga e febre
+N0	frases_perigo.txt:nenhuma#meu_marido_bateu_o	meu marido bateu o carro no portao e nao sei como pagar o conserto
+N0	frases_perigo.txt:nenhuma#meu_filho_bateu_no	meu filho bateu no colega na escola e a diretora chamou
+N0	frases_perigo.txt:nenhuma#o_time_do_meu	o time do meu filho apanhou feio no campeonato
+N0	frases_perigo.txt:nenhuma#vou_morrer_de_rir	vou morrer de rir com essa piada
+N0	frases_perigo.txt:nenhuma#estou_morrendo_de_saudades	estou morrendo de saudades da minha mae
+N0	frases_perigo.txt:nenhuma#bati_a_porta_sem	bati a porta sem querer e me assustei
+N0	frases_perigo.txt:nenhuma#quase_morri_de_vergonha	quase morri de vergonha na reuniao
+N0	frases_perigo.txt:nenhuma#a_prova_foi_um	a prova foi um terror, quase matei meu cerebro de tanto estudar
+N0	frases_perigo.txt:nenhuma#o_cachorro_me_assustou	o cachorro me assustou e eu quase tive um infarto de susto
+N0	frases_perigo.txt:nenhuma#caiu_o_galho_da	caiu o galho da arvore no quintal e preciso de ajuda pra remover
+N0	frases_perigo.txt:nenhuma#meu_filho_nao_responde	meu filho nao responde minhas mensagens
+N0	frases_perigo.txt:nenhuma#meu_marido_nao_me	meu marido nao me responde ha dias e nao sei por que
+N0	frases_perigo.txt:nenhuma#ela_me_seguiu_no	ela me seguiu no instagram e eu aceitei
+N0	frases_perigo.txt:nenhuma#tenho_muito_medo_de	tenho muito medo de falar em publico
+N0	frases_perigo.txt:nenhuma#tenho_medo_de_perder	tenho medo de perder meu emprego
+N0	frases_perigo.txt:nenhuma#estou_com_medo_de	estou com medo de ficar sem dinheiro este mes
+N0	frases_perigo.txt:nenhuma#a_crianca_ta_com	a crianca ta com dor de garganta e preciso de consulta
+N0	frases_perigo.txt:nenhuma#meu_bebe_esta_com	meu bebe esta com febre baixa e tosse, onde levo no posto
+N0	frases_perigo.txt:nenhuma#meu_filho_caiu_da	meu filho caiu da bicicleta e ralou o joelho
+N0	frases_perigo.txt:nenhuma#levei_meu_filho_no	levei meu filho no dentista e ele chorou muito
+N0	frases_perigo.txt:nenhuma#preciso_marcar_consulta_de	preciso marcar consulta de rotina pra minha mae
+N0	frases_perigo.txt:nenhuma#estou_com_dor_de	estou com dor de cabeca ha dois dias
+N0	frases_perigo.txt:nenhuma#meu_pai_esta_com	meu pai esta com gripe forte e tosse
+N0	frases_perigo.txt:nenhuma#quero_saber_como_pedir	quero saber como pedir a segunda via do documento
+N0	frases_perigo.txt:nenhuma#a_escola_bateu_o	a escola bateu o sino, hora do recreio
+N0	frases_perigo.txt:nenhuma#quero_me_matricular_na	quero me matricular na escola pro meu filho
+N0	frases_perigo.txt:nenhuma#estou_desesperada_atras_de	estou desesperada atras de emprego
+N0	frases_perigo.txt:nenhuma#minha_mae_idosa_esta	minha mae idosa esta muito triste desde que meu pai morreu
+N0	frases_perigo.txt:nenhuma#meu_filho_esta_muito	meu filho esta muito agitado e nao quer estudar
+N0	frases_perigo.txt:nenhuma#estou_muito_estressada_com	estou muito estressada com as contas
+N0	frases_perigo.txt:nenhuma#meu_marido_bebe_muito	meu marido bebe muito e eu quero ajuda pra ele se tratar
+N0	frases_perigo.txt:nenhuma#meu_filho_usa_drogas	meu filho usa drogas e eu nao sei o que fazer
+N0	frases_perigo.txt:nenhuma#minha_filha_de_15	minha filha de 15 anos esta namorando e eu quero conversar com ela
+N0	frases_perigo.txt:nenhuma#tem_delegacia_da_mulher	tem delegacia da mulher em rio claro, onde fica
+N0	frases_perigo.txt:nenhuma#quero_informacoes_sobre_a	quero informacoes sobre a medida protetiva, como funciona
+N0	frases_perigo.txt:nenhuma#onde_fica_o_abrigo	onde fica o abrigo pra mulheres
+N0	frases_perigo.txt:nenhuma#meu_vizinho_faz_muito	meu vizinho faz muito barulho de noite
+N0	frases_perigo.txt:nenhuma#tem_um_buraco_na	tem um buraco na rua em frente de casa
+N0	frases_perigo.txt:nenhuma#o_cachorro_do_vizinho	o cachorro do vizinho late a noite toda
+N0	frases_perigo.txt:nenhuma#meu_filho_esta_com	meu filho esta com piolho, o que faço
+N0	frases_perigo.txt:nenhuma#minha_mae_esta_fazendo	minha mae esta fazendo hemodialise e preciso de transporte
+N0	frases_perigo.txt:nenhuma#quero_denunciar_um_comercio	quero denunciar um comercio que vende produto vencido
+N0	frases_perigo.txt:nenhuma#preciso_de_ajuda_pra	preciso de ajuda pra pagar a conta de luz
+N0	frases_perigo.txt:nenhuma#meu_filho_tem_asma	meu filho tem asma e preciso do remedio
+N0	frases_perigo.txt:nenhuma#a_crianca_esta_triste	a crianca esta triste porque a escola mudou
+N0	frases_perigo.txt:nenhuma#estou_gravida_de_3	estou grávida de 3 meses e quero começar o pre natal
+N0	frases_perigo.txt:nenhuma#fui_demitida_e_estou	fui demitida e estou sem renda
+N0	frases_perigo.txt:nenhuma#tem_curso_gratuito_de	tem curso gratuito de costura
+N0	frases_perigo.txt:nenhuma#minha_irma_esta_com	minha irma esta com depressao e quero levar num psicologo
+N0	frases_perigo.txt:nenhuma#meu_avo_caiu_semana	meu avo caiu semana passada e esta fazendo fisioterapia
+N0	frases_perigo.txt:nenhuma#quero_saber_onde_tomar	quero saber onde tomar a vacina da gripe
+N0	frases_perigo.txt:nenhuma#estou_com_dor_nas	estou com dor nas costas faz tempo
+N0	frases_perigo.txt:nenhuma#meu_filho_teve_febre	meu filho teve febre ontem mas melhorou
+N0	frases_perigo.txt:nenhuma#tem_atendimento_pra_gestante	tem atendimento pra gestante no posto
+N0	frases_perigo.txt:nenhuma#a_casa_esta_com	a casa esta com infiltracao e preciso de ajuda
+N0	frases_perigo.txt:nenhuma#meu_marido_esta_desempregado	meu marido esta desempregado e nos estamos sem comida
+N0	frases_perigo.txt:nenhuma#bom_dia_preciso_de	bom dia, preciso de informacao
+N0	frases_perigo.txt:nenhuma#obrigada_pela_ajuda	obrigada pela ajuda
+N0	frases_perigo.txt:nenhuma#morri_de_rir_com	morri de rir com o video que minha amiga mandou
+N0	frases_perigo.txt:nenhuma#estou_morta_de_cansaco	estou morta de cansaco depois do plantao
+N0	frases_perigo.txt:nenhuma#vou_morrer_de_calor	vou morrer de calor nesse onibus lotado
+N0	frases_perigo.txt:nenhuma#morro_de_medo_de	morro de medo de barata
+N0	frases_perigo.txt:nenhuma#quase_morri_de_susto	quase morri de susto com o barulho
+N0	frases_perigo.txt:nenhuma#me_mata_de_vergonha	me mata de vergonha falar em publico
+N0	frases_perigo.txt:nenhuma#estou_morrendo_de_sono	estou morrendo de sono hoje
+N0	frases_perigo.txt:nenhuma#esse_trabalho_esta_me	esse trabalho esta me matando de tanto servico
+N0	frases_perigo.txt:nenhuma#vou_me_matar_de	vou me matar de trabalhar pra pagar as contas
+N0	frases_perigo.txt:nenhuma#vou_morrer_de_fome	vou morrer de fome se a cesta nao chegar logo
+N0	frases_perigo.txt:nenhuma#estamos_sem_comida_em	estamos sem comida em casa e eu quero ajuda
+N0	frases_perigo.txt:nenhuma#estou_passando_fome_e	estou passando fome e preciso de cesta basica
+N0	frases_perigo.txt:nenhuma#nao_tenho_dinheiro_pro	nao tenho dinheiro pro gas essa semana
+N0	frases_perigo.txt:nenhuma#matei_aula_hoje_e	matei aula hoje e a diretora ligou
+N0	frases_perigo.txt:nenhuma#matei_a_saudade_da	matei a saudade da minha mae no fim de semana
+N0	frases_perigo.txt:nenhuma#so_quero_matar_o	so quero matar o tempo na fila do posto
+N0	frases_perigo.txt:nenhuma#precisei_matar_a_sede	precisei matar a sede com agua da torneira
+N0	frases_perigo.txt:nenhuma#bateu_a_porta_com	bateu a porta com forca e acordou o bebe
+N0	frases_perigo.txt:nenhuma#o_juiz_bateu_o	o juiz bateu o martelo e encerrou o processo
+N0	frases_perigo.txt:nenhuma#bati_o_ponto_no	bati o ponto no trabalho atrasada
+N0	frases_perigo.txt:nenhuma#meu_coracao_bate_forte	meu coracao bate forte de ansiedade antes da prova
+N0	frases_perigo.txt:nenhuma#o_sinal_bateu_e	o sinal bateu e as criancas sairam da escola
+N0	frases_perigo.txt:nenhuma#meu_marido_bateu_o	meu marido bateu o carro e quer que eu pague o conserto
+N0	frases_perigo.txt:nenhuma#ele_me_bateu_no	ele me bateu no xadrez e riu muito
+N0	frases_perigo.txt:nenhuma#perdi_pro_meu_filho	perdi pro meu filho no videogame de novo
+N0	frases_perigo.txt:nenhuma#a_minha_filha_me	a minha filha me venceu no jogo de cartas
+N0	frases_perigo.txt:nenhuma#o_time_dele_apanhou	o time dele apanhou na final do campeonato
+N0	frases_perigo.txt:nenhuma#apanhei_no_jogo_de	apanhei no jogo de futebol com as amigas
+N0	frases_perigo.txt:nenhuma#apanhei_muito_pra_aprender	apanhei muito pra aprender a mexer no computador
+N0	frases_perigo.txt:nenhuma#apanhei_pra_achar_o	apanhei pra achar o endereco do posto
+N0	frases_perigo.txt:nenhuma#estou_com_dor_de	estou com dor de dente forte e preciso de dentista
+N0	frases_perigo.txt:nenhuma#dor_de_ouvido_ha	dor de ouvido ha dois dias
+N0	frases_perigo.txt:nenhuma#dor_de_barriga_depois	dor de barriga depois do almoco
+N0	frases_perigo.txt:nenhuma#tosse_seca_ha_uma	tosse seca ha uma semana
+N0	frases_perigo.txt:nenhuma#meu_filho_esta_com	meu filho esta com febre baixa desde ontem
+N0	frases_perigo.txt:nenhuma#cai_e_ralei_o	cai e ralei o cotovelo
+N0	frases_perigo.txt:nenhuma#torci_o_pe_jogando	torci o pe jogando bola
+N0	frases_perigo.txt:nenhuma#estou_com_enxaqueca_e	estou com enxaqueca e preciso de remedio
+N0	frases_perigo.txt:nenhuma#unha_encravada_doendo_muito	unha encravada doendo muito
+N0	frases_perigo.txt:nenhuma#dor_muscular_depois_da	dor muscular depois da academia
+N0	frases_perigo.txt:nenhuma#to_com_muita_dor	to com muita dor de cabeca hoje
+N0	frases_perigo.txt:nenhuma#meu_pai_idoso_esta	meu pai idoso esta com dor no joelho e quer fisioterapia
+N0	frases_perigo.txt:nenhuma#minha_mae_caiu_semana	minha mae caiu semana passada mas esta bem, so queria um check-up
+N0	frases_perigo.txt:nenhuma#onde_fica_a_posto	onde fica a posto de saude mais proximo da minha casa
+N0	frases_perigo.txt:nenhuma#meu_filho_de_5	meu filho de 5 anos precisa de matricula na escola
+N0	frases_perigo.txt:nenhuma#minha_menina_de_9	minha menina de 9 anos quer fazer natacao
+N0	frases_perigo.txt:nenhuma#preciso_de_creche_pro	preciso de creche pro meu bebe
+N0	frases_perigo.txt:nenhuma#meu_filho_levou_advertencia	meu filho levou advertencia na escola
+N0	frases_perigo.txt:nenhuma#o_menino_da_escola	o menino da escola nova esta com dificuldade de aprender
+N0	frases_perigo.txt:nenhuma#a_crianca_ta_com	a crianca ta com tosse e quero marcar pediatra
+N0	frases_perigo.txt:nenhuma#socorro_como_faco_o	socorro, como faço o curriculo
+N0	frases_perigo.txt:nenhuma#me_ajuda_a_achar	me ajuda a achar o posto de saude mais perto
+N0	frases_perigo.txt:nenhuma#socorro_perdi_o_horario	socorro, perdi o horario do onibus
+N0	frases_perigo.txt:nenhuma#quero_me_matricular_no	quero me matricular no curso mas fico ansiosa
+N0	frases_perigo.txt:nenhuma#vou_morrer_de_ansiedade	vou morrer de ansiedade se nao passar na entrevista
+N0	frases_perigo.txt:nenhuma#meu_chefe_pegou_no	meu chefe pegou no meu pe por causa do atraso
+N0	frases_perigo.txt:nenhuma#meu_marido_me_ajuda	meu marido me ajuda em casa mas fica nervoso quando falta dinheiro
+N0	frases_perigo.txt:nenhuma#o_vizinho_me_ameacou	o vizinho me ameacou de processo por causa do muro
+N0	frases_perigo.txt:nenhuma#a_escola_ameacou_chamar	a escola ameacou chamar o conselho por causa das faltas do meu filho
+N0	frases_perigo.txt:nenhuma#minha_amiga_me_persegue	minha amiga me persegue no whatsapp pedindo dinheiro emprestado
+N0	frases_perigo.txt:nenhuma#ele_me_segue_no	ele me segue no instagram e curte tudo
+N0	frases_perigo.txt:nenhuma#meu_filho_me_segue	meu filho me segue pela casa o tempo todo
+N0	frases_perigo.txt:nenhuma#o_professor_passou_a	o professor passou a mao na cabeca dele e elogiou o desenho
+N0	frases_perigo.txt:nenhuma#meu_filho_caiu_no	meu filho caiu no recreio e esta com um galo na testa, mas esta bem
+N0	frases_perigo.txt:nenhuma#a_crianca_ta_sem	a crianca ta sem apetite e quero levar no pediatra
+N0	frases_perigo.txt:nenhuma#meu_neto_de_6	meu neto de 6 anos ficou em casa sozinho meia hora e ficou assustado
+N0	frases_perigo.txt:nenhuma#estou_muito_triste_e	estou muito triste e cansada e queria conversar com alguem
+N0	frases_perigo.txt:nenhuma#estou_com_depressao_e	estou com depressao e quero tratamento no CAPS
+N0	frases_perigo.txt:nenhuma#tomei_meu_remedio_da	tomei meu remedio da pressao no horario errado, o que faco
+N0	frases_perigo.txt:nenhuma#minha_mae_toma_muitos	minha mãe toma muitos remedios e preciso organizar
+N2	frases_perigo.txt:violencia#tentou_me_sufocar_com	tentou me sufocar com o travesseiro
+N2	frases_perigo.txt:violencia#ele_tentou_me_matar	ele tentou me matar ontem
+N2	frases_perigo.txt:violencia#tentou_me_esfaquear_e	tentou me esfaquear e eu consegui correr
+N2	frases_perigo.txt:violencia#tenho_pavor_de_entrar	tenho pavor de entrar em casa quando ele ta la
+N2	frases_perigo.txt:violencia#dormi_na_rua_porque	dormi na rua porque nao quis voltar pra casa por causa dele
+N2	frases_perigo.txt:violencia#fiquei_na_casa_da	fiquei na casa da minha mae escondida, ele me ameaca se eu voltar
+N2	frases_perigo.txt:violencia#sai_de_casa_de	sai de casa de madrugada so com a roupa do corpo fugindo dele
+N2	frases_perigo.txt:violencia#levei_uma_pancada_forte	levei uma pancada forte na cabeca dele e estou com medo
+N2	frases_perigo.txt:violencia#ele_ja_me_bateu	ele ja me bateu e disse que vai fazer pior da proxima vez
+N2	frases_perigo.txt:suicidio#escrevi_uma_carta_de	escrevi uma carta de despedida pros meus filhos
+N2	frases_perigo.txt:suicidio#deixei_um_bilhete_de	deixei um bilhete de despedida na gaveta
+N2	frases_perigo.txt:suicidio#meus_filhos_estariam_melhor	meus filhos estariam melhor sem a mae
+N2	frases_perigo.txt:suicidio#meus_filhos_ficariam_melhor	meus filhos ficariam melhor sem mim
+N2	frases_perigo.txt:suicidio#todo_mundo_ficaria_melhor	todo mundo ficaria melhor sem mim aqui
+N2	frases_perigo.txt:suicidio#ja_me_despedi_de	ja me despedi de todo mundo, hoje eu me vou
+N0	frases_perigo.txt:nenhuma#quero_tirar_uma_duvida	quero tirar uma duvida sobre meu beneficio
+N0	frases_perigo.txt:nenhuma#quero_tirar_a_segunda	quero tirar a segunda via da certidao
+N0	frases_perigo.txt:nenhuma#quero_tirar_o_titulo	quero tirar o titulo de eleitor
+N0	frases_perigo.txt:nenhuma#quero_tirar_um_dia	quero tirar um dia de folga
+N0	frases_perigo.txt:nenhuma#vou_tirar_ferias_em	vou tirar ferias em dezembro
+N0	frases_perigo.txt:nenhuma#vou_tirar_minha_carteira	vou tirar minha carteira de motorista
+N0	frases_perigo.txt:nenhuma#vou_tirar_uma_foto	vou tirar uma foto 3x4 pro documento
+N0	frases_perigo.txt:nenhuma#quero_tirar_xerox_dos	quero tirar xerox dos documentos
+N0	frases_perigo.txt:nenhuma#vou_tirar_o_lixo	vou tirar o lixo pra rua
+N0	frases_perigo.txt:nenhuma#quero_tirar_um_curso	quero tirar um curso de costura
+N0	frases_perigo.txt:nenhuma#vou_tirar_nota_boa	vou tirar nota boa na prova
+N0	frases_perigo.txt:nenhuma#quero_acabar_o_curso	quero acabar o curso este ano
+N0	frases_perigo.txt:nenhuma#vou_acabar_o_ensino	vou acabar o ensino medio no EJA
+N0	frases_perigo.txt:nenhuma#preciso_acabar_de_pagar	preciso acabar de pagar a divida
+N0	frases_perigo.txt:nenhuma#vou_sumir_uns_dias	vou sumir uns dias do trabalho pra cuidar do meu pai doente
+N0	frases_perigo.txt:nenhuma#queria_dormir_mais_um	queria dormir mais um pouco, to exausta do plantao
+N0	frases_perigo.txt:nenhuma#nao_quero_acordar_cedo	nao quero acordar cedo amanha por causa da escola do meu filho
+N0	frases_perigo.txt:nenhuma#vou_me_despedir_da	vou me despedir da turma antes de mudar de bairro
+N0	frases_perigo.txt:nenhuma#quero_me_despedir_da	quero me despedir da minha vizinha que vai se mudar
+N0	frases_perigo.txt:nenhuma#vou_desaparecer_da_fila	vou desaparecer da fila do posto pq nao tenho tempo
+N0	frases_perigo.txt:nenhuma#ja_escrevi_o_curriculo	ja escrevi o curriculo e quero imprimir
+N0	frases_perigo.txt:nenhuma#escrevi_uma_carta_pro	escrevi uma carta pro prefeito pedindo creche
+N0	frases_perigo.txt:nenhuma#meus_filhos_estao_melhor	meus filhos estao melhor na escola nova
+N0	frases_perigo.txt:nenhuma#minha_filha_ficou_melhor	minha filha ficou melhor depois do tratamento
+N0	frases_perigo.txt:nenhuma#ele_tentou_me_ligar	ele tentou me ligar mas nao atendi
+N0	frases_perigo.txt:nenhuma#tentou_me_convencer_a	tentou me convencer a voltar a estudar
+N0	frases_perigo.txt:nenhuma#tentou_me_vender_um	tentou me vender um seguro
+N0	frases_perigo.txt:nenhuma#tenho_medo_de_entrar	tenho medo de entrar na entrevista de emprego
+N0	frases_perigo.txt:nenhuma#tenho_medo_de_reprovar	tenho medo de reprovar no concurso
+N0	frases_perigo.txt:nenhuma#dormi_na_casa_da	dormi na casa da minha mae no fim de semana
+N0	frases_perigo.txt:nenhuma#dormi_mal_e_estou	dormi mal e estou cansada
+N0	frases_perigo.txt:nenhuma#sai_de_casa_cedo	sai de casa cedo pra procurar emprego
+N0	frases_perigo.txt:nenhuma#levei_meu_filho_na	levei meu filho na pediatra e ele chorou
+N0	frases_fora_do_escopo.txt#qual_o_resultado_do	qual o resultado do jogo do corinthians
+N0	frases_fora_do_escopo.txt#quando_comeca_o_proximo	quando comeca o proximo campeonato brasileiro
+N0	frases_fora_do_escopo.txt#como_assistir_o_jogo	como assistir o jogo ao vivo
+N0	frases_fora_do_escopo.txt#tem_show_bom_em	tem show bom em rio claro neste fim de semana
+N0	frases_fora_do_escopo.txt#qual_o_filme_em	qual o filme em cartaz no cinema
+N0	frases_fora_do_escopo.txt#me_indica_uma_serie	me indica uma serie pra ver hoje
+N0	frases_fora_do_escopo.txt#quem_canta_essa_musica	quem canta essa musica que ta tocando
+N0	frases_fora_do_escopo.txt#letra_da_musica_mais	letra da musica mais tocada
+N0	frases_fora_do_escopo.txt#horario_da_novela_de	horario da novela de hoje
+N0	frases_fora_do_escopo.txt#como_ganhar_seguidores_no	como ganhar seguidores no instagram
+N0	frases_fora_do_escopo.txt#como_fazer_um_video	como fazer um video no tiktok
+N0	frases_fora_do_escopo.txt#qual_o_melhor_celular	qual o melhor celular custo beneficio
+N0	frases_fora_do_escopo.txt#onde_conserto_meu_celular	onde conserto meu celular
+N0	frases_fora_do_escopo.txt#como_formatar_o_computador	como formatar o computador
+N0	frases_fora_do_escopo.txt#preciso_de_um_programador	preciso de um programador pra fazer meu aplicativo
+N0	frases_fora_do_escopo.txt#como_criar_um_email	como criar um email novo
+N0	frases_fora_do_escopo.txt#qual_a_senha_do	qual a senha do wifi do shopping
+N0	frases_fora_do_escopo.txt#como_baixar_um_aplicativo	como baixar um aplicativo de musica
+N0	frases_fora_do_escopo.txt#como_instalo_um_programa	como instalo um programa no notebook
+N0	frases_fora_do_escopo.txt#como_compro_passagem_de	como compro passagem de aviao barata
+N0	frases_fora_do_escopo.txt#quanto_custa_um_hotel	quanto custa um hotel em ubatuba
+N0	frases_fora_do_escopo.txt#quais_os_pontos_turisticos	quais os pontos turisticos de campos do jordao
+N0	frases_fora_do_escopo.txt#preciso_de_roteiro_de	preciso de roteiro de viagem pro nordeste
+N0	frases_fora_do_escopo.txt#como_fazer_um_bolo	como fazer um bolo de cenoura fofinho
+N0	frases_fora_do_escopo.txt#receita_de_lasanha_de	receita de lasanha de frango
+N0	frases_fora_do_escopo.txt#como_temperar_carne_pro	como temperar carne pro churrasco
+N0	frases_fora_do_escopo.txt#quanto_tempo_cozinha_o	quanto tempo cozinha o feijao
+N0	frases_fora_do_escopo.txt#onde_tem_um_bom	onde tem um bom restaurante japones
+N0	frases_fora_do_escopo.txt#pizzaria_com_entrega_rapida	pizzaria com entrega rapida na minha rua
+N0	frases_fora_do_escopo.txt#como_preparar_um_suco	como preparar um suco detox
+N0	frases_fora_do_escopo.txt#qual_o_melhor_investimento	qual o melhor investimento pra render mais que a poupanca
+N0	frases_fora_do_escopo.txt#como_comprar_acoes_na	como comprar acoes na bolsa
+N0	frases_fora_do_escopo.txt#quanto_esta_o_bitcoin	quanto esta o bitcoin hoje
+N0	frases_fora_do_escopo.txt#como_declarar_criptomoedas	como declarar criptomoedas
+N0	frases_fora_do_escopo.txt#quero_financiar_um_carro	quero financiar um carro novo
+N0	frases_fora_do_escopo.txt#preco_do_iphone_novo	preco do iphone novo
+N0	frases_fora_do_escopo.txt#onde_vendem_pecas_de	onde vendem pecas de moto
+N0	frases_fora_do_escopo.txt#quanto_custa_trocar_o	quanto custa trocar o oleo do carro
+N0	frases_fora_do_escopo.txt#como_funciona_o_seguro	como funciona o seguro do veiculo
+N0	frases_fora_do_escopo.txt#como_tirar_a_habilitacao	como tirar a habilitacao categoria b
+N0	frases_fora_do_escopo.txt#onde_fazer_vistoria_do	onde fazer vistoria do carro
+N0	frases_fora_do_escopo.txt#quanto_e_340_dividido	quanto e 340 dividido por 17
+N0	frases_fora_do_escopo.txt#resolve_essa_equacao_de	resolve essa equacao de segundo grau pra mim
+N0	frases_fora_do_escopo.txt#me_ajuda_com_o	me ajuda com o dever de historia do meu filho
+N0	frases_fora_do_escopo.txt#qual_a_capital_da	qual a capital da australia
+N0	frases_fora_do_escopo.txt#quem_descobriu_o_brasil	quem descobriu o brasil
+N0	frases_fora_do_escopo.txt#quantos_habitantes_tem_o	quantos habitantes tem o japao
+N0	frases_fora_do_escopo.txt#qual_o_maior_rio	qual o maior rio do mundo
+N0	frases_fora_do_escopo.txt#como_se_escreve_excecao	como se escreve exceção
+N0	frases_fora_do_escopo.txt#qual_a_previsao_do	qual a previsao do tempo pra sexta
+N0	frases_fora_do_escopo.txt#vai_chover_amanha_em	vai chover amanha em campinas
+N0	frases_fora_do_escopo.txt#que_dia_e_hoje	que dia e hoje
+N0	frases_fora_do_escopo.txt#me_conta_uma_historia	me conta uma historia de terror
+N0	frases_fora_do_escopo.txt#conta_uma_piada_de	conta uma piada de portugues
+N0	frases_fora_do_escopo.txt#qual_o_seu_nome	qual o seu nome
+N0	frases_fora_do_escopo.txt#voce_gosta_de_musica	voce gosta de musica
+N0	frases_fora_do_escopo.txt#vamos_conversar_sobre_futebol	vamos conversar sobre futebol
+N0	frases_fora_do_escopo.txt#qual_o_sentido_da	qual o sentido da vida
+N0	frases_fora_do_escopo.txt#me_da_um_conselho	me da um conselho sobre moda
+N0	frases_fora_do_escopo.txt#qual_a_cor_da	qual a cor da moda neste verao
+N0	frases_fora_do_escopo.txt#como_combinar_roupa_com	como combinar roupa com sapato
+N0	frases_fora_do_escopo.txt#onde_compro_maquiagem_barata	onde compro maquiagem barata
+N0	frases_fora_do_escopo.txt#dicas_de_skin_care	dicas de skin care pra pele oleosa
+N0	frases_fora_do_escopo.txt#como_fazer_unha_de	como fazer unha de gel
+N0	frases_fora_do_escopo.txt#quero_ser_influencer_digital	quero ser influencer digital
+N0	frases_fora_do_escopo.txt#quanto_custa_uma_passagem	quanto custa uma passagem pra lisboa
+N0	frases_fora_do_escopo.txt#como_tirar_passaporte	como tirar passaporte
+N0	frases_fora_do_escopo.txt#como_declarar_imposto_de	como declarar imposto de renda do meu carro
+N0	frases_fora_do_escopo.txt#como_fazer_um_site	como fazer um site pra minha empresa
+N0	frases_fora_do_escopo.txt#tradutor_de_ingles_pra	tradutor de ingles pra espanhol
+N0	frases_fora_do_escopo.txt#como_aprender_japones_sozinho	como aprender japones sozinho
+N0	frases_fora_do_escopo.txt#dicas_de_leitura_de	dicas de leitura de ficcao
+N0	frases_fora_do_escopo.txt#onde_posso_comprar_um	onde posso comprar um violao
+N0	frases_fora_do_escopo.txt#aula_de_guitarra_online	aula de guitarra online
+N0	frases_fora_do_escopo.txt#como_montar_um_aquario	como montar um aquario
+N0	frases_fora_do_escopo.txt#qual_a_melhor_racao	qual a melhor racao pra cachorro
+N0	frases_fora_do_escopo.txt#onde_adotar_um_gato	onde adotar um gato
+N0	frases_fora_do_escopo.txt#meu_cachorro_nao_para	meu cachorro nao para de latir
+N0	frases_fora_do_escopo.txt#veterinario_aberto_agora	veterinario aberto agora
+N0	frases_fora_do_escopo.txt#como_cuidar_de_planta	como cuidar de planta em apartamento
+N0	frases_fora_do_escopo.txt#quando_planto_tomate	quando planto tomate
+N0	frases_fora_do_escopo.txt#aluguel_de_carro_pra	aluguel de carro pra viagem
+N0	frases_fora_do_escopo.txt#como_alugar_um_salao	como alugar um salao de festas
+N0	frases_fora_do_escopo.txt#quanto_custa_um_buffet	quanto custa um buffet infantil
+N0	frases_fora_do_escopo.txt#ideias_de_decoracao_pra	ideias de decoracao pra aniversario
+N0	frases_fora_do_escopo.txt#qual_o_melhor_presente	qual o melhor presente pro dia dos namorados
+N0	frases_fora_do_escopo.txt#como_fazer_pedido_de	como fazer pedido de casamento
+N0	frases_fora_do_escopo.txt#cerimonialista_pra_casamento	cerimonialista pra casamento
+N0	frases_fora_do_escopo.txt#quero_um_tatuador_bom	quero um tatuador bom
+N0	frases_fora_do_escopo.txt#como_entrar_pra_academia	como entrar pra academia mais perto
+N0	frases_fora_do_escopo.txt#qual_treino_faz_perder	qual treino faz perder barriga
+N0	frases_fora_do_escopo.txt#suplemento_pra_ganhar_massa	suplemento pra ganhar massa muscular
+N0	frases_fora_do_escopo.txt#dieta_da_lua_funciona	dieta da lua funciona
+N0	frases_fora_do_escopo.txt#quantas_calorias_tem_um	quantas calorias tem um pao
+N0	frases_fora_do_escopo.txt#onde_assistir_o_jogo	onde assistir o jogo da selecao
+N0	frases_fora_do_escopo.txt#quem_ganhou_o_oscar	quem ganhou o oscar
+N0	frases_fora_do_escopo.txt#resultado_da_loteria	resultado da loteria
+N0	frases_fora_do_escopo.txt#como_jogar_na_quina	como jogar na quina
+N0	frases_fora_do_escopo.txt#cotacao_do_euro_hoje	cotacao do euro hoje
+N0	frases_fora_do_escopo.txt#preciso_trocar_dinheiro_pra	preciso trocar dinheiro pra viajar
+N0	frases_fora_do_escopo.txt#onde_comprar_iphone_usado	onde comprar iphone usado
+N0	frases_fora_do_escopo.txt#quero_vender_meu_carro	quero vender meu carro
+N0	frases_fora_do_escopo.txt#quero_comprar_uma_casa	quero comprar uma casa na praia
+N0	frases_fora_do_escopo.txt#como_aprender_a_investir	como aprender a investir em imoveis
+N0	frases_fora_do_escopo.txt#sorvete_de_pistache_onde	sorvete de pistache onde tem
+N0	frases_fora_do_escopo.txt#me_recomenda_um_podcast	me recomenda um podcast
+N0	frases_fora_do_escopo.txt#qual_o_melhor_notebook	qual o melhor notebook pra jogar
+N0	frases_fora_do_escopo.txt#como_fazer_um_churrasco	como fazer um churrasco perfeito
+N0	frases_fora_do_escopo.txt#asdf_jkl	asdf jkl
+N0	frases_fora_do_escopo.txt#ahahahahaha	ahahahahaha
+N0	frases_fora_do_escopo.txt#hm	hmmmm
+N0	frases_fora_do_escopo.txt#testando_testando	testando testando
+N0	frases_fora_do_escopo.txt#123456	123456
+N0	frases_fora_do_escopo.txt#a	aaaaaa
+N0	frases_fora_do_escopo.txt#x	xxxx
+N0	frases_fora_do_escopo.txt#bla_bla	bla bla
+N0	frases_fora_do_escopo.txt#ok_ok_ok	ok ok ok
+N0	frases_fora_do_escopo.txt#teste_de_mensagem	teste de mensagem
+N0	frases_fora_do_escopo.txt#me_ajuda_a_resolver	me ajuda a resolver uma conta de multiplicacao
+N0	frases_fora_do_escopo.txt#qual_e_a_formula	qual e a formula de bhaskara
+N0	frases_fora_do_escopo.txt#preciso_fazer_um_trabalho	preciso fazer um trabalho de historia sobre a revolucao francesa
+N0	frases_fora_do_escopo.txt#como_se_escreve_a	como se escreve a palavra excecao
+N0	frases_fora_do_escopo.txt#qual_a_diferenca_entre	qual a diferenca entre mitose e meiose
+N0	frases_fora_do_escopo.txt#escreve_uma_redacao_sobre	escreve uma redacao sobre meio ambiente pra mim
+N0	frases_fora_do_escopo.txt#me_ensina_a_calcular	me ensina a calcular regra de tres
+N0	frases_fora_do_escopo.txt#qual_a_raiz_quadrada	qual a raiz quadrada de 144
+N0	frases_fora_do_escopo.txt#traduz_esse_texto_pro	traduz esse texto pro ingles
+N0	frases_fora_do_escopo.txt#me_explica_a_materia	me explica a materia de quimica do segundo ano
+N0	frases_fora_do_escopo.txt#me_explica_a_tabuada	me explica a tabuada do sete
+N0	frases_fora_do_escopo.txt#como_funciona_a_fotossintese	como funciona a fotossintese
+N0	frases_fora_do_escopo.txt#me_ajuda_com_a	me ajuda com a tarefa de portugues sobre substantivos
+N0	frases_fora_do_escopo.txt#qual_a_distancia_da	qual a distancia da terra ate a lua
+N0	frases_fora_do_escopo.txt#me_ajuda_com_o	me ajuda com o exercicio de fisica sobre velocidade
+N0	perguntas.json:desenvolvimento:trabalho#preciso_de_um_emprego	preciso de um emprego urgente
+N0	perguntas.json:teste:trabalho#to_desempregada_ha_8	to desempregada ha 8 meses e nao sei por onde comecar
+N0	perguntas.json:teste:trabalho#onde_fica_o_pat	onde fica o pat de rio claro
+N0	perguntas.json:desenvolvimento:trabalho#como_faco_um_curriculo	como faço um curriculo bom
+N0	perguntas.json:teste:trabalho#quero_montar_meu_curriculo	quero montar meu curriculo mas nao sei o que escrever
+N0	perguntas.json:desenvolvimento:trabalho#tem_vaga_de_emprego	tem vaga de emprego pra mulher acima de 40 anos
+N0	perguntas.json:teste:trabalho#quero_abrir_um_negocio	quero abrir um negocio mas nao tenho dinheiro, tem credito?
+N0	perguntas.json:teste:trabalho#banco_do_povo_empresta	banco do povo empresta pra quem
+N0	perguntas.json:desenvolvimento:trabalho#fiz_curso_de_costura	fiz curso de costura e quero vender
+N0	perguntas.json:teste:trabalho#tem_curso_gratuito_de	tem curso gratuito de cabeleireira
+N0	perguntas.json:desenvolvimento:trabalho#quero_aprender_informatica_de	quero aprender informatica de graca
+N0	perguntas.json:teste:trabalho#senai_tem_curso_pra	senai tem curso pra mulher?
+N0	perguntas.json:teste:trabalho#fundo_social_tem_curso	fundo social tem curso
+N0	perguntas.json:desenvolvimento:trabalho#sou_diarista_e_quero	sou diarista e quero algo melhor
+N0	perguntas.json:teste:trabalho#fui_mandada_embora_hoje	fui mandada embora hoje
+N0	perguntas.json:desenvolvimento:trabalho#preciso_de_uma_renda	preciso de uma renda extra urgente
+N0	perguntas.json:teste:trabalho#quero_ser_microempreendedora_como	quero ser microempreendedora como faço o mei
+N0	perguntas.json:teste:trabalho#como_me_preparar_pra	como me preparar pra uma entrevista de emprego
+N0	perguntas.json:desenvolvimento:trabalho#nunca_trabalhei_de_carteira	nunca trabalhei de carteira assinada, por onde comeco
+N0	perguntas.json:teste:trabalho#conecta_rio_claro_oque	conecta rio claro oque é
+N0	perguntas.json:desenvolvimento:educacao#preciso_de_vaga_na	preciso de vaga na creche pro meu filho de 2 anos
+N0	perguntas.json:teste:educacao#como_matricular_meu_filho	como matricular meu filho na escola
+N0	perguntas.json:teste:educacao#meu_filho_tem_4	meu filho tem 4 anos onde eu matriculo
+N0	perguntas.json:desenvolvimento:educacao#nao_tenho_com_quem	nao tenho com quem deixar meu filho pra trabalhar
+N0	perguntas.json:teste:educacao#cmei_perto_de_casa	cmei perto de casa
+N0	perguntas.json:desenvolvimento:educacao#lista_das_escolas_municipais	lista das escolas municipais com telefone
+N0	perguntas.json:teste:educacao#quero_transferir_meu_filho	quero transferir meu filho de escola
+N0	perguntas.json:teste:educacao#nao_consegui_vaga_na	nao consegui vaga na creche, e agora
+N0	perguntas.json:desenvolvimento:educacao#quando_abre_a_matricula	quando abre a matricula 2027
+N0	perguntas.json:teste:educacao#qual_o_calendario_escolar	qual o calendario escolar de 2027
+N0	perguntas.json:desenvolvimento:educacao#vaga_em_escola_pra	vaga em escola pra minha filha de 7 anos
+N0	perguntas.json:teste:educacao#a_creche_mais_perto	a creche mais perto do cervezao
+N0	perguntas.json:teste:educacao#crio_meu_filho_sozinha	crio meu filho sozinha preciso de apoio com a escola
+N0	perguntas.json:desenvolvimento:educacao#meu_filho_nao_quer	meu filho nao quer ir pra escola
+N0	perguntas.json:teste:educacao#onde_pedir_historico_escolar	onde pedir historico escolar do meu filho
+N0	perguntas.json:desenvolvimento:educacao#minha_filha_de_16	minha filha de 16 anos quer voltar a estudar
+N0	perguntas.json:desenvolvimento:estudo#quero_terminar_o_ensino	quero terminar o ensino medio
+N0	perguntas.json:teste:estudo#onde_faco_eja	onde faço eja
+N0	perguntas.json:teste:estudo#quero_fazer_faculdade_mas	quero fazer faculdade mas nao tenho dinheiro
+N0	perguntas.json:desenvolvimento:estudo#cursinho_pra_vestibular_de	cursinho pra vestibular de graça
+N0	perguntas.json:teste:estudo#como_me_preparar_pro	como me preparar pro enem
+N0	perguntas.json:desenvolvimento:estudo#fatec_rio_claro_tem	fatec rio claro tem quais cursos
+N0	perguntas.json:teste:estudo#curso_tecnico_gratuito	curso tecnico gratuito
+N0	perguntas.json:teste:estudo#etec_tem_vaga	etec tem vaga
+N0	perguntas.json:desenvolvimento:estudo#parei_de_estudar_na	parei de estudar na sexta serie, posso voltar?
+N0	perguntas.json:teste:estudo#quero_estudar_a_noite	quero estudar a noite porque trabalho de dia
+N0	perguntas.json:desenvolvimento:estudo#unesp_tem_curso_popular	unesp tem curso popular
+N0	perguntas.json:teste:estudo#quero_fazer_um_curso	quero fazer um curso de enfermagem
+N0	perguntas.json:desenvolvimento:saude#preciso_marcar_consulta_com	preciso marcar consulta com ginecologista
+N0	perguntas.json:teste:saude#onde_fica_o_posto	onde fica o posto de saude do meu bairro
+N0	perguntas.json:teste:saude#minha_filha_ta_com	minha filha ta com febre alta de madrugada
+N0	perguntas.json:desenvolvimento:saude#upa_mais_proxima	upa mais proxima
+N0	perguntas.json:teste:saude#estou_gravida_e_nao	estou gravida e nao sei onde fazer o pre natal
+N0	perguntas.json:desenvolvimento:saude#preciso_de_remedio_e	preciso de remedio e nao tenho dinheiro
+N0	perguntas.json:teste:saude#onde_pego_remedio_de	onde pego remedio de graca
+N0	perguntas.json:teste:saude#vacina_do_meu_filho	vacina do meu filho esta atrasada
+N0	perguntas.json:desenvolvimento:saude#preciso_de_exame_de	preciso de exame de sangue
+N0	perguntas.json:teste:saude#como_agendar_consulta_pelo	como agendar consulta pelo cadu
+N2	perguntas.json:desenvolvimento:saude#dor_forte_no_peito	dor forte no peito
+N0	perguntas.json:teste:saude#preciso_de_dentista_e	preciso de dentista e nao posso pagar
+N0	perguntas.json:teste:saude#meu_filho_precisa_de	meu filho precisa de fonoaudiologo
+N0	perguntas.json:desenvolvimento:saude#preciso_de_transporte_pra	preciso de transporte pra ir no hospital em outra cidade
+N0	perguntas.json:teste:saude#fui_atendida_mal_no	fui atendida mal no posto, pra quem reclamo
+N0	perguntas.json:desenvolvimento:saude#quero_fazer_preventivo	quero fazer preventivo
+N0	perguntas.json:teste:saude#menopausa_tem_atendimento	menopausa tem atendimento
+N0	perguntas.json:teste:saude#meu_pai_idoso_caiu	meu pai idoso caiu e ta com muita dor
+N0	perguntas.json:desenvolvimento:saude#onde_fazer_mamografia	onde fazer mamografia
+N0	perguntas.json:teste:saude#ubs_perto_do_mae	ubs perto do mae preta
+N0	perguntas.json:teste:drogas#meu_marido_bebe_todo	meu marido bebe todo dia e nao aguento mais
+N0	perguntas.json:teste:drogas#meu_irmao_e_alcoolatra	meu irmao é alcoolatra e nao aceita tratamento
+N0	perguntas.json:desenvolvimento:drogas#quero_parar_de_beber	quero parar de beber e nao consigo sozinha
+N0	perguntas.json:teste:drogas#tem_grupo_de_apoio	tem grupo de apoio pra familia de dependente quimico
+N0	perguntas.json:desenvolvimento:drogas#onde_fica_o_caps	onde fica o caps ad
+N0	perguntas.json:teste:drogas#meu_filho_adolescente_fuma	meu filho adolescente fuma maconha todo dia
+N0	perguntas.json:teste:drogas#minha_filha_ta_viciada	minha filha ta viciada em crack
+N0	perguntas.json:desenvolvimento:drogas#quero_ajuda_pra_largar	quero ajuda pra largar o vicio
+N0	perguntas.json:teste:drogas#narcoticos_anonimos_tem_aqui	narcoticos anonimos tem aqui
+N0	perguntas.json:desenvolvimento:mental#estou_com_depressao_nao	estou com depressao nao tenho vontade de nada
+N0	perguntas.json:teste:mental#preciso_de_psicologo_e	preciso de psicologo e nao tenho plano
+N0	perguntas.json:teste:mental#tenho_crises_de_panico	tenho crises de panico
+N0	perguntas.json:desenvolvimento:mental#meu_filho_esta_muito	meu filho esta muito agressivo e triste
+N2	perguntas.json:desenvolvimento:mental#nao_aguento_mais_quero	nao aguento mais, quero sumir
+N2	perguntas.json:desenvolvimento:mental#penso_em_me_matar	penso em me matar
+N2	perguntas.json:desenvolvimento:violencia#meu_marido_me_bateu	meu marido me bateu ontem e eu nao sei o que fazer
+N2	perguntas.json:teste:violencia#estou_apanhando_do_meu	estou apanhando do meu marido
+N2	perguntas.json:desenvolvimento:violencia#tenho_medo_de_voltar	tenho medo de voltar pra casa
+N2	perguntas.json:teste:violencia#como_pedir_medida_protetiva	como pedir medida protetiva
+N2	perguntas.json:teste:violencia#ele_quebrou_tudo_em	ele quebrou tudo em casa e me empurrou
+N2	perguntas.json:desenvolvimento:violencia#preciso_sair_de_casa	preciso sair de casa com meus filhos com seguranca
+N2	perguntas.json:teste:violencia#meu_companheiro_nao_deixa	meu companheiro nao deixa eu trabalhar nem sair
+N2	perguntas.json:desenvolvimento:violencia#sofro_violencia_psicologica_ele	sofro violencia psicologica ele me humilha
+N2	perguntas.json:desenvolvimento:violencia#ligue_180_o_que	ligue 180 o que é
+N2	perguntas.json:desenvolvimento:violencia#meu_pai_abusa_da	meu pai abusa da minha filha de 9 anos
+N2	perguntas.json:desenvolvimento:violencia#a_patrulha_maria_da	a patrulha maria da penha atende como
+N2	perguntas.json:teste:violencia#estou_em_perigo_agora	estou em perigo agora
+N2	perguntas.json:teste:violencia#ele_disse_que_vai	ele disse que vai me matar quando sair
+N2	perguntas.json:desenvolvimento:violencia#onde_fica_o_cram	onde fica o cram
+N0	perguntas.json:teste:violencia#secretaria_da_mulher_de	secretaria da mulher de rio claro telefone
+N0	perguntas.json:desenvolvimento:direitos#nao_recebo_pensao_do	nao recebo pensao do pai dos meus filhos
+N0	perguntas.json:teste:direitos#quero_me_separar_e	quero me separar e nao sei como
+N0	perguntas.json:teste:direitos#meu_ex_nao_deixa	meu ex nao deixa eu ver meu filho
+N0	perguntas.json:desenvolvimento:direitos#preciso_de_advogado_de	preciso de advogado de graça
+N0	perguntas.json:teste:direitos#guarda_dos_filhos_como	guarda dos filhos como funciona
+N0	perguntas.json:desenvolvimento:direitos#divorcio_gratuito	divorcio gratuito
+N0	perguntas.json:teste:direitos#defensoria_publica_rio_claro	defensoria publica rio claro endereço
+N0	perguntas.json:teste:direitos#como_simular_minha_aposentadoria	como simular minha aposentadoria
+N0	perguntas.json:desenvolvimento:direitos#estou_com_o_nome	estou com o nome sujo e dividas
+N0	perguntas.json:teste:direitos#quero_renegociar_minhas_dividas	quero renegociar minhas dividas
+N0	perguntas.json:desenvolvimento:direitos#inss_meu_beneficio_foi	inss meu beneficio foi negado
+N0	perguntas.json:teste:direitos#fui_demitida_gravida_tenho	fui demitida gravida tenho direito
+N0	perguntas.json:teste:direitos#meu_patrao_nao_assinou	meu patrao nao assinou minha carteira
+N0	perguntas.json:desenvolvimento:direitos#preciso_tirar_documentos_mas	preciso tirar documentos mas nao tenho certidao
+N0	perguntas.json:desenvolvimento:moradia#minha_conta_de_luz	minha conta de luz ta muito alta
+N0	perguntas.json:teste:moradia#tarifa_social_de_energia	tarifa social de energia como pedir
+N0	perguntas.json:teste:moradia#conta_de_agua_muito	conta de agua muito cara tem desconto
+N0	perguntas.json:desenvolvimento:moradia#daae_tarifa_social	daae tarifa social
+N0	perguntas.json:teste:moradia#nao_consigo_pagar_o	nao consigo pagar o aluguel
+N0	perguntas.json:desenvolvimento:moradia#quero_me_inscrever_pra	quero me inscrever pra casa propria
+N0	perguntas.json:teste:moradia#fui_despejada_e_nao	fui despejada e nao tenho onde morar
+N0	perguntas.json:teste:moradia#cortaram_minha_luz	cortaram minha luz
+N0	perguntas.json:desenvolvimento:moradia#cadastro_habitacional_como_faco	cadastro habitacional como faco
+N2	perguntas.json:desenvolvimento:moradia#minha_casa_ta_com	minha casa ta com risco de cair
+N0	perguntas.json:desenvolvimento:moradia#moro_de_favor_e	moro de favor e preciso de um lugar
+N0	perguntas.json:teste:moradia#elektro_espaco_de_atendimento	elektro espaço de atendimento
+N0	perguntas.json:desenvolvimento:assistencia#estou_sem_comida_em	estou sem comida em casa
+N0	perguntas.json:teste:assistencia#onde_consigo_cesta_basica	onde consigo cesta basica
+N0	perguntas.json:teste:assistencia#como_receber_bolsa_familia	como receber bolsa familia
+N0	perguntas.json:desenvolvimento:assistencia#qual_cras_atende_o	qual cras atende o jardim brasilia
+N0	perguntas.json:teste:assistencia#cras_do_mae_preta	cras do mae preta endereço
+N0	perguntas.json:desenvolvimento:assistencia#preciso_de_ajuda_financeira	preciso de ajuda financeira nao tenho renda nenhuma
+N0	perguntas.json:teste:assistencia#meu_filho_precisa_de	meu filho precisa de atividades no contraturno
+N0	perguntas.json:teste:assistencia#tem_lugar_pra_idoso	tem lugar pra idoso ficar durante o dia
+N0	perguntas.json:desenvolvimento:assistencia#meu_filho_tem_deficiencia	meu filho tem deficiencia onde procuro apoio
+N0	perguntas.json:teste:assistencia#conselho_tutelar_telefone	conselho tutelar telefone
+N2	perguntas.json:desenvolvimento:assistencia#quero_denunciar_maus_tratos	quero denunciar maus tratos com crianca
+N0	perguntas.json:teste:assistencia#crianca_trabalhando_na_rua	crianca trabalhando na rua pedindo dinheiro
+N0	perguntas.json:teste:assistencia#creas_o_que_faz	creas o que faz
+N0	perguntas.json:desenvolvimento:assistencia#beneficio_pra_pessoa_com	beneficio pra pessoa com deficiencia como pedir
+N0	perguntas.json:teste:assistencia#estou_passando_fome_com	estou passando fome com meus filhos
+N2	perguntas.json:desenvolvimento:assistencia#abrigo_pra_mim_e	abrigo pra mim e meus filhos
+N0	perguntas.json:teste:assistencia#moro_na_rua_e	moro na rua e preciso de ajuda
+N0	perguntas.json:teste:assistencia#secretaria_de_desenvolvimento_social	secretaria de desenvolvimento social telefone
+N0	perguntas.json:desenvolvimento:assistencia#jovem_de_19_anos	jovem de 19 anos saindo do acolhimento tem apoio
+N0	perguntas.json:teste:assistencia#cadunico_como_fazer	cadunico como fazer
+N0	perguntas.json:desenvolvimento:transporte#horario_do_onibus_bela	horario do onibus bela vista
+N0	perguntas.json:teste:transporte#que_horas_passa_o	que horas passa o circular
+N0	perguntas.json:teste:transporte#onibus_do_cervezao_pro	onibus do cervezao pro centro
+N0	perguntas.json:desenvolvimento:transporte#linha_paineiras_horario_domingo	linha paineiras horario domingo
+N0	perguntas.json:teste:transporte#tem_onibus_pra_ir	tem onibus pra ir no pat
+N0	perguntas.json:desenvolvimento:transporte#sou_transporte_pelo_aplicativo	sou transporte pelo aplicativo
+N0	perguntas.json:teste:transporte#onibus_mae_preta_arco	onibus mae preta arco iris horario
+N0	perguntas.json:desenvolvimento:entre#quero_oferecer_meus_servicos	quero oferecer meus servicos de manicure
+N0	perguntas.json:teste:entre#procuro_motorista_mulher_pra	procuro motorista mulher pra levar meu filho
+N0	perguntas.json:teste:entre#tem_psicologa_mulher_que	tem psicologa mulher que atenda por aqui
+N0	perguntas.json:desenvolvimento:entre#academia_so_pra_mulheres	academia so pra mulheres
+N0	perguntas.json:desenvolvimento:multi#estou_desempregada_com_dois	estou desempregada com dois filhos e nao consigo pagar o aluguel
+N2	perguntas.json:teste:multi#meu_marido_me_bate	meu marido me bate e eu quero sair de casa com meus filhos
+N0	perguntas.json:teste:multi#preciso_trabalhar_mas_nao	preciso trabalhar mas nao tenho com quem deixar o bebe
+N0	perguntas.json:desenvolvimento:multi#perdi_o_emprego_estou	perdi o emprego, estou sem comida e devendo a conta de luz
+N0	perguntas.json:teste:multi#meu_filho_usa_drogas	meu filho usa drogas e eu perdi o emprego por causa disso
+N0	perguntas.json:desenvolvimento:multi#estou_gravida_sem_emprego	estou gravida, sem emprego e sem casa
+N0	perguntas.json:teste:multi#quero_voltar_a_estudar	quero voltar a estudar mas tenho filhos pequenos
+N2	perguntas.json:teste:multi#sofro_violencia_e_dependo	sofro violencia e dependo do dinheiro dele
+N0	perguntas.json:desenvolvimento:multi#sou_mae_solo_e	sou mae solo e preciso de tudo, creche, emprego e ajuda
+N2	perguntas.json:teste:multi#meu_marido_bebe_bate	meu marido bebe, bate nas criancas e nao tenho pra onde ir
+N0	perguntas.json:desenvolvimento:multi#minha_mae_idosa_precisa	minha mae idosa precisa de cuidados e eu nao posso trabalhar
+N0	perguntas.json:teste:multi#desempregada_deprimida_e_sem	desempregada, deprimida e sem dinheiro pra remedio
+N0	perguntas.json:desenvolvimento:local#ubs_no_jardim_brasilia	ubs no jardim brasilia
+N0	perguntas.json:teste:local#posto_de_saude_perto	posto de saude perto do cvz
+N0	perguntas.json:teste:local#cras_do_bom_sucesso	cras do bom sucesso
+N0	perguntas.json:desenvolvimento:local#creche_no_jardim_paulista	creche no jardim paulista
+N0	perguntas.json:teste:local#moro_no_cervezao_qual	moro no cervezao qual cras eu vou
+N0	perguntas.json:desenvolvimento:local#escola_perto_de_mim	escola perto de mim meu cep é 13500030
+N0	perguntas.json:teste:local#o_que_tem_perto	o que tem perto da minha casa
+N0	perguntas.json:teste:local#qual_meu_bairro_pelo	qual meu bairro pelo cep 13506095
+N0	perguntas.json:desenvolvimento:fora#qual_a_previsao_do	qual a previsao do tempo amanha
+N0	perguntas.json:teste:fora#quem_ganhou_o_jogo	quem ganhou o jogo ontem
+N0	perguntas.json:teste:fora#me_da_uma_receita	me da uma receita de bolo
+N0	perguntas.json:desenvolvimento:fora#como_investir_em_bitcoin	como investir em bitcoin
+N0	perguntas.json:teste:fora#quero_comprar_um_carro	quero comprar um carro usado
+N0	perguntas.json:desenvolvimento:fora#qual_o_melhor_celular	qual o melhor celular
+N0	perguntas.json:teste:fora#me_conta_uma_piada	me conta uma piada
+N0	perguntas.json:teste:fora#quem_e_o_presidente	quem é o presidente
+N0	perguntas.json:desenvolvimento:fora#como_fazer_um_site	como fazer um site
+N0	perguntas.json:teste:fora#tradutor_de_ingles_pra	tradutor de ingles pra portugues
+N0	perguntas.json:desenvolvimento:fora#preciso_da_senha_do	preciso da senha do wifi
+N0	perguntas.json:teste:fora#qual_a_capital_da	qual a capital da frança
+N0	perguntas.json:teste:fora#horoscopo_de_hoje	horoscopo de hoje
+N0	perguntas.json:desenvolvimento:fora#onde_assistir_filme_online	onde assistir filme online
+N0	perguntas.json:teste:fora#como_emagrecer_rapido	como emagrecer rapido
+N0	perguntas.json:desenvolvimento:fora#pizzaria_que_entrega_em	pizzaria que entrega em rio claro
+N0	perguntas.json:teste:fora#quanto_custa_uma_passagem	quanto custa uma passagem pra sao paulo
+N0	perguntas.json:teste:fora#resultado_da_mega_sena	resultado da mega sena
+N0	perguntas.json:desenvolvimento:fora#me_ajuda_com_meu	me ajuda com meu trabalho de matematica
+N0	perguntas.json:teste:fora#asdfgh_qwerty	asdfgh qwerty
+N0	perguntas.json:desenvolvimento:fora#k	kkkkkkk
+N0	perguntas.json:teste:fora#	?????
+N0	perguntas.json:teste:fora#blablabla	blablabla
+N0	perguntas.json:desenvolvimento:fora#vendo_moto_barata	vendo moto barata
+N0	perguntas.json:teste:fora#musica_pra_dormir	musica pra dormir
+N0	perguntas.json:desenvolvimento:saudacao#oi	oi
+N0	perguntas.json:teste:saudacao#bom_dia	bom dia
+N0	perguntas.json:teste:saudacao#obrigada	obrigada
+N0	perguntas.json:independente:trabalho#perdi_meu_emprego_semana	perdi meu emprego semana passada e preciso de ajuda pra achar outro
+N0	perguntas.json:independente:trabalho#tem_curso_de_graca	tem curso de graça pra aprender a ser cabeleireira
+N0	perguntas.json:independente:trabalho#quero_abrir_um_negocio	quero abrir um negocio de doces em casa, tem credito
+N0	perguntas.json:independente:trabalho#onde_faco_meu_curriculo	onde faco meu curriculo
+N0	perguntas.json:independente:trabalho#tenho_55_anos_e	tenho 55 anos e ninguem me contrata
+N0	perguntas.json:independente:trabalho#quero_fazer_curso_tecnico	quero fazer curso tecnico de enfermagem
+N0	perguntas.json:independente:trabalho#como_me_cadastro_pra	como me cadastro pra vaga de emprego
+N0	perguntas.json:independente:trabalho#senai_tem_curso_de	senai tem curso de soldagem
+N0	perguntas.json:independente:educacao#meu_filho_de_4	meu filho de 4 anos precisa de escola
+N0	perguntas.json:independente:educacao#como_transferir_meu_filho	como transferir meu filho de escola no meio do ano
+N0	perguntas.json:independente:educacao#nao_terminei_o_ensino	nao terminei o ensino fundamental, posso estudar a noite
+N0	perguntas.json:independente:educacao#cursinho_gratuito_pra_vestibular	cursinho gratuito pra vestibular
+N0	perguntas.json:independente:educacao#tem_faculdade_publica_em	tem faculdade publica em rio claro
+N0	perguntas.json:independente:educacao#quais_escolas_de_educacao	quais escolas de educacao infantil existem perto do meu bairro
+N0	perguntas.json:independente:educacao#minha_filha_de_6	minha filha de 6 meses precisa de creche pra eu trabalhar
+N0	perguntas.json:independente:educacao#preciso_do_calendario_escolar	preciso do calendario escolar de 2027
+N0	perguntas.json:independente:saude#estou_com_dor_de	estou com dor de dente forte
+N0	perguntas.json:independente:saude#como_marco_mamografia	como marco mamografia
+N0	perguntas.json:independente:saude#meu_bebe_precisa_de	meu bebe precisa de vacina
+N0	perguntas.json:independente:saude#quero_fazer_exame_de	quero fazer exame de sangue
+N0	perguntas.json:independente:saude#preciso_de_fisioterapia	preciso de fisioterapia
+N0	perguntas.json:independente:saude#meu_filho_tem_autismo	meu filho tem autismo e precisa de terapia
+N0	perguntas.json:independente:saude#to_com_muita_ansiedade	to com muita ansiedade e nao consigo dormir
+N0	perguntas.json:independente:saude#qual_a_ubs_do	qual a UBS do meu bairro
+N0	perguntas.json:independente:drogas#meu_marido_bebe_todo	meu marido bebe todo dia e nao quer se tratar
+N0	perguntas.json:independente:direitos#como_pedir_pensao_alimenticia	como pedir pensao alimenticia pro pai do meu filho
+N0	perguntas.json:independente:direitos#quero_me_separar_mas	quero me separar mas nao tenho dinheiro pra advogado
+N0	perguntas.json:independente:direitos#como_dar_entrada_na	como dar entrada na aposentadoria
+N0	perguntas.json:independente:direitos#estou_com_o_nome	estou com o nome sujo e nao consigo pagar
+N0	perguntas.json:independente:direitos#o_pai_do_meu	o pai do meu filho nao paga pensao ha 2 anos
+N0	perguntas.json:independente:moradia#minha_conta_de_luz	minha conta de luz veio muito alta nao consigo pagar
+N0	perguntas.json:independente:moradia#tem_desconto_na_conta	tem desconto na conta de agua pra quem tem baixa renda
+N0	perguntas.json:independente:moradia#quero_me_inscrever_no	quero me inscrever no minha casa minha vida
+N0	perguntas.json:independente:moradia#estou_sendo_despejada	estou sendo despejada
+N0	perguntas.json:independente:moradia#como_pedir_tarifa_social	como pedir tarifa social de energia
+N0	perguntas.json:independente:assistencia#preciso_de_cesta_basica	preciso de cesta basica
+N0	perguntas.json:independente:assistencia#como_faco_o_cadastro	como faco o cadastro unico
+N0	perguntas.json:independente:assistencia#como_solicitar_bolsa_familia	como solicitar bolsa familia
+N0	perguntas.json:independente:assistencia#meu_filho_de_8	meu filho de 8 anos nao vai na escola e fica na rua
+N0	perguntas.json:independente:assistencia#tem_atividade_pra_minha	tem atividade pra minha mae idosa sair de casa
+N0	perguntas.json:independente:assistencia#estou_em_situacao_de	estou em situacao de rua com meus filhos
+N0	perguntas.json:independente:assistencia#qual_cras_atende_o	qual cras atende o bairro cervezao
+N0	perguntas.json:independente:transporte#horario_do_onibus_da	horario do onibus da linha 6
+N0	perguntas.json:independente:entre#sou_manicure_e_quero	sou manicure e quero divulgar meu trabalho pra outras mulheres
+N0	perguntas.json:independente:local#onde_fica_a_ubs	onde fica a UBS mais proxima da minha casa pelo cep
+N0	perguntas.json:independente:multi#estou_desempregada_com_dois	estou desempregada, com dois filhos pequenos e sem comida
+N0	perguntas.json:independente:multi#fui_demitida_to_sem	fui demitida, to sem dinheiro pro aluguel e preciso de creche
+N0	perguntas.json:independente:multi#meu_filho_tem_deficiencia	meu filho tem deficiencia e eu preciso trabalhar
+N0	perguntas.json:independente:multi#sou_mae_solteira_e	sou mae solteira e quero voltar a estudar mas nao tenho com quem deixar as criancas
+N0	perguntas.json:independente:multi#minha_mae_idosa_mora	minha mae idosa mora comigo, tem alzheimer e eu nao dou conta
+N0	perguntas.json:independente:digitacao#prciso_de_vaga_ne	prciso de vaga ne creche
+N0	perguntas.json:independente:digitacao#kero_faze_um_curco	kero faze um curço de informatica
+N0	perguntas.json:independente:digitacao#tem_dentista_pelo_sus	tem dentista pelo sus?
+N0	perguntas.json:independente:digitacao#cade_o_postinho_do	cade o postinho do jardim
+N0	perguntas.json:independente:digitacao#to_sem_grana_pra	to sem grana pra comer
+N0	perguntas.json:independente:digitacao#bolsa_familia_como_faz	bolsa familia como faz
+N2	perguntas.json:independente:violencia#meu_marido_me_trancou	meu marido me trancou em casa e nao me deixa sair
+N2	perguntas.json:independente:violencia#ele_me_bateu_de	ele me bateu de novo hoje e eu to com medo
+N2	perguntas.json:independente:violencia#meu_namorado_me_ameacou	meu namorado me ameacou com uma faca
+N2	perguntas.json:independente:violencia#tenho_medo_de_ir	tenho medo de ir pra casa hoje, ele esta bebendo
+N2	perguntas.json:independente:violencia#fui_forcada_a_ter	fui forçada a ter relação com meu marido
+N2	perguntas.json:independente:violencia#ele_quebrou_meu_celular	ele quebrou meu celular e disse que se eu sair ele me mata
+N2	perguntas.json:independente:violencia#meu_ex_ta_me	meu ex ta me seguindo e aparece na porta do trabalho
+N2	perguntas.json:independente:violencia#meu_pai_bate_na	meu pai bate na minha mae todo dia
+N2	perguntas.json:independente:violencia#minha_vizinha_esta_gritando	minha vizinha esta gritando e apanhando agora
+N2	perguntas.json:independente:violencia#quero_denunciar_meu_marido	quero denunciar meu marido mas tenho medo
+N2	perguntas.json:independente:violencia#preciso_fugir_de_casa	preciso fugir de casa com meus filhos hoje
+N2	perguntas.json:independente:mental#nao_vejo_mais_saida	nao vejo mais saida, quero morrer
+N2	perguntas.json:independente:mental#to_pensando_em_me	to pensando em me jogar da ponte
+N2	perguntas.json:independente:crianca#meu_vizinho_abusa_do	meu vizinho abusa do filho dele, escuto os gritos
+N2	perguntas.json:independente:saude#estou_com_sangramento_muito	estou com sangramento muito forte na gravidez
+N2	perguntas.json:independente:saude#meu_marido_ta_tendo	meu marido ta tendo um derrame, boca torta
+N2	perguntas.json:independente:saude#meu_bebe_esta_com	meu bebe esta com febre alta e convulsionando
+N2	perguntas.json:independente:saude#ele_ingeriu_soda_caustica	ele ingeriu soda caustica
+N0	perguntas.json:independente:armadilha#vou_me_matar_de	vou me matar de estudar pra passar no vestibular
+N0	perguntas.json:independente:armadilha#estou_morrendo_de_fome	estou morrendo de fome, preciso de ajuda
+N0	perguntas.json:independente:armadilha#meu_filho_caiu_e	meu filho caiu e ralou o joelho, onde faço curativo
+N0	perguntas.json:independente:armadilha#quero_morrer_de_rir	quero morrer de rir com meu filho
+N0	perguntas.json:independente:armadilha#meu_marido_bateu_o	meu marido bateu o carro e preciso do seguro
+N0	perguntas.json:independente:armadilha#o_professor_bateu_o	o professor bateu o martelo na nota
+N0	perguntas.json:independente:armadilha#matei_aula_hoje	matei aula hoje
+N0	perguntas.json:independente:fora#qual_o_telefone_do	qual o telefone do shopping
+N0	perguntas.json:independente:fora#como_tirar_a_carteira	como tirar a carteira de motorista
+N0	perguntas.json:independente:fora#preciso_de_um_encanador	preciso de um encanador
+N0	perguntas.json:independente:fora#como_declarar_imposto_de	como declarar imposto de renda
+N0	perguntas.json:independente:fora#aluguel_de_salao_de	aluguel de salao de festa
+N0	perguntas.json:independente:fora#onde_compro_tinta_pra	onde compro tinta pra parede
+N0	perguntas.json:independente:fora#quanto_e_15_vezes	quanto é 15 vezes 12
+N0	perguntas.json:independente:fora#tem_pizza	tem pizza?
+N0	perguntas.json:independente:fora#quem_foi_dom_pedro	quem foi dom pedro
+N0	perguntas.json:independente:fora#como_instalo_o_whatsapp	como instalo o whatsapp
+N0	perguntas.json:independente:saudacao#boa_tarde_tudo_bem	boa tarde, tudo bem?
+N2	perguntas.json:reserva:violencia#meu_companheiro_me_empurrou	meu companheiro me empurrou da escada ontem
+N2	perguntas.json:reserva:violencia#ele_puxou_meu_cabelo	ele puxou meu cabelo e me jogou no chao
+N2	perguntas.json:reserva:violencia#meu_marido_pegou_o	meu marido pegou o dinheiro todo e nao me deixa trabalhar nem ter celular
+N2	perguntas.json:reserva:violencia#to_com_medo_ele	to com medo, ele disse que vai me buscar no trabalho
+N2	perguntas.json:reserva:violencia#meu_ex_invadiu_minha	meu ex invadiu minha casa de madrugada
+N2	perguntas.json:reserva:violencia#ele_me_obriga_a	ele me obriga a ter relacao mesmo quando eu nao quero
+N2	perguntas.json:reserva:violencia#meu_namorado_me_deu	meu namorado me deu um tapa na frente dos amigos
+N2	perguntas.json:reserva:violencia#ele_ameaca_levar_meus	ele ameaca levar meus filhos se eu for embora
+N2	perguntas.json:reserva:violencia#estou_escondida_na_casa	estou escondida na casa de uma amiga porque ele me procura
+N2	perguntas.json:reserva:violencia#minha_filha_adulta_apanha	minha filha adulta apanha do marido e eu vi marcas no pescoco dela
+N2	perguntas.json:reserva:violencia#meu_chefe_me_encostou	meu chefe me encostou a forca no banheiro
+N2	perguntas.json:reserva:violencia#ele_ta_embriagado_e	ele ta embriagado e quebrando tudo, estou trancada no quarto
+N2	perguntas.json:reserva:mental#nao_aguento_mais_essa	nao aguento mais essa vida, queria sumir pra sempre
+N2	perguntas.json:reserva:mental#comprei_corda_pra_me	comprei corda pra me matar
+N2	perguntas.json:reserva:mental#to_cansada_de_tudo	to cansada de tudo, quero me despedir
+N2	perguntas.json:reserva:mental#engoli_varios_comprimidos_agora	engoli varios comprimidos agora
+N2	perguntas.json:reserva:mental#tenho_vontade_de_me	tenho vontade de me cortar quando fico nervosa
+N2	perguntas.json:reserva:mental#penso_todo_dia_em	penso todo dia em acabar com a minha vida
+N2	perguntas.json:reserva:mental#nao_tem_ninguem_que	nao tem ninguem que se importe comigo, melhor eu nao estar mais aqui
+N2	perguntas.json:reserva:crianca#meu_enteado_de_10	meu enteado de 10 anos ta sendo tocado pelo professor
+N2	perguntas.json:reserva:crianca#minha_filha_chegou_da	minha filha chegou da casa do pai com marcas roxas e diz que ele bate
+N2	perguntas.json:reserva:crianca#tem_uma_menina_na	tem uma menina na vizinhanca que o padrasto tranca no quintal sem comida
+N2	perguntas.json:reserva:crianca#meu_sobrinho_de_6	meu sobrinho de 6 anos me contou que o tio mostra coisas feias pra ele
+N2	perguntas.json:reserva:saude#meu_pai_esta_com	meu pai esta com o rosto torto e nao consegue falar
+N2	perguntas.json:reserva:saude#minha_filha_pequena_caiu	minha filha pequena caiu da janela e nao chora
+N2	perguntas.json:reserva:saude#meu_irmao_esta_palido	meu irmao esta pálido, suando frio e com dor no braço
+N2	perguntas.json:reserva:saude#ela_esta_sangrando_muito	ela está sangrando muito depois do parto
+N2	perguntas.json:reserva:saude#meu_avo_nao_esta	meu avô não está respirando direito
+N2	perguntas.json:reserva:saude#bebi_muito_remedio_sem	bebi muito remedio sem querer, estou passando mal
+N0	perguntas.json:reserva:armadilha#meu_filho_me_bateu	meu filho me bateu no jogo de videogame
+N0	perguntas.json:reserva:armadilha#preciso_de_ajuda_com	preciso de ajuda com a depressao da minha mae
+N0	perguntas.json:reserva:armadilha#meu_time_apanhou_feio	meu time apanhou feio ontem
+N0	perguntas.json:reserva:armadilha#quero_me_matricular_no	quero me matricular no curso, vou morrer de ansiedade se nao conseguir vaga
+N0	perguntas.json:reserva:armadilha#tem_grupo_de_apoio	tem grupo de apoio pra mulher que perdeu o marido
+N0	perguntas.json:reserva:armadilha#meu_marido_me_ajuda	meu marido me ajuda em casa mas nao quer procurar emprego
+N0	perguntas.json:reserva:armadilha#socorro_nao_acho_o	socorro, nao acho o telefone da UBS
+N0	perguntas.json:reserva:armadilha#a_menina_caiu_da	a menina caiu da bicicleta e ralou o joelho
+N2	perguntas.json:final:violencia#meu_esposo_me_deu	meu esposo me deu uma surra com cinto
+N2	perguntas.json:final:violencia#ele_me_ameaca_com	ele me ameaca com arma toda vez que discutimos
+N2	perguntas.json:final:violencia#meu_ex_mandou_mensagem	meu ex mandou mensagem dizendo que sabe onde eu moro e que vai me pegar
+N2	perguntas.json:final:violencia#ele_rasgou_minhas_roupas	ele rasgou minhas roupas e disse que eu nao valho nada
+N2	perguntas.json:final:violencia#meu_namorado_verifica_meu	meu namorado verifica meu celular, me proibe de ter amigas e ja me deu tapa
+N2	perguntas.json:final:violencia#a_policia_levou_ele	a policia levou ele mas ele voltou e vai me matar
+N2	perguntas.json:final:violencia#levei_um_soco_na	levei um soco na boca e sai de casa so com a roupa do corpo
+N2	perguntas.json:final:mental#quero_tomar_tudo_e	quero tomar tudo e dormir pra sempre
+N2	perguntas.json:final:mental#so_penso_em_desaparecer	so penso em desaparecer
+N2	perguntas.json:final:mental#nao_suporto_mais_viver	nao suporto mais viver desse jeito
+N2	perguntas.json:final:mental#acho_que_meus_filhos	acho que meus filhos ficariam melhor sem a mae
+N2	perguntas.json:final:mental#preciso_de_ajuda_porque	preciso de ajuda porque estou pensando em me machucar
+N2	perguntas.json:final:mental#vou_acabar_com_isso	vou acabar com isso hoje
+N2	perguntas.json:final:crianca#o_namorado_da_minha	o namorado da minha mae tocou em mim
+N2	perguntas.json:final:crianca#minha_filha_de_5	minha filha de 5 anos tem dor e sangue e acho que alguem abusou dela
+N2	perguntas.json:final:crianca#o_menino_do_vizinho	o menino do vizinho vive com hematomas e chora de medo do pai
+N2	perguntas.json:final:crianca#meu_marido_obriga_o	meu marido obriga o menino a ficar de castigo sem comer e bate com cabo de vassoura
+N2	perguntas.json:final:crianca#vi_uma_crianca_sendo	vi uma crianca sendo arrastada pelo cabelo na rua pela mae
+N2	perguntas.json:final:crianca#a_baba_deixou_marcas	a baba deixou marcas no meu bebe
+N2	perguntas.json:final:saude#meu_avo_esta_caido	meu avo esta caido no chao e nao responde
+N2	perguntas.json:final:saude#estou_com_dor_muito	estou com dor muito forte no peito irradiando pro braco
+N2	perguntas.json:final:saude#minha_filha_engoliu_um	minha filha engoliu um brinquedo e nao consegue respirar
+N2	perguntas.json:final:saude#o_bebe_esta_convulsionando	o bebe esta convulsionando
+N2	perguntas.json:final:saude#meu_marido_ta_com	meu marido ta com o rosto cinza e suando frio
+N2	perguntas.json:final:saude#estou_perdendo_muito_sangue	estou perdendo muito sangue
+N2	perguntas.json:final:saude#minha_mae_tomou_todos	minha mae tomou todos os remedios do armario sem querer
+N0	perguntas.json:final:armadilha#o_time_da_minha	o time da minha filha apanhou do adversario no volei
+N0	perguntas.json:final:armadilha#bati_o_carro_na	bati o carro na garagem e preciso de seguro
+N0	perguntas.json:final:armadilha#to_morrendo_de_ansiedade	to morrendo de ansiedade pra entrevista de emprego
+N0	perguntas.json:final:armadilha#meu_bebe_esta_com	meu bebe esta com assadura e preciso de pomada
+N0	perguntas.json:final:armadilha#o_dentista_falou_que	o dentista falou que preciso arrancar um dente
+N0	perguntas.json:final:armadilha#meu_pai_caiu_da	meu pai caiu da bicicleta e ralou o braco, onde faco curativo
+N0	perguntas.json:final:armadilha#me_matei_de_estudar	me matei de estudar e nao passei no vestibular
+N0	perguntas.json:final:armadilha#ele_me_deixou_no	ele me deixou no vacuo no whatsapp
+N0	perguntas.json:final:fora#qual_o_preco_do	qual o preco do dolar hoje
+N0	perguntas.json:final:fora#onde_conserto_geladeira	onde conserto geladeira
+N0	perguntas.json:final:fora#tem_vaga_de_estacionamento	tem vaga de estacionamento no centro
+N0	perguntas.json:final:fora#como_fazer_bolo_de	como fazer bolo de chocolate
+N0	perguntas.json:final:fora#dicas_pra_aprender_violao	dicas pra aprender violao
+N0	perguntas.json:final:fora#quem_vai_ganhar_a	quem vai ganhar a copa
+N0	perguntas.json:final:fora#preciso_de_um_eletricista	preciso de um eletricista
+N0	perguntas.json:final:fora#onde_tem_academia_barata	onde tem academia barata
+N0	perguntas.json:final:fora#me_recomenda_um_livro	me recomenda um livro
+N0	perguntas.json:final:fora#qual_o_melhor_plano	qual o melhor plano de internet
+N0	perguntas.json:final:moradia#preciso_de_ajuda_pra	preciso de ajuda pra pagar o aluguel atrasado
+N0	perguntas.json:final:educacao#tem_vaga_em_creche	tem vaga em creche perto do bairro santa cruz
+N0	perguntas.json:final:educacao#como_faco_pra_matricular	como faco pra matricular meu filho com deficiencia na escola
+N0	perguntas.json:final:trabalho#quero_aprender_a_mexer	quero aprender a mexer em computador de graca
+N0	perguntas.json:final:trabalho#onde_faco_curso_de	onde faco curso de manicure
+N0	perguntas.json:final:saude#tenho_consulta_com_cardiologista	tenho consulta com cardiologista, como agendo
+N0	perguntas.json:final:assistencia#meu_pai_idoso_precisa	meu pai idoso precisa de cuidador
+N0	perguntas.json:final:assistencia#como_funciona_o_bpc	como funciona o BPC
+N0	perguntas.json:final:multi#perdi_meu_emprego_e	perdi meu emprego e nao tenho renda pra nada
+N0	perguntas.json:final:saude#preciso_marcar_ginecologista	preciso marcar ginecologista
+N0	perguntas.json:final:saude#tem_vacina_contra_gripe	tem vacina contra gripe
+N0	perguntas.json:final:saude#onde_fica_o_hospital	onde fica o hospital
+N0	perguntas.json:final:educacao#quais_documentos_preciso_pra	quais documentos preciso pra matricular meu filho
+N0	perguntas.json:final:educacao#quero_me_formar_em	quero me formar em tecnologia
+N0	perguntas.json:final:moradia#tem_ajuda_pra_quem	tem ajuda pra quem nao consegue pagar a luz
+N0	perguntas.json:final:saude#estou_gravida_e_preciso	estou gravida e preciso fazer pre natal
+N0	perguntas.json:final:saude#meu_filho_precisa_de	meu filho precisa de psicologo
+N0	perguntas.json:final:saude#atendimento_psicologico_gratuito	atendimento psicologico gratuito
+N0	perguntas.json:final:direitos#preciso_de_um_advogado	preciso de um advogado e nao tenho dinheiro
+N0	perguntas.json:final:direitos#quero_tirar_uma_duvida	quero tirar uma duvida sobre pensao
+N0	perguntas.json:final:transporte#horario_do_onibus_linha	horario do onibus linha 7
+N0	perguntas.json:final:transporte#como_chego_na_upa	como chego na upa de onibus
+N0	perguntas.json:final:assistencia#tem_cesta_basica_pra	tem cesta basica pra familia de baixa renda
+N0	perguntas.json:final:drogas#onde_tem_grupo_de	onde tem grupo de ajuda pra quem quer parar de beber
+N0	perguntas.json:final:drogas#meu_marido_usa_crack	meu marido usa crack e a familia sofre
+N0	perguntas.json:final:entre#quero_vender_meus_artesanatos	quero vender meus artesanatos pra outras mulheres
+N0	perguntas.json:final:moradia#preciso_me_inscrever_pra	preciso me inscrever pra habitacao popular
+N0	perguntas.json:final:direitos#quero_saber_se_tenho	quero saber se tenho direito a aposentadoria rural
+
+N1	lote_gabriel128#000	Meu marido pega meu celular escondido e depois pergunta quem é cada pessoa que me mandou mensagem.
+N1	lote_gabriel128#000	Ele quer minha senha de tudo, diz que casal não pode ter segredo e fica bravo se eu não dou.
+N1	lote_gabriel128#000	Minha irmã contou que o namorado dela lê até as conversa com a mãe dela e não deixa apagar nada.
+N1	lote_gabriel128#001	Meu namorado fica fuçando meu whats toda noite, se eu viro a tela ele já começa a discussão.
+N1	lote_gabriel128#001	Não posso nem mudar a senha do telefone que ele diz que estou escondendo alguma coisa.
+N0	lote_gabriel128#001	Eu e meu marido sabemos a senha um do outro, mas cada um usa o próprio celular sem ficar fiscalizando.
+N0	lote_gabriel128#002	Meu telefone descarregou e pedi o celular dele emprestado pra ligar pra minha mãe.
+N0	lote_gabriel128#002	A gente combinou de olhar juntos as mensagens da operadora porque chegou uma cobrança estranha.
+N0	lote_gabriel128#002	Meu namorado me pediu a senha do Wi-Fi e eu passei, porque ele estava sem internet.
+N1	lote_gabriel128#003	Meu namorado escolhe até minha roupa pra sair, se eu coloco uma saia ele manda trocar.
+N1	lote_gabriel128#003	Ela não pode postar foto de biquini porque o marido fica humilhando e chamando ela de tudo.
+N1	lote_gabriel128#003	Meu marido mandou apagar minhas fotos do Instagram e disse que mulher casada não precisa disso.
+N1	lote_gabriel128#004	Toda vez que vou sair ele reclama da minha roupa, fala que estou querendo chamar atenção dos outros.
+N1	lote_gabriel128#004	A filha da minha vizinha deixou de usar maquiagem porque o namorado dela diz que ela não tem permissão.
+N0	lote_gabriel128#004	Meu marido achou bonito o vestido que escolhi e perguntou onde comprei.
+N0	lote_gabriel128#005	Eu e meu namorado combinamos de não postar fotos íntimas nas redes sociais.
+N0	lote_gabriel128#005	Pedi a opinião dele sobre qual roupa ficava melhor para uma festa e escolhi a que gostei.
+N0	lote_gabriel128#005	Nós dois decidimos deixar nossas redes sociais privadas porque preferimos mais discrição.
+N1	lote_gabriel128#006	Meu marido não deixa eu visitar minha mãe, diz que minha familia só quer acabar com nosso casamento.
+N1	lote_gabriel128#006	Parei de ver minhas amigas porque meu namorado faz um escandalo toda vez que saio com elas.
+N1	lote_gabriel128#006	Minha prima quase não sai de casa, o marido dela implica até quando ela vai na padaria sozinha.
+N1	lote_gabriel128#007	Ele quer que eu corte contato com minhas irmãs e fica dias sem falar comigo quando não obedeço.
+N1	lote_gabriel128#007	Não posso ir na casa da minha mãe sem ele ficar ligando e mandando eu voltar imediatamente.
+N0	lote_gabriel128#007	Meu marido não gosta muito de festa, então combinamos de sair juntos quando os dois estão disponíveis.
+N0	lote_gabriel128#008	Eu e minhas amigas marcamos um encontro, mas resolvi ficar em casa porque estava cansada.
+N0	lote_gabriel128#008	Meu namorado prefere que eu avise quando chegar tarde, e eu também gosto de saber quando ele chega.
+N0	lote_gabriel128#008	Minha família mora longe e por isso não consigo visitar minha mãe toda semana.
+N1	lote_gabriel128#009	Meu marido não deixa eu trabalhar, fala que quem manda em casa é ele e que eu tenho que ficar cuidando de tudo.
+N1	lote_gabriel128#009	Passei numa entrevista mas meu namorado disse que se eu aceitar o emprego vai acabar nosso relacionamento.
+N1	lote_gabriel128#009	Minha mãe quer fazer um curso, mas o companheiro dela diz que mulher que estuda fica metida.
+N1	lote_gabriel128#010	Ele não deixa eu ir pra faculdade, fica falando que estou perdendo tempo e que não preciso aprender nada.
+N1	lote_gabriel128#010	Toda vez que arrumo uma oportunidade de emprego meu marido inventa uma briga pra eu desistir.
+N0	lote_gabriel128#010	Eu e meu marido conversamos e decidimos que vou estudar de manhã enquanto ele trabalha.
+N0	lote_gabriel128#011	Resolvi deixar o emprego por alguns meses para cuidar da minha saúde e depois procurar outro.
+N0	lote_gabriel128#011	Meu namorado me ajudou a escolher um curso que combina com o horário do meu trabalho.
+N0	lote_gabriel128#011	Não consegui aceitar a vaga porque o horário coincidia com minhas aulas.
+N1	lote_gabriel128#012	Meu marido recebe meu salário na conta dele e eu tenho que pedir dinheiro até pra comprar remédio.
+N1	lote_gabriel128#012	Trabalho o mês inteiro mas meu namorado fica com todo meu pagamento, diz que eu não sei cuidar de dinheiro.
+N1	lote_gabriel128#012	Minha irmã não pode nem comprar uma roupa sem mostrar o preço pro marido e pedir autorização.
+N1	lote_gabriel128#013	Ele pegou meu cartão e não devolve, fala que eu gasto demais e que só ele sabe administrar.
+N1	lote_gabriel128#013	Meu marido controla tudo que entra na minha conta e não deixa eu guardar nem dez reais.
+N0	lote_gabriel128#013	Eu e meu marido juntamos parte dos salários para pagar as contas e cada um mantém seu dinheiro pessoal.
+N0	lote_gabriel128#014	Emprestei meu cartão para ele comprar uma coisa porque o dele estava bloqueado, e ele devolveu.
+N0	lote_gabriel128#014	Nós dois combinamos um limite de gastos para conseguir economizar para a viagem.
+N0	lote_gabriel128#014	Meu namorado me ajudou a organizar as contas porque eu pedi ajuda com meu orçamento.
+N1	lote_gabriel128#015	Meu marido fala todo dia que sou uma inútil e que sem ele eu não seria ninguém.
+N1	lote_gabriel128#015	Ele me chama de burra na frente dos amigos e depois diz que eu não sei brincar.
+N1	lote_gabriel128#015	Minha tia vive ouvindo do companheiro que é feia, velha e que nenhum homem ia querer ela.
+N1	lote_gabriel128#016	Meu namorado fala que eu não presto pra nada, até quando faço tudo que ele pede.
+N1	lote_gabriel128#016	Ele fica me diminuindo, diz que não tenho capacidade nem pra cuidar da minha própria vida.
+N0	lote_gabriel128#016	Meu marido brinca que sou teimosa, mas nós dois rimos e nenhum se sente ofendido.
+N0	lote_gabriel128#017	Fiquei chateada porque meu namorado discordou da minha opinião, mas conversamos e resolvemos.
+N0	lote_gabriel128#017	Eu errei uma receita e falei brincando que sou péssima cozinheira.
+N0	lote_gabriel128#017	Meu companheiro disse que não gostou da minha escolha, mas respeitou minha decisão.
+N1	lote_gabriel128#018	Meu namorado liga de cinco em cinco minutos pra saber onde estou, se não atendo ele começa a brigar.
+N1	lote_gabriel128#018	Ele aparece na porta do meu trabalho sem avisar e fica esperando pra ver com quem eu saio.
+N1	lote_gabriel128#018	Tenho que mandar foto de onde estou, se não ele diz que estou mentindo e me castiga com silêncio.
+N1	lote_gabriel128#019	Minha vizinha não consegue nem ir ao mercado tranquila, o marido fica rastreando o celular dela.
+N1	lote_gabriel128#019	Meu marido quer saber cada passo que dou, pergunta até quanto tempo fiquei na fila do banco.
+N0	lote_gabriel128#019	Meu marido manda mensagem perguntando se cheguei bem, porque sabe que volto tarde do trabalho.
+N0	lote_gabriel128#020	Compartilhamos a localização quando fazemos uma viagem longa, por segurança e com o consentimento dos dois.
+N0	lote_gabriel128#020	Meu namorado passou no meu trabalho para me buscar porque combinamos antes.
+N0	lote_gabriel128#020	Avisei que ia demorar no mercado e ele respondeu que tudo bem, para eu não ter pressa.
+N1	lote_gabriel128#021	Meu marido diz que se eu separar dele vou sair só com a roupa do corpo e sem meus filhos.
+N1	lote_gabriel128#021	Ele fala que a casa é dele e que pode me colocar na rua a hora que quiser.
+N1	lote_gabriel128#021	Minha irmã quer se separar, mas o namorado ameaça tirar todo o dinheiro e deixar ela sem nada.
+N1	lote_gabriel128#022	Toda vez que falo em ir embora ele diz que vai conseguir ficar com as crianças e que nunca mais vou ver elas.
+N1	lote_gabriel128#022	Meu companheiro fala que sem ele vou passar fome e não vou ter nem onde dormir.
+N0	lote_gabriel128#022	Eu e meu marido conversamos sobre como dividir os móveis caso um dia a gente se separe.
+N0	lote_gabriel128#023	Estamos organizando a documentação da casa porque queremos saber como fica a propriedade no nome dos dois.
+N0	lote_gabriel128#023	Meu companheiro falou que precisamos economizar para garantir uma moradia melhor para os filhos.
+N0	lote_gabriel128#023	Eu e meu ex combinamos de dividir as despesas das crianças depois da separação.
+N1	lote_gabriel128#024	Meu marido faz uma coisa e depois diz que nunca aconteceu, fala que estou ficando louca.
+N1	lote_gabriel128#024	Toda briga ele vira a situação e no final eu que peço desculpa até quando não fiz nada.
+N1	lote_gabriel128#024	Minha amiga diz que o namorado faz ela duvidar da própria memória, ele nega tudo que falou.
+N1	lote_gabriel128#025	Ele me humilha e depois fala que sou muito sensível, que invento problema onde não existe.
+N1	lote_gabriel128#025	Meu companheiro conta outra versão dos fatos para todo mundo e diz que eu tenho problema da cabeça.
+N0	lote_gabriel128#025	Eu e meu marido lembramos de maneira diferente de uma conversa e resolvemos conferir as mensagens.
+N0	lote_gabriel128#026	Às vezes eu interpreto errado o que ele fala, então prefiro perguntar antes de tirar conclusões.
+N0	lote_gabriel128#026	Meu namorado disse que não concordava comigo, mas ouviu minha explicação e respeitou minha opinião.
+N0	lote_gabriel128#026	Tivemos uma discussão e os dois reconheceram que erraram, sem ficar colocando a culpa um no outro.
+N0	lote_gabriel128#027	Me avisa quando chegar.
+N0	lote_gabriel128#027	Fiquei preocupada porque você demorou.
+N0	lote_gabriel128#027	Manda mensagem quando sair do trabalho.
+N0	lote_gabriel128#028	Quero saber se chegou bem.
+N0	lote_gabriel128#028	Me liga quando puder.
+N0	lote_gabriel128#028	Vou passar para te buscar.
+N0	lote_gabriel128#029	Nós combinamos de compartilhar a localização.
+N0	lote_gabriel128#029	Cada um sabe a senha do outro.
+N0	lote_gabriel128#029	Juntamos nossos salários para pagar as contas.
+N0	lote_gabriel128#030	Decidimos economizar juntos.
+N0	lote_gabriel128#030	Ele escolheu a roupa e eu gostei.
+N0	lote_gabriel128#030	Preferimos sair juntos.
+N0	lote_gabriel128#031	Resolvemos deixar as redes sociais privadas.
+N0	lote_gabriel128#031	Meu marido ficou com ciúme.
+N0	lote_gabriel128#031	Meu namorado não gostou da minha roupa.
+N0	lote_gabriel128#032	Tivemos uma discussão.
+N0	lote_gabriel128#032	Ele ficou chateado porque saí com minhas amigas.
+N0	lote_gabriel128#032	Não concordamos sobre uma compra.
+N0	lote_gabriel128#033	Ele prefere ficar em casa.
+N0	lote_gabriel128#033	Pedi a opinião dele antes de comprar.
+N0	lote_gabriel128#033	Morri de rir.
+N0	lote_gabriel128#034	Ele me matou de vergonha.
+N0	lote_gabriel128#034	Estou morrendo de fome.
+N0	lote_gabriel128#034	Foi uma briga de cachorro grande.
+N0	lote_gabriel128#035	Meu time matou o jogo.
+N0	lote_gabriel128#035	Ela me deu um empurrão na vida.
+N0	lote_gabriel128#035	Aquela prova me deixou louca.
+N0	lote_gabriel128#036	Meu marido me mata de rir.
+N0	lote_gabriel128#036	Quase morri de susto.
+N0	lote_gabriel128#036	Foi uma discussão de novela.
+N0	lote_gabriel128#037	Meu ex me controlava, mas isso acabou há anos.
+N0	lote_gabriel128#037	Já passei por isso, hoje estou bem.
+N0	lote_gabriel128#037	Antigamente ele me proibia de sair, mas não estamos mais juntos.
+N0	lote_gabriel128#038	Minha mãe viveu isso quando era jovem.
+N0	lote_gabriel128#038	Li uma notícia sobre uma mulher que passou por isso.
+N0	lote_gabriel128#038	Vi uma cena de novela em que o marido controlava a esposa.
+N1	lote_gabriel128#039	Minha irmã não pode sair de casa.
+N1	lote_gabriel128#039	Minha vizinha tem que entregar o salário ao marido.
+N1	lote_gabriel128#039	Minha amiga não pode falar com a mãe.
+N1	lote_gabriel128#040	Minha filha está sendo humilhada pelo namorado.
+N0	lote_gabriel128#040	Meu marido usa celular
+N0	lote_gabriel128#040	Meu marido pediu minha senha
+N1	lote_gabriel128#041	Meu marido exige minha senha e lê todas as minhas conversas
+N2	lote_gabriel128#041	Meu marido exige minha senha, me ameaça de morte e me impede de sair
+N0	lote_gabriel128#041	Meu namorado tem ciúme
+N1	lote_gabriel128#042	Meu namorado não deixa eu visitar minhas amigas e me pune quando saio
+N2	lote_gabriel128#042	Meu namorado me agride e ameaça me matar se eu sair
+N1	perigo_controle_indireto#_a_incapacidade_ou_restrição_n	nao posso sair com minhas amigas sem ele brigar
+N1	perigo_controle_indireto#_a_incapacidade_ou_restrição_n	ela nao pode ir na igreja porque o marido nao deixa
+N1	perigo_controle_indireto#_a_incapacidade_ou_restrição_n	nao consigo nem trocar de celular que meu noivo reclama
+N1	perigo_controle_indireto#_a_incapacidade_ou_restrição_n	minha cunhada nao pode postar nada porque o marido fica bravo
+N1	perigo_controle_indireto#_a_incapacidade_ou_restrição_n	nao posso atender o telefone sem ele ficar perguntando quem e
+N0	perigo_controle_indireto#_a_incapacidade_ou_restrição_n	nao posso sair hoje porque estou gripada
+N0	perigo_controle_indireto#_a_incapacidade_ou_restrição_n	nao consigo ir na festa porque tenho prova
+N0	perigo_controle_indireto#_a_incapacidade_ou_restrição_n	minha irma nao pode viajar porque esta gravida de oito meses
+N0	perigo_controle_indireto#_a_incapacidade_ou_restrição_n	nao posso postar foto do trabalho por regra da empresa
+N0	perigo_controle_indireto#_a_incapacidade_ou_restrição_n	nao posso comer doce por causa da diabetes
+N1	perigo_controle_indireto#_b_ordem_punição_e_consequênci	meu marido fica uma semana sem falar comigo quando discordo dele
+N1	perigo_controle_indireto#_b_ordem_punição_e_consequênci	meu namorado faz barraco toda vez que eu saio sem ele
+N1	perigo_controle_indireto#_b_ordem_punição_e_consequênci	se eu chego tarde meu marido me castiga com silencio
+N1	perigo_controle_indireto#_b_ordem_punição_e_consequênci	ele manda eu voltar pra casa toda vez que saio
+N1	perigo_controle_indireto#_b_ordem_punição_e_consequênci	meu noivo naum deixa eu visitar ninguem e fica dias sem falar comigo se eu desobedeco
+N0	perigo_controle_indireto#_b_ordem_punição_e_consequênci	meu marido nao falou comigo hoje porque estava com dor de cabeca
+N0	perigo_controle_indireto#_b_ordem_punição_e_consequênci	a gente discutiu e depois fizemos as pazes
+N0	perigo_controle_indireto#_b_ordem_punição_e_consequênci	meu namorado voltou pra casa cedo porque combinamos
+N0	perigo_controle_indireto#_b_ordem_punição_e_consequênci	se eu chegar tarde aviso ele pelo telefone tranquilo
+N0	perigo_controle_indireto#_b_ordem_punição_e_consequênci	fiquei uma semana sem falar com minha prima por causa de uma briga boba
+N1	perigo_controle_indireto#_c_ameaça_condicional_de_perde	meu marido diz que se eu largar ele vou ficar sem nada
+N1	perigo_controle_indireto#_c_ameaça_condicional_de_perde	ele avisou que se eu sair de casa nunca mais vejo meu filho
+N1	perigo_controle_indireto#_c_ameaça_condicional_de_perde	meu namorado diz que se eu estudar ele me deixa
+N1	perigo_controle_indireto#_c_ameaça_condicional_de_perde	ele fala que se eu denunciar vou perder a casa
+N1	perigo_controle_indireto#_c_ameaça_condicional_de_perde	meu ex diz que se eu casar de novo nunca mais vou ver as criancas
+N0	perigo_controle_indireto#_c_ameaça_condicional_de_perde	se eu aceitar o emprego vou ganhar mais
+N0	perigo_controle_indireto#_c_ameaça_condicional_de_perde	se eu estudar mais vou passar na prova
+N0	perigo_controle_indireto#_c_ameaça_condicional_de_perde	meu marido disse que se chover ele nao vai trabalhar
+N0	perigo_controle_indireto#_c_ameaça_condicional_de_perde	disse que se eu quiser ele ajuda na mudanca
+N0	perigo_controle_indireto#_c_ameaça_condicional_de_perde	se eu separar vou ter que mudar de casa e estou me preparando
+N1	perigo_controle_indireto#_d_retenção_de_dinheiro	meu marido pega meu salario inteiro todo mes
+N1	perigo_controle_indireto#_d_retenção_de_dinheiro	tenho que pedir autorizacao pro meu namorado pra comprar qualquer coisa
+N1	perigo_controle_indireto#_d_retenção_de_dinheiro	minha vizinha entrega o pagamento todo pro marido
+N1	perigo_controle_indireto#_d_retenção_de_dinheiro	meu noivo controla tudo que eu gasto e quer nota fiscal
+N1	perigo_controle_indireto#_d_retenção_de_dinheiro	ele nao deixa eu mexer na minha conta
+N0	perigo_controle_indireto#_d_retenção_de_dinheiro	meu marido e eu dividimos o salario nas contas
+N0	perigo_controle_indireto#_d_retenção_de_dinheiro	emprestei dinheiro pro meu irmao
+N0	perigo_controle_indireto#_d_retenção_de_dinheiro	meu marido me deu o cartao dele pra eu comprar
+N0	perigo_controle_indireto#_d_retenção_de_dinheiro	paguei o aluguel e sobrou pouco
+N0	perigo_controle_indireto#_d_retenção_de_dinheiro	minha vizinha ganhou o salario e comprou uma geladeira
+N1	perigo_controle_indireto#_e_frequência_ligada_a_vigilân	meu marido liga de dez em dez minutos pra saber onde estou
+N1	perigo_controle_indireto#_e_frequência_ligada_a_vigilân	ele manda mensagem toda hora cobrando onde eu estou
+N1	perigo_controle_indireto#_e_frequência_ligada_a_vigilân	ele vive me rastreando pelo celular
+N1	perigo_controle_indireto#_e_frequência_ligada_a_vigilân	meu marido quer saber cada passo meu toda hora
+N1	perigo_controle_indireto#_e_frequência_ligada_a_vigilân	meu namorado fica olhando minha localizacao toda noite
+N0	perigo_controle_indireto#_e_frequência_ligada_a_vigilân	meu marido liga de manha pra desejar bom dia
+N0	perigo_controle_indireto#_e_frequência_ligada_a_vigilân	a gente se fala o dia todo no whatsapp e eu adoro
+N0	perigo_controle_indireto#_e_frequência_ligada_a_vigilân	meu namorado me manda mensagem quando chega em casa
+N0	perigo_controle_indireto#_e_frequência_ligada_a_vigilân	compartilhamos a localizacao na viagem
+N0	perigo_controle_indireto#_e_frequência_ligada_a_vigilân	meu marido me liga no almoco pra conversar
+N1	perigo_controle_indireto#_f_desqualificação	meu marido diz que sou burra e nao sirvo pra nada
+N1	perigo_controle_indireto#_f_desqualificação	ele fica rebaixando tudo que eu faco
+N1	perigo_controle_indireto#_f_desqualificação	meu namorado vive dizendo que ninguem vai me querer
+N1	perigo_controle_indireto#_f_desqualificação	meu ex fala que eu sem ele nao sou nada
+N1	perigo_controle_indireto#_f_desqualificação	meu marido me ridiculariza na frente da familia
+N0	perigo_controle_indireto#_f_desqualificação	meu marido me elogiou na frente da familia
+N0	perigo_controle_indireto#_f_desqualificação	meu chefe disse que preciso melhorar o relatorio
+N0	perigo_controle_indireto#_f_desqualificação	minha mae diz que sou teimosa as vezes e a gente ri
+N0	perigo_controle_indireto#_f_desqualificação	meu namorado disse que nao sabe cozinhar
+N0	perigo_controle_indireto#_f_desqualificação	eu me sinto burra quando erro uma conta
+N1	perigo_controle_indireto#_g_distorção_da_realidade	meu namorado diz que eu invento tudo e que sou maluca
+N1	perigo_controle_indireto#_g_distorção_da_realidade	ele nega que falou e me faz achar que estou imaginando
+N1	perigo_controle_indireto#_g_distorção_da_realidade	meu marido diz que nunca disse aquilo mesmo eu tendo gravado
+N1	perigo_controle_indireto#_g_distorção_da_realidade	minha amiga vive ouvindo do marido que e louca
+N1	perigo_controle_indireto#_g_distorção_da_realidade	ele me faz duvidar da minha memoria
+N0	perigo_controle_indireto#_g_distorção_da_realidade	meu marido disse que esqueceu a conversa e pediu desculpa
+N0	perigo_controle_indireto#_g_distorção_da_realidade	minha memoria esta ruim por causa do estresse do trabalho
+N0	perigo_controle_indireto#_g_distorção_da_realidade	ele lembra diferente de mim e a gente conferiu o recado
+N0	perigo_controle_indireto#_g_distorção_da_realidade	meu namorado nao lembra do meu aniversario
+N0	perigo_controle_indireto#_g_distorção_da_realidade	disse que esta ficando louco com a obra da casa
+N1	perigo_controle_indireto#_h_terceira_pessoa_direta	minha prima nao pode sair de casa sozinha
+N1	perigo_controle_indireto#_h_terceira_pessoa_direta	minha colega nao pode falar com ninguem do trabalho
+N1	perigo_controle_indireto#_h_terceira_pessoa_direta	a vizinha tem que pedir permissao ao marido pra tudo
+N1	perigo_controle_indireto#_h_terceira_pessoa_direta	minha sobrinha esta sendo humilhada pelo namorado
+N1	perigo_controle_indireto#_h_terceira_pessoa_direta	a filha da minha amiga nao pode usar celular
+N0	perigo_controle_indireto#_h_terceira_pessoa_direta	minha irma nao pode sair hoje porque esta doente
+N0	perigo_controle_indireto#_h_terceira_pessoa_direta	a vizinha nao pode estacionar na frente da garagem
+N0	perigo_controle_indireto#_h_terceira_pessoa_direta	minha prima nao pode comer gluten
+N0	perigo_controle_indireto#_h_terceira_pessoa_direta	minha colega nao pode atender agora porque esta em reuniao
+N0	perigo_controle_indireto#_h_terceira_pessoa_direta	a filha da minha amiga nao pode ir na festa porque esta de castigo da escola
+N1	perigo_controle_indireto#nível_2_só_do_detector_sem_ind	meu namorado escolhe minha roupa e fala que sem ele eu nao sou ninguem
+N1	perigo_controle_indireto#nível_2_só_do_detector_sem_ind	meu marido recebe meu pagamento e nao deixa eu trabalhar
+N1	perigo_controle_indireto#nível_2_só_do_detector_sem_ind	ele fala todo dia que sou inutil e nao deixa eu ver minha mae
+N1	perigo_controle_indireto#nível_2_só_do_detector_sem_ind	meu noivo diz que se eu largar ele vou perder tudo
+N1	perigo_controle_indireto#nível_2_só_do_detector_sem_ind	meu marido fica com meu cartao e diz que eu nao sei cuidar de dinheiro
+N2	perigo_controle_indireto#nível_2_só_do_detector_sem_ind	meu marido controla meu celular e disse que vai me matar
+N2	perigo_controle_indireto#nível_2_só_do_detector_sem_ind	ele me proibe de sair e esconde meu celular pra eu nao ligar pra policia
+N2	perigo_controle_indireto#nível_2_só_do_detector_sem_ind	meu namorado fica com meu dinheiro e me bateu ontem
+N2	perigo_controle_indireto#nível_2_só_do_detector_sem_ind	ele nao me deixa sair e ja me trancou no quarto
+N2	perigo_controle_indireto#nível_2_só_do_detector_sem_ind	meu namorado quebrou meu celular e diz que vai me matar se eu contar
+N2	perigo_controle_indireto#nível_2_só_do_detector_sem_ind	meu ex exige minha senha e disse que me bate se eu negar
+N2	perigo_controle_indireto#nível_2_só_do_detector_sem_ind	ele controla meu dinheiro, meu celular e minhas roupas e nao me deixa trabalhar
+N2	perigo_controle_indireto#nível_2_só_do_detector_sem_ind	meu marido me forcou a ter relacao e controla minha conta
+N2	perigo_controle_indireto#nível_2_só_do_detector_sem_ind	ele me ameaca de morte se eu falar com minha familia
+N0	perigo_controle_indireto#frases_curtas_ou_com_acordo_se	meu marido pediu meu cpf
+N0	perigo_controle_indireto#frases_curtas_ou_com_acordo_se	ele prefere cafe
+N0	perigo_controle_indireto#frases_curtas_ou_com_acordo_se	meu noivo ficou chateado
+N0	perigo_controle_indireto#frases_curtas_ou_com_acordo_se	meu marido quer ficar em casa hoje
+N0	perigo_controle_indireto#frases_curtas_ou_com_acordo_se	ele pediu o numero do meu telefone
+N0	perigo_controle_indireto#frases_curtas_ou_com_acordo_se	peguei o celular dele emprestado e ele respondeu que tudo bem
+N0	perigo_controle_indireto#frases_curtas_ou_com_acordo_se	ele escolheu o filme e eu aprovei
+N0	perigo_controle_indireto#frases_curtas_ou_com_acordo_se	combinamos de dividir a senha do streaming
+N0	perigo_controle_indireto#frases_curtas_ou_com_acordo_se	meu namorado me pediu a senha do netflix e eu passei tranquilo
+N0	perigo_controle_indireto#frases_curtas_ou_com_acordo_se	meu marido ficou bravo com o time
+N1	perigo_controle_indireto#_mas_controle_com_imposição_co	meu marido exige minha senha toda hora
+N1	perigo_controle_indireto#_mas_controle_com_imposição_co	meu marido me humilha
+N1	perigo_controle_indireto#_mas_controle_com_imposição_co	ele quer minha senha e fica bravo se eu nao dou
+N1	perigo_controle_coercitivo#as_6_frases_de_desenvolvimento	Meu marido escolhe a roupa que tenho que vestir.
+N1	perigo_controle_coercitivo#as_6_frases_de_desenvolvimento	Meu namorado meliga toda hora querendo me controlar
+N1	perigo_controle_coercitivo#as_6_frases_de_desenvolvimento	Meu marido ghrita comigompor qualuer coisa.
+N1	perigo_controle_coercitivo#as_6_frases_de_desenvolvimento	Meu noivo não deixa eu falaer com ninguém.
+N1	perigo_controle_coercitivo#as_6_frases_de_desenvolvimento	Meu noito todos os dia quer me ver e nãoi me da espaço.
+N1	perigo_controle_coercitivo#as_6_frases_de_desenvolvimento	Meu marido grita muito com meus filhos.
+N1	perigo_controle_coercitivo#1_celular_senha_e_mensagens	meu marido exige a senha do meu celular
+N1	perigo_controle_coercitivo#1_celular_senha_e_mensagens	o namorado fica mexendo no meu zap escondido
+N1	perigo_controle_coercitivo#1_celular_senha_e_mensagens	ele revira minhas mensagens toda hora
+N1	perigo_controle_coercitivo#1_celular_senha_e_mensagens	meu ex quer saber com quem eu falo o tempo todo
+N1	perigo_controle_coercitivo#1_celular_senha_e_mensagens	meu companheiro mexe no meu celuar sem eu saber
+N0	perigo_controle_coercitivo#1_celular_senha_e_mensagens	combinamos de compartilhar a senha do celular
+N0	perigo_controle_coercitivo#1_celular_senha_e_mensagens	meu marido me emprestou o celular dele
+N0	perigo_controle_coercitivo#1_celular_senha_e_mensagens	esqueci a senha do meu celular
+N0	perigo_controle_coercitivo#1_celular_senha_e_mensagens	troquei a senha do wifi
+N0	perigo_controle_coercitivo#1_celular_senha_e_mensagens	meu marido mexeu no meu celular so pra ver as horas
+N1	perigo_controle_coercitivo#2_roupa_aparência_e_redes_soci	meu namorado decide que roupa eu posso usar
+N1	perigo_controle_coercitivo#2_roupa_aparência_e_redes_soci	ele proibe eu de usar saia
+N1	perigo_controle_coercitivo#2_roupa_aparência_e_redes_soci	meu marido manda eu apagar minhas fotos do instagram
+N1	perigo_controle_coercitivo#2_roupa_aparência_e_redes_soci	o noivo nao deixa eu postar foto
+N1	perigo_controle_coercitivo#2_roupa_aparência_e_redes_soci	meu marido escolhe o que eu posso vestir
+N0	perigo_controle_coercitivo#2_roupa_aparência_e_redes_soci	meu marido me ajudou a escolher a roupa do casamento
+N0	perigo_controle_coercitivo#2_roupa_aparência_e_redes_soci	comprei uma blusa nova pro meu marido
+N0	perigo_controle_coercitivo#2_roupa_aparência_e_redes_soci	meu marido gosta do meu cabelo
+N0	perigo_controle_coercitivo#2_roupa_aparência_e_redes_soci	cada um escolhe a propria roupa la em casa
+N0	perigo_controle_coercitivo#2_roupa_aparência_e_redes_soci	meu namorado elogiou minha maquiagem
+N1	perigo_controle_coercitivo#3_isolamento_e_proibição_de_sa	meu marido nao deixa eu visitar minha mae
+N1	perigo_controle_coercitivo#3_isolamento_e_proibição_de_sa	o noivo nao quer que eu fale com as minhas amigas
+N1	perigo_controle_coercitivo#3_isolamento_e_proibição_de_sa	ele diz que minhas amigas nao prestam
+N1	perigo_controle_coercitivo#3_isolamento_e_proibição_de_sa	meu namorado faz cena toda vez que eu saio com as amigas
+N1	perigo_controle_coercitivo#3_isolamento_e_proibição_de_sa	meu marido me proibiu de ver minha familia
+N1	perigo_controle_coercitivo#3_isolamento_e_proibição_de_sa	meu namorado naum deixa eu ver minha mae
+N0	perigo_controle_coercitivo#3_isolamento_e_proibição_de_sa	meu marido adora minha familia e visitamos todo domingo
+N0	perigo_controle_coercitivo#3_isolamento_e_proibição_de_sa	combinamos de sair so com os amigos dele hoje
+N0	perigo_controle_coercitivo#3_isolamento_e_proibição_de_sa	minha mae mandou eu voltar cedo hoje
+N0	perigo_controle_coercitivo#3_isolamento_e_proibição_de_sa	o seguranca nao deixa eu entrar com mochila
+N0	perigo_controle_coercitivo#3_isolamento_e_proibição_de_sa	meu marido ficou feliz de eu encontrar as amigas
+N1	perigo_controle_coercitivo#4_proibição_de_trabalhar_ou_es	meu marido nao quer que eu trabalhe
+N1	perigo_controle_coercitivo#4_proibição_de_trabalhar_ou_es	meu namorado me fez largar a faculdade
+N1	perigo_controle_coercitivo#4_proibição_de_trabalhar_ou_es	ele proibiu eu de estudar
+N1	perigo_controle_coercitivo#4_proibição_de_trabalhar_ou_es	o noivo manda eu largar o emprego
+N1	perigo_controle_coercitivo#4_proibição_de_trabalhar_ou_es	meu ex exige que eu largue o curso
+N1	perigo_controle_coercitivo#4_proibição_de_trabalhar_ou_es	meu marido nao deixa eu trabaia
+N0	perigo_controle_coercitivo#4_proibição_de_trabalhar_ou_es	meu marido me incentivou a estudar
+N0	perigo_controle_coercitivo#4_proibição_de_trabalhar_ou_es	meu marido ficou feliz com meu emprego novo
+N0	perigo_controle_coercitivo#4_proibição_de_trabalhar_ou_es	combinamos que eu volto a trabalhar em marco
+N0	perigo_controle_coercitivo#4_proibição_de_trabalhar_ou_es	cada um trabalha num turno aqui em casa
+N0	perigo_controle_coercitivo#4_proibição_de_trabalhar_ou_es	meu marido trabalha a noite
+N0	perigo_controle_coercitivo#5_dinheiro_salário_cartão	meu marido e eu dividimos as contas
+N0	perigo_controle_coercitivo#5_dinheiro_salário_cartão	meu marido me emprestou dinheiro
+N0	perigo_controle_coercitivo#5_dinheiro_salário_cartão	o salario acabou antes do fim do mes
+N0	perigo_controle_coercitivo#5_dinheiro_salário_cartão	preciso abrir uma conta no banco
+N0	perigo_controle_coercitivo#5_dinheiro_salário_cartão	meu marido paga o aluguel
+N1	perigo_controle_coercitivo#6_humilhação_verbal_recorrente	meu marido me chama de burra toda hora
+N1	perigo_controle_coercitivo#6_humilhação_verbal_recorrente	ele diz que sou inutil na frente dos filhos
+N1	perigo_controle_coercitivo#6_humilhação_verbal_recorrente	meu noivo me chama de gorda todo dia
+N1	perigo_controle_coercitivo#6_humilhação_verbal_recorrente	meu ex vive me chamando de louca
+N1	perigo_controle_coercitivo#6_humilhação_verbal_recorrente	ele me humilha na frente das pessoas
+N1	perigo_controle_coercitivo#6_humilhação_verbal_recorrente	meu marido me umilia todo dia
+N0	perigo_controle_coercitivo#6_humilhação_verbal_recorrente	meu marido me chamou de linda
+N0	perigo_controle_coercitivo#6_humilhação_verbal_recorrente	minha sogra disse que sou muito inteligente
+N0	perigo_controle_coercitivo#6_humilhação_verbal_recorrente	ele me chama de amor
+N0	perigo_controle_coercitivo#6_humilhação_verbal_recorrente	meu marido disse que sou incrivel
+N0	perigo_controle_coercitivo#6_humilhação_verbal_recorrente	meu namorado me chamou de preguicosa de brincadeira
+N1	perigo_controle_coercitivo#7_vigilância_constante	ele quer saber onde eu estou toda hora
+N1	perigo_controle_coercitivo#7_vigilância_constante	meu marido liga toda hora pra saber onde estou
+N1	perigo_controle_coercitivo#7_vigilância_constante	meu namorado instalou rastreador no meu celular
+N1	perigo_controle_coercitivo#7_vigilância_constante	ele exige que eu compartilhe a localizacao
+N1	perigo_controle_coercitivo#7_vigilância_constante	meu ex quer saber onde eu estou o tempo todo
+N0	perigo_controle_coercitivo#7_vigilância_constante	meu marido me avisa quando chega
+N0	perigo_controle_coercitivo#7_vigilância_constante	meu marido liga todo dia pra conversar
+N0	perigo_controle_coercitivo#7_vigilância_constante	ele quer saber como foi meu dia
+N0	perigo_controle_coercitivo#7_vigilância_constante	me liga pra saber se cheguei bem
+N0	perigo_controle_coercitivo#7_vigilância_constante	meu namorado me avisa quando chegar em casa
+N1	perigo_controle_coercitivo#8_ameaça_de_deixar_sem_casa_di	ele diz que vou perder meus filhos se eu me separar
+N1	perigo_controle_coercitivo#8_ameaça_de_deixar_sem_casa_di	meu marido diz que vai me deixar sem dinheiro
+N1	perigo_controle_coercitivo#8_ameaça_de_deixar_sem_casa_di	meu ex diz que vai cortar a pensao
+N1	perigo_controle_coercitivo#8_ameaça_de_deixar_sem_casa_di	ele garante que eu fico sem a casa
+N1	perigo_controle_coercitivo#8_ameaça_de_deixar_sem_casa_di	meu marido diz que vai me botar na rua
+N0	perigo_controle_coercitivo#8_ameaça_de_deixar_sem_casa_di	meu marido disse que vai levar as criancas pra praia
+N0	perigo_controle_coercitivo#8_ameaça_de_deixar_sem_casa_di	o banco disse que vou perder a casa se nao pagar
+N0	perigo_controle_coercitivo#8_ameaça_de_deixar_sem_casa_di	ele vai tirar o lixo
+N0	perigo_controle_coercitivo#8_ameaça_de_deixar_sem_casa_di	combinamos que ele fica com os filhos no fim de semana
+N0	perigo_controle_coercitivo#8_ameaça_de_deixar_sem_casa_di	meu marido disse que vai cortar o cabelo
+N1	perigo_controle_coercitivo#9_culpa_e_dúvida_sobre_a_própr	meu marido diz que eu sou louca
+N1	perigo_controle_coercitivo#9_culpa_e_dúvida_sobre_a_própr	ele me faz duvidar da minha propria cabeca
+N1	perigo_controle_coercitivo#9_culpa_e_dúvida_sobre_a_própr	meu namorado diz que eu imagino coisas
+N1	perigo_controle_coercitivo#9_culpa_e_dúvida_sobre_a_própr	meu ex me culpa por tudo
+N1	perigo_controle_coercitivo#9_culpa_e_dúvida_sobre_a_própr	ele nega o que disse e fala que eu invento
+N0	perigo_controle_coercitivo#9_culpa_e_dúvida_sobre_a_própr	meu marido diz que eu sou linda
+N0	perigo_controle_coercitivo#9_culpa_e_dúvida_sobre_a_própr	ele disse que estou cansada e que preciso descansar
+N0	perigo_controle_coercitivo#9_culpa_e_dúvida_sobre_a_própr	meu namorado se culpa por tudo
+N0	perigo_controle_coercitivo#9_culpa_e_dúvida_sobre_a_própr	a culpa foi minha, errei no trabalho
+N0	perigo_controle_coercitivo#9_culpa_e_dúvida_sobre_a_própr	eu me culpo por tudo
+N1	perigo_controle_coercitivo#10_gritos_recorrentes_um_grito	meu noivo vive gritando comigo
+N1	perigo_controle_coercitivo#10_gritos_recorrentes_um_grito	o marido da minha irma grita com ela todo dia
+N1	perigo_controle_coercitivo#10_gritos_recorrentes_um_grito	ele berra com as criancas por qualquer coisa
+N1	perigo_controle_coercitivo#10_gritos_recorrentes_um_grito	meu namorado grita comigo demais
+N0	perigo_controle_coercitivo#10_gritos_recorrentes_um_grito	meu marido gritou comigo ontem na briga
+N0	perigo_controle_coercitivo#10_gritos_recorrentes_um_grito	ele grita no estadio quando o time faz gol
+N0	perigo_controle_coercitivo#10_gritos_recorrentes_um_grito	meu filho grita muito no recreio
+N0	perigo_controle_coercitivo#10_gritos_recorrentes_um_grito	ele gritou de susto com a barata
+N0	perigo_controle_coercitivo#10_gritos_recorrentes_um_grito	meu marido grita gol toda domingo
+N0	perigo_controle_coercitivo#palavra_isolada_nunca_alerta	marido
+N0	perigo_controle_coercitivo#palavra_isolada_nunca_alerta	ciume
+N0	perigo_controle_coercitivo#palavra_isolada_nunca_alerta	celular
+N0	perigo_controle_coercitivo#palavra_isolada_nunca_alerta	senha
+N0	perigo_controle_coercitivo#palavra_isolada_nunca_alerta	dinheiro
+N0	perigo_controle_coercitivo#palavra_isolada_nunca_alerta	roupa
+N0	perigo_controle_coercitivo#palavra_isolada_nunca_alerta	controle
+N0	perigo_controle_coercitivo#palavra_isolada_nunca_alerta	louca
+N0	perigo_controle_coercitivo#palavra_isolada_nunca_alerta	burra
+N0	perigo_controle_coercitivo#palavra_isolada_nunca_alerta	briga
+N0	perigo_controle_coercitivo#palavra_isolada_nunca_alerta	sair
+N0	perigo_controle_coercitivo#palavra_isolada_nunca_alerta	trabalhar
+N0	perigo_controle_coercitivo#palavra_isolada_nunca_alerta	meu marido
+N0	perigo_controle_coercitivo#palavra_isolada_nunca_alerta	meu celular
+N0	perigo_controle_coercitivo#palavra_isolada_nunca_alerta	minha senha
+N0	perigo_controle_coercitivo#consentimento_acordo_passado_r	combinamos que ele fica com meu salario
+N0	perigo_controle_coercitivo#consentimento_acordo_passado_r	decidimos juntos que ele controla as contas
+N0	perigo_controle_coercitivo#consentimento_acordo_passado_r	resolvemos dividir as senhas do celular
+N0	perigo_controle_coercitivo#consentimento_acordo_passado_r	pedi a opiniao dele e ele escolheu a roupa comigo
+N0	perigo_controle_coercitivo#consentimento_acordo_passado_r	cada um fica com o proprio dinheiro la em casa
+N0	perigo_controle_coercitivo#consentimento_acordo_passado_r	meu antigo noivo controlava meu celular mas hoje meu marido respeita
+N0	perigo_controle_coercitivo#consentimento_acordo_passado_r	na novela o marido nao deixa a mulher sair de casa
+N0	perigo_controle_coercitivo#consentimento_acordo_passado_r	li uma noticia que o marido proibiu a esposa de trabalhar
+N2	perigo_controle_coercitivo#nível_2_só_com_indicador_grave	meu marido nao deixa eu falar com ninguem e me bateu ontem
+N2	perigo_controle_coercitivo#nível_2_só_com_indicador_grave	ele grita comigo por tudo e disse que vai me matar
+N2	perigo_controle_coercitivo#nível_2_só_com_indicador_grave	meu namorado me vigia o tempo todo e me ameaca com uma faca
+N2	perigo_controle_coercitivo#nível_2_só_com_indicador_grave	meu marido toma meu celular e me tranca em casa
+N2	perigo_controle_coercitivo#nível_2_só_com_indicador_grave	meu ex me vigia o tempo todo
+N2	perigo_controle_coercitivo#nível_2_só_com_indicador_grave	meu marido ameaca me deixar sem dinheiro
+N1	perigo_controle_coercitivo#frases_curtas_e_com_erro_de_di	ele grita comigo todo dia
+N1	perigo_controle_coercitivo#frases_curtas_e_com_erro_de_di	namorado mexe no meu celuar toda hora
+N1	perigo_controle_coercitivo#frases_curtas_e_com_erro_de_di	marido pega meu salario
+N1	perigo_controle_coercitivo#frases_curtas_e_com_erro_de_di	ele me umilia sempre
+N1	perigo_controle_coercitivo#frases_curtas_e_com_erro_de_di	noivo naum deixa eu trabalhar
+N1	perigo_controle_coercitivo#frases_curtas_e_com_erro_de_di	marido num deixa eu ver minha mae
+N1	perigo_controle_coercitivo#frases_curtas_e_com_erro_de_di	meu marido ghrita muito com a gente
+N0	perigo_controle_coercitivo#frases_curtas_e_com_erro_de_di	estou com saudade da minha mae
+N0	perigo_controle_coercitivo#frases_curtas_e_com_erro_de_di	preciso calcular o valor da conta
+N0	perigo_controle_coercitivo#frases_curtas_e_com_erro_de_di	o apartamento precisa de conserto
+N0	perigo_controle_coercitivo#frases_curtas_e_com_erro_de_di	minha propria casa e pequena
+N0	perigo_controle_coercitivo#frases_curtas_e_com_erro_de_di	quero escolher a roupa do meu filho

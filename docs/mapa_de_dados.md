@@ -25,6 +25,7 @@ Fluxo: **fontes oficiais e catálogos escritos à mão → pipeline Python → a
 | `web/dados/modelo_necessidades.json` | `pipeline/treinar_necessidades.py` | `web/ia.js` (classificador) |
 | `web/dados/modelo_escopo.json` | `pipeline/treinar_escopo.py` | `web/orientar.js` (abstenção: o texto é do assunto do site?) |
 | `web/dados/modelo_perigo.json` | `pipeline/treinar_perigo.py` | `web/perigo.js` (detector aprendido, junto com as regras) |
+| `web/dados/modelo_aviso_n1.json` | `pipeline/treinar_n1.py` (frases em `pipeline/frases_rotuladas_n1.tsv`) | `web/perigo.js` (classificador de aviso de nível 1; só promove "nenhum alerta" para aviso) |
 | `web/dados/indice_orientacao.json` | `pipeline/indice_orientacao.py` (189 destinos; regenerado em 05/11/2026) | `web/orientar.js`, `web/orientacao-ui.js` |
 | `web/dados/oferta_educacao_infantil.json` | `pipeline/oferta_educacao_infantil.py` (Censo Escolar 2025) | `pipeline/servicos.py`; informa a etapa (creche/pré-escola), **não** vaga |
 | `web/dados/horarios_onibus.json` | `pipeline/horarios_onibus.py` | tela de horários, índice do orientador |

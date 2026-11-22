@@ -49,8 +49,8 @@ Python (instalar: `python -m pip install -r requirements.txt`; fonte única das 
 | Biblioteca | Onde é usada | Para que serve |
 |---|---|---|
 | pandas | `pipeline/cnes.py`, `common.py`, `indice_cep.py`, `oferta_educacao_infantil.py`, `servicos.py` e testes | Leitura e tratamento de CSV grandes (CNES, CNEFE, Censo Escolar) |
-| numpy | `analise_territorial.py`, `common.py`, `indice_cep.py`, `indice_orientacao.py`, `treinar_necessidades.py`, `treinar_perigo.py`, `treinar_escopo.py` | Arrays, cálculo numérico, distâncias |
-| scikit-learn | `treinar_necessidades.py`, `treinar_perigo.py`, `treinar_escopo.py` (TfidfVectorizer, LogisticRegression, OneVsRestClassifier, StratifiedKFold); `indice_orientacao.py` (TfidfVectorizer, TruncatedSVD); `analise_territorial.py` (KMeans) | Treino dos modelos, TF-IDF, redução de dimensão (LSA) e agrupamento. Traz o scipy como dependência |
+| numpy | `analise_territorial.py`, `common.py`, `indice_cep.py`, `indice_orientacao.py`, `treinar_necessidades.py`, `treinar_perigo.py`, `treinar_n1.py`, `treinar_escopo.py` | Arrays, cálculo numérico, distâncias |
+| scikit-learn | `treinar_necessidades.py`, `treinar_perigo.py`, `treinar_n1.py`, `treinar_escopo.py` (TfidfVectorizer, LogisticRegression, OneVsRestClassifier, StratifiedKFold, StratifiedGroupKFold); `indice_orientacao.py` (TfidfVectorizer, TruncatedSVD); `analise_territorial.py` (KMeans) | Treino dos modelos, TF-IDF, redução de dimensão (LSA) e agrupamento. Traz o scipy como dependência |
 | pyshp (módulo `shapefile`) | `pipeline/setores.py`, `pipeline/limite_municipal.py` | Ler shapefiles do IBGE |
 | pyproj | `pipeline/territorio.py`, `pipeline/qualidade_geografica.py`, `pipeline/limite_municipal.py` | Áreas geodésicas no elipsoide GRS80 e transformação de coordenadas |
 | shapely | `pipeline/qualidade_geografica.py`, `pipeline/limite_municipal.py` | Validade geométrica, interseções, união e diferença de polígonos |
@@ -80,6 +80,7 @@ Todos rodam no navegador. Pesos em JSON, treinados em Python, avaliados em `aval
 |---|---|---|---|---|
 | Necessidades | Regressão logística um-contra-todos sobre n-gramas de caracteres (3 a 5) e palavras, TF-IDF | `pipeline/treinar_necessidades.py`, `catalogo/frases_necessidades.txt` | `web/dados/modelo_necessidades.json` | `web/ia.js` (sugestão de necessidades); dica de intenção no orientador |
 | Perigo | Regressão logística por tipo (violência, suicídio, criança, saúde); limiares de aviso e de alerta por validação cruzada | `pipeline/treinar_perigo.py`, `catalogo/frases_perigo.txt` | `web/dados/modelo_perigo.json` | `web/perigo.js`, junto com regras |
+| Aviso (nível 1) | Regressão logística, N1 contra N0, validação cruzada agrupada por família de frases; só promove "nenhum alerta" para aviso, nunca rebaixa nem altera o nível 2. As frases são de desenvolvimento (escritas por IA e pela equipe), então os números da validação cruzada não equivalem a um teste independente | `pipeline/treinar_n1.py`, `pipeline/frases_rotuladas_n1.tsv` | `web/dados/modelo_aviso_n1.json` | `web/perigo.js` (`usarModeloAviso`), junto com regras |
 | Escopo | Regressão logística binária (assunto do site ou não) | `pipeline/treinar_escopo.py`, `catalogo/frases_fora_do_escopo.txt` | `web/dados/modelo_escopo.json` | `web/orientar.js` (abstenção) |
 | Busca | TF-IDF de palavras e de letras, mais LSA (TruncatedSVD, 64 dimensões) | `pipeline/indice_orientacao.py` (usa `web/areas.js` e `web/dados/catalogo_manual.json`) | `web/dados/indice_orientacao.json` | `web/orientar.js` (ranking de destinos) |
 
@@ -195,6 +196,7 @@ python pipeline/servicos.py --somente-manual   # catálogo manual -> web/dados/c
 python pipeline/indice_orientacao.py           # índice do orientador
 python pipeline/treinar_necessidades.py
 python pipeline/treinar_perigo.py
+python pipeline/treinar_n1.py                  # classificador de aviso (nível 1); para retreinar, acrescente linhas a pipeline/frases_rotuladas_n1.tsv
 python pipeline/treinar_escopo.py
 python pipeline/horarios_onibus.py
 ```
