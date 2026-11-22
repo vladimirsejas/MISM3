@@ -288,6 +288,11 @@
      aparece se qualquer um dos dois disparar. Sem o modelo carregado, só valem as regras. */
   var detector = null;
   function usarModelo(m) { detector = (m && IA && IA.criarClassificador) ? IA.criarClassificador(m) : null; if (detector) detector.altos = (m.meta && m.meta.limiares_altos) || {}; }
+  /* Classificador de aviso (pipeline/treinar_n1.py): aprende com exemplos o aviso de nível 1 (controle, humilhação, ameaça velada) que as regras
+     não reconhecem. Só PROMOVE "nenhum alerta" para aviso de nível 1; nunca rebaixa, nunca troca o resultado das regras e nunca age quando já
+     há algum alerta, então não pode piorar o nível 2. Sem o modelo carregado, nada muda. */
+  var detectorAviso = null;
+  function usarModeloAviso(m) { detectorAviso = (m && IA && IA.criarClassificador) ? IA.criarClassificador(m) : null; }
 
   /* nivel 2 = situação de perigo ou de risco de vida; nivel 1 = só perguntou por um serviço de proteção (aviso discreto).
      Devolve null quando não há nenhum sinal. */
@@ -325,6 +330,14 @@
       return { nivel: 1, tipos: fracos, doModelo: doModelo, mensagens: fracos.map(function (tp) { return TIPOS[tp].aviso || TIPOS[tp].mensagem; }), telefones: tels1, pins: [] };
     }
     if (!tipos.length && versoes.some(function (v) { return achou(COMPILADO.violencia.contexto, v); })) { tipos.push("violencia"); nivel = 1; }
+    if (!tipos.length && detectorAviso && !resolvida) {
+      var limAviso = detectorAviso.limiares.aviso, pAviso = detectorAviso.probabilidades(tN !== t ? tN : texto).aviso;
+      if (t2 !== t) pAviso = Math.max(pAviso, detectorAviso.probabilidades(t2).aviso);
+      if (limAviso !== undefined && pAviso >= limAviso) {
+        var telsA = TIPOS.violencia.telefones.slice();
+        return { nivel: 1, tipos: ["violencia"], doModelo: { aviso: Math.round(pAviso * 1000) / 1000 }, mensagens: [TIPOS.violencia.aviso || TIPOS.violencia.mensagem], telefones: telsA, pins: [] };
+      }
+    }
     if (!tipos.length) return null;
     var tels = [], vistos = {}, pins = [];
     tipos.forEach(function (tp) {
@@ -336,5 +349,5 @@
     return { nivel: nivel, tipos: tipos, doModelo: doModelo, mensagens: tipos.map(function (tp) { return TIPOS[tp].mensagem; }), telefones: tels, pins: pins };
   }
 
-  return { avaliar: avaliar, usarModelo: usarModelo, TIPOS: TIPOS, ORDEM: ORDEM };
+  return { avaliar: avaliar, usarModelo: usarModelo, usarModeloAviso: usarModeloAviso, TIPOS: TIPOS, ORDEM: ORDEM };
 });

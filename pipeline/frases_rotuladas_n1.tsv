@@ -9,10 +9,14 @@
 #   perigo_falhas_sinteticas.test.js, catalogo/frases_perigo.txt, catalogo/frases_fora_do_escopo.txt e avaliacao/perguntas.json.
 # Mapeamentos: em frases_perigo.txt e perguntas.json, "perigo" = N2 e "nenhuma"/sem perigo = N0 (esses arquivos não distinguem N1);
 #   as frases de necessidades (catalogo/frases_necessidades.txt) não entram: o rótulo é de necessidade, não de nível.
-# Pedidos de serviço ("onde fica a delegacia da mulher", "o que é o cram") estão como N0, como pede a regra do projeto, embora web/tests/perigo.test.js
-#   ainda espere nível 1 para essas duas frases.
+# Pedidos de serviço sobre proteção ("onde fica a delegacia da mulher", "o que é o cram") NÃO entram: no sistema eles dão aviso de nível 1 de propósito
+#   (web/tests/perigo.test.js exige isso, para mostrar o 180), então não são exemplo nem de N0 nem de N1 para o classificador de aviso.
 # Testes que só afirmam "não é nível 2" (N0 ou N1 indiferente) não entram.
 # Todas as frases foram escritas pela equipe, por IA ou por quem manteve o projeto; nenhuma é de mulher real.
+# Lotes acrescentados para treinar o classificador de aviso (N1), cada um com seu grupo de família:
+#   lote_gabriel128#NNN : 128 frases escritas por IA (ChatGPT) para o desenvolvimento do orientador, rotuladas N0/N1/N2 pela equipe.
+#   perigo_controle_coercitivo#bloco e perigo_controle_indireto#bloco : frases de teste escritas à mão por IA (Claude Code), com erros de digitação.
+# Nenhuma delas é de mulher real e todas são conjunto de DESENVOLVIMENTO. As 59 frases escritas pelo autor do projeto NÃO estão aqui: são o teste independente.
 nivel	grupo	frase
 N2	perigo_generalizacao.test.js#bati_meu_naria_e	Bati Meu naria e eest sanfgrando muito.
 N2	perigo_generalizacao.test.js#ele_esta_sanrgando_muito	ele esta sanrgando muito depois da queda
@@ -209,8 +213,6 @@ N2	perigo.test.js:escrita_variada#quero_morrer	quero morreeeeer
 N2	perigo.test.js:escrita_variada#socorro	socorrooo
 N2	perigo.test.js:nivel2#meu_padrasto_bate_nas	meu padrasto bate nas crianças
 N2	perigo.test.js:nivel2#quero_me_matar_e	quero me matar e meu marido me bate
-N0	perigo.test.js:pedido_de_servico#onde_fica_a_delegacia	onde fica a delegacia da mulher
-N0	perigo.test.js:pedido_de_servico#o_que_e_o	o que é o cram
 N2	frases_perigo.txt:violencia#meu_marido_me_deu	meu marido me deu um soco no rosto ontem a noite
 N2	frases_perigo.txt:violencia#ele_me_puxou_pelos	ele me puxou pelos cabelos e me arrastou pela casa
 N2	frases_perigo.txt:violencia#levei_um_tapa_na	levei um tapa na cara e ele ainda me chamou de inutil
@@ -1177,3 +1179,383 @@ N0	perguntas.json:final:drogas#meu_marido_usa_crack	meu marido usa crack e a fam
 N0	perguntas.json:final:entre#quero_vender_meus_artesanatos	quero vender meus artesanatos pra outras mulheres
 N0	perguntas.json:final:moradia#preciso_me_inscrever_pra	preciso me inscrever pra habitacao popular
 N0	perguntas.json:final:direitos#quero_saber_se_tenho	quero saber se tenho direito a aposentadoria rural
+
+N1	lote_gabriel128#000	Meu marido pega meu celular escondido e depois pergunta quem é cada pessoa que me mandou mensagem.
+N1	lote_gabriel128#000	Ele quer minha senha de tudo, diz que casal não pode ter segredo e fica bravo se eu não dou.
+N1	lote_gabriel128#000	Minha irmã contou que o namorado dela lê até as conversa com a mãe dela e não deixa apagar nada.
+N1	lote_gabriel128#001	Meu namorado fica fuçando meu whats toda noite, se eu viro a tela ele já começa a discussão.
+N1	lote_gabriel128#001	Não posso nem mudar a senha do telefone que ele diz que estou escondendo alguma coisa.
+N0	lote_gabriel128#001	Eu e meu marido sabemos a senha um do outro, mas cada um usa o próprio celular sem ficar fiscalizando.
+N0	lote_gabriel128#002	Meu telefone descarregou e pedi o celular dele emprestado pra ligar pra minha mãe.
+N0	lote_gabriel128#002	A gente combinou de olhar juntos as mensagens da operadora porque chegou uma cobrança estranha.
+N0	lote_gabriel128#002	Meu namorado me pediu a senha do Wi-Fi e eu passei, porque ele estava sem internet.
+N1	lote_gabriel128#003	Meu namorado escolhe até minha roupa pra sair, se eu coloco uma saia ele manda trocar.
+N1	lote_gabriel128#003	Ela não pode postar foto de biquini porque o marido fica humilhando e chamando ela de tudo.
+N1	lote_gabriel128#003	Meu marido mandou apagar minhas fotos do Instagram e disse que mulher casada não precisa disso.
+N1	lote_gabriel128#004	Toda vez que vou sair ele reclama da minha roupa, fala que estou querendo chamar atenção dos outros.
+N1	lote_gabriel128#004	A filha da minha vizinha deixou de usar maquiagem porque o namorado dela diz que ela não tem permissão.
+N0	lote_gabriel128#004	Meu marido achou bonito o vestido que escolhi e perguntou onde comprei.
+N0	lote_gabriel128#005	Eu e meu namorado combinamos de não postar fotos íntimas nas redes sociais.
+N0	lote_gabriel128#005	Pedi a opinião dele sobre qual roupa ficava melhor para uma festa e escolhi a que gostei.
+N0	lote_gabriel128#005	Nós dois decidimos deixar nossas redes sociais privadas porque preferimos mais discrição.
+N1	lote_gabriel128#006	Meu marido não deixa eu visitar minha mãe, diz que minha familia só quer acabar com nosso casamento.
+N1	lote_gabriel128#006	Parei de ver minhas amigas porque meu namorado faz um escandalo toda vez que saio com elas.
+N1	lote_gabriel128#006	Minha prima quase não sai de casa, o marido dela implica até quando ela vai na padaria sozinha.
+N1	lote_gabriel128#007	Ele quer que eu corte contato com minhas irmãs e fica dias sem falar comigo quando não obedeço.
+N1	lote_gabriel128#007	Não posso ir na casa da minha mãe sem ele ficar ligando e mandando eu voltar imediatamente.
+N0	lote_gabriel128#007	Meu marido não gosta muito de festa, então combinamos de sair juntos quando os dois estão disponíveis.
+N0	lote_gabriel128#008	Eu e minhas amigas marcamos um encontro, mas resolvi ficar em casa porque estava cansada.
+N0	lote_gabriel128#008	Meu namorado prefere que eu avise quando chegar tarde, e eu também gosto de saber quando ele chega.
+N0	lote_gabriel128#008	Minha família mora longe e por isso não consigo visitar minha mãe toda semana.
+N1	lote_gabriel128#009	Meu marido não deixa eu trabalhar, fala que quem manda em casa é ele e que eu tenho que ficar cuidando de tudo.
+N1	lote_gabriel128#009	Passei numa entrevista mas meu namorado disse que se eu aceitar o emprego vai acabar nosso relacionamento.
+N1	lote_gabriel128#009	Minha mãe quer fazer um curso, mas o companheiro dela diz que mulher que estuda fica metida.
+N1	lote_gabriel128#010	Ele não deixa eu ir pra faculdade, fica falando que estou perdendo tempo e que não preciso aprender nada.
+N1	lote_gabriel128#010	Toda vez que arrumo uma oportunidade de emprego meu marido inventa uma briga pra eu desistir.
+N0	lote_gabriel128#010	Eu e meu marido conversamos e decidimos que vou estudar de manhã enquanto ele trabalha.
+N0	lote_gabriel128#011	Resolvi deixar o emprego por alguns meses para cuidar da minha saúde e depois procurar outro.
+N0	lote_gabriel128#011	Meu namorado me ajudou a escolher um curso que combina com o horário do meu trabalho.
+N0	lote_gabriel128#011	Não consegui aceitar a vaga porque o horário coincidia com minhas aulas.
+N1	lote_gabriel128#012	Meu marido recebe meu salário na conta dele e eu tenho que pedir dinheiro até pra comprar remédio.
+N1	lote_gabriel128#012	Trabalho o mês inteiro mas meu namorado fica com todo meu pagamento, diz que eu não sei cuidar de dinheiro.
+N1	lote_gabriel128#012	Minha irmã não pode nem comprar uma roupa sem mostrar o preço pro marido e pedir autorização.
+N1	lote_gabriel128#013	Ele pegou meu cartão e não devolve, fala que eu gasto demais e que só ele sabe administrar.
+N1	lote_gabriel128#013	Meu marido controla tudo que entra na minha conta e não deixa eu guardar nem dez reais.
+N0	lote_gabriel128#013	Eu e meu marido juntamos parte dos salários para pagar as contas e cada um mantém seu dinheiro pessoal.
+N0	lote_gabriel128#014	Emprestei meu cartão para ele comprar uma coisa porque o dele estava bloqueado, e ele devolveu.
+N0	lote_gabriel128#014	Nós dois combinamos um limite de gastos para conseguir economizar para a viagem.
+N0	lote_gabriel128#014	Meu namorado me ajudou a organizar as contas porque eu pedi ajuda com meu orçamento.
+N1	lote_gabriel128#015	Meu marido fala todo dia que sou uma inútil e que sem ele eu não seria ninguém.
+N1	lote_gabriel128#015	Ele me chama de burra na frente dos amigos e depois diz que eu não sei brincar.
+N1	lote_gabriel128#015	Minha tia vive ouvindo do companheiro que é feia, velha e que nenhum homem ia querer ela.
+N1	lote_gabriel128#016	Meu namorado fala que eu não presto pra nada, até quando faço tudo que ele pede.
+N1	lote_gabriel128#016	Ele fica me diminuindo, diz que não tenho capacidade nem pra cuidar da minha própria vida.
+N0	lote_gabriel128#016	Meu marido brinca que sou teimosa, mas nós dois rimos e nenhum se sente ofendido.
+N0	lote_gabriel128#017	Fiquei chateada porque meu namorado discordou da minha opinião, mas conversamos e resolvemos.
+N0	lote_gabriel128#017	Eu errei uma receita e falei brincando que sou péssima cozinheira.
+N0	lote_gabriel128#017	Meu companheiro disse que não gostou da minha escolha, mas respeitou minha decisão.
+N1	lote_gabriel128#018	Meu namorado liga de cinco em cinco minutos pra saber onde estou, se não atendo ele começa a brigar.
+N1	lote_gabriel128#018	Ele aparece na porta do meu trabalho sem avisar e fica esperando pra ver com quem eu saio.
+N1	lote_gabriel128#018	Tenho que mandar foto de onde estou, se não ele diz que estou mentindo e me castiga com silêncio.
+N1	lote_gabriel128#019	Minha vizinha não consegue nem ir ao mercado tranquila, o marido fica rastreando o celular dela.
+N1	lote_gabriel128#019	Meu marido quer saber cada passo que dou, pergunta até quanto tempo fiquei na fila do banco.
+N0	lote_gabriel128#019	Meu marido manda mensagem perguntando se cheguei bem, porque sabe que volto tarde do trabalho.
+N0	lote_gabriel128#020	Compartilhamos a localização quando fazemos uma viagem longa, por segurança e com o consentimento dos dois.
+N0	lote_gabriel128#020	Meu namorado passou no meu trabalho para me buscar porque combinamos antes.
+N0	lote_gabriel128#020	Avisei que ia demorar no mercado e ele respondeu que tudo bem, para eu não ter pressa.
+N1	lote_gabriel128#021	Meu marido diz que se eu separar dele vou sair só com a roupa do corpo e sem meus filhos.
+N1	lote_gabriel128#021	Ele fala que a casa é dele e que pode me colocar na rua a hora que quiser.
+N1	lote_gabriel128#021	Minha irmã quer se separar, mas o namorado ameaça tirar todo o dinheiro e deixar ela sem nada.
+N1	lote_gabriel128#022	Toda vez que falo em ir embora ele diz que vai conseguir ficar com as crianças e que nunca mais vou ver elas.
+N1	lote_gabriel128#022	Meu companheiro fala que sem ele vou passar fome e não vou ter nem onde dormir.
+N0	lote_gabriel128#022	Eu e meu marido conversamos sobre como dividir os móveis caso um dia a gente se separe.
+N0	lote_gabriel128#023	Estamos organizando a documentação da casa porque queremos saber como fica a propriedade no nome dos dois.
+N0	lote_gabriel128#023	Meu companheiro falou que precisamos economizar para garantir uma moradia melhor para os filhos.
+N0	lote_gabriel128#023	Eu e meu ex combinamos de dividir as despesas das crianças depois da separação.
+N1	lote_gabriel128#024	Meu marido faz uma coisa e depois diz que nunca aconteceu, fala que estou ficando louca.
+N1	lote_gabriel128#024	Toda briga ele vira a situação e no final eu que peço desculpa até quando não fiz nada.
+N1	lote_gabriel128#024	Minha amiga diz que o namorado faz ela duvidar da própria memória, ele nega tudo que falou.
+N1	lote_gabriel128#025	Ele me humilha e depois fala que sou muito sensível, que invento problema onde não existe.
+N1	lote_gabriel128#025	Meu companheiro conta outra versão dos fatos para todo mundo e diz que eu tenho problema da cabeça.
+N0	lote_gabriel128#025	Eu e meu marido lembramos de maneira diferente de uma conversa e resolvemos conferir as mensagens.
+N0	lote_gabriel128#026	Às vezes eu interpreto errado o que ele fala, então prefiro perguntar antes de tirar conclusões.
+N0	lote_gabriel128#026	Meu namorado disse que não concordava comigo, mas ouviu minha explicação e respeitou minha opinião.
+N0	lote_gabriel128#026	Tivemos uma discussão e os dois reconheceram que erraram, sem ficar colocando a culpa um no outro.
+N0	lote_gabriel128#027	Me avisa quando chegar.
+N0	lote_gabriel128#027	Fiquei preocupada porque você demorou.
+N0	lote_gabriel128#027	Manda mensagem quando sair do trabalho.
+N0	lote_gabriel128#028	Quero saber se chegou bem.
+N0	lote_gabriel128#028	Me liga quando puder.
+N0	lote_gabriel128#028	Vou passar para te buscar.
+N0	lote_gabriel128#029	Nós combinamos de compartilhar a localização.
+N0	lote_gabriel128#029	Cada um sabe a senha do outro.
+N0	lote_gabriel128#029	Juntamos nossos salários para pagar as contas.
+N0	lote_gabriel128#030	Decidimos economizar juntos.
+N0	lote_gabriel128#030	Ele escolheu a roupa e eu gostei.
+N0	lote_gabriel128#030	Preferimos sair juntos.
+N0	lote_gabriel128#031	Resolvemos deixar as redes sociais privadas.
+N0	lote_gabriel128#031	Meu marido ficou com ciúme.
+N0	lote_gabriel128#031	Meu namorado não gostou da minha roupa.
+N0	lote_gabriel128#032	Tivemos uma discussão.
+N0	lote_gabriel128#032	Ele ficou chateado porque saí com minhas amigas.
+N0	lote_gabriel128#032	Não concordamos sobre uma compra.
+N0	lote_gabriel128#033	Ele prefere ficar em casa.
+N0	lote_gabriel128#033	Pedi a opinião dele antes de comprar.
+N0	lote_gabriel128#033	Morri de rir.
+N0	lote_gabriel128#034	Ele me matou de vergonha.
+N0	lote_gabriel128#034	Estou morrendo de fome.
+N0	lote_gabriel128#034	Foi uma briga de cachorro grande.
+N0	lote_gabriel128#035	Meu time matou o jogo.
+N0	lote_gabriel128#035	Ela me deu um empurrão na vida.
+N0	lote_gabriel128#035	Aquela prova me deixou louca.
+N0	lote_gabriel128#036	Meu marido me mata de rir.
+N0	lote_gabriel128#036	Quase morri de susto.
+N0	lote_gabriel128#036	Foi uma discussão de novela.
+N0	lote_gabriel128#037	Meu ex me controlava, mas isso acabou há anos.
+N0	lote_gabriel128#037	Já passei por isso, hoje estou bem.
+N0	lote_gabriel128#037	Antigamente ele me proibia de sair, mas não estamos mais juntos.
+N0	lote_gabriel128#038	Minha mãe viveu isso quando era jovem.
+N0	lote_gabriel128#038	Li uma notícia sobre uma mulher que passou por isso.
+N0	lote_gabriel128#038	Vi uma cena de novela em que o marido controlava a esposa.
+N1	lote_gabriel128#039	Minha irmã não pode sair de casa.
+N1	lote_gabriel128#039	Minha vizinha tem que entregar o salário ao marido.
+N1	lote_gabriel128#039	Minha amiga não pode falar com a mãe.
+N1	lote_gabriel128#040	Minha filha está sendo humilhada pelo namorado.
+N0	lote_gabriel128#040	Meu marido usa celular
+N0	lote_gabriel128#040	Meu marido pediu minha senha
+N1	lote_gabriel128#041	Meu marido exige minha senha e lê todas as minhas conversas
+N2	lote_gabriel128#041	Meu marido exige minha senha, me ameaça de morte e me impede de sair
+N0	lote_gabriel128#041	Meu namorado tem ciúme
+N1	lote_gabriel128#042	Meu namorado não deixa eu visitar minhas amigas e me pune quando saio
+N2	lote_gabriel128#042	Meu namorado me agride e ameaça me matar se eu sair
+N1	perigo_controle_indireto#_a_incapacidade_ou_restrição_n	nao posso sair com minhas amigas sem ele brigar
+N1	perigo_controle_indireto#_a_incapacidade_ou_restrição_n	ela nao pode ir na igreja porque o marido nao deixa
+N1	perigo_controle_indireto#_a_incapacidade_ou_restrição_n	nao consigo nem trocar de celular que meu noivo reclama
+N1	perigo_controle_indireto#_a_incapacidade_ou_restrição_n	minha cunhada nao pode postar nada porque o marido fica bravo
+N1	perigo_controle_indireto#_a_incapacidade_ou_restrição_n	nao posso atender o telefone sem ele ficar perguntando quem e
+N0	perigo_controle_indireto#_a_incapacidade_ou_restrição_n	nao posso sair hoje porque estou gripada
+N0	perigo_controle_indireto#_a_incapacidade_ou_restrição_n	nao consigo ir na festa porque tenho prova
+N0	perigo_controle_indireto#_a_incapacidade_ou_restrição_n	minha irma nao pode viajar porque esta gravida de oito meses
+N0	perigo_controle_indireto#_a_incapacidade_ou_restrição_n	nao posso postar foto do trabalho por regra da empresa
+N0	perigo_controle_indireto#_a_incapacidade_ou_restrição_n	nao posso comer doce por causa da diabetes
+N1	perigo_controle_indireto#_b_ordem_punição_e_consequênci	meu marido fica uma semana sem falar comigo quando discordo dele
+N1	perigo_controle_indireto#_b_ordem_punição_e_consequênci	meu namorado faz barraco toda vez que eu saio sem ele
+N1	perigo_controle_indireto#_b_ordem_punição_e_consequênci	se eu chego tarde meu marido me castiga com silencio
+N1	perigo_controle_indireto#_b_ordem_punição_e_consequênci	ele manda eu voltar pra casa toda vez que saio
+N1	perigo_controle_indireto#_b_ordem_punição_e_consequênci	meu noivo naum deixa eu visitar ninguem e fica dias sem falar comigo se eu desobedeco
+N0	perigo_controle_indireto#_b_ordem_punição_e_consequênci	meu marido nao falou comigo hoje porque estava com dor de cabeca
+N0	perigo_controle_indireto#_b_ordem_punição_e_consequênci	a gente discutiu e depois fizemos as pazes
+N0	perigo_controle_indireto#_b_ordem_punição_e_consequênci	meu namorado voltou pra casa cedo porque combinamos
+N0	perigo_controle_indireto#_b_ordem_punição_e_consequênci	se eu chegar tarde aviso ele pelo telefone tranquilo
+N0	perigo_controle_indireto#_b_ordem_punição_e_consequênci	fiquei uma semana sem falar com minha prima por causa de uma briga boba
+N1	perigo_controle_indireto#_c_ameaça_condicional_de_perde	meu marido diz que se eu largar ele vou ficar sem nada
+N1	perigo_controle_indireto#_c_ameaça_condicional_de_perde	ele avisou que se eu sair de casa nunca mais vejo meu filho
+N1	perigo_controle_indireto#_c_ameaça_condicional_de_perde	meu namorado diz que se eu estudar ele me deixa
+N1	perigo_controle_indireto#_c_ameaça_condicional_de_perde	ele fala que se eu denunciar vou perder a casa
+N1	perigo_controle_indireto#_c_ameaça_condicional_de_perde	meu ex diz que se eu casar de novo nunca mais vou ver as criancas
+N0	perigo_controle_indireto#_c_ameaça_condicional_de_perde	se eu aceitar o emprego vou ganhar mais
+N0	perigo_controle_indireto#_c_ameaça_condicional_de_perde	se eu estudar mais vou passar na prova
+N0	perigo_controle_indireto#_c_ameaça_condicional_de_perde	meu marido disse que se chover ele nao vai trabalhar
+N0	perigo_controle_indireto#_c_ameaça_condicional_de_perde	disse que se eu quiser ele ajuda na mudanca
+N0	perigo_controle_indireto#_c_ameaça_condicional_de_perde	se eu separar vou ter que mudar de casa e estou me preparando
+N1	perigo_controle_indireto#_d_retenção_de_dinheiro	meu marido pega meu salario inteiro todo mes
+N1	perigo_controle_indireto#_d_retenção_de_dinheiro	tenho que pedir autorizacao pro meu namorado pra comprar qualquer coisa
+N1	perigo_controle_indireto#_d_retenção_de_dinheiro	minha vizinha entrega o pagamento todo pro marido
+N1	perigo_controle_indireto#_d_retenção_de_dinheiro	meu noivo controla tudo que eu gasto e quer nota fiscal
+N1	perigo_controle_indireto#_d_retenção_de_dinheiro	ele nao deixa eu mexer na minha conta
+N0	perigo_controle_indireto#_d_retenção_de_dinheiro	meu marido e eu dividimos o salario nas contas
+N0	perigo_controle_indireto#_d_retenção_de_dinheiro	emprestei dinheiro pro meu irmao
+N0	perigo_controle_indireto#_d_retenção_de_dinheiro	meu marido me deu o cartao dele pra eu comprar
+N0	perigo_controle_indireto#_d_retenção_de_dinheiro	paguei o aluguel e sobrou pouco
+N0	perigo_controle_indireto#_d_retenção_de_dinheiro	minha vizinha ganhou o salario e comprou uma geladeira
+N1	perigo_controle_indireto#_e_frequência_ligada_a_vigilân	meu marido liga de dez em dez minutos pra saber onde estou
+N1	perigo_controle_indireto#_e_frequência_ligada_a_vigilân	ele manda mensagem toda hora cobrando onde eu estou
+N1	perigo_controle_indireto#_e_frequência_ligada_a_vigilân	ele vive me rastreando pelo celular
+N1	perigo_controle_indireto#_e_frequência_ligada_a_vigilân	meu marido quer saber cada passo meu toda hora
+N1	perigo_controle_indireto#_e_frequência_ligada_a_vigilân	meu namorado fica olhando minha localizacao toda noite
+N0	perigo_controle_indireto#_e_frequência_ligada_a_vigilân	meu marido liga de manha pra desejar bom dia
+N0	perigo_controle_indireto#_e_frequência_ligada_a_vigilân	a gente se fala o dia todo no whatsapp e eu adoro
+N0	perigo_controle_indireto#_e_frequência_ligada_a_vigilân	meu namorado me manda mensagem quando chega em casa
+N0	perigo_controle_indireto#_e_frequência_ligada_a_vigilân	compartilhamos a localizacao na viagem
+N0	perigo_controle_indireto#_e_frequência_ligada_a_vigilân	meu marido me liga no almoco pra conversar
+N1	perigo_controle_indireto#_f_desqualificação	meu marido diz que sou burra e nao sirvo pra nada
+N1	perigo_controle_indireto#_f_desqualificação	ele fica rebaixando tudo que eu faco
+N1	perigo_controle_indireto#_f_desqualificação	meu namorado vive dizendo que ninguem vai me querer
+N1	perigo_controle_indireto#_f_desqualificação	meu ex fala que eu sem ele nao sou nada
+N1	perigo_controle_indireto#_f_desqualificação	meu marido me ridiculariza na frente da familia
+N0	perigo_controle_indireto#_f_desqualificação	meu marido me elogiou na frente da familia
+N0	perigo_controle_indireto#_f_desqualificação	meu chefe disse que preciso melhorar o relatorio
+N0	perigo_controle_indireto#_f_desqualificação	minha mae diz que sou teimosa as vezes e a gente ri
+N0	perigo_controle_indireto#_f_desqualificação	meu namorado disse que nao sabe cozinhar
+N0	perigo_controle_indireto#_f_desqualificação	eu me sinto burra quando erro uma conta
+N1	perigo_controle_indireto#_g_distorção_da_realidade	meu namorado diz que eu invento tudo e que sou maluca
+N1	perigo_controle_indireto#_g_distorção_da_realidade	ele nega que falou e me faz achar que estou imaginando
+N1	perigo_controle_indireto#_g_distorção_da_realidade	meu marido diz que nunca disse aquilo mesmo eu tendo gravado
+N1	perigo_controle_indireto#_g_distorção_da_realidade	minha amiga vive ouvindo do marido que e louca
+N1	perigo_controle_indireto#_g_distorção_da_realidade	ele me faz duvidar da minha memoria
+N0	perigo_controle_indireto#_g_distorção_da_realidade	meu marido disse que esqueceu a conversa e pediu desculpa
+N0	perigo_controle_indireto#_g_distorção_da_realidade	minha memoria esta ruim por causa do estresse do trabalho
+N0	perigo_controle_indireto#_g_distorção_da_realidade	ele lembra diferente de mim e a gente conferiu o recado
+N0	perigo_controle_indireto#_g_distorção_da_realidade	meu namorado nao lembra do meu aniversario
+N0	perigo_controle_indireto#_g_distorção_da_realidade	disse que esta ficando louco com a obra da casa
+N1	perigo_controle_indireto#_h_terceira_pessoa_direta	minha prima nao pode sair de casa sozinha
+N1	perigo_controle_indireto#_h_terceira_pessoa_direta	minha colega nao pode falar com ninguem do trabalho
+N1	perigo_controle_indireto#_h_terceira_pessoa_direta	a vizinha tem que pedir permissao ao marido pra tudo
+N1	perigo_controle_indireto#_h_terceira_pessoa_direta	minha sobrinha esta sendo humilhada pelo namorado
+N1	perigo_controle_indireto#_h_terceira_pessoa_direta	a filha da minha amiga nao pode usar celular
+N0	perigo_controle_indireto#_h_terceira_pessoa_direta	minha irma nao pode sair hoje porque esta doente
+N0	perigo_controle_indireto#_h_terceira_pessoa_direta	a vizinha nao pode estacionar na frente da garagem
+N0	perigo_controle_indireto#_h_terceira_pessoa_direta	minha prima nao pode comer gluten
+N0	perigo_controle_indireto#_h_terceira_pessoa_direta	minha colega nao pode atender agora porque esta em reuniao
+N0	perigo_controle_indireto#_h_terceira_pessoa_direta	a filha da minha amiga nao pode ir na festa porque esta de castigo da escola
+N1	perigo_controle_indireto#nível_2_só_do_detector_sem_ind	meu namorado escolhe minha roupa e fala que sem ele eu nao sou ninguem
+N1	perigo_controle_indireto#nível_2_só_do_detector_sem_ind	meu marido recebe meu pagamento e nao deixa eu trabalhar
+N1	perigo_controle_indireto#nível_2_só_do_detector_sem_ind	ele fala todo dia que sou inutil e nao deixa eu ver minha mae
+N1	perigo_controle_indireto#nível_2_só_do_detector_sem_ind	meu noivo diz que se eu largar ele vou perder tudo
+N1	perigo_controle_indireto#nível_2_só_do_detector_sem_ind	meu marido fica com meu cartao e diz que eu nao sei cuidar de dinheiro
+N2	perigo_controle_indireto#nível_2_só_do_detector_sem_ind	meu marido controla meu celular e disse que vai me matar
+N2	perigo_controle_indireto#nível_2_só_do_detector_sem_ind	ele me proibe de sair e esconde meu celular pra eu nao ligar pra policia
+N2	perigo_controle_indireto#nível_2_só_do_detector_sem_ind	meu namorado fica com meu dinheiro e me bateu ontem
+N2	perigo_controle_indireto#nível_2_só_do_detector_sem_ind	ele nao me deixa sair e ja me trancou no quarto
+N2	perigo_controle_indireto#nível_2_só_do_detector_sem_ind	meu namorado quebrou meu celular e diz que vai me matar se eu contar
+N2	perigo_controle_indireto#nível_2_só_do_detector_sem_ind	meu ex exige minha senha e disse que me bate se eu negar
+N2	perigo_controle_indireto#nível_2_só_do_detector_sem_ind	ele controla meu dinheiro, meu celular e minhas roupas e nao me deixa trabalhar
+N2	perigo_controle_indireto#nível_2_só_do_detector_sem_ind	meu marido me forcou a ter relacao e controla minha conta
+N2	perigo_controle_indireto#nível_2_só_do_detector_sem_ind	ele me ameaca de morte se eu falar com minha familia
+N0	perigo_controle_indireto#frases_curtas_ou_com_acordo_se	meu marido pediu meu cpf
+N0	perigo_controle_indireto#frases_curtas_ou_com_acordo_se	ele prefere cafe
+N0	perigo_controle_indireto#frases_curtas_ou_com_acordo_se	meu noivo ficou chateado
+N0	perigo_controle_indireto#frases_curtas_ou_com_acordo_se	meu marido quer ficar em casa hoje
+N0	perigo_controle_indireto#frases_curtas_ou_com_acordo_se	ele pediu o numero do meu telefone
+N0	perigo_controle_indireto#frases_curtas_ou_com_acordo_se	peguei o celular dele emprestado e ele respondeu que tudo bem
+N0	perigo_controle_indireto#frases_curtas_ou_com_acordo_se	ele escolheu o filme e eu aprovei
+N0	perigo_controle_indireto#frases_curtas_ou_com_acordo_se	combinamos de dividir a senha do streaming
+N0	perigo_controle_indireto#frases_curtas_ou_com_acordo_se	meu namorado me pediu a senha do netflix e eu passei tranquilo
+N0	perigo_controle_indireto#frases_curtas_ou_com_acordo_se	meu marido ficou bravo com o time
+N1	perigo_controle_indireto#_mas_controle_com_imposição_co	meu marido exige minha senha toda hora
+N1	perigo_controle_indireto#_mas_controle_com_imposição_co	meu marido me humilha
+N1	perigo_controle_indireto#_mas_controle_com_imposição_co	ele quer minha senha e fica bravo se eu nao dou
+N1	perigo_controle_coercitivo#as_6_frases_de_desenvolvimento	Meu marido escolhe a roupa que tenho que vestir.
+N1	perigo_controle_coercitivo#as_6_frases_de_desenvolvimento	Meu namorado meliga toda hora querendo me controlar
+N1	perigo_controle_coercitivo#as_6_frases_de_desenvolvimento	Meu marido ghrita comigompor qualuer coisa.
+N1	perigo_controle_coercitivo#as_6_frases_de_desenvolvimento	Meu noivo não deixa eu falaer com ninguém.
+N1	perigo_controle_coercitivo#as_6_frases_de_desenvolvimento	Meu noito todos os dia quer me ver e nãoi me da espaço.
+N1	perigo_controle_coercitivo#as_6_frases_de_desenvolvimento	Meu marido grita muito com meus filhos.
+N1	perigo_controle_coercitivo#1_celular_senha_e_mensagens	meu marido exige a senha do meu celular
+N1	perigo_controle_coercitivo#1_celular_senha_e_mensagens	o namorado fica mexendo no meu zap escondido
+N1	perigo_controle_coercitivo#1_celular_senha_e_mensagens	ele revira minhas mensagens toda hora
+N1	perigo_controle_coercitivo#1_celular_senha_e_mensagens	meu ex quer saber com quem eu falo o tempo todo
+N1	perigo_controle_coercitivo#1_celular_senha_e_mensagens	meu companheiro mexe no meu celuar sem eu saber
+N0	perigo_controle_coercitivo#1_celular_senha_e_mensagens	combinamos de compartilhar a senha do celular
+N0	perigo_controle_coercitivo#1_celular_senha_e_mensagens	meu marido me emprestou o celular dele
+N0	perigo_controle_coercitivo#1_celular_senha_e_mensagens	esqueci a senha do meu celular
+N0	perigo_controle_coercitivo#1_celular_senha_e_mensagens	troquei a senha do wifi
+N0	perigo_controle_coercitivo#1_celular_senha_e_mensagens	meu marido mexeu no meu celular so pra ver as horas
+N1	perigo_controle_coercitivo#2_roupa_aparência_e_redes_soci	meu namorado decide que roupa eu posso usar
+N1	perigo_controle_coercitivo#2_roupa_aparência_e_redes_soci	ele proibe eu de usar saia
+N1	perigo_controle_coercitivo#2_roupa_aparência_e_redes_soci	meu marido manda eu apagar minhas fotos do instagram
+N1	perigo_controle_coercitivo#2_roupa_aparência_e_redes_soci	o noivo nao deixa eu postar foto
+N1	perigo_controle_coercitivo#2_roupa_aparência_e_redes_soci	meu marido escolhe o que eu posso vestir
+N0	perigo_controle_coercitivo#2_roupa_aparência_e_redes_soci	meu marido me ajudou a escolher a roupa do casamento
+N0	perigo_controle_coercitivo#2_roupa_aparência_e_redes_soci	comprei uma blusa nova pro meu marido
+N0	perigo_controle_coercitivo#2_roupa_aparência_e_redes_soci	meu marido gosta do meu cabelo
+N0	perigo_controle_coercitivo#2_roupa_aparência_e_redes_soci	cada um escolhe a propria roupa la em casa
+N0	perigo_controle_coercitivo#2_roupa_aparência_e_redes_soci	meu namorado elogiou minha maquiagem
+N1	perigo_controle_coercitivo#3_isolamento_e_proibição_de_sa	meu marido nao deixa eu visitar minha mae
+N1	perigo_controle_coercitivo#3_isolamento_e_proibição_de_sa	o noivo nao quer que eu fale com as minhas amigas
+N1	perigo_controle_coercitivo#3_isolamento_e_proibição_de_sa	ele diz que minhas amigas nao prestam
+N1	perigo_controle_coercitivo#3_isolamento_e_proibição_de_sa	meu namorado faz cena toda vez que eu saio com as amigas
+N1	perigo_controle_coercitivo#3_isolamento_e_proibição_de_sa	meu marido me proibiu de ver minha familia
+N1	perigo_controle_coercitivo#3_isolamento_e_proibição_de_sa	meu namorado naum deixa eu ver minha mae
+N0	perigo_controle_coercitivo#3_isolamento_e_proibição_de_sa	meu marido adora minha familia e visitamos todo domingo
+N0	perigo_controle_coercitivo#3_isolamento_e_proibição_de_sa	combinamos de sair so com os amigos dele hoje
+N0	perigo_controle_coercitivo#3_isolamento_e_proibição_de_sa	minha mae mandou eu voltar cedo hoje
+N0	perigo_controle_coercitivo#3_isolamento_e_proibição_de_sa	o seguranca nao deixa eu entrar com mochila
+N0	perigo_controle_coercitivo#3_isolamento_e_proibição_de_sa	meu marido ficou feliz de eu encontrar as amigas
+N1	perigo_controle_coercitivo#4_proibição_de_trabalhar_ou_es	meu marido nao quer que eu trabalhe
+N1	perigo_controle_coercitivo#4_proibição_de_trabalhar_ou_es	meu namorado me fez largar a faculdade
+N1	perigo_controle_coercitivo#4_proibição_de_trabalhar_ou_es	ele proibiu eu de estudar
+N1	perigo_controle_coercitivo#4_proibição_de_trabalhar_ou_es	o noivo manda eu largar o emprego
+N1	perigo_controle_coercitivo#4_proibição_de_trabalhar_ou_es	meu ex exige que eu largue o curso
+N1	perigo_controle_coercitivo#4_proibição_de_trabalhar_ou_es	meu marido nao deixa eu trabaia
+N0	perigo_controle_coercitivo#4_proibição_de_trabalhar_ou_es	meu marido me incentivou a estudar
+N0	perigo_controle_coercitivo#4_proibição_de_trabalhar_ou_es	meu marido ficou feliz com meu emprego novo
+N0	perigo_controle_coercitivo#4_proibição_de_trabalhar_ou_es	combinamos que eu volto a trabalhar em marco
+N0	perigo_controle_coercitivo#4_proibição_de_trabalhar_ou_es	cada um trabalha num turno aqui em casa
+N0	perigo_controle_coercitivo#4_proibição_de_trabalhar_ou_es	meu marido trabalha a noite
+N0	perigo_controle_coercitivo#5_dinheiro_salário_cartão	meu marido e eu dividimos as contas
+N0	perigo_controle_coercitivo#5_dinheiro_salário_cartão	meu marido me emprestou dinheiro
+N0	perigo_controle_coercitivo#5_dinheiro_salário_cartão	o salario acabou antes do fim do mes
+N0	perigo_controle_coercitivo#5_dinheiro_salário_cartão	preciso abrir uma conta no banco
+N0	perigo_controle_coercitivo#5_dinheiro_salário_cartão	meu marido paga o aluguel
+N1	perigo_controle_coercitivo#6_humilhação_verbal_recorrente	meu marido me chama de burra toda hora
+N1	perigo_controle_coercitivo#6_humilhação_verbal_recorrente	ele diz que sou inutil na frente dos filhos
+N1	perigo_controle_coercitivo#6_humilhação_verbal_recorrente	meu noivo me chama de gorda todo dia
+N1	perigo_controle_coercitivo#6_humilhação_verbal_recorrente	meu ex vive me chamando de louca
+N1	perigo_controle_coercitivo#6_humilhação_verbal_recorrente	ele me humilha na frente das pessoas
+N1	perigo_controle_coercitivo#6_humilhação_verbal_recorrente	meu marido me umilia todo dia
+N0	perigo_controle_coercitivo#6_humilhação_verbal_recorrente	meu marido me chamou de linda
+N0	perigo_controle_coercitivo#6_humilhação_verbal_recorrente	minha sogra disse que sou muito inteligente
+N0	perigo_controle_coercitivo#6_humilhação_verbal_recorrente	ele me chama de amor
+N0	perigo_controle_coercitivo#6_humilhação_verbal_recorrente	meu marido disse que sou incrivel
+N0	perigo_controle_coercitivo#6_humilhação_verbal_recorrente	meu namorado me chamou de preguicosa de brincadeira
+N1	perigo_controle_coercitivo#7_vigilância_constante	ele quer saber onde eu estou toda hora
+N1	perigo_controle_coercitivo#7_vigilância_constante	meu marido liga toda hora pra saber onde estou
+N1	perigo_controle_coercitivo#7_vigilância_constante	meu namorado instalou rastreador no meu celular
+N1	perigo_controle_coercitivo#7_vigilância_constante	ele exige que eu compartilhe a localizacao
+N1	perigo_controle_coercitivo#7_vigilância_constante	meu ex quer saber onde eu estou o tempo todo
+N0	perigo_controle_coercitivo#7_vigilância_constante	meu marido me avisa quando chega
+N0	perigo_controle_coercitivo#7_vigilância_constante	meu marido liga todo dia pra conversar
+N0	perigo_controle_coercitivo#7_vigilância_constante	ele quer saber como foi meu dia
+N0	perigo_controle_coercitivo#7_vigilância_constante	me liga pra saber se cheguei bem
+N0	perigo_controle_coercitivo#7_vigilância_constante	meu namorado me avisa quando chegar em casa
+N1	perigo_controle_coercitivo#8_ameaça_de_deixar_sem_casa_di	ele diz que vou perder meus filhos se eu me separar
+N1	perigo_controle_coercitivo#8_ameaça_de_deixar_sem_casa_di	meu marido diz que vai me deixar sem dinheiro
+N1	perigo_controle_coercitivo#8_ameaça_de_deixar_sem_casa_di	meu ex diz que vai cortar a pensao
+N1	perigo_controle_coercitivo#8_ameaça_de_deixar_sem_casa_di	ele garante que eu fico sem a casa
+N1	perigo_controle_coercitivo#8_ameaça_de_deixar_sem_casa_di	meu marido diz que vai me botar na rua
+N0	perigo_controle_coercitivo#8_ameaça_de_deixar_sem_casa_di	meu marido disse que vai levar as criancas pra praia
+N0	perigo_controle_coercitivo#8_ameaça_de_deixar_sem_casa_di	o banco disse que vou perder a casa se nao pagar
+N0	perigo_controle_coercitivo#8_ameaça_de_deixar_sem_casa_di	ele vai tirar o lixo
+N0	perigo_controle_coercitivo#8_ameaça_de_deixar_sem_casa_di	combinamos que ele fica com os filhos no fim de semana
+N0	perigo_controle_coercitivo#8_ameaça_de_deixar_sem_casa_di	meu marido disse que vai cortar o cabelo
+N1	perigo_controle_coercitivo#9_culpa_e_dúvida_sobre_a_própr	meu marido diz que eu sou louca
+N1	perigo_controle_coercitivo#9_culpa_e_dúvida_sobre_a_própr	ele me faz duvidar da minha propria cabeca
+N1	perigo_controle_coercitivo#9_culpa_e_dúvida_sobre_a_própr	meu namorado diz que eu imagino coisas
+N1	perigo_controle_coercitivo#9_culpa_e_dúvida_sobre_a_própr	meu ex me culpa por tudo
+N1	perigo_controle_coercitivo#9_culpa_e_dúvida_sobre_a_própr	ele nega o que disse e fala que eu invento
+N0	perigo_controle_coercitivo#9_culpa_e_dúvida_sobre_a_própr	meu marido diz que eu sou linda
+N0	perigo_controle_coercitivo#9_culpa_e_dúvida_sobre_a_própr	ele disse que estou cansada e que preciso descansar
+N0	perigo_controle_coercitivo#9_culpa_e_dúvida_sobre_a_própr	meu namorado se culpa por tudo
+N0	perigo_controle_coercitivo#9_culpa_e_dúvida_sobre_a_própr	a culpa foi minha, errei no trabalho
+N0	perigo_controle_coercitivo#9_culpa_e_dúvida_sobre_a_própr	eu me culpo por tudo
+N1	perigo_controle_coercitivo#10_gritos_recorrentes_um_grito	meu noivo vive gritando comigo
+N1	perigo_controle_coercitivo#10_gritos_recorrentes_um_grito	o marido da minha irma grita com ela todo dia
+N1	perigo_controle_coercitivo#10_gritos_recorrentes_um_grito	ele berra com as criancas por qualquer coisa
+N1	perigo_controle_coercitivo#10_gritos_recorrentes_um_grito	meu namorado grita comigo demais
+N0	perigo_controle_coercitivo#10_gritos_recorrentes_um_grito	meu marido gritou comigo ontem na briga
+N0	perigo_controle_coercitivo#10_gritos_recorrentes_um_grito	ele grita no estadio quando o time faz gol
+N0	perigo_controle_coercitivo#10_gritos_recorrentes_um_grito	meu filho grita muito no recreio
+N0	perigo_controle_coercitivo#10_gritos_recorrentes_um_grito	ele gritou de susto com a barata
+N0	perigo_controle_coercitivo#10_gritos_recorrentes_um_grito	meu marido grita gol toda domingo
+N0	perigo_controle_coercitivo#palavra_isolada_nunca_alerta	marido
+N0	perigo_controle_coercitivo#palavra_isolada_nunca_alerta	ciume
+N0	perigo_controle_coercitivo#palavra_isolada_nunca_alerta	celular
+N0	perigo_controle_coercitivo#palavra_isolada_nunca_alerta	senha
+N0	perigo_controle_coercitivo#palavra_isolada_nunca_alerta	dinheiro
+N0	perigo_controle_coercitivo#palavra_isolada_nunca_alerta	roupa
+N0	perigo_controle_coercitivo#palavra_isolada_nunca_alerta	controle
+N0	perigo_controle_coercitivo#palavra_isolada_nunca_alerta	louca
+N0	perigo_controle_coercitivo#palavra_isolada_nunca_alerta	burra
+N0	perigo_controle_coercitivo#palavra_isolada_nunca_alerta	briga
+N0	perigo_controle_coercitivo#palavra_isolada_nunca_alerta	sair
+N0	perigo_controle_coercitivo#palavra_isolada_nunca_alerta	trabalhar
+N0	perigo_controle_coercitivo#palavra_isolada_nunca_alerta	meu marido
+N0	perigo_controle_coercitivo#palavra_isolada_nunca_alerta	meu celular
+N0	perigo_controle_coercitivo#palavra_isolada_nunca_alerta	minha senha
+N0	perigo_controle_coercitivo#consentimento_acordo_passado_r	combinamos que ele fica com meu salario
+N0	perigo_controle_coercitivo#consentimento_acordo_passado_r	decidimos juntos que ele controla as contas
+N0	perigo_controle_coercitivo#consentimento_acordo_passado_r	resolvemos dividir as senhas do celular
+N0	perigo_controle_coercitivo#consentimento_acordo_passado_r	pedi a opiniao dele e ele escolheu a roupa comigo
+N0	perigo_controle_coercitivo#consentimento_acordo_passado_r	cada um fica com o proprio dinheiro la em casa
+N0	perigo_controle_coercitivo#consentimento_acordo_passado_r	meu antigo noivo controlava meu celular mas hoje meu marido respeita
+N0	perigo_controle_coercitivo#consentimento_acordo_passado_r	na novela o marido nao deixa a mulher sair de casa
+N0	perigo_controle_coercitivo#consentimento_acordo_passado_r	li uma noticia que o marido proibiu a esposa de trabalhar
+N2	perigo_controle_coercitivo#nível_2_só_com_indicador_grave	meu marido nao deixa eu falar com ninguem e me bateu ontem
+N2	perigo_controle_coercitivo#nível_2_só_com_indicador_grave	ele grita comigo por tudo e disse que vai me matar
+N2	perigo_controle_coercitivo#nível_2_só_com_indicador_grave	meu namorado me vigia o tempo todo e me ameaca com uma faca
+N2	perigo_controle_coercitivo#nível_2_só_com_indicador_grave	meu marido toma meu celular e me tranca em casa
+N2	perigo_controle_coercitivo#nível_2_só_com_indicador_grave	meu ex me vigia o tempo todo
+N2	perigo_controle_coercitivo#nível_2_só_com_indicador_grave	meu marido ameaca me deixar sem dinheiro
+N1	perigo_controle_coercitivo#frases_curtas_e_com_erro_de_di	ele grita comigo todo dia
+N1	perigo_controle_coercitivo#frases_curtas_e_com_erro_de_di	namorado mexe no meu celuar toda hora
+N1	perigo_controle_coercitivo#frases_curtas_e_com_erro_de_di	marido pega meu salario
+N1	perigo_controle_coercitivo#frases_curtas_e_com_erro_de_di	ele me umilia sempre
+N1	perigo_controle_coercitivo#frases_curtas_e_com_erro_de_di	noivo naum deixa eu trabalhar
+N1	perigo_controle_coercitivo#frases_curtas_e_com_erro_de_di	marido num deixa eu ver minha mae
+N1	perigo_controle_coercitivo#frases_curtas_e_com_erro_de_di	meu marido ghrita muito com a gente
+N0	perigo_controle_coercitivo#frases_curtas_e_com_erro_de_di	estou com saudade da minha mae
+N0	perigo_controle_coercitivo#frases_curtas_e_com_erro_de_di	preciso calcular o valor da conta
+N0	perigo_controle_coercitivo#frases_curtas_e_com_erro_de_di	o apartamento precisa de conserto
+N0	perigo_controle_coercitivo#frases_curtas_e_com_erro_de_di	minha propria casa e pequena
+N0	perigo_controle_coercitivo#frases_curtas_e_com_erro_de_di	quero escolher a roupa do meu filho
