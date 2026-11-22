@@ -10,7 +10,17 @@
 
   /* Cada tipo: gatilhos (sobre o texto sem acento, minúsculo, só letras e números), a mensagem, os telefones e os destinos a fixar.
      "forte" = situação que está acontecendo ou é grave; "contexto" = a pessoa só está perguntando por um serviço de proteção. */
-  var PESSOA = "(?:meu marido|meu companheiro|meu namorado|meu ex(?: marido| companheiro| namorado)?|meu pai|meu padrasto|meu patrao|ele|ela)";
+  /* Quem agride pode ser o parceiro ou outro familiar (filho adulto, neto, genro, irmão...): a relação familiar não reduz o risco. */
+  var FAMILIAR = "(?:meu|minha) (?:filho|filha|neto|neta|genro|nora|irmao|irma|sobrinho|sobrinha|cunhado|cunhada|tio|tia|madrasta|enteado|enteada|mae|avo)(?: ja adulto| ja adulta| adulto| adulta| mais velho| mais velha)?";
+  var PESSOA = "(?:meu marido|meu companheiro|meu namorado|meu ex(?: marido| companheiro| namorado)?|meu pai|meu padrasto|meu patrao|ele|ela|" + FAMILIAR + ")";
+  /* Golpe físico descrito sem o verbo "bater" ("me dá tapa", "me deu um soco"); afasta brincadeira e carinho. */
+  var GOLPE = "(?:me|nos) (?:da|deu|dava|dando|der|dar) (?:um |uns |o |a |uma )?(?:tapas?|socos?|chutes?|surras?|empurr\\w+|pancadas?|bofetadas?|murros?|cascudos?|beliscoes|safanao|safanoes|chicotadas?|cintadas?|mordidas?)(?!(?: \\w+){0,6} (?:de brincadeira|brincando|de leve|de carinho|de parabens|de cumprimento))";
+  /* Proteção judicial já concedida (medida protetiva, ordem de afastamento) e o agressor que reaparece ou descumpre: risco alto, não só "pergunta". */
+  var PROTECAO = "(?:protecao (?:judicial |da justica )?contra|protetiva|medida (?:judicial|de protecao|de afastamento|que o juiz)|ordem de (?:afastamento|restricao)|protecao judicial|(?:decisao|ordem) (?:da justica|do juiz|judicial)|juiz (?:deu|concedeu|determinou|mandou) (?:a |uma )?(?:ordem|medida|protecao|afastamento))";
+  var REAPARECE = "(?:(?:veio|voltou|apareceu|aparece|chegou|esta|ta|ficou|fica|anda|continua|insiste)(?: \\w+){0,3} (?:de novo|aqui|rondando|na porta|no portao|na frente|na minha (?:casa|rua|porta)|em frente|me procurando|me procurou|me ligando|me mandando|me esperando)|descumpr\\w+|nao (?:respeita|respeitou|cumpre|cumpriu|obedece|obedeceu)|ignor\\w+ (?:a |as |o )?(?:decisao|medida|ordem|justica|juiz|protecao)|rondando|(?:batendo|esmurrando|chutando|forcando) (?:na|no|a|o) (?:porta|portao|janela)|tentando (?:entrar|arrombar|invadir)|me procurou)";
+  /* Sintomas de infarto sem a palavra "dor": aperto, pressão ou peso no peito; braço ou mandíbula com formigamento junto de outro sinal. */
+  var BRACO_MANDIBULA = "(?:(?:braco|bracos|mandibula|maxilar|ombro) (?:esquerdo |direito )?(?:formig\\w*|dorment\\w*|adormecid\\w*|doendo|dolorid\\w*|pesad\\w*|doi|dor)|(?:dor|formigamento|dormencia|peso) (?:no|em|do|na) (?:braco|bracos|mandibula|maxilar|ombro)(?: esquerdo| direito)?)";
+  var SINAL_ASSOCIADO = "(?:peito|falta de ar|sem ar|ar faltando|suor frio|suando frio|tontura|tonta|enjoo|enjoada|nausea|mal estar|passando mal|palidez|palida)";
   var TIPOS = {
     suicidio: {
       forte: [
@@ -48,7 +58,9 @@
     violencia: {
       forte: [
         "(?:me|nos) (?:bateu|bate|batem|bateram|batendo|agrediu|agride|agrediram|espancou|espanca|empurrou|empurra|chutou|chuta|enforcou|sufocou|esfaqueou|ameacou|ameaca|ameacando|persegue|perseguiu|perseguindo|humilha|humilhou|xingou|xinga|trancou|tranca|proibe|vigia|controla|mordeu|queimou|jogou)(?! (?:no|na|em|num|numa) (?:jogo|jogos|videogame|game|xadrez|truco|baralho|damas|corrida|futebol|partida|campeonato|final|ping pong|tenis))(?! de (?:goleada|\\d))",
-        PESSOA + " me (?:bate|bateu|ameaca|ameacou|agride|agrediu|persegue|humilha|humilhou|abusa|abusou|empurrou|chutou|enforcou)",
+        PESSOA + " me (?:bate|bateu|ameaca|ameacou|agride|agrediu|persegue|humilha|humilhou|abusa|abusou|empurrou|chutou|enforcou)(?! (?:no|na|em|num|numa) (?:jogo|jogos|videogame|game|xadrez|truco|baralho|damas|corrida|futebol|partida|campeonato|final|ping pong|tenis))",
+        GOLPE, PESSOA + " (?:levanta|levantou|ergue|ergueu|levantando) a mao pra (?:mim|cima de mim)",
+        "descumpr\\w+ (?:a |essa |minha )?(?:medida|protecao|ordem)(?: protetiva| judicial| de afastamento)?",
         PESSOA + " (?:controla|controlou|controlando|vigia|vigiando) (?:todo o |toda a |meu |minha |meus |minhas )?(?:dinheiro|conta bancaria|celular|telefone|mensagens|com quem eu falo|roupas|documentos)",
         PESSOA + " (?:bate|bateu|agride|agrediu|empurrou|chutou|enforcou|ameaca|ameacou|abusa|abusou) (?:em|n[ao]s?|d[ao]s?) (?:mim|nos|gente|minha|meu|meus|minhas|nossos|nossas|filha|filho|criancas)",
         PESSOA + " (?:vai|quer|disse que vai) (?:me )?(?:matar|bater)",
@@ -69,6 +81,7 @@
         "estou em perigo", "to em perigo", "me ajuda ele esta aqui", "ele esta aqui", "ele esta vindo", "socorro(?: me (?:ajuda|ajudem)| por favor)?$", "socorro me ajuda"
       ],
       contexto: ["delegacia da mulher", "\\bddm\\b", "\\bcram\\b", "patrulha maria da penha", "ligue 180", "casa abrigo", "casa de abrigo", "abrigo (?:pra|para) (?:mim|mulher|mim e meus filhos|minha familia)", "preciso de abrigo"],
+      combos: [[PROTECAO, REAPARECE]],
       aviso: "Se você está em perigo, ligue 190 (Polícia) ou 180 (Central de Atendimento à Mulher, 24 horas, gratuito).",
       mensagem: "Se você está em perigo agora, ligue 190 (Polícia). O Ligue 180 orienta e encaminha, 24 horas, de graça. Você não precisa contar a sua história aqui.",
       telefones: ["190", "180"],
@@ -78,8 +91,11 @@
       forte: [
         "dor (?:muito )?(?:forte )?(?:no|em) peito", "dor no peito", "falta de ar", "nao consigo respirar", "sem ar", "sufocando", "afogando", "parou de respirar",
         "desmai\\w*", "(?:caiu|tombou|passou mal|bateu a cabeca|escorregou|apagou) e (?:nao|n) (?:responde|reage|acorda|se mexe|fala|levanta)", "nao (?:acorda|respira|reage|se mexe)\\b", "nao esta (?:respirando|reagindo|respondendo)", "inconsciente", "engasg\\w+", "(?:esta|ficou|ficando|esta ficando) (?:roxo|roxa|azul|azulado|azulada|branco|branca como cera)", "vomitando sangue", "(?:febre|temperatura) (?:muito )?alta.{0,40}(?:convuls\\w*|mole|nao acorda|dormindo demais)", "perdeu os sentidos", "(?:queimou|queimadura).{0,25}(?:crianca|bebe|filh[oa]|rosto|corpo)", "(?:levou|tomou) (?:um )?choque", "cortou (?:muito|fundo)", "desacordad\\w*", "convuls\\w*", "infarto", "\\bavc\\b", "derrame", "overdose", "envenen\\w*", "(?:engoliu|tomou|bebeu|ingeriu|comeu) (?:veneno|produto de limpeza|soda caustica|(?:muito|todos os|a cartela de) remedios?)",
+        "(?:meu |o |no )?peito (?:esta |ta |fica |ficou |ficando )?(?:aperta\\w*|apertad\\w*|pesad\\w*|queima\\w*|esmagad\\w*|esmagand\\w*|doendo|doi)(?! (?:de|por) (?:saudade|tristeza|emocao|alegria|orgulho|amor))",
+        "(?:aperto|pressao|peso|queimacao|pontada|facada|fisgada|desconforto|dor) (?:forte |muito forte |intensa |intenso |no lado esquerdo )?(?:no|em|do|sobre o) peito",
         "sangrando (?:muito|bastante)", "sangramento (?:forte|intenso|muito)", "queimadura (?:grave|forte)", "acidente grave"
       ],
+      combos: [[BRACO_MANDIBULA, SINAL_ASSOCIADO]],
       aviso: "Se for uma urgência médica, ligue 192 (SAMU) ou vá à UPA mais próxima.",
       mensagem: "Isso pode ser uma urgência. Ligue agora para o 192 (SAMU) ou vá à UPA mais próxima.",
       telefones: ["192"],
@@ -100,11 +116,14 @@
   Object.keys(TIPOS).forEach(function (t) {
     COMPILADO[t] = {
       forte: TIPOS[t].forte.map(function (r) { return new RegExp("(?:^| )" + r + "(?: |$)"); }),
-      contexto: (TIPOS[t].contexto || []).map(function (r) { return new RegExp("(?:^| )" + r + "(?: |$)"); })
+      contexto: (TIPOS[t].contexto || []).map(function (r) { return new RegExp("(?:^| )" + r + "(?: |$)"); }),
+      /* combinações: dois sinais que só juntos indicam o risco (ex.: proteção judicial + agressor que reaparece) */
+      combos: (TIPOS[t].combos || []).map(function (par) { return par.map(function (r) { return new RegExp("(?:^| )" + r + "(?: |$)"); }); })
     };
   });
 
   function achou(lista, texto) { return lista.some(function (r) { return r.test(texto); }); }
+  function achouCombo(combos, texto) { return combos.some(function (par) { return par.every(function (r) { return r.test(texto); }); }); }
 
   /* Necessidade material familiar não é, por si só, evidência de violência ou perigo infantil.
      Regras explícitas de dano continuam prevalecendo; este filtro evita falso positivo do classificador aprendido. */
@@ -143,7 +162,7 @@
     var probs = detector ? detector.probabilidades(texto) : null, doModelo = {}, fracos = [];
     if (probs && t2 !== t) { var probs2 = detector.probabilidades(t2); Object.keys(probs2).forEach(function (k) { if (probs2[k] > probs[k]) probs[k] = probs2[k]; }); }
     ORDEM.forEach(function (tp) {
-      var regra = versoes.some(function (v) { return achou(COMPILADO[tp].forte, v); }), p = probs ? probs[tp] : undefined, lim = detector ? detector.limiares[tp] : undefined;
+      var regra = versoes.some(function (v) { return achou(COMPILADO[tp].forte, v) || achouCombo(COMPILADO[tp].combos, v); }), p = probs ? probs[tp] : undefined, lim = detector ? detector.limiares[tp] : undefined;
       var alto = detector && detector.altos[tp] !== undefined ? detector.altos[tp] : lim;
       if (!regra && ANCORAS[tp] && !emAlguma(ANCORAS[tp])) p = undefined; /* o detector sozinho não vale sem uma palavra do assunto */
       if (!regra && tp === "crianca" && necessidadeMaterialSemDano(t)) p = undefined; /* pobreza e responsabilidade familiar não são alerta de abuso sem sinal de dano */
