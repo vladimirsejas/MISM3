@@ -68,10 +68,13 @@
     },
     violencia: {
       forte: [
-        "(?:me|nos) (?:bateu|bate|batem|bateram|batendo|agrediu|agride|agrediram|espancou|espanca|empurrou|empurra|chutou|chuta|enforcou|sufocou|esfaqueou|ameacou|ameaca|ameacando|persegue|perseguiu|perseguindo|humilha|humilhou|xingou|xinga|trancou|tranca|proibe|vigia|controla|mordeu|queimou|jogou)(?! (?:no|na|em|num|numa) (?:jogo|jogos|videogame|game|xadrez|truco|baralho|damas|corrida|futebol|partida|campeonato|final|ping pong|tenis))(?! de (?:goleada|\\d))",
-        PESSOA + " me (?:bate|bateu|ameaca|ameacou|agride|agrediu|persegue|humilha|humilhou|abusa|abusou|empurrou|chutou|enforcou)(?! (?:no|na|em|num|numa) (?:jogo|jogos|videogame|game|xadrez|truco|baralho|damas|corrida|futebol|partida|campeonato|final|ping pong|tenis))",
+        "(?:me|nos) (?:bateu|bate|batem|bateram|batendo|agrediu|agride|agrediram|espancou|espanca|empurrou|empurra|chutou|chuta|enforcou|sufocou|esfaqueou|ameacou|ameaca|ameacando|trancou|tranca|proibe|vigia|controla|mordeu|queimou|jogou)(?! (?:no|na|em|num|numa) (?:jogo|jogos|videogame|game|xadrez|truco|baralho|damas|corrida|futebol|partida|campeonato|final|ping pong|tenis))(?! de (?:goleada|\\d))",
+        PESSOA + " me (?:bate|bateu|ameaca|ameacou|agride|agrediu|abusa|abusou|empurrou|chutou|enforcou)(?! (?:no|na|em|num|numa) (?:jogo|jogos|videogame|game|xadrez|truco|baralho|damas|corrida|futebol|partida|campeonato|final|ping pong|tenis))",
         GOLPE, PESSOA + " (?:levanta|levantou|ergue|ergueu|levantando) a mao pra (?:mim|cima de mim)",
         "descumpr\\w+ (?:a |essa |minha )?(?:medida|protecao|ordem)(?: protetiva| judicial| de afastamento)?",
+        "(?:manda|mandou|mandando|envia|enviou|enviando|faz|fez|fazendo|fica|vive|deixou|deixa)(?: \\w+){0,3} ameacando",
+        "(?:me|nos|minha|meu)(?: \\w+){0,5} (?:com|de|portando) (?:uma |um )?(?:faca|facao|canivete|arma|revolver|pistola|garrucha|espingarda)(?!(?: \\w+){0,2} (?:de pao|de cozinha|de mesa|de cortar|de brinquedo))",
+        "(?:ele|ela|ex|marido|namorado|companheiro|homem|alguem)(?: \\w+){0,3} armad[oa]",
         PESSOA + " (?:controla|controlou|controlando|vigia|vigiando) (?:todo o |toda a |meu |minha |meus |minhas )?(?:dinheiro|conta bancaria|celular|telefone|mensagens|com quem eu falo|roupas|documentos)",
         PESSOA + " (?:bate|bateu|agride|agrediu|empurrou|chutou|enforcou|ameaca|ameacou|abusa|abusou) (?:em|n[ao]s?|d[ao]s?) (?:mim|nos|gente|minha|meu|meus|minhas|nossos|nossas|filha|filho|criancas)",
         "(?:meu|minha) (?:pai|mae|padrasto|madrasta|marido|companheiro|namorado|ex|irmao|tio|avo)(?: \\w+){0,3} (?:agrediu|agrediram|agride|bateu|bateram|bate|espancou|espancaram|espanca|machucou|machucam|empurrou|chutou|esfaqueou|enforcou|sufocou|maltratou|maltrata|ameacou)(?: \\w+)? (?:a |o |os |as )?(?:minha mae|meu pai|minha irma|meus irmaos|minhas irmas|minha avo|meu avo|mim|nos|minha familia|a gente|todos nos|todo mundo|todos|meus filhos|as criancas|a mae|a crianca|minhas filhas)",
@@ -82,7 +85,7 @@
         "apanha (?:do|da|de) (?:marido|namorado|companheiro|pai|ex)",
         "violencia (?:domestica|psicologica|fisica|sexual|patrimonial)", "sofro violencia", "sofrendo violencia",
         "vai me matar", "quer me matar", "tentou me (?:matar|estrangular|sufocar|esfaquear|enforcar|afogar|queimar|atropelar)", "(?:ele|ela|meu \\\\w+) tentou me (?:matar|estrangular|sufocar|esfaquear|enforcar)", "\\bme (?:mata|matar|machuca|machucar|esfaqueia|esfaquear)\\b(?! de )", "(?:ele|ela) (?:disse|falou|jurou|prometeu) que (?:me )?(?:mata|vai me|vai acabar comigo)", "acabar comigo",
-        "(?:meu ex|meu ex marido|meu ex namorado|ex|ele|ela|marido|companheiro|namorado|um homem|alguem|um desconhecido|meu patrao|meu chefe)(?: \\w+){0,2} (?:me )?(?:segue|seguiu|seguindo|persegue|perseguindo|perseguiu|vigiando|vigia|monitora|monitorando|espiona|espiando)(?! (?:no|na|nas|nos|em) (?:instagram|insta|face|facebook|redes|whatsapp|zap|tiktok|twitter|x|canal|youtube))", "(?:ta|esta|vive|fica|anda) me (?:seguindo|perseguindo|vigiando|monitorando|espiando)", "aparece (?:na|no|em) (?:porta|trabalho|minha casa|escola|faculdade)", "fica me (?:ligando|mandando mensagem|ameacando|esperando|vigiando)", "(?:nao para|nao para de) (?:me )?(?:ligar|mandar mensagem|perseguir)",
+        "(?:meu ex|meu ex marido|meu ex namorado|ex|ele|ela|marido|companheiro|namorado|um homem|alguem|um desconhecido|meu patrao|meu chefe)(?: \\w+){0,2} (?:me )?(?:vigiando|vigia|monitora|monitorando|espiona|espiando)(?! (?:no|na|nas|nos|em) (?:instagram|insta|face|facebook|redes|whatsapp|zap|tiktok|twitter|x|canal|youtube))", "(?:ta|esta|vive|fica|anda) me (?:vigiando|monitorando|espiando)", "aparece (?:na|no|em) (?:porta|trabalho|minha casa|escola|faculdade)", "fica me (?:ligando|mandando mensagem|ameacando|esperando|vigiando)", "(?:nao para|nao para de) (?:me )?(?:ligar|mandar mensagem|perseguir)",
         "(?:denunciar|denuncia contra|registrar (?:ocorrencia|boletim) contra|prestar queixa d[eo]) (?:o |a |meu |minha )?(?:marido|companheiro|companheira|namorado|ex|pai|padrasto|agressor|patrao)",
         "(?:estou com|to com|fiquei com|sinto|sentindo|morro de) medo (?:dele|dela|do meu (?:marido|ex|companheiro|namorado|pai|padrasto)|da minha familia)",
         "(?:ele|ela) (?:ta|esta) (?:me )?(?:esperando|na porta|na frente da minha casa)", "vou morrer(?! de )", "ameaca de morte", "ameacou de morte", "ameacou me matar",
@@ -94,6 +97,13 @@
         "(?:me deixa|me mantem|me tem|me prende|me tranca) (?:trancad[ao]|presa|em casa|no quarto)", "estou em perigo", "to em perigo", "me ajuda ele esta aqui", "ele esta aqui", "ele esta vindo", "socorro(?: me (?:ajuda|ajudem)| por favor)?$", "socorro me ajuda"
       ],
       contexto: ["delegacia da mulher", "\\bddm\\b", "\\bcram\\b", "patrulha maria da penha", "ligue 180", "casa abrigo", "casa de abrigo", "abrigo (?:pra|para) (?:mim|mulher|mim e meus filhos|minha familia)", "preciso de abrigo"],
+      /* nível 1: só perseguição, humilhação verbal ou xingamento. Se aparecer ameaça, violência física, arma ou descumprimento de proteção,
+         as regras fortes acima valem e o nível é 2. */
+      moderado: [
+        "me (?:persegue|perseguiu|perseguindo|segue|seguiu|seguindo|humilha|humilhou|humilhando|xinga|xingou|xingando|insulta|insultou|ofende|ofendeu|ofendendo|menospreza)(?! (?:no|na|em) (?:instagram|insta|face|facebook|redes|whatsapp|zap|tiktok|twitter|canal|youtube))",
+        "(?:ta|esta|vive|fica|anda) me (?:seguindo|perseguindo|humilhando|xingando|insultando|ofendendo)",
+        "(?:meu ex|meu ex marido|meu ex companheiro|meu ex namorado|ex|ele|ela|marido|companheiro|namorado|um homem|alguem|um desconhecido)(?: \\w+){0,2} (?:persegue|perseguiu|perseguindo)"
+      ],
       combos: [[PROTECAO, REAPARECE], [PROIBIDO, CONTATO, AGRESSOR_AMBIENTE]],
       aviso: "Se você está em perigo, ligue 190 (Polícia) ou 180 (Central de Atendimento à Mulher, 24 horas, gratuito).",
       mensagem: "Se você está em perigo agora, ligue 190 (Polícia). O Ligue 180 orienta e encaminha, 24 horas, de graça. Você não precisa contar a sua história aqui.",
@@ -137,6 +147,7 @@
   Object.keys(TIPOS).forEach(function (t) {
     COMPILADO[t] = {
       forte: TIPOS[t].forte.map(function (r) { return new RegExp("(?:^| )" + r + "(?: |$)"); }),
+      moderado: (TIPOS[t].moderado || []).map(function (r) { return new RegExp("(?:^| )" + r + "(?: |$)"); }),
       contexto: (TIPOS[t].contexto || []).map(function (r) { return new RegExp("(?:^| )" + r + "(?: |$)"); }),
       /* combinações: dois sinais que só juntos indicam o risco (ex.: proteção judicial + agressor que reaparece) */
       combos: (TIPOS[t].combos || []).map(function (par) { return par.map(function (r) { return new RegExp("(?:^| )" + r + "(?: |$)"); }); })
@@ -267,6 +278,7 @@
     ORDEM.forEach(function (tp) {
       var regra = versoes.some(function (v) { return achou(COMPILADO[tp].forte, v) || achouCombo(COMPILADO[tp].combos, v); }), p = probs ? probs[tp] : undefined, lim = detector ? detector.limiares[tp] : undefined;
       if (tp === "violencia" && resolvida) return;
+      if (tp === "violencia" && !regra && versoes.some(function (v) { return achou(COMPILADO[tp].moderado, v); })) { fracos.push(tp); return; } /* só nível 1: o detector não eleva */
       if (tp === "saude" && !regra && versoes.some(function (v) { return DOR_LOCAL.test(v); }) && !versoes.some(function (v) { return GRAVIDADE.test(v); })) p = undefined;
       var alto = detector && detector.altos[tp] !== undefined ? detector.altos[tp] : lim;
       if (!regra && ANCORAS[tp] && !emAlguma(ANCORAS[tp])) p = undefined; /* o detector sozinho não vale sem uma palavra do assunto */

@@ -118,4 +118,19 @@ alerta("Meu  pai  chegou bebado  agrediu minha mãe a mim e meus irmão.", "viol
 alerta("Fiz um corte profund e não sei o telefone do Samu.");
 alerta("Tenho medo que ela se mate.", "suicidio");
 
-console.log("perigo_generalizacao.test.js (prioridade 3) ok");
+
+/* ============ PRIORIDADE 4 — alerta que saía maior que o esperado: só perseguição, humilhação verbal ou xingamento = nível 1 ============ */
+nivel1("Meu ex me persegue.", "violencia");                                       // desenvolvimento
+nivel1("Acho que meu marido me humilha verbalmente.", "violencia");               // desenvolvimento
+nivel1("Meu irmão me xinga todo dia.", "violencia");                              // desenvolvimento
+["meu namorado me insulta na frente dos amigos", "minha sogra me ofende toda vez que vem aqui", "meu ex fica me seguindo na saida do trabalho", "meu chefe me humilha em reuniao",
+ "meu ex me persegue pelas redes sociais e nao me deixa em paz"].forEach((t) => nivel1(t, "violencia"));
+const n1 = nivel1("meu ex me persegue");
+assert(n1.telefones.includes("180") && n1.telefones.includes("190") && n1.pins.length === 0, "nível 1: aviso com telefones, sem fixar serviços");
+/* qualquer elemento de escalada mantém o nível 2: ameaça, violência física, arma, descumprimento de proteção */
+["meu ex me persegue e disse que vai me matar", "meu ex me persegue e me bateu ontem", "meu ex me persegue com uma faca", "meu marido me xinga e me ameaça de morte", "meu ex me persegue e manda mensagem ameaçando",
+ "tenho medida protetiva e ele me persegue na rua", "meu marido me humilha e me empurrou na escada"].forEach((t) => alerta(t, "violencia"));
+/* sem palavra de risco, xingar ou seguir em outro sentido não alerta */
+["meu time me humilhou no jogo de ontem", "o aplicativo me segue em todos os dispositivos", "meu filho xinga o juiz no videogame"].forEach(semCompleto);
+
+console.log("perigo_generalizacao.test.js (prioridade 4) ok");

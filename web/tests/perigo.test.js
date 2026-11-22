@@ -5,7 +5,7 @@ const nivel = (t) => { const r = Perigo.avaliar(t); return r ? r.nivel : 0; };
 
 /* ---- situações que SEMPRE devem acender o alerta (errar para menos é o erro grave) ---- */
 const deve = {
-  violencia: ["meu marido me bate", "ele me ameaçou de morte", "estou apanhando em casa", "fui estuprada", "tenho medo dele", "meu ex me persegue", "ele disse que vai me matar", "sofro violência doméstica", "preciso sair de casa com segurança", "meu vizinho bate na mulher dele toda noite", "minha irmã apanha do marido", "meu marido controla meu dinheiro", "ele vigia meu celular", "meu companheiro controla com quem eu falo"],
+  violencia: ["meu marido me bate", "ele me ameaçou de morte", "estou apanhando em casa", "fui estuprada", "tenho medo dele", "ele disse que vai me matar", "sofro violência doméstica", "preciso sair de casa com segurança", "meu vizinho bate na mulher dele toda noite", "minha irmã apanha do marido", "meu marido controla meu dinheiro", "ele vigia meu celular", "meu companheiro controla com quem eu falo"],
   suicidio: ["pensei em tomar todos os remédios", "queria dormir e não acordar mais", "minha vida não tem mais sentido, não quero estar aqui", "estou pensando em me jogar da ponte", "vou me enforcar", "quero me matar", "não aguento mais viver", "penso em acabar com tudo", "tenho vontade de morrer", "quero sumir"],
   crianca: ["meu padrasto abusa da minha filha", "minha filha está sendo abusada", "meu marido bate nas crianças", "ele machuca os filhos", "meu padrasto mexe com a minha filha de 9 anos", "a criança lá de casa apanha de cinto toda noite", "minha neta de 7 anos contou que o tio passa a mão nela"],
   saude: ["minha mãe caiu e não responde", "meu filho engasgou e está roxo", "estou com dor no peito", "meu filho desmaiou", "não consigo respirar", "ela teve convulsão", "tomou veneno"],
@@ -23,6 +23,10 @@ Object.keys(deve).forEach((tp) => deve[tp].forEach((t) => {
 /* ---- quem só pergunta por um serviço de proteção recebe aviso discreto (nível 1), não alarme ---- */
 assert.strictEqual(nivel("onde fica a delegacia da mulher"), 1);
 assert.strictEqual(nivel("o que é o cram"), 1);
+/* Decisão do projeto (medição independente de 71 frases): só perseguição, humilhação verbal ou xingamento, sem ameaça, violência física, arma ou descumprimento de proteção, é aviso de nível 1 (antes era nível 2). Com ameaça ou violência física continua nível 2. */
+assert.strictEqual(nivel("meu ex me persegue"), 1);
+assert.strictEqual(nivel("meu ex me persegue e disse que vai me matar"), 2);
+assert.strictEqual(nivel("meu ex me persegue e me bateu ontem"), 2);
 
 /* ---- cada alerta traz telefone e destinos fixados; texto vazio é ignorado ---- */
 const r = Perigo.avaliar("quero me matar");
