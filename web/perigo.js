@@ -68,13 +68,16 @@
     },
     violencia: {
       forte: [
-        "(?:me|nos) (?:bateu|bate|batem|bateram|batendo|agrediu|agride|agrediram|espancou|espanca|empurrou|empurra|chutou|chuta|enforcou|sufocou|esfaqueou|ameacou|ameaca|ameacando|trancou|tranca|proibe|vigia|controla|mordeu|queimou|jogou)(?! (?:no|na|em|num|numa) (?:jogo|jogos|videogame|game|xadrez|truco|baralho|damas|corrida|futebol|partida|campeonato|final|ping pong|tenis))(?! de (?:goleada|\\d))",
+        "(?:me|nos) (?:bateu|bate|batem|bateram|batendo|agrediu|agride|agrediram|espancou|espanca|empurrou|empurra|chutou|chuta|enforcou|sufocou|esfaqueou|ameacou|ameaca|ameacando|trancou|tranca|trancaram|trancam|trancando|espancaram|empurraram|chutaram|enforcaram|sufocaram|esfaquearam|ameacaram|proibe|vigia|controla|mordeu|queimou|jogou)(?! (?:no|na|em|num|numa) (?:jogo|jogos|videogame|game|xadrez|truco|baralho|damas|corrida|futebol|partida|campeonato|final|ping pong|tenis))(?! de (?:goleada|\\d))",
         PESSOA + " me (?:bate|bateu|ameaca|ameacou|agride|agrediu|abusa|abusou|empurrou|chutou|enforcou)(?! (?:no|na|em|num|numa) (?:jogo|jogos|videogame|game|xadrez|truco|baralho|damas|corrida|futebol|partida|campeonato|final|ping pong|tenis))",
         GOLPE, PESSOA + " (?:levanta|levantou|ergue|ergueu|levantando) a mao pra (?:mim|cima de mim)",
         "descumpr\\w+ (?:a |essa |minha )?(?:medida|protecao|ordem)(?: protetiva| judicial| de afastamento)?",
         "(?:manda|mandou|mandando|envia|enviou|enviando|faz|fez|fazendo|fica|vive|deixou|deixa)(?: \\w+){0,3} ameacando",
         "(?:me|nos|minha|meu)(?: \\w+){0,5} (?:com|de|portando) (?:uma |um )?(?:faca|facao|canivete|arma|revolver|pistola|garrucha|espingarda)(?!(?: \\w+){0,2} (?:de pao|de cozinha|de mesa|de cortar|de brinquedo))",
         "(?:ele|ela|ex|marido|namorado|companheiro|homem|alguem)(?: \\w+){0,3} armad[oa]",
+        "(?:apontou|apontaram|apontando|aponta|empunhou|empunhando|sacou)(?: \\w+){0,3} (?:uma |um )?(?:arma|faca|facao|revolver|pistola|espingarda|garrucha)",
+        "(?:apontou|apontaram|apontando)(?: (?:uma|um|o|a))? (?!dedo|lapis|caneta|laser|celular|camera|lanterna|controle|microfone)\\w+ (?:pra|para|na|no|em) (?:mim|minha cara|minha cabeca|meu rosto|minha barriga)",
+        "(?:me|nos) (?:prendeu|prenderam|prendem|prendendo) (?:em casa|no quarto|la dentro|dentro de casa|no banheiro|no porao|no quintal)",
         PESSOA + " (?:controla|controlou|controlando|vigia|vigiando) (?:todo o |toda a |meu |minha |meus |minhas )?(?:dinheiro|conta bancaria|celular|telefone|mensagens|com quem eu falo|roupas|documentos)",
         PESSOA + " (?:bate|bateu|agride|agrediu|empurrou|chutou|enforcou|ameaca|ameacou|abusa|abusou) (?:em|n[ao]s?|d[ao]s?) (?:mim|nos|gente|minha|meu|meus|minhas|nossos|nossas|filha|filho|criancas)",
         "(?:meu|minha) (?:pai|mae|padrasto|madrasta|marido|companheiro|namorado|ex|irmao|tio|avo)(?: \\w+){0,3} (?:agrediu|agrediram|agride|bateu|bateram|bate|espancou|espancaram|espanca|machucou|machucam|empurrou|chutou|esfaqueou|enforcou|sufocou|maltratou|maltrata|ameacou)(?: \\w+)? (?:a |o |os |as )?(?:minha mae|meu pai|minha irma|meus irmaos|minhas irmas|minha avo|meu avo|mim|nos|minha familia|a gente|todos nos|todo mundo|todos|meus filhos|as criancas|a mae|a crianca|minhas filhas)",
@@ -168,7 +171,9 @@
     "ameacava ameacavam ameacaram ameacada ameacado perseguia perseguiam perseguidas perseguido perseguida machucava machucavam machucando machucaram " +
     "maltratava maltratando maltrataram empurrava empurrando empurraram sufocava sufocando esfaqueava esfaqueando enforcava enforcando abusava " +
     "abusavam abusaram abusado trancava trancando trancaram apanhava apanhavam apanhado sangrava sangravam desmaiava desmaiando desmaiaram " +
-    "respirava respirando acorrentava acorrentaram amarrava amarraram queimava queimando proibia proibiam proibiram contatos").split(" ");
+    "respirava respirando acorrentava acorrentaram amarrava amarraram queimava queimando proibia proibiam proibiram contatos " +
+    "trancou prendeu prenderam prendendo apontou apontaram apontando empunhou obrigou obrigaram obrigando bateram batendo chutaram sufocaram esfaquearam " +
+    "enforcaram espancaram empurraram ameacaram tentou tentaram tentando").split(" ");
   var NO_VOCAB = {}; VOCABULARIO.forEach(function (w) { NO_VOCAB[w] = 1; });
   ["projecao", "projecoes", "protecoes", "numeros", "telefones", "ligara", "ligaria", "titular", "titulares", "contrato", "contratos", "contratar", "contratada", "contratado", "telefonema"].forEach(function (w) { NO_VOCAB[w] = 1; });
   /* distância de edição com transposição (Damerau/OSA), com corte em "max" */
@@ -233,6 +238,31 @@
       return melhor || w;
     }).join(" ");
   }
+  /* Palavras coladas: "eleme prendeu", "mebateu", "tentoume enforcar", "maridome bate". Só separa um pronome (ele, ela, me, te, nos) quando o resto da palavra
+     é exatamente um termo de perigo (verbo de agressão, cárcere, arma ou o parceiro): nenhuma palavra comum é cortada. A versão separada é só MAIS UMA versão avaliada pelas regras. */
+  var TERMOS_COLADOS = {};
+  ("tentou bateu bate batem bateram trancou tranca trancaram prendeu prenderam prende espancou espanca obrigou obriga ameacou ameaca mata matou matar apontou " +
+   "estrangulou enforcou agrediu empurrou chutou sufocou esfaqueou queimou xingou humilhou persegue perseguiu forcou marido namorado noivo companheiro padrasto " +
+   "enforcar estrangular espancar deu levou quebrou").split(" ").forEach(function (w) { TERMOS_COLADOS[w] = 1; });
+  var PREFIXOS_COLADOS = ["ele", "ela", "me", "te"], SUFIXOS_COLADOS = ["me", "te", "nos"];
+  function descolar(t) {
+    return t.split(" ").map(function (w) {
+      if (w === "eleme") return "ele me";
+      if (w === "elame") return "ela me";
+      if (w.length < 6 || TERMOS_COLADOS[w]) return w;
+      var i, r;
+      if ((w.indexOf("eleme") === 0 || w.indexOf("elame") === 0) && TERMOS_COLADOS[w.slice(5)]) return w.slice(0, 3) + " me " + w.slice(5); /* "elemetrancou" */
+      for (i = 0; i < PREFIXOS_COLADOS.length; i++) {
+        r = w.slice(PREFIXOS_COLADOS[i].length);
+        if (w.indexOf(PREFIXOS_COLADOS[i]) === 0 && TERMOS_COLADOS[r]) return PREFIXOS_COLADOS[i] + " " + r;
+      }
+      for (i = 0; i < SUFIXOS_COLADOS.length; i++) {
+        r = w.slice(0, w.length - SUFIXOS_COLADOS[i].length);
+        if (w.length > SUFIXOS_COLADOS[i].length && w.lastIndexOf(SUFIXOS_COLADOS[i]) === w.length - SUFIXOS_COLADOS[i].length && TERMOS_COLADOS[r]) return r + " " + SUFIXOS_COLADOS[i];
+      }
+      return w;
+    }).join(" ");
+  }
   function achouCombo(combos, texto) { return combos.some(function (par) { return par.every(function (r) { return r.test(texto); }); }); }
 
   /* Necessidade material familiar não é, por si só, evidência de violência ou perigo infantil.
@@ -266,14 +296,16 @@
     if (!t) return null;
     /* Letras esticadas ("me baaaate", "quero morreeer", "socorrooo"): além do texto como veio, olha uma versão com 3 ou mais letras
        iguais seguidas reduzidas a uma (o português não tem palavra com três letras iguais seguidas, então nada legítimo é alterado). */
-    var t2 = t.replace(/([a-z0-9])\1{2,}/g, "$1"), t3 = corrigirDigitacao(t2), versoes = [t];
+    var t2 = t.replace(/([a-z0-9])\1{2,}/g, "$1"), t4 = descolar(t2), t3 = corrigirDigitacao(t4), versoes = [t];
     if (t2 !== t) versoes.push(t2);
-    if (t3 !== t2) versoes.push(t3);
+    if (t4 !== t2) versoes.push(t4);
+    if (t3 !== t4) versoes.push(t3);
+    var versoesSoRegras = (t4 !== t2 ? 1 : 0) + (t3 !== t4 ? 1 : 0); /* as versões corrigidas só alimentam as regras, nunca o detector aprendido */
     versoes = versoes.map(neutralizar);
     function emAlguma(re) { return versoes.some(function (v) { return re.test(v); }); }
     var tipos = [], nivel = 0;
     var tN = neutralizar(t), probs = detector ? detector.probabilidades(tN !== t ? tN : texto) : null, doModelo = {}, fracos = [];
-    if (probs) versoes.slice(1, t3 !== t2 ? versoes.length - 1 : versoes.length).forEach(function (v) { var pv = detector.probabilidades(v); Object.keys(pv).forEach(function (k) { if (pv[k] > probs[k]) probs[k] = pv[k]; }); });
+    if (probs) versoes.slice(1, versoes.length - versoesSoRegras).forEach(function (v) { var pv = detector.probabilidades(v); Object.keys(pv).forEach(function (k) { if (pv[k] > probs[k]) probs[k] = pv[k]; }); });
     var resolvida = violenciaResolvida(versoes);
     ORDEM.forEach(function (tp) {
       var regra = versoes.some(function (v) { return achou(COMPILADO[tp].forte, v) || achouCombo(COMPILADO[tp].combos, v); }), p = probs ? probs[tp] : undefined, lim = detector ? detector.limiares[tp] : undefined;
