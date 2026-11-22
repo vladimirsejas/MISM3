@@ -76,7 +76,7 @@ const tel = Object.fromEntries(conselhos.map((s) => [s.nome, s.telefone]));
 assert.strictEqual(tel["Conselho Tutelar – Região Sul"], "(19) 3533-5411 / (19) 3532-5221");
 assert.strictEqual(tel["Conselho Tutelar – Região Norte"], "(19) 3523-6439", "telefone do Norte conforme a página do CMDCA");
 assert(!JSON.stringify(conselhos).includes("99336"), "telefone sem fonte não pode voltar");
-conselhos.forEach((s) => assert(s.conferido !== false && /CMDCA/.test(s.fonte) && s.fonte_url === "https://cmdcarioclaro.com.br/contato/", "fonte do Conselho: " + s.nome));
+conselhos.forEach((s) => assert(s.estado_conferencia !== "nao_confirmado" && /CMDCA/.test(s.fonte) && s.fonte_url === "https://cmdcarioclaro.com.br/contato/", "fonte do Conselho: " + s.nome));
 /* ---- 5b. CRAS, CREAS e unidades de convivência (Secretaria de Desenvolvimento Social, 10/10/2026) ---- */
 const cras = catalogo.servicos.filter((s) => s.subtipo === "cras");
 assert.strictEqual(cras.length, 6, "a página oficial lista seis CRAS");
@@ -96,13 +96,13 @@ assert.strictEqual(creas[0].telefone, "(19) 3523-6420 / (19) 3523-6439");
 assert(creas[0].endereco.includes("Rua 6, 640") && creas[0].observacao.includes("creas@rioclaro.sp.gov.br"));
 assert(porNome["Conselho Tutelar – Região Norte"].observacao.includes("também aparece como telefone do CREAS"), "o número repetido entre Conselho Norte e CREAS deve ser sinalizado");
 const chi = porNome["Centro de Habilitação Infantil “Princesa Victória” (CHI)"];
-assert(chi && chi.tipo === "saude" && chi.conferido !== false && chi.fonte_url === "https://www.pessoacomdeficiencia.rc.sp.gov.br/", "o CHI foi conferido no site oficial da Fundação de Saúde");
+assert(chi && chi.tipo === "saude" && chi.estado_conferencia !== "nao_confirmado" && chi.fonte_url === "https://www.pessoacomdeficiencia.rc.sp.gov.br/", "o CHI foi conferido no site oficial da Fundação de Saúde");
 assert.strictEqual(chi.telefone, "(19) 3527-1461 / (19) 3535-4408");
 assert(!JSON.stringify(chi).includes("535-1461") || chi.telefone.includes("3527-1461"), "o telefone antigo de 7 dígitos não pode voltar");
 assert(!/\(19\) 535-1461/.test(chi.telefone + chi.observacao), "telefone antigo de 7 dígitos removido");
 assert(chi.observacao.includes("chi@rc.saude-rioclaro.org.br") && /confirme por telefone/.test(chi.observacao), "o público atendido vem de blog sem data e deve pedir confirmação");
 const cei = porNome["Centro de Especialidade Infantil (CEI) “Antonio Carlos Rodrigues – Tute”"];
-assert(cei && cei.tipo === "saude" && cei.conferido === false && /11\/10\/2019/.test(cei.aviso + cei.fonte), "o CEI vem de notícia de 2019: deve constar como informação antiga");
+assert(cei && cei.tipo === "saude" && cei.estado_conferencia === "nao_confirmado" && /11\/10\/2019/.test(cei.aviso + cei.fonte), "o CEI vem de notícia de 2019: deve constar como informação antiga");
 assert.strictEqual(cei.telefone, "(19) 3523-3754 / (19) 3533-4055 / (19) 3524-5770");
 assert(/Rua 15, entre as avenidas 23 e 25/.test(cei.endereco) && /Criari/.test(cei.observacao) && /Caps IJ/.test(cei.observacao) && /CEO/.test(cei.observacao));
 assert(/odontologia do CHI/.test(porNome["Centro de Habilitação Infantil “Princesa Victória” (CHI)"].observacao), "a mudança da odontologia do CHI deve constar no cartão do CHI");
@@ -143,9 +143,9 @@ apae.forEach((s) => assert(s.fonte_url === "https://apaerioclaro.com.br/" && /Ca
   "APAE: fonte do site oficial e sem localização das residências inclusivas: " + s.nome));
 assert.strictEqual(catalogo.servicos.filter((s) => s.subtipo === "scfv").length, 13, "a página oficial lista 13 unidades de convivência");
 catalogo.servicos.filter((s) => ["cras", "creas", "scfv"].includes(s.subtipo)).forEach((s) =>
-  assert(s.conferido !== false && (s.fonte_url.startsWith("https://desenvolvimentosocial.rc.sp.gov.br/") || s.fonte_url === "https://rioclaro.sp.gov.br/centro-ref-assistencia-social/"), "fonte oficial (Secretaria ou Prefeitura): " + s.nome));
-catalogo.servicos.filter((s) => s.conferido === false).forEach((s) => assert(/não conferida/.test(s.fonte) || (s.aviso && s.aviso.length > 20), "item não conferido sem alerta: " + s.nome));
-assert(app.includes("Ainda não conferido na página oficial") && app.includes("s.aviso") && app.includes("s.conferido === false"), "a interface deve avisar quando o item não foi conferido");
+  assert(s.estado_conferencia !== "nao_confirmado" && (s.fonte_url.startsWith("https://desenvolvimentosocial.rc.sp.gov.br/") || s.fonte_url === "https://rioclaro.sp.gov.br/centro-ref-assistencia-social/"), "fonte oficial (Secretaria ou Prefeitura): " + s.nome));
+catalogo.servicos.filter((s) => s.estado_conferencia === "nao_confirmado").forEach((s) => assert(/não conferida/.test(s.fonte) || (s.aviso && s.aviso.length > 20), "item não conferido sem alerta: " + s.nome));
+assert(app.includes("Ainda não conferido na página oficial") && app.includes("s.aviso") && app.includes('est === "nao_confirmado"'), "a interface deve avisar quando o item não foi conferido");
 
 /* ---- 6. Conteúdo das áreas ---- */
 Areas.AREAS.forEach((a) => {
@@ -254,7 +254,7 @@ const cat = JSON.parse(ler("dados/catalogo_manual.json")); const lista = Array.i
   assert(s && s.tipo === "emprego_curso" && s.fonte_url && s.verificado_em, "curso profissionalizante ausente ou sem fonte/data: " + id);
 });
 const sest = lista.find((x) => x.id === "man-sestsenat");
-assert(sest.conferido !== false && /3522-1710/.test(sest.telefone) && /0800 700 9393/.test(sest.telefone) && sest.fonte_url === "https://www.sestsenat.org.br/home", "SEST SENAT: unidade confirmada por telefone, com o 0800 e o link do site");
+assert(sest.estado_conferencia !== "nao_confirmado" && /3522-1710/.test(sest.telefone) && /0800 700 9393/.test(sest.telefone) && sest.fonte_url === "https://www.sestsenat.org.br/home", "SEST SENAT: unidade confirmada por telefone, com o 0800 e o link do site");
 assert(/sócios/.test(sest.observacao), "o cartão do SEST SENAT deve dizer que a página da cidade é para sócios");
 const sestCursos = lista.find((x) => x.id === "man-sestsenat-cursos");
 assert(sestCursos.fonte_url === "https://www.sestsenat.org.br/cursos" && /mudam|muda/.test(sestCursos.observacao), "o cartão de cursos do SEST SENAT remete à página e diz que a lista muda");

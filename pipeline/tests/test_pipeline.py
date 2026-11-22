@@ -158,7 +158,7 @@ def test_manual_nao_conferido_nao_aparece_como_verificado():
     ])
     a, b = servicos_manuais(df, {})
     assert a["conferido"] is False and "não conferida" in a["fonte"]
-    assert b["conferido"] is True and a["fonte"] != b["fonte"]
+    assert b["conferido"] is False and b["estado_conferencia"] == "pendente" and a["fonte"] != b["fonte"]  # campo vazio nao confirma
 
 
 def test_manual_usa_fonte_informada_quando_conferido():

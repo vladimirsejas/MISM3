@@ -108,6 +108,70 @@
     return { dias: dias, antigo: dias > LIMITE_DIAS, texto: texto };
   }
 
-  return { ORDEM: ORDEM, ROTULOS: ROTULOS, rotuloSubtipo: rotuloSubtipo, normalizarCep: normalizarCep, haversine: haversine,
+  /* Estado da conferência do registro (vem do pipeline em "estado_conferencia"). Campo ausente ou vazio NUNCA vira "confirmado":
+     dado antigo sem o campo só é "não confirmado" se dizia conferido=false; o resto é "pendente". */
+  var TEXTO_CONFERENCIA = {
+    confirmado: "Conferido pela equipe do projeto na fonte.",
+    nao_confirmado: "Ainda não conferido na página oficial. Ligue antes de ir.",
+    pendente: "A equipe ainda não conferiu estas informações. Ligue antes de ir."
+  };
+  function estadoConferencia(s) {
+    var e = s && s.estado_conferencia;
+    if (e === "confirmado" || e === "nao_confirmado" || e === "pendente") return e;
+    return s && s.conferido === false ? "nao_confirmado" : "pendente";
+  }
+  function textoConferencia(s) { return TEXTO_CONFERENCIA[estadoConferencia(s)]; }
+
+  /* Procedência e atualidade. A data do registro é a da CONSULTA (quando o projeto leu a fonte), não a da atualização pelo órgão.
+     Limites em dias: os mesmos de pipeline/servicos.py (LIMITES_ATUALIDADE); um teste confere. Nenhum rótulo diz "atualizado". */
+  var LIMITES_ATUALIDADE = { recente_ate_dias: 30, a_renovar_ate_dias: 90 };
+  function atualidade(iso, hoje) {
+    var i = idadeVerificacao(iso, hoje);
+    if (i.dias === null) return { dias: null, estado: "desconhecida" };
+    var e = i.dias <= LIMITES_ATUALIDADE.recente_ate_dias ? "consulta_recente" : i.dias <= LIMITES_ATUALIDADE.a_renovar_ate_dias ? "consulta_a_renovar" : "consulta_antiga";
+    return { dias: i.dias, estado: e };
+  }
+  function dataBrCurta(iso) { var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(iso || "")); return m ? m[3] + "/" + m[2] + "/" + m[1] : ""; }
+  /* "Consultada em 10/10/2026 (há 42 dias)." + o que isso NÃO quer dizer. */
+  function textoConsulta(s, hoje) {
+    var a = atualidade(s && s.verificado_em, hoje);
+    if (a.dias === null) return "Não há registro de quando esta fonte foi consultada: confirme antes de ir.";
+    var quando = a.dias === 0 ? "hoje" : a.dias === 1 ? "há 1 dia" : "há " + a.dias + " dias";
+    var t = "Fonte consultada pela equipe em " + dataBrCurta(s.verificado_em) + " (" + quando + ").";
+    if (s.data_atualizacao_fonte) return t + " O órgão informa atualização em " + dataBrCurta(s.data_atualizacao_fonte) + ".";
+    return t + " Não sabemos quando o órgão atualizou a página.";
+  }
+  /* De onde veio: fonte identificada, genérica ou não identificada (campo "fonte_tipo" do pipeline). */
+  function textoProcedencia(s) {
+    var t = s && s.fonte_tipo;
+    if (t === "generica") return "Só sabemos o site do órgão; a página exata de onde vieram estes dados não foi registrada.";
+    if (t === "nao_identificada") return "Fonte não identificada com precisão: a informação veio de pesquisa, não de uma página oficial conferida.";
+    return "";
+  }
+
+  /* Campos que o cartão mostra e podem faltar. Campo vazio NUNCA é mostrado como se fosse informação disponível.
+     "Não informado" = a fonte do projeto não traz o dado (pode existir; ainda precisa ser confirmado).
+     "Não se aplica" = o campo comprovadamente não faz sentido para aquele tipo de registro. Só vale onde houver regra documentada
+     em NAO_SE_APLICA ({ tipo/subtipo: [campos] }). Hoje NÃO há nenhuma regra com base em fonte: na dúvida, é "não informado". */
+  var CAMPOS_DO_CARTAO = { telefone: "telefone", endereco: "endereço", horario: "horário" };
+  var NAO_SE_APLICA = {};
+  function vazio(v) { return v === null || v === undefined || String(v).trim() === ""; }
+  function camposAusentes(s, regras) {
+    var r = regras || NAO_SE_APLICA, ignorar = (s && (r[s.tipo + "/" + s.subtipo] || r[s.tipo])) || [];
+    var saida = { nao_informado: [], nao_se_aplica: [] };
+    Object.keys(CAMPOS_DO_CARTAO).forEach(function (c) {
+      if (!vazio(s && s[c])) return;
+      (ignorar.indexOf(c) !== -1 ? saida.nao_se_aplica : saida.nao_informado).push(CAMPOS_DO_CARTAO[c]);
+    });
+    return saida;
+  }
+  function textoCamposAusentes(s, regras) {
+    var a = camposAusentes(s, regras);
+    if (!a.nao_informado.length) return "";
+    return "Não informado na fonte: " + a.nao_informado.join(", ") + ". Ligue para a unidade ou confirme no site do órgão antes de ir.";
+  }
+
+  return { camposAusentes: camposAusentes, textoCamposAusentes: textoCamposAusentes, NAO_SE_APLICA: NAO_SE_APLICA, LIMITES_ATUALIDADE: LIMITES_ATUALIDADE, atualidade: atualidade, textoConsulta: textoConsulta, textoProcedencia: textoProcedencia,
+    estadoConferencia: estadoConferencia, textoConferencia: textoConferencia, ORDEM: ORDEM, ROTULOS: ROTULOS, rotuloSubtipo: rotuloSubtipo, normalizarCep: normalizarCep, haversine: haversine,
     formatarDistancia: formatarDistancia, idadeVerificacao: idadeVerificacao, LIMITE_DIAS: LIMITE_DIAS, comDistancia: comDistancia, buscar: buscar };
 });

@@ -67,7 +67,7 @@ def test_catalogo_manual_exige_fonte_e_data_e_rejeita_tipo_invalido():
     base = {"id": "man-cras", "tipo": "assistencia", "subtipo": "cras", "nome": "CRAS Centro",
             "fonte_url": "https://exemplo.gov.br", "verificado_em": "2026-10-12"}
     ok = s.servicos_manuais(pd.DataFrame([base]), {})
-    assert ok[0]["id"] == "man-cras" and ok[0]["conferido"] is True and ok[0]["geo"] == "sem_local"
+    assert ok[0]["id"] == "man-cras" and ok[0]["conferido"] is False and ok[0]["estado_conferencia"] == "pendente" and ok[0]["geo"] == "sem_local"
     with pytest.raises(ValueError, match="sem fonte_url/verificado_em"):
         s.servicos_manuais(pd.DataFrame([{**base, "fonte_url": ""}]), {})
     with pytest.raises(ValueError, match="Tipo invalido"):

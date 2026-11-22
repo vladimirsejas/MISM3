@@ -152,6 +152,7 @@ Não existe: modelo de linguagem, embeddings neurais, previsão de risco, elegib
 | `treinar_necessidades.py`, `treinar_perigo.py`, `treinar_escopo.py` | Frases em `catalogo/` | Modelos em `web/dados/` | numpy, scikit-learn |
 | `indice_orientacao.py` | Áreas, catálogo, horários | `web/dados/indice_orientacao.json` | numpy, scikit-learn |
 | `verificar_catalogo.py` | Catálogo | Relatório de conferência com as páginas oficiais | stdlib |
+| `auditoria_catalogo.py` | `catalogo/servicos_manuais.csv`, código do site e testes | `reproducao/resultados/auditoria_catalogo.json` e CSV de completude (completude, conferência, procedência, atualidade, testes; só leitura local) | stdlib |
 | `inspecionar_arquivo.py` | Arquivos baixados | Estrutura (nunca os registros) | openpyxl |
 | `preparar_versionamento.py` | Arquivos novos | `git add` seguro (tamanho, CPF, dado bruto) | stdlib |
 | `testar_api.py` | `ANTHROPIC_API_KEY` | Resultado de uma chamada mínima | stdlib |
@@ -226,6 +227,7 @@ Notas de ambiente:
 - `pipeline/escolas_municipais.py` consolida o cadastro municipal e os vínculos INEP; gera `web/dados/escolas_municipais.json` sem matrículas ou turmas por unidade. O Censo Escolar é publicado separadamente em totais por rede por `pipeline/oferta_educacao_infantil.py`.
 - Mapa completo de arquivos de dados, geradores e consumidores: [docs/mapa_de_dados.md](docs/mapa_de_dados.md).
 - Verificar o catálogo contra as páginas oficiais (com internet): `python pipeline/verificar_catalogo.py`.
+- Auditar o catálogo e reproduzir as medidas da auditoria de referência (sem rede): `python pipeline/auditoria_catalogo.py --referencia AAAA-MM-DD` (use `--sem-testes` para pular os testes; `--catalogo` aceita outro CSV).
 
 ## Documentação
 

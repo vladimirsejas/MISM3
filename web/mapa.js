@@ -60,11 +60,12 @@
       c.appendChild(p);
     }
     linhaTexto(c, "Horário", s.horario);
+    if (Acesso.textoCamposAusentes(s)) c.appendChild(el("p", "mapa-meta", Acesso.textoCamposAusentes(s)));
     var precisao = el("p", "mapa-precisao " + (s.pos ? "p-" + s.pos.precisao : "p-sem"), MS.rotuloPrecisao(s.pos));
     c.appendChild(precisao);
     if (s.distancia_m != null) c.appendChild(el("p", "mapa-linha-info", Acesso.formatarDistancia(s.distancia_m) + ", em linha reta."));
     var idade = Acesso.idadeVerificacao(s.verificado_em);
-    var aviso = (s.conferido === false ? "Ainda não conferido: ligue antes de ir. " : "") + idade.texto.charAt(0).toUpperCase() + idade.texto.slice(1) + ".";
+    var aviso = (Acesso.estadoConferencia(s) === "confirmado" ? "" : Acesso.estadoConferencia(s) === "nao_confirmado" ? "Ainda não conferido: ligue antes de ir. " : "Conferência pendente: ligue antes de ir. ") + Acesso.textoConsulta(s);
     c.appendChild(el("p", "mapa-meta", aviso));
     var acoes = el("p", "mapa-acoes");
     var g = MS.linkGoogleMaps(s);

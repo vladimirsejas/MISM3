@@ -31,10 +31,11 @@ def test_coordenada_so_quando_ha_fonte_de_coordenada():
 def test_nao_conferido_tem_aviso_e_conferido_tem_fonte():
     for s in CATALOGO:
         assert isinstance(s.get("conferido"), bool), s["id"]
-        if s["conferido"] is False:
+        assert s.get("estado_conferencia") in ("confirmado", "nao_confirmado", "pendente"), s["id"]
+        assert s["conferido"] is (s["estado_conferencia"] == "confirmado"), f"{s['id']}: 'conferido' deve derivar do estado"
+        if s["estado_conferencia"] == "nao_confirmado":
             assert s.get("aviso"), f"{s['id']}: não conferido precisa de aviso visível"
-        else:
-            assert s.get("fonte_url") or s.get("fonte"), f"{s['id']}: conferido precisa de fonte"
+        assert s.get("fonte_url") or s.get("fonte"), f"{s['id']}: todo registro precisa de fonte"
 
 
 def test_ligacoes_inep_apontam_para_servicos_existentes_e_scripts_usam_o_mesmo_arquivo():
