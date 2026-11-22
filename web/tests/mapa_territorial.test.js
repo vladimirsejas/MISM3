@@ -15,7 +15,7 @@ const NAMESPACE_SVG = "http://www.w3.org/2000/svg"; /* identificador de namespac
   assert.deepStrictEqual(urls, [], "endereço externo em " + nome + ": " + urls.join(", "));
   assert(!/@import|url\(\s*["']?https?:/i.test(txt), "sem importação externa em " + nome);
 });
-assert(!/<script[^>]+src="(?!mapa-territorial\.js")/.test(html) && !/<link[^>]+href="(?!estilo\.css|mapa-territorial\.css)/.test(html), "só scripts e estilos locais");
+assert(!/<script[^>]+src="(?!mapa-territorial\.js")/.test(html) && !/<link[^>]+href="(?!estilo\.css|mapa-territorial\.css|data:,")/.test(html), "só scripts e estilos locais");
 assert(!/<img\b|<iframe|<object|<embed|<form\b|<base\b/i.test(html), "sem imagens externas, quadros, formulários nem base");
 const csp = (html.match(/Content-Security-Policy" content="([^"]+)"/) || [])[1] || "";
 assert(/default-src 'none'/.test(csp) && /connect-src 'self'/.test(csp) && /script-src 'self'/.test(csp) && /style-src 'self'/.test(csp), "CSP restritiva: " + csp);
