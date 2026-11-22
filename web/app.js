@@ -74,11 +74,15 @@
       /* a fonte comum e o estado de conferência aparecem uma vez no fim do bloco */
     } else if (est === "nao_confirmado") {
       partes.push('<p class="aviso-nao-conferido">' + (s.aviso ? esc(s.aviso) : "<strong>Ainda não conferido na página oficial.</strong> Ligue antes de ir.") + "</p>");
-      partes.push('<p class="meta">Para conferir: ' + fonte + " · informado em " + esc(s.verificado_em) + "</p>");
+      partes.push('<p class="meta">Para conferir: ' + fonte + "</p>");
+      if (Acesso.textoProcedencia(s)) partes.push('<p class="meta">' + esc(Acesso.textoProcedencia(s)) + "</p>");
+      partes.push('<p class="meta">' + esc(Acesso.textoConsulta(s)) + "</p>");
     } else {
       var idade = Acesso.idadeVerificacao(s.verificado_em);
       partes.push('<p class="meta">' + esc(Acesso.textoConferencia(s)) + "</p>");
-      partes.push('<p class="meta">Fonte: ' + fonte + " · verificado em " + esc(s.verificado_em) + " (" + esc(idade.texto) + ")</p>");
+      partes.push('<p class="meta">Fonte: ' + fonte + "</p>");
+      if (Acesso.textoProcedencia(s)) partes.push('<p class="meta">' + esc(Acesso.textoProcedencia(s)) + "</p>");
+      partes.push('<p class="meta">' + esc(Acesso.textoConsulta(s)) + "</p>");
       if (idade.antigo) partes.push('<p class="aviso-data">' + AVISO_DATA + "</p>");
     }
     var dados_bairros = s.bairros ? ' data-bairros="' + esc(normBairro(s.bairros)) + '"' : "";
@@ -299,7 +303,8 @@
       visiveis.forEach(function (s) { cartoes += cartaoServico(s, comum); });
       if (comum) {
         var idadeComum = Acesso.idadeVerificacao(visiveis[0].verificado_em);
-        notaFonte = '<p class="meta fonte-comum">' + esc(Acesso.textoConferencia(visiveis[0])) + ' Fonte de todos os cartões acima: <a href="' + esc(visiveis[0].fonte_url) + '" target="_blank" rel="noopener noreferrer">' + esc(visiveis[0].fonte) + "</a> · verificado em " + esc(visiveis[0].verificado_em) + " (" + esc(idadeComum.texto) + ").</p>" +
+        notaFonte = '<p class="meta fonte-comum">' + esc(Acesso.textoConferencia(visiveis[0])) + ' Fonte de todos os cartões acima: <a href="' + esc(visiveis[0].fonte_url) + '" target="_blank" rel="noopener noreferrer">' + esc(visiveis[0].fonte) + "</a>. " +
+          esc(Acesso.textoProcedencia(visiveis[0])) + " " + esc(Acesso.textoConsulta(visiveis[0])) + "</p>" +
           (idadeComum.antigo ? '<p class="aviso-data">' + AVISO_DATA + "</p>" : "");
       }
       }

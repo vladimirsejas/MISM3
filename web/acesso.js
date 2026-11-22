@@ -122,6 +122,34 @@
   }
   function textoConferencia(s) { return TEXTO_CONFERENCIA[estadoConferencia(s)]; }
 
-  return { estadoConferencia: estadoConferencia, textoConferencia: textoConferencia, ORDEM: ORDEM, ROTULOS: ROTULOS, rotuloSubtipo: rotuloSubtipo, normalizarCep: normalizarCep, haversine: haversine,
+  /* Procedência e atualidade. A data do registro é a da CONSULTA (quando o projeto leu a fonte), não a da atualização pelo órgão.
+     Limites em dias: os mesmos de pipeline/servicos.py (LIMITES_ATUALIDADE); um teste confere. Nenhum rótulo diz "atualizado". */
+  var LIMITES_ATUALIDADE = { recente_ate_dias: 30, a_renovar_ate_dias: 90 };
+  function atualidade(iso, hoje) {
+    var i = idadeVerificacao(iso, hoje);
+    if (i.dias === null) return { dias: null, estado: "desconhecida" };
+    var e = i.dias <= LIMITES_ATUALIDADE.recente_ate_dias ? "consulta_recente" : i.dias <= LIMITES_ATUALIDADE.a_renovar_ate_dias ? "consulta_a_renovar" : "consulta_antiga";
+    return { dias: i.dias, estado: e };
+  }
+  function dataBrCurta(iso) { var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(iso || "")); return m ? m[3] + "/" + m[2] + "/" + m[1] : ""; }
+  /* "Consultada em 10/10/2026 (há 42 dias)." + o que isso NÃO quer dizer. */
+  function textoConsulta(s, hoje) {
+    var a = atualidade(s && s.verificado_em, hoje);
+    if (a.dias === null) return "Não há registro de quando esta fonte foi consultada: confirme antes de ir.";
+    var quando = a.dias === 0 ? "hoje" : a.dias === 1 ? "há 1 dia" : "há " + a.dias + " dias";
+    var t = "Fonte consultada pela equipe em " + dataBrCurta(s.verificado_em) + " (" + quando + ").";
+    if (s.data_atualizacao_fonte) return t + " O órgão informa atualização em " + dataBrCurta(s.data_atualizacao_fonte) + ".";
+    return t + " Não sabemos quando o órgão atualizou a página.";
+  }
+  /* De onde veio: fonte identificada, genérica ou não identificada (campo "fonte_tipo" do pipeline). */
+  function textoProcedencia(s) {
+    var t = s && s.fonte_tipo;
+    if (t === "generica") return "Só sabemos o site do órgão; a página exata de onde vieram estes dados não foi registrada.";
+    if (t === "nao_identificada") return "Fonte não identificada com precisão: a informação veio de pesquisa, não de uma página oficial conferida.";
+    return "";
+  }
+
+  return { LIMITES_ATUALIDADE: LIMITES_ATUALIDADE, atualidade: atualidade, textoConsulta: textoConsulta, textoProcedencia: textoProcedencia,
+    estadoConferencia: estadoConferencia, textoConferencia: textoConferencia, ORDEM: ORDEM, ROTULOS: ROTULOS, rotuloSubtipo: rotuloSubtipo, normalizarCep: normalizarCep, haversine: haversine,
     formatarDistancia: formatarDistancia, idadeVerificacao: idadeVerificacao, LIMITE_DIAS: LIMITE_DIAS, comDistancia: comDistancia, buscar: buscar };
 });

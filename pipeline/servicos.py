@@ -177,7 +177,58 @@ def estado_conferencia(valor) -> str:
     return _VALORES_CONFERENCIA[chave]
 
 
-def servicos_manuais(df, indice: dict, etapas: dict | None = None) -> list[dict]:
+# ------------------------------------------------------------ procedência e atualidade
+# Procedência da fonte de um registro manual:
+#   identificada     - a planilha traz a descrição da fonte (qual página, qual notícia, quando foi consultada)
+#   generica         - a planilha NÃO descreve a fonte: o sistema só preencheu o texto genérico abaixo. Só sabemos o endereço do
+#                      órgão (fonte_url), não qual página sustenta cada dado. Nenhuma fonte específica é atribuída sem evidência.
+#   nao_identificada - registro não confirmado, sem descrição de fonte: só se sabe que veio de pesquisa
+TEXTO_FONTE_GENERICA = "Página oficial do órgão"
+TEXTO_FONTE_NAO_CONFIRMADA = "Pesquisa na internet; não conferida na página oficial"
+FONTES_TIPOS = ("identificada", "generica", "nao_identificada")
+
+# Atualidade = idade da CONSULTA (quando o projeto leu a fonte), nunca a data em que o órgão atualizou a informação.
+# Limites em dias, configuráveis aqui; web/acesso.js (LIMITES_ATUALIDADE) usa os mesmos valores e um teste confere.
+#   consulta_recente  : consultada há até LIMITES_ATUALIDADE["recente_ate_dias"] dias
+#   consulta_a_renovar: acima disso e até LIMITES_ATUALIDADE["a_renovar_ate_dias"] dias
+#   consulta_antiga   : acima do segundo limite
+#   desconhecida      : data ausente, inválida ou futura
+# Nenhum estado se chama "atualizado": consulta recente não prova que o órgão atualizou a página.
+LIMITES_ATUALIDADE = {"recente_ate_dias": 30, "a_renovar_ate_dias": 90}
+
+
+def _data(iso):
+    from datetime import date
+    m = re.match(r"^(\d{4})-(\d{2})-(\d{2})", str(iso or ""))
+    if not m:
+        return None
+    try:
+        return date(int(m.group(1)), int(m.group(2)), int(m.group(3)))
+    except ValueError:
+        return None
+
+
+def atualidade_da_consulta(verificado_em, referencia, limites: dict | None = None):
+    """(idade em dias, estado). Datas ausentes, inválidas ou futuras dão (None, 'desconhecida')."""
+    lim = limites or LIMITES_ATUALIDADE
+    d0, d1 = _data(verificado_em), _data(referencia)
+    if d0 is None or d1 is None or d0 > d1:
+        return None, "desconhecida"
+    dias = (d1 - d0).days
+    if dias <= lim["recente_ate_dias"]:
+        return dias, "consulta_recente"
+    if dias <= lim["a_renovar_ate_dias"]:
+        return dias, "consulta_a_renovar"
+    return dias, "consulta_antiga"
+
+
+def tipo_de_fonte(fonte_planilha, estado: str) -> str:
+    if fonte_planilha:
+        return "identificada"
+    return "nao_identificada" if estado == "nao_confirmado" else "generica"
+
+
+def servicos_manuais(df, indice: dict, etapas: dict | None = None, referencia: str | None = None) -> list[dict]:
     saida = []
     for _, r in df.iterrows():
         g = lambda c: (None if str(r.get(c, "")) in ("nan", "None", "") else str(r[c]).strip())  # noqa: E731
@@ -197,8 +248,15 @@ def servicos_manuais(df, indice: dict, etapas: dict | None = None) -> list[dict]
             "nome": g("nome"), "cep": normalizar_cep(g("cep")), "endereco": g("endereco"),
             "telefone": g("telefone"), "horario": g("horario"), "lat": lat, "lon": lon, "geo": geo,
             "abrangencia": g("abrangencia") or "local",
-            "fonte": (g("fonte") or "Pesquisa na internet; não conferida na página oficial") if nao_conferido else (g("fonte") or "Página oficial do órgão"),
+            "fonte": (g("fonte") or TEXTO_FONTE_NAO_CONFIRMADA) if nao_conferido else (g("fonte") or TEXTO_FONTE_GENERICA),
+            "fonte_tipo": tipo_de_fonte(g("fonte"), estado),
             "fonte_url": g("fonte_url"), "verificado_em": g("verificado_em"),
+            # campos de atualidade: data_consulta repete verificado_em (mantido por compatibilidade); a data de atualização
+            # pela instituição só existe se a planilha trouxer a coluna opcional "atualizacao_fonte" (hoje não traz): fica vazia.
+            "data_consulta": g("verificado_em"),
+            "data_atualizacao_fonte": g("atualizacao_fonte"),
+            "idade_verificacao_dias": atualidade_da_consulta(g("verificado_em"), referencia)[0],
+            "atualidade": atualidade_da_consulta(g("verificado_em"), referencia)[1],
             "observacao": (g("observacao") or "").replace(FRASE_SEM_ETAPAS, FRASE_COM_ETAPAS)
             if etapas and identificador in etapas else g("observacao"),
             "estado_conferencia": estado,
@@ -224,7 +282,7 @@ def montar(indice: dict, cnes=None, escolas=None, manuais=None, hoje: str | None
     if escolas is not None:
         a = servicos_creches(escolas, indice, hoje); itens += a; contagem["creches_inep"] = len(a)
     if manuais is not None:
-        a = servicos_manuais(manuais, indice, etapas); itens += a; contagem["manuais"] = len(a)
+        a = servicos_manuais(manuais, indice, etapas, referencia=hoje); itens += a; contagem["manuais"] = len(a)
         codigos_manuais = {str(s["cnes"]) for s in a if s.get("cnes")}
     # Somente o catálogo manual pode substituir um registro CNES com o mesmo código.
     # Incluir os códigos da lista CNES aqui apagaria também registros CNES sem substituto manual.
@@ -235,6 +293,8 @@ def montar(indice: dict, cnes=None, escolas=None, manuais=None, hoje: str | None
             continue
         vistos.add(s["id"]); unicos.append(s)
     return {"meta": {"gerado_em": hoje, "contagem_por_origem": contagem,
+                     "limites_atualidade": LIMITES_ATUALIDADE,
+                     "nota_atualidade": "data_consulta e idade_verificacao_dias dizem quando o projeto leu a fonte (idade medida em gerado_em); nao dizem quando o orgao atualizou a informacao.",
                      "aviso": "Cadastros oficiais podem estar desatualizados. Confirme antes de ir."},
             "servicos": unicos}
 
