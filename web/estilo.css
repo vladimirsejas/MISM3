@@ -532,3 +532,7 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%}
 @media(min-width:1700px){
   .guia-area ul{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
+.resumo-dia{overflow-wrap:anywhere}
+.resumo-dia>h3{font-size:1.02rem;margin:1rem 0 .2rem}
+.resumo-lista{margin:.2rem 0 .6rem;padding-left:1.1rem}
+.resumo-lista li{margin:.25rem 0}

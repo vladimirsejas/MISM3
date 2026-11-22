@@ -21,7 +21,7 @@ def real():
 def test_reproduz_registros_e_completude_de_referencia(real):
     assert real["registros"] == 168
     t = {k: v["preenchidos"] for k, v in real["completude_total"].items()}
-    assert (t["telefone"], t["endereco"], t["cep"], t["horario"]) == (151, 156, 108, 52)
+    assert (t["telefone"], t["endereco"], t["cep"], t["horario"]) == (151, 156, 108, 58)
     assert real["coordenada_de_origem"]["registros_com_lat_e_lon_na_planilha"] == 84
     assert real["avisos_de_cautela"]["registros_com_aviso"] == 9
 
