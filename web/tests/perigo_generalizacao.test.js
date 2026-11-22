@@ -52,4 +52,44 @@ assert(cvv.telefones.includes("188") && cvv.telefones.includes("192"), "CVV (188
   .forEach((t) => alerta(t, "suicidio"));
 ["meu pai quer ver o jogo em casa hoje", "tenho medo que ela se machuque na escada", "qual o cvv do meu cartao", "preciso do codigo cvv do cartao de credito", "o numero cvv fica no verso do cartao"].forEach(nenhum);
 
-console.log("perigo_generalizacao.test.js ok");
+
+/* ============ PRIORIDADE 2 — falsos alarmes: figurado, esporte, hipérbole banal, dor comum, proteção sem reaparecimento ============ */
+
+/* 2a. Figurado com objeto abstrato ou emoção: matar/morrer de rir, vergonha, cansaço, "de tanto" + esforço; tapa/empurrão/soco abstratos */
+["Meu namorado  me matou de rir.", "Meu noivo me matou de  tanto correr na pedalada de hoje.",                                  // desenvolvimento
+ "Eu estava muito parada na vida  e meu amigo me deu um tapa de motivação.", "Ontem  eu  vi que meu primo me deu um empurrão na vida."]   // desenvolvimento
+  .forEach(nenhum);
+["minha amiga me mata de rir com as piadas dela", "morri de vergonha na reuniao de hoje", "estou morrendo de saudade da minha mae", "meu pai me matou de cansaco na caminhada de domingo",
+ "preciso de um tapa de realidade pra largar esse emprego", "meu chefe deu um empurrao na minha carreira", "aquela palestra foi um soco na autoestima, mas me fez bem", "o professor me deu um empurraozinho na vida academica"]
+  .forEach(nenhum);
+/* os positivos continuam: golpe de verdade, com ou sem objeto concreto, e "me mata de fome" não é figurado */
+["meu marido me deu um tapa na cara", "ele me deu um soco no rosto ontem", "meu irmao me deu um empurrao na escada", "ele me deu um chute quando eu reclamei", "meu marido ja me deu varios tapas"]
+  .forEach((t) => alerta(t, "violencia"));
+alerta("ele disse que vai me matar", "violencia");
+alerta("meu marido me mata de fome e me bate", "violencia");
+
+/* 2b. Esporte e brincadeira */
+["levei um soco no treino de boxe e fiquei com o olho roxo", "ganhei um chute na aula de luta hoje", "meu primo me deu um empurrao na brincadeira e eu cai na piscina", "tomei uma cotovelada no jogo de basquete"]
+  .forEach(nenhum);
+alerta("meu marido me deu um soco depois do jogo de futebol", "violencia");
+
+/* 2c. Hipérbole sobre falta banal, em contexto hipotético */
+["Me escondi do meu irmão que ele iria me matar hora qaue visse que comi o ultimo pedaço de bolo.",                                  // desenvolvimento
+ "minha irma ia me matar se visse que usei o esmalte dela", "meu pai iria me esganar se soubesse que comi o chocolate", "ele ia me matar se descobrisse que comi o ultimo pedaco de pizza", "minha prima vai me matar se eu quebrar o carregador dela, brincando"]
+  .forEach(semCompleto);
+["ele vai me matar se eu contar pra alguem", "meu marido ia me matar se soubesse que falei com a policia", "ele disse que vai me matar se eu comer na mesa", "meu pai vai me matar se eu sair de casa"]
+  .forEach((t) => alerta(t, "violencia"));
+
+/* 2d. Dor localizada comum, sem sinal de gravidade, não dispara o detector sozinho; com sinal de gravidade continua alertando */
+["Estpou com dor no braço direito.", "Esrou con dor nas costas.", "estou com dor no ombro direito desde de manha", "dor de dente forte desde ontem", "dor na perna depois da caminhada"].forEach(semCompleto);
+["estou com dor no peito", "dor no braco esquerdo e tontura", "dor no braco e falta de ar", "dor nas costas e suor frio e falta de ar"].forEach((t) => alerta(t, "saude"));
+
+/* 2e. Proteção em vigor, agressor que não reaparece (relato resolvido): sem alerta; qualquer reaparecimento ou ameaça mantém o alerta */
+["Depois que fiz  os B.O.  e consegui  a medida protetiva nunca mais meu ex marido se aproximou de  im tem mais de um ano que não tenho  notícias dele.",   // desenvolvimento
+ "depois da medida protetiva ele nunca mais me procurou e ja faz dois anos", "consegui a protecao judicial e desde entao nao tenho noticias dele", "fiz o bo, tenho a medida protetiva e ele nunca mais se aproximou"]
+  .forEach(semCompleto);
+["tenho medida protetiva e ele apareceu ontem na minha porta", "depois da medida protetiva ele nunca mais veio mas hoje mandou mensagem", "tenho medida protetiva mas ele continua me ameacando", "consegui a protetiva e ele voltou a me procurar"]
+  .forEach((t) => alerta(t, "violencia"));
+alerta("depois da medida protetiva nunca mais me procurou mas eu quero me matar", "suicidio");
+
+console.log("perigo_generalizacao.test.js (prioridade 2) ok");

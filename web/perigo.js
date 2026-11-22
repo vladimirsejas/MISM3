@@ -175,12 +175,35 @@
      Outras categorias (figurados com objeto abstrato, esporte, hipérbole banal, proteção em vigor sem reaparecimento) ficam junto delas abaixo. */
   var NEUTRAS = [
     [/(?:codigo|numero|digitos?|verso|seguranca|cartao|credito|debito)(?: \w+){0,3} cvv|cvv (?:do|no|de|da|dos) (?:meu |o |a |seu )?(?:cartao|credito|debito|banco)/g, "codigo do cartao"],
-    [/\bcortes? (?:de|do|da|dos|das) (?:cabelo|barba|unhas?|gastos?|custos?|orcamento|energia|luz|agua|verba|bolo|papel|tecido|grama|franja|despesas?)\b/g, "assunto comum"]
+    [/\bcortes? (?:de|do|da|dos|das) (?:cabelo|barba|unhas?|gastos?|custos?|orcamento|energia|luz|agua|verba|bolo|papel|tecido|grama|franja|despesas?)\b/g, "assunto comum"],
+    /* figurado: "matar/morrer de" rir, vergonha, cansaço, saudade... ou "de tanto" + verbo de esforço ("matou de tanto correr").
+       Ficam de fora medo, fome e sede: "me mata de fome" e "morro de medo dele" podem ser relato real. */
+    [/\b(?:me |te |nos )?(?:mata|matou|mataram|matam|matando|morri|morro|morre|morremos|morrendo|morreu|morrer|morria)(?: \w+)? de (?:rir|riso|risada|risadas|vergonha|cansaco|saudade|sono|susto|calor|frio|curiosidade|emocao|alegria|inveja|preguica|tedio|orgulho|tanto (?:rir|correr|trabalhar|andar|estudar|esperar|pedalar|caminhar|dancar|cantar|pular|jogar|treinar|malhar|limpar|cozinhar|ler|falar|comer|dormir|pensar|rir))\b/g, "expressao figurada"],
+    /* figurado: golpe com objeto abstrato ("tapa de motivação", "empurrão na vida/na carreira", "soco na autoestima") */
+    [/\b(?:tapa|soco|chute|empurrao|empurraozinho|murro|puxao|pancada|cutucada|sacudida|beliscao|cascudo|chacoalhada)(?: \w+)? (?:de|na|no|em|pra|para) (?:a |o )?(?:motivacao|vida|carreira|realidade|ego|autoestima|humildade|confianca|animo|coragem|sorte|esperanca|inspiracao|estudos|trabalho|projeto|sonho|futuro|mercado|profissao|negocios|criatividade|perspectiva|empreendedorismo|juizo|consciencia|ideias)\b/g, "expressao figurada"],
+    /* esporte e brincadeira: golpe "no treino", "na aula de luta", "no jogo", "na brincadeira" */
+    [/\b(?:tapa|soco|chute|empurrao|murro|pancada|cotovelada|joelhada|golpe)s? (?:no|na|durante o|durante a) (?:treino|aula de (?:boxe|luta|judo|jiu jitsu|karate|muay thai|capoeira|taekwondo)|jogo|campeonato|luta de (?:boxe|mma|judo)|partida|brincadeira|recreio|ensaio)\b/g, "expressao esportiva"]
   ];
+  /* hipérbole sobre falta banal, em contexto hipotético ("ele iria me matar se visse que comi o último pedaço de bolo"): só quando há
+     marcador de hipótese/brincadeira E um item banal. Sem os dois, a ameaça continua valendo. */
+  var HIPOTESE = /\b(?:iria|ia|se visse|hora que visse|quando visse|se soubesse|se descobrisse|se percebesse|brincando|de brincadeira|kkk+|haha+)\b/;
+  var ITEM_BANAL = /\b(?:bolo|doce|pizza|chocolate|sorvete|pedaco|biscoito|bolacha|lanche|salgado|coxinha|pao|torrada|refrigerante|controle remoto|videogame|brinquedo|figurinha|camisa do time|chinelo|bateria do celular|carregador|tomada|blusa|esmalte|batom|maquiagem|perfume|fone|tenis)\b/;
   function neutralizar(t) {
     NEUTRAS.forEach(function (n) { t = t.replace(n[0], n[1]); });
+    if (HIPOTESE.test(t) && ITEM_BANAL.test(t)) t = t.replace(/\bme (?:matar|mata|esganar|esganaria|estrangular|assassinar)\b/g, "me repreender").replace(/\bme (?:escondi|escondo|escondia|escondendo)\b/g, "me afastei");
     return t;
   }
+  /* Proteção em vigor e agressor que não reaparece ("depois da medida protetiva nunca mais se aproximou, sem notícias há um ano"): relato
+     resolvido, não perigo. Exige TODAS as três coisas: contexto de proteção, marcador de ausência de contato e nenhum marcador de reaparecimento. */
+  var CTX_PROTECAO = /(?:^| )(?:medida protetiva|protetiva|protecao|b o|boletim|denuncia|ordem de afastamento)(?: |$)/;
+  var SEM_REAPARECER = /(?:nunca mais|nao se aproximou|nao se aproxima|nao me procurou|nao me procura|nao tenho noticias|sem noticias|nao voltou|nao apareceu|faz (?:mais de )?(?:um|dois|tres|\d+) (?:ano|anos|mes|meses) que (?:nao|nunca))/;
+  var REAPARECEU = /(?:voltou|descumpr|de novo|ontem|hoje|agora|rondando|esta aqui|me procurou|me ligou|me mandou|mandou mensagem|ainda (?:me|esta|vem|aparece)|apareceu(?! nunca))/;
+  /* "nunca mais me procurou" é ausência de contato, não reaparecimento: as formas negadas saem antes de procurar marcador de reaparecimento */
+  var NEGADOS = /(?:nunca mais|nao|nunca)(?: \w+){0,2} (?:me procurou|me procura|me ligou|me liga|me mandou|apareceu|voltou|veio|se aproximou|se aproxima|mandou mensagem)/g;
+  function violenciaResolvida(vs) { return vs.every(function (v) { return CTX_PROTECAO.test(v) && SEM_REAPARECER.test(v) && !REAPARECEU.test(v.replace(NEGADOS, " ")); }); }
+  /* Dor localizada comum (braço direito, costas, ombro, ciático, dente...) sem sinal de gravidade: o detector aprendido sozinho não vale. */
+  var DOR_LOCAL = /(?:^| )dor(?:es)? (?:forte |leve |muita |muito )?(?:n[oa]s?|d[oae]s?|em) (?:meu |minha |o |a )?(?:braco|costas|ombros?|ciatico|nervo ciatico|joelhos?|tornozelos?|pernas?|pes?|coluna|lombar|pescoco|dentes?|garganta|ouvido|cabeca|barriga|estomago|maos?|punhos?|cotovelos?|quadril|panturrilha|coxa|tendao)(?: |$)/;
+  var GRAVIDADE = /esquerd|peito|falta de ar|sem ar|formig|dorment|suor|tontur|enjo|desmai|insuport|de repente|subita|irradi|queda|caiu|acidente|pancada|sangr|convuls|inconsci|nao consigo (?:respirar|mexer|levantar|andar|falar)|muito forte|fortissima|desesper/;
   function corrigirDigitacao(t) {
     return t.split(" ").map(function (w) {
       if (w.length < 6 || NO_VOCAB[w] || /\d/.test(w)) return w;
@@ -234,8 +257,11 @@
     var tipos = [], nivel = 0;
     var tN = neutralizar(t), probs = detector ? detector.probabilidades(tN !== t ? tN : texto) : null, doModelo = {}, fracos = [];
     if (probs) versoes.slice(1, t3 !== t2 ? versoes.length - 1 : versoes.length).forEach(function (v) { var pv = detector.probabilidades(v); Object.keys(pv).forEach(function (k) { if (pv[k] > probs[k]) probs[k] = pv[k]; }); });
+    var resolvida = violenciaResolvida(versoes);
     ORDEM.forEach(function (tp) {
       var regra = versoes.some(function (v) { return achou(COMPILADO[tp].forte, v) || achouCombo(COMPILADO[tp].combos, v); }), p = probs ? probs[tp] : undefined, lim = detector ? detector.limiares[tp] : undefined;
+      if (tp === "violencia" && resolvida) return;
+      if (tp === "saude" && !regra && versoes.some(function (v) { return DOR_LOCAL.test(v); }) && !versoes.some(function (v) { return GRAVIDADE.test(v); })) p = undefined;
       var alto = detector && detector.altos[tp] !== undefined ? detector.altos[tp] : lim;
       if (!regra && ANCORAS[tp] && !emAlguma(ANCORAS[tp])) p = undefined; /* o detector sozinho não vale sem uma palavra do assunto */
       if (!regra && tp === "crianca" && necessidadeMaterialSemDano(t)) p = undefined; /* pobreza e responsabilidade familiar não são alerta de abuso sem sinal de dano */
