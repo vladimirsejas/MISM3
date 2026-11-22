@@ -92,4 +92,30 @@ alerta("meu marido me deu um soco depois do jogo de futebol", "violencia");
   .forEach((t) => alerta(t, "violencia"));
 alerta("depois da medida protetiva nunca mais me procurou mas eu quero me matar", "suicidio");
 
-console.log("perigo_generalizacao.test.js (prioridade 2) ok");
+
+/* ============ PRIORIDADE 3 — alerta que saía menor que o esperado ============ */
+
+/* 3a. Contato com quem a justiça proibiu (descumprimento de proteção), inclusive com erro de digitação */
+alerta("Ele     entrou  en  cpmtato com ela mesmo   o juim proibindo.", "violencia");                          // desenvolvimento
+alerta("Ele não pode falar com elae  ta mandando mensagem no celular.", "violencia");                           // desenvolvimento
+["o juiz proibiu mas ele mandou mensagem pra ela hoje", "ele nao pode se aproximar e apareceu no trabalho dela", "mesmo com a ordem de afastamento ele me ligou",
+ "ele entrou em cpmtato com a minha irma mesmo com a decisao da justica proibindo"].forEach((t) => alerta(t, "violencia"));
+["o juiz proibiu a venda do terreno", "ele entrou em contato com o rh da empresa", "a escola proibiu celular em sala", "ele nao pode falar alto na biblioteca", "assinei o contrato do aluguel ontem"].forEach(semCompleto);
+
+/* 3b. Criança machucada (sempre, ou com menção ao conselho tutelar) */
+alerta("A menina sempre chega machucada na escola alguém ptrevisa chamar o conselho tutelar.", "crianca");     // desenvolvimento
+["meu sobrinho sempre volta da casa do pai com roxos", "a crianca vive com marcas pelo corpo e precisa do conselho tutelar", "vou chamar o conselho tutelar porque o menino esta machucado e passando fome",
+ "o menino sempre chega machucado na aula e ninguem faz nada"].forEach((t) => alerta(t, "crianca"));
+["meu filho sempre chega machucado do futebol", "o conselho tutelar atende na segunda?", "meu sobrinho sempre chega cansado da escola", "quero informacao sobre o conselho tutelar da regiao sul"].forEach(semCompleto);
+
+/* 3c. Agressão por pai, mãe, padrasto, madrasta ou outro familiar, com outros familiares como vítimas */
+alerta("Meu  pai  chegou bebado  agrediu minha mãe a mim e meus irmão.", "violencia");                          // desenvolvimento
+["meu padrasto agrediu minha mae e meus irmaos", "minha mae bateu em mim e na minha irma", "meu pai espancou minha avo ontem a noite", "meu tio machucou a gente toda vez que bebe"]
+  .forEach((t) => alerta(t, "violencia"));
+["meu pai bateu o carro na garagem", "minha mae bateu a porta e saiu", "meu irmao empurrou o carrinho no mercado", "meu marido machucou o dedo no portao"].forEach(semCompleto);
+
+/* 3d. Corte profundo + pedido do SAMU e risco de suicídio de terceiro (cobertos na prioridade 1) continuam em nível 2 */
+alerta("Fiz um corte profund e não sei o telefone do Samu.");
+alerta("Tenho medo que ela se mate.", "suicidio");
+
+console.log("perigo_generalizacao.test.js (prioridade 3) ok");

@@ -24,6 +24,7 @@
   var PROIBIDO = "(?:proibid[ao]s?|proibindo|proibiu|nao pode (?:falar|se aproximar|chegar perto|entrar em contato|procurar|ligar|mandar mensagem|ter contato)|(?:juiz|justica|decisao|ordem|medida)(?: \\w+){0,3} (?:proibi\\w+|determin\\w+|mandou)|ordem de afastamento)";
   var CONTATO = "(?:(?:entrou|entrando|fez|teve)(?: \\w+)? contato|contato com ela|contato comigo|falou com ela|falou comigo|mandando mensagem|mandou mensagem|manda mensagem|ligando|ligou|liga pra ela|procurou|procurando|aproximou|se aproxima|apareceu|chegou perto|esta perto|esteve)";
   var AGRESSOR_AMBIENTE = "(?:ele|ex|dele|agressor|marido|namorado|companheiro|pai dos meus filhos|pai dela|pai dele)";
+  var SINAL_DANO_CRIANCA = "(?:machucad\\w+|marcas?|roxo|roxa|roxos|hematomas?|apanh\\w+|abus\\w+|maltrat\\w+|negligenc\\w+|espanc\\w+|queimad\\w+|passando fome|sem comer|trancad\\w+|abandonad\\w+)";
   var SINAL_ASSOCIADO = "(?:peito|falta de ar|sem ar|ar faltando|suor frio|suando frio|tontura|tonta|enjoo|enjoada|nausea|mal estar|passando mal|palidez|palida)";
   var TIPOS = {
     suicidio: {
@@ -56,8 +57,10 @@
         "passa(?:ndo|ou)? a mao (?:nela|nele|na (?:menina|crianca|filha|neta|sobrinha)|no (?:menino|filho|neto|sobrinho))", "(?:neta|filha|filho|crianca|menina|menino|sobrinha|sobrinho)(?: de \\d+ anos)? (?:me )?(?:contou|disse|falou|confessou) que (?:o |a |meu |minha )?(?:\\w+ ){0,3}(?:mexe|mexeu|passa|passou|tocou|abusa|abusou|bolina|obriga|machuca|bate)",
         "(?:crianca|menina|menino|filh[oa]|neto|neta|bebe|sobrinh[oa])s?(?: [a-z]+){0,5} (?:apanh(?:a|am|ando|ou)(?! (?:do|da|dos|das) (?:adversari\\w*|time|equipe|oponent\\w*|rival|jogo|campeonato|volei|futebol|basquete|handebol))(?= (?:de|do|da|dos|das|toda|todo|todas|todos|muito|demais|bastante|dele|dela|em casa|sempre|a noite)|$)|e espancad[oa]|e agredid[oa]|vive machucad[oa]|tem marcas)", "apanha(?:ndo|m)? de (?:cinto|chinelo|fio|pau|corda|vara|mangueira)", "(?:escuto|ouco|ouvi) (?:os )?gritos d[eao]s? (?:crianca|menina|menino|filh[oa]|vizinh[oa])", "(?:crianca|menina|menino|filh[oa]) (?:trancad[oa]|amarrad[oa]|sem comer|passando fome) (?:em casa|sozinh[oa])",
         "(?:crianca|menina|menino|filha|filho) (?:esta sendo |sendo |foi )?(?:abusada|abusado|maltratada|maltratado|espancada|espancado|violentada)",
-        "maus tratos (?:a|com|em|contra) (?:crianca|criancas|menor|filho|filha|bebe)", "abuso sexual (?:de|da|do|contra) (?:crianca|menor|filha|filho)"
+        "maus tratos (?:a|com|em|contra) (?:crianca|criancas|menor|filho|filha|bebe)",
+        "(?:crianca|menina|menino|filh[oa]|bebe|neto|neta|aluna|aluno|sobrinh[oa]|entead[oa]|afilhad[oa])(?: \\w+){0,2} sempre (?:chega|volta|aparece|vem)(?: \\w+){0,5} (?:machucad[oa]|roxo|roxa|com marcas|com hematomas|com roxos)(?!(?: \\w+){0,4} (?:futebol|jogo|treino|bicicleta|skate|patins|brincadeira|campinho|quadra|recreio|capoeira|judo|handebol|volei|basquete|brincando))", "abuso sexual (?:de|da|do|contra) (?:crianca|menor|filha|filho)"
       ],
+      combos: [["conselho tutelar", SINAL_DANO_CRIANCA]],
       aviso: "Se uma criança está em perigo, ligue 190 (Polícia) ou Disque 100 (24 horas, gratuito).",
       mensagem: "Se uma criança está em perigo agora, ligue 190. Para pedir proteção e denunciar: Disque 100 (24 horas, gratuito) e o Conselho Tutelar.",
       telefones: ["190", "100"],
@@ -71,6 +74,7 @@
         "descumpr\\w+ (?:a |essa |minha )?(?:medida|protecao|ordem)(?: protetiva| judicial| de afastamento)?",
         PESSOA + " (?:controla|controlou|controlando|vigia|vigiando) (?:todo o |toda a |meu |minha |meus |minhas )?(?:dinheiro|conta bancaria|celular|telefone|mensagens|com quem eu falo|roupas|documentos)",
         PESSOA + " (?:bate|bateu|agride|agrediu|empurrou|chutou|enforcou|ameaca|ameacou|abusa|abusou) (?:em|n[ao]s?|d[ao]s?) (?:mim|nos|gente|minha|meu|meus|minhas|nossos|nossas|filha|filho|criancas)",
+        "(?:meu|minha) (?:pai|mae|padrasto|madrasta|marido|companheiro|namorado|ex|irmao|tio|avo)(?: \\w+){0,3} (?:agrediu|agrediram|agride|bateu|bateram|bate|espancou|espancaram|espanca|machucou|machucam|empurrou|chutou|esfaqueou|enforcou|sufocou|maltratou|maltrata|ameacou)(?: \\w+)? (?:a |o |os |as )?(?:minha mae|meu pai|minha irma|meus irmaos|minhas irmas|minha avo|meu avo|mim|nos|minha familia|a gente|todos nos|todo mundo|todos|meus filhos|as criancas|a mae|a crianca|minhas filhas)",
         PESSOA + " (?:vai|quer|disse que vai) (?:me )?(?:matar|bater)",
         "(?:estou|to|ta|tou|esta|vivo|vivendo|continuo) (?:apanhando|sendo agredida|sendo ameacada|sofrendo violencia|sendo perseguida)", "apanh(?:o|ando|ei|ou|a|am)\\b(?! (?:chuva|sol|gripe|resfriado|frio|bola|onibus|um taxi|ar|vento|sereno|a bola|o onibus|feio|de goleada|no jogo|em campo|na final|no campeonato|pra (?:aprender|achar|mexer)|muito pra|(?:do|da|dos|das) (?:adversari\\w*|time|equipe|oponent\\w*|rival|jogo|campeonato|volei|futebol|basquete|handebol)))",
         "(?:bate|bateu|batendo|agride|agrediu|espanca|espancou|maltrata|ameaca|ameacou) (?:n[ao]|em|a) (?:a |sua |minha )?(?:mulher|esposa|namorada|companheira|vizinha|irma|amiga|mae)",
@@ -155,7 +159,7 @@
     "abusavam abusaram abusado trancava trancando trancaram apanhava apanhavam apanhado sangrava sangravam desmaiava desmaiando desmaiaram " +
     "respirava respirando acorrentava acorrentaram amarrava amarraram queimava queimando proibia proibiam proibiram contatos").split(" ");
   var NO_VOCAB = {}; VOCABULARIO.forEach(function (w) { NO_VOCAB[w] = 1; });
-  ["projecao", "projecoes", "protecoes", "numeros", "telefones", "ligara", "ligaria"].forEach(function (w) { NO_VOCAB[w] = 1; });
+  ["projecao", "projecoes", "protecoes", "numeros", "telefones", "ligara", "ligaria", "titular", "titulares", "contrato", "contratos", "contratar", "contratada", "contratado", "telefonema"].forEach(function (w) { NO_VOCAB[w] = 1; });
   /* distância de edição com transposição (Damerau/OSA), com corte em "max" */
   function distancia(a, b, max) {
     var la = a.length, lb = b.length, i, j, d = [];
@@ -207,13 +211,15 @@
   function corrigirDigitacao(t) {
     return t.split(" ").map(function (w) {
       if (w.length < 6 || NO_VOCAB[w] || /\d/.test(w)) return w;
-      var limite = w.length >= 10 ? 2 : 1, melhor = null, md = limite + 1;
+      var limite = w.length >= 10 ? 2 : 1, melhor = null, md = 3;
       VOCABULARIO.forEach(function (v) {
         if (v.length < 6) return;
-        var dd = distancia(w, v, limite);
-        if (dd < md) { md = dd; melhor = v; }
+        var lim = limite;
+        if (lim === 1 && w.length >= 7 && v.length >= 7 && Math.abs(w.length - v.length) <= 1 && w.charAt(0) === v.charAt(0) && w.charAt(w.length - 1) === v.charAt(v.length - 1)) lim = 2; /* mesmas letras das pontas */
+        var dd = distancia(w, v, lim);
+        if (dd <= lim && dd < md) { md = dd; melhor = v; }
       });
-      return melhor && md <= limite ? melhor : w;
+      return melhor || w;
     }).join(" ");
   }
   function achouCombo(combos, texto) { return combos.some(function (par) { return par.every(function (r) { return r.test(texto); }); }); }
