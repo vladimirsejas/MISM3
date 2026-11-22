@@ -63,7 +63,7 @@ const dadosVisiveis = ler("dados/catalogo_manual.json");
 /* ---- 5. Links e arquivos locais existem ---- */
 [["index.html", index]].forEach(([nome, html]) => {
   Array.from(html.replace(/<script>[\s\S]*?<\/script>/g, "").matchAll(/(?:href|src)="([^"#]+)(?:#[^"]*)?"/g), (m) => m[1])
-    .filter((u) => !/^(https?:|tel:|mailto:)/.test(u))
+    .filter((u) => !/^(https?:|tel:|mailto:|data:)/.test(u))
     .forEach((u) => assert(fs.existsSync(path.join(web, u.split("?")[0])), nome + ": arquivo local inexistente: " + u));
 });
 assert(fs.existsSync(path.join(web, "dados/catalogo_manual.json")), "o catálogo verificado deve acompanhar o site");
