@@ -1,6 +1,6 @@
 """Auditoria reprodutível do catálogo manual e da privacidade do MISM3 (um comando, resultado estruturado).
 
-Reexecuta, sobre o CSV do catálogo (catalogo/servicos_manuais.csv ou outro informado), as medidas usadas na auditoria externa:
+Reexecuta, sobre o CSV do catálogo (catalogo/servicos_manuais.csv ou outro informado), as medidas usadas na auditoria de referência:
 registros, completude de cada campo (total e por eixo = tipo), estados de conferência, procedência da fonte, atualidade da consulta,
 avisos de cautela, domínios das fontes, análise estática do código quanto a armazenamento e comunicação externa, e o resultado dos testes.
 

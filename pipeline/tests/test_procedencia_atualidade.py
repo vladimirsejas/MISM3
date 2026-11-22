@@ -63,7 +63,7 @@ def test_catalogo_real_os_registros_com_texto_generico_estao_marcados_como_gener
     ("2026-10-21", 31, "consulta_a_renovar"),
     ("2026-08-23", 90, "consulta_a_renovar"),      # limite: 90 dias ainda é "a renovar"
     ("2026-08-22", 91, "consulta_antiga"),
-    ("2026-10-08", 44, "consulta_a_renovar"),      # mais antiga do catálogo na referência do artigo
+    ("2026-10-08", 44, "consulta_a_renovar"),      # mais antiga do catálogo na data de referência
     ("2026-11-05", 16, "consulta_recente"),
 ])
 def test_limites_de_atualidade(data, dias, estado):

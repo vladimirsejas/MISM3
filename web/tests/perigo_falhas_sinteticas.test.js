@@ -1,4 +1,4 @@
-/* Regressão das três falhas de SEGURANÇA achadas na avaliação sintética de 90 perguntas (escritas por uma pessoa, não por mulheres reais):
+/* Regressão das três falhas de SEGURANÇA achadas numa verificação com 90 frases sintéticas (escritas por uma pessoa, não por mulheres reais):
    dor no peito descrita sem a palavra "dor" (s01), agressão por filho adulto com exploração da aposentadoria (f05) e retorno do agressor
    com proteção judicial já concedida (v03). Cada falha tem o texto exato e variações de redação, para provar que a correção é de lógica
    (sintoma + contexto) e não uma lista de frases. Também confere que frases parecidas, mas sem perigo, não geram alerta completo. */
@@ -39,4 +39,4 @@ assert(v03.telefones.includes("190") && v03.pins.some((p) => p.svc === "mulher/p
  "queria saber como funciona a protecao judicial contra violencia", "a justica me deu a guarda do meu filho", "meu braco esquerdo esta com uma coceira",
  "me da um conselho sobre o peito de frango no almoco", "meu cunhado me deu um tapa nas costas de brincadeira no churrasco"
 ].forEach(semAlertaCompleto);
-console.log("perigo_falhas_avaliacao.test.js ok");
+console.log("perigo_falhas_sinteticas.test.js ok");

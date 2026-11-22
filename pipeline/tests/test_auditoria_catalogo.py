@@ -1,4 +1,4 @@
-"""A ferramenta de auditoria reproduz os números da auditoria externa sobre o catálogo da versão pública (168 registros)."""
+"""A ferramenta de auditoria reproduz os números da auditoria de referência sobre o catálogo da versão pública (168 registros)."""
 import csv
 import json
 import sys
@@ -18,7 +18,7 @@ def real():
     return au.auditar_catalogo(CSV_REAL, "2026-11-21")
 
 
-def test_reproduz_registros_e_completude_do_artigo(real):
+def test_reproduz_registros_e_completude_de_referencia(real):
     assert real["registros"] == 168
     t = {k: v["preenchidos"] for k, v in real["completude_total"].items()}
     assert (t["telefone"], t["endereco"], t["cep"], t["horario"]) == (151, 156, 108, 52)
