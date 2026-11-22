@@ -8,7 +8,7 @@ Fluxo: **fontes oficiais e catálogos escritos à mão → pipeline Python → a
 
 | Arquivo | O que é | Quem lê |
 |---|---|---|
-| `catalogo/servicos_manuais.csv` | 168 serviços verificados, cada um com fonte e data; `conferido` = não quando falta confirmação (e então tem aviso) | `pipeline/servicos.py` |
+| `catalogo/servicos_manuais.csv` | 168 serviços verificados, cada um com fonte e data; `conferido` = `sim` (confirmado), `nao` (não confirmado, com aviso) ou vazio (**pendente**: vazio nunca significa confirmação) | `pipeline/servicos.py` |
 | `catalogo/inep_escolas.csv` | ligação manual (revisada) entre escolas do catálogo e o código INEP: 43 escolas | `pipeline/servicos.py`, `pipeline/ligar_catalogo_inep.py` |
 | `catalogo/frases_necessidades.txt` | frases de treino do classificador de necessidades | `pipeline/treinar_necessidades.py` |
 | `catalogo/frases_fora_do_escopo.txt` | frases fora do assunto do site, para o detector de escopo | `pipeline/treinar_escopo.py` |
@@ -58,8 +58,32 @@ Avaliação do orientador: `avaliacao/avaliar.py`, `avaliacao/perguntas.json` (5
 
 - **Coordenada só com fonte:** `geo` = `coordenada_fonte` (45 serviços, com latitude e longitude) ou `sem_local` (os demais). Localização aproximada pelo CEP é outra coisa e nunca vira coordenada de fonte.
 - **Conferido x não conferido:** registro não conferido tem `aviso` visível. O CRAM foi retirado do catálogo por falta de fonte confiável; aparece só como dica no cartão da Secretaria Municipal da Mulher.
-- Testes que protegem isto: `pipeline/tests/test_contrato_dados.py`.
+- **Estados de conferência (`estado_conferencia`):** `confirmado` (planilha: sim), `nao_confirmado` (planilha: nao) e `pendente` (campo vazio). Nenhum registro recebe confirmação automática. O campo antigo `conferido` continua no JSON, mas é derivado: só é verdadeiro quando o estado é `confirmado`. Hoje: 1 confirmado, 3 não confirmados e 164 pendentes. "Desatualizado" não é estado de conferência: é a idade da consulta (abaixo).
+- **Procedência da fonte (`fonte_tipo`):** `identificada` (a planilha descreve a fonte), `generica` (a planilha não descreve; o texto "Página oficial do órgão" é preenchido automaticamente e só se sabe o site do órgão: 9 registros) e `nao_identificada` (não confirmado e sem descrição). Nenhuma fonte específica é atribuída sem evidência.
+- **Atualidade:** `data_consulta` (= `verificado_em`) é a data em que o projeto consultou a fonte, **não** a data em que o órgão atualizou a informação; `data_atualizacao_fonte` fica vazia quando a planilha não traz a coluna opcional `atualizacao_fonte`. `idade_verificacao_dias` e `atualidade` (`consulta_recente` até 30 dias, `consulta_a_renovar` até 90, `consulta_antiga` acima, `desconhecida`) são calculados em `pipeline/servicos.py` (`LIMITES_ATUALIDADE`) e recalculados no navegador com os mesmos limites (`web/acesso.js`). Consulta recente não prova que a informação esteja atualizada.
+- **Campos vazios:** a interface diz "Não informado na fonte" para telefone, endereço e horário ausentes. "Não se aplica" só existe com regra documentada (`NAO_SE_APLICA` em `web/acesso.js`, hoje sem nenhuma regra): na dúvida, é "não informado".
+- Testes que protegem isto: `pipeline/tests/test_contrato_dados.py`, `pipeline/tests/test_conferencia.py`, `pipeline/tests/test_procedencia_atualidade.py`, `web/tests/conferencia_ui.test.js`, `web/tests/procedencia_atualidade.test.js` e `web/tests/campos_incompletos.test.js`.
+- **Auditoria reprodutível:** `python pipeline/auditoria_catalogo.py` recalcula essas medidas (completude por campo e por eixo, estados, procedência, atualidade, avisos) e grava JSON e CSV; o teste `pipeline/tests/test_auditoria_catalogo.py` confere os números da auditoria externa (168 registros; telefone 151, endereço 156, CEP 108, coordenada 84, horário 52; 9 avisos).
 
 ## 6. Documentação de apoio
 
 `README.md`, `docs/registro_decisoes_desenvolvimento.md`, `docs/inventario_de_fontes.md`, `docs/arquitetura_ia.md`, `docs/transporte/README.md`, `docs/estado_do_projeto.md` e os PDFs de prova em `docs/documetacao/`.
+
+## 7. Privacidade, comunicação externa e limites do que foi verificado
+
+Descrição do que o código do site faz **nesta versão**, lida do código-fonte. Não é garantia de anonimato nem declaração de conformidade com a LGPD ou outra lei.
+
+**O que é processado no aparelho da usuária.** O texto digitado no orientador, a busca por CEP e o bairro, o classificador de necessidades, o detector de perigo, o detector de escopo e o índice do orientador rodam no navegador, sobre arquivos de dados baixados do próprio site (`web/dados/`). O código não grava o texto em armazenamento do navegador nem o envia a um servidor do projeto: a busca textual no código (`pipeline/auditoria_catalogo.py`, seção de análise estática) não encontra `localStorage`, `sessionStorage`, `indexedDB`, `document.cookie` nem `serviceWorker` nos arquivos `web/*.js` e `web/*.html`. A biblioteca do mapa (Leaflet) é servida pelo próprio site (`web/vendor`).
+
+**Recursos que podem se comunicar com o exterior.**
+- Camada de ruas do mapa de serviços (`web/mapa.js`): só depois que a usuária marca "Mostrar ruas e nomes", o navegador pede imagens de mapa à Esri (server.arcgisonline.com).
+- Camada opcional do mapa por CEP (`web/app.js`, caixa de seleção de mapa-base): só depois de marcada, o navegador pede imagens ao OpenStreetMap (tile.openstreetmap.org).
+- Links para fontes oficiais, Instagram de unidades e "Ver no Google Maps": só abrem se a usuária clicar, em nova aba, com `noopener noreferrer`; o site de destino passa a receber a visita e segue a sua própria política.
+- Hospedagem do site: o servidor que entrega as páginas e os arquivos de dados, como qualquer servidor web, pode registrar o endereço de rede (IP), data e hora, arquivo pedido e dados do navegador. Esta documentação não examinou a configuração nem os registros desse servidor.
+
+**Quem pode observar o quê.** Os provedores de mapa (Esri e OpenStreetMap) e o servidor de hospedagem podem observar o endereço de rede e os dados técnicos do navegador de quem faz a requisição, e, nos mapas, quais blocos de imagem foram pedidos (o que indica a região que a pessoa está vendo). As páginas usam `referrer: no-referrer` (meta), de modo que o endereço da página não é enviado nos pedidos de imagem; a política de uso do OpenStreetMap pede o contrário, e a versão pública do projeto adotou outra solução (origem do site no Referer): esta branch não alterou esse comportamento.
+
+**O que não foi verificado.**
+- Nenhuma medição de requisições, cookies, armazenamento ou service workers foi feita com navegador automatizado: a etapa foi parada por falta de ferramenta de automação instalada. As afirmações acima vêm da leitura do código, não de captura de tráfego.
+- Não foram verificados os registros do servidor de hospedagem, o que os provedores de mapa fazem com os dados que recebem, nem o comportamento em outros navegadores ou extensões.
+- Não houve validação com usuárias reais, nem avaliação jurídica. A página de privacidade publicada (`privacidade.html` na versão pública 9ed9731) não existe nesta branch e não foi alterada; qualquer ajuste nela precisa ser feito sobre a versão pública.
