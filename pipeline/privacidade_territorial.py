@@ -4,6 +4,8 @@ A validação é fail-closed: se população ou domicílios estiverem ausentes o
 não há base para provar que o setor atende aos critérios de publicação.
 """
 
+import math
+
 LIMITE_PESSOAS = 5
 LIMITE_DOMICILIOS = 3
 CAMPOS_DERIVADOS_SENSIVEIS = (
@@ -21,18 +23,26 @@ CAMPOS_DERIVADOS_SENSIVEIS = (
 )
 
 
+def _contagem_inteira_valida(valor) -> int | None:
+    """Converte contagem não negativa e inteira; fração, NaN, infinito e booleano são inválidos."""
+    if isinstance(valor, bool) or valor is None:
+        return None
+    try:
+        numero = float(valor)
+    except (TypeError, ValueError, OverflowError):
+        return None
+    if not math.isfinite(numero) or numero < 0 or not numero.is_integer():
+        return None
+    return int(numero)
+
+
 def setor_suprimido(propriedades: dict) -> bool:
     """Retorna True quando contagens ou derivados do setor devem ser omitidos."""
     if propriedades.get("suprimido_privacidade") is True:
         return True
-    pessoas = propriedades.get("pessoas")
-    domicilios = propriedades.get("domicilios")
+    pessoas = _contagem_inteira_valida(propriedades.get("pessoas"))
+    domicilios = _contagem_inteira_valida(propriedades.get("domicilios"))
     if pessoas is None or domicilios is None:
-        return True
-    try:
-        pessoas = int(pessoas)
-        domicilios = int(domicilios)
-    except (TypeError, ValueError, OverflowError):
         return True
     return pessoas < LIMITE_PESSOAS or domicilios < LIMITE_DOMICILIOS
 

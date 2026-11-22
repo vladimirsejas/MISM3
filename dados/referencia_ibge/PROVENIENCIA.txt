@@ -1,0 +1,35 @@
+PROVENIÊNCIA DOS ARQUIVOS DE REFERÊNCIA — MISM3 (Rio Claro, SP)
+Preparado em 09/11/2026 a partir de cópias dos arquivos oficiais que o autor mantém em C:\MISM3\docs\ibge.
+
+1. setores_rio_claro_original_ibge_2022.geojson
+   Conteúdo: os 408 setores censitários do município de Rio Claro (código IBGE 3543907), com a geometria original, sem simplificação e sem arredondamento.
+   Fonte: IBGE, Malha de Setores Censitários 2022, arquivo SP_setores_CD2022 (shapefile).
+   Sistema de coordenadas: SIRGAS 2000 (EPSG:4674).
+   Campos mantidos: CD_SETOR, SITUACAO, CD_BAIRRO, NM_BAIRRO, AREA_KM2.
+   Campos REMOVIDOS de propósito: v0001 a v0007 (contagens de pessoas e domicílios). Este arquivo é só geometria. Não deve ser usado para obter contagens nem para contornar a supressão estatística D4.
+
+2. municipio_rio_claro_2025.geojson
+   Conteúdo: o contorno do município de Rio Claro, com AREA_KM2 = 498,403.
+   Fonte: IBGE, Malha Municipal 2025, arquivo SP_Municipios_2025 (shapefile).
+   Sistema de coordenadas: SIRGAS 2000 (EPSG:4674).
+
+3. Somas de verificação SHA-256 dos arquivos de origem (nenhum deles é redistribuído aqui):
+   SP_setores_CD2022.shp  d3fc665debfed4490a4b608785d9acf16bbed4d59e6835345cbcad4f99794296
+   SP_setores_CD2022.shx  841d20c003d2415d62836ed2337922f87be72e4c712bb3a6a93047e3e76d9256
+   SP_setores_CD2022.dbf  0b5f898f5099e2ef9e82ba4adb1e7d830e9c454ae3ad5c2bc76477dffc143e25
+   SP_setores_CD2022.gpkg 0104ef3a85d0c0083acc9e81820a33913f29854cf881d77dd9bf7065e55ee0ed
+   SP_Municipios_2025.shp 45ac4ae39e431d0116a71334fa2dddddcc260708ba8cbb9ba97523dfddfa44f0
+   SP_Municipios_2025.dbf f19a3408a858aa1b4d9b87a64c01ff986b4f114d381cff363536f66d9af1ad04
+
+4. Verificações feitas na preparação (medidas, não estimadas):
+   Rio Claro tem 408 setores no shapefile e 408 no GeoPackage, com os mesmos códigos e geometrias idênticas.
+   Nenhum par de setores originais se sobrepõe e nenhuma geometria é inválida.
+   Soma geodésica das áreas dos setores originais: 498,422 km2. Área geodésica do município (2025): 498,402 km2.
+   Arredondando as coordenadas originais para 6 casas decimais (cerca de 0,11 m), sem nenhuma simplificação, continuam 0 sobreposições e 0 geometrias inválidas, e o arquivo fica com cerca de 0,72 MB.
+   O setores.geojson publicado na main (simplificado com Douglas-Peucker de cerca de 4 m, por polígono) tem 473 pares de setores sobrepostos, dos quais 177 acima de 100 m2.
+
+Ferramentas: Python 3.13, shapely 2.2.0 (GEOS 3.14.1), pyshp, pyogrio 0.13.0, pyproj.
+
+5. SHA-256 dos arquivos GeoJSON de referência versionados (cópias filtradas para Rio Claro, sem contagens):
+   setores_rio_claro_original_ibge_2022.geojson  41a2f2288e729b52d1ac772897514ccc7c1cfea0b933896330fb31ffcc6e13b5
+   municipio_rio_claro_2025.geojson              53c494fcf906c80dbee59ffad18763df07e28315c5a53795671110f27d01c93a

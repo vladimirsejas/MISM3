@@ -91,3 +91,33 @@ def test_montar_remove_duplicata_por_id_e_prefere_manual_ligado_ao_cnes():
     assert por_id["man-ubs"]["nome"] == "UBS oficial"
     assert "cnes-456" in por_id and "man-cras" in por_id
     assert len(por_id) == len(resultado["servicos"])
+
+
+def test_carregar_etapas_usa_tabela_escola_inep_local_e_publica_so_booleanos(tmp_path):
+    import csv
+
+    escola = tmp_path / "Tabela_Escola_2025_V2.csv"
+    campos = ["CO_MUNICIPIO", "CO_ENTIDADE", "TP_SITUACAO_FUNCIONAMENTO", "IN_COMUM_CRECHE", "IN_COMUM_PRE"]
+    with escola.open("w", encoding="utf-8", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=campos, delimiter=";")
+        w.writeheader()
+        w.writerows([
+            {"CO_MUNICIPIO": "3543907", "CO_ENTIDADE": "100", "TP_SITUACAO_FUNCIONAMENTO": "1", "IN_COMUM_CRECHE": "1", "IN_COMUM_PRE": "0"},
+            {"CO_MUNICIPIO": "3543907", "CO_ENTIDADE": "101", "TP_SITUACAO_FUNCIONAMENTO": "2", "IN_COMUM_CRECHE": "1", "IN_COMUM_PRE": "1"},
+            {"CO_MUNICIPIO": "3550308", "CO_ENTIDADE": "102", "TP_SITUACAO_FUNCIONAMENTO": "1", "IN_COMUM_CRECHE": "1", "IN_COMUM_PRE": "1"},
+        ])
+    ligacao = tmp_path / "inep_escolas.csv"
+    with ligacao.open("w", encoding="utf-8", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=["id", "inep"], delimiter=",")
+        w.writeheader()
+        w.writerows([
+            {"id": "man-escola-100", "inep": "100"},
+            {"id": "man-escola-101", "inep": "101"},
+            {"id": "man-escola-102", "inep": "102"},
+        ])
+
+    resultado = s.carregar_etapas(ligacao=ligacao, escola=escola)
+    assert resultado == {
+        "man-escola-100": {"creche": True, "pre_escola": False, "fonte": "Censo Escolar 2025 (INEP)"}
+    }
+    assert not any("matricula" in chave or "turma" in chave for etapa in resultado.values() for chave in etapa)

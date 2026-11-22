@@ -5,9 +5,9 @@ Junta tres origens, sempre marcando de onde veio cada registro:
   * Censo Escolar (creches)    - dados/bruto/escolas/microdados_ed_basica_*.csv
   * Catalogo manual verificado - catalogo/servicos_manuais.csv (CRAS, Secretaria da Mulher...)
 
-Localizacao: se a fonte traz coordenada valida, usa; senao usa o centro do CEP
-(web/dados/cep_indice.json). O campo "geo" diz qual dos dois foi usado, e o site
-mostra isso a usuaria. Sem CEP e sem coordenada = "sem_local" (aparece na lista, nao no mapa).
+Localização manual: latitude/longitude só são usadas quando coincidem com método e confiança em catalogo/localizacao_registro.csv.
+Sem proveniência, o catálogo público não expõe a coordenada bruta; o mapa tenta localizar pelo CEP institucional no índice CNEFE.
+Dados INEP/CNES mantêm a regra de localização de sua própria fonte.
 
 Uso:  python pipeline/servicos.py
       python pipeline/servicos.py --somente-manual   # so o catalogo manual -> web/dados/catalogo_manual.json
@@ -23,6 +23,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import (BRUTO, CATALOGO, RAIZ, MUNICIPIO_IBGE6, MUNICIPIO_IBGE7, WEB_DADOS, achar_coluna, agora_iso,  # noqa: E402
                     ler_csv_flex, normalizar_cep, salvar_json)
+from analise_territorial import carregar_localizacao_registro, coordenada_catalogo_verificada  # noqa: E402
 
 TIPOS = ("creche", "saude", "assistencia", "mulher", "emprego_curso")
 # Rio Claro/SP fica em aprox. lat -22.4, lon -47.56. Caixa folgada para rejeitar coordenada errada.
@@ -120,29 +121,41 @@ def servicos_creches(df, indice: dict, hoje: str) -> list[dict]:
 
 
 # ------------------------------------------------------------ catalogo manual
-def carregar_etapas(ligacao: Path | None = None, oferta: Path | None = None) -> dict:
-    """{id do catálogo: etapas que a escola oferece segundo o Censo Escolar}.
+def carregar_etapas(ligacao: Path | None = None, escola: Path | None = None) -> dict:
+    """{id do catálogo: etapas binárias confirmadas na tabela Escola local do INEP}.
 
-    Junta catalogo/inep_escolas.csv (id do catálogo -> código INEP) com web/dados/oferta_educacao_infantil.json. Só
-    entra quem está nos dois arquivos. Devolve só se a escola oferece creche e pré-escola: nada de número de
-    matrículas (matrícula não é vaga e, num cartão, pareceria vaga).
+    Lê somente CO_ENTIDADE e os indicadores de oferta de creche/pré-escola da tabela Escola 2025,
+    filtrada para Rio Claro. Não lê nem publica matrículas ou turmas por unidade. A tabela bruta
+    permanece local; o JSON público recebe apenas dois booleanos e a fonte.
     """
     import csv
+    import oferta_educacao_infantil as inep
 
     ligacao = ligacao or CATALOGO / "inep_escolas.csv"
-    oferta = oferta or WEB_DADOS / "oferta_educacao_infantil.json"
-    if not (ligacao.exists() and oferta.exists()):
+    escola = escola or (RAIZ / "docs" / "educacao" / "dados" / inep.ARQUIVOS["escola"])
+    if not (ligacao.exists() and escola.exists()):
         return {}
-    escolas = {e["inep"]: e for e in json.loads(oferta.read_text(encoding="utf-8")).get("escolas", [])}
+    colunas = ["CO_MUNICIPIO", "CO_ENTIDADE", "TP_SITUACAO_FUNCIONAMENTO", "IN_COMUM_CRECHE", "IN_COMUM_PRE"]
+    df = inep.ler_filtrado(escola, colunas)
+    por_codigo = {}
+    for r in df.to_dict("records"):
+        if str(r["TP_SITUACAO_FUNCIONAMENTO"]).strip() != "1":
+            continue
+        codigo = str(r["CO_ENTIDADE"]).strip()
+        por_codigo[codigo] = {
+            "creche": str(r["IN_COMUM_CRECHE"]).strip() == "1",
+            "pre_escola": str(r["IN_COMUM_PRE"]).strip() == "1",
+            "fonte": "Censo Escolar 2025 (INEP)",
+        }
     saida = {}
-    with ligacao.open(encoding="utf-8", newline="") as f:
+    with ligacao.open(encoding="utf-8-sig", newline="") as f:
         for r in csv.DictReader(f):
-            e = escolas.get(r["inep"])
-            if e is None:
-                print("AVISO: %s ligado ao INEP %s, que não está na oferta do Censo; sem etapas." % (r["id"], r["inep"]))
-                continue
-            saida[r["id"]] = {"creche": bool(e["oferece_creche"]), "pre_escola": bool(e["oferece_pre_escola"]),
-                              "fonte": "Censo Escolar 2025 (INEP)"}
+            codigo = str(r["inep"]).strip()
+            etapas = por_codigo.get(codigo)
+            if etapas is not None:
+                saida[r["id"]] = etapas
+            else:
+                print("AVISO: %s ligado ao INEP %s, que não está na tabela Escola ativa do Censo; sem etapas." % (r["id"], codigo))
     return saida
 
 
@@ -153,7 +166,7 @@ FRASE_SEM_ETAPAS = ("mas não diz quais etapas ela atende (berçário, maternal,
 FRASE_COM_ETAPAS = "mas não diz se há vaga: ligue para perguntar sobre vaga."
 
 
-def servicos_manuais(df, indice: dict, etapas: dict | None = None) -> list[dict]:
+def servicos_manuais(df, indice: dict, etapas: dict | None = None, localizacao_registro=None) -> list[dict]:
     saida = []
     for _, r in df.iterrows():
         g = lambda c: (None if str(r.get(c, "")) in ("nan", "None", "") else str(r[c]).strip())  # noqa: E731
@@ -162,11 +175,20 @@ def servicos_manuais(df, indice: dict, etapas: dict | None = None) -> list[dict]
             raise ValueError("Tipo invalido '%s' no catalogo manual (use: %s)" % (tipo, ", ".join(TIPOS)))
         if not g("fonte_url") or not g("verificado_em"):
             raise ValueError("Registro '%s' sem fonte_url/verificado_em: todo item manual precisa de fonte e data." % g("nome"))
-        lat, lon, geo = localizar(g("cep"), g("lat"), g("lon"), indice)
+        identificador = g("id") or "man-%s" % _norm(g("nome") or "")
+        coordenada = coordenada_catalogo_verificada(
+            {"id": identificador, "lat": g("lat"), "lon": g("lon")}, localizacao_registro
+        )
+        if coordenada:
+            lat, lon, geo = coordenada[0], coordenada[1], "coordenada_fonte"
+        else:
+            # Não copiar coordenada bruta sem proveniência. O mapa usa o CEP no índice CNEFE.
+            lat = lon = None
+            cepn = normalizar_cep(g("cep"))
+            geo = "centroide_cep" if cepn and cepn in indice else "sem_local"
         # "conferido=nao": a informacao veio de pesquisa na internet e ainda nao foi lida na pagina oficial.
         # O site mostra isso a usuaria e nunca escreve "verificado" nesses itens.
         nao_conferido = (g("conferido") or "").lower() in ("nao", "não", "n")
-        identificador = g("id") or "man-%s" % _norm(g("nome") or "")
         saida.append({
             "id": identificador, "tipo": tipo, "subtipo": g("subtipo"),
             "nome": g("nome"), "cep": normalizar_cep(g("cep")), "endereco": g("endereco"),
@@ -188,7 +210,7 @@ def servicos_manuais(df, indice: dict, etapas: dict | None = None) -> list[dict]
 
 
 # ------------------------------------------------------------ principal
-def montar(indice: dict, cnes=None, escolas=None, manuais=None, hoje: str | None = None, etapas: dict | None = None) -> dict:
+def montar(indice: dict, cnes=None, escolas=None, manuais=None, hoje: str | None = None, etapas: dict | None = None, localizacao_registro=None) -> dict:
     hoje = hoje or agora_iso()
     itens: list[dict] = []
     contagem = {}
@@ -198,7 +220,7 @@ def montar(indice: dict, cnes=None, escolas=None, manuais=None, hoje: str | None
     if escolas is not None:
         a = servicos_creches(escolas, indice, hoje); itens += a; contagem["creches_inep"] = len(a)
     if manuais is not None:
-        a = servicos_manuais(manuais, indice, etapas); itens += a; contagem["manuais"] = len(a)
+        a = servicos_manuais(manuais, indice, etapas, localizacao_registro); itens += a; contagem["manuais"] = len(a)
         codigos_manuais = {str(s["cnes"]) for s in a if s.get("cnes")}
     # Somente o catálogo manual pode substituir um registro CNES com o mesmo código.
     # Incluir os códigos da lista CNES aqui apagaria também registros CNES sem substituto manual.
@@ -217,7 +239,8 @@ def main_somente_manual() -> None:
     """Gera web/dados/catalogo_manual.json so com o catalogo manual verificado (sem CNES/INEP).
     O site usa este arquivo quando servicos.json (base completa) ainda nao foi gerado."""
     m = CATALOGO / "servicos_manuais.csv"
-    saida = montar({}, None, None, ler_csv_flex(m), etapas=carregar_etapas())
+    indice = json.loads((WEB_DADOS / "cep_indice.json").read_text(encoding="utf-8")).get("ceps", {}) if (WEB_DADOS / "cep_indice.json").exists() else {}
+    saida = montar(indice, None, None, ler_csv_flex(m), etapas=carregar_etapas(), localizacao_registro=carregar_localizacao_registro())
     salvar_json(saida, WEB_DADOS / "catalogo_manual.json")
     print("catalogo_manual.json: %d servicos (so catalogo manual; sem CNES nem Censo Escolar)" % len(saida["servicos"]))
 
@@ -257,7 +280,7 @@ def main() -> None:
     if m.exists():
         manuais = ler_csv_flex(m)
 
-    saida = montar(indice, cnes, escolas, manuais, etapas=carregar_etapas())
+    saida = montar(indice, cnes, escolas, manuais, etapas=carregar_etapas(), localizacao_registro=carregar_localizacao_registro())
     salvar_json(saida, WEB_DADOS / "servicos.json")
     por_tipo, por_geo = {}, {}
     for s in saida["servicos"]:

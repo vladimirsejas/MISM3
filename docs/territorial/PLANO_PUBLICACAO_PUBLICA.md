@@ -4,6 +4,20 @@
 **Diretriz do autor:** site principal, mapa territorial e painel de gestão públicos, com dados agregados, transparência metodológica e ressalvas explícitas.  
 **Estado:** preparação para publicação; ainda não é autorização para retirar o bloqueio de indexação, publicar uma versão oficial ou integrar a PR #92 à `main`.
 
+## Atualização técnica — 09/11/2026
+
+Esta atualização prevalece sobre números e descrições anteriores deste documento que tenham sido alterados pela auditoria de fechamento. As seções abaixo preservam o histórico de preparação de 08/11/2026.
+
+- **CEP e privacidade:** o índice público foi saneado de 1.367 para 1.243 entradas. Os 44 CEPs com menos de três endereços continuam generalizados para o centro do setor. A regra D4 protege 17 setores; a regeneração final dos derivados ainda depende da conferência local das contagens brutas.
+- **Geometria:** a geração não aplica Douglas–Peucker nem `coverage_simplify`; preserva os vértices e arredonda somente para seis casas decimais. A referência original IBGE 2022 e o limite municipal 2025 estão em `dados/referencia_ibge/`, sem contagens demográficas. O teste de correspondência compara os 408 setores publicados à referência original.
+- **Topologia:** o limiar de detecção de sobreposição por par e de buraco interno é 0,0121 m², derivado da resolução aproximada de 0,11 m × 0,11 m das coordenadas com seis casas. A malha de referência não apresenta sobreposições nem buracos internos acima desse limiar. O limiar de relevância de 1.000 m² é separado.
+- **Centroides:** a reauditoria sobre a geometria original sem arredondamento encontrou 11 centroides matemáticos externos em 408 setores. A produção preserva os 397 centroides internos e usa ponto representativo interno apenas nos 11 casos externos. A lista de códigos está testada.
+- **Áreas:** a soma dos setores de 2022 com `pyproj.Geod(ellps="GRS80")` é 498,422 km². O limite municipal 2025 tem 498,402 km² pelo mesmo método e atributo oficial `AREA_KM2` de 498,403 km². A diferença de contorno entre as edições 2022 e 2025 é da ordem de 0,7 km² em cada lado da comparação; não é um buraco interno nem uma sobreposição entre setores.
+- **CRAS/UBS:** 22 dos 28 equipamentos têm coordenada individual documentada. Seis usam centro do CEP cadastral e raio operacional do índice no cenário de sensibilidade. Esse cenário pode alterar as distâncias de CRAS e UBS, além das escolas. A aproximação não é apresentada como coordenada individual verificada.
+- **Tiles e atribuição:** a política OSM foi lida e a camada permanece opt-in, com Referer de origem e atribuição visível. Os termos Esri foram lidos; o acesso gratuito é condicionado a uso não comercial, e a qualificação institucional para eventual uso futuro ainda não foi formalmente confirmada. Os tiles não são redistribuídos.
+- **Fontes e licenças:** o inventário distingue disponibilidade pública, licença identificada e autorização de redistribuição. Os arquivos de referência geométrica não recebem licença aberta por este repositório; `LICENSE-DADOS-E-DOCUMENTACAO.md` exclui explicitamente `dados/referencia_ibge/`. A decisão registrada pelo responsável para `mapaRioClaroUSF.geojson` foi preservada sem reabertura.
+- **Estado de liberação:** `noindex, nofollow` permanece. Esta atualização não autoriza deploy, publicação oficial, merge ou alteração da Cloudflare. A regeneração final dos indicadores dependentes das contagens brutas e D4 será feita localmente pelo Claude Code no computador do responsável.
+
 ## 1. Modelo de publicação escolhido
 
 O MISM3 será apresentado em três entradas públicas e relacionadas:
