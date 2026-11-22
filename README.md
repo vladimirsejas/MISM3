@@ -85,6 +85,8 @@ Todos rodam no navegador. Pesos em JSON, treinados em Python, avaliados em `aval
 
 Segurança: `web/perigo.js` aplica regras determinísticas e o modelo de perigo. Regra ou modelo com alta confiança gera alerta completo (telefones e serviços de proteção fixados); modelo com confiança moderada gera só um aviso. O alerta das regras aparece antes de qualquer arquivo ser baixado.
 
+Níveis de alerta: nível 0 = nenhum alerta; nível 1 = aviso de uma linha com 190 e 180, sem fixar serviços; nível 2 = alerta completo. Uma camada de controle coercitivo (comportamento de controle + imposição ou recorrência + relação, em primeira ou terceira pessoa; palavra isolada nunca alerta) gera nível 1 e só chega a nível 2 com indicador grave ou regra de nível 2. O detector aprendido não alerta sozinho em frase curta ou com acordo, sem controle nem violência. Explicação em linguagem simples, números medidos e limites em [docs/niveis_de_alerta_do_orientador.md](docs/niveis_de_alerta_do_orientador.md); não houve validação com mulheres reais.
+
 Não existe: modelo de linguagem, embeddings neurais, previsão de risco, elegibilidade automática de benefício.
 
 ## Estrutura do repositório
@@ -235,6 +237,7 @@ Notas de ambiente:
 - [docs/arquitetura_ia.md](docs/arquitetura_ia.md) e [docs/ia/avaliacao_orientacao.md](docs/ia/avaliacao_orientacao.md): arquitetura de IA, métricas e limites.
 - [docs/mapa_de_dados.md](docs/mapa_de_dados.md), [docs/inventario_de_fontes.md](docs/inventario_de_fontes.md), [docs/documetacao/LEIA-ME.md](docs/documetacao/LEIA-ME.md): dados e fontes arquivadas.
 - [docs/roteiro_teste_orientador.md](docs/roteiro_teste_orientador.md): roteiro de teste manual do orientador.
+- [docs/niveis_de_alerta_do_orientador.md](docs/niveis_de_alerta_do_orientador.md): níveis 0, 1 e 2, camada de controle coercitivo, quando o nível 2 é mantido, como rodar os testes de segurança, números medidos e limitações.
 - [docs/territorial/PLANO_IMPLEMENTACAO_MAPA_TERRITORIAL.md](docs/territorial/PLANO_IMPLEMENTACAO_MAPA_TERRITORIAL.md): plano de implementação do mapa territorial (recuperação, auditoria, qualidade dos dados, usabilidade, navegação e validação para publicação).
 - [docs/territorial/AUDITORIA_SENSIBILIDADE_CENTROIDES.md](docs/territorial/AUDITORIA_SENSIBILIDADE_CENTROIDES.md): método e execução da comparação dos pontos representativos.
 - [docs/territorial/RESULTADO_AUDITORIA_CENTROIDES_2026-11-08.md](docs/territorial/RESULTADO_AUDITORIA_CENTROIDES_2026-11-08.md): resultados calculados para os 408 setores e impacto nos nove centroides externos.
