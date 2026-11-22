@@ -121,15 +121,24 @@ def test_auditoria_de_todos_os_arquivos_publicos_confirma_d4():
     assert aud.auditar_publicacao() == []
 
 def test_nao_aceita_raio_zero_quando_a_proveniencia_nao_esta_registrada(real):
-    equipamento = next(e for e in real["equipamentos"] if e["categoria"] in {"cras", "ubs"} and e["confianca_localizacao"] == "nao_registrada")
+    equipamento = next(
+        e for e in real["equipamentos"]
+        if e["categoria"] in {"cras", "ubs"} and e["confianca_localizacao"] in {"alta", "media"}
+    )
+    equipamento["confianca_localizacao"] = "nao_registrada"
+    equipamento["metodo_localizacao"] = "catalogo_sem_registro_de_proveniencia"
     equipamento["raio_incerteza_m"] = 0
     falhas = aud.auditar(real)
     assert any(f.caminho.endswith("/raio_incerteza_m") and f.tipo == "proveniência" for f in falhas)
 
 
 def test_nao_publica_envelope_se_ha_equipamento_sem_raio_conhecido(real):
-    setor = real["setores"][0]
-    setor["distancia_min_km"]["com_centro_do_cep"]["cras"] = 0
-    setor["distancia_max_km"]["com_centro_do_cep"]["cras"] = 0.1
+    equipamento = next(
+        e for e in real["equipamentos"]
+        if e["categoria"] == "cras" and e["confianca_localizacao"] in {"alta", "media"}
+    )
+    equipamento["confianca_localizacao"] = "nao_registrada"
+    equipamento["metodo_localizacao"] = "catalogo_sem_registro_de_proveniencia"
+    equipamento["raio_incerteza_m"] = None
     falhas = aud.auditar(real)
     assert any("não publicar envelope" in f.mensagem for f in falhas)

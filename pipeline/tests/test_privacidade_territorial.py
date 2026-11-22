@@ -13,6 +13,10 @@ def test_ausencia_ou_valor_invalido_suprime_por_cautela():
     assert p.setor_suprimido({"pessoas": 10, "domicilios": None})
     assert p.setor_suprimido({"pessoas": "desconhecido", "domicilios": 10})
     assert p.setor_suprimido({"pessoas": 10})
+    assert p.setor_suprimido({"pessoas": 5.9, "domicilios": 3})
+    assert p.setor_suprimido({"pessoas": 5, "domicilios": 3.9})
+    assert p.setor_suprimido({"pessoas": float("nan"), "domicilios": 3})
+    assert p.setor_suprimido({"pessoas": -1, "domicilios": 3})
 
 
 def test_geojson_remove_contagens_e_derivados_sem_apagar_geometria():

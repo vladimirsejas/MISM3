@@ -363,21 +363,18 @@ const secEsc = Areas.AREAS.find((a) => a.id === "educacao").secoes.find((sec) =>
 assert(secEsc && secEsc.recolhida && secEsc.filtro && JSON.stringify(secEsc.subtipos) === '["escola_municipal"]', "a lista de escolas deve ficar recolhida e com busca");
 assert(Areas.AREAS.find((a) => a.id === "educacao").secoes.find((sec) => sec.titulo === "Canais oficiais").subtipos.join() === "secretaria", "os canais oficiais devem mostrar só o cartão da Secretaria");
 assert(/data-filtro/.test(ler("app.js")) && /semAcento/.test(ler("app.js")), "a busca por nome ou bairro deve ignorar acentos");
-// Brasão do município (cabeçalho e rodapé) + aviso de projeto acadêmico (não oficial)
-assert(!/marca-brasao/.test(index), "o cabeçalho mostra só o nome e a cidade, sem brasão (decisão do autor, 18/10/2026)");
-assert(/<img class="brasao" src="img\/brasao-rio-claro-256\.webp"[^>]*width="\d+" height="\d+"[^>]*alt="Brasão do município de Rio Claro/.test(index), "o rodapé usa o brasão original de Rio Claro, com alt, largura e altura");
+// Identidade visual neutra até autorização formal de uso de imagens e brasão
+assert(!/marca-brasao|<img class="brasao"/.test(index), "o cabeçalho e o rodapé não devem usar brasão sem autorização");
+assert(/<div class="identidade-neutra" aria-hidden="true">RC<\/div>/.test(index), "o rodapé usa marca textual neutra, sem símbolo municipal");
 assert(/estudo acadêmico de demonstração/.test(index) && /não é um site oficial da Prefeitura de Rio Claro/.test(index), "o rodapé deve dizer que o site é acadêmico e não oficial");
 assert(/não fala em nome da Prefeitura/.test(index), "o rodapé deve deixar claro que o site não fala em nome da Prefeitura");
-["brasao-rio-claro-256.webp", "capa-mulheres.webp"].forEach((nome) => {
-  const arq = path.join(web, "img", nome);
-  assert(fs.existsSync(arq) && fs.statSync(arq).size < 120 * 1024, `${nome} deve existir e ser leve (< 120 KB)`);
-});
+assert(!/brasao-rio-claro|brasao-estilizado|capa-mulheres|faixa-mulheres/.test(index + css), "nenhuma imagem municipal ou de origem não confirmada pode ser referenciada no site");
 
 /* ---- Tela inicial acolhedora: hero, emergência, contatos essenciais, acesso rápido e paleta ---- */
 assert(/<h1 id="titulo-inicio"[^>]*>Você não está <em>sozinha<\/em><\/h1>/.test(index), "a tela inicial deve acolher: 'Você não está sozinha'");
-assert(/<div class="heroi-arte">\s*<img class="heroi-capa" src="img\/capa-mulheres\.webp"[^>]*width="\d+" height="\d+"[^>]*alt="[^"]*idosa[^"]*gorda/.test(index) && !/heroi-mulheres|brasao-estilizado|heroi-brasao/.test(index + css), "a capa é a ilustração das seis mulheres (idosa, tons e cabelos diversos, mulher gorda), com texto alternativo; o brasão estilizado com a leoa saiu");
+assert(/<div class="heroi-arte">\s*<div class="heroi-capa-placeholder"[^>]*>\s*<span class="heroi-sigla"[^>]*>OTM<\/span>\s*<strong>Observatório Territorial da Mulher<\/strong>/.test(index) && /\.heroi-capa-placeholder/.test(css), "a capa usa placeholder textual e CSS neutro, sem imagem de terceiro");
 const inicioTela = index.slice(index.indexOf('id="inicio-tela"'), index.indexOf('id="ia-caixa"'));
-assert((inicioTela.match(/<img /g) || []).length === 1 && !/faixa-mulheres/.test(index), "a abertura tem uma capa só: uma imagem antes da caixa da IA, sem a faixa repetida");
+assert((inicioTela.match(/<img /g) || []).length === 0 && !/faixa-mulheres/.test(index), "a abertura não carrega imagem sem autorização e não repete a faixa");
 assert(/<p class="heroi-etiqueta"><strong>MISM3<\/strong> · Monitoramento Inteligente da Saúde da Mulher<\/p>/.test(index), "a abertura diz o que é o MISM3: Monitoramento Inteligente da Saúde da Mulher");
 assert(!/Informação que fortalece|heroi-lide|heroi-nota/.test(index), "a abertura não repete frases: sem 'Informação que fortalece', sem a frase longa e sem a nota solta");
 assert(/Cada informação mostra a fonte e a data/.test(index), "a tela inicial só pode prometer o que o site cumpre: fonte e data");
@@ -447,9 +444,14 @@ assert(circ1 && circ1.sentidos.length === 1 && circ1.sentidos[0].sentido === "Vo
 assert(onibus.lacunas.some((t) => /Circular I/.test(t) && /Volta/.test(t)) && onibus.lacunas.some((t) => /Feriados/.test(t)) && onibus.lacunas.some((t) => /linha 02/i.test(t) && /Arco-Íris/.test(t)), "as lacunas devem estar declaradas ao usuário (a linha 02 Arco-Íris/Mãe Preta existe no site da SOU e ainda não foi cadastrada)");
 assert(!/\.pdf|OCR|docs\/|desenvolvedor/i.test(JSON.stringify(onibus)), "o JSON de horários não pode expor detalhes internos");
 assert(/Só temos o sentido/.test(app) && /Essa data já passou/.test(app) && /Em feriados os horários podem mudar/.test(app), "o site deve avisar sentido faltante, validade vencida e feriados");
-/* ---- etapas das escolas (Censo Escolar 2025): só creche/pré-escola, nunca número de matrículas ---- */
+/* ---- etapas das escolas (Censo Escolar 2025): dados individuais dependem da regeneração local ---- */
 const comEtapas = catalogo.servicos.filter((s) => s.etapas);
-assert(comEtapas.length >= 40, "as escolas ligadas ao INEP devem trazer as etapas: " + comEtapas.length);
+const regeneracaoPendente = fs.existsSync(path.resolve(web, "../docs/territorial/REGENERACAO_LOCAL_PENDENTE.md"));
+if (regeneracaoPendente) {
+  assert(comEtapas.length === 0 || comEtapas.length >= 40, "a fonte INEP local deve produzir zero etapas quando ausente ou o conjunto completo; nunca publicar associação parcial: " + comEtapas.length);
+} else {
+  assert(comEtapas.length >= 40, "após a regeneração local, as escolas municipais ligadas ao INEP devem trazer as etapas: " + comEtapas.length);
+}
 comEtapas.forEach((s) => {
   assert.deepStrictEqual(Object.keys(s.etapas).sort(), ["creche", "fonte", "pre_escola"], "etapas só com creche, pré-escola e fonte: " + s.nome);
   assert(typeof s.etapas.creche === "boolean" && typeof s.etapas.pre_escola === "boolean", "etapas booleanas: " + s.nome);

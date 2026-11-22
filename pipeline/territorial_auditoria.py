@@ -30,7 +30,7 @@ CATALOGO = RAIZ / "catalogo" / "servicos_manuais.csv"
 CAMPOS_PERMITIDOS = {
     "meta", "totais", "classes", "cobertura", "resumo_distancias", "equipamentos", "setores",
     "versao", "carimbo", "fonte", "entradas_sha256", "entradas_geradas_em", "metodo", "aviso_metodologico", "rotulos_cenario",
-    "auditoria_centros", "metodo_atual", "setores_auditados", "centroides_fora_do_poligono", "substituicao_automatica", "observacao",
+    "auditoria_centros", "metodo_atual", "setores_auditados", "centroides_fora_do_poligono", "substituicao_automatica", "observacao", "metodo_ponto_setorial", "centroides_matematicos_originais_fora",
     "rotulos_categoria", "ressalvas", "conferencia", "equipamentos_fora_da_malha", "coincide_com_exposicao_distancia",
     "setores.geojson", "territorio.json", "exposicao_distancia.json", "analise_territorial.json", "escolas_municipais.json", "localizacao_registro.csv", "servicos_manuais.csv", "cep_indice.json",
     "area_km2", "bairros", "domicilios", "pessoas", "rotulo", "unidade", "limites",

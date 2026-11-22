@@ -2,7 +2,7 @@
 
 ## 1. Escopo
 
-Este documento especifica os indicadores propostos para a versão inicial do mapa territorial do MISM3. Distingue os componentes já observados nos arquivos atuais das definições que ainda dependem de validação ou implementação.
+Este documento especifica os indicadores efetivamente publicados na versão exploratória do mapa territorial do MISM3 e distingue os cálculos reproduzíveis das saídas cuja regeneração local ainda está pendente.
 
 A unidade estatística principal é o setor censitário do IBGE. Os equipamentos são pontos institucionais. Não são utilizados CEP residencial, endereço de paciente, estudante ou família, nem registros individuais.
 
@@ -92,9 +92,9 @@ Em que `φ` representa latitude em radianos, `λ` representa longitude em radian
 
 **Fonte:** geometria dos setores em `web/dados/setores.geojson`; coordenadas institucionais elegíveis do catálogo e seus registros de proveniência; função de distância em `pipeline/analise_territorial.py` e processamento em `pipeline/exposicao_distancia.py`.
 
-**Ponto representativo:** os cálculos atuais utilizam o centroide geométrico calculado pelo código. A análise de sensibilidade entre centroide geométrico e ponto interno representativo é proposta na seção 5 e ainda não foi executada.
+**Ponto representativo:** o código preserva o centroide matemático quando está dentro do setor. Nos 11 casos em que o centroide matemático ficava fora do polígono, utiliza um ponto interno representativo; esse ponto não é denominado centroide matemático. Os 397 centroides matemáticos internos são preservados.
 
-**Incerteza espacial:** quando o equipamento tem raio operacional `r`, publicar também o envelope geométrico `d_min = max(0, d-r)` e `d_max = d+r`. Para várias referências, o limite inferior é o menor `d_min` e o superior é o menor `d_max`; a estimativa central continua sendo a menor distância central. O raio do CEP é parâmetro operacional derivado da dispersão dos endereços CNEFE, não campo oficial do IBGE nem intervalo de confiança. Coordenadas individuais não recebem margem artificial. Faixas sobrepostas não permitem ordenar com segurança qual equipamento é mais próximo. Se o raio de uma localização não está documentado, o envelope daquela categoria/cenário não é publicado (limites nulos); a distância central continua disponível, mas deve ser interpretada como estimativa.
+**Incerteza espacial:** quando o equipamento tem raio operacional `r`, publicar o envelope geométrico `d_min = max(0, d-r)` e `d_max = d+r`. Para várias referências, o limite inferior é o menor `d_min` e o superior é o menor `d_max`. O raio do CEP é parâmetro operacional derivado da dispersão dos endereços CNEFE, não campo oficial do IBGE nem intervalo de confiança. Coordenadas individuais com proveniência registrada não recebem margem artificial. Os seis CRAS/UBS sem proveniência no catálogo não podem usar as coordenadas brutas: no cenário com CEP, recorrem ao centro do CEP institucional e ao raio do índice. Faixas sobrepostas não permitem ordenar com segurança qual equipamento é mais próximo.
 
 **Limitações:** não representa percurso por ruas, tempo de viagem, transporte, barreiras físicas, capacidade, horário, elegibilidade ou atendimento efetivo. Se faltarem coordenadas de equipamentos, a distância até o ponto conhecido mais próximo pode ficar superestimada. A cobertura de localização deve acompanhar todo resultado.
 
@@ -114,31 +114,31 @@ Em que `φ` representa latitude em radianos, `λ` representa longitude em radian
 
 **Limitações:** cobertura não significa precisão uniforme. Coordenadas de métodos diferentes devem ser identificadas separadamente. A coordenada aproximada pelo centro do CEP não deve ser apresentada como equivalente a uma coordenada institucional conferida.
 
-**Situação da proveniência na PR #92:** entre os 28 CRAS/UBS com coordenadas do catálogo, 22 têm método, confiança (11 alta e 11 média) e data de aplicação registrados em `localizacao_registro.csv`. Os outros 6 têm coordenadas cadastradas, mas não possuem registro explícito de proveniência; são publicados com confiança `nao_registrada` e não devem ser descritos como verificados. A confirmação desses seis registros é pendência antes de afirmar cobertura completa de proveniência.
+**Situação da proveniência:** entre os 28 CRAS/UBS, 22 têm método, confiança (11 alta e 11 média) e data de aplicação registrados em `localizacao_registro.csv`. Os outros 6 não têm registro explícito de proveniência. Suas coordenadas brutas do catálogo são excluídas dos cenários de coordenadas individuais; quando o CEP institucional está disponível no índice, a posição aproximada é usada com o respectivo raio. Isso não transforma esses seis registros em coordenadas verificadas.
 
 **Linguagem permitida:** “localização pendente”, “coordenada verificada”, “coordenada aproximada” e “cobertura das coordenadas”.
 
 ## 4. Cenários de localização por CEP institucional
 
-O arquivo `web/dados/exposicao_distancia.json` registra dois cenários: `coordenadas_do_catalogo` e `com_centro_do_cep`. O segundo utiliza, quando falta latitude/longitude, o CEP do registro do próprio equipamento para obter posição aproximada no índice. Não se trata de CEP de paciente, estudante ou família.
+O arquivo `web/dados/exposicao_distancia.json` registra dois cenários: `coordenadas_do_catalogo` e `com_centro_do_cep`. O primeiro aceita coordenadas apenas quando latitude, longitude, método e confiança coincidem com `localizacao_registro.csv`. O segundo acrescenta o CEP cadastral do próprio equipamento quando não há proveniência suficiente para aceitar a coordenada bruta. Não se trata de CEP de paciente, estudante ou família.
 
 No arquivo atual, as coberturas são:
 
 | Categoria | Coordenadas do catálogo | Com centro do CEP |
 |---|---:|---:|
-| CRAS | 6/6 | 6/6 |
-| UBS/USF | 22/22 | 22/22 |
+| CRAS | 4/6 | 6/6 |
+| UBS/USF | 18/22 | 22/22 |
 | Escolas | 33/68 | 68/68 |
 
-Esses valores são lidos do arquivo existente e não foram recalculados nesta fase. A escolha de manter o cenário com CEP institucional como análise de sensibilidade ou retirá-lo é decisão do autor. Ver opções e consequências em `INVENTARIO_TERRITORIAL.md`.
+Essas são as coberturas esperadas pela aplicação da regra ao registro atual. Os JSONs derivados (`territorio.json`, `analise_territorial.json`, `exposicao_distancia.json` e `indicadores_territoriais.json`) ainda precisam ser regenerados e validados na execução completa; até lá, não devem ser tratados como saídas atualizadas.
 
 ## 5. Auditoria geométrica do ponto representativo
 
-**Auditoria inicial executada em 07/11/2026 sobre as 408 geometrias versionadas. A substituição do método permanece pendente.**
+**Status da correção:** implementada no código. Dos 408 setores, 397 mantêm exatamente o centroide matemático original porque já estavam dentro do polígono. Nos nove restantes, o ponto externo é substituído por um ponto interno representativo.
 
-O método atual em pipeline/analise_territorial.py, função centro, escolhe em cada geometria MultiPolygon o componente cujo anel externo tem mais vértices e calcula o centroide desse anel. A seleção por quantidade de vértices não equivale à seleção por área; o cálculo não considera os anéis internos (buracos) nem combina todos os componentes pela área.
+O método base continua calculando o centroide do maior componente escolhido pelo número de vértices do anel externo. A correção não o transforma em centroide ponderado pela área. Quando o centroide cai fora, `ponto_interno` procura candidatos em linhas horizontais internas, desconta os buracos e seleciona o candidato de menor distância geodésica ao centroide original. O resultado é um ponto interno, não um centroide matemático.
 
-**Resultado da verificação espacial:** 9 dos 408 centroides calculados pelo método atual caem fora do respectivo polígono. Os códigos identificados são:
+**Setores corrigidos:**
 
 - 354390705000026
 - 354390705000165
@@ -150,19 +150,11 @@ O método atual em pipeline/analise_territorial.py, função centro, escolhe em 
 - 354390705000530
 - 354390705000541
 
-Uma checagem exploratória adicional calculou o centroide ponderado pela área dos componentes e dos anéis. Ela também encontrou 9 centroides fora; nos nove casos, o deslocamento em relação ao método atual foi inferior a 0,14 metro. Portanto, simplesmente ponderar componentes pela área não resolve esses casos.
+A auditoria de sensibilidade anterior registrou deslocamento máximo de aproximadamente 61,546 m e impacto máximo de aproximadamente 54,149 m nas distâncias. Os testes automatizados foram preparados para confirmar que a correção permanece abaixo de 62 m e que a alteração absoluta das distâncias fica abaixo de 55 m.
 
-**Decisão nesta rodada:** não substituir automaticamente o centroide. A integração da incerteza espacial dos equipamentos foi autorizada em 08/11/2026, mas é independente da escolha do ponto representativo do setor. O ponto alternativo deve ser interno ao polígono e comparado antes da adoção.
+A correção não altera nem recorta a geometria-fonte. Ela muda apenas o ponto usado como origem da distância. O ponto representativo não mede ocupação interna, acessibilidade efetiva nem distribuição da população dentro do setor.
 
-Próxima comparação necessária:
-
-1. Gerar um ponto interno representativo para cada um dos 408 setores, inclusive geometrias multipartes e setores com buracos.
-2. Confirmar por teste ponto-no-polígono que todos os pontos alternativos pertencem à geometria correspondente.
-3. Calcular as distâncias com o mesmo conjunto de equipamentos e nos mesmos cenários de localização.
-4. Comparar deslocamento entre pontos, diferenças de distância por setor e categoria, mediana, percentil 90 e proporções acima dos limiares.
-5. Registrar algoritmo, sistema de coordenadas, versão da biblioteca e resultados.
-6. Adotar o método somente após avaliar o impacto e documentar a decisão.
-
+**Validação pendente:** regenerar os JSONs dependentes e executar integralmente os testes na versão final da branch.
 A auditoria não mede ocupação interna do setor nem acessibilidade efetiva.
 
 ## 6. Contrato metodológico comum aos indicadores
@@ -225,4 +217,17 @@ A presença ou ausência de pontos dentro de um setor não determina a área de 
 
 ## 10. Situação nesta fase
 
-Nesta rodada foi executada a auditoria geométrica inicial das 408 feições e registrada a ocorrência de 9 centroides fora dos polígonos. O gerador e o JSON do mapa passaram a registrar essa auditoria e a distinguir a proveniência das localizações. Nenhum centro foi substituído e as distâncias existentes não foram recalculadas. A comparação completa com pontos internos representativos, o impacto nos indicadores e a definição formal de supressão estatística continuam pendentes. Os números de cobertura apresentados são transcrições dos arquivos atuais do repositório.
+A malha contém 408 setores. O centroide matemático foi preservado nos 399 setores em que já era interno; nos nove casos externos, o cálculo passou a usar ponto interno representativo. A auditoria topológica preliminar encontrou seis pares de setores com interseção acima de 1.000 m² e aproximadamente 0,104348 km² de área setorial fora do limite municipal IBGE 2022. Esses resíduos permanecem registrados para investigação; não houve recorte automático. O cálculo geodésico GRS80 da área setorial é aproximadamente 498,396 km², frente a 498,422 km² no atributo do limite municipal IBGE 2022.
+A política D4 suprime população, domicílios, densidade, pessoas por domicílio e distâncias nos 17 setores abaixo dos limiares de cautela; agregados de bairros afetados e totais municipais sensíveis também são omitidos. Para CRAS/UBS, 22 de 28 coordenadas têm proveniência registrada. As outras seis coordenadas brutas não são mais aceitas: o cenário com CEP utiliza referência institucional aproximada e raio CNEFE quando disponível.
+Os JSONs derivados ainda precisam ser regenerados com as regras atualizadas e conferidos por execução integral dos testes. Os workflows consultados até esta revisão correspondem a commits anteriores ao último conjunto de alterações; portanto, não se declara validação final nem publicação atualizada.
+
+
+## 8. Estado de implementação e limites — 09/11/2026
+
+A malha publicada contém 408 setores censitários do IBGE 2022. A geometria de referência é preservada sem simplificação; somente as coordenadas são arredondadas a seis casas decimais. A área dos setores é calculada geodesicamente com GRS80. A comparação com o limite municipal IBGE 2025 é uma comparação entre edições cartográficas, não uma auditoria de buracos internos na malha.
+
+A política D4 protege 17 setores. Neles, população, domicílios, densidade e distâncias são omitidos; a geometria e a identificação territorial permanecem. Portanto, no máximo 391 setores contribuem para resumos de distância. Não se deve reconstituir valores suprimidos por subtração, comparação de mapas ou cruzamento com outras fontes.
+
+Os cenários de localização são `coordenadas_do_catalogo` e `com_centro_do_cep`. O segundo é análise de sensibilidade baseada no centro e no raio do CEP cadastral do equipamento institucional; não representa coordenada comprovada do prédio. As distâncias são Haversine em linha reta. Não representam rota, tempo de viagem, disponibilidade, capacidade, área de atendimento ou acesso efetivo.
+
+O envelope geométrico mínimo–máximo, quando há raio operacional documentado, não é intervalo de confiança. Quando não há raio, a faixa não é calculada. A regeneração final de indicadores dependentes das fontes locais está bloqueada pelo marcador `docs/territorial/REGENERACAO_LOCAL_PENDENTE.md`.
