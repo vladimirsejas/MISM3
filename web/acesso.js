@@ -108,6 +108,20 @@
     return { dias: dias, antigo: dias > LIMITE_DIAS, texto: texto };
   }
 
-  return { ORDEM: ORDEM, ROTULOS: ROTULOS, rotuloSubtipo: rotuloSubtipo, normalizarCep: normalizarCep, haversine: haversine,
+  /* Estado da conferência do registro (vem do pipeline em "estado_conferencia"). Campo ausente ou vazio NUNCA vira "confirmado":
+     dado antigo sem o campo só é "não confirmado" se dizia conferido=false; o resto é "pendente". */
+  var TEXTO_CONFERENCIA = {
+    confirmado: "Conferido pela equipe do projeto na fonte.",
+    nao_confirmado: "Ainda não conferido na página oficial. Ligue antes de ir.",
+    pendente: "A equipe ainda não conferiu estas informações. Ligue antes de ir."
+  };
+  function estadoConferencia(s) {
+    var e = s && s.estado_conferencia;
+    if (e === "confirmado" || e === "nao_confirmado" || e === "pendente") return e;
+    return s && s.conferido === false ? "nao_confirmado" : "pendente";
+  }
+  function textoConferencia(s) { return TEXTO_CONFERENCIA[estadoConferencia(s)]; }
+
+  return { estadoConferencia: estadoConferencia, textoConferencia: textoConferencia, ORDEM: ORDEM, ROTULOS: ROTULOS, rotuloSubtipo: rotuloSubtipo, normalizarCep: normalizarCep, haversine: haversine,
     formatarDistancia: formatarDistancia, idadeVerificacao: idadeVerificacao, LIMITE_DIAS: LIMITE_DIAS, comDistancia: comDistancia, buscar: buscar };
 });

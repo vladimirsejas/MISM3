@@ -153,6 +153,30 @@ FRASE_SEM_ETAPAS = ("mas não diz quais etapas ela atende (berçário, maternal,
 FRASE_COM_ETAPAS = "mas não diz se há vaga: ligue para perguntar sobre vaga."
 
 
+# Estado da conferência de um registro do catálogo manual (campo "conferido" da planilha).
+#   confirmado     - a equipe leu a fonte oficial e conferiu o dado (planilha: sim)
+#   nao_confirmado - a informação veio de pesquisa e NÃO foi conferida na fonte oficial (planilha: nao)
+#   pendente       - ninguém registrou a conferência (planilha: campo vazio). Vazio NUNCA significa confirmação.
+# "desatualizado" não é um estado de conferência: é a idade da consulta, calculada à parte (ver atualidade_da_consulta).
+ESTADOS_CONFERENCIA = ("confirmado", "nao_confirmado", "pendente")
+_VALORES_CONFERENCIA = {
+    "sim": "confirmado", "s": "confirmado", "confirmado": "confirmado",
+    "nao": "nao_confirmado", "não": "nao_confirmado", "n": "nao_confirmado",
+    "nao_confirmado": "nao_confirmado", "não confirmado": "nao_confirmado", "nao confirmado": "nao_confirmado",
+    "": "pendente", "pendente": "pendente",
+}
+
+
+def estado_conferencia(valor) -> str:
+    """Converte o valor da planilha em um dos três estados. Valor desconhecido é erro, nunca confirmação silenciosa."""
+    chave = ("" if valor is None else str(valor)).strip().lower()
+    if chave in ("nan", "none"):
+        chave = ""
+    if chave not in _VALORES_CONFERENCIA:
+        raise ValueError("Valor de 'conferido' invalido: %r (use sim, nao ou deixe vazio = pendente)" % valor)
+    return _VALORES_CONFERENCIA[chave]
+
+
 def servicos_manuais(df, indice: dict, etapas: dict | None = None) -> list[dict]:
     saida = []
     for _, r in df.iterrows():
@@ -165,7 +189,8 @@ def servicos_manuais(df, indice: dict, etapas: dict | None = None) -> list[dict]
         lat, lon, geo = localizar(g("cep"), g("lat"), g("lon"), indice)
         # "conferido=nao": a informacao veio de pesquisa na internet e ainda nao foi lida na pagina oficial.
         # O site mostra isso a usuaria e nunca escreve "verificado" nesses itens.
-        nao_conferido = (g("conferido") or "").lower() in ("nao", "não", "n")
+        estado = estado_conferencia(g("conferido"))
+        nao_conferido = estado == "nao_confirmado"
         identificador = g("id") or "man-%s" % _norm(g("nome") or "")
         saida.append({
             "id": identificador, "tipo": tipo, "subtipo": g("subtipo"),
@@ -176,7 +201,8 @@ def servicos_manuais(df, indice: dict, etapas: dict | None = None) -> list[dict]
             "fonte_url": g("fonte_url"), "verificado_em": g("verificado_em"),
             "observacao": (g("observacao") or "").replace(FRASE_SEM_ETAPAS, FRASE_COM_ETAPAS)
             if etapas and identificador in etapas else g("observacao"),
-            "conferido": not nao_conferido,
+            "estado_conferencia": estado,
+            "conferido": estado == "confirmado",  # campo antigo, derivado: só é verdadeiro quando o estado é confirmado
             "bairros": g("bairros"),
             "aviso": g("aviso"),
             "grupo": g("grupo"),

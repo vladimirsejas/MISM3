@@ -67,13 +67,17 @@
     if (s.observacao) partes.push('<p class="meta">' + esc(s.observacao) + "</p>");
     if (s.bairros) partes.push('<details class="bairros"><summary>Bairros atendidos</summary><p>' + esc(s.bairros) + ".</p></details>");
     var fonte = s.fonte_url ? '<a href="' + esc(s.fonte_url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.fonte) + "</a>" : esc(s.fonte);
+    var est = Acesso.estadoConferencia(s);
+    /* Aviso de cautela do registro: aparece sempre, seja qual for o estado de conferência. */
+    if (s.aviso && est !== "nao_confirmado") partes.push('<p class="aviso-nao-conferido">' + esc(s.aviso) + "</p>");
     if (semFonte) {
-      /* a fonte comum aparece uma vez no fim do bloco */
-    } else if (s.conferido === false) {
+      /* a fonte comum e o estado de conferência aparecem uma vez no fim do bloco */
+    } else if (est === "nao_confirmado") {
       partes.push('<p class="aviso-nao-conferido">' + (s.aviso ? esc(s.aviso) : "<strong>Ainda não conferido na página oficial.</strong> Ligue antes de ir.") + "</p>");
       partes.push('<p class="meta">Para conferir: ' + fonte + " · informado em " + esc(s.verificado_em) + "</p>");
     } else {
       var idade = Acesso.idadeVerificacao(s.verificado_em);
+      partes.push('<p class="meta">' + esc(Acesso.textoConferencia(s)) + "</p>");
       partes.push('<p class="meta">Fonte: ' + fonte + " · verificado em " + esc(s.verificado_em) + " (" + esc(idade.texto) + ")</p>");
       if (idade.antigo) partes.push('<p class="aviso-data">' + AVISO_DATA + "</p>");
     }
@@ -290,12 +294,12 @@
       } else {
         /* Se todos os cartões do bloco têm a mesma fonte e data (e estão conferidos), a fonte aparece uma vez no fim. */
       var comum = !sec.agrupar && visiveis.length >= 3 && visiveis.every(function (s) {
-        return s.conferido !== false && s.fonte === visiveis[0].fonte && s.fonte_url === visiveis[0].fonte_url && s.verificado_em === visiveis[0].verificado_em;
+        return Acesso.estadoConferencia(s) !== "nao_confirmado" && Acesso.estadoConferencia(s) === Acesso.estadoConferencia(visiveis[0]) && !s.aviso && s.fonte === visiveis[0].fonte && s.fonte_url === visiveis[0].fonte_url && s.verificado_em === visiveis[0].verificado_em;
       });
       visiveis.forEach(function (s) { cartoes += cartaoServico(s, comum); });
       if (comum) {
         var idadeComum = Acesso.idadeVerificacao(visiveis[0].verificado_em);
-        notaFonte = '<p class="meta fonte-comum">Fonte de todos os cartões acima: <a href="' + esc(visiveis[0].fonte_url) + '" target="_blank" rel="noopener noreferrer">' + esc(visiveis[0].fonte) + "</a> · verificado em " + esc(visiveis[0].verificado_em) + " (" + esc(idadeComum.texto) + ").</p>" +
+        notaFonte = '<p class="meta fonte-comum">' + esc(Acesso.textoConferencia(visiveis[0])) + ' Fonte de todos os cartões acima: <a href="' + esc(visiveis[0].fonte_url) + '" target="_blank" rel="noopener noreferrer">' + esc(visiveis[0].fonte) + "</a> · verificado em " + esc(visiveis[0].verificado_em) + " (" + esc(idadeComum.texto) + ").</p>" +
           (idadeComum.antigo ? '<p class="aviso-data">' + AVISO_DATA + "</p>" : "");
       }
       }
