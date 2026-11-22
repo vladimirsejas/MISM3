@@ -1289,3 +1289,22 @@ O autor pediu para analisar, com cuidado, uma revisão do Copilot que não conhe
 - **Efeito para a usuária:** o mapa abre sem ruas nem nomes; quem quiser vê-los marca a caixa. O OpenStreetMap, no mapa "perto de mim", já vinha desmarcado.
 - **Verificação:** com Chromium, 0 pedidos a outros domínios ao abrir a página inicial e a área Educação; ao marcar a caixa, os pedidos de tiles à Esri começam.
 
+
+
+## Decisões consolidadas do fechamento territorial — 09/11/2026
+
+- O fechamento técnico ocorre exclusivamente na branch `mism3-fechamento`, PR #99, sem merge, alteração da `main`, deploy, publicação ou operação na Cloudflare.
+- A geometria dos 408 setores preserva os vértices originais do IBGE 2022; não aplicar Douglas–Peucker nem `coverage_simplify`; arredondar somente a seis casas decimais.
+- A tolerância topológica de sobreposição e buraco interno é 0,0121 m², derivada da quantização. A diferença de aproximadamente 0,7 km² entre edições cartográficas municipais 2022 e 2025 é documentada separadamente.
+- A auditoria identificou 11 centroides matemáticos externos. O ponto interno alternativo é usado somente nesses casos; os outros 397 centroides são preservados.
+- A D4 suprime 17 setores e todos os indicadores derivados protegidos. Estatísticas de distância abrangem no máximo 391 setores.
+- O índice CEP público saneado tem 1.243 CEPs; os 124 sem vínculo setorial verificável foram omitidos e os 44 com menos de três endereços foram generalizados.
+- A regeneração final dependente de fontes locais é executada pelo responsável no computador local; não enviar fontes brutas ou tabelas restritas para GitHub, Actions ou artefatos.
+
+
+## 09/11/2026 — substituição preventiva de imagens sem autorização comprovada
+
+- O brasão municipal e as imagens de origem/licença não comprovadas foram removidos da árvore da branch de publicação `mism3-fechamento`.
+- O cabeçalho permanece textual; a capa e a marca do rodapé foram substituídas por placeholders neutros feitos em HTML/CSS.
+- A decisão é preventiva e limitada à redistribuição: não declara ilicitude dos arquivos nem apaga os originais locais do autor.
+- A restauração de qualquer imagem depende de identificação do titular e autorização/termos aplicáveis.

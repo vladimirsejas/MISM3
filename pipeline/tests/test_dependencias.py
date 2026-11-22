@@ -10,7 +10,7 @@ RAIZ = Path(__file__).resolve().parents[2]
 README = (RAIZ / "README.md").read_text(encoding="utf-8")
 STD = set(sys.stdlib_module_names)
 # módulo importado -> nome do pacote no pip
-PACOTE = {"sklearn": "scikit-learn", "shapefile": "pyshp", "pandas": "pandas", "numpy": "numpy", "openpyxl": "openpyxl", "pytest": "pytest"}
+PACOTE = {"sklearn": "scikit-learn", "shapefile": "pyshp", "pyproj": "pyproj", "shapely": "shapely", "pandas": "pandas", "numpy": "numpy", "openpyxl": "openpyxl", "pytest": "pytest"}
 LOCAIS = {Path(f).stem for f in glob.glob(str(RAIZ / "pipeline" / "*.py"))} | {"conftest"}
 
 
@@ -103,3 +103,42 @@ def test_arquivos_citados_em_crases_no_readme_existem():
         if not (RAIZ / caminho).exists():
             faltam.append(caminho)
     assert not faltam, f"caminhos citados no README que não existem: {sorted(set(faltam))}"
+
+
+def test_licencas_de_terceiros_e_servicos_cartograficos_estao_separados():
+    avisos = (RAIZ / "AVISOS-DE-TERCEIROS.md").read_text(encoding="utf-8")
+    licenca = (RAIZ / "LICENSE-DADOS-E-DOCUMENTACAO.md").read_text(encoding="utf-8")
+    assert "CNEFE 2022" in avisos and "SP_setores_CD2022.zip" in avisos
+    assert "dadosabertos.saude.gov.br/dataset/cnes-cadastro-nacional-de-estabelecimentos-de-saude" in avisos
+    assert "microdados/censo-escolar" in avisos
+    assert "ODbL" in avisos and "operations.osmfoundation.org/policies/tiles/" in avisos
+    assert "esri.com/pt-br/legal/terms/web-site-service" in avisos
+    assert "Shapely 2.1.2" in avisos and "GEOS" in avisos and "LGPL-2.1" in avisos
+    assert "Serviços cartográficos remotos" in licenca
+    assert "não são licenciados por esta declaração CC BY 4.0" in licenca
+    assert "dados/referencia_ibge/setores_rio_claro_original_ibge_2022.geojson" in avisos
+    assert "municipio_rio_claro_2025.geojson" in avisos
+    assert "não recebe licença aberta" in avisos
+    assert "nem os mapas e a cartografia" in licenca
+    assert "`dados/referencia_ibge/`" in licenca
+    linha_mapa_usf = next(l for l in avisos.splitlines() if "mapaRioClaroUSF.geojson" in l)
+    assert "Não autorizado para redistribuição até confirmação" in linha_mapa_usf
+
+
+def test_tiles_externos_sao_opcionais_e_tem_atribuicao_visivel():
+    app = (RAIZ / "web" / "app.js").read_text(encoding="utf-8")
+    mapa = (RAIZ / "web" / "mapa.js").read_text(encoding="utf-8")
+    html = (RAIZ / "web" / "index.html").read_text(encoding="utf-8")
+    readme = (RAIZ / "README.md").read_text(encoding="utf-8")
+
+    assert 'if (e.target.checked)' in app
+    assert 'https://tile.openstreetmap.org/{z}/{x}/{y}.png' in app
+    assert 'referrerPolicy: "origin"' in app
+    assert "OpenStreetMap contributors" in app
+    assert 'if (ligar && !tiles)' in mapa
+    assert "World_Light_Gray_Base" in mapa and "World_Light_Gray_Reference" in mapa
+    assert "Esri" in mapa and "OpenStreetMap contributors" in mapa
+    assert 'name="referrer" content="no-referrer"' in html
+    assert 'name="robots" content="noindex, nofollow"' in html
+    assert "Os termos desses serviços não foram verificados" not in readme
+    assert "uso não comercial" in readme

@@ -2,7 +2,7 @@
 
 Entrada : o zip "SP_setores_CD2022.zip" (shapefile do estado inteiro) em dados/bruto/setores/
           (ou passe o caminho: python pipeline/setores.py caminho/do.zip)
-Saida   : web/dados/setores.geojson  (so Rio Claro, poligonos simplificados)
+Saida   : web/dados/setores.geojson  (so Rio Claro, polígonos originais com coordenadas arredondadas a seis casas)
           web/dados/setor_bairro.json (setor -> bairro do IBGE; o site usa para dizer o bairro provavel de um CEP)
 
 Usa so a biblioteca pura-Python "pyshp" (pip install pyshp): funciona no Windows sem GDAL.
@@ -21,38 +21,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import BRUTO, MUNICIPIO_IBGE7, WEB_DADOS, agora_iso, erro, salvar_json  # noqa: E402
 
-TOLERANCIA_GRAUS = 0.00004  # ~4 m: invisivel no mapa, reduz muito o tamanho
-CASAS = 5                   # ~1 m
-
-
-def _dist_seg(p, a, b):
-    (x, y), (x1, y1), (x2, y2) = p, a, b
-    dx, dy = x2 - x1, y2 - y1
-    if dx == 0 and dy == 0:
-        return ((x - x1) ** 2 + (y - y1) ** 2) ** 0.5
-    t = max(0.0, min(1.0, ((x - x1) * dx + (y - y1) * dy) / (dx * dx + dy * dy)))
-    return ((x - (x1 + t * dx)) ** 2 + (y - (y1 + t * dy)) ** 2) ** 0.5
-
-
-def simplificar(pontos, tol=TOLERANCIA_GRAUS):
-    """Douglas-Peucker iterativo (sem recursao). Mantem primeiro e ultimo ponto."""
-    n = len(pontos)
-    if n <= 4:
-        return list(pontos)
-    manter = [False] * n
-    manter[0] = manter[-1] = True
-    pilha = [(0, n - 1)]
-    while pilha:
-        i, j = pilha.pop()
-        dmax, k = 0.0, -1
-        for m in range(i + 1, j):
-            d = _dist_seg(pontos[m], pontos[i], pontos[j])
-            if d > dmax:
-                dmax, k = d, m
-        if k != -1 and dmax > tol:
-            manter[k] = True
-            pilha += [(i, k), (k, j)]
-    return [p for p, mk in zip(pontos, manter) if mk]
+CASAS = 6  # arredondamento decimal; nenhuma simplificação geométrica
 
 
 def aneis(shape):
@@ -70,16 +39,15 @@ def _area_assinada(anel):
 
 
 def geometria(shape):
-    """Monta MultiPolygon GeoJSON. No shapefile, anel horario = externo; anti-horario = furo."""
+    """Monta MultiPolygon preservando vértices; aplica apenas arredondamento a seis casas."""
     poligonos = []
     for anel in aneis(shape):
-        simples = simplificar(anel)
-        if len(simples) < 4:
+        if len(anel) < 4:
             continue
-        coords = [[round(x, CASAS), round(y, CASAS)] for x, y in simples]
-        if _area_assinada(anel) < 0:       # horario (area negativa) = externo
+        coords = [[round(float(x), CASAS), round(float(y), CASAS)] for x, y in anel]
+        if _area_assinada(anel) < 0:
             poligonos.append([coords])
-        elif poligonos:                     # furo do ultimo externo
+        elif poligonos:
             poligonos[-1].append(coords)
     if not poligonos:
         return None

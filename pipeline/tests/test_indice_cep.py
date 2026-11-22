@@ -14,16 +14,16 @@ def test_ceps_associados_a_setores_protegidos_nao_sao_publicados():
         "33333333": [-22.4, -47.5, 500, "", 0],
     }
     resultado, removidos = ic.filtrar_ceps_de_setores_suprimidos(indice, geo)
-    assert removidos == 1
+    assert removidos == 2
     assert "11111111" not in resultado
-    assert "22222222" in resultado and "33333333" in resultado
+    assert "22222222" in resultado and "33333333" not in resultado
 
 
-def test_ausencia_de_geometria_nao_apaga_ceps_sem_vinculo_setorial():
-    indice = {"33333333": [-22.4, -47.5, 500, "", 0]}
+def test_ausencia_de_setor_na_malha_omite_cep_mesmo_com_muitos_enderecos():
+    indice = {"33333333": [-22.4, -47.5, 500, "", 120]}
     resultado, removidos = ic.filtrar_ceps_de_setores_suprimidos(indice, {"features": []})
-    assert removidos == 0
-    assert resultado == indice
+    assert removidos == 1
+    assert resultado == {}
 
 
 def test_setor_do_cnefe_com_sufixo_de_letra_casa_com_o_geojson_do_ibge():
@@ -42,8 +42,9 @@ def test_indice_publicado_nao_tem_cep_de_setor_protegido_nos_dados_reais():
     dados = Path(__file__).resolve().parents[2] / "web" / "dados"
     geo = json.loads((dados / "setores.geojson").read_text(encoding="utf-8"))
     ceps = json.loads((dados / "cep_indice.json").read_text(encoding="utf-8"))["ceps"]
-    _, removiveis = ic.filtrar_ceps_de_setores_suprimidos(ceps, geo)
-    assert removiveis == 0, "o índice publicado ainda tem %d CEP(s) de setor protegido" % removiveis
+    filtrado, removiveis = ic.filtrar_ceps_de_setores_suprimidos(ceps, geo)
+    assert removiveis == 0, "o índice publicado ainda tem %d CEP(s) sem vínculo verificável ou de setor protegido" % removiveis
+    assert filtrado == ceps
     protegidos = sum(1 for f in geo["features"] if ic.setor_suprimido(f["properties"]))
     assert protegidos > 0, "o teste precisa de setores protegidos para valer"
 
@@ -83,7 +84,43 @@ def test_indice_publicado_nao_tem_ponto_proprio_de_cep_com_poucos_enderecos_nos_
     dados = Path(__file__).resolve().parents[2] / "web" / "dados"
     geo = json.loads((dados / "setores.geojson").read_text(encoding="utf-8"))
     ceps = json.loads((dados / "cep_indice.json").read_text(encoding="utf-8"))["ceps"]
-    novo, generalizados, omitidos = ic.generalizar_ceps_com_poucos_enderecos(ceps, geo)
-    assert (generalizados, omitidos) == (generalizados, 0) and novo == ceps, "o índice publicado ainda tem CEP com menos de 3 endereços com ponto próprio"
+    novo, estatisticas = ic.sanear_indice_para_publicacao(ceps, geo)
+    assert novo == ceps and estatisticas == {
+        "omitidos_validacao_setorial": 0,
+        "generalizados_poucos_enderecos": 0,
+        "omitidos_generalizacao": 0,
+    }, "o índice publicado deve ser idempotente após todas as regras de privacidade"
     pequenos = [c for c, v in ceps.items() if v[4] < ic.MINIMO_ENDERECOS_POR_CEP]
     assert pequenos, "o teste precisa de CEPs com poucos endereços para valer"
+
+
+
+def test_saneamento_integral_aplica_d4_setor_verificavel_e_generalizacao():
+    geo = {"features": [
+        {"properties": {"setor": "111111111111111", "pessoas": 300, "domicilios": 100}, "geometry": QUADRADO},
+        {"properties": {"setor": "222222222222222", "pessoas": 4, "domicilios": 20}, "geometry": QUADRADO},
+    ]}
+    indice = {
+        "11111111": [-22.3912, -47.4961, 150, "111111111111111P", 2],
+        "22222222": [-22.4, -47.5, 150, "999999999999999P", 80],
+        "33333333": [-22.4, -47.5, 150, "222222222222222P", 20],
+        "44444444": [-22.4, -47.5, 150, "111111111111111P", 10],
+    }
+    resultado, stats = ic.sanear_indice_para_publicacao(indice, geo)
+    assert set(resultado) == {"11111111", "44444444"}
+    assert resultado["11111111"][:2] == [-22.395, -47.495]
+    assert stats["omitidos_validacao_setorial"] == 2
+    assert stats["generalizados_poucos_enderecos"] == 1
+    assert stats["omitidos_generalizacao"] == 0
+
+
+def test_registro_com_contagem_fracionaria_ou_invalida_e_omitido():
+    geo = {"features": [{"properties": {"setor": "111111111111111", "pessoas": 300, "domicilios": 100}, "geometry": QUADRADO}]}
+    indice = {
+        "11111111": [-22.4, -47.5, 150, "111111111111111P", 3.5],
+        "22222222": [-22.4, -47.5, 150, "111111111111111P", float("nan")],
+        "33333333": [-22.4, -47.5, 150, "111111111111111P", True],
+    }
+    resultado, removidos = ic.filtrar_ceps_de_setores_suprimidos(indice, geo)
+    assert resultado == {}
+    assert removidos == 3

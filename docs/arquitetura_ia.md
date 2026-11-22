@@ -9,7 +9,7 @@ Escrito em 11/10/2026. Define o papel de cada tecnologia, o que está implementa
 | **Regras de palavras-chave** | `web/necessidades.js`. Entram junto com o modelo, para nunca perder um alerta de violência. **Não são IA.** | Implementado |
 | **Sistema de recomendação (por conteúdo)** | Depois de reconhecer a necessidade, ranqueia os **serviços do catálogo verificado** pela semelhança (TF-IDF de n-gramas) entre o texto da mulher e o nome, tipo e observação de cada serviço, com condições de segurança (ex.: o CAPS de álcool e drogas só aparece se o texto falar disso). | **Implementado** (v1) |
 | **Plano do Trabalho** | Árvore de decisão escrita à mão (**regras, não aprendizado**). | Regras |
-| **Inteligência pública (Observatório)** | Indicadores agregados, lacunas e análise territorial para a Secretaria. | **Não implementado** (ver `docs/observatorio_e_dados_da_secretaria.md`) |
+| **Inteligência pública (Observatório)** | Mapa territorial por setor censitário, painel de qualidade e indicadores agregados para leitura territorial. | **Implementado em versão exploratória**, com regeneração final de derivados locais pendente; não diagnostica pessoas nem mede acesso efetivo. |
 
 ## Atualização de 12/10/2026: do classificador para um sistema de orientação
 Depois de comparar três pareceres de IA (DeepSeek, Gemini e outro), ficou decidido: **não** colocar modelo de linguagem nem modelo pesado no navegador (os celulares do público não aguentam, e relatos sensíveis não podem sair do aparelho), **manter os dados verificados como a inteligência** e usar a IA como interface. Implementado nesta rodada:
@@ -55,3 +55,19 @@ A chave da API **nunca** vai para o navegador nem para o repositório. Usos prev
 ### Detector de perigo aprendido (13/10/2026)
 
 A segurança deixou de depender só de listas de palavras: `web/perigo.js` combina as regras com um detector de aprendizado de máquina (`web/dados/modelo_perigo.json`, treinado por `pipeline/treinar_perigo.py`). Regras e detector se complementam: o alerta completo (telefones e serviços de proteção fixados) aparece se uma regra dispara ou o detector está muito confiante; com confiança moderada aparece só um aviso discreto. Uma âncora semântica impede que o detector sozinho dispare sem palavras do assunto. Números e limites em `docs/ia/avaliacao_orientacao.md`.
+
+
+## Privacidade do orientador — estado implementado
+
+A classificação e a busca são executadas no navegador. O texto digitado fica em memória JavaScript e não é enviado a API, telemetria ou serviço externo, nem gravado em armazenamento local. O único `fetch` do `app.js` é um GET sem corpo para arquivos JSON estáticos da própria aplicação. Os modelos são baixados somente quando a usuária entra na caixa ou envia uma pergunta; não são carregados na abertura inicial.
+
+As regras de perigo são avaliadas imediatamente antes da espera pelo carregamento dos modelos. Se um modelo não carregar, o sistema conserva as regras locais e apresenta os caminhos oficiais de emergência. Ao voltar ao início, mudar de área ou abrir uma vista do painel, os campos de texto livre e seus resultados são limpos. As respostas das jornadas também ficam somente em memória e são descartadas ao retornar ao início ou fechar a página.
+
+Essa garantia se refere ao código e ao comportamento programado; deve continuar protegida por testes que impeçam POST, telemetria, armazenamento ou inclusão do texto em URLs.
+
+
+## Atualização de arquitetura territorial — 09/11/2026
+
+O mapa territorial é servido em `web/mapa-territorial.html` e desenhado em SVG por `web/mapa-territorial.js`. Os únicos dados carregados por essa página são JSON locais da própria origem. Não há mapa-base, tiles ou API externa no mapa territorial. O painel de qualidade permanece separado. As duas páginas mantêm `noindex, nofollow` enquanto o fechamento e a liberação não forem autorizados.
+
+O pipeline territorial usa Python 3.12 e dependências fixadas em `requirements.txt`. A geometria dos 408 setores preserva os vértices originais do IBGE, com arredondamento a seis casas decimais. A política D4 suprime os 17 setores protegidos; o cálculo de distâncias considera apenas os 391 não suprimidos. O sistema de orientação continua executando no navegador: o texto livre não é enviado a servidor nem armazenado.

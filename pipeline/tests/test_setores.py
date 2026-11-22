@@ -56,14 +56,6 @@ def test_municipio_inexistente(tmp_path):
         setores.extrair(setores.abrir_leitor(cria_zip(tmp_path)), municipio="9999999")
 
 
-def test_simplificar_mantem_extremos_e_reduz():
-    reta = [(0.0, 0.0), (0.5, 0.000001), (1.0, 0.0), (1.5, 0.000001), (2.0, 0.0)]
-    s = setores.simplificar(reta, tol=0.0001)
-    assert s[0] == reta[0] and s[-1] == reta[-1] and len(s) < len(reta)
-    quina = [(0, 0), (1, 0), (1, 1), (2, 1), (2, 2)]
-    assert setores.simplificar(quina, tol=0.0001) == quina  # curvas reais ficam
-
-
 def test_grava_setor_bairro_so_com_bairro(tmp_path, monkeypatch):
     """O site usa setor_bairro.json para dizer o bairro provavel de um CEP: so entram setores com bairro (nada inventado)."""
     z = cria_zip(tmp_path)
@@ -74,3 +66,20 @@ def test_grava_setor_bairro_so_com_bairro(tmp_path, monkeypatch):
     saida = json.loads((tmp_path / "web_dados" / "setor_bairro.json").read_text(encoding="utf-8"))
     assert saida["bairros"] == {"354390700000001": "Centro"}  # o setor sem bairro nao aparece
     assert "IBGE" in saida["meta"]["fonte"] and "agrupado" in saida["meta"]["nota"]
+
+
+
+
+def test_geometria_aplica_somente_arredondamento_a_seis_casas(tmp_path):
+    colecao, _ = setores.extrair(setores.abrir_leitor(cria_zip(tmp_path)))
+    for feature in colecao["features"]:
+        def conferir(valor):
+            if isinstance(valor, list):
+                for item in valor:
+                    conferir(item)
+            elif isinstance(valor, float):
+                assert round(valor, 6) == valor
+        conferir(feature["geometry"]["coordinates"])
+    assert setores.CASAS == 6
+    assert not hasattr(setores, "simplificar")
+    assert not hasattr(setores, "simplificar_cobertura")
