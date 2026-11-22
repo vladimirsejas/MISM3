@@ -80,5 +80,6 @@ testeEstrutura();
 testeBuracos();
 testeResumo();
 assert(/catálogo de serviços contém endereço, fonte institucional e data de verificação/.test(html));
+assert(/data em que o projeto consultou a fonte, não a data em que o órgão atualizou/.test(html) && /conferência desses registros pode estar pendente/.test(html), "a página deve dizer que a data é a da consulta e que a conferência pode estar pendente");
 testeBaseReal();
 console.log("qualidade-dados.test.js: painel territorial, procedência, áreas, geometria e cautela D4 validados");
