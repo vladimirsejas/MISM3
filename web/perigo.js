@@ -168,9 +168,17 @@
     "ameacava ameacavam ameacaram ameacada ameacado perseguia perseguiam perseguidas perseguido perseguida machucava machucavam machucando machucaram " +
     "maltratava maltratando maltrataram empurrava empurrando empurraram sufocava sufocando esfaqueava esfaqueando enforcava enforcando abusava " +
     "abusavam abusaram abusado trancava trancando trancaram apanhava apanhavam apanhado sangrava sangravam desmaiava desmaiando desmaiaram " +
-    "respirava respirando acorrentava acorrentaram amarrava amarraram queimava queimando proibia proibiam proibiram contatos").split(" ");
+    "respirava respirando acorrentava acorrentaram amarrava amarraram queimava queimando proibia proibiam proibiram contatos " +
+    "celular celulares mensagens dinheiro salario trabalhar trabalha trabalho estudar proibe humilha humilhar xinga xingar controla controlar vigiar vigia " +
+    "gritando gritar gritou gritaria amigas amigos espaco impede obriga exige ninguem senhas qualquer escolhe roupas " +
+    "namorado esposo companheiro marido deixa privacidade liberdade").split(" ");
+  var VOCAB_CURTO = ["grita"]; /* palavra de 5 letras que também vale como alvo de uma palavra digitada com 6+ letras ("ghrita") */
   var NO_VOCAB = {}; VOCABULARIO.forEach(function (w) { NO_VOCAB[w] = 1; });
-  ["projecao", "projecoes", "protecoes", "numeros", "telefones", "ligara", "ligaria", "titular", "titulares", "contrato", "contratos", "contratar", "contratada", "contratado", "telefonema"].forEach(function (w) { NO_VOCAB[w] = 1; });
+  ["projecao", "projecoes", "protecoes", "numeros", "telefones", "ligara", "ligaria", "titular", "titulares", "contrato", "contratos", "contratar", "contratada", "contratado", "telefonema",
+    /* palavras válidas a 1 edição de um termo-chave (levantadas em textos reais do projeto): nunca são "corrigidas" */
+    "propria", "proprio", "familiar", "familias", "trabalhador", "trabalhadora", "denunciar", "denuncias", "tutela", "escolha", "abusiva", "abusivo", "salarios", "esposa", "gritos",
+    "desacordada", "contrata", "contratam", "contratou", "desabar", "assedia", "assedio", "apanho", "ameacar", "queimada", "queimaduras", "esconde", "estuda", "namorando",
+    "namorados", "duvida", "duvidas", "controle", "controlo", "trabalhei", "trabalhou", "trabalhos", "celulares", "senhas", "agressoes", "emergencial", "escolher", "escolhi", "escolheu", "escolhemos", "escolhem", "controlei", "controlou", "trabalhando", "estudando"].forEach(function (w) { NO_VOCAB[w] = 1; });
   /* distância de edição com transposição (Damerau/OSA), com corte em "max" */
   function distancia(a, b, max) {
     var la = a.length, lb = b.length, i, j, d = [];
@@ -216,22 +224,131 @@
   /* "nunca mais me procurou" é ausência de contato, não reaparecimento: as formas negadas saem antes de procurar marcador de reaparecimento */
   var NEGADOS = /(?:nunca mais|nao|nunca)(?: \w+){0,2} (?:me procurou|me procura|me ligou|me liga|me mandou|apareceu|voltou|veio|se aproximou|se aproxima|mandou mensagem)/g;
   function violenciaResolvida(vs) { return vs.every(function (v) { return CTX_PROTECAO.test(v) && SEM_REAPARECER.test(v) && !REAPARECEU.test(v.replace(NEGADOS, " ")); }); }
+  /* ---------- CONTROLE COERCITIVO E VIOLÊNCIA PSICOLÓGICA: só NÍVEL 1 ----------
+     Por COMBINAÇÃO: comportamento de controle (celular/senha/mensagens, roupa e redes, isolamento, proibir trabalho ou estudo, dinheiro,
+     humilhação recorrente, vigilância, ameaça de tirar filhos/casa/dinheiro, culpa e dúvida sobre a própria sanidade, gritos recorrentes)
+     + imposição, restrição, punição ou recorrência + sujeito de relação (marido, namorado, noivo, ex, companheiro, ele/ela; também em
+     terceira pessoa). Palavra isolada nunca basta. Consentimento/acordo, passado resolvido e ficção suprimem. Esta camada só roda quando
+     NENHUMA regra de nível 2 disparou: nunca rebaixa um nível 2, e o nível 2 só vem dos indicadores graves já existentes (ameaça de morte,
+     agressão física, arma, cárcere, impedir pedir socorro). */
+  var PARCEIRO = "(?:marid\\w{0,2}|mario|namorad[oa]|noi[tv][oa]|ex|companheir[oa]|espos[oa]|parceir[oa]|ficante|ele|ela)";
+  var DEIXA = "(?:nao\\w? deixa|nao deixou|nao deixam|nunca deixa|nao permite|nao aceita que|nao quer que|proibe|proibiu|proibindo|impede|impediu|veta|vetou)";
+  var OBJ = "(?: eu| me| a gente| que eu| de| ela| a ela| que ela| a mulher| a filha| a irma)?";
+  var REC = "(?:todo dia|todos os dias?|toda hora|toda vez|sempre|o tempo todo|a toda hora|diariamente|toda noite|constantemente|de hora em hora|varias vezes por dia|na frente d\\w+|vive|fica)";
+  var CONSENTE = new RegExp("(?:^| )(?:combinamos|decidimos|combinei|resolvemos|concordamos|acordamos|de comum acordo|cada um|juntos|juntas|emprestei|emprestad\\w+|pedi (?:a )?(?:opiniao|ajuda|conselho)|ele ajudou|ele me ajuda|ela me ajuda|a gente combinou|a gente decidiu|a gente resolveu|eu gosto|eu deixo|eu aceito|eu pedi|dividimos|nos dois|eu concordo)(?: |$)");
+  var PASSADO_FICCAO = /(?:^| )(?:antigo|antiga|antigamente|no passado|naquele tempo|quando eu era|quando eramos|ja passou|superei|superou|isso acabou|faz anos|na novela|no filme|na serie|no livro|na tv|no jornal|li uma noticia|vi uma noticia|vi na noticia|uma amiga da minha amiga|conheci uma historia)(?: |$)/;
+  var CTX = "(?: \\w+){0,3}";
+  var COERC = [
+    /* isolamento e proibição de sair, falar, ver */
+    DEIXA + OBJ + CTX + " (?:com )?(?:as |os |a |o )?(?:minhas |meus |minha |meu )?(?:ninguem|nenhum amigo|nenhuma amiga|amigas|amigos|familia|mae|irmas|irmaos|pais)",
+    DEIXA + OBJ + "(?: \\w+){0,2} (?:sair|saia|visitar|ver minha|passear|viajar|frequentar|participar|ter celular|ter redes|usar redes|postar|ir (?:a|na|no|ao|em))",
+    "nao\\w? me (?:da|deixa)(?: \\w+)? (?:espaco|liberdade|privacidade|folga|sossego|um minuto|respirar)",
+    "(?:diz|fala|acha|alega|vive dizendo) que (?:minhas amigas|meus amigos|minha familia|minha mae|minhas irmas|meus pais|a minha familia) (?:nao prestam|nao presta|sao (?:ruins|falsos|falsas|ma influencia)|me fazem mal|querem me separar)",
+    "(?:faz|fez|faz uma) (?:cena|barraco|escandalo|ciumes?) (?:quando|toda vez que|sempre que) (?:eu )?(?:saio|falo|converso|vejo|encontro|visito)",
+    "(?:nao pode|nao posso|nao consegue|nao podem)(?: \\w+){0,2} (?:sair|trabalhar|estudar|falar com ninguem|visitar|ver a familia)(?: \\w+){0,4} (?:porque|pois|ja que) (?:o |a )?(?:marido|namorado|noivo|companheiro|ex|esposo|ele|ela)(?: \\w+){0,2} (?:nao deixa|proibe|nao quer|nao permite)",
+    /* proibir trabalho ou estudo */
+    "(?:" + DEIXA.slice(3, -1) + "|me fez largar|me obrigou a largar|manda eu largar|exige que eu largue|quer que eu largue|me fez parar de|quer que eu pare de)" + OBJ + "(?: \\w+){0,2} (?:trabalhar|trabalho|trabalhe|trabalha|estudar|estude|emprego|faculdade|curso|escola|aula|aulas|estudos|ganhar (?:meu )?dinheiro|ter renda|procurar emprego)",
+    /* dinheiro, salário, cartão */
+    "(?:controla|controlou|retem|esconde|escondeu|toma|tomou|pega|pegou|fica com|ficou com|tira|tirou|confisca|administra sozinho|gerencia sozinho)(?: \\w+){0,3} (?:meu|minha|meus|minhas|todo o meu|todo meu)(?: \\w+)? (?:dinheiro|salario|cartao|pagamento|renda|grana|ganho|conta bancaria|conta do banco|senha do banco|bolsa familia|beneficio)",
+    "(?:nao posso|nao consigo|nao tenho como|nao tenho direito de|nao me deixa|nao deixa eu|nao me permite)(?: \\w+){0,2} (?:ter|usar|mexer|gastar|pegar|sacar|ver|manusear|controlar|decidir)(?: \\w+){0,3} (?:dinheiro|salario|cartao|conta|grana|renda)",
+    "(?:so me da|so me deixa gastar|so me deixa ter|me da (?:uma )?mesada|so libera|cobra cada centavo|pede conta de cada|exige (?:nota|comprovante|prestacao de contas)|manda eu prestar contas|manda prestar contas)",
+    /* celular, senha, localização, vigilância */
+    "(?:exige|exigiu|pede|pediu|quer|obriga|obrigou|manda|mandou|cobra|cobrou|forca)(?: \\w+){0,3} (?:a |minha |minhas |as |meu )?(?:senha|senhas|abrir o celular|desbloquear|mostrar (?:o )?(?:celular|telefone|as mensagens|mensagens)|prova de onde|localizacao|compartilh\\w+ (?:a )?localizacao)",
+    "(?:quer|exige|precisa|faz questao de|cobra|pergunta toda hora) saber(?: \\w+){0,3} (?:onde (?:eu )?(?:estou|ando)|com quem (?:eu )?(?:estou|falo|ando|saio|converso|fui|vou)|tudo (?:que|o que) (?:eu )?(?:faco|fiz)|o que (?:eu )?(?:faco|fiz|estou fazendo)|quem me (?:liga|manda|escreve)|cada passo)",
+    "(?:liga|ligando|ligou|manda mensagem|mandando mensagem|manda msg|chama|telefona|cobra|fica ligando|fica mandando)(?: \\w+){0,3} (?:toda hora|o tempo todo|a toda hora|varias vezes (?:por dia|ao dia)|de hora em hora|de dez em dez minutos|sem parar)(?: \\w+){0,6} (?:controlar|vigiar|saber onde|conferir|checar|cobrar|fiscalizar)",
+    "(?:quer|querendo|tenta|tentando|vive tentando|vive querendo)(?: \\w+){0,2} (?:me controlar|controlar (?:tudo|minha vida|meus passos|minhas? coisas|o que eu|a minha vida))",
+    "(?:me rastreia|instalou rastreador|colocou rastreador|rastreia meu celular|me vigia|vigia meus passos|controla meus passos|controla meus horarios)",
+    /* roupa, aparência, redes sociais */
+    "(?:escolhe|decide|define|manda|impoe|proibe|proibiu|nao deixa|nao deixou|nao permite|exige|obriga|obrigou)(?: \\w+){0,5} (?:roupa|roupas|vestir|vestido|saia|short|shorts|blusa|decote|biquini|maquiagem|batom|cabelo|unhas|calca|salto)",
+    "(?:proibe|proibiu|nao deixa|nao deixou|nao permite|manda|mandou|obriga|obrigou|exige)(?: eu| me| que eu| de| a)?(?: \\w+){0,3} (?:postar|publicar|ter redes sociais|ter instagram|ter facebook|ter whatsapp|ter celular|usar redes|usar instagram|apagar|excluir|deletar|bloquear)",
+    /* ameaça de tirar filhos, casa, dinheiro */
+    "(?:ameaca|ameacou|avisa|avisou|garante|garantiu|promete|prometeu)(?: \\w+){0,4} (?:perder|tirar|levar|ficar sem|fico sem|vou ficar sem)(?: \\w+){0,2} (?:os filhos|as criancas|meus filhos|a guarda|minha casa|a casa|tudo|o emprego|o dinheiro|a pensao|nada)",
+    "(?:vai|vou|disse que vai|diz que vai|ameaca) (?:me )?(?:deixar|botar|por|colocar|largar|jogar|mandar)(?: \\w+){0,2} (?:sem (?:nada|casa|dinheiro|filhos|comida|teto)|na rua|pra rua|para rua)",
+    "(?:vai|diz que vai|disse que vai|ameaca) (?:cortar|suspender|bloquear)(?: \\w+){0,2} (?:o dinheiro|a pensao|a mesada|o cartao|a conta|tudo)",
+    "se eu (?:sair|separar|largar|deixar ele)(?: \\w+){0,3} (?:perco|perder|vou perder|fico sem) (?:os filhos|a casa|tudo|a guarda|o dinheiro)",
+    /* culpa e dúvida sobre a própria sanidade */
+    "(?:diz|disse|fala|falou|vive dizendo|vive falando|acha)(?: \\w+){0,3} (?:que eu (?:sou|estou|to) (?:louca|maluca|doida|exagerada|nervosa|instavel|paranoica|descontrolada|ciumenta|doente)|que (?:eu )?(?:invento|imagino|exagero|crio)(?: coisas| tudo| historias)?|que isso nunca aconteceu|que nunca disse isso|que a culpa e minha|que (?:tudo|a culpa) (?:e|eh) culpa minha|que eu mereco|que eu provoco)",
+    "(?:me faz|faz eu|fez eu)(?: \\w+){0,2} (?:duvidar|achar que (?:sou|estou)|sentir que (?:sou|estou) louca)",
+    "(?:me culpa por tudo|culpa tudo em mim|joga a culpa em mim|a culpa e sempre minha)",
+    /* gritos recorrentes (um "gritou" isolado não conta: só o presente habitual com intensidade) */
+    "(?:grita|gritam|gritando|berra|berrando|esbraveja)(?: \\w+){0,2} (?:com |pra |para )?(?:comig\\w*|a gente|nos|eu|meus filhos|os filhos|as criancas|minhas filhas|meu filho|minha filha|todo mundo|em casa|ela|a mulher)(?: \\w+){0,3} (?:(?:por )?qualquer(?: \\w+)?|por (?:tudo|nada|besteira|bobagem|um nada)|toda hora|todo dia|todos os dias?|sempre|muito|o tempo todo|a toda hora|diariamente|demais|toda vez)",
+    "(?:grita|berra) (?:muito|demais|sempre|toda hora|todo dia|o tempo todo)(?: \\w+){0,3} (?:com|comigo|com a gente|com os filhos|com meus filhos|com as criancas)",
+    "(?:vive|fica|passa o dia|passa o tempo|so sabe) (?:gritando|berrando)",
+    /* voz passiva: "controlada pelo marido" */
+    "(?:proibid[ao]|impedid[ao]|obrigad[ao]|controlad[ao]|vigiad[ao]|humilhad[ao]|xingad[ao]|isolad[ao]) (?:pel[oa]|por) (?:marido|namorado|noivo|companheiro|ex|esposo|parceiro)"
+  ].map(function (r) { return new RegExp("(?:^| )" + r + "(?: |$)"); });
+  var COERC_COMBO = [
+    ["(?:diz|disse|fala|falou|vive dizendo)(?: \\w+){0,6} (?:perder|perco|tirar|levar|ficar sem|fico sem)(?: \\w+){0,2} (?:os filhos|as criancas|meus filhos|a guarda|minha casa|a casa|tudo|o emprego|o dinheiro|a pensao|nada)", "se eu"],
+    /* vigiar o celular exige "às escondidas / toda hora / sem eu saber"; chamar de burra/louca exige recorrência ou plateia */
+    ["(?:vigia|vigiando|mexe|mexendo|revira|revirando|confere|conferindo|le|lendo|olha|olhando|fiscaliza|fiscalizando|checa|checando|espiona|espionando|monitora|monitorando|controla|controlando|bisbilhota|fuca|fucando|xereta)(?: \\w+){0,3} (?:celular|celulares|telefone|mensagens|whatsapp|zap|conversas|redes sociais|instagram|facebook|email|fotos|senhas?|historico)",
+     "(?:escondido|as escondidas|sem eu saber|sem eu deixar|sem minha autorizacao|sem pedir|toda hora|todo dia|sempre|toda vez|o tempo todo|a toda hora|constantemente|diariamente|toda noite|quando durmo)"],
+    ["(?:chama|chamou|chamando|me xinga de|diz que sou|disse que sou|fala que sou|falou que sou|diz que eu sou|me trata como)(?: \\w+){0,2} (?:de )?(?:burra|burro|louca|doida|maluca|inutil|idiota|gorda|feia|vagabunda|imprestavel|incapaz|ignorante|lixo|estupida|fracassada)", REC]
+  ].map(function (par) { return par.map(function (r) { return new RegExp("(?:^| )" + r + "(?: |$)"); }); });
+  /* Convivência normal de casal: acordo, cuidado carinhoso e briga isolada. Se NENHUMA regra de risco disparou, o detector aprendido sozinho não
+     transforma isso em alerta ("meu marido me avisa quando chega", "ele gritou comigo ontem na briga"). Regras fortes e camada de controle seguem valendo. */
+  var CARINHO = /(?:^| )(?:avis\w+ quando (?:eu )?(?:chegar|chega|chegou|chegue)|(?:liga|ligou|ligue) (?:pra|para) saber se (?:eu )?(?:cheguei|estou bem|esta tudo bem)|se preocupa comigo|preocupado comigo|cuida de mim|carinhos[oa]|amoros[oa]|me abraca|me beija|me elogia|me apoia)(?: |$)/;
+  var BRIGA_VERBO = /(?:^| )(?:gritou|discutiu|discutimos|brigamos|brigou|se alterou|levantou a voz|falou alto)(?: |$)/;
+  var BRIGA_ISOLADA = /(?:^| )(?:ontem|hoje|uma vez|so uma vez|na briga|numa briga|na discussao|numa discussao|depois da briga|por causa d[eao])(?: |$)/;
+  var RECORRENCIA_FORTE = /(?:todo dia|todos os dias?|toda hora|toda vez|sempre|o tempo todo|a toda hora|diariamente|vive|fica|toda noite|constantemente|muito|demais)/;
+  /* Elogio, carinho e rotina sobre o parceiro ("me chamou de linda", "me emprestou dinheiro", "trabalha a noite"). Só vale quando NÃO há palavra de
+     violência, medo, coação ou perigo no texto. */
+  var POSITIVO = /(?:^| )(?:linda|lindo|bonita|bonito|incrivel|maravilhos[oa]|inteligente|querida|querido|amor|elogi\w+|gosta|adora|ama|feliz|orgulh\w+|presente|surpresa|ajudou|emprest\w+|apoia|parabeniz\w+|cuida|trabalha|paga|cozinha|cansada|descansar|passeio|praia|viagem|jantar|filme|mercado|compras|lixo|cabelo|aluguel|casamento)(?: |$)/;
+  var VIOLENCIA_LEXICO = /bat\w*|agred\w*|ameac\w*|mat(?:ar|a|ou)|soco|tapa|surra|pancada|empurr\w*|estrangul\w*|sufoc\w*|enforc\w*|abus\w*|violen\w*|medo|pavor|persegu\w*|vigi\w*|tranc\w*|preso|presa|machuc\w*|quebr\w*|arma|faca|socorro|apanh\w*|xing\w*|humilh\w*|control\w*|proib\w*|obriga\w*|forc\w*|nao quero|rasg\w*|valho|assust\w*|culp\w*|invent\w*|louca|burra|grit\w*|berr\w*|perigo|esfaque\w*|estupr\w*|assedi\w*|nao deixa|sabe onde/;
+  var POUCAS = /^(?:meu|minha|meus|minhas|ele|ela|que|com|para|por|uma|uns|das|dos|nao|e|o|a|de|do|da|me)$/;
+  function convivenciaNormal(vs) {
+    return vs.some(function (v) {
+      if (VIOLENCIA_LEXICO.test(v)) return CONSENTE.test(v) || (BRIGA_VERBO.test(v) && BRIGA_ISOLADA.test(v) && !RECORRENCIA_FORTE.test(v));
+      var conteudo = v.split(" ").filter(function (w) { return w && !POUCAS.test(w); });
+      return CONSENTE.test(v) || CARINHO.test(v) || POSITIVO.test(v) || conteudo.length <= 2 || (BRIGA_VERBO.test(v) && BRIGA_ISOLADA.test(v) && !RECORRENCIA_FORTE.test(v));
+    });
+  }
+  var RE_PARCEIRO = new RegExp("(?:^| )" + PARCEIRO + "(?: |$)");
+  function controleCoercitivo(vs) {
+    return vs.some(function (v) {
+      if (CONSENTE.test(v) || PASSADO_FICCAO.test(v) || !RE_PARCEIRO.test(v)) return false;
+      return COERC.some(function (r) { return r.test(v); }) || COERC_COMBO.some(function (par) { return par[0].test(v) && par[1].test(v); });
+    });
+  }
   /* Dor localizada comum (braço direito, costas, ombro, ciático, dente...) sem sinal de gravidade: o detector aprendido sozinho não vale. */
   var DOR_LOCAL = /(?:^| )dor(?:es)? (?:forte |leve |muita |muito )?(?:n[oa]s?|d[oae]s?|em) (?:meu |minha |o |a )?(?:braco|costas|ombros?|ciatico|nervo ciatico|joelhos?|tornozelos?|pernas?|pes?|coluna|lombar|pescoco|dentes?|garganta|ouvido|cabeca|barriga|estomago|maos?|punhos?|cotovelos?|quadril|panturrilha|coxa|tendao)(?: |$)/;
   var GRAVIDADE = /esquerd|peito|falta de ar|sem ar|formig|dorment|suor|tontur|enjo|desmai|insuport|de repente|subita|irradi|queda|caiu|acidente|pancada|sangr|convuls|inconsci|nao consigo (?:respirar|mexer|levantar|andar|falar)|muito forte|fortissima|desesper/;
+  var COLADOS = /\b(me|te)(liga|bate|xinga|grita|persegue|vigia|controla|proibe|humilha|obriga|ameaca|empurra|culpa|chama|manda|exige|cobra|ofende|insulta|segue)\b/g;
+  function coloquial(t) {
+    return t.replace(/\bnaum\b|\bnau\b|\bn\b(?= (?:deixa|pode|posso|quer|deixou))/g, "nao").replace(/\bnum (?=(?:deixa|deixou|deixo|pode|posso|quer|deixam|me)\b)/g, "nao ").replace(COLADOS, "$1 $2");
+  }
   function corrigirDigitacao(t) {
+    t = coloquial(t);
     return t.split(" ").map(function (w) {
+      if (/[aeo]i[ao]$/.test(w) && w.length >= 6 && !NO_VOCAB[w]) { var lh = w.slice(0, -3) + w.charAt(w.length - 3) + "lh" + w.charAt(w.length - 1); if (NO_VOCAB[lh]) return lh; }
       if (w.length < 6 || NO_VOCAB[w] || /\d/.test(w)) return w;
-      var limite = w.length >= 10 ? 2 : 1, melhor = null, md = 3;
-      VOCABULARIO.forEach(function (v) {
-        if (v.length < 6) return;
-        var lim = limite;
-        if (lim === 1 && w.length >= 7 && v.length >= 7 && Math.abs(w.length - v.length) <= 1 && w.charAt(0) === v.charAt(0) && w.charAt(w.length - 1) === v.charAt(v.length - 1)) lim = 2; /* mesmas letras das pontas */
-        var dd = distancia(w, v, lim);
-        if (dd <= lim && dd < md) { md = dd; melhor = v; }
+      var melhor = null, md = 3;
+      VOCABULARIO.concat(VOCAB_CURTO).forEach(function (v) {
+        if (v.length < 6 && VOCAB_CURTO.indexOf(v) === -1) return;
+        var dd = distancia(w, v, 1);
+        if (/^[aeiou]/.test(w)) { var dh = distancia("h" + w, v, 1); if (dh < dd) dd = dh; }
+        if (dd > 1) dd = (w.length >= 7 && duasTrocasDeTecla(w, v)) ? 2 : 9; /* "cpmtato" = "contato": p e m ao lado de o e n no teclado */
+        if (dd <= 2 && dd < md) { md = dd; melhor = v; }
       });
       return melhor || w;
     }).join(" ");
+  }
+  /* teclado ABNT sem acento: duas letras são vizinhas se estão lado a lado ou uma acima/abaixo da outra */
+  var LINHAS_TECLADO = ["qwertyuiop", "asdfghjkl", "zxcvbnm"];
+  function vizinhas(a, b) {
+    for (var r = 0; r < 3; r++) {
+      var c = LINHAS_TECLADO[r].indexOf(a);
+      if (c === -1) continue;
+      if (LINHAS_TECLADO[r].charAt(c - 1) === b || LINHAS_TECLADO[r].charAt(c + 1) === b) return true;
+      if (r > 0 && (LINHAS_TECLADO[r - 1].charAt(c) === b || LINHAS_TECLADO[r - 1].charAt(c + 1) === b)) return true;
+      if (r < 2 && (LINHAS_TECLADO[r + 1].charAt(c - 1) === b || LINHAS_TECLADO[r + 1].charAt(c) === b)) return true;
+    }
+    return false;
+  }
+  function duasTrocasDeTecla(w, v) {
+    if (w.length !== v.length) return false;
+    var n = 0;
+    for (var i = 0; i < w.length; i++) if (w.charAt(i) !== v.charAt(i)) { if (!vizinhas(w.charAt(i), v.charAt(i))) return false; n++; }
+    return n >= 1 && n <= 2;
   }
   function achouCombo(combos, texto) { return combos.some(function (par) { return par.every(function (r) { return r.test(texto); }); }); }
 
@@ -278,7 +395,12 @@
     ORDEM.forEach(function (tp) {
       var regra = versoes.some(function (v) { return achou(COMPILADO[tp].forte, v) || achouCombo(COMPILADO[tp].combos, v); }), p = probs ? probs[tp] : undefined, lim = detector ? detector.limiares[tp] : undefined;
       if (tp === "violencia" && resolvida) return;
+      if (tp === "violencia" && !regra && convivenciaNormal(versoes)) p = undefined;
       if (tp === "violencia" && !regra && versoes.some(function (v) { return achou(COMPILADO[tp].moderado, v); })) { fracos.push(tp); return; } /* só nível 1: o detector não eleva */
+      if (tp === "violencia" && !regra && controleCoercitivo(versoes)) {
+        var altoCC = detector && detector.altos[tp] !== undefined ? detector.altos[tp] : (detector ? detector.limiares[tp] : undefined);
+        if (!(p !== undefined && altoCC !== undefined && p >= altoCC)) { fracos.push(tp); return; } /* se o detector já daria nível 2, esse nível não é rebaixado */
+      }
       if (tp === "saude" && !regra && versoes.some(function (v) { return DOR_LOCAL.test(v); }) && !versoes.some(function (v) { return GRAVIDADE.test(v); })) p = undefined;
       var alto = detector && detector.altos[tp] !== undefined ? detector.altos[tp] : lim;
       if (!regra && ANCORAS[tp] && !emAlguma(ANCORAS[tp])) p = undefined; /* o detector sozinho não vale sem uma palavra do assunto */
