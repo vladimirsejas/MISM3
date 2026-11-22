@@ -149,7 +149,29 @@
     return "";
   }
 
-  return { LIMITES_ATUALIDADE: LIMITES_ATUALIDADE, atualidade: atualidade, textoConsulta: textoConsulta, textoProcedencia: textoProcedencia,
+  /* Campos que o cartão mostra e podem faltar. Campo vazio NUNCA é mostrado como se fosse informação disponível.
+     "Não informado" = a fonte do projeto não traz o dado (pode existir; ainda precisa ser confirmado).
+     "Não se aplica" = o campo comprovadamente não faz sentido para aquele tipo de registro. Só vale onde houver regra documentada
+     em NAO_SE_APLICA ({ tipo/subtipo: [campos] }). Hoje NÃO há nenhuma regra com base em fonte: na dúvida, é "não informado". */
+  var CAMPOS_DO_CARTAO = { telefone: "telefone", endereco: "endereço", horario: "horário" };
+  var NAO_SE_APLICA = {};
+  function vazio(v) { return v === null || v === undefined || String(v).trim() === ""; }
+  function camposAusentes(s, regras) {
+    var r = regras || NAO_SE_APLICA, ignorar = (s && (r[s.tipo + "/" + s.subtipo] || r[s.tipo])) || [];
+    var saida = { nao_informado: [], nao_se_aplica: [] };
+    Object.keys(CAMPOS_DO_CARTAO).forEach(function (c) {
+      if (!vazio(s && s[c])) return;
+      (ignorar.indexOf(c) !== -1 ? saida.nao_se_aplica : saida.nao_informado).push(CAMPOS_DO_CARTAO[c]);
+    });
+    return saida;
+  }
+  function textoCamposAusentes(s, regras) {
+    var a = camposAusentes(s, regras);
+    if (!a.nao_informado.length) return "";
+    return "Não informado na fonte: " + a.nao_informado.join(", ") + ". Ligue para a unidade ou confirme no site do órgão antes de ir.";
+  }
+
+  return { camposAusentes: camposAusentes, textoCamposAusentes: textoCamposAusentes, NAO_SE_APLICA: NAO_SE_APLICA, LIMITES_ATUALIDADE: LIMITES_ATUALIDADE, atualidade: atualidade, textoConsulta: textoConsulta, textoProcedencia: textoProcedencia,
     estadoConferencia: estadoConferencia, textoConferencia: textoConferencia, ORDEM: ORDEM, ROTULOS: ROTULOS, rotuloSubtipo: rotuloSubtipo, normalizarCep: normalizarCep, haversine: haversine,
     formatarDistancia: formatarDistancia, idadeVerificacao: idadeVerificacao, LIMITE_DIAS: LIMITE_DIAS, comDistancia: comDistancia, buscar: buscar };
 });

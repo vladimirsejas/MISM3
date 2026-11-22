@@ -50,7 +50,6 @@
       partes.push('<p class="dist">Atende todo o município</p>');
     }
     if (s.endereco) partes.push("<p>" + esc(s.endereco) + "</p>");
-    else partes.push('<p class="meta">Endereço não informado na fonte: ligue para confirmar.</p>');
     if (s.telefone) partes.push("<p>Telefone: " + linksTelefone(s.telefone) + "</p>");
     if (s.instagram && /^[A-Za-z0-9._]{1,30}$/.test(s.instagram)) {
       partes.push('<p>Contato pelo Instagram: <a href="https://www.instagram.com/' + esc(s.instagram) + '/" target="_blank" rel="noopener noreferrer">@' + esc(s.instagram) + "</a></p>");
@@ -64,6 +63,7 @@
         (oferece.length ? esc(oferece.join(" e ")) : "não aparece com creche nem pré-escola") +
         '. <span class="meta">Fonte: ' + esc(s.etapas.fonte) + ". Mostra a etapa, não se há vaga.</span></p>");
     }
+    if (Acesso.textoCamposAusentes(s)) partes.push('<p class="meta campos-ausentes">' + esc(Acesso.textoCamposAusentes(s)) + "</p>");
     if (s.observacao) partes.push('<p class="meta">' + esc(s.observacao) + "</p>");
     if (s.bairros) partes.push('<details class="bairros"><summary>Bairros atendidos</summary><p>' + esc(s.bairros) + ".</p></details>");
     var fonte = s.fonte_url ? '<a href="' + esc(s.fonte_url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.fonte) + "</a>" : esc(s.fonte);
