@@ -363,6 +363,14 @@
     /(?:escolhe|manda|proibe|decide)(?: \w+){0,5} (?:roupa|vestir)/,
     /(?:rastreia|quer saber onde|me segue|me persegue)/
   ];
+  /* Indicador grave: ameaça de morte, matar, arma, agressão física, estupro ou sexo forçado, cárcere ou impedir de sair à força, impedir de pedir socorro,
+     ameaça física, medo de morrer. Se aparecer qualquer um, o nível 2 do detector é mantido. */
+  var GRAVE = /(?:^| )(?:mat(?:ar|a|ou|o|ando|em)|morte|morrer|morro|morrendo|arma|armado|armada|faca|facao|revolver|pistola|espingarda|bat(?:er|e|eu|em|endo)|espanc\w*|enforc\w*|estrangul\w*|sufoc\w*|agred\w*|agressao|estupr\w*|forcou|forcar|forcada|forcado|sexo|trancad\w*|tranca|trancou|carcere|cativeiro|socorro|esfaque\w*|queimar|queimou|soco|socos|tapa|tapas|chute|chutou|empurr\w*|machuc\w*)(?: |$)/;
+  var SEM_SOCORRO = /(?:nao deixa|impede|proibe|tira|toma|tirou|tomou)(?: \w+){0,4} (?:pedir (?:socorro|ajuda)|ligar (?:pra|para)(?: a)? (?:policia|190|180)|chamar (?:a )?policia)/;
+  /* Ameaça explícita (verbo "ameaçar") e destruição de bens como intimidação também contam como indicador grave: na dúvida, o nível 2 é mantido. */
+  var AMEACA = /(?:^| )ameac(?:a|ou|am|ando|aram|ar)(?: |$)/;
+  var DESTRUICAO = /(?:rasgou|rasga|rasgando|quebrou|quebra|quebrando|destruiu|destroi|queimou|jogou fora|sumiu com)(?: \w+){0,3} (?:minhas|meus|meu|minha|tudo|documentos|roupas|coisas|celular)/;
+  function indicadorGrave(vs) { return vs.some(function (v) { return GRAVE.test(v) || SEM_SOCORRO.test(v) || AMEACA.test(v) || DESTRUICAO.test(v) || controleTotal([v]); }); }
   function controleTotal(vs) { return vs.some(function (v) { return FAMILIAS_CONTROLE.filter(function (r) { return r.test(v); }).length >= 3; }); }
   var RE_PARCEIRO = new RegExp("(?:^| )" + PARCEIRO + "(?: |$)");
   function controleCoercitivo(vs) {
@@ -463,8 +471,11 @@
       if (tp === "violencia" && !regra && convivenciaNormal(versoes)) p = undefined;
       if (tp === "violencia" && !regra && versoes.some(function (v) { return achou(COMPILADO[tp].moderado, v); })) { fracos.push(tp); return; } /* só nível 1: o detector não eleva */
       if (tp === "violencia" && !regra && controleCoercitivo(versoes)) {
+        /* Controle reconhecido e nível 2 vindo SÓ do detector aprendido: sem nenhum indicador grave na frase, fica em nível 1. Com qualquer indicador grave
+           (ou com regra de nível 2, que já é "regra") o nível 2 é mantido. */
         var altoCC = detector && detector.altos[tp] !== undefined ? detector.altos[tp] : (detector ? detector.limiares[tp] : undefined);
-        if (!(p !== undefined && altoCC !== undefined && p >= altoCC)) { fracos.push(tp); return; } /* se o detector já daria nível 2, esse nível não é rebaixado */
+        var detectorDariaNivel2 = p !== undefined && altoCC !== undefined && p >= altoCC;
+        if (!detectorDariaNivel2 || !indicadorGrave(versoes)) { fracos.push(tp); return; }
       }
       if (tp === "saude" && !regra && versoes.some(function (v) { return DOR_LOCAL.test(v); }) && !versoes.some(function (v) { return GRAVIDADE.test(v); })) p = undefined;
       var alto = detector && detector.altos[tp] !== undefined ? detector.altos[tp] : lim;
