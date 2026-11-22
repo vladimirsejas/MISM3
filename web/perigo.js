@@ -20,6 +20,10 @@
   var REAPARECE = "(?:(?:veio|voltou|apareceu|aparece|chegou|esta|ta|ficou|fica|anda|continua|insiste)(?: \\w+){0,3} (?:de novo|aqui|rondando|na porta|no portao|na frente|na minha (?:casa|rua|porta)|em frente|me procurando|me procurou|me ligando|me mandando|me esperando)|descumpr\\w+|nao (?:respeita|respeitou|cumpre|cumpriu|obedece|obedeceu)|ignor\\w+ (?:a |as |o )?(?:decisao|medida|ordem|justica|juiz|protecao)|rondando|(?:batendo|esmurrando|chutando|forcando) (?:na|no|a|o) (?:porta|portao|janela)|tentando (?:entrar|arrombar|invadir)|me procurou)";
   /* Sintomas de infarto sem a palavra "dor": aperto, pressão ou peso no peito; braço ou mandíbula com formigamento junto de outro sinal. */
   var BRACO_MANDIBULA = "(?:(?:braco|bracos|mandibula|maxilar|ombro) (?:esquerdo |direito )?(?:formig\\w*|dorment\\w*|adormecid\\w*|doendo|dolorid\\w*|pesad\\w*|doi|dor)|(?:dor|formigamento|dormencia|peso) (?:no|em|do|na) (?:braco|bracos|mandibula|maxilar|ombro)(?: esquerdo| direito)?)";
+  /* Contato com quem a justiça proibiu: "o juiz proibiu / não pode falar com ela" + o contato acontecendo = descumprimento de proteção. */
+  var PROIBIDO = "(?:proibid[ao]s?|proibindo|proibiu|nao pode (?:falar|se aproximar|chegar perto|entrar em contato|procurar|ligar|mandar mensagem|ter contato)|(?:juiz|justica|decisao|ordem|medida)(?: \\w+){0,3} (?:proibi\\w+|determin\\w+|mandou)|ordem de afastamento)";
+  var CONTATO = "(?:(?:entrou|entrando|fez|teve)(?: \\w+)? contato|contato com ela|contato comigo|falou com ela|falou comigo|mandando mensagem|mandou mensagem|manda mensagem|ligando|ligou|liga pra ela|procurou|procurando|aproximou|se aproxima|apareceu|chegou perto|esta perto|esteve)";
+  var AGRESSOR_AMBIENTE = "(?:ele|ex|dele|agressor|marido|namorado|companheiro|pai dos meus filhos|pai dela|pai dele)";
   var SINAL_ASSOCIADO = "(?:peito|falta de ar|sem ar|ar faltando|suor frio|suando frio|tontura|tonta|enjoo|enjoada|nausea|mal estar|passando mal|palidez|palida)";
   var TIPOS = {
     suicidio: {
@@ -32,7 +36,11 @@
         "(?:pensei|penso|pensando|quero|vou|vontade|ideia|tentei|tentar) (?:em |de )?(?:me )?(?:enforcar|enforco|afogar|envenenar|atirar|jogar (?:d[aoe]|na|no) \\w+|jogar na frente|pular (?:d[aoe]|na|no) \\w+|cortar os pulsos|me jogar)",
         "(?:vou|quero) me (?:enforcar|jogar|atirar|envenenar|afogar)",
         "(?:queria|quero|gostaria de|preferia|desejo) (?:dormir|adormecer) e nao (?:acordar|acordar mais|ver mais nada)", "nao quero (?:mais )?(?:acordar|estar aqui|existir|estar viva|ficar aqui|continuar)", "queria (?:nao ter nascido|desaparecer|nao existir|estar morta|ter morrido)",
-        "(?:minha )?vida nao tem (?:mais )?(?:sentido|valor|jeito|saida)", "nao vejo (?:mais )?(?:saida|solucao|sentido|futuro)", "nao tem mais jeito pra mim", "(?:seria|era|e) melhor (?:se eu )?(?:morresse|nao existisse|nao estivesse aqui|desaparecesse)", "ninguem sentiria minha falta", "nao tenho mais motivo pra viver", "(?:escrevi|deixei|fiz|preparei|escrever) (?:uma )?(?:carta|bilhete|mensagem) de despedida", "ja escrevi minha despedida", "(?:filhos|familia|todos|todo mundo|mundo) (?:ficariam|estariam|ficaria|estaria) melhor sem (?:a mae|mim|eu)", "nao tenho motivo pra (?:viver|continuar)", "quero sumir(?! (?:com|de|da|do|a|o|as|os)\\b)", "acabar com a minha vida"
+        "(?:minha )?vida nao tem (?:mais )?(?:sentido|valor|jeito|saida)", "nao vejo (?:mais )?(?:saida|solucao|sentido|futuro)", "nao tem mais jeito pra mim", "(?:seria|era|e) melhor (?:se eu )?(?:morresse|nao existisse|nao estivesse aqui|desaparecesse)", "ninguem sentiria minha falta", "nao tenho mais motivo pra viver", "(?:escrevi|deixei|fiz|preparei|escrever) (?:uma )?(?:carta|bilhete|mensagem) de despedida", "ja escrevi minha despedida", "(?:filhos|familia|todos|todo mundo|mundo) (?:ficariam|estariam|ficaria|estaria) melhor sem (?:a mae|mim|eu)", "nao tenho motivo pra (?:viver|continuar)", "quero sumir(?! (?:com|de|da|do|a|o|as|os)\\b)", "acabar com a minha vida",
+        "(?:medo|receio|temo|acho|penso|tenho certeza|desconfio|preocupad[ao]|preocupacao)(?: \\w+){0,3} que (?:ela|ele|elas|eles|meu \\w+|minha \\w+|\\w+)(?: \\w+){0,2} (?:se mate|se matar|vai se matar|va se matar|se suicide|se suicidar|(?:tire|tirar) a (?:propria )?vida|acabe com a (?:propria )?vida|(?:tente|tentar|va tentar|possa tentar|pode tentar) (?:se )?(?:matar|suicid\\w+)|(?:se machuque|se fira|se corte|se machucar) (?:a si|de proposito|sozinh[ao])|se (?:faca|fazer) mal)",
+        "(?:ela|ele|meu \\w+|minha \\w+) (?:quer|querendo|pensa em|pensando em|disse que quer|disse que vai|falou que quer|falou que vai|diz que quer|diz que vai) (?:se )?(?:matar|suicidar|morrer(?! de )|acabar com a (?:propria )?vida|tirar a (?:propria )?vida)",
+        "(?:tentou|tentaram|tentando) (?:se )?(?:matar|suicidar|suicidio)", "tentativa de suicidio", "(?:vai |va |pode |possa )se (?:mate|matar)",
+        "cvv", "centro de valorizacao da vida", "(?:ligar|ligue|numero|telefone)(?: \\w+){0,2} 188"
       ],
       aviso: "Se você pensa em se machucar, ligue para o 188 (CVV, conversa de apoio, 24 horas, gratuito) ou para o 192 (SAMU).",
       mensagem: "Sinto muito que você esteja se sentindo assim. Você não está sozinha. Se pensa em se machucar, ligue agora para o 188 (CVV, conversa de apoio, 24 horas, gratuito) ou para o 192 (SAMU).",
@@ -78,10 +86,11 @@
         "tenho medo (?:dele|dela|do meu marido|do meu ex|do meu companheiro|do meu namorado|de voltar pra casa|de voltar para casa|de ir pra casa|de chegar em casa|de entrar em casa|de ficar em casa|de dormir em casa)",
         "(?:nao me deixa|nao deixa eu|me proibe de|me tranca|me prende) (?:sair|em casa|de sair|trabalhar)", "nao posso sair de casa",
         "quebrou tudo", "quebra tudo", "sair de casa com (?:[a-z]+ ){0,4}seguranca", "fugir de casa", "fugir dele",
-        "estou em perigo", "to em perigo", "me ajuda ele esta aqui", "ele esta aqui", "ele esta vindo", "socorro(?: me (?:ajuda|ajudem)| por favor)?$", "socorro me ajuda"
+        "(?:vivo|fico|estou|ficamos|vivemos|estamos|passo os dias|minha (?:filha|mae|irma|amiga|vizinha|prima) (?:vive|fica|esta)) (?:sempre |o tempo todo |todo dia )?(?:trancad[ao]s?|presa|presas|preso|presos|em carcere|em cativeiro)(?: dentro)? (?:em casa|de casa|na casa|dentro de casa|no apartamento|no quintal|no porao|no escuro)(?!(?: \\w+){0,5} (?:quarentena|chuva|gripe|covid|pandemia|greve|obra))",
+        "(?:me deixa|me mantem|me tem|me prende|me tranca) (?:trancad[ao]|presa|em casa|no quarto)", "estou em perigo", "to em perigo", "me ajuda ele esta aqui", "ele esta aqui", "ele esta vindo", "socorro(?: me (?:ajuda|ajudem)| por favor)?$", "socorro me ajuda"
       ],
       contexto: ["delegacia da mulher", "\\bddm\\b", "\\bcram\\b", "patrulha maria da penha", "ligue 180", "casa abrigo", "casa de abrigo", "abrigo (?:pra|para) (?:mim|mulher|mim e meus filhos|minha familia)", "preciso de abrigo"],
-      combos: [[PROTECAO, REAPARECE]],
+      combos: [[PROTECAO, REAPARECE], [PROIBIDO, CONTATO, AGRESSOR_AMBIENTE]],
       aviso: "Se você está em perigo, ligue 190 (Polícia) ou 180 (Central de Atendimento à Mulher, 24 horas, gratuito).",
       mensagem: "Se você está em perigo agora, ligue 190 (Polícia). O Ligue 180 orienta e encaminha, 24 horas, de graça. Você não precisa contar a sua história aqui.",
       telefones: ["190", "180"],
@@ -93,7 +102,12 @@
         "desmai\\w*", "(?:caiu|tombou|passou mal|bateu a cabeca|escorregou|apagou) e (?:nao|n) (?:responde|reage|acorda|se mexe|fala|levanta)", "nao (?:acorda|respira|reage|se mexe)\\b", "nao esta (?:respirando|reagindo|respondendo)", "inconsciente", "engasg\\w+", "(?:esta|ficou|ficando|esta ficando) (?:roxo|roxa|azul|azulado|azulada|branco|branca como cera)", "vomitando sangue", "(?:febre|temperatura) (?:muito )?alta.{0,40}(?:convuls\\w*|mole|nao acorda|dormindo demais)", "perdeu os sentidos", "(?:queimou|queimadura).{0,25}(?:crianca|bebe|filh[oa]|rosto|corpo)", "(?:levou|tomou) (?:um )?choque", "cortou (?:muito|fundo)", "desacordad\\w*", "convuls\\w*", "infarto", "\\bavc\\b", "derrame", "overdose", "envenen\\w*", "(?:engoliu|tomou|bebeu|ingeriu|comeu) (?:veneno|produto de limpeza|soda caustica|(?:muito|todos os|a cartela de) remedios?)",
         "(?:meu |o |no )?peito (?:esta |ta |fica |ficou |ficando )?(?:aperta\\w*|apertad\\w*|pesad\\w*|queima\\w*|esmagad\\w*|esmagand\\w*|doendo|doi)(?! (?:de|por) (?:saudade|tristeza|emocao|alegria|orgulho|amor))",
         "(?:aperto|pressao|peso|queimacao|pontada|facada|fisgada|desconforto|dor) (?:forte |muito forte |intensa |intenso |no lado esquerdo )?(?:no|em|do|sobre o) peito",
-        "sangrando (?:muito|bastante)", "sangramento (?:forte|intenso|muito)", "queimadura (?:grave|forte)", "acidente grave"
+        "sangrando (?:muito|bastante)", "sangramento (?:forte|intenso|muito)",
+        "(?:sangra|sangrou|sangrando) (?:sem parar|demais|muito|bastante|forte)", "nao para de sangrar", "hemorragia", "(?:perdendo|perdi|perdeu) (?:muito )?sangue", "muito sangue",
+        "(?:corte|cortei|ferimento|talho|furo)(?!(?: \\w+){0,3} (?:cabelo|barba|unha|gasto|gastos|custo|custos|orcamento|energia|luz|agua|verba|bolo|papel|tecido|grama))(?: \\w+){0,3} (?:profundo|profunda|fundo|funda|grave)",
+        "(?:dormencia|formigamento|fraqueza|paralisia|adormecimento|perda de (?:forca|sensibilidade)|(?:perdi|perdeu|perdendo) (?:a |o )?(?:forca|movimento|sensibilidade))(?: \\w+){0,3} (?:lado (?:esquerdo|direito)|metade do corpo|metade do rosto|rosto|face|boca)",
+        "(?:lado|metade) (?:esquerdo|direito|do corpo)(?: \\w+){0,3} (?:dormente|dormindo|formigando|paralisad\\w+|sem forca|fraco)",
+        "boca torta", "rosto torto", "fala (?:enrolada|arrastada)", "(?:falando|falar) enrolad[ao]", "perdi a fala", "perda (?:subita )?(?:da |de )?visao", "queimadura (?:grave|forte)", "acidente grave"
       ],
       combos: [[BRACO_MANDIBULA, SINAL_ASSOCIADO]],
       aviso: "Se for uma urgência médica, ligue 192 (SAMU) ou vá à UPA mais próxima.",
@@ -102,7 +116,10 @@
       pins: [{ id: "man-saude-upa-cervezao" }, { id: "man-saude-upa-estadio" }, { id: "man-saude-santa-casa" }]
     },
     risco: {
-      forte: ["risco de (?:cair|desabar|desabamento)", "vai desabar", "desabando", "incendio", "pegando fogo", "alagou", "enchente", "deslizamento", "vazamento de gas", "cheiro de gas"],
+      forte: ["risco de (?:cair|desabar|desabamento)", "vai desabar", "desabando", "incendio", "pegando fogo", "alagou", "enchente", "deslizamento", "vazamento de gas", "cheiro de gas",
+        "(?:queria|quero|preciso|tenho que|tenho de|vou|devo) ligar (?:para|pra|no|na|pro|ao) (?:a |o )?(?:emergencia|samu|bombeiros?|ambulancia|190|192|193)",
+        "(?:nao sei|esqueci|qual|qual e|cade|onde acho|preciso d[oe]) (?:o |a )?(?:numero|telefone|contato)(?: \\w+){0,2} (?:d[aeo]s?|pra|para) (?:emergencia|samu|bombeiros?|ambulancia)",
+        "(?:chamar|chamem|chame) (?:a |uma )?(?:ambulancia|samu|bombeiros)"],
       mensagem: "Se há risco imediato para você ou para quem está com você, ligue 190 (Polícia), 192 (SAMU) ou 193 (Bombeiros).",
       telefones: ["190", "192", "193"],
       pins: []
@@ -123,6 +140,59 @@
   });
 
   function achou(lista, texto) { return lista.some(function (r) { return r.test(texto); }); }
+  /* Tolerância a erro de digitação nos termos-chave de perigo: palavra com 6 letras ou mais que não é do vocabulário e está a 1 edição
+     (2 se tiver 10 letras ou mais) de um termo-chave é trocada por ele numa VERSÃO ADICIONAL do texto; o texto original continua sendo avaliado.
+     Palavras curtas (menos de 6 letras) só valem se escritas certo, para não trocar palavras comuns ("mate", "juiz", "samu"). */
+  var VOCABULARIO = ("sangrando sangramento sangrar sangue hemorragia desmaiei desmaiou desmaiar desmaio dormencia formigamento trancada trancado trancadas " +
+    "emergencia ambulancia bombeiros suicidar suicidio estrangular estrangulou espancou espancada espancado agrediu agrediram agredida agredido agredir " +
+    "ameacou ameacando ameaca perseguindo perseguiu persegue protetiva protecao proibindo proibido proibiu judicial acorrentada acorrentado amarrada amarrado " +
+    "machucada machucado apanhou apanhando tutelar respirar respirando convulsao engasgou infarto veneno violencia estuprada abusada abusou abusando socorro " +
+    "queimadura profundo profunda inconsciente desacordado contato afastamento denuncia delegacia agressor agressora esfaqueou enforcou sufocou machucou " +
+    "maltrata maltratou empurrou conselho telefone numero ligar " +
+    "agredia agrediam agredindo agredira agredidos agredidas espancava espancavam espancando espancaram estrangulava estrangulando estrangularam " +
+    "ameacava ameacavam ameacaram ameacada ameacado perseguia perseguiam perseguidas perseguido perseguida machucava machucavam machucando machucaram " +
+    "maltratava maltratando maltrataram empurrava empurrando empurraram sufocava sufocando esfaqueava esfaqueando enforcava enforcando abusava " +
+    "abusavam abusaram abusado trancava trancando trancaram apanhava apanhavam apanhado sangrava sangravam desmaiava desmaiando desmaiaram " +
+    "respirava respirando acorrentava acorrentaram amarrava amarraram queimava queimando proibia proibiam proibiram contatos").split(" ");
+  var NO_VOCAB = {}; VOCABULARIO.forEach(function (w) { NO_VOCAB[w] = 1; });
+  ["projecao", "projecoes", "protecoes", "numeros", "telefones", "ligara", "ligaria"].forEach(function (w) { NO_VOCAB[w] = 1; });
+  /* distância de edição com transposição (Damerau/OSA), com corte em "max" */
+  function distancia(a, b, max) {
+    var la = a.length, lb = b.length, i, j, d = [];
+    if (Math.abs(la - lb) > max) return max + 1;
+    for (i = 0; i <= la; i++) { d[i] = [i]; }
+    for (j = 1; j <= lb; j++) d[0][j] = j;
+    for (i = 1; i <= la; i++) for (j = 1; j <= lb; j++) {
+      var c = a.charAt(i - 1) === b.charAt(j - 1) ? 0 : 1;
+      d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + c);
+      if (i > 1 && j > 1 && a.charAt(i - 1) === b.charAt(j - 2) && a.charAt(i - 2) === b.charAt(j - 1)) d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + 1);
+    }
+    return d[la][lb];
+  }
+  /* Neutraliza usos que NÃO são sobre risco, por categoria: cada item troca a expressão por um texto neutro ANTES das regras e do detector.
+       - cvv do cartão de crédito (não é o CVV de apoio emocional);
+       - "corte" de cabelo, gastos, energia... (não é ferimento).
+     Outras categorias (figurados com objeto abstrato, esporte, hipérbole banal, proteção em vigor sem reaparecimento) ficam junto delas abaixo. */
+  var NEUTRAS = [
+    [/(?:codigo|numero|digitos?|verso|seguranca|cartao|credito|debito)(?: \w+){0,3} cvv|cvv (?:do|no|de|da|dos) (?:meu |o |a |seu )?(?:cartao|credito|debito|banco)/g, "codigo do cartao"],
+    [/\bcortes? (?:de|do|da|dos|das) (?:cabelo|barba|unhas?|gastos?|custos?|orcamento|energia|luz|agua|verba|bolo|papel|tecido|grama|franja|despesas?)\b/g, "assunto comum"]
+  ];
+  function neutralizar(t) {
+    NEUTRAS.forEach(function (n) { t = t.replace(n[0], n[1]); });
+    return t;
+  }
+  function corrigirDigitacao(t) {
+    return t.split(" ").map(function (w) {
+      if (w.length < 6 || NO_VOCAB[w] || /\d/.test(w)) return w;
+      var limite = w.length >= 10 ? 2 : 1, melhor = null, md = limite + 1;
+      VOCABULARIO.forEach(function (v) {
+        if (v.length < 6) return;
+        var dd = distancia(w, v, limite);
+        if (dd < md) { md = dd; melhor = v; }
+      });
+      return melhor && md <= limite ? melhor : w;
+    }).join(" ");
+  }
   function achouCombo(combos, texto) { return combos.some(function (par) { return par.every(function (r) { return r.test(texto); }); }); }
 
   /* Necessidade material familiar não é, por si só, evidência de violência ou perigo infantil.
@@ -156,11 +226,14 @@
     if (!t) return null;
     /* Letras esticadas ("me baaaate", "quero morreeer", "socorrooo"): além do texto como veio, olha uma versão com 3 ou mais letras
        iguais seguidas reduzidas a uma (o português não tem palavra com três letras iguais seguidas, então nada legítimo é alterado). */
-    var t2 = t.replace(/([a-z0-9])\1{2,}/g, "$1"), versoes = t2 !== t ? [t, t2] : [t];
+    var t2 = t.replace(/([a-z0-9])\1{2,}/g, "$1"), t3 = corrigirDigitacao(t2), versoes = [t];
+    if (t2 !== t) versoes.push(t2);
+    if (t3 !== t2) versoes.push(t3);
+    versoes = versoes.map(neutralizar);
     function emAlguma(re) { return versoes.some(function (v) { return re.test(v); }); }
     var tipos = [], nivel = 0;
-    var probs = detector ? detector.probabilidades(texto) : null, doModelo = {}, fracos = [];
-    if (probs && t2 !== t) { var probs2 = detector.probabilidades(t2); Object.keys(probs2).forEach(function (k) { if (probs2[k] > probs[k]) probs[k] = probs2[k]; }); }
+    var tN = neutralizar(t), probs = detector ? detector.probabilidades(tN !== t ? tN : texto) : null, doModelo = {}, fracos = [];
+    if (probs) versoes.slice(1, t3 !== t2 ? versoes.length - 1 : versoes.length).forEach(function (v) { var pv = detector.probabilidades(v); Object.keys(pv).forEach(function (k) { if (pv[k] > probs[k]) probs[k] = pv[k]; }); });
     ORDEM.forEach(function (tp) {
       var regra = versoes.some(function (v) { return achou(COMPILADO[tp].forte, v) || achouCombo(COMPILADO[tp].combos, v); }), p = probs ? probs[tp] : undefined, lim = detector ? detector.limiares[tp] : undefined;
       var alto = detector && detector.altos[tp] !== undefined ? detector.altos[tp] : lim;
