@@ -210,6 +210,54 @@
   function minutos(hhmm) { return parseInt(hhmm.slice(0, 2), 10) * 60 + parseInt(hhmm.slice(3), 10); }
   function dataBr(iso) { var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || ""); return m ? m[3] + "/" + m[2] + "/" + m[1] : ""; }
 
+  /* resumo-dia:inicio (funções puras, exercitadas por web/tests/transporte_resumo.test.js) */
+  var DIAS_RESUMO = ["Dias úteis", "Sábados", "Domingos"];
+  /* Junta todas as variantes de trajeto do mesmo sentido e dia, ordena, tira saídas repetidas e calcula os indicadores. Sem horário: null. */
+  function resumirDia(sentido, dia) {
+    var vistos = {}, mins = [];
+    (sentido.quadros || []).forEach(function (q) {
+      if (q.dia !== dia) return;
+      (q.horarios || []).forEach(function (x) { var m = minutos(x); if (!vistos[m]) { vistos[m] = 1; mins.push(m); } });
+    });
+    if (!mins.length) return null;
+    mins.sort(function (a, b) { return a - b; });
+    var espera = null, i;
+    for (i = 1; i < mins.length; i++) if (espera === null || mins[i] - mins[i - 1] > espera) espera = mins[i] - mins[i - 1];
+    function hhmm(m) { return (m < 600 ? "0" : "") + Math.floor(m / 60) + ":" + (m % 60 < 10 ? "0" : "") + (m % 60); }
+    return { primeira: hhmm(mins[0]), ultima: hhmm(mins[mins.length - 1]), quantidade: mins.length, maiorEspera: espera };
+  }
+  function textoResumoDia(r) {
+    if (!r) return "sem horários cadastrados";
+    return "primeira saída " + r.primeira + "; última saída " + r.ultima + "; " + r.quantidade + (r.quantidade === 1 ? " saída" : " saídas") +
+      "; maior espera entre saídas: " + (r.maiorEspera === null ? "não se aplica (só uma saída)" : r.maiorEspera + " min");
+  }
+  function textoAvisoResumo(validoAte) {
+    return "São horários de saída publicados pela SOU Transportes. Eles não informam a hora de chegada em cada parada, não incluem feriados e a linha 02 (Arco-Íris/Mãe Preta) ainda não foi cadastrada. Horários válidos até " + dataBr(validoAte) + ".";
+  }
+  /* resumo-dia:fim */
+
+  /* Resumo do dia por linha e sentido, montado só com createElement/textContent. */
+  function elementoResumo(h) {
+    var det = document.createElement("details"), sum = document.createElement("summary"), p;
+    det.className = "linha-onibus resumo-dia"; det.id = "resumo-dia";
+    sum.textContent = "Resumo do dia por linha"; det.appendChild(sum);
+    p = document.createElement("p"); p.className = "status"; p.setAttribute("role", "note"); p.textContent = textoAvisoResumo(h.valido_ate); det.appendChild(p);
+    h.linhas.forEach(function (l) {
+      var t = document.createElement("h3"); t.textContent = "Linha " + l.numero + " – " + l.nome; det.appendChild(t);
+      l.sentidos.forEach(function (s) {
+        var h4 = document.createElement("p"), ul = document.createElement("ul");
+        h4.className = "trajeto"; h4.textContent = s.sentido; det.appendChild(h4);
+        ul.className = "resumo-lista";
+        DIAS_RESUMO.forEach(function (dia) {
+          var li = document.createElement("li"), b = document.createElement("strong");
+          b.textContent = dia + ": "; li.appendChild(b); li.appendChild(document.createTextNode(textoResumoDia(resumirDia(s, dia)))); ul.appendChild(li);
+        });
+        det.appendChild(ul);
+      });
+    });
+    return det;
+  }
+
   function htmlSentido(h, s, hoje) {
     var tipoHoje = DIA_DA_SEMANA[hoje.getDay()], agora = hoje.getHours() * 60 + hoje.getMinutes();
     var proximos = [];
@@ -520,6 +568,10 @@
     $("titulo-area").innerHTML = '<span class="icone-titulo"><svg aria-hidden="true" width="28" height="28"><use href="#' + ICONES[area.icone] + '"/></svg></span>' + esc(area.nome);
     $("intro-area").textContent = area.intro;
     $("conteudo-area").innerHTML = htmlArea(area);
+    if (area.horarios && dados.horarios && dados.horarios.linhas && dados.horarios.linhas.length) {
+      var listaLinhas = $("conteudo-area").querySelector(".lista-linhas");
+      if (listaLinhas) listaLinhas.parentNode.insertBefore(elementoResumo(dados.horarios), listaLinhas);
+    }
     if (area.jornada && window.JornadaUI) JornadaUI.restaurar();
     var temServicos = area.secoes.some(function (s) { return s.tipos.length; });
     $("busca-por-cep").hidden = !(dados.indice && temServicos);
