@@ -103,6 +103,7 @@
         "me (?:persegue|perseguiu|perseguindo|segue|seguiu|seguindo|humilha|humilhou|humilhando|xinga|xingou|xingando|insulta|insultou|ofende|ofendeu|ofendendo|menospreza)(?! (?:no|na|em) (?:instagram|insta|face|facebook|redes|whatsapp|zap|tiktok|twitter|canal|youtube))",
         "(?:ta|esta|vive|fica|anda) me (?:seguindo|perseguindo|humilhando|xingando|insultando|ofendendo)",
         "(?:meu ex|meu ex marido|meu ex companheiro|meu ex namorado|ex|ele|ela|marido|companheiro|namorado|um homem|alguem|um desconhecido)(?: \\w+){0,2} (?:persegue|perseguiu|perseguindo)",
+        "me (?:ridiculariza|ridicularizou|ridicularizando|desmerece|desmereceu|desvaloriza|desvalorizou|diminui|diminuiu|rebaixa|rebaixou)",
         /* controle sem indicador grave (antes eram regras de nível 2): proibir sair/trabalhar, aparecer na porta, ligar sem parar */
         "(?:nao me deixa|nao deixa eu|me proibe de) trabalhar",
         "aparece (?:na|no|em) (?:porta|trabalho|minha casa|escola|faculdade)", "fica me (?:ligando|mandando mensagem|esperando|vigiando)", "(?:nao para|nao para de) (?:me )?(?:ligar|mandar mensagem|perseguir)"
@@ -239,6 +240,7 @@
   var OBJ = "(?: eu| me| a gente| que eu| de| ela| a ela| que ela| a mulher| a filha| a irma)?";
   var REC = "(?:todo dia|todos os dias?|toda hora|toda vez|sempre|o tempo todo|a toda hora|diariamente|toda noite|constantemente|de hora em hora|varias vezes por dia|na frente d\\w+|vive|fica)";
   var CONSENTE = new RegExp("(?:^| )(?:combinamos|decidimos|combinei|resolvemos|concordamos|acordamos|de comum acordo|cada um|juntos|juntas|emprestei|emprestad\\w+|pedi (?:a )?(?:opiniao|ajuda|conselho)|ele ajudou|ele me ajuda|ela me ajuda|a gente combinou|a gente decidiu|a gente resolveu|eu gosto|eu deixo|eu aceito|eu pedi|dividimos|nos dois|eu concordo)(?: |$)");
+  var ACORDO_EXPLICITO = /(?:^| )(?:eu gostei|gostei|passei porque|ele estava sem|ela estava sem|tudo bem|respondeu que|concordo|concordamos|aprovo|aprovei|achei bom|aceitei|topei|de boa|sem problema|foi ideia minha|por escolha minha|combinamos)(?: |$)/;
   var PASSADO_FICCAO = /(?:^| )(?:antigo|antiga|antigamente|no passado|naquele tempo|quando eu era|quando eramos|ja passou|superei|superou|isso acabou|faz anos|na novela|no filme|na serie|no livro|na tv|no jornal|li uma noticia|vi uma noticia|vi na noticia|uma amiga da minha amiga|conheci uma historia)(?: |$)/;
   var CTX = "(?: \\w+){0,3}";
   var NAOPODE = "(?:nao\\w? (?:posso|consigo|pode|consegue|podem|tem permissao de|tenho permissao de)|nunca (?:posso|pode|consigo|consegue))";
@@ -260,7 +262,7 @@
     "(?:nao posso|nao consigo|nao tenho como|nao tenho direito de|nao me deixa|nao deixa eu|nao me permite)(?: \\w+){0,2} (?:ter|usar|mexer|gastar|pegar|sacar|ver|manusear|controlar|decidir)(?: \\w+){0,3} (?:dinheiro|salario|cartao|conta|grana|renda)",
     "(?:so me da|so me deixa gastar|so me deixa ter|me da (?:uma )?mesada|so libera|cobra cada centavo|pede conta de cada|exige (?:nota|comprovante|prestacao de contas)|manda eu prestar contas|manda prestar contas)",
     /* celular, senha, localização, vigilância */
-    "(?:exige|exigiu|pede|pediu|quer|obriga|obrigou|manda|mandou|cobra|cobrou|forca)(?: \\w+){0,3} (?:a |minha |minhas |as |meu )?(?:senha|senhas|abrir o celular|desbloquear|mostrar (?:o )?(?:celular|telefone|as mensagens|mensagens)|prova de onde|localizacao|compartilh\\w+ (?:a )?localizacao)",
+    "(?:exige|exigiu|obriga|obrigou|manda|mandou|cobra|cobrou|forca)(?: \\w+){0,3} (?:a |minha |minhas |as |meu )?(?:senha|senhas|abrir o celular|desbloquear|mostrar (?:o )?(?:celular|telefone|as mensagens|mensagens)|prova de onde|localizacao|compartilh\\w+ (?:a )?localizacao)",
     "(?:quer|exige|precisa|faz questao de|cobra|pergunta toda hora) saber(?: \\w+){0,3} (?:onde (?:eu )?(?:estou|ando)|com quem (?:eu )?(?:estou|falo|ando|saio|converso|fui|vou)|tudo (?:que|o que) (?:eu )?(?:faco|fiz)|o que (?:eu )?(?:faco|fiz|estou fazendo)|quem me (?:liga|manda|escreve)|cada passo)",
     "(?:liga|ligando|ligou|manda mensagem|mandando mensagem|manda msg|chama|telefona|cobra|fica ligando|fica mandando)(?: \\w+){0,3} (?:toda hora|o tempo todo|a toda hora|varias vezes (?:por dia|ao dia)|de hora em hora|de dez em dez minutos|sem parar)(?: \\w+){0,6} (?:controlar|vigiar|saber onde|conferir|checar|cobrar|fiscalizar)",
     "(?:quer|querendo|tenta|tentando|vive tentando|vive querendo)(?: \\w+){0,2} (?:me controlar|controlar (?:tudo|minha vida|meus passos|minhas? coisas|o que eu|a minha vida))",
@@ -293,10 +295,18 @@
     "(?:faz|fez|fazendo)(?: \\w+){0,1} (?:cena|barraco|escandalo|ciumes?)(?: \\w+){0,2} (?:toda vez que|sempre que|quando|se)(?: eu)? (?:saio|sai|falo|converso|vejo|encontro|visito|vou)",
     "(?:implica|reclama|briga|fica bravo|fica furioso|surta|se irrita|fica nervoso|faz cena|castiga)(?: \\w+){0,2} (?:ate )?(?:quando|toda vez que|sempre que|se)(?: \\w+){0,2} (?:saio|sai|vou|vai|falo|fala|converso|conversa|vejo|ve|encontro|encontra|visito|visita|demoro|demora|chego tarde|nao atendo|atendo|respondo|nao respondo|nao obedeco)",
     "(?:quer|exige|manda|obriga|pede)(?: que)?(?: eu)? (?:corte|corto|rompa|termine|pare|largue|deixe de)(?: \\w+){0,2} (?:contato|amizade|de falar|de ver)(?: \\w+){0,4} (?:irmas|irmaos|amigas|amigos|familia|mae|pais)",
-    "(?:fica|passa|ficou)(?: \\w+){0,1} (?:dias|horas|semanas|um tempo|muito tempo) sem (?:falar|olhar|conversar|responder|me dirigir)(?: \\w+){0,1} (?:comigo|com a gente|com ela)",
+    "(?:fica|passa|ficou)(?: \\w+){0,1} (?:dias|horas|semanas|semana|um tempo|muito tempo|mes|meses) sem (?:falar|olhar|conversar|responder|me dirigir)(?: \\w+){0,1} (?:comigo|com a gente|com ela)",
     "(?:inventa|arruma|cria|faz)(?: uma| um)? (?:briga|discussao|confusao|problema)(?: \\w+){0,2} (?:pra|para) eu (?:desistir|nao ir|nao sair|ficar|nao aceitar|largar)",
     "se (?:eu )?nao (?:atendo|respondo|obedeco|faco|aviso|mando|mostro|dou|peco|deixo)(?: \\w+){0,3} (?:ele|ela) (?:comeca a brigar|briga|fica (?:bravo|furioso|nervoso|irritado)|me castiga|surta|grita|reclama|faz cena|me ignora)",
     "(?:fica|vive|passa)(?: \\w+){0,1} (?:esperando|vigiando|olhando)(?: \\w+){0,3} (?:pra|para) (?:ver|saber)(?: \\w+){0,3} (?:com quem|onde|quem|o que)",
+    "(?:manda|mandou|mandando)(?: eu| me)? voltar(?: \\w+){0,3} (?:pra|para|a) casa",
+    "(?:entrega|entregou|passa|passou|deposita|depositou|da)(?: \\w+){0,3} (?:salario|pagamento|dinheiro|cartao)(?: \\w+){0,3} (?:pro|ao|para o|pra) (?:marido|namorado|noivo|companheiro|esposo)",
+    "(?:controla|fiscaliza|confere|cobra|vigia)(?: \\w+){0,3} (?:tudo (?:que|o que) eu gasto|cada gasto|cada centavo|meus gastos|o que eu gasto)",
+    "(?:quer|exige|cobra|pede)(?: \\w+){0,1} (?:nota fiscal|comprovante|prestacao de contas)",
+    "(?:fica |vive )?(?:diminuindo|rebaixando|menosprezando|desvalorizando|ridicularizando|criticando)(?: \\w+){0,2} (?:tudo|o que eu|que eu faco|meu trabalho|minhas)",
+    "ninguem (?:vai|ia|iria)(?: querer)? (?:me|ela|voce)",
+    "(?:eu )?sem (?:ele|ela) (?:eu )?nao (?:seria|sou|sei|consigo|valho)(?: \\w+){0,2} (?:ninguem|nada)",
+    "(?:fica |vive )?(?:me )?(?:olhando|conferindo|checando|acompanhando)(?: \\w+){0,2} (?:minha localizacao|meus passos|onde eu estou)",
     /* (c) ameaça condicional de perder algo */
     "(?:diz|disse|fala|falou|avisa|avisou|ameaca|ameacou)(?: \\w+){0,3} (?:que )?se eu(?: \\w+){0,4} (?:vai acabar|acaba|vou perder|perco|nunca mais|termina|vai terminar|me deixa|vai me deixar|vou ficar sem|fico sem|nao vai mais|me larga|acabou)",
     "nunca mais (?:vou|vai) (?:ver|encontrar|ter)(?: \\w+){0,2} (?:elas|eles|filhos|criancas|meus filhos)",
@@ -307,7 +317,7 @@
     "(?:nao deixa|nao me deixa|nao permite)(?: eu| me)?(?: \\w+){0,2} (?:guardar|ter|usar|gastar|pegar|mexer|sacar|comprar)(?: \\w+){0,3} (?:dinheiro|reais|salario|cartao|conta|grana)",
     /* (e) frequência ligada a vigilância, ligação ou cobrança */
     "(?:liga|ligando|ligou|manda mensagem|mandando mensagem|chama|telefona|cobra)(?: \\w+){0,3} (?:de \\w+ em \\w+ minutos|a cada (?:\\w+ )?(?:minutos|hora|horas)|de hora em hora)(?: \\w+){0,6} (?:controlar|vigiar|saber onde|conferir|checar|cobrar|fiscalizar|onde (?:eu )?estou)",
-    "(?:fica |vive )?(?:rastreando|rastreia|monitorando|monitora|vigiando|espionando)(?: \\w+){0,3} (?:celular|localizacao|passos|telefone|whatsapp|mensagens)",
+    "(?:fica |vive )?(?:me )?(?:rastreando|rastreia|monitorando|monitora|vigiando|espionando)(?: \\w+){0,3} (?:celular|localizacao|passos|telefone|whatsapp|mensagens)",
     /* (f) desqualificação */
     "(?:diz|fala|disse|falou|vive dizendo)(?: \\w+){0,2} que (?:eu )?(?:nao (?:presto|sirvo|sou capaz|tenho capacidade|valho|sei fazer nada|sou nada)|(?:sou|estou) (?:uma )?(?:inutil|burra|incapaz|nada|um fracasso|fracassada|pesada))",
     "sem (?:ele|ela) eu nao (?:seria|sou|sei|consigo|valho)(?: \\w+){0,2} (?:ninguem|nada)",
@@ -327,6 +337,8 @@
     "(?:vira|virou|inverte|inverteu) a situacao"
   ].map(function (r) { return new RegExp("(?:^| )" + r + "(?: |$)"); });
   var COERC_COMBO = [
+    ["(?:pede|pediu|pedindo|quer|querendo)(?: \\w+){0,3} (?:a |minha |minhas |as |meu )?(?:senha|senhas|abrir o celular|mostrar (?:o )?(?:celular|telefone|as mensagens|mensagens)|compartilh\\w+ (?:a )?localizacao)",
+     "(?:toda hora|todo dia|toda vez|sempre|o tempo todo|fica bravo|fica furioso|fica nervoso|briga|ter segredo|nao pode ter segredo|se eu nao|castiga|me ignora|nao aceita)"],
     ["(?:vigia|vigiando|mexe|mexendo|revira|revirando|confere|conferindo|le|lendo|olha|olhando|fiscaliza|fiscalizando|checa|checando|espiona|espionando|monitora|monitorando|controla|controlando|bisbilhota|fuca|fucando|xereta)(?: \\w+){0,3} (?:whats|wpp|direct|insta|inbox|conversas|chat)",
      "(?:escondido|as escondidas|sem eu saber|sem eu deixar|sem minha autorizacao|sem pedir|toda hora|todo dia|sempre|toda vez|o tempo todo|a toda hora|constantemente|diariamente|toda noite|quando durmo)"],
     ["(?:diz|disse|fala|falou|vive dizendo)(?: \\w+){0,6} (?:perder|perco|tirar|levar|ficar sem|fico sem)(?: \\w+){0,2} (?:os filhos|as criancas|meus filhos|a guarda|minha casa|a casa|tudo|o emprego|o dinheiro|a pensao|nada)", "se eu"],
@@ -344,12 +356,23 @@
   /* Elogio, carinho e rotina sobre o parceiro ("me chamou de linda", "me emprestou dinheiro", "trabalha a noite"). Só vale quando NÃO há palavra de
      violência, medo, coação ou perigo no texto. */
   var POSITIVO = /(?:^| )(?:linda|lindo|bonita|bonito|incrivel|maravilhos[oa]|inteligente|querida|querido|amor|elogi\w+|gosta|adora|ama|feliz|orgulh\w+|presente|surpresa|ajudou|emprest\w+|apoia|parabeniz\w+|cuida|trabalha|paga|cozinha|cansada|descansar|passeio|praia|viagem|jantar|filme|mercado|compras|lixo|cabelo|aluguel|casamento)(?: |$)/;
-  var VIOLENCIA_LEXICO = /bat\w*|agred\w*|ameac\w*|mat(?:ar|a|ou)|soco|tapa|surra|pancada|empurr\w*|estrangul\w*|sufoc\w*|enforc\w*|abus\w*|violen\w*|medo|pavor|persegu\w*|vigi\w*|tranc\w*|preso|presa|machuc\w*|quebr\w*|arma|faca|socorro|apanh\w*|xing\w*|humilh\w*|control\w*|proib\w*|obriga\w*|forc\w*|nao quero|rasg\w*|valho|assust\w*|culp\w*|invent\w*|louca|burra|grit\w*|berr\w*|perigo|esfaque\w*|estupr\w*|assedi\w*|nao deixa|sabe onde/;
+  var VIOLENCIA_LEXICO = /\b(?:bat\w*|agred\w*|ameac\w*|mat(?:ar|a|ou)|soco|tapa|surra|pancada|empurr\w*|estrangul\w*|sufoc\w*|enforc\w*|abus\w*|violen\w*|medo|pavor|persegu\w*|vigi\w*|tranc\w*|preso|presa|machuc\w*|quebr\w*|arma|faca|socorro|apanh\w*|xing\w*|humilh\w*|control\w*|proib\w*|obriga\w*|forc\w*|nao quero|rasg\w*|valho|assust\w*|culp\w*|invent\w*|louca|burra|grit\w*|berr\w*|perigo|esfaque\w*|estupr\w*|assedi\w*|nao deixa|sabe onde)/;
   var POUCAS = /^(?:meu|minha|meus|minhas|ele|ela|que|com|para|por|uma|uns|das|dos|nao|e|o|a|de|do|da|me)$/;
+  /* Marcadores de acordo, aprovação ou concordância ("eu gostei", "passei porque", "ele estava sem", "tudo bem", "respondeu que"). */
+  var ACORDO = /(?:^| )(?:eu gostei|gostei|passei porque|eu passei|ele estava sem|ela estava sem|tudo bem|respondeu que|respondeu|concordo|concordamos|aprovo|aprovei|achei bom|achei otimo|aceitei|topei|de boa|sem problema|tranquilo|tranquila|nao me incomoda|foi ideia minha|por escolha minha|eu quis|eu quero|eu pedi|combinamos)(?: |$)/;
+  /* Marcador de imposição, restrição, punição ou recorrência: se aparece, a frase não é "sem sinal" e o detector não é vetado. */
+  var IMPOSICAO = /(?:^| )(?:nao deixa|nao deixou|nao me deixa|nao pode|nao posso|nao permite|proib\w+|exig\w+|obrig\w+|mand(?:a|ou|ando|am|e) (?:eu|me|ela|a gente|que|a)|tem que|tenho que|toda hora|todo dia|toda vez|todas as vezes|o tempo todo|castig\w+|puni\w+|so ele|so ela|quer saber|a toda hora|diariamente|constantemente)(?: |$)/;
+  /* Frase curta: até este número de palavras, sem comportamento de controle, indicador grave, palavra de violência nem imposição, o detector aprendido
+     sozinho não gera alerta (pedido de dado sem imposição, preferência, emoção isolada, concordância). Valor ajustado nos testes (perigo_controle_coercitivo). */
+  var LIMITE_FRASE_CURTA = 10;
+  /* Contexto de proteção ou de risco imediato: com ele o detector nunca é vetado (ex.: "consegui a protetiva e ele voltou a me procurar"). */
+  var RISCO_CONTEXTO = /\b(?:protetiva|protecao|medida|ordem de afastamento|delegacia|policia|boletim|b o|denunci\w+|juiz|justica|abrigo|fugir|fugi|escond\w+|sair de casa|apavorad\w+|aterroriz\w+|voltou|apareceu|aparece|aqui|na porta|rondando|me procurar|me procurou)\b/;
   function convivenciaNormal(vs) {
     return vs.some(function (v) {
-      if (VIOLENCIA_LEXICO.test(v)) return CONSENTE.test(v) || (BRIGA_VERBO.test(v) && BRIGA_ISOLADA.test(v) && !RECORRENCIA_FORTE.test(v));
       var conteudo = v.split(" ").filter(function (w) { return w && !POUCAS.test(w); });
+      var semSinal = !VIOLENCIA_LEXICO.test(v) && !IMPOSICAO.test(v) && !RISCO_CONTEXTO.test(v) && !controleCoercitivo([v]) && !indicadorGrave([v]);
+      if (semSinal && (v.split(" ").length <= LIMITE_FRASE_CURTA || ACORDO.test(v))) return true;
+      if (VIOLENCIA_LEXICO.test(v)) return CONSENTE.test(v) || (BRIGA_VERBO.test(v) && BRIGA_ISOLADA.test(v) && !RECORRENCIA_FORTE.test(v));
       return CONSENTE.test(v) || CARINHO.test(v) || POSITIVO.test(v) || conteudo.length <= 2 || (BRIGA_VERBO.test(v) && BRIGA_ISOLADA.test(v) && !RECORRENCIA_FORTE.test(v));
     });
   }
@@ -375,7 +398,7 @@
   var RE_PARCEIRO = new RegExp("(?:^| )" + PARCEIRO + "(?: |$)");
   function controleCoercitivo(vs) {
     return vs.some(function (v) {
-      if (CONSENTE.test(v) || PASSADO_FICCAO.test(v) || !RE_PARCEIRO.test(v)) return false;
+      if (CONSENTE.test(v) || ACORDO_EXPLICITO.test(v) || PASSADO_FICCAO.test(v) || !RE_PARCEIRO.test(v)) return false;
       /* (a favor de quem lê o código) daqui em diante o texto tem sujeito de relação e não tem acordo, passado ou ficção */
       return COERC.some(function (r) { return r.test(v); }) || COERC_COMBO.some(function (par) { return par[0].test(v) && par[1].test(v); });
     }) || vs.some(function (v) {
@@ -468,6 +491,7 @@
     ORDEM.forEach(function (tp) {
       var regra = versoes.some(function (v) { return achou(COMPILADO[tp].forte, v) || achouCombo(COMPILADO[tp].combos, v); }) || (tp === "violencia" && controleTotal(versoes)), p = probs ? probs[tp] : undefined, lim = detector ? detector.limiares[tp] : undefined;
       if (tp === "violencia" && resolvida) return;
+      if (tp === "crianca" && !regra && controleCoercitivo(versoes) && !versoes.some(function (v) { return /(?:^| )(?:crianca\w*|menina|menino|bebe|pequen[oa]s?|recem nascid\w+|\d+ anos|escola|creche|aluno|aluna)(?: |$)/.test(v); })) p = undefined;
       if (tp === "violencia" && !regra && convivenciaNormal(versoes)) p = undefined;
       if (tp === "violencia" && !regra && versoes.some(function (v) { return achou(COMPILADO[tp].moderado, v); })) { fracos.push(tp); return; } /* só nível 1: o detector não eleva */
       if (tp === "violencia" && !regra && controleCoercitivo(versoes)) {
