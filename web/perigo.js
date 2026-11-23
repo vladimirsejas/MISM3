@@ -37,7 +37,9 @@
         "(?:pensei|penso|pensando|quero|vou|vontade|ideia|tentei|tentar) (?:em |de )?(?:me )?(?:enforcar|enforco|afogar|envenenar|atirar|jogar (?:d[aoe]|na|no) \\w+|jogar na frente|pular (?:d[aoe]|na|no) \\w+|cortar os pulsos|me jogar)",
         "(?:vou|quero) me (?:enforcar|jogar|atirar|envenenar|afogar)",
         "(?:queria|quero|gostaria de|preferia|desejo) (?:dormir|adormecer) e nao (?:acordar|acordar mais|ver mais nada)", "nao quero (?:mais )?(?:acordar|estar aqui|existir|estar viva|ficar aqui|continuar)", "queria (?:nao ter nascido|desaparecer|nao existir|estar morta|ter morrido)",
-        "(?:minha )?vida nao tem (?:mais )?(?:sentido|valor|jeito|saida)", "nao vejo (?:mais )?(?:saida|solucao|sentido|futuro)", "nao tem mais jeito pra mim", "(?:seria|era|e) melhor (?:se eu )?(?:morresse|nao existisse|nao estivesse aqui|desaparecesse)", "ninguem sentiria minha falta", "nao tenho mais motivo pra viver", "(?:escrevi|deixei|fiz|preparei|escrever) (?:uma )?(?:carta|bilhete|mensagem) de despedida", "ja escrevi minha despedida", "(?:filhos|familia|todos|todo mundo|mundo) (?:ficariam|estariam|ficaria|estaria) melhor sem (?:a mae|mim|eu)", "nao tenho motivo pra (?:viver|continuar)", "quero sumir(?! (?:com|de|da|do|a|o|as|os)\\b)", "acabar com a minha vida",
+        "(?:minha )?vida nao tem (?:mais )?(?:sentido|valor|jeito|saida)", "nao vejo (?:mais )?(?:saida|solucao|sentido|futuro)", "nao tem mais jeito pra mim", "(?:seria|era|e) melhor (?:se eu )?(?:morresse|nao existisse|nao estivesse aqui|desaparecesse)", "ninguem sentiria minha falta", "nao tenho mais motivo pra viver", "(?:escrevi|deixei|fiz|preparei|escrever) (?:uma )?(?:carta|bilhete|mensagem) de despedida", "ja escrevi minha despedida", "(?:filhos|familia|todos|todo mundo|mundo) (?:ficariam|estariam|ficaria|estaria) melhor sem (?:a mae|mim|eu)", "nao tenho motivo pra (?:viver|continuar)",
+        "(?:queria|quero|vontade de|penso em|pensando em|gostaria de) (?:descansar|dormir) (?:pra|para) sempre", "(?:queria|quero|vontade de|penso em|pensando em|gostaria de) parar de existir",
+        "(?:penso em|pensando em|vontade de|ideia de) dar um fim (?:nisso|em tudo|na minha vida|a minha vida|a tudo)", "(?:quero|vou|queria) dar um fim (?:em tudo|na minha vida|a minha vida)", "(?:eu )?nao deveria (?:estar aqui|existir|estar viva)", "quero sumir(?! (?:com|de|da|do|a|o|as|os)\\b)", "acabar com a minha vida",
         "(?:medo|receio|temo|acho|penso|tenho certeza|desconfio|preocupad[ao]|preocupacao)(?: \\w+){0,3} que (?:ela|ele|elas|eles|meu \\w+|minha \\w+|\\w+)(?: \\w+){0,2} (?:se mate|se matar|vai se matar|va se matar|se suicide|se suicidar|(?:tire|tirar) a (?:propria )?vida|acabe com a (?:propria )?vida|(?:tente|tentar|va tentar|possa tentar|pode tentar) (?:se )?(?:matar|suicid\\w+)|(?:se machuque|se fira|se corte|se machucar) (?:a si|de proposito|sozinh[ao])|se (?:faca|fazer) mal)",
         "(?:ela|ele|meu \\w+|minha \\w+) (?:quer|querendo|pensa em|pensando em|disse que quer|disse que vai|falou que quer|falou que vai|diz que quer|diz que vai) (?:se )?(?:matar|suicidar|morrer(?! de )|acabar com a (?:propria )?vida|tirar a (?:propria )?vida)",
         "(?:tentou|tentaram|tentando) (?:se )?(?:matar|suicidar|suicidio)", "tentativa de suicidio", "(?:vai |va |pode |possa )se (?:mate|matar)",
@@ -139,7 +141,7 @@
         "(?:chamar|chamem|chame) (?:a |uma )?(?:ambulancia|samu|bombeiros)"],
       mensagem: "Se há risco imediato para você ou para quem está com você, ligue 190 (Polícia), 192 (SAMU) ou 193 (Bombeiros).",
       telefones: ["190", "192", "193"],
-      pins: []
+      pins: [{ id: "man-defesa-civil" }]
     }
   };
 
@@ -275,6 +277,14 @@
   }
 
 
+  /* "Acabar" aplicado a tarefa, turno ou período ("não vejo a hora de acabar o expediente") não é sinal de suicídio. Vale só para o detector
+     aprendido: as regras continuam valendo e qualquer palavra de morte ou de se ferir na frase desliga esta trava. */
+  var ACABAR_TAREFA = /(?:^| )(?:acab\w*|termin\w*|fin\w+)(?: \w+){0,3} (?:expediente|aula|aulas|prova|provas|turno|plantao|servico|reuniao|curso|faculdade|semestre|trabalho|dia|semana|mes|ano|fase|obra|projeto)(?: |$)/;
+  var SINAL_MORTE = /(?:^| )(?:morr\w*|mort\w*|matar|mato|matei|suicid\w*|vida|viver|vivo|viva|machuc\w*|cort(?:ar|ei|es)|enforc\w*|veneno|remedios?|comprimidos?|pulsos?|ponte|sumir|desapare\w*|despedid\w*|existir|nascer|nasci|sem mim|desist\w*)(?: |$)/;
+  function acabarSemMorte(versoes) {
+    return versoes.some(function (v) { return ACABAR_TAREFA.test(v); }) && !versoes.some(function (v) { return SINAL_MORTE.test(v); });
+  }
+
   /* Âncoras: um alerta que vem SÓ do detector aprendido precisa de ao menos uma palavra do campo do assunto. Modelos pequenos confundem
      "vou tirar férias" com "vou tirar a minha vida"; a âncora barra esse tipo de erro sem atrapalhar as regras. */
   var ANCORAS = {
@@ -318,6 +328,7 @@
       if (tp === "violencia" && !regra && versoes.some(function (v) { return achou(COMPILADO[tp].moderado, v); })) { fracos.push(tp); return; } /* só nível 1: o detector não eleva */
       if (tp === "saude" && !regra && versoes.some(function (v) { return DOR_LOCAL.test(v); }) && !versoes.some(function (v) { return GRAVIDADE.test(v); })) p = undefined;
       var alto = detector && detector.altos[tp] !== undefined ? detector.altos[tp] : lim;
+      if (!regra && tp === "suicidio" && acabarSemMorte(versoes)) p = undefined; /* "acabar o expediente" não é ideação */
       if (!regra && ANCORAS[tp] && !emAlguma(ANCORAS[tp])) p = undefined; /* o detector sozinho não vale sem uma palavra do assunto */
       if (!regra && tp === "crianca" && necessidadeMaterialSemDano(t)) p = undefined; /* pobreza e responsabilidade familiar não são alerta de abuso sem sinal de dano */
       if (p !== undefined && lim !== undefined && p >= lim) doModelo[tp] = Math.round(p * 1000) / 1000;

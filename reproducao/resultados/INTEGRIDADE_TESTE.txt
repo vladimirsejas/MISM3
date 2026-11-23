@@ -1,0 +1,19 @@
+INTEGRIDADE DO TESTE CONGELADO v1 (execução única)
+Início: 2026-11-11 19:04:32  Fim: 2026-11-11 19:05:03 (hora local)
+Último commit: 4bf167621e7d66baf953418a3fa48d7b6ed99b2f
+SHA-256 do conjunto de 190 mensagens e do gabarito (estão no mesmo arquivo), conteúdo commitado com finais de linha LF: abbae38d3cc39a8428130c09ac59d65c96cff497112481a9eadcf3ac9227ae00
+SHA-256 dos bytes no disco (finais de linha CRLF por core.autocrlf=true; mesmo conteúdo): e37e27a31b39d43a3fafa636a1bcfcc7f5d46fb28d83a290e48e594dc52f7914
+Observação: o SHA do disco diferia do pré-registrado só pelos finais de linha (CRLF x LF); o executor conferiu o SHA com CRLF->LF, igual ao pré-registrado. Nenhum arquivo do projeto foi alterado.
+Arquivos usados (caminho e SHA-256):
+  C:\MISM3\protocolo\conjunto_congelado_v1.json  disco=e37e27a31b39d43a3fafa636a1bcfcc7f5d46fb28d83a290e48e594dc52f7914  lf=abbae38d3cc39a8428130c09ac59d65c96cff497112481a9eadcf3ac9227ae00
+  C:\MISM3\protocolo\CONJUNTO_CONGELADO_v1.sha256  disco=ddc89719551ce96e209a8f341a66af5c692c01c9db07313283514a81c01b4e7c  lf=377a7f5c1de637a509e0f5b547d76991f6e6e42737a69af93a393e077f7a3ee3
+  C:\MISM3\web\dados\indice_orientacao.json  disco=f4417e85d598d6e25fc943b1c7e4b73865edfc738fded35527bcad60ac923afb  lf=f4417e85d598d6e25fc943b1c7e4b73865edfc738fded35527bcad60ac923afb
+  C:\MISM3\web\dados\modelo_necessidades.json  disco=e6bdc03df223f7d5a1cca1f172905800c9ed2dc881ec478247a833e61352395a  lf=5c30dfe79ebcae17cad01db3368b23455eb47c2685c8ca030bcebeee535b34eb
+  C:\MISM3\web\dados\modelo_perigo.json  disco=64fffc31e8c07ee1d6bc23937b1d70ff00fb2346d6361fe1eff8217870bd9da6  lf=fe9197580bf0c26b022edc673014e9d0d2476957cfb1645efe8e52a044cc21ea
+  C:\MISM3\web\dados\modelo_escopo.json  disco=667baaa520a9613831a666a1f28bd0522d74101d7aed5dfcb30464234d7daba3  lf=8f029e26756541eac00bdca36276fcadd6c42690324cfbe2cb4b7aa218792b80
+  C:\MISM3\reproducao\rodar_variantes.js  disco=6c61aac4d8e0aa79eecf83831f93aa0041f6e4bce87aec3ec32d0ea9f77536c5  lf=54f5a45ba70287c06789cca35712887c9be5f673374f938e6cf1ad620a8d4f34
+  C:\MISM3\reproducao\comum.py  disco=2cc61fe90cc5f11beccb4b019a45d443ef482433528c3a3f681549620163a3ee  lf=3469f86c15515dd6a4f591a44ab08232b4af1ce1222115ab295fca0b7476aa45
+  C:\MISM3\reproducao\ablacao.py  disco=b57e0a7b1abc7bb133dc2ce17247403bbe346bbcefef762f4786dea18d6b62a5  lf=7de91fb67037225c1edcec838e57576a97cce94563e6d727f19c43c418597763
+Condições do protocolo sem execução: 8 e 9 (NÃO EXECUTÁVEL: não implementadas no código, ver MANIFESTO_EXECUCAO_v1.md, seção 5).
+Condições 2 e 5 executadas pelo mapeamento fixo do manifesto: 2 = sem_regras_lexicais_necessidade; 5 = apenas_regras.
+Alerta de perigo = campo perigo da saída (qualquer nível). Abstenção = campo abstem da saída.

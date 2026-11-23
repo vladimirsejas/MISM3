@@ -1,0 +1,1901 @@
+﻿id_mensagem;condicao_protocolo;condicao_codigo;item_1;item_2;item_3;alerta_perigo;abstencao
+C-001;1;completo;;;;não;sim
+C-001;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-001;3;sem_ngramas_letras;;;;não;sim
+C-001;4;sem_lsa;;;;não;sim
+C-001;5;apenas_regras;;;;não;sim
+C-001;6;sem_perigo_aprendido;;;;não;sim
+C-001;7;sem_escopo;;;;não;sim
+C-001;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-001;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-001;10;linha_de_base_tfidf;canal-assistencia-assistencia-avo-175;canal-assistencia-assistencia-avo-173;classe-assistencia-cras;não;não
+C-002;1;completo;ferr-plano-trabalho;area-trabalho;man-pat;sim;não
+C-002;2;sem_regras_lexicais_necessidade;;;;sim;sim
+C-002;3;sem_ngramas_letras;;;;sim;sim
+C-002;4;sem_lsa;;;;sim;sim
+C-002;5;apenas_regras;ferr-plano-trabalho;area-trabalho;man-pat;sim;não
+C-002;6;sem_perigo_aprendido;ferr-plano-trabalho;area-trabalho;man-pat;não;não
+C-002;7;sem_escopo;ferr-plano-trabalho;area-trabalho;man-pat;sim;não
+C-002;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-002;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-002;10;linha_de_base_tfidf;ferr-mapa;sec-direitos-secao-2;sec-direitos-secao-1;não;não
+C-003;1;completo;canal-saude-saude-apoio-emocional-132;sec-saude-saude-apoio-emocional;canal-direitos-secao-5-150;sim;não
+C-003;2;sem_regras_lexicais_necessidade;canal-saude-saude-apoio-emocional-132;sec-saude-saude-apoio-emocional;canal-direitos-secao-5-150;sim;não
+C-003;3;sem_ngramas_letras;;;;sim;sim
+C-003;4;sem_lsa;;;;sim;sim
+C-003;5;apenas_regras;;;;sim;sim
+C-003;6;sem_perigo_aprendido;canal-saude-saude-apoio-emocional-132;sec-saude-saude-apoio-emocional;canal-direitos-secao-5-150;não;não
+C-003;7;sem_escopo;canal-saude-saude-apoio-emocional-132;sec-saude-saude-apoio-emocional;canal-direitos-secao-5-150;sim;não
+C-003;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-003;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-003;10;linha_de_base_tfidf;canal-assistencia-assistencia-avo-175;ferr-mapa;canal-assistencia-assistencia-avo-173;não;não
+C-004;1;completo;sec-direitos-secao-1;canal-direitos-secao-1-144;man-defensoria-nudem;não;não
+C-004;2;sem_regras_lexicais_necessidade;sec-direitos-secao-1;canal-direitos-secao-1-144;man-defensoria-nudem;não;não
+C-004;3;sem_ngramas_letras;sec-direitos-secao-1;canal-direitos-secao-1-144;man-defensoria-nudem;não;não
+C-004;4;sem_lsa;;;;não;sim
+C-004;5;apenas_regras;sec-direitos-secao-1;canal-direitos-secao-1-144;man-defensoria-nudem;não;não
+C-004;6;sem_perigo_aprendido;sec-direitos-secao-1;canal-direitos-secao-1-144;man-defensoria-nudem;não;não
+C-004;7;sem_escopo;sec-direitos-secao-1;canal-direitos-secao-1-144;man-defensoria-nudem;não;não
+C-004;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-004;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-004;10;linha_de_base_tfidf;sec-assistencia-assistencia-cadunico;canal-assistencia-assistencia-avo-175;man-saude-caps-i;não;não
+C-005;1;completo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-005;2;sem_regras_lexicais_necessidade;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-005;3;sem_ngramas_letras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-005;4;sem_lsa;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-005;5;apenas_regras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-005;6;sem_perigo_aprendido;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-005;7;sem_escopo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-005;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-005;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-005;10;linha_de_base_tfidf;sec-direitos-secao-2;ferr-mapa;sec-direitos-secao-1;não;não
+C-006;1;completo;man-scfv-idoso-sao-vicente;man-scfv-jd-bandeirantes;sec-assistencia-secao-3;não;não
+C-006;2;sem_regras_lexicais_necessidade;man-scfv-idoso-sao-vicente;man-scfv-jd-bandeirantes;sec-assistencia-secao-3;não;não
+C-006;3;sem_ngramas_letras;;;;não;sim
+C-006;4;sem_lsa;;;;não;sim
+C-006;5;apenas_regras;;;;não;sim
+C-006;6;sem_perigo_aprendido;man-scfv-idoso-sao-vicente;man-scfv-jd-bandeirantes;sec-assistencia-secao-3;não;não
+C-006;7;sem_escopo;man-scfv-idoso-sao-vicente;man-scfv-jd-bandeirantes;sec-assistencia-secao-3;não;não
+C-006;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-006;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-006;10;linha_de_base_tfidf;canal-assistencia-assistencia-avo-175;sec-moradia-secao-3;canal-assistencia-assistencia-cadunico-169;não;não
+C-007;1;completo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-007;2;sem_regras_lexicais_necessidade;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-007;3;sem_ngramas_letras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-007;4;sem_lsa;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-007;5;apenas_regras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-007;6;sem_perigo_aprendido;sec-direitos-secao-1;sec-direitos-secao-2;canal-direitos-secao-1-144;não;não
+C-007;7;sem_escopo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-007;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-007;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-007;10;linha_de_base_tfidf;canal-assistencia-assistencia-avo-173;ferr-cras-bairro;sec-direitos-secao-2;não;não
+C-008;1;completo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-008;2;sem_regras_lexicais_necessidade;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-008;3;sem_ngramas_letras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-008;4;sem_lsa;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-008;5;apenas_regras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-008;6;sem_perigo_aprendido;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-008;7;sem_escopo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-008;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-008;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-008;10;linha_de_base_tfidf;sec-assistencia-assistencia-cadunico;canal-direitos-secao-1-144;sec-educacao-educacao-voce;não;não
+C-009;1;completo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-009;2;sem_regras_lexicais_necessidade;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-009;3;sem_ngramas_letras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-009;4;sem_lsa;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-009;5;apenas_regras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-009;6;sem_perigo_aprendido;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-009;7;sem_escopo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-009;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-009;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-009;10;linha_de_base_tfidf;ferr-mapa;sec-direitos-secao-1;sec-assistencia-assistencia-cadunico;não;não
+C-010;1;completo;;;;não;sim
+C-010;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-010;3;sem_ngramas_letras;;;;não;sim
+C-010;4;sem_lsa;;;;não;sim
+C-010;5;apenas_regras;;;;não;sim
+C-010;6;sem_perigo_aprendido;;;;não;sim
+C-010;7;sem_escopo;;;;não;sim
+C-010;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-010;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-010;10;linha_de_base_tfidf;sec-assistencia-assistencia-cadunico;ferr-cras-bairro;ferr-mapa;não;não
+C-011;1;completo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-011;2;sem_regras_lexicais_necessidade;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-011;3;sem_ngramas_letras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-011;4;sem_lsa;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-011;5;apenas_regras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-011;6;sem_perigo_aprendido;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-011;7;sem_escopo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-011;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-011;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-011;10;linha_de_base_tfidf;sec-assistencia-assistencia-cadunico;canal-assistencia-assistencia-avo-175;sec-direitos-secao-2;não;não
+C-012;1;completo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-012;2;sem_regras_lexicais_necessidade;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-012;3;sem_ngramas_letras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-012;4;sem_lsa;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-012;5;apenas_regras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-012;6;sem_perigo_aprendido;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-012;7;sem_escopo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-012;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-012;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-012;10;linha_de_base_tfidf;ferr-mapa;canal-assistencia-assistencia-avo-175;canal-direitos-secao-4-156;não;não
+C-013;1;completo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-013;2;sem_regras_lexicais_necessidade;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-013;3;sem_ngramas_letras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-013;4;sem_lsa;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-013;5;apenas_regras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-013;6;sem_perigo_aprendido;man-patrulha-maria-da-penha;man-desenv-social-sede;man-sde;não;não
+C-013;7;sem_escopo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-013;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-013;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-013;10;linha_de_base_tfidf;ferr-cras-bairro;ferr-mapa;canal-assistencia-assistencia-avo-175;não;não
+C-014;1;completo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-014;2;sem_regras_lexicais_necessidade;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-014;3;sem_ngramas_letras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-014;4;sem_lsa;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-014;5;apenas_regras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-014;6;sem_perigo_aprendido;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-014;7;sem_escopo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-014;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-014;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-014;10;linha_de_base_tfidf;canal-saude-saude-apoio-emocional-132;sec-saude-saude-familia-drogas;sec-assistencia-assistencia-cadunico;não;não
+C-015;1;completo;sec-saude-saude-apoio-emocional;canal-saude-saude-apoio-emocional-132;canal-direitos-secao-4-156;sim;não
+C-015;2;sem_regras_lexicais_necessidade;sec-saude-saude-apoio-emocional;canal-saude-saude-apoio-emocional-132;canal-direitos-secao-4-156;sim;não
+C-015;3;sem_ngramas_letras;;;;sim;sim
+C-015;4;sem_lsa;;;;sim;sim
+C-015;5;apenas_regras;;;;sim;sim
+C-015;6;sem_perigo_aprendido;sec-saude-saude-apoio-emocional;canal-saude-saude-apoio-emocional-132;canal-direitos-secao-4-156;não;não
+C-015;7;sem_escopo;sec-saude-saude-apoio-emocional;canal-saude-saude-apoio-emocional-132;canal-direitos-secao-4-156;sim;não
+C-015;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-015;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-015;10;linha_de_base_tfidf;canal-assistencia-assistencia-avo-175;sec-assistencia-assistencia-cadunico;canal-saude-saude-apoio-emocional-132;não;não
+C-016;1;completo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-016;2;sem_regras_lexicais_necessidade;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-016;3;sem_ngramas_letras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-016;4;sem_lsa;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-016;5;apenas_regras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-016;6;sem_perigo_aprendido;canal-direitos-secao-1-144;sec-direitos-secao-1;sec-direitos-secao-2;não;não
+C-016;7;sem_escopo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-016;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-016;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-016;10;linha_de_base_tfidf;sec-assistencia-assistencia-cadunico;canal-educacao-educacao-filhos-118;sec-direitos-secao-2;não;não
+C-017;1;completo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-017;2;sem_regras_lexicais_necessidade;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-017;3;sem_ngramas_letras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-017;4;sem_lsa;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-017;5;apenas_regras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-017;6;sem_perigo_aprendido;;;;não;sim
+C-017;7;sem_escopo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-017;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-017;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-017;10;linha_de_base_tfidf;sec-assistencia-assistencia-cadunico;sec-moradia-secao-3;canal-assistencia-assistencia-avo-174;não;não
+C-018;1;completo;ferr-perto-cep;ferr-mapa;;não;não
+C-018;2;sem_regras_lexicais_necessidade;ferr-perto-cep;ferr-mapa;;não;não
+C-018;3;sem_ngramas_letras;ferr-perto-cep;ferr-mapa;;não;não
+C-018;4;sem_lsa;;;;não;sim
+C-018;5;apenas_regras;;;;não;sim
+C-018;6;sem_perigo_aprendido;ferr-perto-cep;ferr-mapa;;não;não
+C-018;7;sem_escopo;ferr-perto-cep;ferr-mapa;;não;não
+C-018;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-018;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-018;10;linha_de_base_tfidf;ferr-perto-cep;ferr-mapa;canal-assistencia-assistencia-avo-175;não;não
+C-019;1;completo;sec-direitos-secao-1;canal-direitos-secao-1-144;sec-educacao-educacao-filhos;não;não
+C-019;2;sem_regras_lexicais_necessidade;sec-direitos-secao-1;canal-direitos-secao-1-144;man-defensoria-nudem;não;não
+C-019;3;sem_ngramas_letras;sec-direitos-secao-1;canal-direitos-secao-1-144;sec-educacao-educacao-filhos;não;não
+C-019;4;sem_lsa;;;;não;sim
+C-019;5;apenas_regras;sec-direitos-secao-1;canal-direitos-secao-1-144;sec-educacao-educacao-filhos;não;não
+C-019;6;sem_perigo_aprendido;sec-direitos-secao-1;canal-direitos-secao-1-144;sec-educacao-educacao-filhos;não;não
+C-019;7;sem_escopo;sec-direitos-secao-1;canal-direitos-secao-1-144;sec-educacao-educacao-filhos;não;não
+C-019;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-019;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-019;10;linha_de_base_tfidf;sec-direitos-secao-1;canal-moradia-secao-3-164;canal-direitos-secao-1-144;não;não
+C-020;1;completo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-020;2;sem_regras_lexicais_necessidade;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-020;3;sem_ngramas_letras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-020;4;sem_lsa;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-020;5;apenas_regras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-020;6;sem_perigo_aprendido;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-020;7;sem_escopo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-020;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-020;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-020;10;linha_de_base_tfidf;man-sde;sec-assistencia-assistencia-cadunico;ferr-mapa;não;não
+C-021;1;completo;;;;não;sim
+C-021;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-021;3;sem_ngramas_letras;;;;não;sim
+C-021;4;sem_lsa;;;;não;sim
+C-021;5;apenas_regras;;;;não;sim
+C-021;6;sem_perigo_aprendido;;;;não;sim
+C-021;7;sem_escopo;;;;não;sim
+C-021;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-021;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-021;10;linha_de_base_tfidf;sec-assistencia-assistencia-cadunico;sec-direitos-secao-1;man-pat;não;não
+C-022;1;completo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-022;2;sem_regras_lexicais_necessidade;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-022;3;sem_ngramas_letras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-022;4;sem_lsa;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-022;5;apenas_regras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-022;6;sem_perigo_aprendido;canal-direitos-secao-5-153;canal-direitos-secao-5-152;man-conselho-tutelar-sul;não;não
+C-022;7;sem_escopo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-022;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-022;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-022;10;linha_de_base_tfidf;classe-assistencia-cras;area-entre-mulheres;sec-direitos-secao-1;não;não
+C-023;1;completo;;;;não;sim
+C-023;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-023;3;sem_ngramas_letras;;;;não;sim
+C-023;4;sem_lsa;;;;não;sim
+C-023;5;apenas_regras;;;;não;sim
+C-023;6;sem_perigo_aprendido;;;;não;sim
+C-023;7;sem_escopo;;;;não;sim
+C-023;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-023;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-023;10;linha_de_base_tfidf;canal-saude-saude-familia-drogas-135;canal-assistencia-assistencia-avo-173;canal-saude-saude-mulher-130;não;não
+C-024;1;completo;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-defensoria-nudem;sim;não
+C-024;2;sem_regras_lexicais_necessidade;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-defensoria-nudem;sim;não
+C-024;3;sem_ngramas_letras;;;;sim;sim
+C-024;4;sem_lsa;;;;sim;sim
+C-024;5;apenas_regras;;;;sim;sim
+C-024;6;sem_perigo_aprendido;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-defensoria-nudem;não;não
+C-024;7;sem_escopo;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-defensoria-nudem;sim;não
+C-024;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-024;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-024;10;linha_de_base_tfidf;classe-assistencia-cras;man-conselho-tutelar-sul;canal-assistencia-assistencia-cadunico-169;não;não
+C-025;1;completo;canal-direitos-secao-4-156;ferr-plano-assistencia;man-scfv-jd-brasilia;não;não
+C-025;2;sem_regras_lexicais_necessidade;canal-direitos-secao-4-156;ferr-plano-assistencia;man-scfv-jd-brasilia;não;não
+C-025;3;sem_ngramas_letras;;;;não;sim
+C-025;4;sem_lsa;;;;não;sim
+C-025;5;apenas_regras;canal-direitos-secao-4-156;ferr-plano-assistencia;man-scfv-jd-brasilia;não;não
+C-025;6;sem_perigo_aprendido;canal-direitos-secao-4-156;ferr-plano-assistencia;man-scfv-jd-brasilia;não;não
+C-025;7;sem_escopo;canal-direitos-secao-4-156;ferr-plano-assistencia;man-scfv-jd-brasilia;não;não
+C-025;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-025;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-025;10;linha_de_base_tfidf;classe-assistencia-cras;sec-assistencia-assistencia-cadunico;canal-direitos-secao-4-156;não;não
+C-026;1;completo;;;;sim;sim
+C-026;2;sem_regras_lexicais_necessidade;;;;sim;sim
+C-026;3;sem_ngramas_letras;;;;sim;sim
+C-026;4;sem_lsa;;;;sim;sim
+C-026;5;apenas_regras;;;;sim;sim
+C-026;6;sem_perigo_aprendido;;;;não;sim
+C-026;7;sem_escopo;;;;sim;sim
+C-026;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-026;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-026;10;linha_de_base_tfidf;canal-assistencia-assistencia-avo-174;canal-assistencia-assistencia-cadunico-169;canal-saude-saude-apoio-emocional-132;não;não
+C-027;1;completo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-027;2;sem_regras_lexicais_necessidade;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-027;3;sem_ngramas_letras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-027;4;sem_lsa;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-027;5;apenas_regras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-027;6;sem_perigo_aprendido;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-027;7;sem_escopo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-027;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-027;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-027;10;linha_de_base_tfidf;sec-assistencia-assistencia-cadunico;man-secretaria-mulher;canal-saude-saude-apoio-emocional-133;não;não
+C-028;1;completo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-028;2;sem_regras_lexicais_necessidade;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-028;3;sem_ngramas_letras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-028;4;sem_lsa;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-028;5;apenas_regras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-028;6;sem_perigo_aprendido;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-028;7;sem_escopo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-028;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-028;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-028;10;linha_de_base_tfidf;canal-moradia-secao-3-164;sec-assistencia-assistencia-cadunico;canal-direitos-secao-1-144;não;não
+C-029;1;completo;man-ddm-rio-claro;canal-assistencia-assistencia-avo-175;sec-direitos-secao-2;sim;não
+C-029;2;sem_regras_lexicais_necessidade;man-ddm-rio-claro;canal-assistencia-assistencia-avo-175;sec-direitos-secao-2;sim;não
+C-029;3;sem_ngramas_letras;;;;sim;sim
+C-029;4;sem_lsa;;;;sim;sim
+C-029;5;apenas_regras;;;;sim;sim
+C-029;6;sem_perigo_aprendido;man-ddm-rio-claro;canal-assistencia-assistencia-avo-175;sec-direitos-secao-2;não;não
+C-029;7;sem_escopo;man-ddm-rio-claro;canal-assistencia-assistencia-avo-175;sec-direitos-secao-2;sim;não
+C-029;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-029;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-029;10;linha_de_base_tfidf;sec-assistencia-assistencia-cadunico;man-pat;canal-saude-saude-apoio-emocional-132;não;não
+C-030;1;completo;;;;sim;sim
+C-030;2;sem_regras_lexicais_necessidade;;;;sim;sim
+C-030;3;sem_ngramas_letras;;;;sim;sim
+C-030;4;sem_lsa;;;;sim;sim
+C-030;5;apenas_regras;;;;sim;sim
+C-030;6;sem_perigo_aprendido;;;;não;sim
+C-030;7;sem_escopo;;;;sim;sim
+C-030;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-030;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-030;10;linha_de_base_tfidf;ferr-cras-bairro;sec-moradia-secao-3;ferr-mapa;não;não
+C-031;1;completo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-031;2;sem_regras_lexicais_necessidade;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-031;3;sem_ngramas_letras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-031;4;sem_lsa;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-031;5;apenas_regras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-031;6;sem_perigo_aprendido;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-031;7;sem_escopo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-031;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-031;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-031;10;linha_de_base_tfidf;sec-assistencia-assistencia-cadunico;man-pat;man-saude-pa-ginecologia;não;não
+C-032;1;completo;man-saude-upa-estadio;man-saude-upa-cervezao;man-defesa-civil;sim;não
+C-032;2;sem_regras_lexicais_necessidade;man-saude-upa-estadio;man-saude-upa-cervezao;man-defesa-civil;sim;não
+C-032;3;sem_ngramas_letras;;;;sim;sim
+C-032;4;sem_lsa;;;;sim;sim
+C-032;5;apenas_regras;;;;sim;sim
+C-032;6;sem_perigo_aprendido;man-saude-upa-estadio;man-saude-upa-cervezao;man-defesa-civil;não;não
+C-032;7;sem_escopo;man-saude-upa-estadio;man-saude-upa-cervezao;man-defesa-civil;sim;não
+C-032;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-032;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-032;10;linha_de_base_tfidf;sec-assistencia-assistencia-cadunico;canal-saude-saude-apoio-emocional-132;man-saude-pa-ginecologia;não;não
+C-033;1;completo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-033;2;sem_regras_lexicais_necessidade;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-033;3;sem_ngramas_letras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-033;4;sem_lsa;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-033;5;apenas_regras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-033;6;sem_perigo_aprendido;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-033;7;sem_escopo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-033;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-033;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-033;10;linha_de_base_tfidf;sec-assistencia-assistencia-cadunico;ferr-cras-bairro;canal-educacao-educacao-filhos-114;não;não
+C-034;1;completo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-034;2;sem_regras_lexicais_necessidade;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-034;3;sem_ngramas_letras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-034;4;sem_lsa;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-034;5;apenas_regras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-034;6;sem_perigo_aprendido;sec-saude-saude-familia-drogas;canal-saude-saude-familia-drogas-135;man-saude-caps-ad;não;não
+C-034;7;sem_escopo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-034;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-034;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-034;10;linha_de_base_tfidf;ferr-cras-bairro;man-saude-caps-ad;ferr-mapa;não;não
+C-035;1;completo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-035;2;sem_regras_lexicais_necessidade;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-035;3;sem_ngramas_letras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-035;4;sem_lsa;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-035;5;apenas_regras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-035;6;sem_perigo_aprendido;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-035;7;sem_escopo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-035;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-035;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-035;10;linha_de_base_tfidf;ferr-cras-bairro;man-conselho-tutelar-sul;canal-assistencia-assistencia-avo-173;não;não
+C-036;1;completo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-036;2;sem_regras_lexicais_necessidade;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-036;3;sem_ngramas_letras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-036;4;sem_lsa;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-036;5;apenas_regras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-036;6;sem_perigo_aprendido;;;;não;sim
+C-036;7;sem_escopo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-036;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-036;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-036;10;linha_de_base_tfidf;sec-assistencia-assistencia-cadunico;ferr-mapa;sec-moradia-secao-3;não;não
+C-037;1;completo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-037;2;sem_regras_lexicais_necessidade;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-037;3;sem_ngramas_letras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-037;4;sem_lsa;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-037;5;apenas_regras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-037;6;sem_perigo_aprendido;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-037;7;sem_escopo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-037;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-037;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-037;10;linha_de_base_tfidf;man-conselho-tutelar-norte;man-conselho-tutelar-sul;sec-moradia-secao-1;não;não
+C-038;1;completo;man-saude-caps-iii;man-saude-upa-estadio;man-ddm-rio-claro;sim;não
+C-038;2;sem_regras_lexicais_necessidade;man-saude-caps-iii;man-saude-upa-estadio;man-ddm-rio-claro;sim;não
+C-038;3;sem_ngramas_letras;man-saude-caps-iii;man-saude-upa-estadio;man-ddm-rio-claro;sim;não
+C-038;4;sem_lsa;man-saude-caps-iii;man-saude-upa-estadio;man-ddm-rio-claro;sim;não
+C-038;5;apenas_regras;man-saude-caps-iii;man-saude-upa-estadio;man-ddm-rio-claro;sim;não
+C-038;6;sem_perigo_aprendido;man-saude-caps-iii;man-saude-upa-estadio;man-ddm-rio-claro;sim;não
+C-038;7;sem_escopo;man-saude-caps-iii;man-saude-upa-estadio;man-ddm-rio-claro;sim;não
+C-038;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-038;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-038;10;linha_de_base_tfidf;man-saude-sepa;canal-saude-saude-apoio-emocional-132;sec-assistencia-assistencia-cadunico;não;não
+C-039;1;completo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-039;2;sem_regras_lexicais_necessidade;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-039;3;sem_ngramas_letras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-039;4;sem_lsa;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-039;5;apenas_regras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-039;6;sem_perigo_aprendido;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-039;7;sem_escopo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-039;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-039;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-039;10;linha_de_base_tfidf;sec-assistencia-assistencia-cadunico;ferr-cras-bairro;man-defesa-civil;não;não
+C-040;1;completo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-040;2;sem_regras_lexicais_necessidade;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-040;3;sem_ngramas_letras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-040;4;sem_lsa;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-040;5;apenas_regras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-040;6;sem_perigo_aprendido;;;;não;sim
+C-040;7;sem_escopo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-040;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-040;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-040;10;linha_de_base_tfidf;man-saude-sepa;canal-assistencia-assistencia-avo-173;man-sestsenat;não;não
+C-041;1;completo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-041;2;sem_regras_lexicais_necessidade;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-041;3;sem_ngramas_letras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-041;4;sem_lsa;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-041;5;apenas_regras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-041;6;sem_perigo_aprendido;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-041;7;sem_escopo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-041;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-041;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-041;10;linha_de_base_tfidf;canal-saude-saude-apoio-emocional-132;sec-assistencia-assistencia-cadunico;man-saude-pa-ginecologia;não;não
+C-042;1;completo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-042;2;sem_regras_lexicais_necessidade;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-042;3;sem_ngramas_letras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-042;4;sem_lsa;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-042;5;apenas_regras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-042;6;sem_perigo_aprendido;man-saude-pa-ginecologia;man-saude-upa-estadio;sec-saude-saude-familia-drogas;não;não
+C-042;7;sem_escopo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-042;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-042;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-042;10;linha_de_base_tfidf;sec-assistencia-assistencia-cadunico;canal-saude-saude-mulher-130;man-saude-upa-estadio;não;não
+C-043;1;completo;man-saude-upa-estadio;man-saude-upa-cervezao;man-defesa-civil;sim;não
+C-043;2;sem_regras_lexicais_necessidade;man-saude-upa-estadio;man-saude-upa-cervezao;man-defesa-civil;sim;não
+C-043;3;sem_ngramas_letras;man-saude-upa-estadio;man-saude-upa-cervezao;sec-moradia-secao-4;sim;não
+C-043;4;sem_lsa;;;;sim;sim
+C-043;5;apenas_regras;;;;sim;sim
+C-043;6;sem_perigo_aprendido;man-saude-upa-estadio;man-saude-upa-cervezao;man-defesa-civil;não;não
+C-043;7;sem_escopo;man-saude-upa-estadio;man-saude-upa-cervezao;man-defesa-civil;sim;não
+C-043;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-043;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-043;10;linha_de_base_tfidf;sec-assistencia-assistencia-cadunico;canal-assistencia-assistencia-avo-173;man-pat;não;não
+C-044;1;completo;ferr-perto-cep;ferr-mapa;man-saude-upa-estadio;sim;não
+C-044;2;sem_regras_lexicais_necessidade;ferr-perto-cep;ferr-mapa;man-saude-upa-estadio;sim;não
+C-044;3;sem_ngramas_letras;ferr-perto-cep;ferr-mapa;;sim;não
+C-044;4;sem_lsa;;;;sim;sim
+C-044;5;apenas_regras;;;;sim;sim
+C-044;6;sem_perigo_aprendido;ferr-perto-cep;ferr-mapa;man-saude-upa-estadio;não;não
+C-044;7;sem_escopo;ferr-perto-cep;ferr-mapa;man-saude-upa-estadio;sim;não
+C-044;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-044;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-044;10;linha_de_base_tfidf;ferr-perto-cep;ferr-mapa;canal-saude-saude-apoio-emocional-132;não;não
+C-045;1;completo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-045;2;sem_regras_lexicais_necessidade;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-045;3;sem_ngramas_letras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-045;4;sem_lsa;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-045;5;apenas_regras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-045;6;sem_perigo_aprendido;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-045;7;sem_escopo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-045;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-045;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-045;10;linha_de_base_tfidf;canal-assistencia-assistencia-avo-173;ferr-mapa;ferr-perto-cep;não;não
+C-046;1;completo;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-046;2;sem_regras_lexicais_necessidade;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-046;3;sem_ngramas_letras;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-046;4;sem_lsa;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-046;5;apenas_regras;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-046;6;sem_perigo_aprendido;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-046;7;sem_escopo;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-046;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-046;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-046;10;linha_de_base_tfidf;ferr-cras-bairro;ferr-mapa;sec-moradia-secao-3;não;não
+C-047;1;completo;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-047;2;sem_regras_lexicais_necessidade;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-047;3;sem_ngramas_letras;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-047;4;sem_lsa;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-047;5;apenas_regras;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-047;6;sem_perigo_aprendido;;;;não;sim
+C-047;7;sem_escopo;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-047;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-047;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-047;10;linha_de_base_tfidf;ferr-cras-bairro;canal-assistencia-assistencia-avo-173;canal-saude-saude-mulher-128;não;não
+C-048;1;completo;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-048;2;sem_regras_lexicais_necessidade;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-048;3;sem_ngramas_letras;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-048;4;sem_lsa;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-048;5;apenas_regras;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-048;6;sem_perigo_aprendido;canal-educacao-educacao-filhos-111;classe-assistencia-cras;man-cras-bom-sucesso;não;não
+C-048;7;sem_escopo;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-048;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-048;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-048;10;linha_de_base_tfidf;ferr-mapa;canal-saude-saude-mulher-130;man-conselho-tutelar-sul;não;não
+C-049;1;completo;man-conselho-tutelar-norte;man-conselho-tutelar-sul;man-creas;sim;não
+C-049;2;sem_regras_lexicais_necessidade;man-conselho-tutelar-norte;man-conselho-tutelar-sul;man-creas;sim;não
+C-049;3;sem_ngramas_letras;man-conselho-tutelar-norte;man-conselho-tutelar-sul;man-creas;sim;não
+C-049;4;sem_lsa;man-conselho-tutelar-norte;man-conselho-tutelar-sul;man-creas;sim;não
+C-049;5;apenas_regras;man-conselho-tutelar-norte;man-conselho-tutelar-sul;man-creas;sim;não
+C-049;6;sem_perigo_aprendido;;;;não;sim
+C-049;7;sem_escopo;man-conselho-tutelar-norte;man-conselho-tutelar-sul;man-creas;sim;não
+C-049;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-049;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-049;10;linha_de_base_tfidf;canal-moradia-secao-3-164;man-cras-mae-preta;man-cras-jardim-independencia;não;não
+C-050;1;completo;man-conselho-tutelar-norte;man-conselho-tutelar-sul;man-creas;sim;não
+C-050;2;sem_regras_lexicais_necessidade;man-conselho-tutelar-norte;man-conselho-tutelar-sul;man-creas;sim;não
+C-050;3;sem_ngramas_letras;man-conselho-tutelar-norte;man-conselho-tutelar-sul;man-creas;sim;não
+C-050;4;sem_lsa;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-050;5;apenas_regras;man-conselho-tutelar-norte;man-conselho-tutelar-sul;man-creas;sim;não
+C-050;6;sem_perigo_aprendido;man-conselho-tutelar-norte;man-conselho-tutelar-sul;man-creas;sim;não
+C-050;7;sem_escopo;man-conselho-tutelar-norte;man-conselho-tutelar-sul;man-creas;sim;não
+C-050;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-050;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-050;10;linha_de_base_tfidf;sec-assistencia-assistencia-cadunico;ferr-cras-bairro;ferr-mapa;não;não
+C-051;1;completo;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-051;2;sem_regras_lexicais_necessidade;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-051;3;sem_ngramas_letras;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-051;4;sem_lsa;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-051;5;apenas_regras;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-051;6;sem_perigo_aprendido;canal-educacao-educacao-filhos-111;canal-educacao-educacao-filhos-116;sec-saude-saude-familia-drogas;não;não
+C-051;7;sem_escopo;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-051;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-051;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-051;10;linha_de_base_tfidf;canal-saude-saude-mulher-130;canal-educacao-educacao-filhos-119;canal-assistencia-assistencia-avo-174;não;não
+C-052;1;completo;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-052;2;sem_regras_lexicais_necessidade;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-052;3;sem_ngramas_letras;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-052;4;sem_lsa;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-052;5;apenas_regras;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-052;6;sem_perigo_aprendido;classe-assistencia-cras;ferr-plano-assistencia;man-cras-terra-nova;não;não
+C-052;7;sem_escopo;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-052;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-052;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-052;10;linha_de_base_tfidf;man-conselho-tutelar-sul;man-conselho-tutelar-norte;canal-direitos-secao-1-144;não;não
+C-053;1;completo;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-053;2;sem_regras_lexicais_necessidade;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-053;3;sem_ngramas_letras;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-053;4;sem_lsa;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-053;5;apenas_regras;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-053;6;sem_perigo_aprendido;sec-educacao-educacao-escolas;canal-educacao-educacao-filhos-119;canal-educacao-educacao-filhos-110;não;não
+C-053;7;sem_escopo;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-053;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-053;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-053;10;linha_de_base_tfidf;canal-educacao-educacao-filhos-119;canal-saude-saude-apoio-emocional-133;canal-educacao-educacao-filhos-114;não;não
+C-054;1;completo;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-054;2;sem_regras_lexicais_necessidade;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-054;3;sem_ngramas_letras;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-054;4;sem_lsa;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-054;5;apenas_regras;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-054;6;sem_perigo_aprendido;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-054;7;sem_escopo;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-054;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-054;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-054;10;linha_de_base_tfidf;canal-educacao-educacao-filhos-111;man-conselho-tutelar-sul;man-conselho-tutelar-norte;não;não
+C-055;1;completo;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-055;2;sem_regras_lexicais_necessidade;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-055;3;sem_ngramas_letras;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-055;4;sem_lsa;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-055;5;apenas_regras;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-055;6;sem_perigo_aprendido;sec-educacao-educacao-filhos;man-banco-do-povo;ferr-plano-educacao;não;não
+C-055;7;sem_escopo;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-055;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-055;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-055;10;linha_de_base_tfidf;ferr-cras-bairro;ferr-mapa;sec-moradia-secao-3;não;não
+C-056;1;completo;man-conselho-tutelar-sul;man-conselho-tutelar-norte;sec-assistencia-secao-2;sim;não
+C-056;2;sem_regras_lexicais_necessidade;man-conselho-tutelar-sul;man-conselho-tutelar-norte;sec-assistencia-secao-2;sim;não
+C-056;3;sem_ngramas_letras;man-conselho-tutelar-sul;man-conselho-tutelar-norte;sec-assistencia-secao-2;sim;não
+C-056;4;sem_lsa;;;;sim;sim
+C-056;5;apenas_regras;man-conselho-tutelar-sul;man-conselho-tutelar-norte;sec-assistencia-secao-2;sim;não
+C-056;6;sem_perigo_aprendido;man-conselho-tutelar-sul;man-conselho-tutelar-norte;sec-assistencia-secao-2;não;não
+C-056;7;sem_escopo;man-conselho-tutelar-sul;man-conselho-tutelar-norte;sec-assistencia-secao-2;sim;não
+C-056;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-056;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-056;10;linha_de_base_tfidf;man-conselho-tutelar-sul;man-conselho-tutelar-norte;canal-educacao-educacao-filhos-111;não;não
+C-057;1;completo;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-057;2;sem_regras_lexicais_necessidade;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-057;3;sem_ngramas_letras;man-conselho-tutelar-norte;man-conselho-tutelar-sul;man-creas;sim;não
+C-057;4;sem_lsa;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-057;5;apenas_regras;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-057;6;sem_perigo_aprendido;;;;não;sim
+C-057;7;sem_escopo;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-057;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-057;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-057;10;linha_de_base_tfidf;man-creas;canal-saude-saude-mulher-130;canal-assistencia-assistencia-avo-174;não;não
+C-058;1;completo;ferr-perto-cep;sec-educacao-educacao-escolas;canal-educacao-educacao-filhos-119;não;não
+C-058;2;sem_regras_lexicais_necessidade;ferr-perto-cep;sec-educacao-educacao-escolas;canal-educacao-educacao-filhos-119;não;não
+C-058;3;sem_ngramas_letras;sec-educacao-educacao-escolas;canal-educacao-educacao-filhos-119;ferr-perto-cep;não;não
+C-058;4;sem_lsa;;;;não;sim
+C-058;5;apenas_regras;ferr-perto-cep;sec-educacao-educacao-escolas;canal-educacao-educacao-filhos-119;não;não
+C-058;6;sem_perigo_aprendido;ferr-perto-cep;sec-educacao-educacao-escolas;canal-educacao-educacao-filhos-119;não;não
+C-058;7;sem_escopo;ferr-perto-cep;sec-educacao-educacao-escolas;canal-educacao-educacao-filhos-119;não;não
+C-058;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-058;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-058;10;linha_de_base_tfidf;sec-educacao-educacao-escolas;man-conselho-tutelar-sul;canal-educacao-educacao-filhos-119;não;não
+C-059;1;completo;;;;sim;sim
+C-059;2;sem_regras_lexicais_necessidade;;;;sim;sim
+C-059;3;sem_ngramas_letras;;;;sim;sim
+C-059;4;sem_lsa;;;;sim;sim
+C-059;5;apenas_regras;;;;sim;sim
+C-059;6;sem_perigo_aprendido;;;;não;sim
+C-059;7;sem_escopo;;;;sim;sim
+C-059;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-059;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-059;10;linha_de_base_tfidf;ferr-cras-bairro;canal-educacao-educacao-filhos-112;canal-assistencia-assistencia-avo-172;não;não
+C-060;1;completo;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-060;2;sem_regras_lexicais_necessidade;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-060;3;sem_ngramas_letras;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-060;4;sem_lsa;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-060;5;apenas_regras;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-060;6;sem_perigo_aprendido;man-scfv-jd-bandeirantes;man-scfv-idoso-sao-vicente;man-cras-mae-preta;não;não
+C-060;7;sem_escopo;man-conselho-tutelar-sul;man-conselho-tutelar-norte;man-creas;sim;não
+C-060;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-060;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-060;10;linha_de_base_tfidf;man-conselho-tutelar-sul;classe-assistencia-cras;man-conselho-tutelar-norte;não;não
+C-061;1;completo;man-saude-caps-iii;man-saude-upa-estadio;man-saude-farmacia-central;sim;não
+C-061;2;sem_regras_lexicais_necessidade;man-saude-caps-iii;man-saude-upa-estadio;man-saude-farmacia-central;sim;não
+C-061;3;sem_ngramas_letras;man-saude-caps-iii;man-saude-upa-estadio;man-saude-farmacia-central;sim;não
+C-061;4;sem_lsa;man-saude-caps-iii;man-saude-upa-estadio;man-saude-farmacia-central;sim;não
+C-061;5;apenas_regras;man-saude-caps-iii;man-saude-upa-estadio;man-saude-farmacia-central;sim;não
+C-061;6;sem_perigo_aprendido;man-saude-caps-iii;man-saude-upa-estadio;man-saude-farmacia-central;sim;não
+C-061;7;sem_escopo;man-saude-caps-iii;man-saude-upa-estadio;man-saude-farmacia-central;sim;não
+C-061;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-061;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-061;10;linha_de_base_tfidf;man-saude-farmacia-central;sec-saude-saude-unidades;man-saude-disp-medicamentos;não;não
+C-062;1;completo;man-saude-caps-iii;man-saude-upa-estadio;classe-saude-especialidades;sim;não
+C-062;2;sem_regras_lexicais_necessidade;man-saude-caps-iii;man-saude-upa-estadio;classe-saude-especialidades;sim;não
+C-062;3;sem_ngramas_letras;man-saude-caps-iii;man-saude-upa-estadio;classe-saude-especialidades;sim;não
+C-062;4;sem_lsa;man-saude-caps-iii;man-saude-upa-estadio;man-saude-ceo;sim;não
+C-062;5;apenas_regras;man-saude-caps-iii;man-saude-upa-estadio;classe-saude-especialidades;sim;não
+C-062;6;sem_perigo_aprendido;man-saude-caps-iii;man-saude-upa-estadio;classe-saude-especialidades;sim;não
+C-062;7;sem_escopo;man-saude-caps-iii;man-saude-upa-estadio;classe-saude-especialidades;sim;não
+C-062;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-062;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-062;10;linha_de_base_tfidf;ferr-cras-bairro;ferr-mapa;sec-moradia-secao-3;não;não
+C-063;1;completo;man-saude-caps-iii;man-saude-upa-estadio;man-fundo-social;sim;não
+C-063;2;sem_regras_lexicais_necessidade;man-saude-caps-iii;man-saude-upa-estadio;man-fundo-social;sim;não
+C-063;3;sem_ngramas_letras;man-saude-caps-iii;man-saude-upa-estadio;man-fundo-social;sim;não
+C-063;4;sem_lsa;man-saude-caps-iii;man-saude-upa-estadio;sec-saude-saude-apoio-emocional;sim;não
+C-063;5;apenas_regras;man-saude-caps-iii;man-saude-upa-estadio;man-fundo-social;sim;não
+C-063;6;sem_perigo_aprendido;man-saude-caps-iii;man-saude-upa-estadio;man-fundo-social;sim;não
+C-063;7;sem_escopo;man-saude-caps-iii;man-saude-upa-estadio;man-fundo-social;sim;não
+C-063;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-063;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-063;10;linha_de_base_tfidf;canal-assistencia-assistencia-avo-174;man-fundo-social;sec-assistencia-secao-4;não;não
+C-064;1;completo;man-saude-caps-iii;man-saude-upa-estadio;ferr-plano-trabalho;sim;não
+C-064;2;sem_regras_lexicais_necessidade;man-saude-caps-iii;man-saude-upa-estadio;ferr-plano-trabalho;sim;não
+C-064;3;sem_ngramas_letras;man-saude-caps-iii;man-saude-upa-estadio;ferr-plano-trabalho;sim;não
+C-064;4;sem_lsa;man-saude-caps-iii;man-saude-upa-estadio;ferr-plano-trabalho;sim;não
+C-064;5;apenas_regras;man-saude-caps-iii;man-saude-upa-estadio;ferr-plano-trabalho;sim;não
+C-064;6;sem_perigo_aprendido;ferr-plano-trabalho;man-saude-caps-ad;man-saude-caps-iii;não;não
+C-064;7;sem_escopo;man-saude-caps-iii;man-saude-upa-estadio;ferr-plano-trabalho;sim;não
+C-064;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-064;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-064;10;linha_de_base_tfidf;classe-assistencia-cras;ferr-plano-trabalho;man-cras-bom-sucesso;não;não
+C-065;1;completo;man-saude-caps-iii;man-saude-upa-estadio;man-saude-caps-ad;sim;não
+C-065;2;sem_regras_lexicais_necessidade;man-saude-caps-iii;man-saude-upa-estadio;man-saude-caps-ad;sim;não
+C-065;3;sem_ngramas_letras;man-saude-caps-iii;man-saude-upa-estadio;man-saude-caps-ad;sim;não
+C-065;4;sem_lsa;man-saude-caps-iii;man-saude-upa-estadio;man-saude-caps-ad;sim;não
+C-065;5;apenas_regras;man-saude-caps-iii;man-saude-upa-estadio;canal-educacao-educacao-filhos-116;sim;não
+C-065;6;sem_perigo_aprendido;;;;não;sim
+C-065;7;sem_escopo;man-saude-caps-iii;man-saude-upa-estadio;man-saude-caps-ad;sim;não
+C-065;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-065;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-065;10;linha_de_base_tfidf;ferr-cras-bairro;canal-saude-saude-apoio-emocional-132;ferr-mapa;não;não
+C-066;1;completo;;;;não;sim
+C-066;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-066;3;sem_ngramas_letras;;;;não;sim
+C-066;4;sem_lsa;;;;não;sim
+C-066;5;apenas_regras;;;;não;sim
+C-066;6;sem_perigo_aprendido;;;;não;sim
+C-066;7;sem_escopo;;;;não;sim
+C-066;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-066;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-066;10;linha_de_base_tfidf;canal-assistencia-secao-2-177;canal-saude-saude-apoio-emocional-132;area-educacao;não;não
+C-067;1;completo;man-saude-caps-iii;man-saude-upa-estadio;sec-direitos-secao-1;sim;não
+C-067;2;sem_regras_lexicais_necessidade;man-saude-caps-iii;man-saude-upa-estadio;sec-direitos-secao-1;sim;não
+C-067;3;sem_ngramas_letras;man-saude-caps-iii;man-saude-upa-estadio;sec-direitos-secao-1;sim;não
+C-067;4;sem_lsa;man-saude-caps-iii;man-saude-upa-estadio;sec-direitos-secao-1;sim;não
+C-067;5;apenas_regras;man-saude-caps-iii;man-saude-upa-estadio;sec-direitos-secao-1;sim;não
+C-067;6;sem_perigo_aprendido;man-saude-caps-iii;man-saude-upa-estadio;sec-direitos-secao-1;sim;não
+C-067;7;sem_escopo;man-saude-caps-iii;man-saude-upa-estadio;sec-direitos-secao-1;sim;não
+C-067;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-067;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-067;10;linha_de_base_tfidf;sec-saude-saude-apoio-emocional;sec-trabalho-trabalho-formacao-longa;sec-educacao-educacao-formacao-longa;não;não
+C-068;1;completo;man-saude-caps-iii;man-saude-upa-estadio;sec-moradia-secao-3;sim;não
+C-068;2;sem_regras_lexicais_necessidade;man-saude-caps-iii;man-saude-upa-estadio;sec-moradia-secao-3;sim;não
+C-068;3;sem_ngramas_letras;man-saude-caps-iii;man-saude-upa-estadio;sec-moradia-secao-3;sim;não
+C-068;4;sem_lsa;man-saude-caps-iii;man-saude-upa-estadio;sec-moradia-secao-3;sim;não
+C-068;5;apenas_regras;man-saude-caps-iii;man-saude-upa-estadio;area-transporte;sim;não
+C-068;6;sem_perigo_aprendido;;;;não;sim
+C-068;7;sem_escopo;man-saude-caps-iii;man-saude-upa-estadio;sec-moradia-secao-3;sim;não
+C-068;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-068;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-068;10;linha_de_base_tfidf;sec-moradia-secao-3;ferr-cras-bairro;ferr-mapa;não;não
+C-069;1;completo;;;;sim;sim
+C-069;2;sem_regras_lexicais_necessidade;;;;sim;sim
+C-069;3;sem_ngramas_letras;;;;sim;sim
+C-069;4;sem_lsa;;;;sim;sim
+C-069;5;apenas_regras;;;;sim;sim
+C-069;6;sem_perigo_aprendido;;;;não;sim
+C-069;7;sem_escopo;;;;sim;sim
+C-069;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-069;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-069;10;linha_de_base_tfidf;canal-assistencia-assistencia-avo-173;canal-educacao-educacao-filhos-111;canal-direitos-secao-1-144;não;não
+C-070;1;completo;;;;não;sim
+C-070;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-070;3;sem_ngramas_letras;;;;não;sim
+C-070;4;sem_lsa;;;;não;sim
+C-070;5;apenas_regras;;;;não;sim
+C-070;6;sem_perigo_aprendido;;;;não;sim
+C-070;7;sem_escopo;;;;não;sim
+C-070;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-070;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-070;10;linha_de_base_tfidf;classe-assistencia-cras;ferr-cras-bairro;man-cras-bom-sucesso;não;não
+C-071;1;completo;man-saude-caps-iii;man-saude-upa-estadio;sec-assistencia-assistencia-avo;sim;não
+C-071;2;sem_regras_lexicais_necessidade;man-saude-caps-iii;man-saude-upa-estadio;sec-assistencia-assistencia-avo;sim;não
+C-071;3;sem_ngramas_letras;man-saude-caps-iii;man-saude-upa-estadio;sec-assistencia-assistencia-avo;sim;não
+C-071;4;sem_lsa;man-saude-caps-iii;man-saude-upa-estadio;canal-saude-saude-mulher-128;sim;não
+C-071;5;apenas_regras;man-saude-caps-iii;man-saude-upa-estadio;sec-assistencia-assistencia-avo;sim;não
+C-071;6;sem_perigo_aprendido;man-saude-caps-iii;man-saude-upa-estadio;sec-assistencia-assistencia-avo;sim;não
+C-071;7;sem_escopo;man-saude-caps-iii;man-saude-upa-estadio;sec-assistencia-assistencia-avo;sim;não
+C-071;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-071;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-071;10;linha_de_base_tfidf;canal-educacao-educacao-filhos-121;canal-assistencia-assistencia-avo-173;canal-direitos-secao-1-145;não;não
+C-072;1;completo;man-saude-caps-iii;man-saude-upa-estadio;sec-saude-saude-apoio-emocional;sim;não
+C-072;2;sem_regras_lexicais_necessidade;man-saude-caps-iii;man-saude-upa-estadio;sec-saude-saude-apoio-emocional;sim;não
+C-072;3;sem_ngramas_letras;man-saude-caps-iii;man-saude-upa-estadio;sec-saude-saude-apoio-emocional;sim;não
+C-072;4;sem_lsa;man-saude-caps-iii;man-saude-upa-estadio;canal-saude-saude-apoio-emocional-132;sim;não
+C-072;5;apenas_regras;man-saude-caps-iii;man-saude-upa-estadio;sec-saude-saude-apoio-emocional;sim;não
+C-072;6;sem_perigo_aprendido;man-saude-caps-iii;man-saude-upa-estadio;sec-saude-saude-apoio-emocional;sim;não
+C-072;7;sem_escopo;man-saude-caps-iii;man-saude-upa-estadio;sec-saude-saude-apoio-emocional;sim;não
+C-072;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-072;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-072;10;linha_de_base_tfidf;sec-moradia-secao-3;sec-saude-saude-apoio-emocional;ferr-cras-bairro;não;não
+C-073;1;completo;;;;não;sim
+C-073;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-073;3;sem_ngramas_letras;;;;não;sim
+C-073;4;sem_lsa;;;;não;sim
+C-073;5;apenas_regras;;;;não;sim
+C-073;6;sem_perigo_aprendido;;;;não;sim
+C-073;7;sem_escopo;;;;não;sim
+C-073;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-073;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-073;10;linha_de_base_tfidf;ferr-cras-bairro;ferr-mapa;sec-moradia-secao-3;não;não
+C-074;1;completo;sec-direitos-secao-1;ferr-mapa;canal-direitos-secao-1-144;não;não
+C-074;2;sem_regras_lexicais_necessidade;sec-direitos-secao-1;ferr-mapa;canal-direitos-secao-1-144;não;não
+C-074;3;sem_ngramas_letras;;;;não;sim
+C-074;4;sem_lsa;;;;não;sim
+C-074;5;apenas_regras;;;;não;sim
+C-074;6;sem_perigo_aprendido;sec-direitos-secao-1;ferr-mapa;canal-direitos-secao-1-144;não;não
+C-074;7;sem_escopo;sec-direitos-secao-1;ferr-mapa;canal-direitos-secao-1-144;não;não
+C-074;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-074;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-074;10;linha_de_base_tfidf;ferr-mapa;ferr-cras-bairro;man-saude-usf-palmeiras;não;não
+C-075;1;completo;;;;não;sim
+C-075;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-075;3;sem_ngramas_letras;;;;não;sim
+C-075;4;sem_lsa;;;;não;sim
+C-075;5;apenas_regras;;;;não;sim
+C-075;6;sem_perigo_aprendido;;;;não;sim
+C-075;7;sem_escopo;;;;não;sim
+C-075;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-075;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-075;10;linha_de_base_tfidf;canal-saude-saude-familia-drogas-140;man-saude-caps-i;man-saude-caps-ad;não;não
+C-076;1;completo;man-saude-caps-iii;man-saude-upa-estadio;canal-saude-saude-mulher-128;sim;não
+C-076;2;sem_regras_lexicais_necessidade;man-saude-caps-iii;man-saude-upa-estadio;canal-saude-saude-mulher-128;sim;não
+C-076;3;sem_ngramas_letras;man-saude-caps-iii;man-saude-upa-estadio;canal-saude-saude-mulher-128;sim;não
+C-076;4;sem_lsa;man-saude-caps-iii;man-saude-upa-estadio;canal-saude-saude-mulher-128;sim;não
+C-076;5;apenas_regras;man-saude-caps-iii;man-saude-upa-estadio;canal-educacao-educacao-filhos-116;sim;não
+C-076;6;sem_perigo_aprendido;canal-saude-saude-mulher-128;canal-saude-saude-mulher-130;canal-educacao-educacao-filhos-116;não;não
+C-076;7;sem_escopo;man-saude-caps-iii;man-saude-upa-estadio;canal-saude-saude-mulher-128;sim;não
+C-076;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-076;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-076;10;linha_de_base_tfidf;canal-educacao-educacao-filhos-116;canal-assistencia-assistencia-avo-175;canal-saude-saude-mulher-130;não;não
+C-077;1;completo;;;;sim;sim
+C-077;2;sem_regras_lexicais_necessidade;;;;sim;sim
+C-077;3;sem_ngramas_letras;;;;sim;sim
+C-077;4;sem_lsa;;;;sim;sim
+C-077;5;apenas_regras;;;;sim;sim
+C-077;6;sem_perigo_aprendido;;;;não;sim
+C-077;7;sem_escopo;;;;sim;sim
+C-077;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-077;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-077;10;linha_de_base_tfidf;sec-moradia-secao-2;sec-direitos-secao-4;canal-educacao-educacao-filhos-113;não;não
+C-078;1;completo;sec-saude-saude-apoio-emocional;man-saude-caps-ad;man-saude-caps-iii;não;não
+C-078;2;sem_regras_lexicais_necessidade;sec-saude-saude-apoio-emocional;man-saude-caps-ad;man-saude-caps-iii;não;não
+C-078;3;sem_ngramas_letras;sec-saude-saude-apoio-emocional;man-saude-caps-iii;man-saude-caps-ad;não;não
+C-078;4;sem_lsa;;;;não;sim
+C-078;5;apenas_regras;;;;não;sim
+C-078;6;sem_perigo_aprendido;sec-saude-saude-apoio-emocional;man-saude-caps-ad;man-saude-caps-iii;não;não
+C-078;7;sem_escopo;sec-saude-saude-apoio-emocional;man-saude-caps-ad;man-saude-caps-iii;não;não
+C-078;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-078;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-078;10;linha_de_base_tfidf;ferr-cras-bairro;sec-moradia-secao-3;ferr-mapa;não;não
+C-079;1;completo;man-saude-caps-iii;man-saude-upa-estadio;man-saude-caps-ad;sim;não
+C-079;2;sem_regras_lexicais_necessidade;man-saude-caps-iii;man-saude-upa-estadio;man-saude-caps-ad;sim;não
+C-079;3;sem_ngramas_letras;man-saude-caps-iii;man-saude-upa-estadio;man-saude-caps-ad;sim;não
+C-079;4;sem_lsa;man-saude-caps-iii;man-saude-upa-estadio;man-saude-caps-ad;sim;não
+C-079;5;apenas_regras;man-saude-caps-iii;man-saude-upa-estadio;man-saude-caps-ad;sim;não
+C-079;6;sem_perigo_aprendido;man-saude-caps-ad;man-saude-caps-i;sec-saude-saude-apoio-emocional;não;não
+C-079;7;sem_escopo;man-saude-caps-iii;man-saude-upa-estadio;man-saude-caps-ad;sim;não
+C-079;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-079;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-079;10;linha_de_base_tfidf;sec-direitos-secao-2;classe-assistencia-cras;area-entre-mulheres;não;não
+C-080;1;completo;;;;sim;sim
+C-080;2;sem_regras_lexicais_necessidade;;;;sim;sim
+C-080;3;sem_ngramas_letras;;;;sim;sim
+C-080;4;sem_lsa;;;;sim;sim
+C-080;5;apenas_regras;;;;sim;sim
+C-080;6;sem_perigo_aprendido;;;;não;sim
+C-080;7;sem_escopo;;;;sim;sim
+C-080;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-080;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-080;10;linha_de_base_tfidf;sec-moradia-secao-3;ferr-cras-bairro;ferr-mapa;não;não
+C-081;1;completo;man-secretaria-educacao;sec-educacao-educacao-filhos;sec-educacao-educacao-escolas;não;não
+C-081;2;sem_regras_lexicais_necessidade;man-secretaria-educacao;sec-educacao-educacao-filhos;sec-educacao-educacao-escolas;não;não
+C-081;3;sem_ngramas_letras;sec-educacao-educacao-escolas;sec-educacao-educacao-filhos;man-secretaria-educacao;não;não
+C-081;4;sem_lsa;man-secretaria-educacao;sec-educacao-educacao-filhos;sec-educacao-educacao-escolas;não;não
+C-081;5;apenas_regras;man-secretaria-educacao;sec-educacao-educacao-filhos;sec-educacao-educacao-escolas;não;não
+C-081;6;sem_perigo_aprendido;man-secretaria-educacao;sec-educacao-educacao-filhos;sec-educacao-educacao-escolas;não;não
+C-081;7;sem_escopo;man-secretaria-educacao;sec-educacao-educacao-filhos;sec-educacao-educacao-escolas;não;não
+C-081;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-081;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-081;10;linha_de_base_tfidf;ferr-mapa;ferr-perto-cep;sec-educacao-educacao-escolas;não;não
+C-082;1;completo;man-pat;sec-trabalho-secao-1;man-conecta;não;não
+C-082;2;sem_regras_lexicais_necessidade;man-pat;sec-trabalho-secao-1;man-conecta;não;não
+C-082;3;sem_ngramas_letras;man-pat;sec-trabalho-secao-1;man-conecta;não;não
+C-082;4;sem_lsa;man-pat;man-conecta;sec-trabalho-secao-1;não;não
+C-082;5;apenas_regras;man-pat;sec-trabalho-secao-1;man-conecta;não;não
+C-082;6;sem_perigo_aprendido;man-pat;sec-trabalho-secao-1;man-conecta;não;não
+C-082;7;sem_escopo;man-pat;sec-trabalho-secao-1;man-conecta;não;não
+C-082;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-082;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-082;10;linha_de_base_tfidf;man-pat;man-conecta;ferr-plano-trabalho;não;não
+C-083;1;completo;classe-assistencia-cras;sec-assistencia-secao-1;man-cras-terra-nova;não;não
+C-083;2;sem_regras_lexicais_necessidade;classe-assistencia-cras;sec-assistencia-secao-1;man-cras-terra-nova;não;não
+C-083;3;sem_ngramas_letras;classe-assistencia-cras;sec-assistencia-secao-1;man-cras-bom-sucesso;não;não
+C-083;4;sem_lsa;classe-assistencia-cras;sec-assistencia-secao-1;sec-assistencia-assistencia-cadunico;não;não
+C-083;5;apenas_regras;classe-assistencia-cras;sec-assistencia-secao-1;man-cras-terra-nova;não;não
+C-083;6;sem_perigo_aprendido;classe-assistencia-cras;sec-assistencia-secao-1;man-cras-terra-nova;não;não
+C-083;7;sem_escopo;classe-assistencia-cras;sec-assistencia-secao-1;man-cras-terra-nova;não;não
+C-083;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-083;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-083;10;linha_de_base_tfidf;classe-assistencia-cras;man-cras-terra-nova;man-cras-jardim-independencia;não;não
+C-084;1;completo;sec-assistencia-secao-1;canal-direitos-secao-1-144;canal-moradia-secao-3-163;não;não
+C-084;2;sem_regras_lexicais_necessidade;sec-assistencia-secao-1;canal-direitos-secao-1-144;canal-moradia-secao-3-163;não;não
+C-084;3;sem_ngramas_letras;;;;não;sim
+C-084;4;sem_lsa;;;;não;sim
+C-084;5;apenas_regras;sec-assistencia-secao-1;canal-moradia-secao-3-163;canal-direitos-secao-1-144;não;não
+C-084;6;sem_perigo_aprendido;sec-assistencia-secao-1;canal-direitos-secao-1-144;canal-moradia-secao-3-163;não;não
+C-084;7;sem_escopo;sec-assistencia-secao-1;canal-direitos-secao-1-144;canal-moradia-secao-3-163;não;não
+C-084;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-084;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-084;10;linha_de_base_tfidf;sec-assistencia-secao-1;canal-direitos-secao-1-144;ferr-cras-bairro;não;não
+C-085;1;completo;sec-saude-saude-unidades;classe-saude-ubs;man-saude-usf-assistencia;não;não
+C-085;2;sem_regras_lexicais_necessidade;sec-saude-saude-unidades;classe-saude-ubs;man-saude-usf-assistencia;não;não
+C-085;3;sem_ngramas_letras;sec-saude-saude-unidades;classe-saude-ubs;man-cadu;não;não
+C-085;4;sem_lsa;sec-saude-saude-unidades;classe-saude-ubs;man-saude-usf-assistencia;não;não
+C-085;5;apenas_regras;sec-saude-saude-unidades;classe-saude-ubs;man-saude-usf-assistencia;não;não
+C-085;6;sem_perigo_aprendido;sec-saude-saude-unidades;classe-saude-ubs;man-saude-usf-assistencia;não;não
+C-085;7;sem_escopo;sec-saude-saude-unidades;classe-saude-ubs;man-saude-usf-assistencia;não;não
+C-085;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-085;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-085;10;linha_de_base_tfidf;sec-saude-saude-unidades;classe-saude-ubs;man-saude-usf-assistencia;não;não
+C-086;1;completo;sec-moradia-secao-5;sec-moradia-secao-3;canal-moradia-secao-3-164;não;não
+C-086;2;sem_regras_lexicais_necessidade;sec-moradia-secao-5;sec-moradia-secao-3;canal-moradia-secao-3-164;não;não
+C-086;3;sem_ngramas_letras;sec-moradia-secao-5;sec-moradia-secao-3;canal-moradia-secao-3-164;não;não
+C-086;4;sem_lsa;sec-moradia-secao-5;sec-moradia-secao-3;canal-moradia-secao-3-164;não;não
+C-086;5;apenas_regras;sec-moradia-secao-5;sec-moradia-secao-3;canal-moradia-secao-3-164;não;não
+C-086;6;sem_perigo_aprendido;sec-moradia-secao-5;sec-moradia-secao-3;canal-moradia-secao-3-164;não;não
+C-086;7;sem_escopo;sec-moradia-secao-5;sec-moradia-secao-3;canal-moradia-secao-3-164;não;não
+C-086;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-086;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-086;10;linha_de_base_tfidf;sec-moradia-secao-5;sec-assistencia-assistencia-cadunico;sec-moradia-secao-3;não;não
+C-087;1;completo;ferr-plano-trabalho;area-transporte;man-pat;não;não
+C-087;2;sem_regras_lexicais_necessidade;area-transporte;ferr-plano-trabalho;man-pat;não;não
+C-087;3;sem_ngramas_letras;;;;não;sim
+C-087;4;sem_lsa;;;;não;sim
+C-087;5;apenas_regras;ferr-plano-trabalho;area-transporte;man-pat;não;não
+C-087;6;sem_perigo_aprendido;ferr-plano-trabalho;area-transporte;man-pat;não;não
+C-087;7;sem_escopo;ferr-plano-trabalho;area-transporte;man-pat;não;não
+C-087;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-087;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-087;10;linha_de_base_tfidf;area-transporte;ferr-plano-trabalho;canal-educacao-educacao-filhos-115;não;não
+C-088;1;completo;man-saude-ceo;man-saude-ceo-infantil;;não;não
+C-088;2;sem_regras_lexicais_necessidade;man-saude-ceo;man-saude-ceo-infantil;;não;não
+C-088;3;sem_ngramas_letras;man-saude-ceo;man-saude-ceo-infantil;;não;não
+C-088;4;sem_lsa;man-saude-ceo;man-saude-ceo-infantil;man-saude-upa-estadio;não;não
+C-088;5;apenas_regras;man-saude-ceo;man-saude-ceo-infantil;;não;não
+C-088;6;sem_perigo_aprendido;man-saude-ceo;man-saude-ceo-infantil;;não;não
+C-088;7;sem_escopo;man-saude-ceo;man-saude-ceo-infantil;;não;não
+C-088;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-088;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-088;10;linha_de_base_tfidf;classe-saude-especialidades;man-saude-cerest;man-saude-ceo;não;não
+C-089;1;completo;sec-assistencia-assistencia-cadunico;classe-assistencia-cras;sec-assistencia-secao-1;não;não
+C-089;2;sem_regras_lexicais_necessidade;sec-assistencia-assistencia-cadunico;classe-assistencia-cras;sec-assistencia-secao-1;não;não
+C-089;3;sem_ngramas_letras;sec-assistencia-assistencia-cadunico;classe-assistencia-cras;canal-assistencia-assistencia-cadunico-169;não;não
+C-089;4;sem_lsa;sec-assistencia-assistencia-cadunico;classe-assistencia-cras;sec-assistencia-secao-1;não;não
+C-089;5;apenas_regras;sec-assistencia-assistencia-cadunico;classe-assistencia-cras;sec-assistencia-secao-1;não;não
+C-089;6;sem_perigo_aprendido;sec-assistencia-assistencia-cadunico;classe-assistencia-cras;sec-assistencia-secao-1;não;não
+C-089;7;sem_escopo;sec-assistencia-assistencia-cadunico;classe-assistencia-cras;sec-assistencia-secao-1;não;não
+C-089;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-089;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-089;10;linha_de_base_tfidf;sec-assistencia-assistencia-cadunico;classe-assistencia-cras;man-cras-bom-sucesso;não;não
+C-090;1;completo;area-saude;sec-saude-saude-mulher;canal-saude-saude-mulher-128;não;não
+C-090;2;sem_regras_lexicais_necessidade;area-saude;sec-saude-saude-mulher;canal-saude-saude-mulher-128;não;não
+C-090;3;sem_ngramas_letras;;;;não;sim
+C-090;4;sem_lsa;;;;não;sim
+C-090;5;apenas_regras;;;;não;sim
+C-090;6;sem_perigo_aprendido;area-saude;sec-saude-saude-mulher;canal-saude-saude-mulher-128;não;não
+C-090;7;sem_escopo;area-saude;sec-saude-saude-mulher;canal-saude-saude-mulher-128;não;não
+C-090;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-090;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-090;10;linha_de_base_tfidf;sec-saude-saude-mulher;area-saude;classe-saude-especialidades;não;não
+C-091;1;completo;classe-assistencia-cras;man-cras-terra-nova;sec-moradia-secao-5;não;não
+C-091;2;sem_regras_lexicais_necessidade;classe-assistencia-cras;man-cras-terra-nova;sec-moradia-secao-5;não;não
+C-091;3;sem_ngramas_letras;classe-assistencia-cras;man-cras-terra-nova;sec-assistencia-secao-1;não;não
+C-091;4;sem_lsa;;;;não;sim
+C-091;5;apenas_regras;;;;não;sim
+C-091;6;sem_perigo_aprendido;classe-assistencia-cras;man-cras-terra-nova;sec-moradia-secao-5;não;não
+C-091;7;sem_escopo;classe-assistencia-cras;man-cras-terra-nova;sec-moradia-secao-5;não;não
+C-091;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-091;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-091;10;linha_de_base_tfidf;sec-moradia-secao-5;classe-assistencia-cras;man-saude-hospital-municipal;não;não
+C-092;1;completo;ferr-central-justica;man-defensoria-nudem;sec-direitos-secao-1;não;não
+C-092;2;sem_regras_lexicais_necessidade;ferr-central-justica;man-defensoria-nudem;sec-direitos-secao-1;não;não
+C-092;3;sem_ngramas_letras;ferr-central-justica;man-defensoria-nudem;sec-direitos-secao-1;não;não
+C-092;4;sem_lsa;ferr-central-justica;man-defensoria-nudem;sec-direitos-secao-1;não;não
+C-092;5;apenas_regras;ferr-central-justica;man-defensoria-nudem;sec-direitos-secao-1;não;não
+C-092;6;sem_perigo_aprendido;ferr-central-justica;man-defensoria-nudem;sec-direitos-secao-1;não;não
+C-092;7;sem_escopo;ferr-central-justica;man-defensoria-nudem;sec-direitos-secao-1;não;não
+C-092;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-092;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-092;10;linha_de_base_tfidf;man-defensoria-nudem;sec-direitos-secao-1;canal-direitos-secao-1-144;não;não
+C-093;1;completo;man-senai-rio-claro;man-senac-rio-claro;man-cqp-rio-claro;não;não
+C-093;2;sem_regras_lexicais_necessidade;man-senai-rio-claro;man-senac-rio-claro;man-cqp-rio-claro;não;não
+C-093;3;sem_ngramas_letras;man-senai-rio-claro;man-senac-rio-claro;man-cqp-rio-claro;não;não
+C-093;4;sem_lsa;man-senai-rio-claro;man-senac-rio-claro;man-cqp-rio-claro;não;não
+C-093;5;apenas_regras;man-senai-rio-claro;man-senac-rio-claro;man-cqp-rio-claro;não;não
+C-093;6;sem_perigo_aprendido;man-senai-rio-claro;man-senac-rio-claro;man-cqp-rio-claro;não;não
+C-093;7;sem_escopo;man-senai-rio-claro;man-senac-rio-claro;man-cqp-rio-claro;não;não
+C-093;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-093;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-093;10;linha_de_base_tfidf;man-senai-rio-claro;man-senac-rio-claro;man-sesi-eja;não;não
+C-094;1;completo;sec-assistencia-secao-1;classe-assistencia-cras;sec-assistencia-assistencia-cadunico;não;não
+C-094;2;sem_regras_lexicais_necessidade;sec-assistencia-secao-1;classe-assistencia-cras;sec-assistencia-assistencia-cadunico;não;não
+C-094;3;sem_ngramas_letras;;;;não;sim
+C-094;4;sem_lsa;;;;não;sim
+C-094;5;apenas_regras;;;;não;sim
+C-094;6;sem_perigo_aprendido;sec-assistencia-secao-1;classe-assistencia-cras;sec-assistencia-assistencia-cadunico;não;não
+C-094;7;sem_escopo;sec-assistencia-secao-1;classe-assistencia-cras;sec-assistencia-assistencia-cadunico;não;não
+C-094;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-094;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-094;10;linha_de_base_tfidf;sec-assistencia-assistencia-cadunico;man-cras-jardim-independencia;man-cras-terra-nova;não;não
+C-095;1;completo;canal-educacao-educacao-filhos-113;sec-educacao-secao-2;canal-educacao-educacao-filhos-118;não;não
+C-095;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-095;3;sem_ngramas_letras;;;;não;sim
+C-095;4;sem_lsa;;;;não;sim
+C-095;5;apenas_regras;canal-educacao-educacao-filhos-113;sec-educacao-secao-2;canal-educacao-educacao-filhos-118;não;não
+C-095;6;sem_perigo_aprendido;canal-educacao-educacao-filhos-113;sec-educacao-secao-2;canal-educacao-educacao-filhos-118;não;não
+C-095;7;sem_escopo;canal-educacao-educacao-filhos-113;sec-educacao-secao-2;canal-educacao-educacao-filhos-118;não;não
+C-095;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-095;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-095;10;linha_de_base_tfidf;man-scfv-idoso-sao-vicente;man-scfv-sao-joao-da-escocia;sec-assistencia-secao-3;não;não
+C-096;1;completo;man-saude-farmacia-central;man-saude-disp-medicamentos;;não;não
+C-096;2;sem_regras_lexicais_necessidade;man-saude-farmacia-central;man-saude-disp-medicamentos;;não;não
+C-096;3;sem_ngramas_letras;man-saude-farmacia-central;man-saude-disp-medicamentos;sec-saude-saude-unidades;não;não
+C-096;4;sem_lsa;man-saude-farmacia-central;man-saude-disp-medicamentos;;não;não
+C-096;5;apenas_regras;man-saude-farmacia-central;man-saude-disp-medicamentos;;não;não
+C-096;6;sem_perigo_aprendido;man-saude-farmacia-central;man-saude-disp-medicamentos;;não;não
+C-096;7;sem_escopo;man-saude-farmacia-central;man-saude-disp-medicamentos;;não;não
+C-096;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-096;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-096;10;linha_de_base_tfidf;man-saude-farmacia-central;man-saude-disp-medicamentos;sec-saude-saude-unidades;não;não
+C-097;1;completo;ferr-central-justica;;;não;não
+C-097;2;sem_regras_lexicais_necessidade;ferr-central-justica;;;não;não
+C-097;3;sem_ngramas_letras;ferr-central-justica;;;não;não
+C-097;4;sem_lsa;ferr-central-justica;;;não;não
+C-097;5;apenas_regras;ferr-central-justica;;;não;não
+C-097;6;sem_perigo_aprendido;ferr-central-justica;;;não;não
+C-097;7;sem_escopo;ferr-central-justica;;;não;não
+C-097;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-097;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-097;10;linha_de_base_tfidf;ferr-cras-bairro;ferr-mapa;canal-assistencia-assistencia-avo-172;não;não
+C-098;1;completo;;;;não;sim
+C-098;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-098;3;sem_ngramas_letras;;;;não;sim
+C-098;4;sem_lsa;;;;não;sim
+C-098;5;apenas_regras;;;;não;sim
+C-098;6;sem_perigo_aprendido;;;;não;sim
+C-098;7;sem_escopo;;;;não;sim
+C-098;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-098;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-098;10;linha_de_base_tfidf;sec-moradia-secao-3;ferr-cras-bairro;classe-assistencia-cras;não;não
+C-099;1;completo;ferr-curriculo;sec-trabalho-secao-1;man-pat;não;não
+C-099;2;sem_regras_lexicais_necessidade;ferr-curriculo;sec-trabalho-secao-1;man-pat;não;não
+C-099;3;sem_ngramas_letras;ferr-curriculo;man-pat;sec-trabalho-secao-1;não;não
+C-099;4;sem_lsa;ferr-curriculo;sec-trabalho-secao-1;man-pat;não;não
+C-099;5;apenas_regras;ferr-curriculo;sec-trabalho-secao-1;man-pat;não;não
+C-099;6;sem_perigo_aprendido;ferr-curriculo;sec-trabalho-secao-1;man-pat;não;não
+C-099;7;sem_escopo;ferr-curriculo;sec-trabalho-secao-1;man-pat;não;não
+C-099;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-099;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-099;10;linha_de_base_tfidf;ferr-curriculo;sec-trabalho-secao-1;man-cras-bom-sucesso;não;não
+C-100;1;completo;sec-assistencia-secao-1;ferr-mapa;ferr-perto-cep;não;não
+C-100;2;sem_regras_lexicais_necessidade;ferr-mapa;sec-assistencia-secao-1;ferr-perto-cep;não;não
+C-100;3;sem_ngramas_letras;ferr-mapa;sec-assistencia-secao-1;ferr-perto-cep;não;não
+C-100;4;sem_lsa;sec-assistencia-secao-1;ferr-mapa;ferr-perto-cep;não;não
+C-100;5;apenas_regras;sec-assistencia-secao-1;ferr-mapa;ferr-perto-cep;não;não
+C-100;6;sem_perigo_aprendido;sec-assistencia-secao-1;ferr-mapa;ferr-perto-cep;não;não
+C-100;7;sem_escopo;sec-assistencia-secao-1;ferr-mapa;ferr-perto-cep;não;não
+C-100;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-100;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-100;10;linha_de_base_tfidf;ferr-mapa;sec-assistencia-secao-1;ferr-perto-cep;não;não
+C-101;1;completo;;;;não;sim
+C-101;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-101;3;sem_ngramas_letras;;;;não;sim
+C-101;4;sem_lsa;;;;não;sim
+C-101;5;apenas_regras;;;;não;sim
+C-101;6;sem_perigo_aprendido;;;;não;sim
+C-101;7;sem_escopo;;;;não;sim
+C-101;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-101;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-101;10;linha_de_base_tfidf;canal-saude-saude-apoio-emocional-132;canal-direitos-secao-1-144;canal-assistencia-assistencia-cadunico-169;não;não
+C-102;1;completo;;;;não;sim
+C-102;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-102;3;sem_ngramas_letras;;;;não;sim
+C-102;4;sem_lsa;;;;não;sim
+C-102;5;apenas_regras;;;;não;sim
+C-102;6;sem_perigo_aprendido;;;;não;sim
+C-102;7;sem_escopo;;;;não;sim
+C-102;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-102;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-102;10;linha_de_base_tfidf;sec-assistencia-assistencia-cadunico;sec-moradia-secao-3;ferr-cras-bairro;não;não
+C-103;1;completo;;;;não;sim
+C-103;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-103;3;sem_ngramas_letras;;;;não;sim
+C-103;4;sem_lsa;;;;não;sim
+C-103;5;apenas_regras;;;;não;sim
+C-103;6;sem_perigo_aprendido;;;;não;sim
+C-103;7;sem_escopo;;;;não;sim
+C-103;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-103;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-103;10;linha_de_base_tfidf;man-saude-usf-jardim-novo;man-saude-usf-bonsucesso;man-saude-santa-casa;não;não
+C-104;1;completo;;;;não;sim
+C-104;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-104;3;sem_ngramas_letras;;;;não;sim
+C-104;4;sem_lsa;;;;não;sim
+C-104;5;apenas_regras;;;;não;sim
+C-104;6;sem_perigo_aprendido;;;;não;sim
+C-104;7;sem_escopo;;;;não;sim
+C-104;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-104;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-104;10;linha_de_base_tfidf;sec-assistencia-assistencia-cadunico;canal-assistencia-assistencia-avo-175;man-pat;não;não
+C-105;1;completo;canal-saude-saude-familia-drogas-139;canal-saude-saude-familia-drogas-138;canal-saude-saude-apoio-emocional-133;não;não
+C-105;2;sem_regras_lexicais_necessidade;canal-saude-saude-familia-drogas-139;canal-saude-saude-familia-drogas-138;canal-saude-saude-apoio-emocional-133;não;não
+C-105;3;sem_ngramas_letras;;;;não;sim
+C-105;4;sem_lsa;;;;não;sim
+C-105;5;apenas_regras;;;;não;sim
+C-105;6;sem_perigo_aprendido;canal-saude-saude-familia-drogas-139;canal-saude-saude-familia-drogas-138;canal-saude-saude-apoio-emocional-133;não;não
+C-105;7;sem_escopo;canal-saude-saude-familia-drogas-139;canal-saude-saude-familia-drogas-138;canal-saude-saude-apoio-emocional-133;não;não
+C-105;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-105;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-105;10;linha_de_base_tfidf;sec-saude-saude-mulher;sec-trabalho-trabalho-formacao-longa;sec-direitos-secao-4;não;não
+C-106;1;completo;sec-moradia-secao-2;man-creas;area-direitos;não;não
+C-106;2;sem_regras_lexicais_necessidade;sec-moradia-secao-2;man-creas;area-direitos;não;não
+C-106;3;sem_ngramas_letras;sec-moradia-secao-2;canal-moradia-secao-2-161;canal-educacao-educacao-filhos-118;não;não
+C-106;4;sem_lsa;;;;não;sim
+C-106;5;apenas_regras;;;;não;sim
+C-106;6;sem_perigo_aprendido;sec-moradia-secao-2;man-creas;area-direitos;não;não
+C-106;7;sem_escopo;sec-moradia-secao-2;man-creas;area-direitos;não;não
+C-106;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-106;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-106;10;linha_de_base_tfidf;sec-moradia-secao-2;ferr-cras-bairro;sec-moradia-secao-3;não;não
+C-107;1;completo;;;;não;sim
+C-107;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-107;3;sem_ngramas_letras;;;;não;sim
+C-107;4;sem_lsa;;;;não;sim
+C-107;5;apenas_regras;;;;não;sim
+C-107;6;sem_perigo_aprendido;;;;não;sim
+C-107;7;sem_escopo;;;;não;sim
+C-107;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-107;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-107;10;linha_de_base_tfidf;sec-assistencia-assistencia-avo;canal-saude-saude-apoio-emocional-133;man-secretaria-mulher;não;não
+C-108;1;completo;;;;não;sim
+C-108;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-108;3;sem_ngramas_letras;;;;não;sim
+C-108;4;sem_lsa;;;;não;sim
+C-108;5;apenas_regras;;;;não;sim
+C-108;6;sem_perigo_aprendido;;;;não;sim
+C-108;7;sem_escopo;;;;não;sim
+C-108;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-108;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-108;10;linha_de_base_tfidf;canal-direitos-secao-5-149;sec-assistencia-assistencia-cadunico;canal-direitos-secao-1-145;não;não
+C-109;1;completo;man-creas;area-direitos;canal-saude-saude-familia-drogas-140;não;não
+C-109;2;sem_regras_lexicais_necessidade;man-creas;area-direitos;canal-saude-saude-familia-drogas-140;não;não
+C-109;3;sem_ngramas_letras;;;;não;sim
+C-109;4;sem_lsa;;;;não;sim
+C-109;5;apenas_regras;;;;não;sim
+C-109;6;sem_perigo_aprendido;man-creas;area-direitos;canal-saude-saude-familia-drogas-140;não;não
+C-109;7;sem_escopo;man-creas;area-direitos;canal-saude-saude-familia-drogas-140;não;não
+C-109;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-109;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-109;10;linha_de_base_tfidf;sec-direitos-secao-4;canal-educacao-educacao-filhos-113;canal-saude-saude-familia-drogas-140;não;não
+C-110;1;completo;;;;não;sim
+C-110;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-110;3;sem_ngramas_letras;;;;não;sim
+C-110;4;sem_lsa;;;;não;sim
+C-110;5;apenas_regras;;;;não;sim
+C-110;6;sem_perigo_aprendido;;;;não;sim
+C-110;7;sem_escopo;;;;não;sim
+C-110;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-110;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-110;10;linha_de_base_tfidf;sec-assistencia-assistencia-cadunico;sec-moradia-secao-3;ferr-cras-bairro;não;não
+C-111;1;completo;;;;não;sim
+C-111;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-111;3;sem_ngramas_letras;;;;não;sim
+C-111;4;sem_lsa;;;;não;sim
+C-111;5;apenas_regras;;;;não;sim
+C-111;6;sem_perigo_aprendido;;;;não;sim
+C-111;7;sem_escopo;;;;não;sim
+C-111;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-111;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-111;10;linha_de_base_tfidf;canal-assistencia-assistencia-cadunico-169;sec-saude-saude-mulher;area-direitos;não;não
+C-112;1;completo;canal-saude-saude-apoio-emocional-132;canal-direitos-secao-5-153;canal-direitos-secao-5-152;não;não
+C-112;2;sem_regras_lexicais_necessidade;canal-saude-saude-apoio-emocional-132;canal-direitos-secao-5-153;canal-direitos-secao-5-152;não;não
+C-112;3;sem_ngramas_letras;;;;não;sim
+C-112;4;sem_lsa;;;;não;sim
+C-112;5;apenas_regras;;;;não;sim
+C-112;6;sem_perigo_aprendido;canal-saude-saude-apoio-emocional-132;canal-direitos-secao-5-153;canal-direitos-secao-5-152;não;não
+C-112;7;sem_escopo;canal-saude-saude-apoio-emocional-132;canal-direitos-secao-5-153;canal-direitos-secao-5-152;não;não
+C-112;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-112;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-112;10;linha_de_base_tfidf;canal-assistencia-assistencia-avo-175;canal-saude-saude-apoio-emocional-132;canal-saude-saude-apoio-emocional-133;não;não
+C-113;1;completo;;;;não;sim
+C-113;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-113;3;sem_ngramas_letras;;;;não;sim
+C-113;4;sem_lsa;;;;não;sim
+C-113;5;apenas_regras;;;;não;sim
+C-113;6;sem_perigo_aprendido;;;;não;sim
+C-113;7;sem_escopo;;;;não;sim
+C-113;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-113;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-113;10;linha_de_base_tfidf;canal-educacao-educacao-filhos-121;area-assistencia;canal-saude-saude-familia-drogas-135;não;não
+C-114;1;completo;;;;não;sim
+C-114;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-114;3;sem_ngramas_letras;;;;não;sim
+C-114;4;sem_lsa;;;;não;sim
+C-114;5;apenas_regras;;;;não;sim
+C-114;6;sem_perigo_aprendido;;;;não;sim
+C-114;7;sem_escopo;sec-assistencia-assistencia-avo;canal-assistencia-assistencia-avo-174;ferr-plano-assistencia;não;não
+C-114;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-114;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-114;10;linha_de_base_tfidf;canal-educacao-educacao-filhos-110;sec-saude-saude-apoio-emocional;ferr-cras-bairro;não;não
+C-115;1;completo;classe-assistencia-scfv;sec-assistencia-secao-3;man-scfv-jd-brasilia;não;não
+C-115;2;sem_regras_lexicais_necessidade;classe-assistencia-scfv;sec-assistencia-secao-3;man-scfv-jd-brasilia;não;não
+C-115;3;sem_ngramas_letras;;;;não;sim
+C-115;4;sem_lsa;;;;não;sim
+C-115;5;apenas_regras;;;;não;sim
+C-115;6;sem_perigo_aprendido;classe-assistencia-scfv;sec-assistencia-secao-3;man-scfv-jd-brasilia;não;não
+C-115;7;sem_escopo;classe-assistencia-scfv;sec-assistencia-secao-3;man-scfv-jd-brasilia;não;não
+C-115;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-115;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-115;10;linha_de_base_tfidf;sec-assistencia-assistencia-avo;canal-assistencia-assistencia-avo-175;man-secretaria-mulher;não;não
+C-116;1;completo;;;;não;sim
+C-116;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-116;3;sem_ngramas_letras;;;;não;sim
+C-116;4;sem_lsa;;;;não;sim
+C-116;5;apenas_regras;;;;não;sim
+C-116;6;sem_perigo_aprendido;;;;não;sim
+C-116;7;sem_escopo;;;;não;sim
+C-116;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-116;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-116;10;linha_de_base_tfidf;area-direitos;area-transporte;canal-saude-saude-apoio-emocional-133;não;não
+C-117;1;completo;;;;não;sim
+C-117;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-117;3;sem_ngramas_letras;;;;não;sim
+C-117;4;sem_lsa;;;;não;sim
+C-117;5;apenas_regras;;;;não;sim
+C-117;6;sem_perigo_aprendido;;;;não;sim
+C-117;7;sem_escopo;;;;não;sim
+C-117;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-117;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-117;10;linha_de_base_tfidf;sec-assistencia-assistencia-cadunico;canal-assistencia-assistencia-avo-172;man-pat;não;não
+C-118;1;completo;canal-saude-saude-apoio-emocional-132;man-banco-do-povo;sec-saude-saude-apoio-emocional;não;não
+C-118;2;sem_regras_lexicais_necessidade;canal-saude-saude-apoio-emocional-132;man-banco-do-povo;sec-saude-saude-apoio-emocional;não;não
+C-118;3;sem_ngramas_letras;canal-saude-saude-apoio-emocional-132;man-banco-do-povo;sec-saude-saude-apoio-emocional;não;não
+C-118;4;sem_lsa;;;;não;sim
+C-118;5;apenas_regras;man-banco-do-povo;canal-saude-saude-apoio-emocional-132;sec-saude-saude-apoio-emocional;não;não
+C-118;6;sem_perigo_aprendido;canal-saude-saude-apoio-emocional-132;man-banco-do-povo;sec-saude-saude-apoio-emocional;não;não
+C-118;7;sem_escopo;canal-saude-saude-apoio-emocional-132;man-banco-do-povo;sec-saude-saude-apoio-emocional;não;não
+C-118;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-118;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-118;10;linha_de_base_tfidf;man-banco-do-povo;sec-saude-saude-apoio-emocional;canal-saude-saude-apoio-emocional-132;não;não
+C-119;1;completo;;;;não;sim
+C-119;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-119;3;sem_ngramas_letras;;;;não;sim
+C-119;4;sem_lsa;;;;não;sim
+C-119;5;apenas_regras;;;;não;sim
+C-119;6;sem_perigo_aprendido;;;;não;sim
+C-119;7;sem_escopo;;;;não;sim
+C-119;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-119;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-119;10;linha_de_base_tfidf;canal-saude-saude-apoio-emocional-133;canal-moradia-secao-3-163;canal-assistencia-assistencia-avo-173;não;não
+C-120;1;completo;man-banco-do-povo;;;não;não
+C-120;2;sem_regras_lexicais_necessidade;man-banco-do-povo;;;não;não
+C-120;3;sem_ngramas_letras;man-banco-do-povo;;;não;não
+C-120;4;sem_lsa;;;;não;sim
+C-120;5;apenas_regras;man-banco-do-povo;;;não;não
+C-120;6;sem_perigo_aprendido;man-banco-do-povo;;;não;não
+C-120;7;sem_escopo;man-banco-do-povo;;;não;não
+C-120;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-120;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-120;10;linha_de_base_tfidf;man-banco-do-povo;sec-direitos-secao-4;canal-direitos-secao-1-144;não;não
+C-121;1;completo;;;;não;sim
+C-121;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-121;3;sem_ngramas_letras;;;;não;sim
+C-121;4;sem_lsa;;;;não;sim
+C-121;5;apenas_regras;;;;não;sim
+C-121;6;sem_perigo_aprendido;;;;não;sim
+C-121;7;sem_escopo;;;;não;sim
+C-121;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-121;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-121;10;linha_de_base_tfidf;ferr-cras-bairro;sec-educacao-educacao-formacao-longa;sec-trabalho-secao-1;não;não
+C-122;1;completo;;;;não;sim
+C-122;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-122;3;sem_ngramas_letras;;;;não;sim
+C-122;4;sem_lsa;;;;não;sim
+C-122;5;apenas_regras;;;;não;sim
+C-122;6;sem_perigo_aprendido;;;;não;sim
+C-122;7;sem_escopo;;;;não;sim
+C-122;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-122;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-122;10;linha_de_base_tfidf;man-saude-disp-medicamentos;sec-assistencia-assistencia-cadunico;man-saude-farmacia-central;não;não
+C-123;1;completo;;;;não;sim
+C-123;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-123;3;sem_ngramas_letras;;;;não;sim
+C-123;4;sem_lsa;;;;não;sim
+C-123;5;apenas_regras;;;;não;sim
+C-123;6;sem_perigo_aprendido;;;;não;sim
+C-123;7;sem_escopo;man-saude-laboratorio;;;não;não
+C-123;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-123;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-123;10;linha_de_base_tfidf;ferr-cras-bairro;man-saude-laboratorio;ferr-mapa;não;não
+C-124;1;completo;;;;não;sim
+C-124;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-124;3;sem_ngramas_letras;;;;não;sim
+C-124;4;sem_lsa;;;;não;sim
+C-124;5;apenas_regras;;;;não;sim
+C-124;6;sem_perigo_aprendido;;;;não;sim
+C-124;7;sem_escopo;;;;não;sim
+C-124;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-124;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-124;10;linha_de_base_tfidf;sec-moradia-secao-3;ferr-mapa;ferr-cras-bairro;não;não
+C-125;1;completo;;;;não;sim
+C-125;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-125;3;sem_ngramas_letras;;;;não;sim
+C-125;4;sem_lsa;;;;não;sim
+C-125;5;apenas_regras;;;;não;sim
+C-125;6;sem_perigo_aprendido;;;;não;sim
+C-125;7;sem_escopo;;;;não;sim
+C-125;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-125;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-125;10;linha_de_base_tfidf;sec-educacao-educacao-formacao-longa;canal-direitos-secao-4-156;canal-saude-saude-familia-drogas-136;não;não
+C-126;1;completo;;;;não;sim
+C-126;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-126;3;sem_ngramas_letras;;;;não;sim
+C-126;4;sem_lsa;;;;não;sim
+C-126;5;apenas_regras;;;;não;sim
+C-126;6;sem_perigo_aprendido;;;;não;sim
+C-126;7;sem_escopo;;;;não;sim
+C-126;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-126;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-126;10;linha_de_base_tfidf;ferr-cras-bairro;ferr-mapa;man-banco-do-povo;não;não
+C-127;1;completo;;;;não;sim
+C-127;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-127;3;sem_ngramas_letras;;;;não;sim
+C-127;4;sem_lsa;;;;não;sim
+C-127;5;apenas_regras;;;;não;sim
+C-127;6;sem_perigo_aprendido;;;;não;sim
+C-127;7;sem_escopo;;;;não;sim
+C-127;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-127;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-127;10;linha_de_base_tfidf;canal-educacao-educacao-filhos-115;sec-assistencia-assistencia-cadunico;man-cras-terra-nova;não;não
+C-128;1;completo;;;;não;sim
+C-128;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-128;3;sem_ngramas_letras;;;;não;sim
+C-128;4;sem_lsa;;;;não;sim
+C-128;5;apenas_regras;;;;não;sim
+C-128;6;sem_perigo_aprendido;;;;não;sim
+C-128;7;sem_escopo;;;;não;sim
+C-128;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-128;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-128;10;linha_de_base_tfidf;canal-educacao-educacao-filhos-119;ferr-cras-bairro;man-cras-terra-nova;não;não
+C-129;1;completo;man-defesa-civil;sec-moradia-secao-4;man-cras-panorama;não;não
+C-129;2;sem_regras_lexicais_necessidade;man-defesa-civil;sec-moradia-secao-4;man-cras-panorama;não;não
+C-129;3;sem_ngramas_letras;man-defesa-civil;sec-moradia-secao-4;man-habitacao-secretaria;não;não
+C-129;4;sem_lsa;;;;não;sim
+C-129;5;apenas_regras;;;;não;sim
+C-129;6;sem_perigo_aprendido;man-defesa-civil;sec-moradia-secao-4;man-cras-panorama;não;não
+C-129;7;sem_escopo;man-defesa-civil;sec-moradia-secao-4;man-cras-panorama;não;não
+C-129;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-129;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-129;10;linha_de_base_tfidf;man-cras-panorama;man-defesa-civil;sec-assistencia-assistencia-cadunico;não;não
+C-130;1;completo;;;;não;sim
+C-130;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-130;3;sem_ngramas_letras;;;;não;sim
+C-130;4;sem_lsa;;;;não;sim
+C-130;5;apenas_regras;;;;não;sim
+C-130;6;sem_perigo_aprendido;;;;não;sim
+C-130;7;sem_escopo;;;;não;sim
+C-130;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-130;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-130;10;linha_de_base_tfidf;man-sesi-eja;canal-educacao-educacao-filhos-119;canal-saude-saude-familia-drogas-136;não;não
+C-131;1;completo;;;;não;sim
+C-131;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-131;3;sem_ngramas_letras;;;;não;sim
+C-131;4;sem_lsa;;;;não;sim
+C-131;5;apenas_regras;;;;não;sim
+C-131;6;sem_perigo_aprendido;;;;não;sim
+C-131;7;sem_escopo;;;;não;sim
+C-131;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-131;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-131;10;linha_de_base_tfidf;ferr-cras-bairro;canal-educacao-educacao-filhos-110;canal-saude-saude-mulher-129;não;não
+C-132;1;completo;;;;não;sim
+C-132;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-132;3;sem_ngramas_letras;;;;não;sim
+C-132;4;sem_lsa;;;;não;sim
+C-132;5;apenas_regras;;;;não;sim
+C-132;6;sem_perigo_aprendido;;;;não;sim
+C-132;7;sem_escopo;;;;não;sim
+C-132;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-132;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-132;10;linha_de_base_tfidf;canal-saude-saude-apoio-emocional-133;canal-educacao-educacao-filhos-115;ferr-cras-bairro;não;não
+C-133;1;completo;;;;não;sim
+C-133;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-133;3;sem_ngramas_letras;;;;não;sim
+C-133;4;sem_lsa;;;;não;sim
+C-133;5;apenas_regras;;;;não;sim
+C-133;6;sem_perigo_aprendido;;;;não;sim
+C-133;7;sem_escopo;;;;não;sim
+C-133;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-133;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-133;10;linha_de_base_tfidf;canal-saude-saude-mulher-130;ferr-plano-educacao;canal-direitos-secao-1-145;não;não
+C-134;1;completo;;;;não;sim
+C-134;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-134;3;sem_ngramas_letras;;;;não;sim
+C-134;4;sem_lsa;;;;não;sim
+C-134;5;apenas_regras;;;;não;sim
+C-134;6;sem_perigo_aprendido;;;;não;sim
+C-134;7;sem_escopo;;;;não;sim
+C-134;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-134;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-134;10;linha_de_base_tfidf;ferr-cras-bairro;canal-educacao-educacao-filhos-110;ferr-mapa;não;não
+C-135;1;completo;man-procon-centro;man-procon-cervezao;;não;não
+C-135;2;sem_regras_lexicais_necessidade;man-procon-centro;man-procon-cervezao;;não;não
+C-135;3;sem_ngramas_letras;man-procon-cervezao;man-procon-centro;;não;não
+C-135;4;sem_lsa;;;;não;sim
+C-135;5;apenas_regras;man-procon-centro;man-procon-cervezao;;não;não
+C-135;6;sem_perigo_aprendido;man-procon-centro;man-procon-cervezao;;não;não
+C-135;7;sem_escopo;man-procon-centro;man-procon-cervezao;;não;não
+C-135;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-135;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-135;10;linha_de_base_tfidf;classe-assistencia-cras;canal-educacao-educacao-filhos-115;man-cras-bom-sucesso;não;não
+C-136;1;completo;;;;não;sim
+C-136;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-136;3;sem_ngramas_letras;;;;não;sim
+C-136;4;sem_lsa;;;;não;sim
+C-136;5;apenas_regras;;;;não;sim
+C-136;6;sem_perigo_aprendido;;;;não;sim
+C-136;7;sem_escopo;;;;não;sim
+C-136;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-136;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-136;10;linha_de_base_tfidf;canal-educacao-educacao-filhos-119;ferr-cras-bairro;ferr-mapa;não;não
+C-137;1;completo;;;;não;sim
+C-137;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-137;3;sem_ngramas_letras;;;;não;sim
+C-137;4;sem_lsa;;;;não;sim
+C-137;5;apenas_regras;;;;não;sim
+C-137;6;sem_perigo_aprendido;;;;não;sim
+C-137;7;sem_escopo;;;;não;sim
+C-137;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-137;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-137;10;linha_de_base_tfidf;canal-moradia-secao-2-161;man-saude-usf-terra-nova;sec-direitos-secao-1;não;não
+C-138;1;completo;;;;não;sim
+C-138;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-138;3;sem_ngramas_letras;;;;não;sim
+C-138;4;sem_lsa;;;;não;sim
+C-138;5;apenas_regras;;;;não;sim
+C-138;6;sem_perigo_aprendido;;;;não;sim
+C-138;7;sem_escopo;;;;não;sim
+C-138;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-138;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-138;10;linha_de_base_tfidf;man-saude-usf-terra-nova;ferr-cras-bairro;man-cras-terra-nova;não;não
+C-139;1;completo;;;;não;sim
+C-139;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-139;3;sem_ngramas_letras;;;;não;sim
+C-139;4;sem_lsa;;;;não;sim
+C-139;5;apenas_regras;;;;não;sim
+C-139;6;sem_perigo_aprendido;;;;não;sim
+C-139;7;sem_escopo;;;;não;sim
+C-139;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-139;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-139;10;linha_de_base_tfidf;ferr-curriculo;area-educacao;sec-saude-saude-mulher;não;não
+C-140;1;completo;man-procon-centro;man-procon-cervezao;;não;não
+C-140;2;sem_regras_lexicais_necessidade;man-procon-centro;man-procon-cervezao;;não;não
+C-140;3;sem_ngramas_letras;;;;não;sim
+C-140;4;sem_lsa;;;;não;sim
+C-140;5;apenas_regras;man-procon-centro;man-procon-cervezao;canal-educacao-educacao-filhos-121;não;não
+C-140;6;sem_perigo_aprendido;man-procon-centro;man-procon-cervezao;;não;não
+C-140;7;sem_escopo;man-procon-centro;man-procon-cervezao;;não;não
+C-140;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-140;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-140;10;linha_de_base_tfidf;man-procon-centro;man-procon-cervezao;ferr-mapa;não;não
+C-141;1;completo;;;;não;sim
+C-141;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-141;3;sem_ngramas_letras;;;;não;sim
+C-141;4;sem_lsa;;;;não;sim
+C-141;5;apenas_regras;;;;não;sim
+C-141;6;sem_perigo_aprendido;;;;não;sim
+C-141;7;sem_escopo;;;;não;sim
+C-141;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-141;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-141;10;linha_de_base_tfidf;ferr-cras-bairro;ferr-mapa;canal-educacao-educacao-filhos-110;não;não
+C-142;1;completo;;;;não;sim
+C-142;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-142;3;sem_ngramas_letras;;;;não;sim
+C-142;4;sem_lsa;;;;não;sim
+C-142;5;apenas_regras;;;;não;sim
+C-142;6;sem_perigo_aprendido;;;;não;sim
+C-142;7;sem_escopo;;;;não;sim
+C-142;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-142;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-142;10;linha_de_base_tfidf;sec-assistencia-assistencia-cadunico;man-conecta;canal-moradia-secao-2-161;não;não
+C-143;1;completo;;;;não;sim
+C-143;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-143;3;sem_ngramas_letras;;;;não;sim
+C-143;4;sem_lsa;;;;não;sim
+C-143;5;apenas_regras;;;;não;sim
+C-143;6;sem_perigo_aprendido;;;;não;sim
+C-143;7;sem_escopo;canal-saude-saude-familia-drogas-135;canal-educacao-educacao-filhos-115;;não;não
+C-143;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-143;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-143;10;linha_de_base_tfidf;ferr-cras-bairro;ferr-mapa;canal-educacao-educacao-filhos-110;não;não
+C-144;1;completo;;;;não;sim
+C-144;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-144;3;sem_ngramas_letras;;;;não;sim
+C-144;4;sem_lsa;;;;não;sim
+C-144;5;apenas_regras;;;;não;sim
+C-144;6;sem_perigo_aprendido;;;;não;sim
+C-144;7;sem_escopo;;;;não;sim
+C-144;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-144;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-144;10;linha_de_base_tfidf;canal-educacao-educacao-filhos-115;sec-assistencia-assistencia-cadunico;canal-educacao-educacao-filhos-112;não;não
+C-145;1;completo;;;;não;sim
+C-145;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-145;3;sem_ngramas_letras;;;;não;sim
+C-145;4;sem_lsa;;;;não;sim
+C-145;5;apenas_regras;;;;não;sim
+C-145;6;sem_perigo_aprendido;;;;não;sim
+C-145;7;sem_escopo;canal-educacao-educacao-filhos-114;sec-educacao-educacao-formacao-longa;sec-trabalho-trabalho-formacao-longa;não;não
+C-145;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-145;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-145;10;linha_de_base_tfidf;canal-educacao-educacao-filhos-114;ferr-cras-bairro;sec-educacao-educacao-escolas;não;não
+C-146;1;completo;;;;não;sim
+C-146;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-146;3;sem_ngramas_letras;;;;não;sim
+C-146;4;sem_lsa;;;;não;sim
+C-146;5;apenas_regras;;;;não;sim
+C-146;6;sem_perigo_aprendido;;;;não;sim
+C-146;7;sem_escopo;;;;não;sim
+C-146;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-146;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-146;10;linha_de_base_tfidf;man-defesa-civil;canal-saude-saude-apoio-emocional-132;canal-educacao-educacao-filhos-112;não;não
+C-147;1;completo;;;;não;sim
+C-147;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-147;3;sem_ngramas_letras;;;;não;sim
+C-147;4;sem_lsa;;;;não;sim
+C-147;5;apenas_regras;;;;não;sim
+C-147;6;sem_perigo_aprendido;;;;não;sim
+C-147;7;sem_escopo;;;;não;sim
+C-147;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-147;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-147;10;linha_de_base_tfidf;man-saude-farmacia-central;man-saude-disp-medicamentos;ferr-cras-bairro;não;não
+C-148;1;completo;;;;não;sim
+C-148;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-148;3;sem_ngramas_letras;;;;não;sim
+C-148;4;sem_lsa;;;;não;sim
+C-148;5;apenas_regras;;;;não;sim
+C-148;6;sem_perigo_aprendido;;;;não;sim
+C-148;7;sem_escopo;;;;não;sim
+C-148;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-148;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-148;10;linha_de_base_tfidf;canal-educacao-educacao-filhos-114;canal-direitos-secao-1-145;canal-assistencia-assistencia-avo-175;não;não
+C-149;1;completo;;;;não;sim
+C-149;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-149;3;sem_ngramas_letras;;;;não;sim
+C-149;4;sem_lsa;;;;não;sim
+C-149;5;apenas_regras;;;;não;sim
+C-149;6;sem_perigo_aprendido;;;;não;sim
+C-149;7;sem_escopo;canal-moradia-secao-2-161;ferr-mapa;canal-saude-saude-mulher-128;não;não
+C-149;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-149;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-149;10;linha_de_base_tfidf;ferr-mapa;canal-moradia-secao-2-161;canal-saude-saude-mulher-130;não;não
+C-150;1;completo;;;;não;sim
+C-150;2;sem_regras_lexicais_necessidade;;;;não;sim
+C-150;3;sem_ngramas_letras;;;;não;sim
+C-150;4;sem_lsa;;;;não;sim
+C-150;5;apenas_regras;;;;não;sim
+C-150;6;sem_perigo_aprendido;;;;não;sim
+C-150;7;sem_escopo;;;;não;sim
+C-150;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-150;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-150;10;linha_de_base_tfidf;canal-direitos-secao-4-156;man-sestsenat;canal-moradia-secao-3-163;não;não
+C-151;1;completo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-151;2;sem_regras_lexicais_necessidade;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-151;3;sem_ngramas_letras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-151;4;sem_lsa;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-151;5;apenas_regras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-151;6;sem_perigo_aprendido;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-151;7;sem_escopo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-151;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-151;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-151;10;linha_de_base_tfidf;classe-assistencia-cras;ferr-plano-assistencia;man-cras-bom-sucesso;não;não
+C-152;1;completo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-152;2;sem_regras_lexicais_necessidade;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-152;3;sem_ngramas_letras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-152;4;sem_lsa;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-152;5;apenas_regras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-152;6;sem_perigo_aprendido;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-152;7;sem_escopo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-152;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-152;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-152;10;linha_de_base_tfidf;canal-educacao-educacao-filhos-110;sec-direitos-secao-2;sec-educacao-educacao-filhos;não;não
+C-153;1;completo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-153;2;sem_regras_lexicais_necessidade;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-153;3;sem_ngramas_letras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-153;4;sem_lsa;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-153;5;apenas_regras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-153;6;sem_perigo_aprendido;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-153;7;sem_escopo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-153;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-153;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-153;10;linha_de_base_tfidf;man-patrulha-maria-da-penha;sec-direitos-secao-2;man-ddm-rio-claro;não;não
+C-154;1;completo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-154;2;sem_regras_lexicais_necessidade;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-154;3;sem_ngramas_letras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-154;4;sem_lsa;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-154;5;apenas_regras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-154;6;sem_perigo_aprendido;sec-direitos-secao-2;classe-assistencia-cras;man-cras-terra-nova;não;não
+C-154;7;sem_escopo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-154;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-154;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-154;10;linha_de_base_tfidf;classe-assistencia-cras;sec-direitos-secao-2;man-cras-bom-sucesso;não;não
+C-155;1;completo;ferr-central-justica;classe-assistencia-cras;sec-assistencia-secao-1;não;não
+C-155;2;sem_regras_lexicais_necessidade;ferr-central-justica;classe-assistencia-cras;sec-assistencia-secao-1;não;não
+C-155;3;sem_ngramas_letras;ferr-central-justica;classe-assistencia-cras;sec-assistencia-secao-1;não;não
+C-155;4;sem_lsa;ferr-central-justica;;;não;não
+C-155;5;apenas_regras;ferr-central-justica;classe-assistencia-cras;sec-assistencia-secao-1;não;não
+C-155;6;sem_perigo_aprendido;ferr-central-justica;classe-assistencia-cras;sec-assistencia-secao-1;não;não
+C-155;7;sem_escopo;ferr-central-justica;classe-assistencia-cras;sec-assistencia-secao-1;não;não
+C-155;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-155;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-155;10;linha_de_base_tfidf;sec-assistencia-secao-1;sec-direitos-secao-1;canal-assistencia-assistencia-avo-172;não;não
+C-156;1;completo;man-saude-farmacia-central;man-saude-disp-medicamentos;sec-saude-saude-unidades;sim;não
+C-156;2;sem_regras_lexicais_necessidade;man-saude-farmacia-central;man-saude-disp-medicamentos;sec-saude-saude-unidades;sim;não
+C-156;3;sem_ngramas_letras;man-saude-farmacia-central;man-saude-disp-medicamentos;sec-saude-saude-unidades;sim;não
+C-156;4;sem_lsa;;;;sim;sim
+C-156;5;apenas_regras;man-saude-farmacia-central;man-saude-disp-medicamentos;sec-saude-saude-unidades;sim;não
+C-156;6;sem_perigo_aprendido;man-saude-farmacia-central;man-saude-disp-medicamentos;sec-saude-saude-unidades;não;não
+C-156;7;sem_escopo;man-saude-farmacia-central;man-saude-disp-medicamentos;sec-saude-saude-unidades;sim;não
+C-156;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-156;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-156;10;linha_de_base_tfidf;sec-saude-saude-unidades;man-saude-disp-medicamentos;man-saude-farmacia-central;não;não
+C-157;1;completo;man-conselho-tutelar-norte;man-conselho-tutelar-sul;man-creas;sim;não
+C-157;2;sem_regras_lexicais_necessidade;man-conselho-tutelar-norte;man-conselho-tutelar-sul;man-creas;sim;não
+C-157;3;sem_ngramas_letras;man-conselho-tutelar-norte;man-conselho-tutelar-sul;man-creas;sim;não
+C-157;4;sem_lsa;man-conselho-tutelar-norte;man-conselho-tutelar-sul;man-creas;sim;não
+C-157;5;apenas_regras;man-conselho-tutelar-norte;man-conselho-tutelar-sul;man-creas;sim;não
+C-157;6;sem_perigo_aprendido;man-conselho-tutelar-norte;man-conselho-tutelar-sul;man-creas;sim;não
+C-157;7;sem_escopo;man-conselho-tutelar-norte;man-conselho-tutelar-sul;man-creas;sim;não
+C-157;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-157;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-157;10;linha_de_base_tfidf;ferr-plano-trabalho;sec-direitos-secao-2;man-conecta;não;não
+C-158;1;completo;man-saude-caps-iii;man-saude-upa-estadio;man-ddm-rio-claro;sim;não
+C-158;2;sem_regras_lexicais_necessidade;man-saude-caps-iii;man-saude-upa-estadio;man-ddm-rio-claro;sim;não
+C-158;3;sem_ngramas_letras;man-saude-caps-iii;man-saude-upa-estadio;man-ddm-rio-claro;sim;não
+C-158;4;sem_lsa;man-saude-caps-iii;man-saude-upa-estadio;man-ddm-rio-claro;sim;não
+C-158;5;apenas_regras;man-saude-caps-iii;man-saude-upa-estadio;man-ddm-rio-claro;sim;não
+C-158;6;sem_perigo_aprendido;man-saude-caps-iii;man-saude-upa-estadio;man-ddm-rio-claro;sim;não
+C-158;7;sem_escopo;man-saude-caps-iii;man-saude-upa-estadio;man-ddm-rio-claro;sim;não
+C-158;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-158;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-158;10;linha_de_base_tfidf;sec-assistencia-assistencia-cadunico;man-pat;sec-direitos-secao-2;não;não
+C-159;1;completo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-159;2;sem_regras_lexicais_necessidade;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-159;3;sem_ngramas_letras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-159;4;sem_lsa;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-159;5;apenas_regras;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-159;6;sem_perigo_aprendido;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-159;7;sem_escopo;man-ddm-rio-claro;man-patrulha-maria-da-penha;man-secretaria-mulher;sim;não
+C-159;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-159;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-159;10;linha_de_base_tfidf;classe-assistencia-cras;man-cras-bom-sucesso;sec-assistencia-assistencia-cadunico;não;não
+C-160;1;completo;classe-assistencia-cras;sec-moradia-secao-5;sec-moradia-secao-3;sim;não
+C-160;2;sem_regras_lexicais_necessidade;classe-assistencia-cras;sec-moradia-secao-5;man-cras-terra-nova;sim;não
+C-160;3;sem_ngramas_letras;;;;sim;sim
+C-160;4;sem_lsa;;;;sim;sim
+C-160;5;apenas_regras;sec-moradia-secao-5;sec-moradia-secao-3;man-habitacao-secretaria;sim;não
+C-160;6;sem_perigo_aprendido;classe-assistencia-cras;sec-moradia-secao-5;sec-moradia-secao-3;não;não
+C-160;7;sem_escopo;classe-assistencia-cras;sec-moradia-secao-5;sec-moradia-secao-3;sim;não
+C-160;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-160;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+C-160;10;linha_de_base_tfidf;ferr-mapa;man-cras-mae-preta;canal-assistencia-assistencia-avo-172;não;não
+D-001;1;completo;sec-educacao-educacao-filhos;man-secretaria-educacao;sec-educacao-educacao-escolas;não;não
+D-001;2;sem_regras_lexicais_necessidade;sec-educacao-educacao-filhos;man-secretaria-educacao;sec-educacao-educacao-escolas;não;não
+D-001;3;sem_ngramas_letras;sec-educacao-educacao-filhos;man-secretaria-educacao;sec-educacao-educacao-escolas;não;não
+D-001;4;sem_lsa;sec-educacao-educacao-filhos;man-secretaria-educacao;sec-educacao-educacao-escolas;não;não
+D-001;5;apenas_regras;sec-educacao-educacao-filhos;man-secretaria-educacao;sec-educacao-educacao-escolas;não;não
+D-001;6;sem_perigo_aprendido;sec-educacao-educacao-filhos;man-secretaria-educacao;sec-educacao-educacao-escolas;não;não
+D-001;7;sem_escopo;sec-educacao-educacao-filhos;man-secretaria-educacao;sec-educacao-educacao-escolas;não;não
+D-001;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-001;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-001;10;linha_de_base_tfidf;sec-educacao-educacao-filhos;ferr-plano-educacao;canal-educacao-educacao-filhos-110;não;não
+D-002;1;completo;sec-educacao-educacao-filhos;canal-educacao-educacao-filhos-119;area-educacao;não;não
+D-002;2;sem_regras_lexicais_necessidade;sec-educacao-educacao-filhos;canal-educacao-educacao-filhos-119;area-educacao;não;não
+D-002;3;sem_ngramas_letras;sec-educacao-educacao-filhos;canal-educacao-educacao-filhos-119;area-educacao;não;não
+D-002;4;sem_lsa;;;;não;sim
+D-002;5;apenas_regras;sec-educacao-educacao-filhos;canal-educacao-educacao-filhos-119;area-educacao;não;não
+D-002;6;sem_perigo_aprendido;sec-educacao-educacao-filhos;canal-educacao-educacao-filhos-119;area-educacao;não;não
+D-002;7;sem_escopo;sec-educacao-educacao-filhos;canal-educacao-educacao-filhos-119;area-educacao;não;não
+D-002;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-002;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-002;10;linha_de_base_tfidf;canal-educacao-educacao-filhos-115;canal-educacao-educacao-filhos-119;sec-educacao-educacao-filhos;não;não
+D-003;1;completo;man-sesi-eja;sec-educacao-educacao-voce;man-sesi-rio-claro;não;não
+D-003;2;sem_regras_lexicais_necessidade;man-sesi-eja;sec-educacao-educacao-voce;man-sesi-rio-claro;não;não
+D-003;3;sem_ngramas_letras;man-sesi-eja;sec-educacao-educacao-voce;man-sesi-rio-claro;não;não
+D-003;4;sem_lsa;sec-educacao-educacao-voce;man-sesi-eja;man-sesi-rio-claro;não;não
+D-003;5;apenas_regras;man-sesi-eja;sec-educacao-educacao-voce;man-sesi-rio-claro;não;não
+D-003;6;sem_perigo_aprendido;man-sesi-eja;sec-educacao-educacao-voce;man-sesi-rio-claro;não;não
+D-003;7;sem_escopo;man-sesi-eja;sec-educacao-educacao-voce;man-sesi-rio-claro;não;não
+D-003;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-003;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-003;10;linha_de_base_tfidf;sec-educacao-educacao-voce;man-sesi-eja;ferr-plano-educacao;não;não
+D-004;1;completo;man-etec-cps;man-etec-rio-claro;man-senai-rio-claro;não;não
+D-004;2;sem_regras_lexicais_necessidade;man-etec-cps;man-etec-rio-claro;man-senai-rio-claro;não;não
+D-004;3;sem_ngramas_letras;man-etec-cps;man-etec-rio-claro;man-senai-rio-claro;não;não
+D-004;4;sem_lsa;man-etec-cps;man-etec-rio-claro;man-senai-rio-claro;não;não
+D-004;5;apenas_regras;man-etec-cps;man-etec-rio-claro;man-senai-rio-claro;não;não
+D-004;6;sem_perigo_aprendido;man-etec-cps;man-etec-rio-claro;man-senai-rio-claro;não;não
+D-004;7;sem_escopo;man-etec-cps;man-etec-rio-claro;man-senai-rio-claro;não;não
+D-004;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-004;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-004;10;linha_de_base_tfidf;man-etec-cps;man-etec-rio-claro;ferr-mapa;não;não
+D-005;1;completo;sec-educacao-educacao-voce;man-sesi-eja;man-sesi-rio-claro;não;não
+D-005;2;sem_regras_lexicais_necessidade;sec-educacao-educacao-voce;man-sesi-eja;man-sesi-rio-claro;não;não
+D-005;3;sem_ngramas_letras;sec-educacao-educacao-voce;man-sesi-eja;man-metamorfose;não;não
+D-005;4;sem_lsa;sec-educacao-educacao-voce;man-sesi-eja;man-metamorfose;não;não
+D-005;5;apenas_regras;sec-educacao-educacao-voce;man-sesi-eja;area-educacao;não;não
+D-005;6;sem_perigo_aprendido;sec-educacao-educacao-voce;man-sesi-eja;man-sesi-rio-claro;não;não
+D-005;7;sem_escopo;sec-educacao-educacao-voce;man-sesi-eja;man-sesi-rio-claro;não;não
+D-005;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-005;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-005;10;linha_de_base_tfidf;man-sesi-eja;sec-educacao-educacao-voce;area-educacao;não;não
+D-006;1;completo;canal-educacao-educacao-filhos-119;canal-educacao-educacao-filhos-115;sec-educacao-educacao-escolas;não;não
+D-006;2;sem_regras_lexicais_necessidade;canal-educacao-educacao-filhos-119;canal-educacao-educacao-filhos-115;sec-educacao-educacao-escolas;não;não
+D-006;3;sem_ngramas_letras;;;;não;sim
+D-006;4;sem_lsa;;;;não;sim
+D-006;5;apenas_regras;;;;não;sim
+D-006;6;sem_perigo_aprendido;canal-educacao-educacao-filhos-119;canal-educacao-educacao-filhos-115;sec-educacao-educacao-escolas;não;não
+D-006;7;sem_escopo;canal-educacao-educacao-filhos-119;canal-educacao-educacao-filhos-115;sec-educacao-educacao-escolas;não;não
+D-006;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-006;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-006;10;linha_de_base_tfidf;classe-assistencia-cras;man-cras-bom-sucesso;man-cras-terra-nova;não;não
+D-007;1;completo;sec-educacao-educacao-filhos;sec-educacao-secao-2;canal-educacao-educacao-filhos-115;não;não
+D-007;2;sem_regras_lexicais_necessidade;sec-educacao-educacao-filhos;sec-educacao-secao-2;canal-educacao-educacao-filhos-115;não;não
+D-007;3;sem_ngramas_letras;sec-educacao-educacao-filhos;sec-educacao-secao-2;canal-educacao-educacao-filhos-115;não;não
+D-007;4;sem_lsa;sec-educacao-educacao-filhos;sec-educacao-secao-2;canal-educacao-educacao-filhos-115;não;não
+D-007;5;apenas_regras;sec-educacao-educacao-filhos;sec-educacao-secao-2;canal-educacao-educacao-filhos-115;não;não
+D-007;6;sem_perigo_aprendido;sec-educacao-educacao-filhos;sec-educacao-secao-2;canal-educacao-educacao-filhos-115;não;não
+D-007;7;sem_escopo;sec-educacao-educacao-filhos;sec-educacao-secao-2;canal-educacao-educacao-filhos-115;não;não
+D-007;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-007;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-007;10;linha_de_base_tfidf;canal-educacao-educacao-filhos-119;sec-educacao-educacao-filhos;canal-educacao-educacao-filhos-113;não;não
+D-008;1;completo;sec-educacao-educacao-voce;man-fatec-esg;man-fatec-ia;não;não
+D-008;2;sem_regras_lexicais_necessidade;sec-educacao-educacao-voce;man-fatec-esg;man-fatec-ia;não;não
+D-008;3;sem_ngramas_letras;sec-educacao-educacao-voce;man-fatec-esg;man-fatec-ia;não;não
+D-008;4;sem_lsa;;;;não;sim
+D-008;5;apenas_regras;sec-educacao-educacao-voce;man-fatec-esg;man-fatec-ia;não;não
+D-008;6;sem_perigo_aprendido;sec-educacao-educacao-voce;man-fatec-esg;man-fatec-ia;não;não
+D-008;7;sem_escopo;sec-educacao-educacao-voce;man-fatec-esg;man-fatec-ia;não;não
+D-008;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-008;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-008;10;linha_de_base_tfidf;ferr-plano-assistencia;ferr-plano-educacao;ferr-plano-trabalho;não;não
+D-009;1;completo;man-sesi-eja;sec-educacao-educacao-voce;ferr-plano-educacao;não;não
+D-009;2;sem_regras_lexicais_necessidade;man-sesi-eja;ferr-plano-educacao;sec-educacao-educacao-voce;não;não
+D-009;3;sem_ngramas_letras;man-sesi-eja;sec-educacao-educacao-voce;man-sesi-rio-claro;não;não
+D-009;4;sem_lsa;;;;não;sim
+D-009;5;apenas_regras;man-sesi-eja;sec-educacao-educacao-voce;ferr-plano-educacao;não;não
+D-009;6;sem_perigo_aprendido;man-sesi-eja;sec-educacao-educacao-voce;ferr-plano-educacao;não;não
+D-009;7;sem_escopo;man-sesi-eja;sec-educacao-educacao-voce;ferr-plano-educacao;não;não
+D-009;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-009;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-009;10;linha_de_base_tfidf;classe-assistencia-cras;canal-direitos-secao-1-144;canal-direitos-secao-1-145;não;não
+D-010;1;completo;ferr-perto-cep;sec-educacao-educacao-escolas;sec-educacao-educacao-filhos;não;não
+D-010;2;sem_regras_lexicais_necessidade;ferr-perto-cep;sec-educacao-educacao-escolas;sec-educacao-educacao-filhos;não;não
+D-010;3;sem_ngramas_letras;ferr-perto-cep;sec-educacao-educacao-filhos;sec-educacao-educacao-escolas;não;não
+D-010;4;sem_lsa;ferr-perto-cep;sec-educacao-educacao-escolas;sec-educacao-educacao-filhos;não;não
+D-010;5;apenas_regras;ferr-perto-cep;sec-educacao-educacao-escolas;sec-educacao-educacao-filhos;não;não
+D-010;6;sem_perigo_aprendido;ferr-perto-cep;sec-educacao-educacao-escolas;sec-educacao-educacao-filhos;não;não
+D-010;7;sem_escopo;ferr-perto-cep;sec-educacao-educacao-escolas;sec-educacao-educacao-filhos;não;não
+D-010;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-010;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-010;10;linha_de_base_tfidf;ferr-perto-cep;ferr-mapa;sec-educacao-educacao-escolas;não;não
+D-011;1;completo;sec-trabalho-secao-1;canal-assistencia-assistencia-avo-175;canal-assistencia-secao-2-177;não;não
+D-011;2;sem_regras_lexicais_necessidade;sec-trabalho-secao-1;canal-assistencia-assistencia-avo-175;canal-assistencia-secao-2-177;não;não
+D-011;3;sem_ngramas_letras;;;;não;sim
+D-011;4;sem_lsa;;;;não;sim
+D-011;5;apenas_regras;;;;não;sim
+D-011;6;sem_perigo_aprendido;sec-trabalho-secao-1;canal-assistencia-assistencia-avo-175;canal-assistencia-secao-2-177;não;não
+D-011;7;sem_escopo;sec-trabalho-secao-1;canal-assistencia-assistencia-avo-175;canal-assistencia-secao-2-177;não;não
+D-011;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-011;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-011;10;linha_de_base_tfidf;sec-assistencia-assistencia-cadunico;canal-assistencia-assistencia-avo-175;sec-saude-saude-apoio-emocional;não;não
+D-012;1;completo;ferr-curriculo;;;não;não
+D-012;2;sem_regras_lexicais_necessidade;ferr-curriculo;;;não;não
+D-012;3;sem_ngramas_letras;ferr-curriculo;;;não;não
+D-012;4;sem_lsa;ferr-curriculo;;;não;não
+D-012;5;apenas_regras;ferr-curriculo;;;não;não
+D-012;6;sem_perigo_aprendido;ferr-curriculo;;;não;não
+D-012;7;sem_escopo;ferr-curriculo;;;não;não
+D-012;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-012;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-012;10;linha_de_base_tfidf;ferr-curriculo;man-pat;canal-saude-saude-apoio-emocional-132;não;não
+D-013;1;completo;area-direitos;canal-assistencia-assistencia-avo-175;canal-direitos-secao-5-149;não;não
+D-013;2;sem_regras_lexicais_necessidade;area-direitos;canal-assistencia-assistencia-avo-175;canal-assistencia-secao-2-177;não;não
+D-013;3;sem_ngramas_letras;area-direitos;canal-direitos-secao-5-149;canal-assistencia-assistencia-avo-175;não;não
+D-013;4;sem_lsa;;;;não;sim
+D-013;5;apenas_regras;area-direitos;canal-assistencia-assistencia-avo-175;canal-direitos-secao-5-149;não;não
+D-013;6;sem_perigo_aprendido;area-direitos;canal-assistencia-assistencia-avo-175;canal-direitos-secao-5-149;não;não
+D-013;7;sem_escopo;area-direitos;canal-assistencia-assistencia-avo-175;canal-direitos-secao-5-149;não;não
+D-013;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-013;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-013;10;linha_de_base_tfidf;area-direitos;canal-assistencia-assistencia-avo-175;ferr-plano-assistencia;não;não
+D-014;1;completo;;;;não;sim
+D-014;2;sem_regras_lexicais_necessidade;;;;não;sim
+D-014;3;sem_ngramas_letras;;;;não;sim
+D-014;4;sem_lsa;;;;não;sim
+D-014;5;apenas_regras;;;;não;sim
+D-014;6;sem_perigo_aprendido;;;;não;sim
+D-014;7;sem_escopo;man-pat;canal-educacao-educacao-filhos-111;sec-trabalho-secao-1;não;não
+D-014;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-014;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-014;10;linha_de_base_tfidf;man-pat;sec-assistencia-assistencia-cadunico;canal-educacao-educacao-filhos-111;não;não
+D-015;1;completo;man-pat;man-conecta;man-sde;não;não
+D-015;2;sem_regras_lexicais_necessidade;man-pat;man-conecta;man-sde;não;não
+D-015;3;sem_ngramas_letras;man-pat;man-sde;man-conecta;não;não
+D-015;4;sem_lsa;man-pat;man-conecta;man-sde;não;não
+D-015;5;apenas_regras;man-pat;man-conecta;man-sde;não;não
+D-015;6;sem_perigo_aprendido;man-pat;man-conecta;man-sde;não;não
+D-015;7;sem_escopo;man-pat;man-conecta;man-sde;não;não
+D-015;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-015;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-015;10;linha_de_base_tfidf;man-pat;man-conecta;ferr-plano-trabalho;não;não
+D-016;1;completo;area-trabalho;man-pat;man-cqp-ajapi;não;não
+D-016;2;sem_regras_lexicais_necessidade;area-trabalho;man-pat;man-cqp-ajapi;não;não
+D-016;3;sem_ngramas_letras;area-trabalho;man-cqp-rio-claro;man-cqp-ajapi;não;não
+D-016;4;sem_lsa;area-trabalho;ferr-plano-trabalho;man-pat;não;não
+D-016;5;apenas_regras;area-trabalho;man-pat;man-cqp-ajapi;não;não
+D-016;6;sem_perigo_aprendido;area-trabalho;man-pat;man-cqp-ajapi;não;não
+D-016;7;sem_escopo;area-trabalho;man-pat;man-cqp-ajapi;não;não
+D-016;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-016;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-016;10;linha_de_base_tfidf;canal-assistencia-assistencia-cadunico-169;area-trabalho;sec-trabalho-secao-1;não;não
+D-017;1;completo;canal-educacao-educacao-filhos-120;canal-educacao-educacao-filhos-121;sec-educacao-educacao-filhos;não;não
+D-017;2;sem_regras_lexicais_necessidade;canal-educacao-educacao-filhos-120;canal-educacao-educacao-filhos-121;sec-educacao-educacao-filhos;não;não
+D-017;3;sem_ngramas_letras;;;;não;sim
+D-017;4;sem_lsa;;;;não;sim
+D-017;5;apenas_regras;;;;não;sim
+D-017;6;sem_perigo_aprendido;canal-educacao-educacao-filhos-120;canal-educacao-educacao-filhos-121;sec-educacao-educacao-filhos;não;não
+D-017;7;sem_escopo;canal-educacao-educacao-filhos-120;canal-educacao-educacao-filhos-121;sec-educacao-educacao-filhos;não;não
+D-017;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-017;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-017;10;linha_de_base_tfidf;canal-educacao-educacao-filhos-113;canal-educacao-educacao-filhos-111;canal-educacao-educacao-filhos-115;não;não
+D-018;1;completo;classe-assistencia-scfv;sec-assistencia-secao-3;man-scfv-jd-brasilia;não;não
+D-018;2;sem_regras_lexicais_necessidade;classe-assistencia-scfv;sec-assistencia-secao-3;man-scfv-jd-brasilia;não;não
+D-018;3;sem_ngramas_letras;;;;não;sim
+D-018;4;sem_lsa;;;;não;sim
+D-018;5;apenas_regras;;;;não;sim
+D-018;6;sem_perigo_aprendido;classe-assistencia-scfv;sec-assistencia-secao-3;man-scfv-jd-brasilia;não;não
+D-018;7;sem_escopo;classe-assistencia-scfv;sec-assistencia-secao-3;man-scfv-jd-brasilia;não;não
+D-018;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-018;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-018;10;linha_de_base_tfidf;ferr-cras-bairro;ferr-mapa;canal-saude-saude-apoio-emocional-133;não;não
+D-019;1;completo;ferr-central-justica;ferr-plano-trabalho;man-pat;não;não
+D-019;2;sem_regras_lexicais_necessidade;ferr-central-justica;ferr-plano-trabalho;man-pat;não;não
+D-019;3;sem_ngramas_letras;ferr-central-justica;ferr-plano-trabalho;man-pat;não;não
+D-019;4;sem_lsa;ferr-central-justica;ferr-plano-trabalho;;não;não
+D-019;5;apenas_regras;ferr-central-justica;ferr-plano-trabalho;man-pat;não;não
+D-019;6;sem_perigo_aprendido;ferr-central-justica;ferr-plano-trabalho;man-pat;não;não
+D-019;7;sem_escopo;ferr-central-justica;ferr-plano-trabalho;man-pat;não;não
+D-019;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-019;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-019;10;linha_de_base_tfidf;ferr-plano-trabalho;canal-educacao-educacao-filhos-115;man-habitacao-secretaria;não;não
+D-020;1;completo;ferr-curriculo;ferr-plano-trabalho;canal-direitos-secao-4-156;não;não
+D-020;2;sem_regras_lexicais_necessidade;ferr-curriculo;ferr-plano-trabalho;canal-direitos-secao-4-156;não;não
+D-020;3;sem_ngramas_letras;;;;não;sim
+D-020;4;sem_lsa;;;;não;sim
+D-020;5;apenas_regras;;;;não;sim
+D-020;6;sem_perigo_aprendido;ferr-curriculo;ferr-plano-trabalho;canal-direitos-secao-4-156;não;não
+D-020;7;sem_escopo;ferr-curriculo;ferr-plano-trabalho;canal-direitos-secao-4-156;não;não
+D-020;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-020;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-020;10;linha_de_base_tfidf;man-secretaria-educacao;sec-direitos-secao-4;canal-saude-saude-familia-drogas-139;não;não
+D-021;1;completo;sec-moradia-secao-5;sec-moradia-secao-3;;não;não
+D-021;2;sem_regras_lexicais_necessidade;sec-moradia-secao-5;sec-moradia-secao-3;;não;não
+D-021;3;sem_ngramas_letras;sec-moradia-secao-5;sec-moradia-secao-3;;não;não
+D-021;4;sem_lsa;sec-moradia-secao-5;sec-moradia-secao-3;;não;não
+D-021;5;apenas_regras;sec-moradia-secao-5;sec-moradia-secao-3;;não;não
+D-021;6;sem_perigo_aprendido;sec-moradia-secao-5;sec-moradia-secao-3;;não;não
+D-021;7;sem_escopo;sec-moradia-secao-5;sec-moradia-secao-3;;não;não
+D-021;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-021;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-021;10;linha_de_base_tfidf;sec-moradia-secao-5;man-fundacao-saude;canal-moradia-secao-1-159;não;não
+D-022;1;completo;sec-moradia-secao-5;sec-moradia-secao-3;sec-direitos-secao-2;não;não
+D-022;2;sem_regras_lexicais_necessidade;sec-moradia-secao-5;sec-direitos-secao-2;sec-moradia-secao-3;não;não
+D-022;3;sem_ngramas_letras;sec-moradia-secao-5;sec-moradia-secao-3;sec-direitos-secao-2;não;não
+D-022;4;sem_lsa;sec-moradia-secao-5;sec-moradia-secao-3;;não;não
+D-022;5;apenas_regras;sec-moradia-secao-5;sec-moradia-secao-3;;não;não
+D-022;6;sem_perigo_aprendido;sec-moradia-secao-5;sec-moradia-secao-3;sec-direitos-secao-2;não;não
+D-022;7;sem_escopo;sec-moradia-secao-5;sec-moradia-secao-3;sec-direitos-secao-2;não;não
+D-022;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-022;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-022;10;linha_de_base_tfidf;sec-moradia-secao-5;canal-assistencia-assistencia-avo-175;canal-direitos-secao-5-149;não;não
+D-023;1;completo;sec-moradia-secao-2;;;não;não
+D-023;2;sem_regras_lexicais_necessidade;sec-moradia-secao-2;;;não;não
+D-023;3;sem_ngramas_letras;sec-moradia-secao-2;canal-moradia-secao-2-161;;não;não
+D-023;4;sem_lsa;sec-moradia-secao-2;;;não;não
+D-023;5;apenas_regras;sec-moradia-secao-2;;;não;não
+D-023;6;sem_perigo_aprendido;sec-moradia-secao-2;;;não;não
+D-023;7;sem_escopo;sec-moradia-secao-2;;;não;não
+D-023;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-023;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-023;10;linha_de_base_tfidf;sec-moradia-secao-2;ferr-cras-bairro;canal-educacao-educacao-filhos-121;não;não
+D-024;1;completo;sec-moradia-secao-1;area-moradia;canal-moradia-secao-1-159;não;não
+D-024;2;sem_regras_lexicais_necessidade;sec-moradia-secao-1;area-moradia;canal-moradia-secao-1-159;não;não
+D-024;3;sem_ngramas_letras;sec-moradia-secao-1;area-moradia;canal-moradia-secao-1-159;não;não
+D-024;4;sem_lsa;sec-moradia-secao-1;;;não;não
+D-024;5;apenas_regras;sec-moradia-secao-1;area-moradia;;não;não
+D-024;6;sem_perigo_aprendido;sec-moradia-secao-1;area-moradia;canal-moradia-secao-1-159;não;não
+D-024;7;sem_escopo;sec-moradia-secao-1;area-moradia;canal-moradia-secao-1-159;não;não
+D-024;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-024;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-024;10;linha_de_base_tfidf;sec-moradia-secao-1;area-moradia;canal-moradia-secao-1-159;não;não
+D-025;1;completo;sec-moradia-secao-2;sec-moradia-secao-1;area-moradia;não;não
+D-025;2;sem_regras_lexicais_necessidade;sec-moradia-secao-2;sec-moradia-secao-1;area-moradia;não;não
+D-025;3;sem_ngramas_letras;sec-moradia-secao-2;sec-moradia-secao-1;area-moradia;não;não
+D-025;4;sem_lsa;sec-moradia-secao-2;sec-moradia-secao-1;ferr-plano-assistencia;não;não
+D-025;5;apenas_regras;sec-moradia-secao-2;sec-moradia-secao-1;area-moradia;não;não
+D-025;6;sem_perigo_aprendido;sec-moradia-secao-2;sec-moradia-secao-1;area-moradia;não;não
+D-025;7;sem_escopo;sec-moradia-secao-2;sec-moradia-secao-1;area-moradia;não;não
+D-025;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-025;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-025;10;linha_de_base_tfidf;sec-moradia-secao-2;sec-moradia-secao-1;sec-assistencia-assistencia-cadunico;não;não
+D-026;1;completo;man-saude-upa-estadio;man-saude-upa-cervezao;sec-moradia-secao-4;não;não
+D-026;2;sem_regras_lexicais_necessidade;man-saude-upa-estadio;man-saude-upa-cervezao;sec-moradia-secao-4;não;não
+D-026;3;sem_ngramas_letras;;;;não;sim
+D-026;4;sem_lsa;;;;não;sim
+D-026;5;apenas_regras;;;;não;sim
+D-026;6;sem_perigo_aprendido;man-saude-upa-estadio;man-saude-upa-cervezao;sec-moradia-secao-4;não;não
+D-026;7;sem_escopo;man-saude-upa-estadio;man-saude-upa-cervezao;sec-moradia-secao-4;não;não
+D-026;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-026;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-026;10;linha_de_base_tfidf;sec-moradia-secao-3;ferr-mapa;ferr-cras-bairro;não;não
+D-027;1;completo;sec-moradia-secao-5;sec-direitos-secao-2;sec-direitos-secao-3;não;não
+D-027;2;sem_regras_lexicais_necessidade;sec-moradia-secao-5;sec-direitos-secao-2;sec-direitos-secao-3;não;não
+D-027;3;sem_ngramas_letras;sec-moradia-secao-5;sec-direitos-secao-2;sec-direitos-secao-3;não;não
+D-027;4;sem_lsa;;;;não;sim
+D-027;5;apenas_regras;;;;não;sim
+D-027;6;sem_perigo_aprendido;sec-moradia-secao-5;sec-direitos-secao-2;sec-direitos-secao-3;não;não
+D-027;7;sem_escopo;sec-moradia-secao-5;sec-direitos-secao-2;sec-direitos-secao-3;não;não
+D-027;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-027;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-027;10;linha_de_base_tfidf;sec-direitos-secao-2;man-saude-santa-casa;canal-saude-saude-familia-drogas-135;não;não
+D-028;1;completo;man-defesa-civil;sec-moradia-secao-4;canal-saude-saude-familia-drogas-139;não;não
+D-028;2;sem_regras_lexicais_necessidade;man-defesa-civil;sec-moradia-secao-4;canal-saude-saude-familia-drogas-139;não;não
+D-028;3;sem_ngramas_letras;;;;não;sim
+D-028;4;sem_lsa;;;;não;sim
+D-028;5;apenas_regras;;;;não;sim
+D-028;6;sem_perigo_aprendido;man-defesa-civil;sec-moradia-secao-4;canal-saude-saude-familia-drogas-139;não;não
+D-028;7;sem_escopo;man-defesa-civil;sec-moradia-secao-4;canal-saude-saude-familia-drogas-139;não;não
+D-028;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-028;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-028;10;linha_de_base_tfidf;sec-moradia-secao-3;ferr-mapa;sec-moradia-secao-4;não;não
+D-029;1;completo;sec-moradia-secao-3;man-habitacao-secretaria;area-moradia;não;não
+D-029;2;sem_regras_lexicais_necessidade;sec-moradia-secao-3;man-habitacao-secretaria;area-moradia;não;não
+D-029;3;sem_ngramas_letras;sec-moradia-secao-3;man-habitacao-secretaria;area-moradia;não;não
+D-029;4;sem_lsa;sec-moradia-secao-3;man-habitacao-secretaria;area-moradia;não;não
+D-029;5;apenas_regras;sec-moradia-secao-3;man-habitacao-secretaria;area-moradia;não;não
+D-029;6;sem_perigo_aprendido;sec-moradia-secao-3;man-habitacao-secretaria;area-moradia;não;não
+D-029;7;sem_escopo;sec-moradia-secao-3;man-habitacao-secretaria;area-moradia;não;não
+D-029;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-029;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-029;10;linha_de_base_tfidf;sec-moradia-secao-3;man-habitacao-secretaria;sec-assistencia-assistencia-cadunico;não;não
+D-030;1;completo;sec-moradia-secao-3;ferr-cras-bairro;;não;não
+D-030;2;sem_regras_lexicais_necessidade;sec-moradia-secao-3;ferr-cras-bairro;;não;não
+D-030;3;sem_ngramas_letras;sec-moradia-secao-3;ferr-cras-bairro;sec-moradia-secao-5;não;não
+D-030;4;sem_lsa;sec-moradia-secao-3;ferr-cras-bairro;canal-moradia-secao-3-163;não;não
+D-030;5;apenas_regras;sec-moradia-secao-3;ferr-cras-bairro;;não;não
+D-030;6;sem_perigo_aprendido;sec-moradia-secao-3;ferr-cras-bairro;;não;não
+D-030;7;sem_escopo;sec-moradia-secao-3;ferr-cras-bairro;;não;não
+D-030;8;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-030;9;;NÃO EXECUTÁVEL;;;NÃO EXECUTÁVEL;NÃO EXECUTÁVEL
+D-030;10;linha_de_base_tfidf;sec-moradia-secao-3;ferr-cras-bairro;canal-assistencia-assistencia-avo-172;não;não
