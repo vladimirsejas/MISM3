@@ -219,3 +219,14 @@ assert.strictEqual(UI.telHref("(19) 9 9956-3042 (WhatsApp)"), "tel:+551999956304
 assert.strictEqual(UI.telHref("(19) 3533-5411 / (19) 3532-5221"), "tel:+551935335411");
 assert.strictEqual(UI.telHref("0800 771 1532"), null, "número 0800 sem DDD segue sem link, como antes");
 assert.strictEqual(UI.telHref(""), null);
+
+/* htmlPerigo: o link usa telHref, também para número composto; nível 2 (alerta completo) e nível 1 (aviso discreto) */
+const alerta2 = UI.htmlPerigo({ nivel: 2, mensagens: ["Se você está em perigo."], telefones: ["190", "153 / 0800 771 1532", "(19) 3533-9009"] });
+assert(alerta2.includes('href="tel:153"') && alerta2.includes(">153 / 0800 771 1532</a>"), "nível 2: link do 153, texto completo");
+assert(alerta2.includes('href="tel:190"') && alerta2.includes('href="tel:+551935339009"') && /role="alert"/.test(alerta2), "nível 2: 190 e número com DDD");
+const aviso1 = UI.htmlPerigo({ nivel: 1, mensagens: ["Se você está em perigo."], telefones: ["188", "192", "153 / 0800 771 1532"] });
+assert(aviso1.includes('href="tel:188"') && aviso1.includes('href="tel:192"') && aviso1.includes('href="tel:153"') && /role="note"/.test(aviso1), "nível 1: links dos números curtos");
+assert.strictEqual(UI.htmlPerigo(null), "");
+assert.strictEqual(UI.telHref("192"), "tel:192");
+assert.strictEqual(UI.telHref("190; 180"), "tel:190");
+assert.strictEqual(UI.telHref("1900"), null, "quatro dígitos não é número de emergência");

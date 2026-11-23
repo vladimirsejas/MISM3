@@ -48,7 +48,7 @@
   }
 
   function telHref(tel) {
-    var texto = String(tel || ""), tres = /^\s*(\d{3})\s*(?:\/|$)/.exec(texto); /* 100, 180, 190, 192, 153: número de 3 dígitos, sozinho ou o primeiro de uma lista */
+    var texto = String(tel || ""), tres = /^\s*(\d{3})\s*(?:[\/;,|]|$)/.exec(texto); /* 100, 180, 190, 192, 153: número de 3 dígitos, sozinho ou o primeiro de uma lista */
     if (tres) return "tel:" + tres[1];
     var m = /\(?(\d{2})\)?\s*(9?\s?\d{4})[-\s]?(\d{4})/.exec(String(tel || ""));
     return m ? "tel:+55" + m[1] + (m[2] + m[3]).replace(/\s/g, "") : null;
@@ -60,9 +60,9 @@
 
   function htmlPerigo(p) {
     if (!p) return "";
-    var tels = p.telefones.map(function (n) { return '<a class="tel-grande" href="tel:' + esc(n) + '">' + esc(n) + "</a>"; }).join(" · ");
+    var tels = p.telefones.map(function (n) { return '<a class="tel-grande" href="' + esc(telHref(n) || "tel:" + n) + '">' + esc(n) + "</a>"; }).join(" · ");
     if (p.nivel === 1) {
-      var t1 = p.telefones.map(function (n) { return '<a href="tel:' + esc(n) + '">' + esc(n) + "</a>"; }).join(" · ");
+      var t1 = p.telefones.map(function (n) { return '<a href="' + esc(telHref(n) || "tel:" + n) + '">' + esc(n) + "</a>"; }).join(" · ");
       return '<p class="status" role="note">' + p.mensagens.map(esc).join(" ") + " " + t1 + ". Você pode usar também o botão “Em perigo agora?” no alto da página.</p>";
     }
     return '<div class="status urgente" role="alert">' + p.mensagens.map(function (m) { return "<p><strong>" + esc(m) + "</strong></p>"; }).join("") +

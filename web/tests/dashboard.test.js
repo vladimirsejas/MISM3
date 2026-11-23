@@ -73,10 +73,14 @@ catalogo.servicos.forEach((s) => assert(s.fonte_url && s.verificado_em && !/\[DE
 const conselhos = catalogo.servicos.filter((s) => /Conselho Tutelar/.test(s.nome));
 assert.strictEqual(conselhos.length, 2, "devem constar o Conselho Tutelar Sul e o Norte");
 const tel = Object.fromEntries(conselhos.map((s) => [s.nome, s.telefone]));
+const porNomeConselhos = Object.fromEntries(conselhos.map((s) => [s.nome, s]));
 assert.strictEqual(tel["Conselho Tutelar – Região Sul"], "(19) 3533-5411 / (19) 3532-5221");
 assert.strictEqual(tel["Conselho Tutelar – Região Norte"], "(19) 3523-6439 / (19) 99336-6682 (plantão)", "telefone do Norte (CMDCA) e plantão listado pela Secretaria de Desenvolvimento Social");
 assert(!tel["Conselho Tutelar – Região Sul"].includes("99336") && tel["Conselho Tutelar – Região Norte"].includes("99336-6682"), "o plantão 99336-6682 é só do Conselho Norte, com fonte da Secretaria de Desenvolvimento Social");
-conselhos.forEach((s) => assert(s.estado_conferencia !== "nao_confirmado" && /CMDCA/.test(s.fonte) && s.fonte_url === (/Norte/.test(s.nome) ? "https://desenvolvimentosocial.rc.sp.gov.br/?page_id=1270" : "https://cmdcarioclaro.com.br/contato/"), "fonte do Conselho: " + s.nome));
+conselhos.forEach((s) => assert(s.estado_conferencia !== "nao_confirmado" && s.fonte_url === (/Norte/.test(s.nome) ? "https://desenvolvimentosocial.rc.sp.gov.br/?page_id=1270" : "https://cmdcarioclaro.com.br/contato/"), "fonte do Conselho: " + s.nome));
+const fonteNorte = porNomeConselhos["Conselho Tutelar – Região Norte"].fonte, fonteSul = porNomeConselhos["Conselho Tutelar – Região Sul"].fonte;
+assert(/CMDCA/.test(fonteSul), "o Sul vem da página do CMDCA");
+assert(/escala de plantão/.test(fonteNorte) && /Unidades de Atendimento/.test(fonteNorte) && !/CMDCA/.test(fonteNorte), "o Norte vem de documentos da Secretaria de Desenvolvimento Social, não do CMDCA");
 /* ---- 5b. CRAS, CREAS e unidades de convivência (Secretaria de Desenvolvimento Social, 10/10/2026) ---- */
 const cras = catalogo.servicos.filter((s) => s.subtipo === "cras");
 assert.strictEqual(cras.length, 6, "a página oficial lista seis CRAS");
