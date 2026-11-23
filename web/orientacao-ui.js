@@ -48,6 +48,8 @@
   }
 
   function telHref(tel) {
+    var texto = String(tel || ""), tres = /^\s*(\d{3})\s*(?:\/|$)/.exec(texto); /* 100, 180, 190, 192, 153: número de 3 dígitos, sozinho ou o primeiro de uma lista */
+    if (tres) return "tel:" + tres[1];
     var m = /\(?(\d{2})\)?\s*(9?\s?\d{4})[-\s]?(\d{4})/.exec(String(tel || ""));
     return m ? "tel:+55" + m[1] + (m[2] + m[3]).replace(/\s/g, "") : null;
   }

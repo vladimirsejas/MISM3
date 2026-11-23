@@ -208,3 +208,14 @@ function blocoFuncao(nome) {
 ["mostrarInicio", "mostrarArea", "mostrarVista"].forEach((nome) => {
   assert(/limparDuvida\(\)/.test(blocoFuncao(nome)), nome + " apaga o texto livre ao sair da tela atual");
 });
+
+/* telHref: números de 3 dígitos (153, 188, 190, 192) viram link de ligar, sozinhos ou como primeiro de uma lista; números com DDD continuam como antes */
+assert.strictEqual(UI.telHref("153"), "tel:153");
+assert.strictEqual(UI.telHref("153 / 0800 771 1532"), "tel:153", "o primeiro número da lista vira o link");
+assert.strictEqual(UI.telHref(" 188 "), "tel:188");
+assert.strictEqual(UI.telHref("(19) 3523-6439"), "tel:+551935236439");
+assert.strictEqual(UI.telHref("(19) 3523-6439 / (19) 99336-6682 (plantão)"), "tel:+551935236439");
+assert.strictEqual(UI.telHref("(19) 9 9956-3042 (WhatsApp)"), "tel:+5519999563042");
+assert.strictEqual(UI.telHref("(19) 3533-5411 / (19) 3532-5221"), "tel:+551935335411");
+assert.strictEqual(UI.telHref("0800 771 1532"), null, "número 0800 sem DDD segue sem link, como antes");
+assert.strictEqual(UI.telHref(""), null);
