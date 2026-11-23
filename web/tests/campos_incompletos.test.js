@@ -26,7 +26,7 @@ assert.deepStrictEqual(A.camposAusentes({ tipo: "assistencia", subtipo: "outro",
 const cat = JSON.parse(fs.readFileSync(path.join(web, "dados", "catalogo_manual.json"), "utf8")).servicos;
 assert.strictEqual(cat.length, 168);
 const sem = (c) => cat.filter((s) => !String(s[c] || "").trim()).length;
-assert.deepStrictEqual([sem("telefone"), sem("endereco"), sem("horario")], [17, 12, 110], "contagens de campos vazios mudaram: investigar");
+assert.deepStrictEqual([sem("telefone"), sem("endereco"), sem("horario")], [15, 12, 108], "contagens de campos vazios mudaram: investigar");
 const incompletos = cat.filter((s) => A.textoCamposAusentes(s));
 assert(incompletos.length >= 100 && incompletos.length <= 168);
 cat.forEach((s) => { if (!String(s.telefone || "").trim()) assert(/telefone/.test(A.textoCamposAusentes(s)), s.id); });

@@ -64,9 +64,9 @@ const cras = plano("apoio").passos[0];
 assert(/3522-1930/.test(cras.contato.telefone), "o telefone da Secretaria de Desenvolvimento Social vem do catálogo");
 assert(cras.acao.alvo === "#mapa/cras" && /id="titulo-cras"/.test(fs.readFileSync(path.join(web, "index.html"), "utf8")), "o passo leva à caixa 'Qual CRAS atende o meu bairro?'");
 const creas = plano("direitos").passos[0];
-assert(/3523-6420/.test(creas.contato.telefone) && /violência física, psicológica ou sexual/.test(creas.porque), "CREAS: telefone do catálogo e o que ele atende, como na fonte");
+assert(/3523-6513/.test(creas.contato.telefone) && /3523-6420/.test(creas.contato.telefone) && !/3523-6439/.test(creas.contato.telefone) && /violência física, psicológica ou sexual/.test(creas.porque), "CREAS: telefone do catálogo e o que ele atende, como na fonte");
 const conselho = plano("direitos").passos[1];
-assert(/Região Sul: \(19\) 3533-5411/.test(conselho.pergunte[0]) && /Região Norte: \(19\) 3523-6439/.test(conselho.pergunte[0]), "os telefones dos dois Conselhos Tutelares vêm do catálogo");
+assert(/Região Sul: \(19\) 3533-5411/.test(conselho.pergunte[0]) && /Região Norte: \(19\) 3523-6439 \/ \(19\) 99336-6682/.test(conselho.pergunte[0]), "os telefones dos dois Conselhos Tutelares vêm do catálogo");
 assert(!conselho.contato, "não escolhe um Conselho por conta própria: a pessoa precisa saber a região");
 assert(/Ligue 180/.test(plano("direitos").apoio.texto) && plano("direitos").apoio.alvo === "#direitos", "para a mulher em violência, aponta o 180 e a área Direitos");
 
