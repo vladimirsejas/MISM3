@@ -380,13 +380,13 @@ assert(!/marca-brasao|<img class="brasao"/.test(index), "o cabeçalho e o rodap�
 assert(/<div class="identidade-neutra" aria-hidden="true">RC<\/div>/.test(index), "o rodapé usa marca textual neutra, sem símbolo municipal");
 assert(/estudo acadêmico de demonstração/.test(index) && /não é um site oficial da Prefeitura de Rio Claro/.test(index), "o rodapé deve dizer que o site é acadêmico e não oficial");
 assert(/não fala em nome da Prefeitura/.test(index), "o rodapé deve deixar claro que o site não fala em nome da Prefeitura");
-assert(!/brasao-rio-claro|brasao-estilizado|capa-mulheres|faixa-mulheres/.test(index + css), "nenhuma imagem municipal ou de origem não confirmada pode ser referenciada no site");
+assert(!/brasao-rio-claro|brasao-estilizado|faixa-mulheres/.test(index + css), "nenhuma imagem municipal ou de origem não confirmada pode ser referenciada no site");
 
 /* ---- Tela inicial acolhedora: hero, emergência, contatos essenciais, acesso rápido e paleta ---- */
 assert(/<h1 id="titulo-inicio"[^>]*>Você não está <em>sozinha<\/em><\/h1>/.test(index), "a tela inicial deve acolher: 'Você não está sozinha'");
-assert(/<div class="heroi-arte">\s*<div class="heroi-capa-placeholder"[^>]*>\s*<span class="heroi-sigla"[^>]*>OTM<\/span>\s*<strong>Observatório Territorial da Mulher<\/strong>/.test(index) && /\.heroi-capa-placeholder/.test(css), "a capa usa placeholder textual e CSS neutro, sem imagem de terceiro");
+assert(/<div class="heroi-arte">\s*<img class="heroi-capa" src="img\/capa-mulheres\.jpg" width="1200" height="670"[^>]*alt="Seis mulheres de perfil entre flores/.test(index) && /\.heroi-capa\{/.test(css) && fs.existsSync(path.join(web, "img", "capa-mulheres.jpg")), "a capa é a ilustração gerada pelo autor (origem registrada em docs/MATRIZ_DIREITOS_DE_USO.csv)");
 const inicioTela = index.slice(index.indexOf('id="inicio-tela"'), index.indexOf('id="ia-caixa"'));
-assert((inicioTela.match(/<img /g) || []).length === 0 && !/faixa-mulheres/.test(index), "a abertura não carrega imagem sem autorização e não repete a faixa");
+assert((inicioTela.match(/<img /g) || []).length === 1 && /<img class="heroi-capa" src="img\/capa-mulheres\.jpg"/.test(inicioTela) && !/faixa-mulheres/.test(index), "a abertura carrega só a capa e não repete a faixa");
 assert(/<p class="heroi-etiqueta"><strong>MISM3<\/strong> · Monitoramento Inteligente da Saúde da Mulher<\/p>/.test(index), "a abertura diz o que é o MISM3: Monitoramento Inteligente da Saúde da Mulher");
 assert(!/Informação que fortalece|heroi-lide|heroi-nota/.test(index), "a abertura não repete frases: sem 'Informação que fortalece', sem a frase longa e sem a nota solta");
 assert(/Cada informação mostra a fonte e a data/.test(index), "a tela inicial só pode prometer o que o site cumpre: fonte e data");
