@@ -141,7 +141,7 @@
         "(?:chamar|chamem|chame) (?:a |uma )?(?:ambulancia|samu|bombeiros)"],
       mensagem: "Se há risco imediato para você ou para quem está com você, ligue 190 (Polícia), 192 (SAMU) ou 193 (Bombeiros).",
       telefones: ["190", "192", "193"],
-      pins: []
+      pins: [{ id: "man-defesa-civil" }]
     }
   };
 
