@@ -230,3 +230,34 @@ assert.strictEqual(UI.htmlPerigo(null), "");
 assert.strictEqual(UI.telHref("192"), "tel:192");
 assert.strictEqual(UI.telHref("190; 180"), "tel:190");
 assert.strictEqual(UI.telHref("1900"), null, "quatro dígitos não é número de emergência");
+
+/* Defesa Civil no alerta de enchente e desabamento: 199 utilizável, mensagem de emergência sem o 199, botão que diz o que abre e leva à seção certa */
+assert.strictEqual(UI.telHref("199 (24 horas)"), "tel:199", "telefone da Defesa Civil vira link");
+assert.strictEqual(UI.telHref("199 (24 horas) / (19) 3534-3199 (administrativo)"), "tel:199");
+assert.strictEqual(UI.telHref("(19) 3534-3199"), "tel:+551935343199");
+const Areas = require("../areas.js");
+UI.lembrarAreas([{ id: "moradia", nome: "Moradia" }]);
+["alagou tudo aqui em casa", "risco de desabar o barranco atras de casa"].forEach((t) => {
+  const r = motor.responder(t, {});
+  assert(r.perigo && r.perigo.tipos.includes("risco"), `"${t}" aciona o alerta de risco`);
+  assert(!r.perigo.telefones.includes("199") && ["190", "192", "193"].every((n) => r.perigo.telefones.includes(n)), "a mensagem de emergência segue com 190, 192 e 193, sem misturar o 199");
+  const dc = r.itens.find((i) => i.id === "man-defesa-civil");
+  assert(dc && dc.fixado === true && /^199/.test(dc.contato.telefone), `"${t}" fixa o cartão da Defesa Civil com o 199`);
+  const html = UI.html(r, {}, []);
+  assert(html.includes('href="tel:199"'), "o 199 do cartão é um link de ligar");
+  assert(html.includes('href="#moradia/secao-4"') && html.includes(">Ver este serviço em Moradia</a>") && html.includes('aria-label="Ver Defesa Civil de Rio Claro em Moradia"'), "o botão identifica o serviço e o destino");
+  const [area, sec] = dc.href.replace("#", "").split("/");
+  const secao = Areas.porId(area).secoes.find((s) => s.ancora === sec);
+  assert(secao && (secao.subtipos || []).includes("defesa_civil"), "o destino é a seção de Defesa Civil da área " + area);
+});
+
+/* app.js: linksTelefone não pode emendar números da observação entre parênteses ("199 (24 horas)" não vira tel:19924) */
+const srcApp = fs.readFileSync(path.join(web, "app.js"), "utf8");
+const blocoLinks = /function linksTelefone\(txt\) \{[\s\S]*?\n  \}\r?\n/.exec(srcApp);
+assert(blocoLinks, "linksTelefone existe em app.js");
+const linksTelefone = new Function("esc", blocoLinks[0] + "return linksTelefone;")(UI.esc);
+const lt = linksTelefone("199 (24 horas) / (19) 3534-3199 (administrativo)");
+assert(lt.includes('href="tel:199"') && !lt.includes("19924") && lt.includes('href="tel:1935343199"'), "199 e o administrativo da Defesa Civil viram links separados e corretos");
+const lp = linksTelefone("(19) 3523-6439 / (19) 99336-6682 (plantão)");
+assert(lp.includes('href="tel:1935236439"') && lp.includes('href="tel:19993366682"'), "números com DDD e observação sem dígitos ficam como antes");
+assert(linksTelefone("153").includes('href="tel:153"') && linksTelefone("0800 773 4340").includes('href="tel:08007734340"'), "curtos e 0800 seguem com link nesta tela");
