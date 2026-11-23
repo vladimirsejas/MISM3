@@ -14,7 +14,8 @@ const conferidos = {
   "man-saude-bezerra-de-menezes": ["(19) 2112-2100", "https://www.saude-rioclaro.org.br/enderecos.htm"],
   "man-senai-rio-claro": ["(19) 3522-4951 / (19) 98292-0356 (WhatsApp)", "https://sp.senai.br/unidade/rioclaro/horario-de-atendimento"],
   "man-fatec-ia": ["(19) 3522-8703", "https://fatecrioclaro.cps.sp.gov.br/ia/"],
-  "man-fatec-esg": ["(19) 3522-8703", "https://fatecrioclaro.cps.sp.gov.br/esg/"]
+  "man-fatec-esg": ["(19) 3522-8703", "https://fatecrioclaro.cps.sp.gov.br/esg/"],
+  "man-senac-rio-claro": ["(19) 2112-3400", "https://www.sp.senac.br/senac-rio-claro"]
 };
 Object.entries(conferidos).forEach(([id, [tel, url]]) => {
   const s = porId[id];
@@ -31,7 +32,7 @@ assert(/não informa os dias/.test(porId["man-fatec-esg"].observacao), "a Fatec 
 assert(/rodapé do site da Fatec Rio Claro/.test(porId["man-fatec-ia"].observacao) && /também consta na página deste curso/.test(porId["man-fatec-ia"].observacao), "a origem do telefone e do horário da Fatec IA está dita");
 
 const semFonte = [
-  "man-saude-hospital-municipal", "man-scfv-jd-brasilia", "man-scfv-apae-adulta", "man-senac-rio-claro", "man-etec-cps",
+  "man-saude-hospital-municipal", "man-scfv-jd-brasilia", "man-scfv-apae-adulta", "man-etec-cps",
   "man-sesi-eja", "man-faculdade-sesi", "man-sestsenat-cursos", "man-metamorfose", "man-peja-unesp"
 ];
 semFonte.forEach((id) => {
