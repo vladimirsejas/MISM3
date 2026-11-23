@@ -1,0 +1,30 @@
+grupo,condicao,acertos_top3,total,percentual
+total,busca_pura,46,140,32.9
+total,sem_fixacao,42,140,30.0
+total,tfidf,35,140,25.0
+total,bm25,38,140,27.1
+total,completo,76,140,54.3
+risco,busca_pura,17,90,18.9
+risco,sem_fixacao,15,90,16.7
+risco,tfidf,12,90,13.3
+risco,bm25,12,90,13.3
+risco,completo,49,90,54.4
+sem_risco,busca_pura,29,50,58.0
+sem_risco,sem_fixacao,27,50,54.0
+sem_risco,tfidf,23,50,46.0
+sem_risco,bm25,26,50,52.0
+sem_risco,completo,27,50,54.0
+
+mensagens,variante,referencia,dif_variante_menos_referencia_pp,ic95_inferior_pp,ic95_superior_pp
+140,busca_pura,tfidf,7.86,0.71,15.0
+140,busca_pura,bm25,5.71,-0.71,12.86
+140,busca_pura,completo,-21.43,-29.29,-13.57
+140,sem_fixacao,tfidf,5.0,-2.14,12.86
+140,sem_fixacao,bm25,2.86,-4.29,10.0
+140,sem_fixacao,completo,-24.29,-31.43,-17.14
+50 sem risco,busca_pura,tfidf,12.0,0.0,24.0
+50 sem risco,busca_pura,bm25,6.0,-6.0,18.0
+50 sem risco,busca_pura,completo,4.0,0.0,10.0
+50 sem risco,sem_fixacao,tfidf,8.0,-4.0,20.0
+50 sem risco,sem_fixacao,bm25,2.0,-10.0,14.0
+50 sem risco,sem_fixacao,completo,0.0,0.0,0.0

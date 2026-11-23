@@ -1,0 +1,13 @@
+ancora,fator,alertas_risco_qualquer_nivel_de_90,alertas_completos_de_90,alertas_sem_risco_de_100,viol_qualquer,ide_qualquer,cri_qualquer,viol_completos,ide_completos,cri_completos
+ligada,1.0,73,56,0,45,14,14,33,11,12
+ligada,0.9,75,62,1,47,14,14,37,13,12
+ligada,0.8,78,68,2,49,15,14,41,14,13
+ligada,0.7,80,73,3,50,16,14,46,14,13
+ligada,0.6,81,77,4,51,16,14,49,14,14
+ligada,0.5,83,79,5,53,16,14,50,15,14
+desligada,1.0,76,58,3,45,16,15,33,12,13
+desligada,0.9,78,64,4,47,16,15,37,14,13
+desligada,0.8,81,70,5,49,17,15,41,15,14
+desligada,0.7,83,76,7,50,18,15,46,16,14
+desligada,0.6,85,80,11,51,19,15,49,16,15
+desligada,0.5,87,82,18,53,19,15,50,17,15
