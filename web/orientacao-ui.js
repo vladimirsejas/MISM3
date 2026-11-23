@@ -1,6 +1,6 @@
 /* Tela do orientador: junta a camada de segurança (perigo.js) e o motor de busca (orientar.js) e desenha a resposta.
    Serve a tela inicial ("Conte com suas palavras") e a caixa de dúvida de cada área: uma só lógica, duas entradas.
-   Os arquivos da busca (índice e modelos, cerca de 2 MB sem compressão) só são baixados quando a pessoa entra na caixa ou envia uma pergunta. O texto nunca sai do aparelho. */
+   Os arquivos da busca (índice e modelos, cerca de 2,65 MB sem compressão, medido em 23/11/2026) só são baixados quando a pessoa entra na caixa ou envia uma pergunta. O texto nunca sai do aparelho. */
 (function (raiz, fabrica) {
   if (typeof module === "object" && module.exports) module.exports = fabrica();
   else raiz.OrientacaoUI = fabrica();
@@ -48,7 +48,7 @@
   }
 
   function telHref(tel) {
-    var texto = String(tel || ""), tres = /^\s*(\d{3})\s*(?:[\/;,|]|$)/.exec(texto); /* 100, 180, 190, 192, 153: número de 3 dígitos, sozinho ou o primeiro de uma lista */
+    var texto = String(tel || ""), tres = /^\s*(\d{3})(?=\s*(?:[\/;,|(]|$))/.exec(texto); /* 100, 180, 190, 192, 153: número de 3 dígitos, sozinho ou o primeiro de uma lista */
     if (tres) return "tel:" + tres[1];
     var m = /\(?(\d{2})\)?\s*(9?\s?\d{4})[-\s]?(\d{4})/.exec(String(tel || ""));
     return m ? "tel:+55" + m[1] + (m[2] + m[3]).replace(/\s/g, "") : null;
@@ -81,7 +81,8 @@
     var naArea = ctx && ctx.area && it.area === ctx.area && it.sec;
     var ir = naArea
       ? '<button type="button" class="btn-rolar" data-rolar="' + esc(it.sec) + '">Ver na página</button>'
-      : '<a class="btn-rolar" href="' + esc(it.href) + '">Abrir ' + (it.tipo === "area" ? "a área" : "em " + esc(nomeDaArea(it.area))) + "</a>";
+      : '<a class="btn-rolar" href="' + esc(it.href) + '"' + (it.tipo === "servico" ? ' aria-label="' + esc("Ver " + it.titulo + " em " + nomeDaArea(it.area)) + '"' : "") + ">" +
+        esc(it.tipo === "area" ? "Abrir a área" : it.tipo === "servico" ? "Ver este serviço em " + nomeDaArea(it.area) : "Abrir em " + nomeDaArea(it.area)) + "</a>";
     return '<li><strong>' + esc(it.titulo) + "</strong>" + (it.resumo ? "<p>" + esc(it.resumo) + "</p>" : "") +
       (partes.length ? '<p class="orientacao-contato">' + partes.join(" · ") + "</p>" : "") + conf + porque + "<div>" + ir + "</div></li>";
   }

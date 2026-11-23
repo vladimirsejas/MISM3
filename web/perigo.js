@@ -135,7 +135,7 @@
       pins: [{ id: "man-saude-upa-cervezao" }, { id: "man-saude-upa-estadio" }, { id: "man-saude-santa-casa" }]
     },
     risco: {
-      forte: ["risco de (?:cair|desabar|desabamento)", "vai desabar", "desabando", "incendio", "pegando fogo", "alagou", "enchente", "deslizamento", "vazamento de gas", "cheiro de gas",
+      forte: ["risco de (?:cair|desabar|desabamento)", "vai desabar", "desabando", "incendio(?!(?: \\w+){0,3} (?:filme|novela|serie|livro|jogo|historia|documentario|teatro|peca|musica|cena|desenho|game|reportagem|noticia))", "pegando fogo", "alagou", "enchente", "deslizamento", "vazamento de gas", "cheiro de gas",
         "(?:queria|quero|preciso|tenho que|tenho de|vou|devo) ligar (?:para|pra|no|na|pro|ao) (?:a |o )?(?:emergencia|samu|bombeiros?|ambulancia|190|192|193)",
         "(?:nao sei|esqueci|qual|qual e|cade|onde acho|preciso d[oe]) (?:o |a )?(?:numero|telefone|contato)(?: \\w+){0,2} (?:d[aeo]s?|pra|para) (?:emergencia|samu|bombeiros?|ambulancia)",
         "(?:chamar|chamem|chame) (?:a |uma )?(?:ambulancia|samu|bombeiros)"],

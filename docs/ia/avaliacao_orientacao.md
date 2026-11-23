@@ -151,7 +151,7 @@ python pipeline/indice_orientacao.py                   # regera o índice do ori
 - Frases reais de mulheres, com consentimento, para treinar e medir o detector (as de hoje são da equipe).
 - Mais negativos e frases fora do escopo para melhorar a abstenção.
 - Revisão das regras e do detector com CRAM, DDM e CAPS; decidir os textos dos avisos.
-- Tamanho: o índice (540 KB) e os modelos de perigo (520 KB), escopo (310 KB) e necessidades (600 KB) somam cerca de 2 MB sem compressão e só são baixados quando a usuária começa a escrever; em conexões lentas isso demora alguns segundos na primeira vez.
+- Tamanho (medido em disco em 23/11/2026): o índice (702 KB) e os modelos de necessidades (675 KB), perigo (551 KB), aviso de nível 1 (382 KB) e escopo (338 KB) somam cerca de 2,65 MB sem compressão (cerca de 0,68 MB com gzip) e só são baixados quando a usuária começa a escrever; em conexões lentas isso demora alguns segundos na primeira vez.
 
 ## Nota de 05/11/2026: avaliação exploratória e correções posteriores
 

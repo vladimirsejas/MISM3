@@ -32,7 +32,8 @@
   /* Um campo pode ter mais de um número separado por " / ": cada um recebe o seu link (nunca um número emendado). */
   function linksTelefone(txt) {
     return String(txt).split(/\s+\/\s+/).map(function (t) {
-      var num = t.replace(/[^\d+]/g, "");
+      /* "199 (24 horas)": a observação entre parênteses (com letras) não entra no número do link */
+      var num = t.replace(/\s*\([^)]*[A-Za-zÀ-ÿ][^)]*\)\s*$/, "").replace(/[^\d+]/g, "");
       return num ? '<a href="tel:' + esc(num) + '">' + esc(t) + "</a>" : esc(t);
     }).join(" · ");
   }

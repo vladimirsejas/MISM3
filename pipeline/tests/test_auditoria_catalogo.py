@@ -21,7 +21,7 @@ def real():
 def test_reproduz_registros_e_completude_de_referencia(real):
     assert real["registros"] == 168
     t = {k: v["preenchidos"] for k, v in real["completude_total"].items()}
-    assert (t["telefone"], t["endereco"], t["cep"], t["horario"]) == (153, 156, 108, 60)
+    assert (t["telefone"], t["endereco"], t["cep"], t["horario"]) == (159, 156, 108, 63)
     assert real["coordenada_de_origem"]["registros_com_lat_e_lon_na_planilha"] == 84
     assert real["avisos_de_cautela"]["registros_com_aviso"] == 9
 
@@ -35,8 +35,8 @@ def test_reproduz_dominios_datas_e_idades(real):
 
 def test_reproduz_indicador_antigo_contra_marcacoes_explicitas(real):
     c = real["conferencia"]
-    assert c["indicador_antigo_conferido"]["valor"] == 166 and c["marcacoes_explicitas"] == 7
-    assert c["estados"] == {"confirmado": 5, "nao_confirmado": 2, "pendente": 161}
+    assert c["indicador_antigo_conferido"]["valor"] == 166 and c["marcacoes_explicitas"] == 13
+    assert c["estados"] == {"confirmado": 11, "nao_confirmado": 2, "pendente": 155}
     assert real["procedencia"]["generica"] == 9
 
 

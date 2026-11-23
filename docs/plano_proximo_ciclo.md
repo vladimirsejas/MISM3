@@ -10,7 +10,7 @@ Escrito em 11/10/2026, a partir do plano sugerido pelo ChatGPT e conferido contr
 | Serviços no catálogo | 164 | `catalogo/servicos_manuais.csv` |
 | No mapa | 45 pelo endereço, 38 pelo CEP (aproximado), **81 só na lista** | `web/tests/mapa.test.js` |
 | Registros "não conferidos" | **5**: CRAM, Delegacia da Mulher, Patrulha Maria da Penha, CEI Antonio Ca…, Cadu | coluna `conferido` |
-| Sem telefone / sem endereço | 19 / 13 (inclui Delegacia e Patrulha: os dois) | catálogo |
+| Sem telefone / sem endereço | 10 / 12 em 23/11/2026 (Delegacia e Patrulha já têm telefone; os 10 sem telefone não têm número publicado em fonte oficial localizada) | catálogo |
 | CRAS localizados | 2 de 6 (os outros 4 aguardam a rodada do geocodificador) | catálogo |
 | Bairro → CRAS | **já existe**: os 6 CRAS trazem a lista oficial de bairros que atendem (10 a 44 bairros cada) | campo `bairros`, fonte: página da Prefeitura |
 | Busca por "Bom Sucesso", "Mãe Preta", "Jardim Brasília" | acha o CRAS certo | `mapa-servicos.js` |

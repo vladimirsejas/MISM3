@@ -32,7 +32,7 @@ cat.forEach((s) => {
   assert.strictEqual(s.conferido, s.estado_conferencia === "confirmado", s.id + ": 'conferido' deve derivar do estado");
 });
 const csv = fs.readFileSync(path.join(web, "..", "catalogo", "servicos_manuais.csv"), "utf8");
-assert(cat.filter((s) => s.estado_conferencia === "confirmado").length === 5, "só a marcação explícita da planilha pode confirmar (DDM e os quatro registros conferidos em 23/11/2026)");
+assert(cat.filter((s) => s.estado_conferencia === "confirmado").length === 11, "só a marcação explícita da planilha pode confirmar (DDM e os dez registros conferidos em 23/11/2026)");
 assert(cat.filter((s) => s.estado_conferencia === "pendente").length > 100, "campo vazio deve resultar em pendente");
 
 /* a interface usa o estado e mostra o aviso de cautela sempre */
