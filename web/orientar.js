@@ -329,10 +329,34 @@
     }
 
     /* responder: o que a mulher veria. Nunca devolve só silêncio: se não achar, diz isso e oferece o caminho certo. */
+    /* Fala popular que os modelos não conhecem: acrescenta (nunca troca) as palavras do catálogo ao texto usado na busca e no escopo.
+       O texto que a pessoa escreveu e as palavras "apareceu por causa de" continuam os originais. */
+    var POPULAR = [
+      [/\b(?:trampo|trampos|bico fixo|servico fixo)\b/, "emprego trabalho vaga"],
+      [/\bme mandaram embora\b|\bfui demitida\b|\bperdi o emprego\b/, "desemprego emprego trabalho"],
+      [/\babrigo\b/, "acolhimento casa de acolhimento"],
+      [/\bmaquina de costura\b|\bmontar um negocio\b|\babrir um negocio\b|\bnegocio proprio\b/, "credito microcredito negocio renda"],
+      [/\bescolinha\b|\bcrechinha\b/, "creche escola matricula"],
+      [/\bpensao\b.*\badvogad\w*|\badvogad\w*.*\bpensao\b|\bpagar advogado\b|\bsem advogado\b/, "defensoria publica orientacao juridica gratuita"],
+      [/\bnao paga a pensao\b|\bpedir pensao\b|\bpensao alimenticia\b/, "defensoria publica"],
+      [/\bdroga\w*|\bcrack\b|\bbebe demais\b|\balcool\w*|\bvicio\b/, "caps saude mental dependencia"],
+      [/\bautismo\b|\bautista\b|\btea\b/, "deficiencia atendimento especializado centro de habilitacao"],
+      [/\bfisioterapia\b|\bavc\b/, "reabilitacao centro de habilitacao especialidades"],
+      [/\bteste do pezinho\b|\bvacina\w*\b/, "posto de saude ubs"],
+      [/\bbarranco\b|\bdesabar\b|\benchente\b|\balagou\b/, "defesa civil"],
+      [/\bempresa que me enganou\b|\bcobraram errado\b|\bcobraram um valor\b|\bproduto com defeito\b/, "procon consumidor"]
+    ];
+    function ampliar(texto) {
+      var t = Regras.normalizar(texto), extra = [];
+      POPULAR.forEach(function (par) { if (par[0].test(t)) extra.push(par[1]); });
+      return extra.length ? texto + " " + extra.join(" ") : texto;
+    }
     function responder(texto, ctx) {
       ctx = ctx || {};
+      var textoOriginal = texto;
+      texto = ampliar(texto);
       var t = Regras.normalizar(texto);
-      var perigo = Perigo.avaliar(texto);
+      var perigo = Perigo.avaliar(textoOriginal);
       var urgente = !!(perigo && perigo.nivel === 2); /* só o alerta completo ignora o filtro de escopo; o aviso discreto (nível 1) não */
       var base = { perigo: perigo, saudacao: false, geral: false, abstem: false, itens: [], melhor: 0 };
       if (!t) return Object.assign(base, { abstem: true });
@@ -387,7 +411,7 @@
         var u = e.x.u;
         return { rank: i + 1, id: u.id, tipo: u.tipo, area: u.area, sec: u.sec, svc: u.svc, titulo: u.titulo, resumo: u.resumo, href: u.href,
                  contato: u.contato || null, fonte: u.fonte || null, n: u.n || null, pontos: Math.round(e.x.s * 1000) / 1000,
-                 fixado: e.fixado, palavras: motivo(texto, u) };
+                 fixado: e.fixado, palavras: motivo(textoOriginal, u) };
       });
       return Object.assign(base, { itens: itens, abstem: !urgente && !itens.length, melhor: Math.round(melhor * 1000) / 1000 });
     }
